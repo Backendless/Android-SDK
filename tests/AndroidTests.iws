@@ -1,0 +1,1608 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" readonly="true" id="a748f441-e7db-4943-8ab4-84e2615fa2ec" name="Default" comment="" />
+    <ignored path="AndroidTests.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <file path="$PROJECT_DIR$/../../sdk/android/postprocess.xml" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1359966226379" ignored="false" />
+    <file path="/postprocess.xml" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1359966224483" ignored="false" />
+    <file path="/pom.xml" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1359969682075" ignored="false" />
+    <file path="/TestsFrame.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363168892187" ignored="false" />
+    <file path="/a.dummy" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365430752147" ignored="false" />
+    <file path="/IAsyncTest.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433252495" ignored="false" />
+    <file path="/Backendless.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1359976549967" ignored="false" />
+    <file path="/Files.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1359974905139" ignored="false" />
+    <file path="/UploadTests.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1359972124212" ignored="false" />
+    <file path="$PROJECT_DIR$/../../sdk/android/src/com/backendless/android/FilesExtra.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1359971922184" ignored="false" />
+    <file path="$PROJECT_DIR$/../../sdk/android/src/com/backendless/FilesExtra.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1359971980724" ignored="false" />
+    <file path="/FilesExtra.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1359971978512" ignored="false" />
+    <file path="$PROJECT_DIR$/../../sdk/android/src/com/backendless/IUploadAsyncTask.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1359974991128" ignored="false" />
+    <file path="/IUploadAsyncTask.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1359974884150" ignored="false" />
+    <file path="$PROJECT_DIR$/../../sdk/android/src/com/backendless/AndroidUploadFileAsyncTask.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1359976351990" ignored="false" />
+    <file path="/AndroidUploadFileAsyncTask.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1359975039834" ignored="false" />
+    <file path="/UploadFileAsyncTask.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1359974922646" ignored="false" />
+    <file path="/JavaUploadFileAsyncTask.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1359976410083" ignored="false" />
+    <file path="$PROJECT_DIR$/../../sdk/android/src/com/backendless/exceptions/ExceptionMessage.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1359976530524" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/conf/weborb-config.xml" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363161566112" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/conf/backendless.config" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365445009608" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/staged/conf/weborb-config.xml" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363170855879" ignored="false" />
+    <file path="/Dummy.txt" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365453079251" ignored="false" />
+    <file path="/CollectionTest.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363168871787" ignored="false" />
+    <file path="/fragment.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365506168102" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/services/persistence/PersistenceServiceProxy.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363178393199" ignored="false" />
+    <file path="/PersistenceServiceProxy.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363178393199" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/staged/WEB-INF/flex/weborb-services-config.xml" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365437186956" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/staged/WEB-INF/flex/services-config.xml" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1364234579952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/staged/conf/weborb-acl.xml" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365437186956" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/staged/conf/logger.xml" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365437186956" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/staged/resources/accesspolicy/clientaccesspolicy.xml" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365437186956" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/staged/WEB-INF/flex/remoting-config.xml" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365432696645" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/staged/conf/ehcache.xml" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1364234579952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/staged/WEB-INF/flex/messaging-config.xml" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365437186956" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/services/persistence/PersistenceOperationContext.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365504018181" ignored="false" />
+    <file path="/PersistenceOperationContext.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363178290159" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/services/persistence/PersistenceService.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365504018181" ignored="false" />
+    <file path="/PersistenceService.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365442602798" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/conf/routes" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363183666273" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/controllers/common/Persistence.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363253170292" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/test/controllers/PersistenceTest.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363181043590" ignored="false" />
+    <file path="/PersistenceTest.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363181031760" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/services/persistence/selector/parser/SelectorParserConstants.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363178710644" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/logs/webORB_log10.log" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363179011382" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/controllers/Persistence.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363253170292" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/controllers/console/DataManagement.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363253170292" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.9.1/src_managed/main/controllers/routes.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363182662533" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/analytics/AnalyticsGatheringService.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363183666273" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/management/activity/milestone/MilestoneEventRouter.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363183666273" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/UserDataTableDataMapper.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363253170292" ignored="false" />
+    <file path="/UserDataTableDataMapper.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363196770327" ignored="false" />
+    <file path="/MemCachedUserProperties.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363185818466" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/cache/MemCachedUserProperties.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363186494275" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/cache/MemCachedPersistance.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363188540785" ignored="false" />
+    <file path="/MemCachedPersistance.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363188540785" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/test/com/backendless/cache/MemCachedPersistenceTest.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363188439206" ignored="false" />
+    <file path="/MemCachedPersistenceTest.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363188366786" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/cache/CachedUserDataTable.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363196732656" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/IUserDataTable.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363196481011" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/UserDataTable.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363253170292" ignored="false" />
+    <file path="/UserDataTable.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363196911507" ignored="false" />
+    <file path="/CachedUserDataTable.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363196732308" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/IUserDataTableColumn.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363195064625" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/UserDataTableColumn.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365504018181" ignored="false" />
+    <file path="/IUserDataTableColumn.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363195063712" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/cache/MemCached.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363195829681" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/cache/CachedUserDataTableColumn.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363196128172" ignored="false" />
+    <file path="/CachedUserDataTableColumn.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363196121927" ignored="false" />
+    <file path="/Schema.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363196427784" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/services/persistence/Schema.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363196427784" ignored="false" />
+    <file path="/IUserDataTable.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363196474549" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/services/persistence/schema/SaveSchemaOperation.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363196608613" ignored="false" />
+    <file path="/SaveSchemaOperation.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1363196570088" ignored="false" />
+    <file path="/SaveNewObjectTest.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365452821502" ignored="false" />
+    <file path="/ComplexEntityAsync.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1364204770466" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/services/users/UserRegistration.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1364205086291" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/test/controllers/users/UserUpdateControllerTest.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1364205086291" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/resources/scripts/flvToPng.sh" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1364205183547" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/services/persistence/Entity.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365504018181" ignored="false" />
+    <file path="/Entity.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1364240627707" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/services/persistence/validator/EntityValidator.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1364241033858" ignored="false" />
+    <file path="/EntityValidator.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1364240199637" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/staged/conf/routes" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1364222000415" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/services/persistence/Datastore.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365504018181" ignored="false" />
+    <file path="/Datastore.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1364240133831" ignored="false" />
+    <file path="/IntEntityAsync.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365430673113" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/rest_2.10-1.0.pom" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005949" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/Routes$.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/classes/weborb-config.xml" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/Global$.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/Files.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/lib/jquery.js" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/ServerCode.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/views/html/package.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/ReverseVersion.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/geo/Geolocation.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/analytics/ReverseAnalytics.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/ReverseUserSecurity.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/javascript/ReverseMessagingDebug.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/ReverseBilling.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/javascript/ReverseOptions.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/ReverseMedia.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/javascript/ReversePersistence.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/MyApplication.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/javascript/ReverseServerCode.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/ManageAppSettings.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/ReverseDeviceRegistrations.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/ReverseDeveloperSocialLogin.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/ref/ReverseHelp.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/ui/DataManagement.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/lib/template.css" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/AppVersionService.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/GeoOperationDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/ApplicationTypeDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/config/ServerConfig.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/MediaSettingsDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/servercode/ExecutorProcessProvider.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/users/UserRegistration.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/geo/Units.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/VersionToGeoPointsCategory.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/users/ReverseUserProperties.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/UserPropertyToAppVersionDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/views/html/data/data$.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/UserPropertyDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/UserMediaTubePermissionDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/config/MemCachedConfig.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/UserGeoPointsCategoryPermission.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/DataColumnTypeDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005950" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/StaticQueryOptions.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/Country.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/MediaTubeOperationDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/GeoPoint.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/views/html/media/permissions$.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/UserDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/views/html/media/media$.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/MilestoneEventToAppVersion.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/bind/ApiCallRequestBinder.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/DeveloperSessionDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/bind/AppVersionBinder.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/views/html/users/login$.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/management/MessagingService.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/RoleDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/EmailSettingsDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/cache/MemCachedBilling.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/util/SqlStringUtil.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/googleanalytic/GoogleAnalytic.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/redis/JedisClientManager.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/UserToDeviceRegistrationDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/GeoPointMetadata.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/RoleToUser.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/GlobalRoleMessagingPermissionDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/IP2LocationDb.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/LoggedInUser.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/geo/GeoServiceValidator.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/AppVersionToUserDataTables.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/GlobalRoleDataPermission.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/users/routes.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/GlobalRoleGeoPermission.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/views/html/common/footer$.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/bind/ApplicationBinder.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/MobileSettingsDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/GlobalRoleMessagingPermission.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/management/UserSecurityService.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/util/JdbcHelper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/MilestoneEventToAppVersionDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/servercode/RemoteObjectManagementService.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/Media.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/DeveloperOperationDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/servercode/JVMProcess.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/Application.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/util/DateUtil.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/EventToApplication.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/User.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/geo/query/TotalPointQuery.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/permissions/javascript/ReverseUserPermissions.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005951" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/codegen/_UserDataTablePermissionDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/codegen/_DefaultUser.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/management/billing/IBillingService.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/codegen/_DeploymentTypeDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/users/javascript/ReverseUserProperties.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/media/MediaObjectInfo.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/geo/query/MetadataWhereClauseConverter.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/codegen/_ActivityEntryDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/codegen/_EventsDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/billing/BillingSettings.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/codegen/_DataColumnType.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/file/MediaDirectoryGitHandler.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/management/users/UserLoginUpdateType.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/exceptions/billing/InvalidMigrationException.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/management/stats/Stats.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/management/users/SendTestEmailTask.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/management/users/EventDto.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/analytics/retrieve/AnalyticsDataRetriever.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/messaging/PushBroadcastMask.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/messaging/DeviceRegistrationService.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/exceptions/config/InitializationConfigException.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/ui/javascript/ReverseMedia.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/geo/model/Location.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/codegen/_RoleToUserDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/ui/javascript/ReverseManageAppSettings.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/ui/javascript/ReverseGeolocation.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/messaging/ChannelService.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/codegen/_MailActionDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/analytics/ref/ReverseAnalytics.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/analytics/aggregators/IAggregator.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/codegen/_MediaSettingsDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/exceptions/management/RepositoryManagementException.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/ui/ref/ReverseDataManagement.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/security/operations/PersistenceOperations.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/management/activity/PropertiesUpdateActivitiesUtil.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/codegen/_RoleMediaTubePermission.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/codegen/_GlobalRoleMessagingPermission.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/geo/bind/Latitude.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/codegen/_MobileSettingsDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/analytics/methods/FileMethods.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/analytics/methods/GeoMethods.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/codegen/_UserDataTableColumnDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/analytics/methods/MediaMethods.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/controllers/console/users/javascript/ReverseUserLogin.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/management/developer/StorageStrategies.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/analytics/aggregators/DayAggregator.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/management/developer/SessionDataBaseStorage.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/exceptions/persistence/PersistencePermissionException.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005952" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/codegen/_MilestoneEventToAppVersion.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/exceptions/user/UserRegistrationException.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/codegen/_ChannelOperationDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/codegen/_UserRegistrationSettings.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/management/appVersion/MigrationSettings.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/management/appVersion/AppVersionService.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/codegen/_RoleChannelPermission.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/codegen/_VersionToChannel.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/codegen/_VersionToChannelDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/management/analytics/DeviceType.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/billing/QuantityBasedBillingComponentGroup.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/persistence/ObjectProperty.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/management/activity/milestone/listeners/ThousandApiCall.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/tasks/persistence/CopyDataTask.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/management/activity/milestone/listeners/FirstDataTable.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/tasks/activity/ActivityStreamPublishTask.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/management/activity/dto/ErrorActivityEntryDTO.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/tasks/devreg/SendEmailTask.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/billing/chargify/ProductComponent.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/persistence/Datastore.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/tasks/devreg/RestorePwdTask.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/management/activity/milestone/MilestoneActivity.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/billing/rules/VersionBillingRule.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/billing/rules/RegUsersBillingRule.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/persistence/BackendlessDataQuery.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/management/activity/dto/ActivityEntryDTO.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/billing/rules/MeteredBillingRule.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/persistence/selector/ComparisonExpression.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/notifications/PushError.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/users/UserProperty.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/notifications/IPushNotificator.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/notifications/AbstractPushNotificator.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/users/AbstractProperty.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/persistence/schema/RenameSchemaOperation.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/views/html/common/widgets/usersSidebar$.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/persistence/selector/util/Interval.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/persistence/selector/util/DateUtil.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/billing/rules/MediaStreamBillingRule.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/persistence/selector/parser/Token.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/billing/rules/ApiCallBillingRule.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/persistence/schema/AddColumnsOperation.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/mail/template/MailEvents.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/billing/chargify/exceptions/NotFoundException.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/billing/rules/DeveloperBillingRule.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/notifications/exceptions/UnknownErrorException.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/tasks/users/RequestPasswordRecoveryMailNotificationTask.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005953" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/notifications/exceptions/ConnectionException.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005954" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/tasks/users/RegistrationConfirmationMailNotification.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005954" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/analytics/datamodel/codegen/_DayAggregationData.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005954" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/exceptions/management/appVersion/AppVersionServiceNoApplicationIdException.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005954" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/analytics/datamodel/codegen/_DayAggregationDataDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005954" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/exceptions/management/appVersion/AppVersionWithTheSameUrlPrefixException.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005954" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/management/activity/types/DeveloperActivityType.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005954" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/persistence/Primitive.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005954" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/persistence/PersistenceServiceForClients.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005954" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/notifications/validators/WPMessageValidator.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005954" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/notifications/android/GCMNotificationResultWrapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005954" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/notifications/exceptions/InvalidTokenException.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005954" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/management/activity/milestone/listeners/FirstLogIn.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005954" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/services/persistence/PersistenceOperationContext.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005954" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/types/v3/RequestMessage.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005954" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/writer/serialization/DeviceRegistrationDtoExpirationSerilizer.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005954" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/tasks/users/LogsInForXTimeMaliNotificationTask.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433005954" ignored="false" />
+    <file path="/AggregatorAsync.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365438619066" ignored="false" />
+    <file path="/PartEntity.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365433885522" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/target/scala-2.10/api/com/backendless/datamodel/DeviceRegistrationDataMapper.html" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365437186956" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/services/persistence/EntityDescription.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365504018181" ignored="false" />
+    <file path="/EntityDescription.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365437052579" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/services/persistence/CustomLogicDecorator.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365504018181" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/codegen/_DeveloperDataMapper.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365505924688" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/codegen/_Developer.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365505924688" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/codegen/_Person_1DataMapper.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365505924688" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/codegen/_BackendlessDb.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365505924688" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/management/DataManagementService.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365444953230" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/codegen/_Person_1.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365505924688" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/test/controllers/console/SchemaEditingTest.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365444953230" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/codegen/_AppVersionDataMapper.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365505924688" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/enums/DataColumnTypeEnum.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365444953230" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/codegen/_AppVersion.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365505924688" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../db/ant/build-backendless-db.xml" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365504018181" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/management/activity/ActivityService.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365444953230" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../db/ReCreateSchema.sql" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365504018181" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/management/users/UserPropertiesService.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365444953230" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/test/controllers/console/DataManagementTest.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365444953230" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/services/persistence/PersistenceServiceForClients.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365504018181" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/test/com/backendless/services/persistence/PersistenceServiceTest.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365504018181" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/MessagingChannelDataMapper.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365444953230" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/GeoPointsCategoryDataMapper.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365444953230" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/tests_staged.xml" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365444953230" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/lib/weborb.jar!/weborb/data/management/DataMapper.class" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365444953231" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/AppVersion.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365452710702" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/servercode/ServiceType.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365445683923" ignored="false" />
+    <file path="/ServiceType.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365445662996" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/CodeBinding.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365445463389" ignored="false" />
+    <file path="/CodeBinding.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365445453416" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/Method.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365451556617" ignored="false" />
+    <file path="/Method.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365451547707" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/codegen/_Method.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365505924688" ignored="false" />
+    <file path="/_Method.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365446133816" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/codegen/_Service.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365505924688" ignored="false" />
+    <file path="/_Service.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365446085130" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/servercode/ServiceTypeEnum.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365446171615" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/servercode/CodeBindingRegistry.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365450657423" ignored="false" />
+    <file path="/CodeBindingRegistry.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365447513331" ignored="false" />
+    <file path="/CustomLogicDecorator.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365450557055" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/servercode/ServiceOperation.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365449778294" ignored="false" />
+    <file path="/ServiceOperation.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365449736077" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/test/com/backendless/servercode/PersistenceServiceWithRemoteValidationTest.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365506321525" ignored="false" />
+    <file path="/PersistenceServiceWithRemoteValidationTest.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365506321525" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/servercode/ICodeBindingRegistry.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365450646613" ignored="false" />
+    <file path="/_MethodDataMapper.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365505305542" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/codegen/_MethodDataMapper.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365505924688" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/codegen/_ServiceDataMapper.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365505924688" ignored="false" />
+    <file path="/_ServiceDataMapper.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365505327535" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/codegen/_UserDataTable.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365505924688" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/codegen/_ActivityEntryDataMapper.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365505924688" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/codegen/_CodeBinding.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365505924688" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/codegen/_MethodParameterDataMapper.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365505924688" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../server/play/app/com/backendless/datamodel/codegen/_CodeBindingDataMapper.java" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365505924688" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../../../../backendless/src/client/sdk/actionscript/src/com/backendless/Backendless.as" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365506738105" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../../../../backendless/src/client/sdk/actionscript/src/com/backendless/service/_MediaService.as" changelist="a748f441-e7db-4943-8ab4-84e2615fa2ec" time="1365506761200" ignored="false" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="DebuggerManager">
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
+      <breakpoint url="file://$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/unitTests/fileService/asyncTests/UploadTest.java" line="22" class="com.backendless.tests.junit.unitTests.fileService.asyncTests.UploadTest$1" package="com.backendless.tests.junit.unitTests.fileService.asyncTests">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
+    <breakpoint_any>
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </breakpoint_any>
+    <breakpoint_rules />
+    <ui_properties />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="AndroidTests" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="TestsLog.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/logger/TestsLog.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="39" column="52" selection-start="1599" selection-end="1599" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#0#2523#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HttpIOEngine.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../../../../WeborbJava/src/weborb/client/ioEngine/HttpIOEngine.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="255" column="0" selection-start="8276" selection-end="8276" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ArrayType.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../../../../WeborbJava/src/weborb/reader/ArrayType.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="312" column="0" selection-start="9321" selection-end="9321" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SaveNewObjectTest.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/unitTests/persistenceService/asyncTests/SaveNewObjectTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="215" column="32" selection-start="7813" selection-end="7813" vertical-scroll-proportion="0.29820627">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AdaptingResponder.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../sdk/android/src/com/backendless/async/responder/AdaptingResponder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="67" column="0" selection-start="2301" selection-end="2301" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NamedObject.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../../../../WeborbJava/src/weborb/reader/NamedObject.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="126" column="0" selection-start="3524" selection-end="3524" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AnonymousObject.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../../../../WeborbJava/src/weborb/reader/AnonymousObject.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="279" column="0" selection-start="7827" selection-end="7827" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReferenceCache.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../../../../WeborbJava/src/weborb/reader/ReferenceCache.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="40" column="0" selection-start="1035" selection-end="1035" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="false" />
+    </FindUsagesManager>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/unitTests/fileService/syncTests/DeleteTests.java" />
+        <option value="$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/unitTests/fileService/asyncTests/DeleteTests.java" />
+        <option value="$PROJECT_DIR$/junit/pom.xml" />
+        <option value="$PROJECT_DIR$/../../sdk/android/src/com/backendless/UploadFileAsyncTask.java" />
+        <option value="$PROJECT_DIR$/../../sdk/android/src/com/backendless/UploadBitmapAsyncTask.java" />
+        <option value="$PROJECT_DIR$/../../sdk/android/src/com/backendless/Files.java" />
+        <option value="$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/unitTests/fileService/syncTests/UploadTests.java" />
+        <option value="$PROJECT_DIR$/../../sdk/android/src/com/backendless/Backendless.java" />
+        <option value="$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/unitTests/persistenceService/syncTests/CollectionTest.java" />
+        <option value="$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/unitTests/persistenceService/syncTests/TestsFrame.java" />
+        <option value="$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/unitTests/persistenceService/asyncEntities/primitiveEntities/ComplexEntityAsync.java" />
+        <option value="$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/unitTests/persistenceService/asyncEntities/primitiveEntities/IntEntityAsync.java" />
+        <option value="$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/IAsyncTest.java" />
+        <option value="$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/unitTests/persistenceService/asyncEntities/primitiveEntities/PartEntity.java" />
+        <option value="$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/unitTests/persistenceService/asyncEntities/primitiveEntities/AggregatorAsync.java" />
+        <option value="$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/unitTests/persistenceService/asyncTests/SaveNewObjectTest.java" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="android-sdk-junit-tests" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="android-sdk-junit-tests" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Lifecycle" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$LifecycleNode" />
+        </PATH_ELEMENT>
+      </PATH>
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="63" />
+    <option name="y" value="22" />
+    <option name="width" value="1377" />
+    <option name="height" value="878" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <OptionsSetting value="true" id="Undo Check Out" />
+    <OptionsSetting value="true" id="Get Latest Version" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidTests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidTests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidTests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidTests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidTests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="unitTests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidTests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="unitTests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="persistenceService" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidTests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="unitTests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="persistenceService" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="asyncTests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidTests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="unitTests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="persistenceService" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="asyncEntities" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidTests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="unitTests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="persistenceService" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="asyncEntities" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="primitiveEntities" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidTests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidTests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backendless.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidTests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backendless.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="weborb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidTests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backendless.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="weborb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidTests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backendless.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="weborb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ioEngine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="recentsLimit" value="5" />
+    <property name="options.lastSelected" value="preferences.sourceCode" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../../WeborbJava/src" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
+    <property name="FullScreen" value="false" />
+    <property name="GoToClass.includeLibraries" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.backendless.tests.junit.unitTests.persistenceService.asyncEntities.primitiveEntities" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/junit/libs" />
+      <recent name="$PROJECT_DIR$/junit/src" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.SaveNewObjectTest.testSaveCircularEntity">
+    <configuration default="false" name="com.backendless.tests.junit.unitTests.persistenceService.syncTests in JUnitTests" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.backendless.tests.junit.unitTests.persistenceService.syncTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="JUnitTests" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.backendless.tests.junit.unitTests.persistenceService.syncTests" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="package" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="SaveNewObjectTest.testSaveComplexEntity" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.backendless.tests.junit.unitTests.persistenceService.asyncTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="JUnitTests" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.backendless.tests.junit.unitTests.persistenceService.asyncTests" />
+      <option name="MAIN_CLASS_NAME" value="com.backendless.tests.junit.unitTests.persistenceService.asyncTests.SaveNewObjectTest" />
+      <option name="METHOD_NAME" value="testSaveComplexEntity" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="SaveNewObjectTest" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.backendless.tests.junit.unitTests.persistenceService.asyncTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="JUnitTests" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.backendless.tests.junit.unitTests.persistenceService.asyncTests" />
+      <option name="MAIN_CLASS_NAME" value="com.backendless.tests.junit.unitTests.persistenceService.asyncTests.SaveNewObjectTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="SaveNewObjectTest.testSaveEntityToANewDataBase" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.backendless.tests.junit.unitTests.persistenceService.asyncTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="JUnitTests" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.backendless.tests.junit.unitTests.persistenceService.asyncTests" />
+      <option name="MAIN_CLASS_NAME" value="com.backendless.tests.junit.unitTests.persistenceService.asyncTests.SaveNewObjectTest" />
+      <option name="METHOD_NAME" value="testSaveEntityToANewDataBase" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="SaveNewObjectTest.testSaveCircularEntity" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.backendless.tests.junit.unitTests.persistenceService.asyncTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="JUnitTests" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.backendless.tests.junit.unitTests.persistenceService.asyncTests" />
+      <option name="MAIN_CLASS_NAME" value="com.backendless.tests.junit.unitTests.persistenceService.asyncTests.SaveNewObjectTest" />
+      <option name="METHOD_NAME" value="testSaveCircularEntity" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
+      <option name="PROGRAM_PARAMETERS" />
+      <method />
+    </configuration>
+    <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list />
+            </option>
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="workingDirPath" value="" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="JUnit.com.backendless.tests.junit.unitTests.persistenceService.syncTests in JUnitTests" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.SaveNewObjectTest.testSaveComplexEntity" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.SaveNewObjectTest" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.SaveNewObjectTest.testSaveEntityToANewDataBase" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.SaveNewObjectTest.testSaveCircularEntity" />
+    </list>
+    <recent_temporary>
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="JUnit.SaveNewObjectTest.testSaveCircularEntity" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.SaveNewObjectTest.testSaveComplexEntity" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.SaveNewObjectTest.testSaveEntityToANewDataBase" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.SaveNewObjectTest" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.com.backendless.tests.junit.unitTests.persistenceService.syncTests in JUnitTests" />
+      </list>
+    </recent_temporary>
+    <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
+      <Host>localhost</Host>
+      <Port>5050</Port>
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="true">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="DETECT_NESTED_COPIES" value="true" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
+    <configuration useDefault="true">$USER_HOME$/.subversion</configuration>
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a748f441-e7db-4943-8ab4-84e2615fa2ec" name="Default" comment="" />
+      <created>1359965778332</created>
+      <updated>1359965778332</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="63" y="22" width="1377" height="878" extended-state="6" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24964029" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="JRebel Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.69604087" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="JRebel" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298153" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32849604" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32589927" sideWeight="0.6701847" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3238167" sideWeight="0.6728232" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32717678" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298153" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="CHECK_NEW_TODO" value="true" />
+    <option name="myTodoPanelSettings">
+      <value>
+        <are-packages-shown value="false" />
+        <are-modules-shown value="false" />
+        <flatten-packages value="false" />
+        <is-autoscroll-to-source value="false" />
+      </value>
+    </option>
+    <option name="PERFORM_UPDATE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_COMMIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
+    <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false" />
+    <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
+    <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
+    <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
+    <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
+    <option name="SHORT_DIFF_HORISONTALLY" value="true" />
+    <option name="SHORT_DIFF_EXTRA_LINES" value="2" />
+    <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true" />
+    <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
+    <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+    <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
+    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
+    <option name="SHOW_DIRTY_RECURSIVELY" value="false" />
+    <option name="LIMIT_HISTORY" value="true" />
+    <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
+    <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
+    <option name="LAST_COMMIT_MESSAGE" />
+    <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
+    <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8" />
+    <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
+    <option name="ACTIVE_VCS_NAME" />
+    <option name="UPDATE_GROUP_BY_PACKAGES" value="false" />
+    <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
+    <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
+    <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/../../../../../../WeborbJava/src/weborb/reader/AnonymousObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="279" column="0" selection-start="7827" selection-end="7827" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../../WeborbJava/src/weborb/reader/ReferenceCache.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="0" selection-start="1035" selection-end="1035" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/Defaults.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="13" selection-start="1077" selection-end="1077" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/unitTests/persistenceService/asyncTests/TestsFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="3" selection-start="1247" selection-end="1247" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/IAsyncTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="102" column="47" selection-start="2942" selection-end="2942" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/unitTests/persistenceService/asyncEntities/primitiveEntities/IntEntityAsync.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="29" selection-start="460" selection-end="460" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/unitTests/persistenceService/asyncEntities/baseEntities/CreatedEntityAsync.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="22" selection-start="140" selection-end="140" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/junit/libs/backendless.jar!/weborb/client/ioEngine/HttpIOEngine.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="389" column="1" selection-start="0" selection-end="12213" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../../WeborbJava/src/weborb/client/ioEngine/HttpIOEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="255" column="0" selection-start="8276" selection-end="8276" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../sdk/android/src/com/backendless/async/responder/AdaptingResponder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="0" selection-start="2301" selection-end="2301" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../../WeborbJava/src/weborb/reader/ReferenceCache.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="0" selection-start="1035" selection-end="1035" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../../WeborbJava/src/weborb/reader/NamedObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="126" column="0" selection-start="3524" selection-end="3524" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../../WeborbJava/src/weborb/reader/AnonymousObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="279" column="0" selection-start="7827" selection-end="7827" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../../WeborbJava/src/weborb/reader/ArrayType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="312" column="0" selection-start="9321" selection-end="9321" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/logger/TestsLog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="52" selection-start="1599" selection-end="1599" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#2523#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/junit/src/test/java/com/backendless/tests/junit/unitTests/persistenceService/asyncTests/SaveNewObjectTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="215" column="32" selection-start="7813" selection-end="7813" vertical-scroll-proportion="0.29820627">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="Copyright.UI">
+        <settings>
+          <last-edited>Backendless</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.6</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>JUnitTests</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: junit:junit:4.11</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
+
