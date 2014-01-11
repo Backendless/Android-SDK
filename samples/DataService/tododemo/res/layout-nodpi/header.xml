@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:gravity="top" android:paddingLeft="@dimen/small_padding"
+              android:paddingRight="@dimen/small_padding"
+              android:id="@+id/parentLayout">
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/service_name"
+            android:textSize="@dimen/bit_text" android:layout_marginTop="@dimen/default_margin"
+            android:gravity="center_horizontal"/>
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separatorLine"
+            android:background="@android:color/white" android:layout_marginTop="@dimen/small_padding"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To do:"
+            android:textSize="@dimen/normal_text"
+            android:layout_marginTop="@dimen/small_padding" android:layout_gravity="center_horizontal"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:layout_marginTop="@dimen/small_padding">
+        <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/addToDoField" android:textSize="@dimen/normal_text"
+                android:layout_gravity="center_horizontal" android:layout_marginTop="@dimen/small_padding"
+                android:hint="@string/default_todo_hint" android:layout_marginBottom="@dimen/small_padding"
+                android:inputType="textShortMessage|textCapSentences|textAutoComplete|textAutoCorrect"
+                android:imeOptions="actionGo"
+                android:singleLine="true"/>
+    </LinearLayout>
+</LinearLayout>
+

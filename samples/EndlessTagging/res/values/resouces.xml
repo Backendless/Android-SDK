@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="listViewColor" parent="@android:style/Theme.NoTitleBar">
+        <item name="android:textColor">#6C6B5A</item>
+    </style>
+</resources>

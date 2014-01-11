@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ *********************************************************************************************************************
+  ~  <p/>
+  ~  BACKENDLESS.COM CONFIDENTIAL
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  ~  <p/>
+  ~  Copyright 2012 BACKENDLESS.COM. All Rights Reserved.
+  ~  <p/>
+  ~  NOTICE: All information contained herein is, and remains the property of Backendless.com and its suppliers,
+  ~  if any. The intellectual and technical concepts contained herein are proprietary to Backendless.com and its
+  ~  suppliers and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret
+  ~  or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden
+  ~  unless prior written permission is obtained from Backendless.com.
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  -->
+
+<resources>
+    <string name="app_name">FileService Backendless Sample</string>
+    <string name="service_name">Backendless Files</string>
+    <string name="welcome_text">This example demonstrates file (image) upload and sharing.</string>
+    <string name="uploaded_text">The image has been uploaded. The file is available at the following URL:</string>
+    <string name="takeNewPhoto">Take a photo</string>
+    <string name="takeAnotherPhoto">Take another photo</string>
+</resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:gravity="top" android:paddingLeft="@dimen/small_padding"
+              android:paddingRight="@dimen/small_padding">
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="@dimen/small_padding">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey"
+                android:id="@+id/itemsToDoField" android:textSize="@dimen/normal_text"
+                android:layout_marginTop="@dimen/micro_padding" android:layout_marginLeft="@dimen/small_padding"
+                android:layout_marginBottom="@dimen/micro_padding" android:layout_gravity="center_vertical"
+                android:gravity="center_vertical|left"/>
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/itemsDoneField" android:textSize="@dimen/normal_text"
+                android:layout_marginRight="@dimen/small_padding" android:layout_marginLeft="@dimen/small_padding"
+                android:layout_marginTop="@dimen/micro_padding" android:layout_marginBottom="@dimen/micro_padding"
+                android:gravity="center_vertical|right" android:clickable="true"
+                android:textColor="@color/blue"
+                android:textStyle="bold" android:layout_gravity="center_vertical|right"/>
+    </LinearLayout>
+</LinearLayout>

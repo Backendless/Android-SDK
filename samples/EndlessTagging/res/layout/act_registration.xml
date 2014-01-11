@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+        android:gravity="center_vertical|center_horizontal"
+        >
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:layout_below="@+id/linearLayout3"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_centerInParent="true"
+            android:background="@drawable/login_back">
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" android:id="@+id/relativeLayout" android:gravity="center_vertical|center_horizontal"
+                android:layout_marginLeft="20dp" android:layout_marginRight="20dp"
+                android:background="@drawable/reg_form">
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linearLayout" android:gravity="center_vertical|center_horizontal"
+                    android:layout_alignLeft="@+id/linearLayout2" android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true" android:background="#ffffff">
+                <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="  Name:"
+                        android:id="@+id/textName" android:layout_gravity="center" android:textSize="14.5dp"
+                        android:textColor="@android:color/darker_gray" android:textStyle="normal"/>
+                <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/editUserName" android:layout_gravity="center_horizontal|top"
+                        android:textColor="#000000"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" android:layout_alignLeft="@+id/linearLayout"
+                    android:layout_below="@+id/linearLayout" android:id="@+id/linearLayout1" android:layout_marginTop="3dp"
+                    android:baselineAligned="false" android:background="#ffffff"
+                    android:gravity="center_vertical|center_horizontal">
+                <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="  Email:"
+                        android:id="@+id/textEmail" android:layout_gravity="center" android:textSize="14.5dp"
+                        android:textColor="@android:color/darker_gray" android:textStyle="normal"/>
+                <EditText
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/emailEdit" android:layout_gravity="center" android:inputType="textEmailAddress"
+                        android:textColor="#000000"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" android:layout_below="@+id/linearLayout1" android:layout_marginTop="3dp"
+                    android:id="@+id/linearLayout2"
+                    android:background="#ffffff" android:gravity="center_vertical|center_horizontal"
+                    android:layout_alignParentTop="false"
+                    android:layout_centerInParent="true">
+                <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="  Password:"
+                        android:id="@+id/textPass" android:layout_gravity="left|center_vertical" android:textSize="14.5dp"
+                        android:textStyle="normal" android:textColor="@android:color/darker_gray"/>
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/passwordEdit" android:password="true" android:textColor="#000000"
+                        android:layout_gravity="center"/>
+            </LinearLayout>
+        </RelativeLayout>
+        <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/registrationBtn"
+                android:background="@drawable/yellow_btn"
+                android:layout_alignParentRight="true" android:layout_below="@+id/relativeLayout"
+                android:layout_marginTop="25dp" android:gravity="center_vertical|center_horizontal"
+                android:layout_marginLeft="20dp" android:layout_marginRight="20dp" android:text="Register Now!"
+                android:textColor="#000000" android:textSize="16dp" android:textStyle="normal"/>
+        <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/yellow_btn"
+                android:id="@+id/cancelBtn" android:layout_alignLeft="@+id/relativeLayout"
+                android:layout_below="@+id/registrationBtn" android:gravity="center" android:layout_marginTop="25dp"
+                android:layout_marginRight="20dp" android:textSize="16dp"
+                android:textColor="#000000" android:text="Cancel" android:textStyle="normal"/>
+    </RelativeLayout>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/logo"
+            android:gravity="top" android:id="@+id/linearLayout3"
+            android:layout_alignLeft="@+id/linearLayout1" android:layout_alignParentTop="true">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Registration"
+                android:id="@+id/textRegistration" android:layout_gravity="center" android:gravity="center"
+                android:textSize="16dp" android:textColor="#ffffff" android:textStyle="normal"
+                android:layout_marginTop="7dp"/>
+    </LinearLayout>
+</RelativeLayout>

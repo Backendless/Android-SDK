@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ *********************************************************************************************************************
+  ~  <p/>
+  ~  BACKENDLESS.COM CONFIDENTIAL
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  ~  <p/>
+  ~  Copyright 2012 BACKENDLESS.COM. All Rights Reserved.
+  ~  <p/>
+  ~  NOTICE: All information contained herein is, and remains the property of Backendless.com and its suppliers,
+  ~  if any. The intellectual and technical concepts contained herein are proprietary to Backendless.com and its
+  ~  suppliers and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret
+  ~  or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden
+  ~  unless prior written permission is obtained from Backendless.com.
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  -->
+
+<resources>
+    <!-- Primitives -->
+    <string name="app_name">EndlessMatchMaker</string>
+    <string name="label_toppanel_registration">Registration</string>
+    <string name="radio_gender">Sex:</string>
+    <string name="label_loginwith">Login With:</string>
+    <string name="textfield_profile_label">Please choose your preferences to build your profile:</string>
+    <string name="loading_text">Loading. Please wait…</string>
+
+    <!-- Buttons -->
+    <string name="button_register">Register</string>
+    <string name="button_login">Login</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_profile_findmatches">Find matches</string>
+    <string name="button_profile_logout">Logout</string>
+    <string name="button_profile">Profile</string>
+    <string name="button_back">Back</string>
+    <string name="button_match_ping">Ping</string>
+    <string name="button_edit">Edit</string>
+    <string name="button_sendmessage">Send Message</string>
+    <string name="button_send">Send</string>
+    <string name="button_open_settings">Open settings</string>
+    <string name="button_pings">Pings</string>
+
+    <!-- Registration fields -->
+    <string name="textfield_name_default">Name</string>
+    <string name="textfield_password_default">Password</string>
+    <string name="textfield_verify_password_default">Verify Password</string>
+    <string name="textfield_email_default">Email</string>
+    <string name="textfield_dateofbirth_default">Date of birth</string>
+
+    <!-- Labels -->
+    <string name="label_toppanel_matches">Your Matches</string>
+    <string name="label_toppanel_pings">Pings</string>
+    <string name="label_pinged">Pinged you</string>
+
+    <!-- Properties -->
+    <string name="textfield_loading">Loading…</string>
+    <string name="textfield_preferences_label_base">Choose your preferences in</string>
+    <string name="textfield_matches_found">Local matches:</string>
+    <string name="textfield_matches_global">Global matches:</string>
+    <string name="textfield_match_label">Overall profile match:</string>
+    <string name="textfield_push_label">Login to check out your matches.</string>
+    <string name="textfield_property_label_food">Food</string>
+    <string name="textfield_property_label_music">Music</string>
+    <string name="textfield_property_label_hobbies">Hobbies</string>
+    <string name="textfield_property_label_travel">Travel</string>
+    <string name="textfield_push_message">you were pinged on Endless Matchmaker by</string>
+    <string name="textfield_send_message">you got message on Endless Matchmaker from</string>
+    <string name="textfield_goto_settings">You have no location provider enabled. Click the button bellow to open the
+        settings screen and select any.
+    </string>
+    <string name="message_hint">Enter your message here...</string>
+    <string name="yes">Ok</string>
+</resources>

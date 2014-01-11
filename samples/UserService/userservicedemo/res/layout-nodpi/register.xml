@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ *********************************************************************************************************************
+  ~  <p/>
+  ~  BACKENDLESS.COM CONFIDENTIAL
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  ~  <p/>
+  ~  Copyright 2012 BACKENDLESS.COM. All Rights Reserved.
+  ~  <p/>
+  ~  NOTICE: All information contained herein is, and remains the property of Backendless.com and its suppliers,
+  ~  if any. The intellectual and technical concepts contained herein are proprietary to Backendless.com and its
+  ~  suppliers and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret
+  ~  or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden
+  ~  unless prior written permission is obtained from Backendless.com.
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  -->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <TableLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" android:layout_marginTop="@dimen/default_margin">
+            <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" android:gravity="center_horizontal"
+                    >
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name:"
+                        android:paddingRight="@dimen/small_padding" android:textSize="@dimen/normal_text"/>
+                <EditText
+                        android:layout_width="@dimen/edittext_width"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/nameField" android:textSize="@dimen/normal_text"
+                        android:inputType="textCapWords"/>
+            </TableRow>
+            <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" android:gravity="center_horizontal"
+                    >
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Password:"
+                        android:paddingRight="@dimen/small_padding" android:textSize="@dimen/normal_text"/>
+                <EditText
+                        android:layout_width="@dimen/edittext_width"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/passwordField" android:textSize="@dimen/normal_text"
+                        android:inputType="textPassword"/>
+            </TableRow>
+            <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" android:gravity="center_horizontal"
+                    >
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Verify password:"
+                        android:paddingRight="@dimen/small_padding" android:textSize="@dimen/normal_text"/>
+                <EditText
+                        android:layout_width="@dimen/edittext_width"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/verifyPasswordField" android:textSize="@dimen/normal_text"
+                        android:inputType="textPassword"/>
+            </TableRow>
+            <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" android:gravity="center_horizontal"
+                    >
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email:"
+                        android:paddingRight="@dimen/small_padding" android:textSize="@dimen/normal_text"/>
+                <EditText
+                        android:layout_width="@dimen/edittext_width"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/emailField" android:textSize="@dimen/normal_text"
+                        android:inputType="textEmailAddress"/>
+            </TableRow>
+            <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" android:gravity="center_horizontal"
+                    >
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sex:"
+                        android:paddingRight="@dimen/small_padding" android:textSize="@dimen/normal_text"/>
+                <RadioGroup android:id="@+id/genderRadio" android:orientation="horizontal">
+                    <RadioButton
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="M"
+                            android:id="@+id/genderMale" android:textSize="@dimen/normal_text"/>
+                    <RadioButton
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:text="F" android:layout_marginLeft="@dimen/small_padding"
+                            android:id="@+id/genderFemale" android:textSize="@dimen/normal_text"/>
+                </RadioGroup>
+            </TableRow>
+            <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" android:gravity="center_horizontal"
+                    >
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date of birth:"
+                        android:paddingRight="@dimen/small_padding" android:textSize="@dimen/normal_text"/>
+                <EditText
+                        android:layout_width="@dimen/edittext_width"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/dateOfBirthField" android:textSize="@dimen/normal_text"
+                        android:focusable="false"/>
+            </TableRow>
+        </TableLayout>
+        <Button
+                android:layout_width="@dimen/button_width"
+                android:layout_height="@dimen/button_height"
+                android:text="Register"
+                android:id="@+id/registerButton" android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/small_padding" android:textSize="@dimen/normal_text"/>
+    </LinearLayout>
+</ScrollView>

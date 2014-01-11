@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_gravity="center">
+
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="40dp" android:id="@+id/relativeLayout"
+            android:background="@drawable/logo">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Make a choice"
+                android:id="@+id/textMake"
+                android:layout_centerHorizontal="true" android:layout_alignParentTop="true"
+                android:layout_marginTop="8dp" android:gravity="center" android:textColor="#ffffff"
+                android:textSize="16dp" android:textStyle="normal"/>
+    </RelativeLayout>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="357dp"
+            android:layout_alignParentLeft="true" android:gravity="center"
+            android:layout_below="@+id/relativeLayout"
+            android:background="@drawable/login_back" android:layout_alignParentBottom="true">
+        <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/yellow_btn"
+                android:id="@+id/photoBtn" android:layout_gravity="left|center_vertical" android:layout_marginTop="20dp"
+                android:layout_marginLeft="15dp" android:layout_marginRight="15dp" android:text="Take Photo"
+                android:textColor="#000000" android:textSize="16dp" android:textStyle="normal"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="or"
+                  android:id="@+id/textOr" android:layout_below="@+id/linearLayout1" android:textSize="14.5dp"
+                  android:layout_centerInParent="true" android:textColor="#ffffff" android:gravity="center"
+                  android:layout_marginTop="10dp" android:textStyle="normal"/>
+        <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/yellow_btn"
+                android:id="@+id/chooseBtn" android:layout_gravity="left|center_vertical"
+                android:layout_marginTop="20dp" android:layout_marginLeft="15dp" android:layout_marginRight="15dp"
+                android:textStyle="normal" android:textSize="16dp" android:textColor="#000000"
+                android:text="Choose From Library"/>
+    </LinearLayout>
+</RelativeLayout>

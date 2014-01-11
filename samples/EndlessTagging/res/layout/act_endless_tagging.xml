@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <fragment
+            class="com.google.android.gms.maps.MapFragment"
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="215dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" android:layout_marginTop="40dp" android:layout_centerInParent="true"
+            android:layout_alignParentRight="true" android:layout_above="@+id/relativeLayout1"/>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_alignLeft="@+id/map"
+            android:layout_alignParentTop="true" android:id="@+id/relativeLayout"
+            android:background="@drawable/logo">
+        <Button
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/blue_btn"
+                android:id="@+id/filterBtn"
+                android:layout_alignParentRight="true" android:layout_alignTop="@+id/cancelBtn"
+                android:layout_marginRight="7dp" android:layout_marginTop="6dp" android:text="Filter"
+                android:textColor="#ffffff" android:textSize="16dp" android:textStyle="normal"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Endless Tagging"
+                android:id="@+id/textEndless"
+                android:layout_alignBottom="@+id/filterBtn" android:layout_centerInParent="true"
+                android:gravity="center" android:textColor="#ffffff" android:textSize="16dp"
+                android:textIsSelectable="false" android:textStyle="normal" android:layout_marginBottom="5dp"/>
+    </RelativeLayout>
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:gravity="bottom"
+            android:id="@+id/relativeLayout1"
+            android:background="@drawable/map_back" android:layout_alignLeft="@+id/relativeLayout"
+            android:layout_alignParentBottom="true">
+        <Button
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tagBtn"
+                android:background="@drawable/blue_btn"
+                android:layout_alignParentLeft="true" android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true" android:layout_alignWithParentIfMissing="false"
+                android:layout_alignParentTop="false" android:layout_marginBottom="7dp"
+                android:layout_marginLeft="7dp" android:text="Tag" android:textColor="#ffffff" android:textSize="16dp"
+                android:textStyle="normal"/>
+        <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBar" android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/tagBtn" android:indeterminate="false"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Loading"
+                android:id="@+id/textLoading" android:layout_toLeftOf="@+id/progressBar"
+                android:layout_alignTop="@+id/tagBtn" android:layout_centerInParent="true" android:gravity="center"/>
+    </RelativeLayout>
+
+</RelativeLayout>

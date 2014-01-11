@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_gravity="center"
+        android:background="@drawable/filter_back">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/relativeLayout"
+            android:background="@drawable/logo">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pick a Category"
+                android:id="@+id/textCategory" android:layout_centerHorizontal="true" android:layout_alignParentTop="true"
+                android:layout_marginTop="8dp" android:gravity="center" android:textColor="#ffffff"
+                android:textSize="16dp" android:textStyle="normal"/>
+    </RelativeLayout>
+    <ListView
+            android:id="@+id/lvMain"
+            android:layout_width="match_parent"
+            android:layout_height="186dp"
+            android:layout_above="@+id/textCat"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/relativeLayout"
+            android:background="@drawable/list_back" android:layout_margin="20dp">
+    </ListView>
+    <EditText
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editNewCategory"
+            android:autoText="false" android:singleLine="true"
+            android:layout_alignLeft="@+id/lvMain" android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"/>
+    <Button
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/blue_btn"
+            android:id="@+id/addCategoryBtn"
+            android:layout_alignRight="@+id/lvMain" android:layout_alignBaseline="@+id/editNewCategory"
+            android:text="Next" android:textColor="#ffffff" android:textSize="16dp" android:textStyle="normal"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Enter you own category"
+
+            android:id="@+id/textCat"
+            android:textSize="14.5dp" android:layout_alignLeft="@+id/cancelBtn"
+            android:layout_above="@+id/editNewCategory" android:layout_marginLeft="20dp" android:textColor="#000000"
+            android:textStyle="normal" android:textIsSelectable="false"/>
+</RelativeLayout>

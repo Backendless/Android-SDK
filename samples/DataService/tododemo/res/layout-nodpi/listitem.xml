@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+    <CheckBox
+            android:id="@+id/isDoneCheckbox"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_margin" android:layout_marginRight="@dimen/small_padding"
+            android:layout_marginTop="@dimen/micro_padding" android:layout_marginBottom="@dimen/micro_padding"
+            android:layout_centerVertical="true"/>
+    <TextView
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:id="@+id/textField" android:textSize="@dimen/normal_text" android:layout_toRightOf="@+id/isDoneCheckbox"
+            android:layout_marginBottom="@dimen/micro_padding" android:layout_marginTop="@dimen/micro_padding"
+            android:layout_marginRight="@dimen/small_padding"
+            android:layout_centerVertical="true" android:background="@android:color/transparent"
+            android:editable="false"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:src="@android:drawable/ic_menu_delete"
+            android:layout_height="wrap_content"
+            android:id="@+id/trashIcon"
+            android:visibility="invisible"
+            android:layout_marginTop="@dimen/micro_padding"
+            android:layout_marginBottom="@dimen/micro_padding"
+            android:baselineAlignBottom="false" android:cropToPadding="false"
+            android:adjustViewBounds="false" android:layout_alignParentLeft="false"
+            android:layout_alignWithParentIfMissing="false" android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/default_margin" android:layout_centerVertical="true"/>
+</RelativeLayout>

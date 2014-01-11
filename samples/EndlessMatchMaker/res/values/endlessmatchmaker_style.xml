@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ *********************************************************************************************************************
+  ~  <p/>
+  ~  BACKENDLESS.COM CONFIDENTIAL
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  ~  <p/>
+  ~  Copyright 2012 BACKENDLESS.COM. All Rights Reserved.
+  ~  <p/>
+  ~  NOTICE: All information contained herein is, and remains the property of Backendless.com and its suppliers,
+  ~  if any. The intellectual and technical concepts contained herein are proprietary to Backendless.com and its
+  ~  suppliers and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret
+  ~  or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden
+  ~  unless prior written permission is obtained from Backendless.com.
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  -->
+
+<resources>
+    <!-- Basics -->
+    <style name="EndlessMatchMakerStyle" parent="android:Theme.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">@drawable/background</item>
+        <item name="android:editTextStyle">@style/EditTextStyleDefault</item>
+        <item name="android:windowSoftInputMode">stateHidden</item>
+    </style>
+    <style name="ButtonStyleDefault">
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/defaultFontSize</item>
+    </style>
+    <style name="EditTextStyleDefault">
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+    <style name="RadioStyleDefault">
+        <item name="android:button">@drawable/radio_style</item>
+    </style>
+    <style name="RadioDotStyleDefault">
+        <item name="android:button">@drawable/radio_dot_style</item>
+    </style>
+    <style name="CheckboxStyleDefault">
+        <item name="android:background">@drawable/checkbox_background_style</item>
+        <item name="android:textSize">@dimen/defaultProfileDetailsFontSize</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:paddingLeft">@dimen/checkboxPadding</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginBottom">@dimen/smallPadding</item>
+    </style>
+    <style name="ProgressBarDefault">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/progress_horizontal</item>
+        <item name="android:minHeight">@dimen/progressBarHeight</item>
+        <item name="android:maxHeight">@dimen/progressBarHeight</item>
+    </style>
+
+    <!-- Buttons -->
+    <style name="ButtonFullPinkStyle" parent="ButtonStyleDefault">
+        <item name="android:background">@drawable/button_fullpink_style</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:height">47dp</item>
+    </style>
+    <style name="ButtonHalfedPinkStyle" parent="ButtonStyleDefault">
+        <item name="android:background">@drawable/button_halfedpink_style</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+    <style name="ButtonHalfedNotPinkStyle" parent="ButtonStyleDefault">
+        <item name="android:background">@drawable/button_halfednotpink_style</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+    <style name="ButtonSocial" parent="ButtonStyleDefault">
+        <item name="android:background">@drawable/button_social_style</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+    <style name="ButtonTopPanelLeftStyle" parent="ButtonStyleDefault">
+        <item name="android:background">@drawable/button_toppanel_left</item>
+        <item name="android:textSize">@dimen/topPanelButtonTextSize</item>
+        <item name="android:layout_marginRight">@dimen/defaultMargin</item>
+    </style>
+    <style name="ButtonTopPanelRightStyle" parent="ButtonStyleDefault">
+        <item name="android:background">@drawable/button_toppanel_right</item>
+        <item name="android:textSize">@dimen/topPanelButtonTextSize</item>
+        <item name="android:layout_marginLeft">@dimen/defaultMargin</item>
+        <item name="android:paddingRight">@dimen/microPadding</item>
+    </style>
+    <style name="ProfileCalendarLineDarkButton">
+        <item name="android:background">@drawable/button_calendar_line_dark</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+    <style name="ProfileCalendarLineLightButton">
+        <item name="android:background">@drawable/button_calendar_line_light</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <!-- Layouts -->
+    <style name="MainLayouStyle">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:paddingLeft">@dimen/defaultPadding</item>
+        <item name="android:paddingRight">@dimen/defaultPadding</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="DoubleButtonLayoutStyle">
+        <item name="android:background">@drawable/button_full_pink</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_marginBottom">@dimen/defaultPadding</item>
+    </style>
+    <style name="TopPanelBlackLayoutStyle">
+        <item name="android:background">@drawable/background_top_black</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:padding">@dimen/smallPadding</item>
+        <item name="android:layout_marginBottom">@dimen/defaultPadding</item>
+    </style>
+    <style name="TopPanelNotBlackLayoutStyle" parent="TopPanelBlackLayoutStyle">
+        <item name="android:background">@drawable/background_top_notblack</item>
+    </style>
+    <style name="LogRegFieldsStyle">
+        <item name="android:background">@drawable/input_form_bg</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingLeft">@dimen/defaultPadding</item>
+        <item name="android:paddingRight">@dimen/defaultPadding</item>
+        <item name="android:layout_marginBottom">@dimen/defaultPadding</item>
+    </style>
+
+    <!-- Labels -->
+    <style name="ShadowedLabelStyle">
+        <item name="android:shadowColor">@color/black</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+    </style>
+    <style name="TopPanelLabelStyle" parent="ShadowedLabelStyle">
+        <item name="android:textSize">@dimen/topPanelLabelTextSize</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="ItalicLabels" parent="ShadowedLabelStyle">
+        <item name="android:textSize">@dimen/defaultItalicLabelFontSize</item>
+        <item name="android:gravity">center_vertical|left</item>
+        <item name="android:textColor">@color/fields_text_color</item>
+
+    </style>
+    <style name="ProfileUsernameLabel" parent="ShadowedLabelStyle">
+        <item name="android:textSize">@dimen/defaultProfileUsernameFontSize</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="ProfileDetailsLabel" parent="ShadowedLabelStyle">
+        <item name="android:textSize">@dimen/defaultProfileDetailsFontSize</item>
+        <item name="android:textColor">@color/fields_text_color</item>
+        <item name="android:shadowColor">@color/black</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+    </style>
+    <style name="MatchDetailsPinkLabel">
+        <item name="android:textSize">@dimen/defaultProfileDetailsFontSize</item>
+        <item name="android:textColor">@color/pink</item>
+    </style>
+    <style name="ProfileDetailsWhiteLabel" parent="ShadowedLabelStyle">
+        <item name="android:textSize">@dimen/defaultProfileDetailsFontSize</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="ProfilePropertyLabel">
+        <item name="android:textSize">@dimen/defaultPropertyLabelFontSize</item>
+        <item name="android:textColor">@color/fields_text_color</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <!-- Fields -->
+    <style name="LogRegFieldsTextStyle">
+        <item name="android:textColor">@color/fields_text_color</item>
+        <item name="android:textSize">@dimen/defaultFontSize</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:typeface">normal</item>
+    </style>
+    <style name="FieldIconStyle">
+        <item name="android:layout_width">@dimen/iconWidth</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginRight">@dimen/smallPadding</item>
+    </style>
+    <style name="FieldSeparatorStyle">
+        <item name="android:src">@drawable/input_form_separator</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginRight">@dimen/smallPadding</item>
+    </style>
+
+    <!-- Images -->
+    <style name="ProfilePropertyEditIcon">
+        <item name="android:src">@drawable/list_arrow</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:paddingRight">@dimen/smallPadding</item>
+    </style>
+    <style name="Separator">
+        <item name="android:layout_height">1dp</item>
+    </style>
+    <style name="SeparatorThin">
+        <item name="android:layout_height">0dp</item>
+    </style>
+    <style name="SeparatorHorizontalDark" parent="Separator">
+        <item name="android:background">@color/darkblue</item>
+    </style>
+    <style name="SeparatorHorizontalLight" parent="Separator">
+        <item name="android:background">@color/lightblue</item>
+        <item name="android:layout_marginBottom">@dimen/defaultPadding</item>
+    </style>
+    <style name="SeparatorHorizontalDarkThin" parent="SeparatorThin">
+        <item name="android:background">@color/darkblue</item>
+    </style>
+    <style name="SeparatorHorizontalLightThin" parent="SeparatorThin">
+        <item name="android:background">@color/lightblue</item>
+        <item name="android:layout_marginBottom">@dimen/defaultPadding</item>
+    </style>
+    <style name="ProfileCalendarLine">
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+    <style name="ProfileCalendarLineFilled" parent="ProfileCalendarLine">
+        <item name="android:background">@drawable/background_calendar_line_light</item>
+    </style>
+</resources>

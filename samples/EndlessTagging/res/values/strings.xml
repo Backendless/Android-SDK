@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Endless Tagging</string>
+    <string name="save_data">Do you want to save the new GeoPoint?</string>
+    <string name="new_point">Do you want create a new GeoPoint here?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="camera_alert">Warning</string>
+    <string name="regBtnText"><u>Register for free!</u></string>
+</resources>

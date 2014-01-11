@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_gravity="center"
+        android:background="@drawable/filter_back">
+
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" android:id="@+id/relativeLayout"
+            android:background="@drawable/logo">
+        <Button
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/blue_btn"
+                android:id="@+id/searchBtnMulti"
+                android:layout_alignParentRight="true" android:layout_alignParentTop="true"
+                android:layout_marginTop="5dp" android:layout_marginRight="5dp" android:text="Done"
+                android:textColor="#ffffff" android:textSize="16dp" android:textStyle="normal"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="What would you like to see?"
+                android:id="@+id/textFilter"
+                android:gravity="center" android:textColor="#ffffff"
+                android:textSize="16dp" android:layout_toLeftOf="@+id/searchBtnMulti"
+                android:layout_alignBottom="@+id/searchBtnMulti" android:textStyle="normal"
+                android:layout_marginRight="5dp" android:layout_alignParentLeft="true"
+                android:layout_marginBottom="4dp"/>
+    </RelativeLayout>
+    <ListView
+            android:id="@+id/lvMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="false" android:layout_below="@+id/relativeLayout"
+            android:background="@drawable/list_back" android:layout_margin="20dp" android:clickable="false"
+            >
+    </ListView>
+</RelativeLayout>

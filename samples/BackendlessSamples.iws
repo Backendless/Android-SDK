@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RunManager" selected="Android Application.pushdemo">
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
+      <option name="PROGRAM_PARAMETERS" />
+      <method />
+    </configuration>
+    <configuration default="false" name="pushdemo" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="pushdemo" />
+      <option name="ACTIVITY_CLASS" value="com.backendless.examples.messagingservice.pushdemo.MainActivity" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="geodemo" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="geodemo" />
+      <option name="ACTIVITY_CLASS" value="com.backendless.examples.geoservice.geodemo.MainActivity" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="filedemo" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="filedemo" />
+      <option name="ACTIVITY_CLASS" value="com.backendless.examples.fileservice.filedemo.MainActivity" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="pubsubdemo" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="pubsubdemo" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="tododemo" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="tododemo" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="userservicedemo" type="AndroidRunConfigurationType" factoryName="Android Application">
+          <module name="userservicedemo" />
+          <option name="ACTIVITY_CLASS" value="" />
+          <option name="MODE" value="default_activity" />
+          <option name="DEPLOY" value="true" />
+          <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+          <option name="PREFERRED_AVD" value="" />
+          <option name="COMMAND_LINE" value="" />
+          <option name="WIPE_USER_DATA" value="false" />
+          <option name="DISABLE_BOOT_ANIMATION" value="false" />
+          <option name="NETWORK_SPEED" value="full" />
+          <option name="NETWORK_LATENCY" value="none" />
+          <option name="CLEAR_LOGCAT" value="false" />
+          <method />
+        </configuration>
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="Android Application.geodemo" />
+      <item index="1" class="java.lang.String" itemvalue="Android Application.filedemo" />
+      <item index="2" class="java.lang.String" itemvalue="Android Application.pubsubdemo" />
+      <item index="3" class="java.lang.String" itemvalue="Android Application.pushdemo" />
+      <item index="4" class="java.lang.String" itemvalue="Android Application.tododemo" />
+      <item index="4" class="java.lang.String" itemvalue="Android Application.userservicedemo" />
+    </list>
+    <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
+      <Host>localhost</Host>
+      <Port>5050</Port>
+    </configuration>
+  </component>
+</project>
+

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ *********************************************************************************************************************
+  ~  <p/>
+  ~  BACKENDLESS.COM CONFIDENTIAL
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  ~  <p/>
+  ~  Copyright 2012 BACKENDLESS.COM. All Rights Reserved.
+  ~  <p/>
+  ~  NOTICE: All information contained herein is, and remains the property of Backendless.com and its suppliers,
+  ~  if any. The intellectual and technical concepts contained herein are proprietary to Backendless.com and its
+  ~  suppliers and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret
+  ~  or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden
+  ~  unless prior written permission is obtained from Backendless.com.
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:padding="@dimen/default_margin">
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/service_name"
+            android:textSize="@dimen/bit_text"
+            android:gravity="center_horizontal" android:layout_marginBottom="@dimen/small_padding"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/normal_text"
+            android:text="Your coordinates:" android:textStyle="bold"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" android:layout_marginLeft="@dimen/big_margin"
+            android:layout_marginTop="@dimen/micro_padding">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="latitude:"
+                android:textSize="@dimen/normal_text"
+                android:layout_marginRight="@dimen/small_padding"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="0"
+                android:id="@+id/latitudeField" android:textSize="@dimen/normal_text"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" android:layout_marginLeft="@dimen/big_margin"
+            android:layout_marginTop="@dimen/micro_padding">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="longitude:"
+                android:textSize="@dimen/normal_text"
+                android:layout_marginRight="@dimen/small_padding"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="0"
+                android:id="@+id/longitudeField" android:textSize="@dimen/normal_text"/>
+    </LinearLayout>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/normal_text"
+            android:text="Search nearby cities:" android:textStyle="bold"
+            android:layout_marginTop="@dimen/big_margin"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" android:layout_marginRight="@dimen/micro_padding"
+            android:layout_marginTop="@dimen/micro_padding">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="radius (km):"
+                android:textSize="@dimen/normal_text"
+                />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radiusField" android:layout_marginLeft="@dimen/micro_padding"
+                android:textSize="@dimen/normal_text" android:text="0"/>
+    </LinearLayout>
+    <SeekBar
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/radiusBar" android:layout_marginTop="@dimen/default_margin" android:indeterminate="false"
+            android:max="40000"/>
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/textView" android:textSize="@dimen/normal_text" android:layout_alignParentLeft="true"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="40 000"
+                android:id="@+id/textView1" android:textSize="@dimen/normal_text"
+                android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+    <Button
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:text="Search"
+            android:id="@+id/searchButton" android:layout_marginTop="@dimen/small_padding"
+            android:textSize="@dimen/normal_text" android:singleLine="false"
+            android:layout_gravity="right"/>
+</LinearLayout>
+

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ToDoS Backendless Sample</string>
+    <string name="service_name">Backendless Data Service</string>
+    <string name="default_todo_hint">What needs to be done?</string>
+</resources>

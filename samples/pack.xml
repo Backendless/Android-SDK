@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ *********************************************************************************************************************
+  ~  <p/>
+  ~  BACKENDLESS.COM CONFIDENTIAL
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  ~  <p/>
+  ~  Copyright 2012 BACKENDLESS.COM. All Rights Reserved.
+  ~  <p/>
+  ~  NOTICE: All information contained herein is, and remains the property of Backendless.com and its suppliers,
+  ~  if any. The intellectual and technical concepts contained herein are proprietary to Backendless.com and its
+  ~  suppliers and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret
+  ~  or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden
+  ~  unless prior written permission is obtained from Backendless.com.
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  -->
+
+<project name="packSamples" default="packAll" basedir=".">
+
+    <property name="absoluteOut" value="${basedir}/out"/>
+    <property name="backendlessJarPath" value="../out/backendless.jar"/>
+
+    <target name="clean">
+        <delete file="backendless.zip" failonerror="false"/>
+        <delete dir="${absoluteOut}" failonerror="false"/>
+        <mkdir dir="${absoluteOut}"/>
+    </target>
+
+    <target name="prepare" depends="clean">
+        <mkdir dir="${absoluteOut}/examples"/>
+        <mkdir dir="${absoluteOut}/libs"/>
+        <copy file="${backendlessJarPath}" todir="${absoluteOut}/libs"/>
+        <copy file="BackendlessSamples.ipr" todir="${absoluteOut}/examples"/>
+        <copy file="BackendlessSamples.iws" todir="${absoluteOut}/examples"/>
+        <copy file="getting-started.pdf" todir="${absoluteOut}"/>
+        <!--touch file="${absoluteOut}/license.html"/-->
+        <copydir dest="${absoluteOut}/examples/.metadata"
+                 src=".metadata"/>
+    </target>
+
+    <target name="packSample">
+        <mkdir dir="${absoluteOut}/examples/${examplesRootPath}"/>
+        <mkdir dir="${absoluteOut}/examples/${examplesRootPath}/gen"/>
+        <copydir dest="${absoluteOut}/examples/${examplesRootPath}/.settings"
+                 src="${sampleSrcPath}/.settings"/>
+        <copydir dest="${absoluteOut}/examples/${examplesRootPath}/libs"
+                 src="${sampleSrcPath}/libs"/>
+        <copydir dest="${absoluteOut}/examples/${examplesRootPath}/res"
+                 src="${sampleSrcPath}/res"/>
+        <copydir dest="${absoluteOut}/examples/${examplesRootPath}/src"
+                 src="${sampleSrcPath}/src"/>
+        <copy todir="${absoluteOut}/examples/${examplesRootPath}">
+            <fileset file="${sampleSrcPath}/.classpath"/>
+            <fileset file="${sampleSrcPath}/.project"/>
+            <fileset file="${sampleSrcPath}/AndroidManifest.xml"/>
+            <fileset file="${sampleSrcPath}/${sampleName}.iml"/>
+            <fileset file="${sampleSrcPath}/project.properties"/>
+        </copy>
+        <copy file="${backendlessJarPath}" todir="${sampleSrcPath}/libs" overwrite="true"/>
+    </target>
+
+    <target name="packAll" depends="prepare">
+        <antcall target="packSample">
+            <param name="sampleName" value="filedemo"/>
+            <param name="sampleSrcPath" value="FileService/filedemo"/>
+            <param name="examplesRootPath" value="file-service"/>
+        </antcall>
+
+        <antcall target="packSample">
+            <param name="sampleName" value="tododemo"/>
+            <param name="sampleSrcPath" value="DataService/tododemo"/>
+            <param name="examplesRootPath" value="data-service"/>
+        </antcall>
+
+        <antcall target="packSample">
+            <param name="sampleName" value="geodemo"/>
+            <param name="sampleSrcPath" value="GeoService/geodemo"/>
+            <param name="examplesRootPath" value="geo-service"/>
+        </antcall>
+
+        <antcall target="packSample">
+            <param name="sampleName" value="userservicedemo"/>
+            <param name="sampleSrcPath" value="UserService/userservicedemo"/>
+            <param name="examplesRootPath" value="user-service"/>
+        </antcall>
+
+        <antcall target="packSample">
+            <param name="sampleName" value="pubsubdemo"/>
+            <param name="sampleSrcPath" value="MessagingService/pubsubdemo"/>
+            <param name="examplesRootPath" value="messaging-service/pubsubdemo"/>
+        </antcall>
+
+        <antcall target="packSample">
+            <param name="sampleName" value="pushdemo"/>
+            <param name="sampleSrcPath" value="MessagingService/pushdemo"/>
+            <param name="examplesRootPath" value="messaging-service/pushdemo"/>
+        </antcall>
+
+        <zip destfile="backendless.zip" basedir="${absoluteOut}"
+             excludes="**/.svn, **/.DS_Store"/>
+    </target>
+</project>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_gravity="center"
+        android:background="@drawable/filter_back">
+
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" android:id="@+id/relativeLayout"
+            android:background="@drawable/logo" android:layout_alignParentLeft="false" android:gravity="center">
+        <Button
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/blue_btn"
+                android:id="@+id/commentsBtn"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp" android:text="Comments"
+                android:textColor="#ffffff" android:textSize="16dp" android:textStyle="normal"
+                android:layout_marginTop="5dp"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Point Comments"
+                android:id="@+id/textPointComments"
+                android:textColor="#ffffff"
+                android:textSize="16dp"
+                android:layout_centerInParent="true" android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/photoBtn" android:textStyle="normal" android:layout_marginBottom="20dp"
+                android:gravity="center_vertical|center_horizontal"/>
+        <Button
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="Photo"
+                android:id="@+id/photoBtn"
+                android:layout_alignRight="@+id/commentsBtn" android:layout_alignBottom="@+id/commentsBtn"
+                android:background="@drawable/blue_btn" android:textColor="#ffffff" android:textSize="16dp"
+                android:textStyle="normal"/>
+    </RelativeLayout>
+    <Button
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/blue_btn"
+            android:id="@+id/addCommentBtn"
+            android:text="Post" android:textColor="#ffffff" android:textSize="16dp" android:textStyle="normal"
+            android:layout_alignRight="@+id/commentList" android:layout_alignBottom="@+id/photoView"
+            android:layout_marginBottom="7dp" android:layout_marginLeft="3dp"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editComment"
+            android:layout_alignLeft="@+id/relativeLayout" android:layout_alignTop="@+id/addCommentBtn"
+            android:layout_toLeftOf="@+id/addCommentBtn" android:layout_marginLeft="20dp"
+            />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Add your comment"
+            android:id="@+id/textViewComment"
+            android:layout_above="@+id/addCommentBtn" android:textSize="14.5dp"
+            android:textColor="#000000" android:layout_marginLeft="20dp" android:textStyle="normal"/>
+    <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/commentList"
+            android:background="@drawable/list_back"
+            android:focusable="false" android:scrollingCache="false" android:layout_alignLeft="@+id/relativeLayout"
+            android:layout_below="@+id/relativeLayout" android:layout_above="@+id/textViewComment"
+            android:layout_margin="20dp"/>
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/photoView"
+            android:layout_alignLeft="@+id/relativeLayout" android:layout_below="@+id/relativeLayout"
+            />
+</RelativeLayout>

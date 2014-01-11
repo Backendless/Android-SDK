@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ *********************************************************************************************************************
+  ~  <p/>
+  ~  BACKENDLESS.COM CONFIDENTIAL
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  ~  <p/>
+  ~  Copyright 2012 BACKENDLESS.COM. All Rights Reserved.
+  ~  <p/>
+  ~  NOTICE: All information contained herein is, and remains the property of Backendless.com and its suppliers,
+  ~  if any. The intellectual and technical concepts contained herein are proprietary to Backendless.com and its
+  ~  suppliers and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret
+  ~  or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden
+  ~  unless prior written permission is obtained from Backendless.com.
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" style="@style/TopPanelBlackLayoutStyle" android:baselineAligned="false"
+            >
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/textfield_loading"
+                style="@style/TopPanelLabelStyle"
+                android:id="@+id/preferenceName" android:textSize="16dp" android:textStyle="normal"
+                android:typeface="normal" android:gravity="center"/>
+    </LinearLayout>
+    <LinearLayout style="@style/MainLayouStyle" android:layout_width="fill_parent" android:layout_height="match_parent"
+                  android:gravity="top">
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/preferenceLabel"
+                style="@style/ItalicLabels" android:layout_marginBottom="@dimen/defaultPadding"
+                android:textSize="14.5dp" android:textStyle="normal" android:typeface="normal"/>
+        <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+                          android:orientation="vertical" android:id="@+id/preferencesContainer"
+                    >
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ *********************************************************************************************************************
+  ~  <p/>
+  ~  BACKENDLESS.COM CONFIDENTIAL
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  ~  <p/>
+  ~  Copyright 2012 BACKENDLESS.COM. All Rights Reserved.
+  ~  <p/>
+  ~  NOTICE: All information contained herein is, and remains the property of Backendless.com and its suppliers,
+  ~  if any. The intellectual and technical concepts contained herein are proprietary to Backendless.com and its
+  ~  suppliers and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret
+  ~  or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden
+  ~  unless prior written permission is obtained from Backendless.com.
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              style="@style/ProfileCalendarLineFilled">
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            style="@style/SeparatorHorizontalDarkThin"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:paddingRight="@dimen/defaultPadding"
+            android:paddingTop="@dimen/microPadding" android:paddingBottom="@dimen/microPadding">
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/avatarImage"
+                android:background="@drawable/background_avatar" android:maxHeight="50dp"
+                android:maxWidth="50dp" android:minHeight="50dp" android:minWidth="50dp"
+                android:cropToPadding="false" android:adjustViewBounds="true"
+                android:layout_marginLeft="@dimen/defaultPadding" android:layout_gravity="center_vertical"
+                />
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    style="@style/ProfileCalendarLine" android:paddingLeft="@dimen/defaultPadding"
+                    android:paddingRight="@dimen/defaultPadding"
+                    android:layout_marginTop="@dimen/smallPadding"
+                    android:layout_marginBottom="@dimen/smallPadding"
+                    android:gravity="fill_horizontal">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/ProfilePropertyLabel" android:layout_weight="6"
+                        android:layout_gravity="center_vertical" android:id="@+id/nameField"
+                        android:singleLine="true" android:textSize="14.5dp" android:textStyle="normal"
+                        android:typeface="normal"/>
+                <TextView
+                        android:layout_width="@dimen/defaultPadding"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/totalMatchValue" style="@style/MatchDetailsPinkLabel"
+                        android:layout_gravity="center_vertical" android:layout_weight="2"
+                        android:gravity="right" android:textSize="14.5dp" android:textStyle="normal"
+                        android:typeface="normal"/>
+                <TextView
+                        android:layout_width="@dimen/defaultPadding"
+                        android:layout_height="wrap_content"
+                        android:text="%"
+                        style="@style/MatchDetailsPinkLabel" android:layout_gravity="center_vertical"
+                        android:layout_weight="0" android:gravity="left" android:textSize="14.5dp"
+                        android:textStyle="normal" android:typeface="normal"/>
+            </LinearLayout>
+            <ProgressBar
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/totalProgressBar" style="@style/ProgressBarDefault"
+                    android:layout_marginBottom="@dimen/smallPadding"
+                    android:paddingLeft="@dimen/defaultPadding" android:paddingRight="@dimen/defaultPadding"/>
+        </LinearLayout>
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView" android:background="@drawable/list_arrow"
+                android:layout_gravity="center" android:layout_marginLeft="@dimen/defaultPadding"
+                />
+    </LinearLayout>
+</LinearLayout>

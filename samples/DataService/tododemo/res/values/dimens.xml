@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="default_margin">30dp</dimen>
+    <dimen name="small_padding">16dp</dimen>
+    <dimen name="bit_text">24sp</dimen>
+    <dimen name="normal_text">16sp</dimen>
+    <dimen name="button_width">80dp</dimen>
+    <dimen name="button_height">45dp</dimen>
+    <dimen name="edittext_width">150dp</dimen>
+    <dimen name="separatorLine">1dp</dimen>
+    <dimen name="micro_padding">6dp</dimen>
+    <dimen name="checkbox_size">20dp</dimen>
+</resources>

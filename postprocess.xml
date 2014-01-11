@@ -1,0 +1,30 @@
+<!--
+  ~ *********************************************************************************************************************
+  ~  <p/>
+  ~  BACKENDLESS.COM CONFIDENTIAL
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  ~  <p/>
+  ~  Copyright 2012 BACKENDLESS.COM. All Rights Reserved.
+  ~  <p/>
+  ~  NOTICE: All information contained herein is, and remains the property of Backendless.com and its suppliers,
+  ~  if any. The intellectual and technical concepts contained herein are proprietary to Backendless.com and its
+  ~  suppliers and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret
+  ~  or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden
+  ~  unless prior written permission is obtained from Backendless.com.
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  -->
+
+<project default="copy_artifact" basedir=".">
+    <target name="copy_artifact">
+        <copy file="out/backendless.jar" todir="samples/DataService/tododemo/libs" overwrite="true"/>
+        <copy file="out/backendless.jar" todir="samples/FileService/filedemo/libs" overwrite="true"/>
+        <copy file="out/backendless.jar" todir="samples/GeoService/geodemo/libs" overwrite="true"/>
+        <copy file="out/backendless.jar" todir="samples/MessagingService/pubsubdemo/libs" overwrite="true"/>
+        <copy file="out/backendless.jar" todir="samples/MessagingService/pushdemo/libs" overwrite="true"/>
+        <copy file="out/backendless.jar" todir="samples/UserService/userservicedemo/libs" overwrite="true"/>
+        <copy file="out/backendless.jar" todir="samples/UserService/rolesdemo/libs" overwrite="true"/>
+        <copy file="out/backendless.jar" todir="../../tests/android/junit/libs" overwrite="true"/>
+    </target>
+</project>

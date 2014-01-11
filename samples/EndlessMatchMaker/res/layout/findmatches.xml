@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ *********************************************************************************************************************
+  ~  <p/>
+  ~  BACKENDLESS.COM CONFIDENTIAL
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  ~  <p/>
+  ~  Copyright 2012 BACKENDLESS.COM. All Rights Reserved.
+  ~  <p/>
+  ~  NOTICE: All information contained herein is, and remains the property of Backendless.com and its suppliers,
+  ~  if any. The intellectual and technical concepts contained herein are proprietary to Backendless.com and its
+  ~  suppliers and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret
+  ~  or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden
+  ~  unless prior written permission is obtained from Backendless.com.
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" style="@style/TopPanelBlackLayoutStyle" android:baselineAligned="false"
+            android:gravity="right" android:layout_marginBottom="0dp">
+        <Button
+                android:layout_width="@dimen/defaultButtonWidth"
+                android:layout_height="40dp"
+                android:text="@string/button_profile"
+                android:id="@+id/profileButton"
+                style="@style/ButtonTopPanelLeftStyle" android:layout_gravity="left" android:layout_weight="1"
+                android:textSize="16dp" android:textStyle="normal" android:typeface="normal"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_toppanel_matches"
+                style="@style/TopPanelLabelStyle"
+                android:singleLine="false" android:layout_weight="10"
+                android:gravity="center_horizontal" android:textSize="16dp" android:textStyle="normal"
+                android:typeface="normal"/>
+        <Button
+                android:layout_width="@dimen/defaultButtonWidth"
+                android:layout_height="40dp"
+                android:text="@string/button_pings"
+                android:id="@+id/pingsButton"
+                style="@style/ButtonTopPanelRightStyle" android:layout_gravity="right" android:layout_weight="1"
+                android:textSize="16dp" android:textStyle="normal" android:typeface="normal"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" style="@style/TopPanelNotBlackLayoutStyle"
+            android:layout_marginBottom="-4dp">
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" android:gravity="center_vertical">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_name_white"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/textfield_matches_found"
+                    style="@style/ProfileDetailsWhiteLabel"
+                    android:paddingLeft="@dimen/smallPadding" android:textSize="16dp" android:textStyle="normal"
+                    android:typeface="normal"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/matchesFound" style="@style/ProfileDetailsWhiteLabel"
+                    android:paddingLeft="@dimen/smallPadding" android:textSize="16dp" android:textStyle="normal"
+                    android:typeface="normal"/>
+            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                       android:src="@drawable/icon_name_white" android:id="@+id/imageView"
+                       android:layout_marginLeft="10dp"/>
+            <TextView style="@style/ProfileDetailsWhiteLabel" android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" android:text="@string/textfield_matches_global"
+                      android:paddingLeft="@dimen/smallPadding" android:textSize="16dp" android:textStyle="normal"
+                      android:typeface="normal" android:id="@+id/textView"/>
+            <TextView style="@style/ProfileDetailsWhiteLabel" android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" android:id="@+id/textFoundGlobal"
+                      android:paddingLeft="@dimen/smallPadding" android:textSize="16dp" android:textStyle="normal"
+                      android:typeface="normal"/>
+            <ProgressBar
+                    android:layout_width="@dimen/iconWidth"
+                    android:layout_height="@dimen/iconWidth"
+                    android:id="@+id/progressBar" android:indeterminate="true" android:indeterminateBehavior="cycle"
+                    android:indeterminateOnly="true" android:layout_marginLeft="@dimen/defaultPadding"
+                    android:visibility="gone"/>
+        </LinearLayout>
+    </LinearLayout>
+    <fragment
+            class="com.google.android.gms.maps.MapFragment"
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" android:layout_centerInParent="true"
+            android:layout_alignParentRight="true" android:layout_above="@+id/relativeLayout1"/>
+</LinearLayout>
