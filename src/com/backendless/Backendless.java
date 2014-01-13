@@ -34,7 +34,6 @@ public final class Backendless
   public static final Messaging Messaging = com.backendless.Messaging.getInstance();
   public static final Geo Geo = com.backendless.Geo.getInstance();
   public static final Files Files = com.backendless.Files.getInstance();
-  //private static String url = "http://10.0.1.9:9000";
   private static String url = "https://api.backendless.com";
   private static IBackendlessService backendlessService;
   private static IBackendlessService.Init backendlessInitService;
