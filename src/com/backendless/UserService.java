@@ -430,14 +430,13 @@ public final class UserService
           BackendlessCollection<HashMap> backendlessCollection, Class<E> userClass ) throws BackendlessException
   {
     List<E> data = new ArrayList<E>();
-    for( HashMap e : backendlessCollection.getCurrentPage() )
+    for( HashMap properties : backendlessCollection.getCurrentPage() )
     {
       try
       {
         E user = userClass.newInstance();
-        user.setProperties( e );
-        E t = (E) user;
-        data.add( (E) user );
+        user.setProperties( properties );
+        data.add( user );
       }
       catch( Throwable t )
       {
