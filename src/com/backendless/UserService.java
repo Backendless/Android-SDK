@@ -359,8 +359,7 @@ public final class UserService
     }
   }
 
-  public <E extends BackendlessUser> BackendlessCollection<E> find(
-          Class<E> userClass ) throws BackendlessException
+  public <E extends BackendlessUser> BackendlessCollection<E> find( Class<E> userClass ) throws BackendlessException
   {
     return find( userClass, (BackendlessDataQuery) null );
   }
@@ -389,9 +388,16 @@ public final class UserService
         @Override
         public void handleResponse( BackendlessCollection<HashMap> response )
         {
-          BackendlessCollection<E> result = convertResponse( response, userClass );
-          if( responder != null )
-            responder.handleResponse( result );
+          try
+          {
+            BackendlessCollection<E> result = convertResponse( response, userClass );
+            if( responder != null )
+              responder.handleResponse( result );
+          }
+          catch( BackendlessException e )
+          {
+            handleFault( new BackendlessFault( e ) );
+          }
         }
 
         @Override
@@ -410,7 +416,7 @@ public final class UserService
   }
 
   private <E extends BackendlessUser> BackendlessCollection<E> convertResponse(
-          BackendlessCollection<HashMap> backendlessCollection, Class<E> userClass )
+          BackendlessCollection<HashMap> backendlessCollection, Class<E> userClass ) throws BackendlessException
   {
     List<E> data = new ArrayList<E>();
     for( HashMap e : backendlessCollection.getCurrentPage() )
@@ -422,8 +428,9 @@ public final class UserService
         E t = (E) user;
         data.add( (E) user );
       }
-      catch( Exception ignored )
+      catch( Throwable t )
       {
+        throw new BackendlessException( t );
       }
     }
     return backendlessCollection.newInstance( data, userClass );
