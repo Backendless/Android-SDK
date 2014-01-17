@@ -46,6 +46,7 @@ public final class Persistence
   private final static String DEFAULT_META_FIELD = "__meta";
 
   public final static String LOAD_ALL_RELATIONS = "*";
+  public final static DataPermission Permissions = new DataPermission();
 
   private static final Persistence instance = new Persistence();
 
@@ -517,7 +518,7 @@ public final class Persistence
 
   }*/
 
-  private <E> String getEntityId( E entity ) throws BackendlessException
+  static String getEntityId( Object entity ) throws BackendlessException
   {
     String id;
 
