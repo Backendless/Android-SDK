@@ -26,7 +26,7 @@ import com.backendless.persistence.BackendlessDataQuery;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-@SuppressWarnings( "unchecked" )
+@SuppressWarnings("unchecked")
 public class BackendlessCollection<E>
 {
   private final Object dataLock = new Object();
@@ -96,7 +96,14 @@ public class BackendlessCollection<E>
     }
     else
     {
-      return Backendless.Persistence.find( type, (BackendlessDataQuery) tempQuery );
+      if( type == null )
+      {
+        throw new BackendlessException( "Collection is empty" );
+      }
+      else
+      {
+        return Backendless.Persistence.find( type, (BackendlessDataQuery) tempQuery );
+      }
     }
   }
 
@@ -121,6 +128,22 @@ public class BackendlessCollection<E>
     result.setData( data );
     result.setQuery( query );
     result.setType( type );
+    result.setTotalObjects( totalObjects );
+
+    return result;
+  }
+
+  <E> BackendlessCollection<E> newInstance( List<E> newData )
+  {
+    BackendlessCollection<E> result = new BackendlessCollection<E>();
+    result.setData( newData );
+    result.setQuery( query );
+
+    if( !newData.isEmpty() )
+    {
+      result.setType( (Class<E>) newData.get( 0 ).getClass() );
+    }
+
     result.setTotalObjects( totalObjects );
 
     return result;

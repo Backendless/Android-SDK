@@ -22,6 +22,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.property.AbstractProperty;
 import com.backendless.property.UserProperty;
 import weborb.types.Types;
@@ -356,6 +357,76 @@ public final class UserService
         }
       } );
     }
+  }
+
+  public <E extends BackendlessUser> BackendlessCollection<E> find(
+          Class<E> userClass ) throws BackendlessException
+  {
+    return find( userClass, (BackendlessDataQuery) null );
+  }
+
+  public <E extends BackendlessUser> BackendlessCollection<E> find( Class<E> userClass,
+                                                                    BackendlessDataQuery backendlessDataQuery ) throws BackendlessException
+  {
+    BackendlessCollection<HashMap> response = Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "find", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), "Users", backendlessDataQuery } );
+    BackendlessCollection<E> result = convertResponse( response, userClass );
+    return result;
+  }
+
+  public <E extends BackendlessUser> void find( Class<E> userClass,
+                                                final AsyncCallback<BackendlessCollection<E>> responder )
+  {
+    find( userClass, null, responder );
+  }
+
+  public <E extends BackendlessUser> void find( final Class<E> userClass, BackendlessDataQuery backendlessDataQuery,
+                                                final AsyncCallback<BackendlessCollection<E>> responder )
+  {
+    try
+    {
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "find", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), "Users", backendlessDataQuery }, new AsyncCallback<BackendlessCollection<HashMap>>()
+      {
+        @Override
+        public void handleResponse( BackendlessCollection<HashMap> response )
+        {
+          BackendlessCollection<E> result = convertResponse( response, userClass );
+          if( responder != null )
+            responder.handleResponse( result );
+        }
+
+        @Override
+        public void handleFault( BackendlessFault fault )
+        {
+          if( responder != null )
+            responder.handleFault( fault );
+        }
+      } );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
+  private <E extends BackendlessUser> BackendlessCollection<E> convertResponse(
+          BackendlessCollection<HashMap> backendlessCollection, Class<E> userClass )
+  {
+    List<E> data = new ArrayList<E>();
+    for( HashMap e : backendlessCollection.getCurrentPage() )
+    {
+      try
+      {
+        E user = userClass.newInstance();
+        user.setProperties( e );
+        E t = (E) user;
+        data.add( (E) user );
+      }
+      catch( Exception ignored )
+      {
+      }
+    }
+    return backendlessCollection.newInstance( data );
   }
 
   public BackendlessUser findByIdentity( String identity ) throws BackendlessException
