@@ -19,7 +19,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa3e4aea-c9d5-420e-b854-3b539143136f" name="Default" comment="Bug fixes">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/backendless/DataPermission.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/junit/libs/backendless.jar" afterPath="$PROJECT_DIR$/tests/junit/libs/backendless.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/Backendless.java" afterPath="$PROJECT_DIR$/src/com/backendless/Backendless.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.iml" afterPath="$PROJECT_DIR$/androidSDK.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.ipr" afterPath="$PROJECT_DIR$/androidSDK.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.iws" afterPath="$PROJECT_DIR$/androidSDK.iws" />
     </list>
     <ignored path="androidSDK.iws" />
@@ -97,24 +101,8 @@
   </component>
   <component name="DebuggerManager">
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
-    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
-      <breakpoint url="file://$PROJECT_DIR$/src/com/backendless/core/responder/policy/DecoratorCachingAdaptingPolicy.java" line="16" class="com.backendless.core.responder.policy.DecoratorCachingAdaptingPolicy" package="com.backendless.core.responder.policy">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-    </line_breakpoints>
-    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <breakpoint_any>
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
         <option name="NOTIFY_UNCAUGHT" value="true" />
@@ -160,120 +148,107 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="IDataStore.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/backendless/IDataStore.java">
+      <file leaf-file-name="Persistence.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/backendless/Persistence.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="37" selection-start="1777" selection-end="1777" vertical-scroll-proportion="0.0" vertical-offset="125" max-vertical-offset="750">
-              <folding>
-                <element signature="e#0#2592#0" expanded="false" />
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PoJoAdaptingPolicy.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/backendless/core/responder/policy/PoJoAdaptingPolicy.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="13" selection-start="1228" selection-end="1228" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="660">
-              <folding>
-                <element signature="e#0#2052#0" expanded="false" />
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FootprintsManager.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/backendless/FootprintsManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="0" selection-start="774" selection-end="774" vertical-scroll-proportion="0.0" vertical-offset="167" max-vertical-offset="2340">
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#445#464#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DecoratorCachingAdaptingPolicy.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/backendless/core/responder/policy/DecoratorCachingAdaptingPolicy.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="0" selection-start="489" selection-end="489" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
+            <state line="148" column="43" selection-start="5751" selection-end="5751" vertical-scroll-proportion="0.0" vertical-offset="540" max-vertical-offset="8850">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AbstractAdaptingPolicyDecorator.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/backendless/core/responder/policy/AbstractAdaptingPolicyDecorator.java">
+      <file leaf-file-name="DataPermission.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/backendless/DataPermission.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="0" selection-start="621" selection-end="621" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="435">
+            <state line="23" column="72" selection-start="1084" selection-end="1084" vertical-scroll-proportion="0.16030534" vertical-offset="0" max-vertical-offset="195">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Invoker.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/backendless/Invoker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="111" column="15" selection-start="4262" selection-end="4262" vertical-scroll-proportion="0.0" vertical-offset="1665" max-vertical-offset="2160">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExceptionMessage.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/backendless/exceptions/ExceptionMessage.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="24" column="83" selection-start="1183" selection-end="1207" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="1875">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="androidsdk.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/androidsdk.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="206" column="52" selection-start="8180" selection-end="8180" vertical-scroll-proportion="0.0" vertical-offset="2369" max-vertical-offset="3585">
               <folding>
-                <element signature="imports" expanded="false" />
+                <element signature="tag#path#0;tag#project#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Footprint.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/backendless/Footprint.java">
+      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/junit/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="29" selection-start="191" selection-end="191" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1425">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DeleteTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/junit/src/test/java/com/backendless/tests/junit/unitTests/fileService/asyncTests/DeleteTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="208" column="105" selection-start="7345" selection-end="7345" vertical-scroll-proportion="0.0" vertical-offset="2531" max-vertical-offset="3270">
               <folding>
                 <element signature="imports" expanded="false" />
-                <element signature="e#542#543#0" expanded="false" />
-                <element signature="e#567#568#0" expanded="false" />
-                <element signature="e#617#618#0" expanded="false" />
-                <element signature="e#651#652#0" expanded="false" />
-                <element signature="e#683#684#0" expanded="false" />
-                <element signature="e#707#708#0" expanded="false" />
-                <element signature="e#753#754#0" expanded="false" />
-                <element signature="e#785#786#0" expanded="false" />
-                <element signature="e#817#818#0" expanded="false" />
-                <element signature="e#841#842#0" expanded="false" />
-                <element signature="e#887#888#0" expanded="false" />
-                <element signature="e#919#920#0" expanded="false" />
-                <element signature="e#952#953#0" expanded="false" />
-                <element signature="e#975#976#0" expanded="false" />
-                <element signature="e#1021#1022#0" expanded="false" />
-                <element signature="e#1051#1052#0" expanded="false" />
+                <element signature="e#513#2646#0" expanded="false" />
+                <element signature="e#2639#2640#0" expanded="false" />
+                <element signature="e#2754#3246#0" expanded="false" />
+                <element signature="e#3239#3240#0" expanded="false" />
+                <element signature="e#3353#5691#0" expanded="false" />
+                <element signature="e#5684#5685#0" expanded="false" />
+                <element signature="e#5804#6318#0" expanded="false" />
+                <element signature="e#6311#6312#0" expanded="false" />
+                <element signature="e#6429#8668#0" expanded="false" />
+                <element signature="e#8661#8662#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PersistenceOperations.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/backendless/persistence/PersistenceOperations.java">
+      <file leaf-file-name="DeleteTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/junit/src/test/java/com/backendless/tests/junit/unitTests/fileService/syncTests/DeleteTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="22" selection-start="1122" selection-end="1122" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+            <state line="16" column="62" selection-start="438" selection-end="438" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2070">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UploadTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/junit/src/test/java/com/backendless/tests/junit/unitTests/fileService/syncTests/UploadTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="46" column="31" selection-start="1982" selection-end="1982" vertical-scroll-proportion="0.0" vertical-offset="421" max-vertical-offset="750">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestPer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/TestPer.java">
+      <file leaf-file-name="androidsdk.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/androidsdk.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="12" selection-start="2029" selection-end="2029" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="645">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AbstractDataPermission.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/backendless/AbstractDataPermission.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="40" selection-start="2160" selection-end="2160" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1185">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Backendless.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/backendless/Backendless.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="83" selection-start="1663" selection-end="1663" vertical-scroll-proportion="0.34736842" vertical-offset="0" max-vertical-offset="2385">
+            <state line="0" column="97" selection-start="73" selection-end="73" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="90">
               <folding />
             </state>
           </provider>
@@ -290,7 +265,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="object-acl" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
   </component>
@@ -307,22 +282,13 @@
         <option value="$PROJECT_DIR$/src/com/backendless/Messaging.java" />
         <option value="$USER_HOME$/tests/android/junit/src/test/java/com/backendless/tests/junit/unitTests/persistenceService/asyncTests/DeleteObjectTest.java" />
         <option value="$PROJECT_DIR$/postprocess.xml" />
+        <option value="$PROJECT_DIR$/src/com/backendless/Persistence.java" />
         <option value="$PROJECT_DIR$/androidsdk.properties" />
         <option value="$USER_HOME$/tests/android/junit/src/test/java/com/backendless/tests/junit/unitTests/geoService/syncTests/AddPointTest.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/exceptions/BackendlessFault.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/Invoker.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/AbstructDataPermission.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/persistence/PersistenseOperations.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/utils/PermissionTypes.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/Persistence.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/TestPer.java" />
-        <option value="$PROJECT_DIR$/src/com/Entity.java" />
-        <option value="$PROJECT_DIR$/../WebORBJava/src/weborb/util/ObjectInspector.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/AbstractDataPermission.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/persistence/PersistenceOperations.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/DataPermission.java" />
-        <option value="$PROJECT_DIR$/src/com/TestPer.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/Backendless.java" />
+        <option value="$PROJECT_DIR$/src/com/backendless/DataPermission.java" />
       </list>
     </option>
   </component>
@@ -374,7 +340,7 @@
     <OptionsSetting value="true" id="Edit" />
     <OptionsSetting value="true" id="Undo Check Out" />
     <OptionsSetting value="true" id="Get Latest Version" />
-    <ConfirmationsSetting value="2" id="Add" />
+    <ConfirmationsSetting value="1" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
@@ -399,6 +365,26 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="androidSDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="androidSDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="androidSDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="Scope">
         <subPane subId="androidSDK">
           <PATH>
@@ -549,11 +535,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
+              <option name="myItemId" value="tests" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -567,15 +549,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="tests" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="backendless" />
+              <option name="myItemId" value="junit" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -589,19 +567,19 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="tests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="backendless" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
+              <option name="myItemId" value="test" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -615,19 +593,27 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="tests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
+              <option name="myItemId" value="test" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="backendless" />
+              <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="persistence" />
+              <option name="myItemId" value="junit" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -641,29 +627,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="tests" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="backendless" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="geo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="androidSDK" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Android-SDK" />
+              <option name="myItemId" value="junit" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -685,15 +653,33 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="libs" />
+              <option name="myItemId" value="tests" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="weborbclient.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="META-INF" />
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="androidSDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Android-SDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backendless" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -709,26 +695,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="libs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="androidSDK" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="androidSDK" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="androidSDK" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -759,7 +725,7 @@
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="options.lastSelected" value="project.propVCSSupport.Confirmation" />
+    <property name="options.lastSelected" value="preferences.pluginManager" />
     <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="project.structure.side.proportion" value="0.18663594" />
     <property name="MemberChooser.copyJavadoc" value="false" />
@@ -781,7 +747,7 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
     <property name="GenerateAntBuildDialog.inclineRuntiemClasspath" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../WebORBJava" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/tests/junit/libs" />
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="androidsdk" />
     <property name="GenerateAntBuildDialog.enableUiFormCompile" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
@@ -804,8 +770,6 @@
     <property name="last.edited.regexp" value="Sample Text" />
     <property name="dynamic.classpath" value="false" />
     <property name="options.searchVisible" value="true" />
-    <property name="extract.method.default.visibility" value="private" />
-    <property name="OverrideImplement.overriding.sorted" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -825,30 +789,36 @@
       <recent name="com.backendless.messaging" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="com" />
       <recent name="" />
+      <recent name="com" />
       <recent name="com.client" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.TestPerProxy">
-    <configuration default="false" name="TestPer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.com.backendless.tests.junit in androidSDK">
+    <configuration default="false" name="FindObjectTest.testFindFirstEntity" type="JUnit" factoryName="JUnit" temporary="true">
       <extension name="coverage" enabled="false" merge="false" runner="idea">
         <pattern>
-          <option name="PATTERN" value="com.*" />
+          <option name="PATTERN" value="com.backendless.tests.junit.unitTests.persistenceService.asyncTests.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="MAIN_CLASS_NAME" value="com.TestPer" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <module name="test" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.backendless.tests.junit.unitTests.persistenceService.asyncTests" />
+      <option name="MAIN_CLASS_NAME" value="com.backendless.tests.junit.unitTests.persistenceService.asyncTests.FindObjectTest" />
+      <option name="METHOD_NAME" value="testFindFirstEntity" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="androidSDK" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
       <envs />
+      <patterns />
       <RunnerSettings RunnerId="Debug">
         <option name="DEBUG_PORT" value="" />
         <option name="TRANSPORT" value="0" />
@@ -1176,6 +1146,21 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="true" type="ScalaTestRunConfiguration" factoryName="ScalaTest">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <extension name="scalaCoverage" />
+      <module name="" />
+      <setting name="path" value="" />
+      <setting name="package" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="$PROJECT_DIR$" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="testName" value="" />
+      <setting name="testKind" value="Class" />
+      <setting name="showProgressMessages" value="true" />
+      <method />
+    </configuration>
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
       <module name="" />
       <option name="ACTIVITY_CLASS" value="" />
@@ -1193,21 +1178,6 @@
       <option name="NETWORK_LATENCY" value="none" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
-      <method />
-    </configuration>
-    <configuration default="true" type="ScalaTestRunConfiguration" factoryName="ScalaTest">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <extension name="scalaCoverage" />
-      <module name="" />
-      <setting name="path" value="" />
-      <setting name="package" value="" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workingDirectory" value="$PROJECT_DIR$" />
-      <setting name="searchForTest" value="Across module dependencies" />
-      <setting name="testName" value="" />
-      <setting name="testKind" value="Class" />
-      <setting name="showProgressMessages" value="true" />
       <method />
     </configuration>
     <configuration default="false" name="TestClient" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -1270,56 +1240,20 @@
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
-    <configuration default="false" name="TestPerProxy" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="com.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="com.TestPer" />
-      <option name="VM_PARAMETERS" value="-Dhttp.proxyHost=localhost -Dhttp.proxyPort=8999" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="androidSDK" />
-      <envs />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <list size="9">
+    <list size="8">
       <item index="0" class="java.lang.String" itemvalue="Android Application.TestClient" />
       <item index="1" class="java.lang.String" itemvalue="Android Application.BackendlessClient" />
       <item index="2" class="java.lang.String" itemvalue="Android Tests.BackendlessTestClient" />
-      <item index="3" class="java.lang.String" itemvalue="Application.TestPerProxy" />
-      <item index="4" class="java.lang.String" itemvalue="Application.TestPer" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.FindObjectTest.testFindLastEntity" />
-      <item index="6" class="java.lang.String" itemvalue="JUnit.SaveNewObjectTest.testSaveCircularEntity" />
-      <item index="7" class="java.lang.String" itemvalue="JUnit.com.backendless.tests.junit.unitTests.usersService in androidSDK" />
-      <item index="8" class="java.lang.String" itemvalue="JUnit.com.backendless.tests.junit in androidSDK" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.FindObjectTest.testFindFirstEntity" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.FindObjectTest.testFindLastEntity" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.SaveNewObjectTest.testSaveCircularEntity" />
+      <item index="6" class="java.lang.String" itemvalue="JUnit.com.backendless.tests.junit.unitTests.usersService in androidSDK" />
+      <item index="7" class="java.lang.String" itemvalue="JUnit.com.backendless.tests.junit in androidSDK" />
     </list>
     <recent_temporary>
-      <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="Application.TestPer" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.com.backendless.tests.junit in androidSDK" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.com.backendless.tests.junit.unitTests.usersService in androidSDK" />
+      <list size="2">
+        <item index="0" class="java.lang.String" itemvalue="JUnit.com.backendless.tests.junit in androidSDK" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.com.backendless.tests.junit.unitTests.usersService in androidSDK" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -1327,12 +1261,7 @@
       <Port>5050</Port>
     </configuration>
   </component>
-  <component name="ShelveChangesManager" show_recycled="false">
-    <changelist date="1389976934183">
-      <option name="PATH" value="$USER_HOME$/Library/Preferences/IntelliJIdea13/shelf/Bug_fixes.patch" />
-      <option name="DESCRIPTION" value="Bug fixes" />
-    </changelist>
-  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SqlCodeAssistantSettings">
     <option name="dbBrowserSelectedConnection" value="androidSDK" />
   </component>
@@ -1416,8 +1345,7 @@
       <changelist id="fa3e4aea-c9d5-420e-b854-3b539143136f" name="Default" comment="" />
       <created>1346939934083</created>
       <updated>1349270174939</updated>
-      <workItem from="1389793818505" duration="6133000" />
-      <workItem from="1389941799930" duration="19218000" />
+      <workItem from="1389793818505" duration="5660000" />
     </task>
     <task id="LOCAL-00002" summary="gg">
       <created>1349270157918</created>
@@ -1599,31 +1527,11 @@
       <created>1361817543135</created>
       <updated>1361817543135</updated>
     </task>
-    <task id="LOCAL-00047" summary="added object acl">
-      <created>1389868270003</created>
-      <updated>1389868270003</updated>
-    </task>
-    <task id="LOCAL-00048" summary="deleted tests">
-      <created>1389868342796</created>
-      <updated>1389868342796</updated>
-    </task>
-    <task id="LOCAL-00049" summary="added methods for object acl management">
-      <created>1389976730813</created>
-      <updated>1389976730813</updated>
-    </task>
-    <task id="LOCAL-00050" summary="added methods for object acl management">
-      <created>1389976863158</created>
-      <updated>1389976863158</updated>
-    </task>
-    <task id="LOCAL-00051" summary="Bug fixes">
-      <created>1389976934511</created>
-      <updated>1389976934511</updated>
-    </task>
-    <option name="localTasksCounter" value="52" />
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39626000" />
+    <option name="totallyTimeSpent" value="5660000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1649,57 +1557,60 @@
     <frame x="-268" y="-1058" width="1920" height="1058" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.45548654" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.86279684" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3726708" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29339722" sideWeight="0.6492786" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30020705" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30202776" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19525066" sideWeight="0.086330935" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24829157" sideWeight="0.39473686" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21024546" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3492696" sideWeight="0.9086331" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3498965" sideWeight="0.9086331" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13045794" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959402" sideWeight="0.6753529" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17199148" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22774327" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20181043" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29296067" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="IntelliGuard" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="ASM" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294964" sideWeight="0.80474937" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Regex Tester" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
+      <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.70238096" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Cloverage" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="ConsoleMavenPlugin" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="17" side_tool="false" content_ui="tabs" />
+      <window_info id="Code Consultant" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="DatabaseBrowser" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Test Runs" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977018" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven-2 Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="FindBugs-IDEA" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37467018" sideWeight="0.4971223" order="19" side_tool="false" content_ui="tabs" />
-      <window_info id="Analysis" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="21" side_tool="false" content_ui="tabs" />
-      <window_info id="ASM" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294964" sideWeight="0.80474937" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.70238096" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
-      <window_info id="ConsoleMavenPlugin" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="17" side_tool="false" content_ui="tabs" />
-      <window_info id="Code Consultant" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Properties" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294893" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852808" sideWeight="0.6715928" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven-2 Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="UML Diagrams" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Code Graph" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3303505" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="FindBugs-IDEA" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37467018" sideWeight="0.4971223" order="19" side_tool="false" content_ui="tabs" />
       <window_info id="Android Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.327212" sideWeight="0.5" order="20" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Analysis" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="21" side_tool="false" content_ui="tabs" />
       <window_info id="JSON Formatter" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="22" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39868203" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Graphical Navigator" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39868203" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Android Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="23" side_tool="false" content_ui="tabs" />
     </layout>
+  </component>
+  <component name="UpdateCopyrightCheckinHandler">
+    <option name="UPDATE_COPYRIGHT" value="true" />
   </component>
   <component name="ValidationConfiguration">
     <option name="VALIDATE_ON_BUILD" value="true" />
@@ -1737,6 +1648,9 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
+    <MESSAGE value="Minor fixes" />
+    <MESSAGE value="Code update" />
+    <MESSAGE value="Services moved to Backendless class. Push service refactoring (removed receiver). Cleanup. Device registration refactoring (switched to async only - needed for android sdk &gt; 12 API level)." />
     <MESSAGE value="Refactoring, fixes" />
     <MESSAGE value="Backendless URL fix" />
     <MESSAGE value="Fixes" />
@@ -1750,6 +1664,7 @@
     <MESSAGE value="Push service refactoring" />
     <MESSAGE value="Added android,jar" />
     <MESSAGE value="Removed gcm.jar dependency" />
+    <MESSAGE value="Bug fixes" />
     <MESSAGE value="Refactoring" />
     <MESSAGE value="Exceptions logic refactoring. Minor refactoring." />
     <MESSAGE value="Added regexp for parsing fileservice exceptions from server" />
@@ -1758,12 +1673,9 @@
     <MESSAGE value="set and get for url" />
     <MESSAGE value="Fixed unregister bug. BackendlessFault encapsulated inside BackendlessException." />
     <MESSAGE value="FileService refactoring - async invocation changed to ThreadPool + Handler instead of AsyncTask" />
-    <MESSAGE value="added object acl" />
-    <MESSAGE value="deleted tests" />
-    <MESSAGE value="added methods for object acl management" />
-    <MESSAGE value="Bug fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="FileService refactoring - async invocation changed to ThreadPool + Handler instead of AsyncTask" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -1829,64 +1741,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/Persistence.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="72" selection-start="2481" selection-end="2481" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="9390">
-          <folding>
-            <element signature="e#0#22627#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#2586#2587#0" expanded="false" />
-            <element signature="e#2611#2612#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/DataStoreFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="37" selection-start="1305" selection-end="1305" vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="2205">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../WebORBJava/src/weborb/client/WeborbClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="137" column="15" selection-start="4794" selection-end="4794" vertical-scroll-proportion="0.0" vertical-offset="2055" max-vertical-offset="4845">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../WebORBJava/src/weborb/client/ioEngine/IOEngine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="132" column="24" selection-start="3330" selection-end="3330" vertical-scroll-proportion="0.0" vertical-offset="1980" max-vertical-offset="5685">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../WebORBJava/src/weborb/client/ioEngine/HttpIOEngine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="199" column="0" selection-start="6348" selection-end="6348" vertical-scroll-proportion="0.0" vertical-offset="2985" max-vertical-offset="6225">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../WebORBJava/src/weborb/client/IChainedResponder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="17" selection-start="1246" selection-end="1246" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="540">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/DataPermission.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="16" selection-start="1178" selection-end="1178" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="615">
-          <folding>
-            <element signature="e#0#1856#0" expanded="false" />
-            <element signature="e#1423#1424#0" expanded="false" />
-            <element signature="e#1470#1471#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/Backendless.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="38" column="63" selection-start="1986" selection-end="1986" vertical-scroll-proportion="0.0" vertical-offset="570" max-vertical-offset="2865">
@@ -1926,7 +1780,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/androidsdk.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="97" selection-start="73" selection-end="73" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="90" />
+        <state line="0" column="97" selection-start="73" selection-end="73" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="90">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/files/router/IOutputStreamRouter.java">
@@ -1954,6 +1810,13 @@
         <state line="46" column="35" selection-start="1628" selection-end="1628" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/Invoker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="111" column="15" selection-start="4262" selection-end="4262" vertical-scroll-proportion="0.0" vertical-offset="1665" max-vertical-offset="2160">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/exceptions/ExceptionMessage.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="24" column="83" selection-start="1183" selection-end="1207" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="1875">
@@ -1963,7 +1826,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/androidsdk.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="73" selection-start="73" selection-end="73" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="90" />
+        <state line="0" column="97" selection-start="73" selection-end="73" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="90">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/postprocess.xml">
@@ -1973,208 +1838,74 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/Persistence.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="148" column="43" selection-start="5751" selection-end="5751" vertical-scroll-proportion="0.0" vertical-offset="540" max-vertical-offset="8850">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/junit/src/test/java/com/backendless/tests/junit/unitTests/fileService/asyncTests/DeleteTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="208" column="105" selection-start="7345" selection-end="7345" vertical-scroll-proportion="0.0" vertical-offset="2531" max-vertical-offset="3270">
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#513#2646#0" expanded="false" />
+            <element signature="e#2639#2640#0" expanded="false" />
+            <element signature="e#2754#3246#0" expanded="false" />
+            <element signature="e#3239#3240#0" expanded="false" />
+            <element signature="e#3353#5691#0" expanded="false" />
+            <element signature="e#5684#5685#0" expanded="false" />
+            <element signature="e#5804#6318#0" expanded="false" />
+            <element signature="e#6311#6312#0" expanded="false" />
+            <element signature="e#6429#8668#0" expanded="false" />
+            <element signature="e#8661#8662#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/junit/src/test/java/com/backendless/tests/junit/unitTests/fileService/syncTests/UploadTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="31" selection-start="1982" selection-end="1982" vertical-scroll-proportion="0.0" vertical-offset="421" max-vertical-offset="750">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/junit/src/test/java/com/backendless/tests/junit/unitTests/fileService/syncTests/DeleteTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="62" selection-start="438" selection-end="438" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2070">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/Backendless.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="35" selection-start="1924" selection-end="1924" vertical-scroll-proportion="0.0" vertical-offset="116" max-vertical-offset="2385">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/androidsdk.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="206" column="13" selection-start="8180" selection-end="8180" vertical-scroll-proportion="0.0" vertical-offset="2369" max-vertical-offset="3585">
+        <state line="206" column="52" selection-start="8180" selection-end="8180" vertical-scroll-proportion="0.0" vertical-offset="2369" max-vertical-offset="3585">
           <folding>
             <element signature="tag#path#0;tag#project#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/core/responder/policy/IAdaptingPolicy.java">
+    <entry file="file://$PROJECT_DIR$/tests/junit/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="17" selection-start="178" selection-end="178" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/core/responder/AdaptingResponder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="50" selection-start="2067" selection-end="2067" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1395">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../WebORBJava/src/weborb/client/IChainedResponder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="17" selection-start="1246" selection-end="1246" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../WebORBJava/src/weborb/client/ioEngine/IOEngine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="132" column="24" selection-start="3330" selection-end="3330" vertical-scroll-proportion="0.0" vertical-offset="1322" max-vertical-offset="5190">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../WebORBJava/src/weborb/client/ioEngine/HttpIOEngine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="199" column="0" selection-start="6348" selection-end="6348" vertical-scroll-proportion="0.0" vertical-offset="1975" max-vertical-offset="5280">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../WebORBJava/src/weborb/util/io/Serializer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="99" column="0" selection-start="2604" selection-end="2604" vertical-scroll-proportion="0.0" vertical-offset="947" max-vertical-offset="3045">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../WebORBJava/src/weborb/client/WeborbClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="137" column="0" selection-start="4779" selection-end="4779" vertical-scroll-proportion="0.0" vertical-offset="1472" max-vertical-offset="4470">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../WebORBJava/src/weborb/writer/ObjectWriter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="0" selection-start="3330" selection-end="3330" vertical-scroll-proportion="0.0" vertical-offset="924" max-vertical-offset="3900">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/libs/weborbclient.jar!/META-INF/MANIFEST.MF">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="648">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../WebORBJava/src/weborb/util/ObjectInspector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="259" column="0" selection-start="8178" selection-end="8178" vertical-scroll-proportion="0.0" vertical-offset="3429" max-vertical-offset="5325">
-          <folding>
-            <element signature="e#1490#1498#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/core/responder/policy/PoJoAdaptingPolicy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="13" selection-start="1228" selection-end="1228" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="660">
-          <folding>
-            <element signature="e#0#2052#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/Footprint.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="29" selection-start="191" selection-end="191" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1425">
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#542#543#0" expanded="false" />
-            <element signature="e#567#568#0" expanded="false" />
-            <element signature="e#617#618#0" expanded="false" />
-            <element signature="e#651#652#0" expanded="false" />
-            <element signature="e#683#684#0" expanded="false" />
-            <element signature="e#707#708#0" expanded="false" />
-            <element signature="e#753#754#0" expanded="false" />
-            <element signature="e#785#786#0" expanded="false" />
-            <element signature="e#817#818#0" expanded="false" />
-            <element signature="e#841#842#0" expanded="false" />
-            <element signature="e#887#888#0" expanded="false" />
-            <element signature="e#919#920#0" expanded="false" />
-            <element signature="e#952#953#0" expanded="false" />
-            <element signature="e#975#976#0" expanded="false" />
-            <element signature="e#1021#1022#0" expanded="false" />
-            <element signature="e#1051#1052#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/core/responder/policy/AbstractAdaptingPolicyDecorator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="621" selection-end="621" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="435">
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/IDataStore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="37" selection-start="1777" selection-end="1777" vertical-scroll-proportion="0.0" vertical-offset="125" max-vertical-offset="750">
-          <folding>
-            <element signature="e#0#2592#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/DataStoreFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="41" selection-start="2804" selection-end="2804" vertical-scroll-proportion="0.3808" vertical-offset="707" max-vertical-offset="1905">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/FootprintsManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="0" selection-start="774" selection-end="774" vertical-scroll-proportion="0.0" vertical-offset="167" max-vertical-offset="2340">
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#445#464#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/Invoker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="126" column="0" selection-start="4568" selection-end="4568" vertical-scroll-proportion="0.0" vertical-offset="1070" max-vertical-offset="1695">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/core/responder/policy/DecoratorCachingAdaptingPolicy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="489" selection-end="489" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/Persistence.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="533" column="49" selection-start="19830" selection-end="19830" vertical-scroll-proportion="0.0" vertical-offset="6561" max-vertical-offset="8865">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/persistence/PersistenceOperations.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="22" selection-start="1122" selection-end="1122" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="655">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/DataPermission.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="50" selection-start="1289" selection-end="1289" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/TestPer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="12" selection-start="2029" selection-end="2029" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="645">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/AbstractDataPermission.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="40" selection-start="2160" selection-end="2160" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1185">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/Backendless.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="83" selection-start="1663" selection-end="1663" vertical-scroll-proportion="0.34736842" vertical-offset="0" max-vertical-offset="2385">
+        <state line="23" column="72" selection-start="1084" selection-end="1084" vertical-scroll-proportion="0.16030534" vertical-offset="0" max-vertical-offset="195">
           <folding />
         </state>
       </provider>
@@ -2307,4 +2038,3 @@
     </states>
   </component>
 </project>
-
