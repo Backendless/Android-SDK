@@ -426,7 +426,7 @@ public final class UserService
       {
       }
     }
-    return backendlessCollection.newInstance( data );
+    return backendlessCollection.newInstance( data, userClass );
   }
 
   public BackendlessUser findByIdentity( String identity ) throws BackendlessException

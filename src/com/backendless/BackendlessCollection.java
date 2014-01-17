@@ -96,14 +96,7 @@ public class BackendlessCollection<E>
     }
     else
     {
-      if( type == null )
-      {
-        throw new BackendlessException( "Collection is empty" );
-      }
-      else
-      {
-        return Backendless.Persistence.find( type, (BackendlessDataQuery) tempQuery );
-      }
+      return Backendless.Persistence.find( type, (BackendlessDataQuery) tempQuery );
     }
   }
 
@@ -133,17 +126,12 @@ public class BackendlessCollection<E>
     return result;
   }
 
-  <E> BackendlessCollection<E> newInstance( List<E> newData )
+  <E> BackendlessCollection<E> newInstance( List<E> newData, Class<E> userClass )
   {
     BackendlessCollection<E> result = new BackendlessCollection<E>();
     result.setData( newData );
     result.setQuery( query );
-
-    if( !newData.isEmpty() )
-    {
-      result.setType( (Class<E>) newData.get( 0 ).getClass() );
-    }
-
+    result.setType( userClass );
     result.setTotalObjects( totalObjects );
 
     return result;
