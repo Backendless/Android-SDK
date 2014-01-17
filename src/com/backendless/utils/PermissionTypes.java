@@ -16,40 +16,9 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless;
+package com.backendless.utils;
 
-import com.backendless.persistence.PersistenceOperations;
-
-public class DataPermission
+public enum PermissionTypes
 {
-  public static final Find FIND = new Find();
-  public static final Update UPDATE = new Update();
-  public static final Remove REMOVE = new Remove();
-
-  public static class Find extends AbstractDataPermission
-  {
-    @Override
-    protected PersistenceOperations getOperation()
-    {
-      return PersistenceOperations.FIND;
-    }
-  }
-
-  public static class Update extends AbstractDataPermission
-  {
-    @Override
-    protected PersistenceOperations getOperation()
-    {
-      return PersistenceOperations.UPDATE;
-    }
-  }
-
-  public static class Remove extends AbstractDataPermission
-  {
-    @Override
-    protected PersistenceOperations getOperation()
-    {
-      return PersistenceOperations.REMOVE;
-    }
-  }
+  GRANT, DENY
 }

@@ -349,7 +349,9 @@
         <root url="file://$PROJECT_DIR$/tests/junit/libs" />
       </CLASSES>
       <JAVADOC />
-      <SOURCES />
+      <SOURCES>
+        <root url="file://$PROJECT_DIR$/../WebORBJava/src" />
+      </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/tests/junit/libs" recursive="false" />
     </library>
     <library name="libs-for-android-sdk">
@@ -358,7 +360,9 @@
         <root url="file://$PROJECT_DIR$/libs" />
       </CLASSES>
       <JAVADOC />
-      <SOURCES />
+      <SOURCES>
+        <root url="file://$PROJECT_DIR$/../WebORBJava/src" />
+      </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/libs" recursive="false" />
     </library>
     <library name="maps">
