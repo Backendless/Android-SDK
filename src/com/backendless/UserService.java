@@ -359,6 +359,17 @@ public final class UserService
     }
   }
 
+  public BackendlessCollection<BackendlessUser> find() throws BackendlessException
+  {
+    return find( BackendlessUser.class );
+  }
+
+  public BackendlessCollection<BackendlessUser> find(
+          BackendlessDataQuery backendlessDataQuery ) throws BackendlessException
+  {
+    return find( BackendlessUser.class, backendlessDataQuery );
+  }
+
   public <E extends BackendlessUser> BackendlessCollection<E> find( Class<E> userClass ) throws BackendlessException
   {
     return find( userClass, (BackendlessDataQuery) null );
