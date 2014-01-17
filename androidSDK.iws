@@ -19,14 +19,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa3e4aea-c9d5-420e-b854-3b539143136f" name="Default" comment="Bug fixes">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/backendless/AbstractDataPermission.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/backendless/utils/PermissionTypes.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/backendless/persistence/PersistenceOperations.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/weborbclient.jar" afterPath="$PROJECT_DIR$/libs/weborbclient.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/Backendless.java" afterPath="$PROJECT_DIR$/src/com/backendless/Backendless.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/DataPermission.java" afterPath="$PROJECT_DIR$/src/com/backendless/DataPermission.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/Persistence.java" afterPath="$PROJECT_DIR$/src/com/backendless/Persistence.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.ipr" afterPath="$PROJECT_DIR$/androidSDK.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.iws" afterPath="$PROJECT_DIR$/androidSDK.iws" />
     </list>
     <ignored path="androidSDK.iws" />
@@ -259,15 +252,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataPermission.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/backendless/DataPermission.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="50" selection-start="1289" selection-end="1289" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="TestPer.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/TestPer.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -277,10 +261,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AbstractDataPermission.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="AbstractDataPermission.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/backendless/AbstractDataPermission.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="40" selection-start="2160" selection-end="2160" vertical-scroll-proportion="0.47482014" vertical-offset="0" max-vertical-offset="1185">
+            <state line="42" column="40" selection-start="2160" selection-end="2160" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1185">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Backendless.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/backendless/Backendless.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="33" column="83" selection-start="1663" selection-end="1663" vertical-scroll-proportion="0.34736842" vertical-offset="0" max-vertical-offset="2385">
               <folding />
             </state>
           </provider>
@@ -323,13 +316,13 @@
         <option value="$PROJECT_DIR$/src/com/backendless/utils/PermissionTypes.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/Persistence.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/TestPer.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/Backendless.java" />
         <option value="$PROJECT_DIR$/src/com/Entity.java" />
         <option value="$PROJECT_DIR$/../WebORBJava/src/weborb/util/ObjectInspector.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/AbstractDataPermission.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/persistence/PersistenceOperations.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/DataPermission.java" />
         <option value="$PROJECT_DIR$/src/com/TestPer.java" />
+        <option value="$PROJECT_DIR$/src/com/backendless/Backendless.java" />
       </list>
     </option>
   </component>
@@ -1334,7 +1327,12 @@
       <Port>5050</Port>
     </configuration>
   </component>
-  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="ShelveChangesManager" show_recycled="false">
+    <changelist date="1389976934183">
+      <option name="PATH" value="$USER_HOME$/Library/Preferences/IntelliJIdea13/shelf/Bug_fixes.patch" />
+      <option name="DESCRIPTION" value="Bug fixes" />
+    </changelist>
+  </component>
   <component name="SqlCodeAssistantSettings">
     <option name="dbBrowserSelectedConnection" value="androidSDK" />
   </component>
@@ -1419,7 +1417,7 @@
       <created>1346939934083</created>
       <updated>1349270174939</updated>
       <workItem from="1389793818505" duration="6133000" />
-      <workItem from="1389941799930" duration="19076000" />
+      <workItem from="1389941799930" duration="19218000" />
     </task>
     <task id="LOCAL-00002" summary="gg">
       <created>1349270157918</created>
@@ -1613,11 +1611,19 @@
       <created>1389976730813</created>
       <updated>1389976730813</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="added methods for object acl management">
+      <created>1389976863158</created>
+      <updated>1389976863158</updated>
+    </task>
+    <task id="LOCAL-00051" summary="Bug fixes">
+      <created>1389976934511</created>
+      <updated>1389976934511</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39484000" />
+    <option name="totallyTimeSpent" value="39626000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1644,7 +1650,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5921325" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.45548654" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1664,7 +1670,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17199148" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22774327" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22774327" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="IntelliGuard" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Regex Tester" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Cloverage" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1744,7 +1750,6 @@
     <MESSAGE value="Push service refactoring" />
     <MESSAGE value="Added android,jar" />
     <MESSAGE value="Removed gcm.jar dependency" />
-    <MESSAGE value="Bug fixes" />
     <MESSAGE value="Refactoring" />
     <MESSAGE value="Exceptions logic refactoring. Minor refactoring." />
     <MESSAGE value="Added regexp for parsing fileservice exceptions from server" />
@@ -1756,7 +1761,8 @@
     <MESSAGE value="added object acl" />
     <MESSAGE value="deleted tests" />
     <MESSAGE value="added methods for object acl management" />
-    <option name="LAST_COMMIT_MESSAGE" value="added methods for object acl management" />
+    <MESSAGE value="Bug fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug fixes" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="VssConfiguration">
@@ -1988,13 +1994,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/Backendless.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="110" column="52" selection-start="4438" selection-end="4438" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2400">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../WebORBJava/src/weborb/client/IChainedResponder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="17" selection-start="1246" selection-end="1246" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495">
@@ -2168,7 +2167,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/AbstractDataPermission.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="40" selection-start="2160" selection-end="2160" vertical-scroll-proportion="0.47482014" vertical-offset="0" max-vertical-offset="1185">
+        <state line="42" column="40" selection-start="2160" selection-end="2160" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1185">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/Backendless.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="83" selection-start="1663" selection-end="1663" vertical-scroll-proportion="0.34736842" vertical-offset="0" max-vertical-offset="2385">
           <folding />
         </state>
       </provider>
