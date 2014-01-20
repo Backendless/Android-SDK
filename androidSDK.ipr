@@ -17,23 +17,8 @@
     <list size="0" />
   </component>
   <component name="AntConfiguration">
-    <defaultAnt bundledAnt="true" />
-    <buildFile url="file://$PROJECT_DIR$/postprocess.xml">
-      <additionalClassPath />
-      <antReference projectDefault="true" />
-      <customJdkName value="" />
-      <maximumHeapSize value="128" />
-      <maximumStackSize value="2" />
-      <properties />
-    </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/androidsdk.xml">
-      <additionalClassPath />
-      <antReference projectDefault="true" />
-      <customJdkName value="" />
-      <maximumHeapSize value="128" />
-      <maximumStackSize value="2" />
-      <properties />
-    </buildFile>
+    <buildFile url="file://$PROJECT_DIR$/postprocess.xml" />
+    <buildFile url="file://$PROJECT_DIR$/androidsdk.xml" />
   </component>
   <component name="ArtifactManager">
     <artifact type="jar" build-on-make="true" name="androidSDK:jar">
@@ -84,7 +69,11 @@
       <entry name="?*.tld" />
       <entry name="?*.ftl" />
     </wildcardResourcePatterns>
-    <annotationProcessing enabled="false" useClasspath="true" />
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="false">
+        <processorPath useClasspath="true" />
+      </profile>
+    </annotationProcessing>
   </component>
   <component name="CopyrightManager" default="Backendless">
     <copyright>
@@ -307,14 +296,14 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../../tests/android/junit/src/test/NewTest.iml" filepath="$PROJECT_DIR$/../../tests/android/junit/src/test/NewTest.iml" />
+      <module fileurl="file://$USER_HOME$/tests/android/junit/src/test/NewTest.iml" filepath="$USER_HOME$/tests/android/junit/src/test/NewTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/androidSDK.iml" filepath="$PROJECT_DIR$/androidSDK.iml" />
     </modules>
   </component>
   <component name="ProjectResources">
     <default-html-doctype>http://www.w3.org/1999/xhtml</default-html-doctype>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="Android 4.4 Platform" project-jdk-type="Android SDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="RegexUtilComponent" text="1900-01-01 2007/08/13 1900.01.01 1900 01 01 1900-01.01 1900 13 01 1900 02 31" flags="0" regex="(19|20)\d\d([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])" mode="0" />
@@ -337,7 +326,7 @@
     <option name="mySupportsUserInfoFilter" value="true" />
   </component>
   <component name="VcsDirectoryMappings">
-    <mapping directory="$PROJECT_DIR$/../../../.." vcs="Git" />
+    <mapping directory="" vcs="Git" />
   </component>
   <component name="WebServicesPlugin" addRequiredLibraries="true" />
   <component name="libraryTable">
@@ -357,14 +346,11 @@
     </library>
     <library name="libs">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../../tests/android/junit/libs/maps.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../../tests/android/junit/libs/hamcrest-core-1.3.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../../tests/android/junit/libs/junit-4.11.jar!/" />
+        <root url="file://$PROJECT_DIR$/tests/junit/libs" />
       </CLASSES>
       <JAVADOC />
-      <SOURCES>
-        <root url="file://$PROJECT_DIR$/src" />
-      </SOURCES>
+      <SOURCES />
+      <jarDirectory url="file://$PROJECT_DIR$/tests/junit/libs" recursive="false" />
     </library>
     <library name="libs-for-android-sdk">
       <CLASSES>
@@ -374,16 +360,6 @@
       <JAVADOC />
       <SOURCES />
       <jarDirectory url="file://$PROJECT_DIR$/libs" recursive="false" />
-    </library>
-    <library name="libs-for-tests">
-      <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../../tests/android/junit/libs/maps.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../../tests/android/junit/libs/hamcrest-core-1.3.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../../tests/android/junit/libs/junit-4.11.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../../tests/android/junit/libs/weborbclient.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
     </library>
     <library name="maps">
       <CLASSES>

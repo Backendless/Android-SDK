@@ -72,6 +72,7 @@ public class BackendlessCollection<E>
   //Sync methods
   public BackendlessCollection<E> nextPage() throws BackendlessException
   {
+    checkQuery();
     int offset = query.getOffset();
     int pageSize = query.getPageSize();
 
@@ -86,6 +87,7 @@ public class BackendlessCollection<E>
   //Download page logic
   private BackendlessCollection<E> downloadPage( int pageSize, int offset ) throws BackendlessException
   {
+    checkQuery();
     IBackendlessQuery tempQuery = query.newInstance();
     tempQuery.setOffset( offset );
     tempQuery.setPageSize( pageSize );
@@ -102,6 +104,7 @@ public class BackendlessCollection<E>
 
   public BackendlessCollection<E> previousPage() throws BackendlessException
   {
+    checkQuery();
     int offset = query.getOffset();
     int pageSize = query.getPageSize();
 
@@ -192,5 +195,16 @@ public class BackendlessCollection<E>
         return getPage( pageSize, offset );
       }
     }.executeThis( pageSize, offset );
+  }
+
+  private void checkQuery()
+  {
+    if( query != null )
+      return;
+
+    BackendlessDataQuery backendlessDataQuery = new BackendlessDataQuery();
+    backendlessDataQuery.setOffset( 0 );
+    backendlessDataQuery.setPageSize( data.size() );
+    query = backendlessDataQuery;
   }
 }
