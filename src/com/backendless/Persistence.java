@@ -408,7 +408,8 @@ public final class Persistence
 
     checkPageSizeAndOffset( dataQuery );
 
-    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), entity.getSimpleName(), dataQuery };
+    String simpleName = entity.isAssignableFrom( BackendlessUser.class ) ? "Users" : entity.getSimpleName();
+    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), simpleName, dataQuery };
     BackendlessCollection<E> result = (BackendlessCollection<E>) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, getCollectionAdaptingResponder( entity ) );
     result.setQuery( dataQuery );
     result.setType( entity );

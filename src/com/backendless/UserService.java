@@ -370,6 +370,16 @@ public final class UserService
     return find( BackendlessUser.class, backendlessDataQuery );
   }
 
+  public void find(BackendlessDataQuery backendlessDataQuery, AsyncCallback<BackendlessCollection<BackendlessUser>> responder)
+  {
+    find( BackendlessUser.class, backendlessDataQuery, responder );
+  }
+
+  public void find( AsyncCallback<BackendlessCollection<BackendlessUser>> responder )
+  {
+    find( BackendlessUser.class, responder );
+  }
+
   public <E extends BackendlessUser> BackendlessCollection<E> find( Class<E> userClass ) throws BackendlessException
   {
     return find( userClass, (BackendlessDataQuery) null );
@@ -401,7 +411,7 @@ public final class UserService
         {
           try
           {
-            BackendlessCollection<E> result = convertResponse( response, userClass );
+            BackendlessUserCollection<E> result = convertResponse( response, userClass );
             if( responder != null )
               responder.handleResponse( result );
           }
@@ -426,7 +436,7 @@ public final class UserService
     }
   }
 
-  private <E extends BackendlessUser> BackendlessCollection<E> convertResponse(
+  public <E extends BackendlessUser> BackendlessUserCollection<E> convertResponse(
           BackendlessCollection<HashMap> backendlessCollection, Class<E> userClass ) throws BackendlessException
   {
     List<E> data = new ArrayList<E>();
@@ -443,7 +453,7 @@ public final class UserService
         throw new BackendlessException( t );
       }
     }
-    return backendlessCollection.newInstance( data, userClass );
+    return backendlessCollection.newUserInstance( data, userClass );
   }
 
   public BackendlessUser findByIdentity( String identity ) throws BackendlessException

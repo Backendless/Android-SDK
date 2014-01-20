@@ -129,9 +129,9 @@ public class BackendlessCollection<E>
     return result;
   }
 
-  <E> BackendlessCollection<E> newInstance( List<E> newData, Class<E> userClass )
+  <E extends BackendlessUser> BackendlessUserCollection<E> newUserInstance( List<E> newData, Class<E> userClass )
   {
-    BackendlessCollection<E> result = new BackendlessCollection<E>();
+    BackendlessUserCollection<E> result = new BackendlessUserCollection<E>();
     result.setData( newData );
     result.setQuery( query );
     result.setType( userClass );
