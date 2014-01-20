@@ -19,27 +19,20 @@
 package com.backendless.geo;
 
 import com.backendless.IBackendlessQuery;
+import com.backendless.commons.geo.AbstractBackendlessGeoQuery;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BackendlessGeoQuery implements IBackendlessQuery
+public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements IBackendlessQuery
 {
-  private Double latitude;
-  private Double longitude;
-  private Double radius;
   private Units units;
-  private List<String> categories = new ArrayList<String>();
   private boolean includeMeta = true;
-  private Map<String, String> metadata = new HashMap<String, String>();
   private double[] searchRectangle;
   private int pageSize = 0;
   private int offset;
-  private String whereClause;
-  private Map<String, String> relativeFindMetadata = new HashMap<String, String>();
-  private double relativeFindPercentThreshold = 0;
 
   public BackendlessGeoQuery()
   {
@@ -130,36 +123,6 @@ public class BackendlessGeoQuery implements IBackendlessQuery
     includeMeta = true;
   }
 
-  public Double getLatitude()
-  {
-    return latitude;
-  }
-
-  public void setLatitude( Double latitude )
-  {
-    this.latitude = latitude;
-  }
-
-  public Double getLongitude()
-  {
-    return longitude;
-  }
-
-  public void setLongitude( Double longitude )
-  {
-    this.longitude = longitude;
-  }
-
-  public Double getRadius()
-  {
-    return radius;
-  }
-
-  public void setRadius( Double radius )
-  {
-    this.radius = radius;
-  }
-
   public Units getUnits()
   {
     return units;
@@ -176,11 +139,6 @@ public class BackendlessGeoQuery implements IBackendlessQuery
       categories = new ArrayList<String>();
 
     return new ArrayList<String>( categories );
-  }
-
-  public void setCategories( List<String> categories )
-  {
-    this.categories = categories;
   }
 
   public void addCategory( String category )
@@ -200,11 +158,6 @@ public class BackendlessGeoQuery implements IBackendlessQuery
       return metadata = new HashMap<String, String>();
 
     return new HashMap<String, String>( metadata );
-  }
-
-  public void setMetadata( Map<String, String> metadata )
-  {
-    this.metadata = metadata;
   }
 
   public void putMetadata( String metadataKey, String metadataValue )
@@ -263,39 +216,9 @@ public class BackendlessGeoQuery implements IBackendlessQuery
     this.offset = offset;
   }
 
-  public Map<String, String> getRelativeFindMetadata()
-  {
-    return relativeFindMetadata;
-  }
-
-  public void setRelativeFindMetadata( Map<String, String> relativeFindMetadata )
-  {
-    this.relativeFindMetadata = relativeFindMetadata;
-  }
-
   public void putRelativeFindMetadata( String key, String value )
   {
     relativeFindMetadata.put( key, value );
-  }
-
-  public double getRelativeFindPercentThreshold()
-  {
-    return relativeFindPercentThreshold;
-  }
-
-  public void setRelativeFindPercentThreshold( double relativeFindPercentThreshold )
-  {
-    this.relativeFindPercentThreshold = relativeFindPercentThreshold;
-  }
-
-  public String getWhereClause()
-  {
-    return whereClause;
-  }
-
-  public void setWhereClause( String whereClause )
-  {
-    this.whereClause = whereClause;
   }
 
   @Override

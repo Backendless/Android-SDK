@@ -18,30 +18,13 @@
 
 package com.backendless.geo;
 
-public class GeoCategory implements Comparable<GeoCategory>
-{
-  private String objectId;
-  private String name;
-  private int size;
+import com.backendless.commons.geo.BaseGeoCategory;
 
+public class GeoCategory extends BaseGeoCategory implements Comparable<GeoCategory>
+{
   public String getId()
   {
     return objectId;
-  }
-
-  public String getName()
-  {
-    return name;
-  }
-
-  public int getSize()
-  {
-    return size;
-  }
-
-  public void setName( String name )
-  {
-    this.name = name;
   }
 
   @Override
