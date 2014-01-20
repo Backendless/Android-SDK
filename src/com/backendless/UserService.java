@@ -389,7 +389,7 @@ public final class UserService
                                                                     BackendlessDataQuery backendlessDataQuery ) throws BackendlessException
   {
     BackendlessCollection<HashMap> response = Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "find", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), "Users", backendlessDataQuery } );
-    BackendlessCollection<E> result = convertResponse( response, userClass );
+    BackendlessCollection<E> result = BackendlessUserCollection.create( response, userClass );
     return result;
   }
 
@@ -411,7 +411,7 @@ public final class UserService
         {
           try
           {
-            BackendlessUserCollection<E> result = convertResponse( response, userClass );
+            BackendlessUserCollection<E> result = BackendlessUserCollection.create( response, userClass );
             if( responder != null )
               responder.handleResponse( result );
           }
@@ -434,26 +434,6 @@ public final class UserService
       if( responder != null )
         responder.handleFault( new BackendlessFault( e ) );
     }
-  }
-
-  public <E extends BackendlessUser> BackendlessUserCollection<E> convertResponse(
-          BackendlessCollection<HashMap> backendlessCollection, Class<E> userClass ) throws BackendlessException
-  {
-    List<E> data = new ArrayList<E>();
-    for( HashMap properties : backendlessCollection.getCurrentPage() )
-    {
-      try
-      {
-        E user = userClass.newInstance();
-        user.setProperties( properties );
-        data.add( user );
-      }
-      catch( Throwable t )
-      {
-        throw new BackendlessException( t );
-      }
-    }
-    return backendlessCollection.newUserInstance( data, userClass );
   }
 
   public BackendlessUser findByIdentity( String identity ) throws BackendlessException

@@ -32,8 +32,8 @@ public class BackendlessCollection<E>
   private final Object dataLock = new Object();
   private Class<E> type;
   private List<E> data = new CopyOnWriteArrayList<E>();
-  private int totalObjects;
-  private volatile IBackendlessQuery query;
+  int totalObjects;
+  volatile IBackendlessQuery query;
 
   public BackendlessCollection()
   {
@@ -124,17 +124,6 @@ public class BackendlessCollection<E>
     result.setData( data );
     result.setQuery( query );
     result.setType( type );
-    result.setTotalObjects( totalObjects );
-
-    return result;
-  }
-
-  <E extends BackendlessUser> BackendlessUserCollection<E> newUserInstance( List<E> newData, Class<E> userClass )
-  {
-    BackendlessUserCollection<E> result = new BackendlessUserCollection<E>();
-    result.setData( newData );
-    result.setQuery( query );
-    result.setType( userClass );
     result.setTotalObjects( totalObjects );
 
     return result;
