@@ -6,7 +6,6 @@ import com.backendless.property.ObjectProperty;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -18,18 +17,6 @@ import java.util.Map;
  */
 public abstract class PersistenceExtender<T>
 {
-  private Class<T> userClass;
-
-  public PersistenceExtender()
-  {
-    userClass = (Class<T>) HashMap.class;
-  }
-
-  public PersistenceExtender( Class<T> clazz )
-  {
-    this.userClass = clazz;
-  }
-
   public void beforeFindById( RunnerContext context, String objectId, String[] relations ) throws Exception
   {
   }
@@ -40,20 +27,20 @@ public abstract class PersistenceExtender<T>
     return entity.getResult();
   }
 
-  public void beforeCreate( RunnerContext context, Map entityMap ) throws Exception
+  public void beforeCreate( RunnerContext context, T t ) throws Exception
   {
   }
 
-  public T afterCreate( RunnerContext context, Map entityMap, ExecutionResult<T> entity ) throws Exception
+  public T afterCreate( RunnerContext context, T t, ExecutionResult<T> entity ) throws Exception
   {
     return entity.getResult();
   }
 
-  public void beforeUpdate( RunnerContext context, Map entityMap ) throws Exception
+  public void beforeUpdate( RunnerContext context, T t ) throws Exception
   {
   }
 
-  public T afterUpdate( RunnerContext context, Map entityMap, ExecutionResult<T> entity ) throws Exception
+  public T afterUpdate( RunnerContext context, T t, ExecutionResult<T> entity ) throws Exception
   {
     return entity.getResult();
   }
@@ -92,8 +79,8 @@ public abstract class PersistenceExtender<T>
   {
   }
 
-  public BackendlessCollection afterFind( RunnerContext context, BackendlessDataQuery query,
-                                          ExecutionResult<BackendlessCollection> collection ) throws Exception
+  public BackendlessCollection<T> afterFind( RunnerContext context, BackendlessDataQuery query,
+                                             ExecutionResult<BackendlessCollection<T>> collection ) throws Exception
   {
     return collection.getResult();
   }
@@ -114,11 +101,6 @@ public abstract class PersistenceExtender<T>
   public T afterLast( RunnerContext context, ExecutionResult<T> entity ) throws Exception
   {
     return entity.getResult();
-  }
-
-  public final Class<?> getUserClass()
-  {
-    return userClass;
   }
 }
 
