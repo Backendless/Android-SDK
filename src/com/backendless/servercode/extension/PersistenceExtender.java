@@ -1,12 +1,12 @@
 package com.backendless.servercode.extension;
 
 import com.backendless.BackendlessCollection;
-import com.backendless.commons.persistence.BaseEntityDescription;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.property.ObjectProperty;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -16,19 +16,26 @@ import java.util.Map;
  * Time: 12:40 PM
  * To change this template use File | Settings | File Templates.
  */
-public abstract class PersistenceExtender
+public abstract class PersistenceExtender<T>
 {
+  private Class<T> userClass;
+
   public PersistenceExtender()
   {
+    userClass = (Class<T>) HashMap.class;
+  }
 
+  public PersistenceExtender( Class<T> clazz )
+  {
+    this.userClass = clazz;
   }
 
   public void beforeFindById( RunnerContext context, String objectId, String[] relations ) throws Exception
   {
   }
 
-  public BaseEntityDescription afterFindById( RunnerContext context, String objectId, String[] relations,
-                                              ExecutionResult<BaseEntityDescription> entity ) throws Exception
+  public T afterFindById( RunnerContext context, String objectId, String[] relations,
+                          ExecutionResult<T> entity ) throws Exception
   {
     return entity.getResult();
   }
@@ -37,8 +44,7 @@ public abstract class PersistenceExtender
   {
   }
 
-  public BaseEntityDescription afterCreate( RunnerContext context, Map entityMap,
-                                            ExecutionResult<BaseEntityDescription> entity ) throws Exception
+  public T afterCreate( RunnerContext context, Map entityMap, ExecutionResult<T> entity ) throws Exception
   {
     return entity.getResult();
   }
@@ -47,8 +53,7 @@ public abstract class PersistenceExtender
   {
   }
 
-  public BaseEntityDescription afterUpdate( RunnerContext context, Map entityMap,
-                                            ExecutionResult<BaseEntityDescription> entity ) throws Exception
+  public T afterUpdate( RunnerContext context, Map entityMap, ExecutionResult<T> entity ) throws Exception
   {
     return entity.getResult();
   }
@@ -97,8 +102,7 @@ public abstract class PersistenceExtender
   {
   }
 
-  public BaseEntityDescription afterFirst( RunnerContext context,
-                                           ExecutionResult<BaseEntityDescription> entity ) throws Exception
+  public T afterFirst( RunnerContext context, ExecutionResult<T> entity ) throws Exception
   {
     return entity.getResult();
   }
@@ -107,10 +111,14 @@ public abstract class PersistenceExtender
   {
   }
 
-  public BaseEntityDescription afterLast( RunnerContext context,
-                                          ExecutionResult<BaseEntityDescription> entity ) throws Exception
+  public T afterLast( RunnerContext context, ExecutionResult<T> entity ) throws Exception
   {
     return entity.getResult();
+  }
+
+  public final Class<?> getUserClass()
+  {
+    return userClass;
   }
 }
 
