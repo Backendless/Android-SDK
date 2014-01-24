@@ -26,14 +26,14 @@ import com.backendless.persistence.BackendlessDataQuery;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-@SuppressWarnings( "unchecked" )
+@SuppressWarnings("unchecked")
 public class BackendlessCollection<E>
 {
   private final Object dataLock = new Object();
   private Class<E> type;
   private List<E> data = new CopyOnWriteArrayList<E>();
-  private int totalObjects;
-  private volatile IBackendlessQuery query;
+  int totalObjects;
+  volatile IBackendlessQuery query;
 
   public BackendlessCollection()
   {

@@ -22,6 +22,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.property.AbstractProperty;
 import com.backendless.property.UserProperty;
 import weborb.types.Types;
@@ -355,6 +356,83 @@ public final class UserService
             responder.handleFault( fault );
         }
       } );
+    }
+  }
+
+  public BackendlessCollection<BackendlessUser> find() throws BackendlessException
+  {
+    return find( BackendlessUser.class );
+  }
+
+  public BackendlessCollection<BackendlessUser> find(
+          BackendlessDataQuery backendlessDataQuery ) throws BackendlessException
+  {
+    return find( BackendlessUser.class, backendlessDataQuery );
+  }
+
+  public void find(BackendlessDataQuery backendlessDataQuery, AsyncCallback<BackendlessCollection<BackendlessUser>> responder)
+  {
+    find( BackendlessUser.class, backendlessDataQuery, responder );
+  }
+
+  public void find( AsyncCallback<BackendlessCollection<BackendlessUser>> responder )
+  {
+    find( BackendlessUser.class, responder );
+  }
+
+  public <E extends BackendlessUser> BackendlessCollection<E> find( Class<E> userClass ) throws BackendlessException
+  {
+    return find( userClass, (BackendlessDataQuery) null );
+  }
+
+  public <E extends BackendlessUser> BackendlessCollection<E> find( Class<E> userClass,
+                                                                    BackendlessDataQuery backendlessDataQuery ) throws BackendlessException
+  {
+    BackendlessCollection<HashMap> response = Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "find", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), "Users", backendlessDataQuery } );
+    BackendlessCollection<E> result = BackendlessUserCollection.create( response, userClass );
+    return result;
+  }
+
+  public <E extends BackendlessUser> void find( Class<E> userClass,
+                                                final AsyncCallback<BackendlessCollection<E>> responder )
+  {
+    find( userClass, null, responder );
+  }
+
+  public <E extends BackendlessUser> void find( final Class<E> userClass, BackendlessDataQuery backendlessDataQuery,
+                                                final AsyncCallback<BackendlessCollection<E>> responder )
+  {
+    try
+    {
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "find", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), "Users", backendlessDataQuery }, new AsyncCallback<BackendlessCollection<HashMap>>()
+      {
+        @Override
+        public void handleResponse( BackendlessCollection<HashMap> response )
+        {
+          try
+          {
+            BackendlessUserCollection<E> result = BackendlessUserCollection.create( response, userClass );
+            if( responder != null )
+              responder.handleResponse( result );
+          }
+          catch( BackendlessException e )
+          {
+            handleFault( new BackendlessFault( e ) );
+          }
+        }
+
+        @Override
+        public void handleFault( BackendlessFault fault )
+        {
+          if( responder != null )
+            responder.handleFault( fault );
+        }
+      } );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
     }
   }
 
