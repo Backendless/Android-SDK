@@ -35,7 +35,7 @@ public class BackendlessGeoQuery implements IBackendlessQuery
   private boolean includeMeta = true;
   private Map<String, String> metadata = new HashMap<String, String>();
   private double[] searchRectangle;
-  private int pageSize = 0;
+  private int pageSize = 100;
   private int offset;
   private String whereClause;
   private Map<String, String> relativeFindMetadata = new HashMap<String, String>();
