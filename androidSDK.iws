@@ -27,8 +27,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/MessagingService/pubsubdemo/gen/com/backendless/examples/messagingservice/pubsubdemo/BuildConfig.java" afterPath="$PROJECT_DIR$/samples/MessagingService/pubsubdemo/gen/com/backendless/examples/messagingservice/pubsubdemo/BuildConfig.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/MessagingService/pushdemo/gen/com/backendless/examples/messagingservice/pushdemo/BuildConfig.java" afterPath="$PROJECT_DIR$/samples/MessagingService/pushdemo/gen/com/backendless/examples/messagingservice/pushdemo/BuildConfig.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/userservicedemo/gen/com/backendless/examples/userservice/demo/BuildConfig.java" afterPath="$PROJECT_DIR$/samples/UserService/userservicedemo/gen/com/backendless/examples/userservice/demo/BuildConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.iml" afterPath="$PROJECT_DIR$/androidSDK.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.ipr" afterPath="$PROJECT_DIR$/androidSDK.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.iws" afterPath="$PROJECT_DIR$/androidSDK.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/FileService/filedemo/filedemo.iml" afterPath="$PROJECT_DIR$/samples/FileService/filedemo/filedemo.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/GeoService/geodemo/geodemo.iml" afterPath="$PROJECT_DIR$/samples/GeoService/geodemo/geodemo.iml" />
@@ -168,14 +166,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BackendlessCollection.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BackendlessCollection.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/backendless/BackendlessCollection.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="21" selection-start="1619" selection-end="1628" vertical-scroll-proportion="0.15051903" vertical-offset="138" max-vertical-offset="2550">
+            <state line="37" column="21" selection-start="1619" selection-end="1628" vertical-scroll-proportion="0.0" vertical-offset="138" max-vertical-offset="2550">
               <folding>
                 <element signature="e#1670#1671#0" expanded="true" />
                 <element signature="e#1691#1692#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="androidSDK.iws" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/androidSDK.iws">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2040" column="0" selection-start="110589" selection-end="110589" vertical-scroll-proportion="0.94690263" vertical-offset="30065" max-vertical-offset="30690">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -278,6 +285,7 @@
         <option value="$PROJECT_DIR$/src/com/backendless/Backendless.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/DataPermission.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/Messaging.java" />
+        <option value="$PROJECT_DIR$/androidSDK.iws" />
       </list>
     </option>
   </component>
@@ -1719,11 +1727,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/BackendlessCollection.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="21" selection-start="1619" selection-end="1628" vertical-scroll-proportion="0.15051903" vertical-offset="138" max-vertical-offset="2550">
+        <state line="37" column="21" selection-start="1619" selection-end="1628" vertical-scroll-proportion="0.0" vertical-offset="138" max-vertical-offset="2550">
           <folding>
             <element signature="e#1670#1671#0" expanded="true" />
             <element signature="e#1691#1692#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/androidSDK.iws">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2040" column="0" selection-start="110589" selection-end="110589" vertical-scroll-proportion="0.94690263" vertical-offset="30065" max-vertical-offset="30690">
+          <folding />
         </state>
       </provider>
     </entry>
