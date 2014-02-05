@@ -48,8 +48,8 @@ public class BackendlessUserCollection<E extends BackendlessUser> extends Backen
 
     BackendlessUserCollection<E> backendlessUserCollection = new BackendlessUserCollection<E>();
     backendlessUserCollection.setData( data );
-    backendlessUserCollection.setQuery( backendlessCollection.query );
-    backendlessUserCollection.setTotalObjects( backendlessCollection.totalObjects );
+    backendlessUserCollection.setQuery( backendlessCollection.getQuery() );
+    backendlessUserCollection.setTotalObjects( backendlessCollection.getTotalObjects() );
     backendlessUserCollection.setType( userClass );
 
     return backendlessUserCollection;
