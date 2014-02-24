@@ -31,6 +31,7 @@ public final class Backendless
   public static final FootprintsManager FootprintsManager = com.backendless.FootprintsManager.getInstance();
   public static final UserService UserService = com.backendless.UserService.getInstance();
   public static final Persistence Persistence = com.backendless.Persistence.getInstance();
+  public static final Persistence Data = com.backendless.Persistence.getInstance();
   public static final Messaging Messaging = com.backendless.Messaging.getInstance();
   public static final Geo Geo = com.backendless.Geo.getInstance();
   public static final Files Files = com.backendless.Files.getInstance();

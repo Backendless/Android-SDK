@@ -122,7 +122,7 @@ public final class Messaging
 
   public void registerDevice( String GCMSenderID, String channel, AsyncCallback<Void> callback )
   {
-    registerDevice( GCMSenderID, (channel == null || channel.equals( "" )) ? null : Arrays.asList( channel ), null, null );
+    registerDevice( GCMSenderID, (channel == null || channel.equals( "" )) ? null : Arrays.asList( channel ), null, callback );
   }
 
   public void registerDevice( String GCMSenderID, List<String> channels, Date expiration )
