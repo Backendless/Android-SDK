@@ -689,7 +689,7 @@ public final class Persistence
     }
   }
 
-  private <T> Map serializeToMap( T entity )
+  static <T> Map serializeToMap( T entity )
   {
     HashMap result = new HashMap();
     weborb.util.ObjectInspector.getObjectProperties( entity.getClass(), entity, result, new ArrayList(), true, true );

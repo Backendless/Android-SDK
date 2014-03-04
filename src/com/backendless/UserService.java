@@ -107,7 +107,7 @@ public final class UserService
 
   public BackendlessUser update( final BackendlessUser user ) throws BackendlessException
   {
-    checkUserToBeProper( user );
+    checkUserToBeProperForUpdate( user );
 
     if( user.getUserId() != null && user.getUserId().equals( "" ) )
       throw new IllegalArgumentException( ExceptionMessage.WRONG_USER_ID );
@@ -121,7 +121,7 @@ public final class UserService
   {
     try
     {
-      checkUserToBeProper( user );
+      checkUserToBeProperForUpdate( user );
 
       if( user.getUserId() != null && user.getUserId().equals( "" ) )
         throw new IllegalArgumentException( ExceptionMessage.WRONG_USER_ID );
@@ -572,11 +572,16 @@ public final class UserService
 
   private static void checkUserToBeProper( BackendlessUser user ) throws BackendlessException
   {
-    if( user == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_USER );
+    checkUserToBeProperForUpdate( user );
 
     if( user.getPassword() == null || user.getPassword().equals( "" ) )
       throw new IllegalArgumentException( ExceptionMessage.NULL_PASSWORD );
+  }
+
+  private static void checkUserToBeProperForUpdate( BackendlessUser user )
+  {
+    if( user == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_USER );
   }
 
   private void handleUserLogin( Map<String, Object> invokeResult )
