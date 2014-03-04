@@ -23,7 +23,7 @@ import java.util.List;
 
 public class QueryOptions
 {
-  private int pageSize;
+  private int pageSize = 10;
   private int offset;
   private List<String> sortBy;
   private List<String> related;

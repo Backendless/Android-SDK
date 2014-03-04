@@ -28,6 +28,17 @@ public class BackendlessDataQuery implements IBackendlessQuery
   private List<String> properties;
   private String whereClause;
   private QueryOptions queryOptions;
+  private int relationDepth;
+
+  public int getRelationDepth()
+  {
+    return relationDepth;
+  }
+
+  public void setRelationDepth( int relationDepth )
+  {
+    this.relationDepth = relationDepth;
+  }
 
   public BackendlessDataQuery()
   {
@@ -105,7 +116,7 @@ public class BackendlessDataQuery implements IBackendlessQuery
   //PageSize properties added, because DataQuery and GeoQuery has different architecture
   public int getPageSize()
   {
-    return queryOptions == null ? 0 : queryOptions.getPageSize();
+    return queryOptions == null ? 10 : queryOptions.getPageSize();
   }
 
   public void setPageSize( int pageSize )
