@@ -5,8 +5,8 @@ import com.backendless.property.UserProperty;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,26 +25,28 @@ public abstract class UserExtender
   {
   }
 
-  public Map afterLogin( RunnerContext context, String login, String password,
-                         ExecutionResult<Map> userValues ) throws Exception
+  public HashMap afterLogin( RunnerContext context, String login, String password,
+                             ExecutionResult<HashMap> userValues ) throws Exception
   {
     return userValues.getResult();
   }
 
-  public void beforeRegister( RunnerContext context, Map userValue ) throws Exception
+  public void beforeRegister( RunnerContext context, HashMap userValue ) throws Exception
   {
   }
 
-  public Map afterRegister( RunnerContext context, Map userValue, ExecutionResult<Map> savedValue ) throws Exception
+  public HashMap afterRegister( RunnerContext context, HashMap userValue,
+                                ExecutionResult<HashMap> savedValue ) throws Exception
   {
     return savedValue.getResult();
   }
 
-  public void beforeUpdate( RunnerContext context, Map userValue ) throws Exception
+  public void beforeUpdate( RunnerContext context, HashMap userValue ) throws Exception
   {
   }
 
-  public Map afterUpdate( RunnerContext context, Map userValue, ExecutionResult<Map> savedValue ) throws Exception
+  public HashMap afterUpdate( RunnerContext context, HashMap userValue,
+                              ExecutionResult<HashMap> savedValue ) throws Exception
   {
     return savedValue.getResult();
   }
