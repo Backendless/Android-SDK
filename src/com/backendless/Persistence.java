@@ -262,7 +262,8 @@ public final class Persistence
     return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), entity.getSimpleName(), id, relations }, getPOJOAdaptingResponder( entity ) );
   }
 
-  protected <E> E findById( final Class<E> entity, final String id, final List<String> relations, final Integer relationDepth ) throws BackendlessException
+  protected <E> E findById( final Class<E> entity, final String id, final List<String> relations,
+                            final Integer relationDepth ) throws BackendlessException
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY_NAME );
@@ -293,7 +294,8 @@ public final class Persistence
     }
   }
 
-  protected <E> void findById( final Class<E> entity, final String id, final List<String> relations, final Integer relationDepth, AsyncCallback<E> responder )
+  protected <E> void findById( final Class<E> entity, final String id, final List<String> relations,
+                               final Integer relationDepth, AsyncCallback<E> responder )
   {
     try
     {
@@ -303,7 +305,7 @@ public final class Persistence
       if( id == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ID );
 
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), entity.getSimpleName(), id, relationDepth }, responder );
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), entity.getSimpleName(), id, relations, relationDepth }, responder );
     }
     catch( Throwable e )
     {
@@ -495,12 +497,13 @@ public final class Persistence
     return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "first", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), entity.getSimpleName() }, getPOJOAdaptingResponder( entity ) );
   }
 
-  protected <E> E first( final Class<E> entity, final Integer relationDepth ) throws BackendlessException
+  protected <E> E first( final Class<E> entity, final List<String> relations,
+                         final Integer relationDepth ) throws BackendlessException
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-    return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "first", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), entity.getSimpleName(), relationDepth }, getPOJOAdaptingResponder( entity ) );
+    return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "first", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), entity.getSimpleName(), relations, relationDepth }, getPOJOAdaptingResponder( entity ) );
   }
 
   protected <E> void first( final Class<E> entity, final AsyncCallback<E> responder )
@@ -519,14 +522,15 @@ public final class Persistence
     }
   }
 
-  protected <E> void first( final Class<E> entity, final Integer relationDepth, final AsyncCallback<E> responder )
+  protected <E> void first( final Class<E> entity, final List<String> relations, final Integer relationDepth,
+                            final AsyncCallback<E> responder )
   {
     try
     {
       if( entity == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "first", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), entity.getSimpleName(), relationDepth }, responder, getPOJOAdaptingResponder( entity ) );
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "first", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), entity.getSimpleName(), relations, relationDepth }, responder, getPOJOAdaptingResponder( entity ) );
     }
     catch( Throwable e )
     {
@@ -543,12 +547,13 @@ public final class Persistence
     return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "last", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), entity.getSimpleName() }, getPOJOAdaptingResponder( entity ) );
   }
 
-  protected <E> E last( final Class<E> entity, final Integer relationDepth ) throws BackendlessException
+  protected <E> E last( final Class<E> entity, final List<String> relations,
+                        final Integer relationDepth ) throws BackendlessException
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-    return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "last", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), entity.getSimpleName(), relationDepth }, getPOJOAdaptingResponder( entity ) );
+    return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "last", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), entity.getSimpleName(), relations, relationDepth }, getPOJOAdaptingResponder( entity ) );
   }
 
   protected <E> void last( final Class<E> entity, final AsyncCallback<E> responder )
@@ -567,14 +572,15 @@ public final class Persistence
     }
   }
 
-  protected <E> void last( final Class<E> entity, final Integer relationDepth, final AsyncCallback<E> responder )
+  protected <E> void last( final Class<E> entity, final List<String> relations, final Integer relationDepth,
+                           final AsyncCallback<E> responder )
   {
     try
     {
       if( entity == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "last", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), entity.getSimpleName(), relationDepth }, responder, getPOJOAdaptingResponder( entity ) );
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "last", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), entity.getSimpleName(), relations, relationDepth }, responder, getPOJOAdaptingResponder( entity ) );
     }
     catch( Throwable e )
     {

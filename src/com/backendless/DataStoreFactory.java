@@ -61,9 +61,21 @@ class DataStoreFactory
       }
 
       @Override
+      public E findFirst( List<String> relations, Integer relationDepth ) throws BackendlessException
+      {
+        return Backendless.Persistence.first( entityClass, relations, relationDepth );
+      }
+
+      @Override
       public void findFirst( final AsyncCallback<E> responder )
       {
         Backendless.Persistence.first( entityClass, responder );
+      }
+
+      @Override
+      public void findFirst( List<String> relations, Integer relationDepth, final AsyncCallback<E> responder )
+      {
+        Backendless.Persistence.first( entityClass, relations, relationDepth, responder );
       }
 
       @Override
@@ -73,9 +85,21 @@ class DataStoreFactory
       }
 
       @Override
+      public E findLast( List<String> relations, Integer relationDepth ) throws BackendlessException
+      {
+        return Backendless.Persistence.last( entityClass, relations, relationDepth );
+      }
+
+      @Override
       public void findLast( final AsyncCallback<E> responder )
       {
         Backendless.Persistence.last( entityClass, responder );
+      }
+
+      @Override
+      public void findLast( List<String> relations, Integer relationDepth, final AsyncCallback<E> responder )
+      {
+        Backendless.Persistence.last( entityClass, relations, relationDepth, responder );
       }
 
       @Override
@@ -121,9 +145,21 @@ class DataStoreFactory
       }
 
       @Override
+      public E findById( String objectId, List<String> relations, Integer relationDepth ) throws BackendlessException
+      {
+        return Backendless.Persistence.findById( entityClass, objectId, relations, relationDepth );
+      }
+
+      @Override
       public void findById( String objectId, List<String> relations, AsyncCallback<E> responder )
       {
         Backendless.Persistence.findById( entityClass, objectId, relations, responder );
+      }
+
+      @Override
+      public void findById( String objectId, List<String> relations, Integer relationDepth, AsyncCallback<E> responder )
+      {
+        Backendless.Persistence.findById( entityClass, objectId, relations, relationDepth, responder );
       }
 
       @Override
