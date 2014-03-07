@@ -32,6 +32,7 @@ import com.backendless.persistence.QueryOptions;
 import com.backendless.property.ObjectProperty;
 import weborb.types.Types;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -591,7 +592,10 @@ public final class Persistence
 
     try
     {
-      entityClass.getConstructor( new Class[ 0 ] );
+      Constructor[] constructors = entityClass.getConstructors();
+
+      if( constructors.length > 0 )
+         entityClass.getConstructor( new Class[ 0 ] );
     }
     catch( NoSuchMethodException e )
     {
