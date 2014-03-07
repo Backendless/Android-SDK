@@ -81,7 +81,7 @@ class DataStoreFactory
       @Override
       public BackendlessCollection<E> find() throws BackendlessException
       {
-        return Backendless.Persistence.find( entityClass, null );
+        return Backendless.Persistence.find( entityClass, new BackendlessDataQuery() );
       }
 
       @Override
@@ -93,7 +93,7 @@ class DataStoreFactory
       @Override
       public void find( AsyncCallback<BackendlessCollection<E>> responder )
       {
-        Backendless.Persistence.find( entityClass, null, responder );
+        Backendless.Persistence.find( entityClass, new BackendlessDataQuery(), responder );
       }
 
       @Override
