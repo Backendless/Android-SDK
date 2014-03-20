@@ -11,8 +11,9 @@ import com.backendless.commons.exception.ExceptionRepresentation;
  */
 public class ExecutionResult<T>
 {
-  T result;
-  ExceptionRepresentation exception;
+  private T result;
+  private Object[] modifiedArguments;
+  private ExceptionRepresentation exception;
 
   public ExecutionResult()
   {
@@ -43,5 +44,15 @@ public class ExecutionResult<T>
   public void setException( ExceptionRepresentation exception )
   {
     this.exception = exception;
+  }
+
+  public Object[] getModifiedArguments()
+  {
+    return modifiedArguments;
+  }
+
+  public void setModifiedArguments( Object[] modifiedArguments )
+  {
+    this.modifiedArguments = modifiedArguments;
   }
 }
