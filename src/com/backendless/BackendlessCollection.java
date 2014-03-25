@@ -19,6 +19,7 @@
 package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.commons.AbstractBackendlessCollection;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.geo.BackendlessGeoQuery;
 import com.backendless.persistence.BackendlessDataQuery;
@@ -26,17 +27,15 @@ import com.backendless.persistence.BackendlessDataQuery;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-@SuppressWarnings( "unchecked" )
-public class BackendlessCollection<E>
+public class BackendlessCollection<E> extends AbstractBackendlessCollection<E>
 {
   private final Object dataLock = new Object();
   private Class<E> type;
-  private List<E> data = new CopyOnWriteArrayList<E>();
-  private int totalObjects;
   private volatile IBackendlessQuery query;
 
   public BackendlessCollection()
   {
+    data = new CopyOnWriteArrayList<E>();
   }
 
   public Class<E> getType()
@@ -52,16 +51,6 @@ public class BackendlessCollection<E>
   public void setPageSize( int pageSize )
   {
     query.setPageSize( pageSize );
-  }
-
-  public int getTotalObjects()
-  {
-    return totalObjects;
-  }
-
-  public void setTotalObjects( int totalObjects )
-  {
-    this.totalObjects = totalObjects;
   }
 
   public List<E> getCurrentPage()

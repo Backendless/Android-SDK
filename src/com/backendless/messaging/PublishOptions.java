@@ -73,6 +73,13 @@ public class PublishOptions
     this.subtopic = subtopic;
   }
 
+  public PublishOptions( PublishMessageInfo info )
+  {
+    this.publisherId = info.getPublisherId();
+    this.headers = info.getHeaders();
+    this.subtopic = info.getSubtopic();
+  }
+
   public String getPublisherId()
   {
     return publisherId;

@@ -18,23 +18,17 @@
 
 package com.backendless.geo;
 
+import com.backendless.commons.geo.BaseGeoPoint;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GeoPoint implements Serializable
+public class GeoPoint extends BaseGeoPoint implements Serializable
 {
   private static final long serialVersionUID = -4982310969493523406L;
-
-  private String objectId;
-  private double latitude;
-  private double longitude;
-  private List<String> categories;
-  private Map<String, String> metadata;
-  private Double distance;
-
   private final static int multiplier = 1000000;
 
   public GeoPoint()
@@ -67,31 +61,6 @@ public class GeoPoint implements Serializable
     this.longitude = (double) longitudeE6 / multiplier;
     this.categories = categories;
     this.metadata = metadata;
-  }
-
-  public String getObjectId()
-  {
-    return objectId;
-  }
-
-  public double getLatitude()
-  {
-    return latitude;
-  }
-
-  public void setLatitude( double latitude )
-  {
-    this.latitude = latitude;
-  }
-
-  public double getLongitude()
-  {
-    return longitude;
-  }
-
-  public void setLongitude( double longitude )
-  {
-    this.longitude = longitude;
   }
 
   public int getLatitudeE6()
@@ -177,6 +146,7 @@ public class GeoPoint implements Serializable
   {
     this.metadata = metadata;
   }
+
   public Double getDistance()
   {
     return distance;
