@@ -19,9 +19,11 @@
 package com.backendless;
 
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.io.BackendlessUserWriter;
 import weborb.config.ORBConfig;
 import weborb.util.log.ILoggingConstants;
 import weborb.util.log.Log;
+import weborb.writer.MessageWriter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -109,6 +111,7 @@ public final class Backendless
       throw new IllegalArgumentException( ExceptionMessage.NULL_VERSION );
 
     HeadersManager.cleanHeaders();
+    MessageWriter.addTypeWriter( BackendlessUser.class, new BackendlessUserWriter() );
     backendlessInitService.initService( context, new IServiceCreatedCallback()
     {
       @Override

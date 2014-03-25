@@ -28,6 +28,12 @@ public class BackendlessUser
   public static final String PASSWORD_KEY = "password";
   public static final String EMAIL_KEY = "email";
   private static final String ID_KEY = "objectId";
+  private String ___class = "Users;";
+
+  public String get___class()
+  {
+    return ___class;
+  }
 
   public BackendlessUser()
   {
@@ -71,6 +77,11 @@ public class BackendlessUser
     {
       properties.put( key, value );
     }
+  }
+
+  public String getObjectId()
+  {
+    return getUserId();
   }
 
   public String getUserId()
