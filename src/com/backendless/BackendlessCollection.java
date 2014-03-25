@@ -138,6 +138,11 @@ public class BackendlessCollection<E> extends AbstractBackendlessCollection<E>
     }
   }
 
+  public IBackendlessQuery getQuery()
+  {
+    return query;
+  }
+
   //Async methods
   public void nextPage( AsyncCallback<BackendlessCollection<E>> responder )
   {

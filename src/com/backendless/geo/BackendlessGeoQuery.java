@@ -31,7 +31,7 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
   private Units units;
   private boolean includeMeta = true;
   private double[] searchRectangle;
-  private int pageSize = 0;
+  private int pageSize = 100;
   private int offset;
 
   public BackendlessGeoQuery()
