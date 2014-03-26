@@ -19,8 +19,10 @@
 package com.backendless;
 
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.io.BackendlessUserFactory;
 import com.backendless.io.BackendlessUserWriter;
 import weborb.config.ORBConfig;
+import weborb.util.ObjectFactories;
 import weborb.util.log.ILoggingConstants;
 import weborb.util.log.Log;
 import weborb.writer.MessageWriter;
@@ -112,6 +114,7 @@ public final class Backendless
 
     HeadersManager.cleanHeaders();
     MessageWriter.addTypeWriter( BackendlessUser.class, new BackendlessUserWriter() );
+    ObjectFactories.addArgumentObjectFactory( BackendlessUser.class.getName(), new BackendlessUserFactory() );
     backendlessInitService.initService( context, new IServiceCreatedCallback()
     {
       @Override

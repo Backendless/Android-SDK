@@ -27,13 +27,7 @@ public class BackendlessUser
 
   public static final String PASSWORD_KEY = "password";
   public static final String EMAIL_KEY = "email";
-  private static final String ID_KEY = "objectId";
-  private String ___class = "Users;";
-
-  public String get___class()
-  {
-    return ___class;
-  }
+  public static final String ID_KEY = "objectId";
 
   public BackendlessUser()
   {
@@ -48,7 +42,8 @@ public class BackendlessUser
   {
     synchronized( this )
     {
-      this.properties.putAll( properties );
+      this.properties.clear();
+      putProperties( properties );
     }
   }
 
