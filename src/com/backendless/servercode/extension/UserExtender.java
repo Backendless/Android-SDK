@@ -26,9 +26,9 @@ public abstract class UserExtender
   }
 
   public HashMap afterLogin( RunnerContext context, String login, String password,
-                             ExecutionResult<HashMap> userValues ) throws Exception
+                             ExecutionResult<HashMap> result ) throws Exception
   {
-    return userValues.getResult();
+    return result.getResult();
   }
 
   public void beforeRegister( RunnerContext context, HashMap userValue ) throws Exception
@@ -36,9 +36,9 @@ public abstract class UserExtender
   }
 
   public HashMap afterRegister( RunnerContext context, HashMap userValue,
-                                ExecutionResult<HashMap> savedValue ) throws Exception
+                                ExecutionResult<HashMap> result ) throws Exception
   {
-    return savedValue.getResult();
+    return result.getResult();
   }
 
   public void beforeUpdate( RunnerContext context, HashMap userValue ) throws Exception
@@ -46,18 +46,18 @@ public abstract class UserExtender
   }
 
   public HashMap afterUpdate( RunnerContext context, HashMap userValue,
-                              ExecutionResult<HashMap> savedValue ) throws Exception
+                              ExecutionResult<HashMap> result ) throws Exception
   {
-    return savedValue.getResult();
+    return result.getResult();
   }
 
   public void beforeRemove( RunnerContext context, String id ) throws Exception
   {
   }
 
-  public Long afterRemove( RunnerContext context, String id, ExecutionResult<Long> removedLong ) throws Exception
+  public Long afterRemove( RunnerContext context, String id, ExecutionResult<Long> result ) throws Exception
   {
-    return removedLong.getResult();
+    return result.getResult();
   }
 
   public void beforeDescribe( RunnerContext context ) throws Exception
@@ -65,17 +65,16 @@ public abstract class UserExtender
   }
 
   public List<UserProperty> afterDescribe( RunnerContext context,
-                                           ExecutionResult<List<UserProperty>> properties ) throws Exception
+                                           ExecutionResult<List<UserProperty>> result ) throws Exception
   {
-    return properties.getResult();
+    return result.getResult();
   }
 
   public void beforeRestorePassword( RunnerContext context, String email ) throws Exception
   {
   }
 
-  public void afterRestorePassword( RunnerContext context, String email,
-                                    ExceptionRepresentation exceptionRepresentation ) throws Exception
+  public void afterRestorePassword( RunnerContext context, String email, ExecutionResult result ) throws Exception
   {
   }
 
