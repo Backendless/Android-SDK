@@ -22,24 +22,24 @@ public abstract class UserExtender
   {
   }
 
-  public void beforeFind( RunnerContext context, BackendlessDataQuery query )
+  public void beforeFind( RunnerContext context, BackendlessDataQuery query ) throws Exception
   {
 
   }
 
   public BackendlessCollection afterFind( RunnerContext context, BackendlessDataQuery query,
-                                          ExecutionResult<BackendlessCollection> result )
+                                          ExecutionResult<BackendlessCollection> result ) throws Exception
   {
     return result.getResult();
   }
 
-  public void beforeFindById( RunnerContext context, String objectId, String[] relations )
+  public void beforeFindById( RunnerContext context, String objectId, String[] relations ) throws Exception
   {
 
   }
 
   public HashMap afterFindById( RunnerContext context, String objectId, String[] relations,
-                                ExecutionResult<HashMap> result )
+                                ExecutionResult<HashMap> result ) throws Exception
   {
     return result.getResult();
   }
