@@ -1,5 +1,7 @@
 package com.backendless.servercode.extension;
 
+import com.backendless.BackendlessCollection;
+import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.property.UserProperty;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
@@ -18,6 +20,28 @@ public abstract class UserExtender
 {
   public UserExtender()
   {
+  }
+
+  public void beforeFind( RunnerContext context, BackendlessDataQuery query )
+  {
+
+  }
+
+  public BackendlessCollection afterFind( RunnerContext context, BackendlessDataQuery query,
+                                          ExecutionResult<BackendlessCollection> result )
+  {
+    return result.getResult();
+  }
+
+  public void beforeFindById( RunnerContext context, String objectId, String[] relations )
+  {
+
+  }
+
+  public HashMap afterFindById( RunnerContext context, String objectId, String[] relations,
+                                ExecutionResult<HashMap> result )
+  {
+    return result.getResult();
   }
 
   public void beforeLogin( RunnerContext context, String login, String password ) throws Exception
