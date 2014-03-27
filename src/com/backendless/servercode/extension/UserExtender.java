@@ -1,6 +1,5 @@
 package com.backendless.servercode.extension;
 
-import com.backendless.commons.exception.ExceptionRepresentation;
 import com.backendless.property.UserProperty;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
@@ -82,7 +81,7 @@ public abstract class UserExtender
   {
   }
 
-  public void afterLogout( RunnerContext context, ExceptionRepresentation exceptionRepresentation ) throws Exception
+  public void afterLogout( RunnerContext context, ExecutionResult result ) throws Exception
   {
   }
 }

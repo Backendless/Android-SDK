@@ -1,7 +1,6 @@
 package com.backendless.servercode.extension;
 
 import com.backendless.BackendlessCollection;
-import com.backendless.commons.exception.ExceptionRepresentation;
 import com.backendless.geo.BackendlessGeoQuery;
 import com.backendless.geo.GeoCategory;
 import com.backendless.geo.GeoPoint;
@@ -57,8 +56,7 @@ public abstract class GeoExtender
   {
   }
 
-  public void afterRemovePoint( RunnerContext context, String pointId,
-                                ExceptionRepresentation exceptionRepresentation ) throws Exception
+  public void afterRemovePoint( RunnerContext context, String pointId, ExecutionResult result ) throws Exception
   {
   }
 

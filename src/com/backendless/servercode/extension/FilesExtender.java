@@ -1,6 +1,5 @@
 package com.backendless.servercode.extension;
 
-import com.backendless.commons.exception.ExceptionRepresentation;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
@@ -32,7 +31,7 @@ public abstract class FilesExtender
   }
 
   public void afterDeleteFileOrDirectory( RunnerContext context, String fileUrlLocation,
-                                          ExceptionRepresentation exceptionRepresentation ) throws Exception
+                                          ExecutionResult result ) throws Exception
   {
   }
 }
