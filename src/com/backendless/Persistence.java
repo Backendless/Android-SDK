@@ -263,7 +263,7 @@ public final class Persistence
   }
 
   protected <E> E findById( final Class<E> entity, final String id, final List<String> relations,
-                            final Integer relationDepth ) throws BackendlessException
+                            final int relationDepth ) throws BackendlessException
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY_NAME );
@@ -295,7 +295,7 @@ public final class Persistence
   }
 
   protected <E> void findById( final Class<E> entity, final String id, final List<String> relations,
-                               final Integer relationDepth, AsyncCallback<E> responder )
+                               final int relationDepth, AsyncCallback<E> responder )
   {
     try
     {
@@ -498,7 +498,7 @@ public final class Persistence
   }
 
   protected <E> E first( final Class<E> entity, final List<String> relations,
-                         final Integer relationDepth ) throws BackendlessException
+                         final int relationDepth ) throws BackendlessException
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
@@ -522,7 +522,7 @@ public final class Persistence
     }
   }
 
-  protected <E> void first( final Class<E> entity, final List<String> relations, final Integer relationDepth,
+  protected <E> void first( final Class<E> entity, final List<String> relations, final int relationDepth,
                             final AsyncCallback<E> responder )
   {
     try
@@ -548,7 +548,7 @@ public final class Persistence
   }
 
   protected <E> E last( final Class<E> entity, final List<String> relations,
-                        final Integer relationDepth ) throws BackendlessException
+                        final int relationDepth ) throws BackendlessException
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
@@ -572,7 +572,7 @@ public final class Persistence
     }
   }
 
-  protected <E> void last( final Class<E> entity, final List<String> relations, final Integer relationDepth,
+  protected <E> void last( final Class<E> entity, final List<String> relations, final int relationDepth,
                            final AsyncCallback<E> responder )
   {
     try
