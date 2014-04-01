@@ -1,6 +1,6 @@
 package com.backendless.servercode;
 
-import com.backendless.commons.exception.ExceptionRepresentation;
+import com.backendless.commons.exception.ExceptionWrapper;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,7 +12,7 @@ import com.backendless.commons.exception.ExceptionRepresentation;
 public class ExecutionResult<T>
 {
   private T result;
-  private ExceptionRepresentation exception;
+  private ExceptionWrapper exception;
 
   public ExecutionResult()
   {
@@ -22,10 +22,10 @@ public class ExecutionResult<T>
   {
     this.result = res;
     if( exception != null )
-      this.exception = new ExceptionRepresentation( exception );
+      this.exception = new ExceptionWrapper( exception );
   }
 
-  public ExceptionRepresentation getException()
+  public ExceptionWrapper getException()
   {
     return exception;
   }
@@ -40,7 +40,7 @@ public class ExecutionResult<T>
     this.result = result;
   }
 
-  public void setException( ExceptionRepresentation exception )
+  public void setException( ExceptionWrapper exception )
   {
     this.exception = exception;
   }
