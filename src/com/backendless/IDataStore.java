@@ -38,11 +38,15 @@ public interface IDataStore<E>
 
   public E findFirst( int relationsDepth ) throws BackendlessException;
 
+  public E findFirst( List<String> relations ) throws BackendlessException;
+
   public E findFirst( List<String> relations, int relationsDepth ) throws BackendlessException;
 
   public void findFirst( AsyncCallback<E> responder );
 
   public void findFirst( int relationsDepth, AsyncCallback<E> responder );
+
+  public void findFirst( List<String> relations, AsyncCallback<E> responder );
 
   public void findFirst( List<String> relations, int relationsDepth, AsyncCallback<E> responder );
 
@@ -50,11 +54,15 @@ public interface IDataStore<E>
 
   public E findLast( int relationsDepth ) throws BackendlessException;
 
+  public E findLast( List<String> relations ) throws BackendlessException;
+
   public E findLast( List<String> relations, int relationsDepth ) throws BackendlessException;
 
   public void findLast( AsyncCallback<E> responder );
 
   public void findLast( int relationsDepth, AsyncCallback<E> responder );
+
+  public void findLast( List<String> relations, AsyncCallback<E> responder );
 
   public void findLast( List<String> relations, int relationsDepth, AsyncCallback<E> responder );
 
