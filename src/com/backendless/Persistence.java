@@ -65,6 +65,11 @@ public final class Persistence
     Types.addClientClassMapping( "com.backendless.services.persistence.QueryOptions", QueryOptions.class );
   }
 
+  public void mapTableToClass( String tableName, Class clazz )
+ {
+   weborb.types.Types.addClientClassMapping( tableName, clazz );
+ }
+
   public <E> E save( E entity ) throws BackendlessException
   {
     if( entity == null )

@@ -722,7 +722,7 @@ public final class Messaging
       if( bodyParts == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_BODYPARTS );
 
-      if( recipients.equals( " " ) || recipients.isEmpty() )
+      if( recipients == null || recipients.isEmpty() )
         throw new IllegalArgumentException( ExceptionMessage.NULL_RECIPIENTS );
 
       if( attachments == null )
