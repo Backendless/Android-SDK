@@ -28,17 +28,6 @@ public class BackendlessDataQuery implements IBackendlessQuery
   private List<String> properties;
   private String whereClause;
   private QueryOptions queryOptions;
-  private int relationDepth;
-
-  public int getRelationDepth()
-  {
-    return relationDepth;
-  }
-
-  public void setRelationDepth( int relationDepth )
-  {
-    this.relationDepth = relationDepth;
-  }
 
   public BackendlessDataQuery()
   {

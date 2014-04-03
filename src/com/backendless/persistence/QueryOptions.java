@@ -27,6 +27,7 @@ public class QueryOptions
   private int offset;
   private List<String> sortBy;
   private List<String> related;
+  private int relationsDepth;
 
   public QueryOptions()
   {
@@ -127,5 +128,15 @@ public class QueryOptions
     result.setRelated( related );
 
     return result;
+  }
+
+  public void setRelationsDepth ( int relationsDepth )
+  {
+    this.relationsDepth = relationsDepth;
+  }
+
+  public int getRelationsDepth()
+  {
+    return this.relationsDepth;
   }
 }

@@ -358,51 +358,6 @@ public final class UserService
     }
   }
 
-  public BackendlessUser findByIdentity( String identity ) throws BackendlessException
-  {
-    if( identity == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
-
-    BackendlessUser result = new BackendlessUser();
-    result.putProperties( (HashMap<String, Object>) Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "findByIdentity", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), identity } ) );
-
-    return result;
-  }
-
-  public void findByIdentity( final String identity, final AsyncCallback<BackendlessUser> responder )
-  {
-    try
-    {
-      if( identity == null )
-        throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
-
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "findByIdentity", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), identity }, new AsyncCallback<HashMap<String, Object>>()
-      {
-        @Override
-        public void handleResponse( HashMap<String, Object> response )
-        {
-          BackendlessUser result = new BackendlessUser();
-          result.putProperties( response );
-
-          if( responder != null )
-            responder.handleResponse( result );
-        }
-
-        @Override
-        public void handleFault( BackendlessFault fault )
-        {
-          if( responder != null )
-            responder.handleFault( fault );
-        }
-      } );
-    }
-    catch( Throwable e )
-    {
-      if( responder != null )
-        responder.handleFault( new BackendlessFault( e ) );
-    }
-  }
-
   public void restorePassword( String identity ) throws BackendlessException
   {
     if( identity == null )
