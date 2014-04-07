@@ -34,6 +34,8 @@ public class BackendlessUserFactory implements IArgumentObjectFactory
     if( iAdaptingType instanceof NamedObject )
       iAdaptingType = ((NamedObject) iAdaptingType).getTypedObject();
 
+    if( iAdaptingType.getClass().getName().equals( "weborb.reader.NullType" ))
+      return null;
 
     HashMap props = null;
 
