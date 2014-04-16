@@ -24,7 +24,7 @@ import com.backendless.exceptions.ExceptionMessage;
 import java.util.Hashtable;
 import java.util.Map;
 
-class HeadersManager
+public class HeadersManager
 {
   private static final Object headersLock = new Object();
   private static volatile HeadersManager instance;
@@ -34,7 +34,7 @@ class HeadersManager
   {
   }
 
-  static HeadersManager getInstance() throws BackendlessException
+  public static HeadersManager getInstance() throws BackendlessException
   {
     if( instance == null )
       synchronized( headersLock )
@@ -66,7 +66,7 @@ class HeadersManager
     }
   }
 
-  void addHeader( HeadersEnum headersEnum, String value )
+  public void addHeader( HeadersEnum headersEnum, String value )
   {
     synchronized( headersLock )
     {
@@ -74,7 +74,7 @@ class HeadersManager
     }
   }
 
-  void addHeaders( Map<String, String> headers )
+  public void addHeaders( Map<String, String> headers )
   {
     if( headers == null || headers.isEmpty() )
       return;
@@ -85,7 +85,7 @@ class HeadersManager
     }
   }
 
-  void removeHeader( HeadersEnum headersEnum )
+  public void removeHeader( HeadersEnum headersEnum )
   {
     synchronized( headersLock )
     {
@@ -93,7 +93,7 @@ class HeadersManager
     }
   }
 
-  Hashtable<String, String> getHeaders() throws BackendlessException
+  public Hashtable<String, String> getHeaders() throws BackendlessException
   {
     synchronized( headersLock )
     {
@@ -104,7 +104,7 @@ class HeadersManager
     }
   }
 
-  void setHeaders( Map<String, String> headers )
+  public void setHeaders( Map<String, String> headers )
   {
     synchronized( headersLock )
     {
@@ -112,7 +112,7 @@ class HeadersManager
     }
   }
 
-  String getHeader( HeadersEnum headersEnum ) throws BackendlessException
+  public String getHeader( HeadersEnum headersEnum ) throws BackendlessException
   {
     synchronized( headersLock )
     {
@@ -128,7 +128,7 @@ class HeadersManager
     }
   }
 
-  enum HeadersEnum
+  public enum HeadersEnum
   {
     USER_TOKEN_KEY( "user-token" ), LOGGED_IN_KEY( "logged-in" ), SESSION_TIME_OUT_KEY( "session-time-out" ),
     APP_ID_NAME( "application-id" ), SECRET_KEY_NAME( "secret-key" ), APP_TYPE_NAME( "application-type" ),
