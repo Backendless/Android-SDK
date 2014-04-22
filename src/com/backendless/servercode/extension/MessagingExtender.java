@@ -43,11 +43,11 @@ public abstract class MessagingExtender
     return subscriberId.getResult();
   }
 
-  public void beforePoll( RunnerContext context ) throws Exception
+  public void beforePoll( RunnerContext context, String subscriptionId ) throws Exception
   {
   }
 
-  public List<Message> afterPoll( RunnerContext context, ExecutionResult<List<Message>> messages ) throws Exception
+  public List<Message> afterPoll( RunnerContext context, String subscriptionId, ExecutionResult<List<Message>> messages ) throws Exception
   {
     return messages.getResult();
   }
