@@ -12,6 +12,7 @@ import com.backendless.commons.exception.ExceptionWrapper;
 public class ExecutionResult<T>
 {
   private T result;
+  private byte[] arguments;
   private ExceptionWrapper exception;
 
   public ExecutionResult()
@@ -45,4 +46,13 @@ public class ExecutionResult<T>
     this.exception = exception;
   }
 
+  public byte[] getArguments()
+  {
+    return arguments;
+  }
+
+  public void setArguments( byte[] arguments )
+  {
+    this.arguments = arguments;
+  }
 }
