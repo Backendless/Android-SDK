@@ -152,6 +152,16 @@ public final class Geo
     }
   }
 
+  public void deletePoint( GeoPoint geoPoint )
+  {
+    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "deletePoint", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId() } );
+  }
+
+  public void deletePoint( GeoPoint geoPoint, AsyncCallback<Void> responder )
+  {
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "deletePoint", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId() }, responder );
+  }
+
   public BackendlessCollection<GeoPoint> getPoints( BackendlessGeoQuery geoQuery ) throws BackendlessException
   {
     checkGeoQuery( geoQuery );
