@@ -22,16 +22,6 @@ public abstract class GeoExtender
   {
   }
 
-  public void beforeSavePoint( RunnerContext context, GeoPoint point ) throws Exception
-  {
-  }
-
-  public GeoPoint afterSavePoint( RunnerContext context, GeoPoint point,
-                                  ExecutionResult<GeoPoint> savedPoint ) throws Exception
-  {
-    return savedPoint.getResult();
-  }
-
   public void beforeAddPoint( RunnerContext context, GeoPoint point ) throws Exception
   {
   }
