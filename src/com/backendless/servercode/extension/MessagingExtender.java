@@ -32,12 +32,17 @@ public abstract class MessagingExtender
     return status.getResult();
   }
 
-  public void beforeSubscribe( RunnerContext context, String subscriptionId,
+  public void beforeSubscribe( RunnerContext context,
+                               String subscriptionId,
+                               String channel,
                                SubscriptionOptions options ) throws Exception
   {
   }
 
-  public String afterSubscribe( RunnerContext context, String subscriptionId, SubscriptionOptions options,
+  public String afterSubscribe( RunnerContext context,
+                                String subscriptionId,
+                                String channel,
+                                SubscriptionOptions options,
                                 ExecutionResult<String> subscriberId ) throws Exception
   {
     return subscriberId.getResult();
