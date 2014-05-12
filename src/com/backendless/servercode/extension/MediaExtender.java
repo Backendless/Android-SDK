@@ -17,10 +17,8 @@ public abstract class MediaExtender
   {
   }
 
-  public Boolean acceptConnection( RunnerContext context, String operationName, String tubeName,
-                                   Boolean accessGranted ) throws Exception
+  public void acceptConnection( RunnerContext context, String operationName, String tubeName, Boolean accessGranted ) throws Exception
   {
-    return accessGranted;
   }
 
   public void publishStarted( RunnerContext context, MediaObjectInfo info ) throws Exception
