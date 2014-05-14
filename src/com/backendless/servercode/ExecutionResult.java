@@ -12,7 +12,6 @@ import com.backendless.commons.exception.ExceptionWrapper;
 public class ExecutionResult<T>
 {
   private T result;
-  private byte[] arguments;
   private ExceptionWrapper exception;
 
   public ExecutionResult()
@@ -31,10 +30,9 @@ public class ExecutionResult<T>
       this.exception = new ExceptionWrapper( exception );
   }
 
-  public ExecutionResult( T result, byte[] arguments, ExceptionWrapper exception )
+  public ExecutionResult( T result, ExceptionWrapper exception )
   {
     this.result = result;
-    this.arguments = arguments;
     this.exception = exception;
   }
 
@@ -56,24 +54,5 @@ public class ExecutionResult<T>
   public void setException( ExceptionWrapper exception )
   {
     this.exception = exception;
-  }
-
-  public byte[] getArguments()
-  {
-    return arguments;
-  }
-
-  public void setArguments( byte[] arguments )
-  {
-    this.arguments = arguments;
-  }
-
-  @Override
-  public String toString()
-  {
-    return "ExecutionResult{" +
-            "result=" + result +
-            ", exception=" + exception +
-            '}';
   }
 }
