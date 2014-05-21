@@ -116,4 +116,6 @@ public class ExceptionMessage
   public static final String NULL_SUBJECT = "Subject cannot be null";
   public static final String NULL_RECIPIENTS = "Recipients cannot be empty";
   public static final String NULL_ATTACHMENTS = "Attachments cannot be null";
+
+  public static final String INIT_BEFORE_USE = "Init storage before use";
 }
