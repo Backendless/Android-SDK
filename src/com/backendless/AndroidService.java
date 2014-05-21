@@ -24,6 +24,7 @@ import android.content.pm.PackageManager;
 import android.os.Binder;
 import android.os.IBinder;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.persistence.local.UserTokenStorageFactory;
 import com.backendless.utils.AndroidIO;
 
 import java.io.IOException;
@@ -170,7 +171,7 @@ public class AndroidService extends Service implements IBackendlessService
 
   private void cleanHeadersFromPreferences()
   {
-    if(sharedPreferences.contains( Type.HEADERS.name64() ))
+    if( sharedPreferences.contains( Type.HEADERS.name64() ) )
     {
       SharedPreferences.Editor editor = sharedPreferences.edit();
       editor.remove( Type.HEADERS.name64() );
@@ -266,6 +267,8 @@ public class AndroidService extends Service implements IBackendlessService
         throw new IllegalArgumentException( ExceptionMessage.NULL_CONTEXT );
 
       Context applicationContext = ((Context) arg).getApplicationContext();
+
+      UserTokenStorageFactory.instance().init( applicationContext );
 
       PackageManager packageManager = applicationContext.getPackageManager();
       final Intent intent = new Intent( applicationContext, AndroidService.class );
