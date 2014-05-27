@@ -39,6 +39,7 @@ public final class Backendless
   public static final Persistence Data = com.backendless.Persistence.getInstance();
   public static final Messaging Messaging = com.backendless.Messaging.getInstance();
   public static final Geo Geo = com.backendless.Geo.getInstance();
+  public static final Media Media = com.backendless.Media.getInstance();
   public static final Files Files = com.backendless.Files.getInstance();
   private static String url = "https://api.backendless.com";
   private static IBackendlessService backendlessService;
