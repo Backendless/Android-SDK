@@ -21,6 +21,7 @@ package com.backendless;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.io.BackendlessUserFactory;
 import com.backendless.io.BackendlessUserWriter;
+import com.backendless.persistence.local.UserTokenStorageFactory;
 import weborb.config.ORBConfig;
 import weborb.util.ObjectFactories;
 import weborb.util.log.ILoggingConstants;
@@ -129,6 +130,11 @@ public final class Backendless
     /* Needed for android only */
     if( backendlessService instanceof StubBackendlessService )
       backendlessService.setAuthKeys( applicationId, secretKey, version );
+
+    String userToken = UserTokenStorageFactory.instance().getStorage().get();
+
+    if( userToken != null && !userToken.equals( "" ) )
+      HeadersManager.getInstance().addHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY, userToken );
   }
 
   public static void setUIState( String state )

@@ -126,6 +126,7 @@ public class QueryOptions
     result.setOffset( offset );
     result.setSortBy( sortBy );
     result.setRelated( related );
+    result.setRelationsDepth( relationsDepth );
 
     return result;
   }
@@ -137,6 +138,6 @@ public class QueryOptions
 
   public int getRelationsDepth()
   {
-    return this.relationsDepth;
+    return relationsDepth;
   }
 }

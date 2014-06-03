@@ -22,6 +22,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.persistence.local.UserTokenStorageFactory;
 import com.backendless.property.AbstractProperty;
 import com.backendless.property.UserProperty;
 import weborb.types.Types;
@@ -154,6 +155,12 @@ public final class UserService
 
   public BackendlessUser login( final String login, final String password ) throws BackendlessException
   {
+    return login( login, password, false );
+  }
+
+  public BackendlessUser login( final String login, final String password,
+                                boolean stayLoggedIn ) throws BackendlessException
+  {
     synchronized( currentUserLock )
     {
       if( !currentUser.getProperties().isEmpty() )
@@ -165,13 +172,19 @@ public final class UserService
       if( password == null || password.equals( "" ) )
         throw new IllegalArgumentException( ExceptionMessage.NULL_PASSWORD );
 
-      handleUserLogin( (HashMap<String, Object>) Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), login, password } ) );
+      handleUserLogin( (HashMap<String, Object>) Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), login, password } ), stayLoggedIn );
 
       return currentUser;
     }
   }
 
   public void login( final String login, final String password, final AsyncCallback<BackendlessUser> responder )
+  {
+     login( login, password, responder, false );
+  }
+
+  public void login( final String login, final String password, final AsyncCallback<BackendlessUser> responder,
+                     boolean stayLoggedIn )
   {
     if( !currentUser.getProperties().isEmpty() )
       logout( new AsyncCallback<Void>()
@@ -200,7 +213,7 @@ public final class UserService
           if( password == null || password.equals( "" ) )
             throw new IllegalArgumentException( ExceptionMessage.NULL_PASSWORD );
           else
-            Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), login, password }, getUserLoginAsyncHandler( responder ) );
+            Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), login, password }, getUserLoginAsyncHandler( responder, stayLoggedIn ) );
         }
       }
       catch( Throwable e )
@@ -217,15 +230,29 @@ public final class UserService
   }
 
   public BackendlessUser loginWithFacebookSession( com.facebook.Session facebookSession,
+                                                   com.facebook.model.GraphUser facebookUser, boolean stayLoggedIn )
+  {
+    return loginWithFacebookSession( facebookSession, facebookUser, new HashMap<String, String>(), stayLoggedIn );
+  }
+
+  public BackendlessUser loginWithFacebookSession( com.facebook.Session facebookSession,
                                                    com.facebook.model.GraphUser facebookUser,
                                                    Map<String, String> facebookFieldsMappings )
   {
+    return loginWithFacebookSession( facebookSession, facebookUser, facebookFieldsMappings, false );
+  }
+
+  public BackendlessUser loginWithFacebookSession( com.facebook.Session facebookSession,
+                                                   com.facebook.model.GraphUser facebookUser,
+                                                   Map<String, String> facebookFieldsMappings, boolean stayLoggedIn )
+  {
+
     synchronized( currentUserLock )
     {
       if( !currentUser.getProperties().isEmpty() )
         logout();
 
-      handleUserLogin( getUserServiceAndroidExtra().loginWithFacebookSession( facebookSession, facebookUser, facebookFieldsMappings ) );
+      handleUserLogin( getUserServiceAndroidExtra().loginWithFacebookSession( facebookSession, facebookUser, facebookFieldsMappings ), stayLoggedIn );
 
       return currentUser;
     }
@@ -240,8 +267,23 @@ public final class UserService
 
   public void loginWithFacebookSession( final com.facebook.Session facebookSession,
                                         final com.facebook.model.GraphUser facebookUser,
+                                        final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  {
+    loginWithFacebookSession( facebookSession, facebookUser, null, responder, stayLoggedIn );
+  }
+
+  public void loginWithFacebookSession( final com.facebook.Session facebookSession,
+                                        final com.facebook.model.GraphUser facebookUser,
                                         final Map<String, String> facebookFieldsMappings,
                                         final AsyncCallback<BackendlessUser> responder )
+  {
+    loginWithFacebookSession( facebookSession, facebookUser, facebookFieldsMappings, responder, false );
+  }
+
+  public void loginWithFacebookSession( final com.facebook.Session facebookSession,
+                                        final com.facebook.model.GraphUser facebookUser,
+                                        final Map<String, String> facebookFieldsMappings,
+                                        final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
   {
     if( !currentUser.getProperties().isEmpty() )
       logout( new AsyncCallback<Void>()
@@ -264,7 +306,7 @@ public final class UserService
       {
         synchronized( currentUserLock )
         {
-          getUserServiceAndroidExtra().loginWithFacebookSession( facebookSession, facebookUser, facebookFieldsMappings, getUserLoginAsyncHandler( responder ) );
+          getUserServiceAndroidExtra().loginWithFacebookSession( facebookSession, facebookUser, facebookFieldsMappings, getUserLoginAsyncHandler( responder, stayLoggedIn ) );
         }
       }
       catch( Throwable e )
@@ -297,10 +339,23 @@ public final class UserService
   }
 
   public void loginWithFacebook( android.app.Activity context, android.webkit.WebView webView,
+                                 final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  {
+    loginWithFacebook( context, webView, null, null, responder, stayLoggedIn );
+  }
+
+  public void loginWithFacebook( android.app.Activity context, android.webkit.WebView webView,
                                  Map<String, String> facebookFieldsMappings, List<String> permissions,
                                  final AsyncCallback<BackendlessUser> responder )
   {
-    getUserServiceAndroidExtra().loginWithFacebook( context, webView, facebookFieldsMappings, permissions, getUserLoginAsyncHandler( responder ) );
+    loginWithFacebook( context, webView, facebookFieldsMappings, permissions, responder, false );
+  }
+
+  public void loginWithFacebook( android.app.Activity context, android.webkit.WebView webView,
+                                 Map<String, String> facebookFieldsMappings, List<String> permissions,
+                                 final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  {
+    getUserServiceAndroidExtra().loginWithFacebook( context, webView, facebookFieldsMappings, permissions, getUserLoginAsyncHandler( responder, stayLoggedIn ) );
   }
 
   public void loginWithTwitter( android.app.Activity context, AsyncCallback<BackendlessUser> responder )
@@ -308,10 +363,23 @@ public final class UserService
     loginWithTwitter( context, null, null, responder );
   }
 
+  public void loginWithTwitter( android.app.Activity context, AsyncCallback<BackendlessUser> responder,
+                                boolean stayLoggedIn )
+  {
+    loginWithTwitter( context, null, null, responder, stayLoggedIn );
+  }
+
   public void loginWithTwitter( android.app.Activity context, android.webkit.WebView webView,
                                 Map<String, String> twitterFieldsMappings, AsyncCallback<BackendlessUser> responder )
   {
-    getUserServiceAndroidExtra().loginWithTwitter( context, webView, twitterFieldsMappings, getUserLoginAsyncHandler( responder ) );
+    loginWithTwitter( context, webView, twitterFieldsMappings, responder, false );
+  }
+
+  public void loginWithTwitter( android.app.Activity context, android.webkit.WebView webView,
+                                Map<String, String> twitterFieldsMappings, AsyncCallback<BackendlessUser> responder,
+                                boolean stayLoggedIn )
+  {
+    getUserServiceAndroidExtra().loginWithTwitter( context, webView, twitterFieldsMappings, getUserLoginAsyncHandler( responder, stayLoggedIn ) );
   }
 
   public void logout() throws BackendlessException
@@ -319,9 +387,15 @@ public final class UserService
     synchronized( currentUserLock )
     {
       Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "logout", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } );
-      currentUser.clearProperties();
-      HeadersManager.getInstance().removeHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY );
+      handleLogout();
     }
+  }
+
+  private void handleLogout()
+  {
+    currentUser.clearProperties();
+    HeadersManager.getInstance().removeHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY );
+    UserTokenStorageFactory.instance().getStorage().set( "" );
   }
 
   public void logout( final AsyncCallback<Void> responder )
@@ -333,10 +407,9 @@ public final class UserService
         @Override
         public void handleResponse( Void response )
         {
-          currentUser.clearProperties();
           try
           {
-            HeadersManager.getInstance().removeHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY );
+            handleLogout();
           }
           catch( Throwable e )
           {
@@ -539,9 +612,13 @@ public final class UserService
       throw new IllegalArgumentException( ExceptionMessage.NULL_USER );
   }
 
-  private void handleUserLogin( Map<String, Object> invokeResult )
+  private void handleUserLogin( Map<String, Object> invokeResult, boolean stayLoggedIn )
   {
-    HeadersManager.getInstance().addHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY, (String) invokeResult.get( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() ) );
+    String userToken = (String) invokeResult.get( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() );
+    HeadersManager.getInstance().addHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY, userToken );
+
+    if( stayLoggedIn )
+      UserTokenStorageFactory.instance().getStorage().set( userToken );
 
     for( String key : invokeResult.keySet() )
       if( !key.equals( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() ) )
@@ -549,7 +626,7 @@ public final class UserService
   }
 
   private AsyncCallback<HashMap<String, Object>> getUserLoginAsyncHandler(
-          final AsyncCallback<BackendlessUser> responder )
+          final AsyncCallback<BackendlessUser> responder, final boolean stayLoggedIn )
   {
     return new AsyncCallback<HashMap<String, Object>>()
     {
@@ -558,18 +635,12 @@ public final class UserService
       {
         try
         {
-          HeadersManager.getInstance().addHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY, (String) response.get( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() ) );
+          handleUserLogin( response, stayLoggedIn );
         }
         catch( Throwable e )
         {
           if( responder != null )
             responder.handleFault( new BackendlessFault( e ) );
-        }
-
-        for( String key : response.keySet() )
-        {
-          if( !key.equals( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() ) )
-            currentUser.setProperty( key, response.get( key ) );
         }
 
         if( responder != null )
