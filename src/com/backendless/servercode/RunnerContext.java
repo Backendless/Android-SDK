@@ -2,6 +2,8 @@ package com.backendless.servercode;
 
 import com.backendless.commons.DeviceType;
 
+import java.util.Map;
+
 /**
  * Created with IntelliJ IDEA.
  * User: ivanlappo
@@ -15,6 +17,7 @@ public class RunnerContext
   private String userId;
   private String userToken;
   private DeviceType deviceType;
+  private Map dynamicProps;
 
   public RunnerContext()
   {
@@ -58,5 +61,15 @@ public class RunnerContext
   public void setDeviceType( DeviceType deviceType )
   {
     this.deviceType = deviceType;
+  }
+
+  public Map getDynamicProps()
+  {
+    return dynamicProps;
+  }
+
+  public void setDynamicProps( Map dynamicProps )
+  {
+    this.dynamicProps = dynamicProps;
   }
 }
