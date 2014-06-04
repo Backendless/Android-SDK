@@ -17,7 +17,7 @@ public class RunnerContext
   private String userId;
   private String userToken;
   private DeviceType deviceType;
-  private Map dynamicProps;
+  private Map missingProperties;
 
   public RunnerContext()
   {
@@ -63,13 +63,13 @@ public class RunnerContext
     this.deviceType = deviceType;
   }
 
-  public Map getDynamicProps()
+  public Map getMissingProperties()
   {
-    return dynamicProps;
+    return missingProperties;
   }
 
-  public void setDynamicProps( Map dynamicProps )
+  public void setMissingProperties( Map missingProperties )
   {
-    this.dynamicProps = dynamicProps;
+    this.missingProperties = missingProperties;
   }
 }
