@@ -45,8 +45,6 @@ import com.backendless.messaging.*;
 import com.backendless.push.GCMRegistrar;
 import weborb.types.Types;
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.util.*;
 
 public final class Messaging
@@ -88,8 +86,7 @@ public final class Messaging
     if( id == null || id.equals( "" ) )
       try
       {
-        InetAddress inetAddress = InetAddress.getLocalHost();
-        id = UUID.nameUUIDFromBytes( NetworkInterface.getByInetAddress( inetAddress ).getHardwareAddress() ).toString();
+        id = UUID.randomUUID().toString();
       }
       catch( Exception e )
       {
