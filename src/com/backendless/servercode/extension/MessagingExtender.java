@@ -25,51 +25,50 @@ public abstract class MessagingExtender
   {
   }
 
-  public MessageStatus afterPublish( RunnerContext context, Object Message, PublishOptions publishOptions,
-                                     DeliveryOptions deliveryOptions,
+  public void afterPublish( RunnerContext context, Object Message, PublishOptions publishOptions,
+                            DeliveryOptions deliveryOptions,
                                      ExecutionResult<MessageStatus> status ) throws Exception
   {
-    return status.getResult();
   }
 
-  public void beforeSubscribe( RunnerContext context, String subscriptionId,
+  public void beforeSubscribe( RunnerContext context,
+                               String subscriptionId,
+                               String channel,
                                SubscriptionOptions options ) throws Exception
   {
   }
 
-  public String afterSubscribe( RunnerContext context, String subscriptionId, SubscriptionOptions options,
+  public void afterSubscribe( RunnerContext context, String subscriptionId,
+                                String channel,
+                                SubscriptionOptions options,
                                 ExecutionResult<String> subscriberId ) throws Exception
   {
-    return subscriberId.getResult();
   }
 
   public void beforePoll( RunnerContext context, String subscriptionId ) throws Exception
   {
   }
 
-  public List<Message> afterPoll( RunnerContext context, String subscriptionId, ExecutionResult<List<Message>> messages ) throws Exception
+  public void afterPoll( RunnerContext context, String subscriptionId,
+                         ExecutionResult<List<Message>> messages ) throws Exception
   {
-    return messages.getResult();
   }
 
   public void beforeCancel( RunnerContext context, String subscriptionId ) throws Exception
   {
   }
 
-  public MessageStatus afterCancel( RunnerContext context, String subscriptionId,
-                                    ExecutionResult<MessageStatus> status ) throws Exception
+  public void afterCancel( RunnerContext context, String subscriptionId, ExecutionResult<MessageStatus> status ) throws Exception
   {
-    return status.getResult();
   }
 
   public void beforeDeviceRegistration( RunnerContext context, DeviceRegistration registrationDto ) throws Exception
   {
   }
 
-  public String afterDeviceRegistration( RunnerContext context, DeviceRegistration registrationDto,
-                                         ExecutionResult<String> registrationId ) throws Exception
+  public void afterDeviceRegistration( RunnerContext context, DeviceRegistration registrationDto,
+                                       ExecutionResult<String> registrationId ) throws Exception
   {
-    return registrationId.getResult();
   }
 }
 

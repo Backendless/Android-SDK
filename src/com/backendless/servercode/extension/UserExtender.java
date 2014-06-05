@@ -27,10 +27,9 @@ public abstract class UserExtender
 
   }
 
-  public BackendlessCollection afterFind( RunnerContext context, BackendlessDataQuery query,
-                                          ExecutionResult<BackendlessCollection> result ) throws Exception
+  public void afterFind( RunnerContext context, BackendlessDataQuery query,
+                         ExecutionResult<BackendlessCollection> result ) throws Exception
   {
-    return result.getResult();
   }
 
   public void beforeFindById( RunnerContext context, String objectId, String[] relations ) throws Exception
@@ -38,59 +37,48 @@ public abstract class UserExtender
 
   }
 
-  public HashMap afterFindById( RunnerContext context, String objectId, String[] relations,
-                                ExecutionResult<HashMap> result ) throws Exception
+  public void afterFindById( RunnerContext context, String objectId, String[] relations, ExecutionResult<HashMap> result ) throws Exception
   {
-    return result.getResult();
   }
 
   public void beforeLogin( RunnerContext context, String login, String password ) throws Exception
   {
   }
 
-  public HashMap afterLogin( RunnerContext context, String login, String password,
-                             ExecutionResult<HashMap> result ) throws Exception
+  public void afterLogin( RunnerContext context, String login, String password, ExecutionResult<HashMap> result ) throws Exception
   {
-    return result.getResult();
   }
 
   public void beforeRegister( RunnerContext context, HashMap userValue ) throws Exception
   {
   }
 
-  public HashMap afterRegister( RunnerContext context, HashMap userValue,
-                                ExecutionResult<HashMap> result ) throws Exception
+  public void afterRegister( RunnerContext context, HashMap userValue, ExecutionResult<HashMap> result ) throws Exception
   {
-    return result.getResult();
   }
 
   public void beforeUpdate( RunnerContext context, HashMap userValue ) throws Exception
   {
   }
 
-  public HashMap afterUpdate( RunnerContext context, HashMap userValue,
-                              ExecutionResult<HashMap> result ) throws Exception
+  public void afterUpdate( RunnerContext context, HashMap userValue, ExecutionResult<HashMap> result ) throws Exception
   {
-    return result.getResult();
   }
 
   public void beforeRemove( RunnerContext context, String id ) throws Exception
   {
   }
 
-  public Long afterRemove( RunnerContext context, String id, ExecutionResult<Long> result ) throws Exception
+  public void afterRemove( RunnerContext context, String id, ExecutionResult<Long> result ) throws Exception
   {
-    return result.getResult();
   }
 
   public void beforeDescribe( RunnerContext context ) throws Exception
   {
   }
 
-  public List<UserProperty> afterDescribe( RunnerContext context,
-                                           ExecutionResult<List<UserProperty>> result ) throws Exception
+  public void afterDescribe( RunnerContext context, ExecutionResult<List<UserProperty>> result ) throws Exception
   {
-    return result.getResult();
   }
 
   public void beforeRestorePassword( RunnerContext context, String email ) throws Exception

@@ -20,10 +20,8 @@ public abstract class FilesExtender
   {
   }
 
-  public String afterMoveToRepository( RunnerContext context, String fileUrlLocation,
-                                       ExecutionResult<String> result ) throws Exception
+  public void afterMoveToRepository( RunnerContext context, String fileUrlLocation, ExecutionResult<String> result ) throws Exception
   {
-    return result.getResult();
   }
 
   public void beforeDeleteFileOrDirectory( RunnerContext context, String fileUrlLocation ) throws Exception

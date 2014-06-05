@@ -18,11 +18,22 @@ public class ExecutionResult<T>
   {
   }
 
+  public ExecutionResult( T result )
+  {
+    this.result = result;
+  }
+
   public ExecutionResult( T res, Exception exception )
   {
     this.result = res;
     if( exception != null )
       this.exception = new ExceptionWrapper( exception );
+  }
+
+  public ExecutionResult( T result, ExceptionWrapper exception )
+  {
+    this.result = result;
+    this.exception = exception;
   }
 
   public ExceptionWrapper getException()
@@ -44,5 +55,4 @@ public class ExecutionResult<T>
   {
     this.exception = exception;
   }
-
 }
