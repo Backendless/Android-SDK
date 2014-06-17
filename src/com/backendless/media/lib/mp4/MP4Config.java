@@ -33,9 +33,14 @@ public class MP4Config {
 	
 	private MP4Parser mp4Parser;
 	private String mProfilLevel, mPPS, mSPS;
+  private static String BASE_LEVEL_3_0 = "42001e";  // MPEG4, AVC(H.264) Baseline 3.0, AAC-HC, [MPEG-4 AVC/H.264]
+  private static String BASE_LEVEL_3_1 = "42001f";  // MPEG4, AVC(H.264) Baseline 3.0, AAC-HC, [MPEG-4 AVC/H.264]
+  private static String MAIN_LEVEL_3_0 = "4d001e";  // MPEG4, AVC(H.264) Main 3.0, AAC-HC,     [MPEG-4 AVC/H.264]
+  private static String MAIN_LEVEL_3_1 = "4d001f";  // MPEG4, AVC(H.264) Main 3.0, AAC-HC,     [MPEG-4 AVC/H.264]
+  private static String HIGH_LEVEL_4_1 = "4d001f";  // MPEG4, AVC(H.264) High 4.1, AAC-HC,     [MPEG-4 AVC/H.264]
 
 	public MP4Config(String profil, String sps, String pps) {
-		mProfilLevel = profil; 
+		mProfilLevel = MAIN_LEVEL_3_0;//profil;
 		mPPS = pps; 
 		mSPS = sps;
 	}
@@ -43,13 +48,13 @@ public class MP4Config {
 	public MP4Config(String sps, String pps) {
 		mPPS = pps;
 		mSPS = sps;
-		mProfilLevel = MP4Parser.toHexString( Base64.decode( sps, Base64.NO_WRAP ),1,3);
+		mProfilLevel = MAIN_LEVEL_3_0;//MP4Parser.toHexString( Base64.decode( sps, Base64.NO_WRAP ),1,3);
 	}	
 	
 	public MP4Config(byte[] sps, byte[] pps) {
 		mPPS = Base64.encodeToString( pps, 0, pps.length, Base64.NO_WRAP );
 		mSPS = Base64.encodeToString( sps, 0, sps.length, Base64.NO_WRAP );
-		mProfilLevel = MP4Parser.toHexString(sps,1,3);
+		mProfilLevel = MAIN_LEVEL_3_0;//MP4Parser.toHexString(sps,1,3);
 	}
 	
 	/**
