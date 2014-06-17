@@ -12,6 +12,7 @@ public class FootprintsManager
   private static final FootprintsManager instance = new FootprintsManager();
   private final Map<Object, Footprint> persistenceCache = new WeakHashMap<Object, Footprint>();
   public final Inner Inner = new Inner();
+  private static Set<Object> toBeCached = new HashSet<Object>(); //for cyclic entities
 
   static FootprintsManager getInstance()
   {
@@ -123,6 +124,7 @@ public class FootprintsManager
 
     public void putEntityFootprintToCache( Object instance, Object entity )
     {
+      toBeCached.add( entity );
       try
       {
         if( instance instanceof BackendlessCollection )
@@ -130,19 +132,23 @@ public class FootprintsManager
           AnonymousObject typedObject = (AnonymousObject) ((NamedObject) entity).getTypedObject();
           ArrayType dataArray = (ArrayType) typedObject.getProperties().get( "data" );
           Object[] instances = ((BackendlessCollection) instance).getCurrentPage().toArray();
-          putEntityFootprintToCache( instances, dataArray );
+          if( !toBeCached.contains( dataArray ) )
+            putEntityFootprintToCache( instances, dataArray );
         }
         else if( entity instanceof NamedObject )
-          putEntityFootprintToCache( instance, ((NamedObject) entity).getTypedObject() );
+          if( !toBeCached.contains( ((NamedObject) entity).getTypedObject() ) )
+            putEntityFootprintToCache( instance, ((NamedObject) entity).getTypedObject() );
         else if( entity instanceof AnonymousObject )
-          putEntityFootprintToCache( instance, ((AnonymousObject) entity).getProperties() );
+          if( !toBeCached.contains( ((AnonymousObject) entity).getProperties() ) )
+            putEntityFootprintToCache( instance, ((AnonymousObject) entity).getProperties() );
         else if( entity instanceof ArrayType )
         {
           Object[] entities = (Object[]) ((ArrayType) entity).getArray();
           Object[] arrayInstance = instance instanceof List ? ((List) instance).toArray() : (Object[]) instance;
 
           for( int i = 0; i < arrayInstance.length; i++ )
-            putEntityFootprintToCache( arrayInstance[ i ], entities[ i ] );
+            if( !toBeCached.contains( entities[ i ] ) )
+              putEntityFootprintToCache( arrayInstance[ i ], entities[ i ] );
         }
         else
         {
@@ -154,7 +160,8 @@ public class FootprintsManager
             if( entityEntryValue instanceof NamedObject || entityEntryValue instanceof ArrayType )
             {
               Object innerInstance = getObjectFieldByName( instance, entityEntry.getKey() );
-              putEntityFootprintToCache( innerInstance, entityEntry.getValue() );
+              if( !toBeCached.contains( entityEntry.getValue() ) )
+                putEntityFootprintToCache( innerInstance, entityEntry.getValue() );
             }
           }
 

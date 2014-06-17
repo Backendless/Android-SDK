@@ -18,8 +18,10 @@
 
 package com.backendless;
 
+import com.backendless.commons.DeviceType;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.servercode.Util;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -49,7 +51,12 @@ public class HeadersManager
           instance = new HeadersManager();
           instance.addHeader( HeadersEnum.APP_ID_NAME, Backendless.getApplicationId() );
           instance.addHeader( HeadersEnum.SECRET_KEY_NAME, Backendless.getSecretKey() );
-          instance.addHeader( HeadersEnum.APP_TYPE_NAME, "ANDROID" );
+
+          if( Util.isCodeRunner() )
+            instance.addHeader( HeadersEnum.APP_TYPE_NAME, DeviceType.BL.name() );
+          else
+            instance.addHeader( HeadersEnum.APP_TYPE_NAME, DeviceType.ANDROID.name() );
+
           instance.addHeader( HeadersEnum.API_VERSION, "1.0" );
           instance.addHeaders( Backendless.getHeaders() );
         }

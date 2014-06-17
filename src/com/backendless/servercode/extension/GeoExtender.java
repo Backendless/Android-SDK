@@ -26,20 +26,18 @@ public abstract class GeoExtender
   {
   }
 
-  public GeoPoint afterAddPoint( RunnerContext context, GeoPoint point,
-                                 ExecutionResult<GeoPoint> addedPoint ) throws Exception
+  public void afterAddPoint( RunnerContext context, GeoPoint point,
+                             ExecutionResult<GeoPoint> addedPoint ) throws Exception
   {
-    return addedPoint.getResult();
   }
 
   public void beforeUpdatePoint( RunnerContext context, GeoPoint point ) throws Exception
   {
   }
 
-  public GeoPoint afterUpdatePoint( RunnerContext context, GeoPoint point,
-                                    ExecutionResult<GeoPoint> updatedPoint ) throws Exception
+  public void afterUpdatePoint( RunnerContext context, GeoPoint point,
+                                ExecutionResult<GeoPoint> updatedPoint ) throws Exception
   {
-    return updatedPoint.getResult();
   }
 
   public void beforeRemovePoint( RunnerContext context, String pointId ) throws Exception
@@ -54,40 +52,36 @@ public abstract class GeoExtender
   {
   }
 
-  public List<GeoCategory> afterGetCategories( RunnerContext context,
-                                               ExecutionResult<List<GeoCategory>> categories ) throws Exception
+  public void afterGetCategories( RunnerContext context,
+                                  ExecutionResult<List<GeoCategory>> categories ) throws Exception
   {
-    return categories.getResult();
   }
 
   public void beforeGetPoints( RunnerContext context, BackendlessGeoQuery query ) throws Exception
   {
   }
 
-  public BackendlessCollection<GeoPoint> afterGetPoints( RunnerContext context, BackendlessGeoQuery query,
-                                                         ExecutionResult<BackendlessCollection<GeoPoint>> points ) throws Exception
+  public void afterGetPoints( RunnerContext context, BackendlessGeoQuery query,
+                              ExecutionResult<BackendlessCollection<GeoPoint>> points ) throws Exception
   {
-    return points.getResult();
   }
 
   public void beforeAddCategory( RunnerContext context, String categoryName ) throws Exception
   {
   }
 
-  public GeoCategory afterAddCategory( RunnerContext context, String categoryName,
-                                       ExecutionResult<GeoCategory> addedCategory ) throws Exception
+  public void afterAddCategory( RunnerContext context, String categoryName,
+                                ExecutionResult<GeoCategory> addedCategory ) throws Exception
   {
-    return addedCategory.getResult();
   }
 
   public void beforeDeleteCategory( RunnerContext context, String categoryName ) throws Exception
   {
   }
 
-  public Boolean afterDeleteCategory( RunnerContext context, String categoryName,
-                                      ExecutionResult<Boolean> deleted ) throws Exception
+  public void afterDeleteCategory( RunnerContext context, String categoryName,
+                                   ExecutionResult<Boolean> deleted ) throws Exception
   {
-    return deleted.getResult();
   }
 
   public void beforeRelativeFind( RunnerContext context, BackendlessGeoQuery backendlessGeoQuery ) throws Exception
@@ -95,10 +89,9 @@ public abstract class GeoExtender
 
   }
 
-  public BackendlessCollection afterRelativeFind( RunnerContext context, BackendlessGeoQuery backendlessGeoQuery,
-                                                  ExecutionResult<BackendlessCollection<GeoPoint>> findPoints ) throws Exception
+  public void afterRelativeFind( RunnerContext context, BackendlessGeoQuery backendlessGeoQuery,
+                                 ExecutionResult<BackendlessCollection<GeoPoint>> findPoints ) throws Exception
   {
-    return findPoints.getResult();
   }
 }
 
