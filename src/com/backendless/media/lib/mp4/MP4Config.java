@@ -40,7 +40,7 @@ public class MP4Config {
   private static String HIGH_LEVEL_4_1 = "4d001f";  // MPEG4, AVC(H.264) High 4.1, AAC-HC,     [MPEG-4 AVC/H.264]
 
 	public MP4Config(String profil, String sps, String pps) {
-		mProfilLevel = MAIN_LEVEL_3_0;//profil;
+		mProfilLevel = MAIN_LEVEL_3_1;//profil;
 		mPPS = pps; 
 		mSPS = sps;
 	}
@@ -48,13 +48,13 @@ public class MP4Config {
 	public MP4Config(String sps, String pps) {
 		mPPS = pps;
 		mSPS = sps;
-		mProfilLevel = MAIN_LEVEL_3_0;//MP4Parser.toHexString( Base64.decode( sps, Base64.NO_WRAP ),1,3);
+		mProfilLevel = MAIN_LEVEL_3_1;//MP4Parser.toHexString( Base64.decode( sps, Base64.NO_WRAP ),1,3);
 	}	
 	
 	public MP4Config(byte[] sps, byte[] pps) {
 		mPPS = Base64.encodeToString( pps, 0, pps.length, Base64.NO_WRAP );
 		mSPS = Base64.encodeToString( sps, 0, sps.length, Base64.NO_WRAP );
-		mProfilLevel = MAIN_LEVEL_3_0;//MP4Parser.toHexString(sps,1,3);
+		mProfilLevel = MAIN_LEVEL_3_1;//MP4Parser.toHexString(sps,1,3);
 	}
 	
 	/**
