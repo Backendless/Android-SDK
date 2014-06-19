@@ -174,7 +174,7 @@ public final class Backendless
     return backendlessService.getSecretKey();
   }
 
-  protected static String getVersion()
+  public static String getVersion()
   {
     if( backendlessService == null )
       throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
