@@ -18,6 +18,7 @@
 
 package com.backendless;
 
+import com.backendless.async.callback.BackendlessCallback;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.io.BackendlessUserFactory;
 import com.backendless.io.BackendlessUserWriter;
@@ -140,6 +141,24 @@ public final class Backendless
 
     if( userToken != null && !userToken.equals( "" ) )
       HeadersManager.getInstance().addHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY, userToken );
+
+    String userId = UserTokenStorageFactory.instance().getStorage().getUserId();
+
+    if( !userId.equals( "" ) )
+    {
+      synchronized( Backendless.UserService.currentUserLock )
+      {
+        Backendless.UserService.findById( userId, new BackendlessCallback<BackendlessUser>()
+        {
+          @Override
+          public void handleResponse( BackendlessUser response )
+          {
+            Backendless.UserService.currentUser.setProperties( response.getProperties() );
+          }
+        } );
+      }
+    }
+
   }
 
   public static void setUIState( String state )

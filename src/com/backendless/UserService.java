@@ -34,8 +34,8 @@ public final class UserService
   final static String USER_MANAGER_SERVER_ALIAS = "com.backendless.services.users.UserService";
   private final static String PREFS_NAME = "backendless_pref";
 
-  private final static BackendlessUser currentUser = new BackendlessUser();
-  private final static Object currentUserLock = new Object();
+  final static BackendlessUser currentUser = new BackendlessUser();
+  final static Object currentUserLock = new Object();
 
   private static final UserService instance = new UserService();
 
@@ -455,6 +455,51 @@ public final class UserService
     }
   }
 
+  public BackendlessUser findById( String id ) throws BackendlessException
+  {
+    if( id == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
+
+    BackendlessUser result = new BackendlessUser();
+    result.putProperties( (HashMap<String, Object>) Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), id, new ArrayList() } ) );
+
+    return result;
+  }
+
+  public void findById( final String id, final AsyncCallback<BackendlessUser> responder )
+  {
+    try
+    {
+      if( id == null )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
+
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), id, new ArrayList() }, new AsyncCallback<HashMap<String, Object>>()
+      {
+        @Override
+        public void handleResponse( HashMap<String, Object> response )
+        {
+          BackendlessUser result = new BackendlessUser();
+          result.putProperties( response );
+
+          if( responder != null )
+            responder.handleResponse( result );
+        }
+
+        @Override
+        public void handleFault( BackendlessFault fault )
+        {
+          if( responder != null )
+            responder.handleFault( fault );
+        }
+      } );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
   public void assignRole( String identity, String roleName ) throws BackendlessException
   {
     if( identity == null )
@@ -617,12 +662,12 @@ public final class UserService
     String userToken = (String) invokeResult.get( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() );
     HeadersManager.getInstance().addHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY, userToken );
 
-    if( stayLoggedIn )
-      UserTokenStorageFactory.instance().getStorage().set( userToken );
-
     for( String key : invokeResult.keySet() )
       if( !key.equals( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() ) )
         currentUser.setProperty( key, invokeResult.get( key ) );
+
+    if( stayLoggedIn )
+      UserTokenStorageFactory.instance().getStorage().set( userToken );
   }
 
   private AsyncCallback<HashMap<String, Object>> getUserLoginAsyncHandler(
