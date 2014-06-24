@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public abstract class CustomEventHandler
 {
-  public Map handleEvent( EventContext context, Map ecentArgs )
+  public Map handleEvent( EventContext context, Map eventArgs )
   {
     return null;
   }
