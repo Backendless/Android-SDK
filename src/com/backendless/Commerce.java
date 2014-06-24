@@ -20,7 +20,7 @@ public final class Commerce
 
   private Commerce()
   {
-    Types.addClientClassMapping( "com.backendless.management.commerce.GooglePlayPurchaseStatusDTO", GooglePlayPurchaseStatus.class );
+    Types.addClientClassMapping( "com.backendless.management.commerce.GooglePlayPurchaseStatus", GooglePlayPurchaseStatus.class );
   }
 
   public GooglePlayPurchaseStatus validatePlayPurchase( String packageName, String productId, String token )
