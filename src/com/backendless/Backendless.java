@@ -18,6 +18,7 @@
 
 package com.backendless;
 
+import com.backendless.async.callback.BackendlessCallback;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.io.BackendlessUserFactory;
 import com.backendless.io.BackendlessUserWriter;
@@ -41,6 +42,7 @@ public final class Backendless
   public static final Messaging Messaging = com.backendless.Messaging.getInstance();
   public static final Geo Geo = com.backendless.Geo.getInstance();
   public static final Files Files = com.backendless.Files.getInstance();
+  public static final Commerce Commerce = com.backendless.Commerce.getInstance();
   private static String url = "https://api.backendless.com";
   private static IBackendlessService backendlessService;
   private static IBackendlessService.Init backendlessInitService;
@@ -139,6 +141,24 @@ public final class Backendless
 
     if( userToken != null && !userToken.equals( "" ) )
       HeadersManager.getInstance().addHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY, userToken );
+
+    String userId = UserTokenStorageFactory.instance().getStorage().getUserId();
+
+    if( !userId.equals( "" ) )
+    {
+      synchronized( Backendless.UserService.currentUserLock )
+      {
+        Backendless.UserService.findById( userId, new BackendlessCallback<BackendlessUser>()
+        {
+          @Override
+          public void handleResponse( BackendlessUser response )
+          {
+            Backendless.UserService.currentUser.setProperties( response.getProperties() );
+          }
+        } );
+      }
+    }
+
   }
 
   public static void setUIState( String state )

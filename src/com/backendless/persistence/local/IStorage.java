@@ -22,4 +22,6 @@ public interface IStorage<T>
 {
   public T get();
   public void set(T value);
+
+  public String getUserId();
 }

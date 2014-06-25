@@ -20,6 +20,7 @@ package com.backendless.persistence.local;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import com.backendless.Backendless;
 
 class AndroidUserTokenStorage implements IStorage<String>
 {
@@ -28,6 +29,12 @@ class AndroidUserTokenStorage implements IStorage<String>
   AndroidUserTokenStorage( Context context )
   {
     this.context = context;
+  }
+
+  @Override
+  public String getUserId()
+  {
+    return context.getSharedPreferences( UserTokenStorageFactory.key, Context.MODE_PRIVATE ).getString( "user-id", "" );
   }
 
   @Override
@@ -41,6 +48,7 @@ class AndroidUserTokenStorage implements IStorage<String>
   {
     SharedPreferences.Editor editor = context.getSharedPreferences( UserTokenStorageFactory.key, Context.MODE_PRIVATE ).edit();
     editor.putString( UserTokenStorageFactory.key, value );
+    editor.putString( "user-id", Backendless.UserService.CurrentUser().getUserId() );
     editor.commit();
   }
 }
