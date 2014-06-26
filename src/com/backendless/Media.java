@@ -25,32 +25,31 @@ import android.preference.PreferenceManager;
 import android.view.SurfaceHolder;
 import android.widget.MediaController;
 import android.widget.VideoView;
-import com.backendless.commons.media.OperationMeta;
-import com.backendless.exceptions.BackendlessException;
-import com.backendless.media.MediaOperations;
 import com.backendless.media.StreamProtocolType;
 import com.backendless.media.StreamQuality;
 import com.backendless.media.StreamType;
 import com.backendless.media.lib.Session;
 import com.backendless.media.lib.SessionBuilder;
 import com.backendless.media.lib.audio.AudioQuality;
-import com.backendless.media.lib.gl.SurfaceView;
+import com.backendless.media.lib.gl.BackendlessSurfaceView;
 import com.backendless.media.lib.rtsp.RtspClient;
 import com.backendless.media.lib.video.VideoQuality;
 
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class Media
 {
-  private final static String GEO_MANAGER_SERVER_ALIAS = "com.backendless.services.media.MediaService";
+  private final static String MEDIA_MANAGER_SERVER_ALIAS = "com.backendless.services.media.MediaService";
   private final static String SERVER_URL_LIVE = "10.0.1.9:1935/mediaAppLive/";  //Change to api.backendless.com
   private final static String SERVER_URL_VOD = "10.0.1.9:1935/mediaAppVod/";  //Change to api.backendless.com
   private final static String RTSP_PROTOCOL = StreamProtocolType.RTSP.getValue();
   private final static String HLS_PROTOCOL = StreamProtocolType.HLS.getValue();
   private final static String USER_NAME = "root";
   private final static String USER_PASSWORD = "123";
-  private String URL = "";
+  private String URL;
+  private String params;
 
   private static final Media instance = new Media();
 
@@ -59,35 +58,48 @@ public final class Media
     return instance;
   }
 
-  public void publishLiveAndRecord( Context context,  SurfaceView surfaceView, String tube, String streamName, StreamQuality streamQuality )
+  public void publishLiveAndRecord( Context context,  BackendlessSurfaceView backendlessSurfaceView, String tube, String streamName, StreamQuality streamQuality )
   {
-    publishStream( context, surfaceView, tube, streamName, true, streamQuality );
+    publishStream( context, backendlessSurfaceView, tube, streamName, true, streamQuality, StreamType.LiveRecording );
   }
 
-  public void publishLive( Context context, SurfaceView surfaceView, String tube, String streamName, StreamQuality streamQuality )
+  public void publishLive( Context context, BackendlessSurfaceView backendlessSurfaceView, String tube, String streamName, StreamQuality streamQuality )
   {
-    publishStream( context, surfaceView, tube, streamName, false, streamQuality );
+    publishStream( context, backendlessSurfaceView, tube, streamName, false, streamQuality, StreamType.Live );
   }
 
   public void playLive( Context context, VideoView videoView, StreamProtocolType streamProtocolType, String tube, String streamName )
   {
-    playStream( context, videoView, streamProtocolType, tube, streamName, StreamType.Live );
+    playStream( context, videoView, streamProtocolType, tube, streamName, StreamType.Available );
   }
 
   public void playRecord( Context context, VideoView videoView, StreamProtocolType streamProtocolType, String tube, String streamName )
   {
-    playStream( context, videoView, streamProtocolType, tube, streamName, StreamType.Available );
+    playStream( context, videoView, streamProtocolType, tube, streamName, StreamType.Recording );
   }
 
-  private void publishStream( Context context, SurfaceView surfaceView, String tube, String streamName,
-                              Boolean iSRecord, StreamQuality streamQuality )
+  private void publishStream( Context context, BackendlessSurfaceView backendlessSurfaceView, String tube, String streamName,
+                              Boolean iSRecord, StreamQuality streamQuality, StreamType streamType )
   {
-    URL = RTSP_PROTOCOL + SERVER_URL_LIVE + streamName;
-    Session session = getSession( context, surfaceView );
+    String operationType;
+
+    if( streamType.getValue()== 1 )
+      operationType = "publishLive";
+
+    else operationType = "publishLiveAndRecord";
+
+    params = getConnectParams( tube, operationType, streamName);
+    URL = RTSP_PROTOCOL + SERVER_URL_LIVE + streamName + params;
+    if( iSRecord )
+    {
+
+    }
+
+    Session session = getSession( context, backendlessSurfaceView );
     RtspClient rtspClient = getRtspClient( context, session );
-    surfaceView.getHolder().addCallback( (SurfaceHolder.Callback) context );
+    backendlessSurfaceView.getHolder().addCallback( (SurfaceHolder.Callback) context );
     selectQuality(session, streamQuality);
-    startOrStopStream( context, rtspClient );
+    startOrStopStream( context, rtspClient, URL );
 
 //    String streamType = null;
 //    String operation = "playRecord";
@@ -100,6 +112,7 @@ public final class Media
 
   private void playStream( Context context, VideoView videoView, StreamProtocolType streamProtocolType, String tube, String streamName, StreamType streamType )
   {
+    String operationType = null;
     String url = null;
 
     if( streamProtocolType == null )
@@ -109,20 +122,36 @@ public final class Media
 
     if(  streamProtocolType.equals( StreamProtocolType.RTSP ))
     {
-      if( streamType.getValue() == 1  )
-        url = RTSP_PROTOCOL + SERVER_URL_VOD + streamName;
+      if( streamType.getValue() == 2  )
+      {
+        operationType = "playLive";
+        params = getConnectParams( tube, operationType, streamName);
+        url = RTSP_PROTOCOL + SERVER_URL_LIVE + streamName + params;
+      }
 
       else
-        url =  RTSP_PROTOCOL + SERVER_URL_VOD + "mp4:" + streamName + ".mp4"; //Add File Format
+      {
+        operationType = "playRecord";
+        params = getConnectParams( tube, operationType, streamName);
+        url =  RTSP_PROTOCOL + SERVER_URL_VOD + "mp4:" + streamName + ".mp4" + params; //Add File Format
+      }
     }
 
     if( streamProtocolType.equals( StreamProtocolType.HLS ))
     {
-      if( streamType.getValue() == 1 )
-        url = HLS_PROTOCOL + SERVER_URL_VOD + streamName + "/playlist.m3u8";
+      if( streamType.getValue() == 2 )
+      {
+        operationType = "playLive";
+        params = getConnectParams( tube, operationType, streamName);
+        url = HLS_PROTOCOL + SERVER_URL_LIVE + streamName + "/playlist.m3u8" + params;
+      }
 
       else
-        url =  HLS_PROTOCOL + SERVER_URL_VOD + "mp4:" + streamName + ".mp4/playlist.m3u8"; //Add File Format
+      {
+        operationType = "playRecord";
+        params = getConnectParams( tube, operationType, streamName);
+        url =  HLS_PROTOCOL + SERVER_URL_VOD + "mp4:" + streamName + ".mp4/playlist.m3u8"+ params; //Add File Format
+      }
     }
 
     videoView.setVideoURI( Uri.parse( url ));
@@ -131,19 +160,32 @@ public final class Media
     videoView.start();
   }
 
-  private Session getSession(Context context, SurfaceView mSurfaceView)
+  private Session getSession(Context context, BackendlessSurfaceView mBackendlessSurfaceView )
   {
     Session mSession = SessionBuilder.getInstance()
             .setContext( context )
             .setAudioEncoder( SessionBuilder.AUDIO_AAC )
             .setAudioQuality( new AudioQuality( 8000, 16000 ) )
             .setVideoEncoder( SessionBuilder.VIDEO_H264 )
-            .setSurfaceView( mSurfaceView )
+            .setSurfaceView( mBackendlessSurfaceView )
             .setPreviewOrientation( 0 )
             .setCallback( (Session.Callback) context )
             .build();
 
     return mSession;
+  }
+
+  private String getConnectParams(String tube, String operationType, String streamName)
+  {
+    String paramsToSend;
+    BackendlessUser currentUser = Backendless.UserService.CurrentUser();
+    Object identity = currentUser != null?currentUser.getProperty( "user-token" ): null;
+
+    HashMap<String, String> map = new HashMap<String, String>(  );
+    map.putAll( HeadersManager.getInstance().getHeaders() );
+    map.put( "identity", identity != null? identity.toString(): map.get( "user-token" ) );
+    paramsToSend = "?application-id=" + map.get( "application-id" ) + "&version=" + Backendless.getVersion() + "&identity=" + map.get( "identity" ) + "&tube=" + tube + "&operationType=" + operationType+"&streamName=" + streamName;
+    return paramsToSend;
   }
 
   private void selectQuality(Session session, StreamQuality streamQuality)
@@ -159,28 +201,28 @@ public final class Media
   }
 
   // Connects/disconnects to the RTSP server and starts/stops the stream
-  private void startOrStopStream( Context context, RtspClient rtspClient ) {
+  private void startOrStopStream( Context context, RtspClient rtspClient, String url ) {
     if (!rtspClient.isStreaming()) {
       String ip,port,path;
 
       // We save the content user inputs in Shared Preferences
       SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences( context );
       SharedPreferences.Editor editor = mPrefs.edit();
-      editor.putString("uri", URL);
+      editor.putString("uri", url);
       editor.putString("password", USER_PASSWORD);
       editor.putString("username", USER_NAME);
       editor.commit();
 
       // We parse the URI written in the Editext
       Pattern uri = Pattern.compile("rtsp://(.+):(\\d+)/(.+)");
-      Matcher m = uri.matcher(URL); m.find();
+      Matcher m = uri.matcher(url); m.find();
       ip = m.group(1);
       port = m.group(2);
       path = m.group(3);
 
       rtspClient.setCredentials(USER_NAME, USER_PASSWORD);
-      rtspClient.setServerAddress(ip, Integer.parseInt(port));
-      rtspClient.setStreamPath("/"+path);
+      rtspClient.setServerAddress( ip, Integer.parseInt( port ) );
+      rtspClient.setStreamPath( "/" + path );
       rtspClient.startStream();
 
     } else {
@@ -195,36 +237,6 @@ public final class Media
     RtspClient mClient = new RtspClient();
     mClient.setSession( mSession );
     mClient.setCallback( (RtspClient.Callback) context );
-
   return mClient;
-  }
-  private boolean acceptConnection( String tube, MediaOperations operation ) throws BackendlessException
-  {
-    Boolean hasAccess = false;
-
-    hasAccess = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "acceptConnection", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), null, tube, operation } );
-    return hasAccess;
-  }
-
-//  private void publishStarted( AppVersion appVersion, String tube, StreamType type, String identity,
-//                               MediaObjectInfo mediaObjectInfo )
-//  {
-//    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "publishStarted", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), categoryName } );
-//  }
-//
-//  private void publishFinished( AppVersion appVersion, String tube, StreamType type, String identity,
-//                                MediaObjectInfo mediaObjectInfo )
-//  {
-//    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "publishFinished", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), categoryName } );
-//  }
-
-  private void streamDestroyed( String identity, OperationMeta meta )
-  {
-    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "streamDestroyed", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), identity, meta } );
-  }
-
-  private void streamCreated( String identity, OperationMeta meta )
-  {
-    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "streamCreated", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), identity, meta } );
   }
 }

@@ -1,3 +1,5 @@
+
+
 /*
  * ********************************************************************************************************************
  *  <p/>
@@ -27,7 +29,7 @@ import com.backendless.media.lib.rtp.H263Packetizer;
 import java.io.IOException;
 
 /**
- * A class for backendless H.263 from the camera of an android device using RTP.
+ * A class for streaming H.263 from the camera of an android device using RTP.
  * You should use a {@link android.service.textservice.SpellCheckerService.Session} instantiated with {@link SessionBuilder} instead of using this class directly.
  * Call {@link #setDestinationAddress(InetAddress)}, {@link #setDestinationPorts(int)} and {@link #setVideoQuality(VideoQuality)}
  * to configure the stream. You can then call {@link #start()} to start the RTP stream.
@@ -40,9 +42,8 @@ public class H263Stream extends VideoStream {
 	 * Uses CAMERA_FACING_BACK by default.
 	 * @throws java.io.IOException
 	 */
-	public H263Stream() throws IOException
-  {
-		this( CameraInfo.CAMERA_FACING_BACK);
+	public H263Stream() throws IOException {
+		this(CameraInfo.CAMERA_FACING_BACK);
 	}
 
 	/**
@@ -60,16 +61,14 @@ public class H263Stream extends VideoStream {
 	/**
 	 * Starts the stream.
 	 */
-	public synchronized void start() throws IllegalStateException, IOException
-  {
+	public synchronized void start() throws IllegalStateException, IOException {
 		if (!mStreaming) {
 			configure();
 			super.start();
 		}
 	}
 	
-	public synchronized void configure() throws IllegalStateException, IOException
-  {
+	public synchronized void configure() throws IllegalStateException, IOException {
 		super.configure();
 		mMode = MODE_MEDIARECORDER_API;
 		mQuality = mRequestedQuality.clone();
@@ -79,7 +78,7 @@ public class H263Stream extends VideoStream {
 	 * Returns a description of the stream using SDP. It can then be included in an SDP file.
 	 */
 	public String getSessionDescription() {
-		return "m=video "+ String.valueOf( getDestinationPorts()[ 0 ] )+" RTP/AVP 96\r\n" +
+		return "m=video "+String.valueOf(getDestinationPorts()[0])+" RTP/AVP 96\r\n" +
 				"a=rtpmap:96 H263-1998/90000\r\n";
 	}
 

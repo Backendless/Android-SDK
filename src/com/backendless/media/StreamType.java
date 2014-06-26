@@ -20,7 +20,7 @@ package com.backendless.media;
 
 public enum StreamType
 {
-  Available(0),  Live(1), Recording(2), LiveRecording(3), NotAvailable(4);
+  Available( 0 ), Live( 1 ), Recording( 2 ), LiveRecording( 3 ), NotAvailable( 4 );
   private int value;
 
   private StreamType( int value )
@@ -36,10 +36,17 @@ public enum StreamType
   public static StreamType convertWowzaStreamType( String streamType )
   {
 
-    if("live".equals( streamType ))
+    if( "live".equals( streamType ) )
       return Live;
-    if("live-record".equals( streamType ))
+
+    if( "live-record".equals( streamType ) )
       return LiveRecording;
+
+    if( "play-live".equals( streamType ) )
+      return Recording;
+
+    if( "play-record".equals( streamType ) )
+      return Available;
     throw new UnsupportedOperationException();
   }
 }

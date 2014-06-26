@@ -20,11 +20,11 @@ package com.backendless.media;
 
 public enum StreamQuality
 {
-  LOW("176x144, 15 fps, 170 Kbps"), MEDIUM("352x288, 30 fps, 250 Kbps"), HIGH("640x480, 30 fps, 600 Kbps");
+  LOW( "176x144, 30 fps, 170 Kbps" ), MEDIUM( "352x288, 30 fps, 300 Kbps" ), HIGH( "640x480, 30 fps, 600 Kbps" );
 
   /*
   * LOW - 176x144, 170 Kbps
-  * MEDIUM - 352x288, 250 Kbps
+  * MEDIUM - 352x288, 300 Kbps
   * HIGH - 640x480, 600 Kbps
   */
   private String value = "";

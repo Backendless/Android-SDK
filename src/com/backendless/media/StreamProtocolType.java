@@ -18,9 +18,9 @@
 
 package com.backendless.media;
 
-public enum  StreamProtocolType
+public enum StreamProtocolType
 {
-  RTSP("rtsp://"), HLS("http://");
+  RTSP( "rtsp://" ), HLS( "http://" );
 
   /*
   * RTSP - Native Android protocol
