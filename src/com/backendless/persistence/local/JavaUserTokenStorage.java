@@ -18,6 +18,7 @@
 
 package com.backendless.persistence.local;
 
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 class JavaUserTokenStorage implements IStorage<String>
@@ -45,5 +46,13 @@ class JavaUserTokenStorage implements IStorage<String>
   public void set( String value )
   {
     prefs.put( UserTokenStorageFactory.key, value );
+    try
+    {
+      prefs.flush();
+    }
+    catch( BackingStoreException e )
+    {
+      throw new RuntimeException( e );
+    }
   }
 }

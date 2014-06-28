@@ -664,7 +664,7 @@ public final class UserService
    *
    * @return user id, if the user is logged in; else empty string
    */
-  public String userLoggedIn()
+  public String loggedInUser()
   {
     return UserIdStorageFactory.instance().getStorage().get();
   }
