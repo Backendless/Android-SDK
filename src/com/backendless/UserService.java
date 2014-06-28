@@ -22,6 +22,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.persistence.local.UserIdStorageFactory;
 import com.backendless.persistence.local.UserTokenStorageFactory;
 import com.backendless.property.AbstractProperty;
 import com.backendless.property.UserProperty;
@@ -34,8 +35,8 @@ public final class UserService
   final static String USER_MANAGER_SERVER_ALIAS = "com.backendless.services.users.UserService";
   private final static String PREFS_NAME = "backendless_pref";
 
-  final static BackendlessUser currentUser = new BackendlessUser();
-  final static Object currentUserLock = new Object();
+  private final static BackendlessUser currentUser = new BackendlessUser();
+  private final static Object currentUserLock = new Object();
 
   private static final UserService instance = new UserService();
 
@@ -396,6 +397,7 @@ public final class UserService
     currentUser.clearProperties();
     HeadersManager.getInstance().removeHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY );
     UserTokenStorageFactory.instance().getStorage().set( "" );
+    UserIdStorageFactory.instance().getStorage().set( "" );
   }
 
   public void logout( final AsyncCallback<Void> responder )
@@ -657,6 +659,26 @@ public final class UserService
       throw new IllegalArgumentException( ExceptionMessage.NULL_USER );
   }
 
+  /**
+   * Returns user ID of the logged in user or empty string if user is not logged in.
+   *
+   * @return user id, if the user is logged in; else empty string
+   */
+  public String loggedInUser()
+  {
+    return UserIdStorageFactory.instance().getStorage().get();
+  }
+
+  /**
+   * Sets the properties of the given user to current one.
+   *
+   * @param user a user from which properties should be taken
+   */
+  public void setCurrentUser( BackendlessUser user )
+  {
+    currentUser.setProperties( user.getProperties() );
+  }
+
   private void handleUserLogin( Map<String, Object> invokeResult, boolean stayLoggedIn )
   {
     String userToken = (String) invokeResult.get( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() );
@@ -667,7 +689,10 @@ public final class UserService
         currentUser.setProperty( key, invokeResult.get( key ) );
 
     if( stayLoggedIn )
+    {
       UserTokenStorageFactory.instance().getStorage().set( userToken );
+      UserIdStorageFactory.instance().getStorage().set( Backendless.UserService.CurrentUser().getUserId() );
+    }
   }
 
   private AsyncCallback<HashMap<String, Object>> getUserLoginAsyncHandler(

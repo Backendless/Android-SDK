@@ -24,6 +24,7 @@ import android.content.pm.PackageManager;
 import android.os.Binder;
 import android.os.IBinder;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.persistence.local.UserIdStorageFactory;
 import com.backendless.persistence.local.UserTokenStorageFactory;
 import com.backendless.servercode.Util;
 import com.backendless.utils.AndroidIO;
@@ -270,7 +271,10 @@ public class AndroidService extends Service implements IBackendlessService
       Context applicationContext = ((Context) arg).getApplicationContext();
 
       if( !Util.isCodeRunner() )
+      {
         UserTokenStorageFactory.instance().init( applicationContext );
+        UserIdStorageFactory.instance().init( applicationContext );
+      }
 
       PackageManager packageManager = applicationContext.getPackageManager();
       final Intent intent = new Intent( applicationContext, AndroidService.class );
