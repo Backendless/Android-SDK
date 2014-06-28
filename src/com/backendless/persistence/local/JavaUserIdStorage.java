@@ -20,16 +20,16 @@ package com.backendless.persistence.local;
 
 import java.util.prefs.Preferences;
 
-class JavaUserTokenStorage implements IStorage<String>
+class JavaUserIdStorage implements IStorage<String>
 {
   private Preferences prefs = Preferences.userRoot().node( this.getClass().getName() );
-  private static JavaUserTokenStorage instance = new JavaUserTokenStorage();
+  private static JavaUserIdStorage instance = new JavaUserIdStorage();
 
-  private JavaUserTokenStorage()
+  private JavaUserIdStorage()
   {
   }
 
-  public static JavaUserTokenStorage instance()
+  public static JavaUserIdStorage instance()
   {
     return instance;
   }
@@ -37,13 +37,12 @@ class JavaUserTokenStorage implements IStorage<String>
   @Override
   public String get()
   {
-
-    return prefs.get( UserTokenStorageFactory.key, "" );
+    return prefs.get( UserIdStorageFactory.key, "" );
   }
 
   @Override
   public void set( String value )
   {
-    prefs.put( UserTokenStorageFactory.key, value );
+    prefs.put( UserIdStorageFactory.key, value );
   }
 }

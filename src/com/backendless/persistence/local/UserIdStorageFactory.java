@@ -18,32 +18,35 @@
 
 package com.backendless.persistence.local;
 
-import java.util.prefs.Preferences;
+import android.content.Context;
+import com.backendless.Backendless;
+import com.backendless.exceptions.ExceptionMessage;
 
-class JavaUserTokenStorage implements IStorage<String>
+public class UserIdStorageFactory
 {
-  private Preferences prefs = Preferences.userRoot().node( this.getClass().getName() );
-  private static JavaUserTokenStorage instance = new JavaUserTokenStorage();
+  static final String key = "user-id";
+  private static AndroidUserIdStorage androidUserIdStorage;
+  private static UserIdStorageFactory instance = new UserIdStorageFactory();
 
-  private JavaUserTokenStorage()
-  {
-  }
-
-  public static JavaUserTokenStorage instance()
+  public static UserIdStorageFactory instance()
   {
     return instance;
   }
 
-  @Override
-  public String get()
+  private UserIdStorageFactory()
   {
-
-    return prefs.get( UserTokenStorageFactory.key, "" );
   }
 
-  @Override
-  public void set( String value )
+  public void init( Context context )
   {
-    prefs.put( UserTokenStorageFactory.key, value );
+    androidUserIdStorage = new AndroidUserIdStorage( context );
+  }
+
+  public IStorage<String> getStorage()
+  {
+    if( Backendless.isAndroid() && androidUserIdStorage == null )
+      throw new IllegalArgumentException( ExceptionMessage.INIT_BEFORE_USE );
+
+    return Backendless.isAndroid() ? androidUserIdStorage : JavaUserIdStorage.instance();
   }
 }
