@@ -1,6 +1,7 @@
 package com.backendless.servercode.extension;
 
-import javax.naming.event.EventContext;
+import com.backendless.servercode.RunnerContext;
+
 import java.util.Map;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Map;
  */
 public abstract class CustomEventHandler
 {
-  public Map handleEvent( EventContext context, Map eventArgs )
+  public Map handleEvent( RunnerContext context, Map eventArgs )
   {
     return null;
   }
