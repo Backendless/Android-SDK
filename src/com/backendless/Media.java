@@ -60,26 +60,26 @@ public final class Media
 
   public void publishLiveAndRecord( Context context,  BackendlessSurfaceView backendlessSurfaceView, String tube, String streamName, StreamQuality streamQuality )
   {
-    publishStream( context, backendlessSurfaceView, tube, streamName, true, streamQuality, StreamType.LiveRecording );
+    publishStream( context, backendlessSurfaceView, tube, streamName, streamQuality, StreamType.LiveRecording );
   }
 
   public void publishLive( Context context, BackendlessSurfaceView backendlessSurfaceView, String tube, String streamName, StreamQuality streamQuality )
   {
-    publishStream( context, backendlessSurfaceView, tube, streamName, false, streamQuality, StreamType.Live );
+    publishStream( context, backendlessSurfaceView, tube, streamName, streamQuality, StreamType.Live );
   }
 
   public void playLive( Context context, VideoView videoView, StreamProtocolType streamProtocolType, String tube, String streamName )
   {
-    playStream( context, videoView, streamProtocolType, tube, streamName, StreamType.Available );
+    playStream( context, videoView, streamProtocolType, tube, streamName, StreamType.Recording );
   }
 
   public void playRecord( Context context, VideoView videoView, StreamProtocolType streamProtocolType, String tube, String streamName )
   {
-    playStream( context, videoView, streamProtocolType, tube, streamName, StreamType.Recording );
+    playStream( context, videoView, streamProtocolType, tube, streamName, StreamType.Available );
   }
 
   private void publishStream( Context context, BackendlessSurfaceView backendlessSurfaceView, String tube, String streamName,
-                              Boolean iSRecord, StreamQuality streamQuality, StreamType streamType )
+                              StreamQuality streamQuality, StreamType streamType )
   {
     String operationType;
 
@@ -90,24 +90,12 @@ public final class Media
 
     params = getConnectParams( tube, operationType, streamName);
     URL = RTSP_PROTOCOL + SERVER_URL_LIVE + streamName + params;
-    if( iSRecord )
-    {
-
-    }
 
     Session session = getSession( context, backendlessSurfaceView );
     RtspClient rtspClient = getRtspClient( context, session );
     backendlessSurfaceView.getHolder().addCallback( (SurfaceHolder.Callback) context );
     selectQuality(session, streamQuality);
     startOrStopStream( context, rtspClient, URL );
-
-//    String streamType = null;
-//    String operation = "playRecord";
-//    if( iSRecord )
-//    {
-//      streamType = "live";
-//      operation = "playLive";
-//    }
   }
 
   private void playStream( Context context, VideoView videoView, StreamProtocolType streamProtocolType, String tube, String streamName, StreamType streamType )

@@ -22,10 +22,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa3e4aea-c9d5-420e-b854-3b539143136f" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/backendless/media/MediaOperations.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/backendless/media/OperationIdentity.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/gl/SurfaceView.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/gl/BackendlessSurfaceView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/android.jar" afterPath="$PROJECT_DIR$/libs/android.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/DataService/tododemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/DataService/tododemo/libs/backendless.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/FileService/filedemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/FileService/filedemo/libs/backendless.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/GeoService/geodemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/GeoService/geodemo/libs/backendless.jar" />
@@ -33,49 +29,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/MessagingService/pushdemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/MessagingService/pushdemo/libs/backendless.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/rolesdemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/UserService/rolesdemo/libs/backendless.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/userservicedemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/UserService/userservicedemo/libs/backendless.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/rtp/AACADTSPacketizer.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/rtp/AACADTSPacketizer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/rtp/AACLATMPacketizer.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/rtp/AACLATMPacketizer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/audio/AACStream.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/audio/AACStream.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/rtp/AMRNBPacketizer.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/rtp/AMRNBPacketizer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/audio/AMRNBStream.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/audio/AMRNBStream.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/rtp/AbstractPacketizer.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/rtp/AbstractPacketizer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/audio/AudioQuality.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/audio/AudioQuality.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/audio/AudioStream.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/audio/AudioStream.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/exceptions/CameraInUseException.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/exceptions/CameraInUseException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/hw/CodecManager.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/hw/CodecManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/video/CodecManager.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/video/CodecManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/exceptions/ConfNotSupportedException.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/exceptions/ConfNotSupportedException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/hw/EncoderDebugger.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/hw/EncoderDebugger.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/rtp/H263Packetizer.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/rtp/H263Packetizer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/video/H263Stream.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/video/H263Stream.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/rtp/H264Packetizer.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/rtp/H264Packetizer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/video/H264Stream.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/video/H264Stream.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/exceptions/InvalidSurfaceException.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/exceptions/InvalidSurfaceException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/mp4/MP4Config.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/mp4/MP4Config.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/mp4/MP4Parser.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/mp4/MP4Parser.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/Media.java" afterPath="$PROJECT_DIR$/src/com/backendless/Media.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/rtp/MediaCodecInputStream.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/rtp/MediaCodecInputStream.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/MediaStream.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/MediaStream.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/hw/NV21Convertor.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/hw/NV21Convertor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/rtsp/RtcpDeinterleaver.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/rtsp/RtcpDeinterleaver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/rtp/RtpSocket.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/rtp/RtpSocket.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/rtsp/RtspClient.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/rtsp/RtspClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/rtsp/RtspServer.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/rtsp/RtspServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/rtcp/SenderReport.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/rtcp/SenderReport.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/Session.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/Session.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/SessionBuilder.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/SessionBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/exceptions/StorageUnavailableException.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/exceptions/StorageUnavailableException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/Stream.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/Stream.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/StreamProtocolType.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/StreamProtocolType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/StreamQuality.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/StreamQuality.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/StreamType.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/StreamType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/gl/SurfaceManager.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/gl/SurfaceManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/gl/TextureManager.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/gl/TextureManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/rtsp/UriParser.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/rtsp/UriParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/video/VideoQuality.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/video/VideoQuality.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/media/lib/video/VideoStream.java" afterPath="$PROJECT_DIR$/src/com/backendless/media/lib/video/VideoStream.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.iml" afterPath="$PROJECT_DIR$/androidSDK.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.ipr" afterPath="$PROJECT_DIR$/androidSDK.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.iws" afterPath="$PROJECT_DIR$/androidSDK.iws" />
     </list>
     <ignored path="androidSDK.iws" />
@@ -135,7 +89,7 @@
     <file path="/strings.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1358522864841" ignored="false" />
     <file path="$USER_HOME$/sample_apps/android/EndlessMatchMaker/res/layout/editpreference.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1358262346634" ignored="false" />
     <file path="/editpreference.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1354713193280" ignored="false" />
-    <file path="/fragment.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403767165708" ignored="false" />
+    <file path="/fragment.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404136963181" ignored="false" />
     <file path="$USER_HOME$/sample_apps/android/EndlessMatchMaker/src/com/EndlessMatchMaker/data/models/Travel.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1353532855662" ignored="false" />
     <file path="$USER_HOME$/sample_apps/android/EndlessMatchMaker/src/com/EndlessMatchMaker/data/models/Music.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1353532851739" ignored="false" />
     <file path="$USER_HOME$/sample_apps/android/EndlessMatchMaker/src/com/EndlessMatchMaker/data/models/Hobbies.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1353532846201" ignored="false" />
@@ -158,7 +112,7 @@
     <file path="$PROJECT_DIR$/clients/BackendlessClient/tests/com/client/unitTests/persistenceService/syncTests/SaveNewObjectTests.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1357915005020" ignored="false" />
     <file path="/SaveNewObjectTests.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1356369197519" ignored="false" />
     <file path="/AdaptingResponder.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1358153673012" ignored="false" />
-    <file path="/Dummy.txt" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595431551" ignored="false" />
+    <file path="/Dummy.txt" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403865904334" ignored="false" />
     <file path="$PROJECT_DIR$/clients/BackendlessClient/tests/com/client/unitTests/geoService/asyncTests/GetPointsTests.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1357898582640" ignored="false" />
     <file path="$PROJECT_DIR$/clients/BackendlessClient/tests/com/client/unitTests/geoService/asyncTests/AddPointTests.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1357898582640" ignored="false" />
     <file path="$PROJECT_DIR$/clients/BackendlessClient/tests/com/client/unitTests/geoService/syncTests/AddPointTests.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1357915005020" ignored="false" />
@@ -1130,12 +1084,12 @@
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/EndlessTagging/.idea/workspace.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1391093041811" ignored="false" />
     <file path="$PROJECT_DIR$/../AndroidMedia/examples/libstreaming-examples/example3/app/src/net/majorkernelpanic/example3/MainActivity.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401199897114" ignored="false" />
     <file path="$PROJECT_DIR$/src/com/backendless/geo/Media.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1400757398819" ignored="false" />
-    <file path="/Media.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403708247186" ignored="false" />
+    <file path="/Media.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404135544142" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sample_apps/as_video/src/LiveVideoTest.mxml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595424411" ignored="false" />
     <file path="$PROJECT_DIR$/src/com/backendless/media/q.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1400764292203" ignored="false" />
     <file path="/IOperations.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1400831583657" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/services/persistence/schema/SaveRelationOperation.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401112548834" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/Application.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403707172650" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/Application.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403874872732" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/db/recreatedb/CreateAppSchemas.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1400767729223" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sample_apps/as_video/VideoTest.iws" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401112548834" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/db/recreatedb/SqlCommands.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401102037988" ignored="false" />
@@ -1149,9 +1103,9 @@
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/resources/codegen/ios/ios.xsl" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595140484" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/util/GlobalHelper.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401112524213" ignored="false" />
     <file path="$PROJECT_DIR$/../AndroidMedia/examples/libstreaming-examples/example3/web/index.htm" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401096505465" ignored="false" />
-    <file path="/Application.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403084520923" ignored="false" />
+    <file path="/Application.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403870180944" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/target/scala-2.10/rest_2.10-1.0.pom" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403699712341" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/services/media/MediaServiceOperations.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595119764" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/services/media/MediaServiceOperations.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403873633425" ignored="false" />
     <file path="/MediaServiceOperations.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401103661789" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/management/codegen/CodeGenerationManager.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401112524213" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/management/files/FileManagementService.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401112524213" ignored="false" />
@@ -1189,14 +1143,14 @@
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/src/com/example/TestStream/MyActivity.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403016524898" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/gen/com/example/TestStream/BuildConfig.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595614646" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/res/layout/main.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403080306400" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/res/layout/activity_main.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403016872174" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/res/layout/activity_main.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403771296784" ignored="false" />
     <file path="/activity_main.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403016816850" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/AndroidManifest.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403179400762" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/src/com/example/TestStream/TestStream.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403709145630" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/src/com/example/TestStream/TestStream.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404124349728" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/gen/com/example/TestStream/Manifest.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595581835" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/gen/com/example/TestStream/R.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595581835" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/PlayStreamOnWowza/res/layout/activity_main.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403016853530" ignored="false" />
-    <file path="/TestStream.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403699081448" ignored="false" />
+    <file path="/TestStream.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404124348667" ignored="false" />
     <file path="/StreamProtocolType.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403078446250" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/PlayStreamFromWowza/src/com/example/PlayStreamFromWowza/MainActivity.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595119764" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/libs/backendless.jar!/com/backendless/Media.class" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403272374807" ignored="false" />
@@ -1208,11 +1162,11 @@
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaAppVod/ant-build.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403085165749" ignored="false" />
     <file path="/ant-build.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403085368574" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/OperationMeta.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403085197569" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/HttpUtil.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403085197569" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/MediaEventListener.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403708104880" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/HttpUtil.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404113848966" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/MediaEventListener.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404134015198" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/MediaObjectInfo.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403085197569" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/OperationIdentity.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595048485" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/Media.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403709550083" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/Media.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404137256280" ignored="false" />
     <file path="$PROJECT_DIR$/../AndroidMedia/libstreaming/src/net/majorkernelpanic/streaming/mp4/MP4Config.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403091690380" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/PlayStreamOnWowza/src/com/example/PlayStreamOnWowza/MainActivity.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403697036563" ignored="false" />
     <file path="$PROJECT_DIR$/../AndroidMedia/libstreaming/src/net/majorkernelpanic/streaming/video/VideoQuality.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403090885742" ignored="false" />
@@ -1236,17 +1190,20 @@
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/controllers/Media.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595119763" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/conf/routes" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595119763" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/services/persistence/ConsolePersistanceUserValidationDecorator.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595119763" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/services/media/FlvToPngConverter.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595119764" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/services/media/FlvToPngConverter.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403873639188" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/test/controllers/media/MediaTest.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595119764" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/console/src/newconsole/js/ui/popup/popup.js" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403687217348" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/SnapshotUtil.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403708976880" ignored="false" />
-    <file path="/SnapshotUtil.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403708280511" ignored="false" />
-    <file path="/MediaEventListener.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403704833497" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/console/src/newconsole/js/ui/popup/popup.js" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403876821743" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/SnapshotUtil.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404133495098" ignored="false" />
+    <file path="/SnapshotUtil.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403788842505" ignored="false" />
+    <file path="/MediaEventListener.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404125323431" ignored="false" />
     <file path="/popup.js" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403686885174" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/PlayStreamOnWowza/gen/com/example/PlayStreamOnWowza/BuildConfig.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403696985573" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/security/operations/MediaOperations.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403699543394" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/security/operations/MediaOperations.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403861365459" ignored="false" />
     <file path="$USER_HOME$/Downloads/quickblox-android-sdk-master/sample-videochat/src/com/quickblox/videochatsample/ui/ActivityLogin.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403767767057" ignored="false" />
     <file path="$USER_HOME$/Downloads/quickblox-android-sdk-master/sample-videochat/AndroidManifest.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403767552642" ignored="false" />
+    <file path="/FlvToPngConverter.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403790925172" ignored="false" />
+    <file path="/MediaOperations.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403861356434" ignored="false" />
+    <file path="/HttpUtil.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403883949487" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -1356,7 +1313,7 @@
       </breakpoint>
     </breakpoint_any>
     <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
-      <breakpoint url="file://$PROJECT_DIR$/src/com/backendless/media/lib/rtsp/RtspClient.java" line="337" class="com.backendless.media.lib.rtsp.RtspClient" package="com.backendless.media.lib.rtsp">
+      <breakpoint url="file://$PROJECT_DIR$/src/com/backendless/media/lib/rtsp/RtspClient.java" line="355" class="com.backendless.media.lib.rtsp.RtspClient" package="com.backendless.media.lib.rtsp">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -1371,7 +1328,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/com/backendless/Media.java" line="99" class="com.backendless.Media" package="com.backendless">
+      <breakpoint url="file://$PROJECT_DIR$/src/com/backendless/Media.java" line="95" class="com.backendless.Media" package="com.backendless">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -1386,7 +1343,37 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/com/backendless/Media.java" line="187" class="com.backendless.Media" package="com.backendless">
+      <breakpoint url="file://$PROJECT_DIR$/src/com/backendless/Media.java" line="175" class="com.backendless.Media" package="com.backendless">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/com/backendless/Media.java" line="112" class="com.backendless.Media" package="com.backendless">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/com/backendless/Media.java" line="129" class="com.backendless.Media" package="com.backendless">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -1425,7 +1412,7 @@
       <file leaf-file-name="Media.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/backendless/Media.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="96" column="8" selection-start="4208" selection-end="4208" vertical-scroll-proportion="-2.890785">
+            <state line="120" column="43" selection-start="5106" selection-end="5106" vertical-scroll-proportion="1.4863482">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -1436,7 +1423,7 @@
       <file leaf-file-name="StreamType.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/backendless/media/StreamType.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="47" selection-start="1279" selection-end="1279" vertical-scroll-proportion="0.0">
+            <state line="22" column="38" selection-start="1112" selection-end="1121" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -1457,36 +1444,36 @@
             <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#9317#9501#0" expanded="true" />
-                <element signature="e#9494#9495#0" expanded="true" />
-                <element signature="e#12833#13033#0" expanded="true" />
-                <element signature="e#13026#13027#0" expanded="true" />
-                <element signature="e#14636#14822#0" expanded="true" />
-                <element signature="e#14815#14816#0" expanded="true" />
-                <element signature="e#17305#17407#0" expanded="true" />
-                <element signature="e#17400#17401#0" expanded="true" />
-                <element signature="e#18315#19391#0" expanded="true" />
-                <element signature="e#19384#19385#0" expanded="true" />
-                <element signature="e#19509#19684#0" expanded="true" />
-                <element signature="e#19677#19678#0" expanded="true" />
-                <element signature="e#20107#21005#0" expanded="true" />
-                <element signature="e#20998#20999#0" expanded="true" />
-                <element signature="e#21577#21923#0" expanded="true" />
-                <element signature="e#21916#21917#0" expanded="true" />
-                <element signature="e#22186#22360#0" expanded="true" />
-                <element signature="e#22353#22354#0" expanded="true" />
-                <element signature="e#22435#22612#0" expanded="true" />
-                <element signature="e#22605#22606#0" expanded="true" />
-                <element signature="e#22684#22858#0" expanded="true" />
-                <element signature="e#22851#22852#0" expanded="true" />
-                <element signature="e#22930#23104#0" expanded="true" />
-                <element signature="e#23097#23098#0" expanded="true" />
-                <element signature="e#23226#23421#0" expanded="true" />
-                <element signature="e#23414#23415#0" expanded="true" />
-                <element signature="e#23506#23688#0" expanded="true" />
-                <element signature="e#23681#23682#0" expanded="true" />
-                <element signature="e#23733#23988#0" expanded="true" />
-                <element signature="e#23983#23984#0" expanded="true" />
+                <element signature="e#10343#10527#0" expanded="true" />
+                <element signature="e#10520#10521#0" expanded="true" />
+                <element signature="e#13859#14059#0" expanded="true" />
+                <element signature="e#14052#14053#0" expanded="true" />
+                <element signature="e#15662#15848#0" expanded="true" />
+                <element signature="e#15841#15842#0" expanded="true" />
+                <element signature="e#18331#18433#0" expanded="true" />
+                <element signature="e#18426#18427#0" expanded="true" />
+                <element signature="e#19341#20417#0" expanded="true" />
+                <element signature="e#20410#20411#0" expanded="true" />
+                <element signature="e#20535#20710#0" expanded="true" />
+                <element signature="e#20703#20704#0" expanded="true" />
+                <element signature="e#21133#22031#0" expanded="true" />
+                <element signature="e#22024#22025#0" expanded="true" />
+                <element signature="e#22603#22949#0" expanded="true" />
+                <element signature="e#22942#22943#0" expanded="true" />
+                <element signature="e#23212#23386#0" expanded="true" />
+                <element signature="e#23379#23380#0" expanded="true" />
+                <element signature="e#23461#23638#0" expanded="true" />
+                <element signature="e#23631#23632#0" expanded="true" />
+                <element signature="e#23710#23884#0" expanded="true" />
+                <element signature="e#23877#23878#0" expanded="true" />
+                <element signature="e#23956#24130#0" expanded="true" />
+                <element signature="e#24123#24124#0" expanded="true" />
+                <element signature="e#24252#24447#0" expanded="true" />
+                <element signature="e#24440#24441#0" expanded="true" />
+                <element signature="e#24532#24714#0" expanded="true" />
+                <element signature="e#24707#24708#0" expanded="true" />
+                <element signature="e#24759#25014#0" expanded="true" />
+                <element signature="e#25009#25010#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -2524,7 +2511,11 @@
       <created>1403104084103</created>
       <updated>1403104084103</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="refactoring">
+      <created>1403770298805</created>
+      <updated>1403770298805</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -2570,7 +2561,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959402" sideWeight="0.6753529" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24143426" sideWeight="0.5216" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24143426" sideWeight="0.6528" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29348987" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="IntelliGuard" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="ASM" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294964" sideWeight="0.80474937" order="3" side_tool="false" content_ui="tabs" />
@@ -2666,7 +2657,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="add methods for media part 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoring" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -2680,7 +2671,6 @@
     <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Refactoring, fixes" />
     <MESSAGE value="Backendless URL fix" />
     <MESSAGE value="Fixes" />
     <MESSAGE value="URL fix" />
@@ -2705,6 +2695,7 @@
     <MESSAGE value="Video implementation start" />
     <MESSAGE value="Add main level implementation" />
     <MESSAGE value="add methods for media part 1" />
+    <MESSAGE value="refactoring" />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -2786,8 +2777,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="33" column="46" selection-start="1417" selection-end="1417" vertical-scroll-proportion="0.8761062">
           <folding>
-            <element signature="e#0#5549#0" expanded="true" />
-            <element signature="imports" expanded="true" />
+            <element signature="e#0#5549#0" expanded="false" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2796,8 +2787,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="41" column="66" selection-start="1653" selection-end="1653" vertical-scroll-proportion="1.0884956">
           <folding>
-            <element signature="e#0#9956#0" expanded="true" />
-            <element signature="imports" expanded="true" />
+            <element signature="e#0#9956#0" expanded="false" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2834,9 +2825,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="14" column="53" selection-start="899" selection-end="899" vertical-scroll-proportion="0.3699115">
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#8235#9281#0" expanded="true" />
-            <element signature="e#9274#9275#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#8235#9281#0" expanded="false" />
+            <element signature="e#9274#9275#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2845,8 +2836,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="32" column="72" selection-start="1776" selection-end="1776" vertical-scroll-proportion="0.8495575">
           <folding>
-            <element signature="e#0#3177#0" expanded="true" />
-            <element signature="imports" expanded="true" />
+            <element signature="e#0#3177#0" expanded="false" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2855,7 +2846,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="38" column="5" selection-start="1400" selection-end="1400" vertical-scroll-proportion="0.88235295">
           <folding>
-            <element signature="e#0#2495#0" expanded="true" />
+            <element signature="e#0#2495#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2864,8 +2855,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="36" column="50" selection-start="1535" selection-end="1535" vertical-scroll-proportion="0.9557522">
           <folding>
-            <element signature="e#0#3633#0" expanded="true" />
-            <element signature="imports" expanded="true" />
+            <element signature="e#0#3633#0" expanded="false" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2875,36 +2866,36 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9317#9501#0" expanded="true" />
-            <element signature="e#9494#9495#0" expanded="true" />
-            <element signature="e#12833#13033#0" expanded="true" />
-            <element signature="e#13026#13027#0" expanded="true" />
-            <element signature="e#14636#14822#0" expanded="true" />
-            <element signature="e#14815#14816#0" expanded="true" />
-            <element signature="e#17305#17407#0" expanded="true" />
-            <element signature="e#17400#17401#0" expanded="true" />
-            <element signature="e#18315#19391#0" expanded="true" />
-            <element signature="e#19384#19385#0" expanded="true" />
-            <element signature="e#19509#19684#0" expanded="true" />
-            <element signature="e#19677#19678#0" expanded="true" />
-            <element signature="e#20107#21005#0" expanded="true" />
-            <element signature="e#20998#20999#0" expanded="true" />
-            <element signature="e#21577#21923#0" expanded="true" />
-            <element signature="e#21916#21917#0" expanded="true" />
-            <element signature="e#22186#22360#0" expanded="true" />
-            <element signature="e#22353#22354#0" expanded="true" />
-            <element signature="e#22435#22612#0" expanded="true" />
-            <element signature="e#22605#22606#0" expanded="true" />
-            <element signature="e#22684#22858#0" expanded="true" />
-            <element signature="e#22851#22852#0" expanded="true" />
-            <element signature="e#22930#23104#0" expanded="true" />
-            <element signature="e#23097#23098#0" expanded="true" />
-            <element signature="e#23226#23421#0" expanded="true" />
-            <element signature="e#23414#23415#0" expanded="true" />
-            <element signature="e#23506#23688#0" expanded="true" />
-            <element signature="e#23681#23682#0" expanded="true" />
-            <element signature="e#23733#23988#0" expanded="true" />
-            <element signature="e#23983#23984#0" expanded="true" />
+            <element signature="e#10343#10527#0" expanded="true" />
+            <element signature="e#10520#10521#0" expanded="true" />
+            <element signature="e#13859#14059#0" expanded="true" />
+            <element signature="e#14052#14053#0" expanded="true" />
+            <element signature="e#15662#15848#0" expanded="true" />
+            <element signature="e#15841#15842#0" expanded="true" />
+            <element signature="e#18331#18433#0" expanded="true" />
+            <element signature="e#18426#18427#0" expanded="true" />
+            <element signature="e#19341#20417#0" expanded="true" />
+            <element signature="e#20410#20411#0" expanded="true" />
+            <element signature="e#20535#20710#0" expanded="true" />
+            <element signature="e#20703#20704#0" expanded="true" />
+            <element signature="e#21133#22031#0" expanded="true" />
+            <element signature="e#22024#22025#0" expanded="true" />
+            <element signature="e#22603#22949#0" expanded="true" />
+            <element signature="e#22942#22943#0" expanded="true" />
+            <element signature="e#23212#23386#0" expanded="true" />
+            <element signature="e#23379#23380#0" expanded="true" />
+            <element signature="e#23461#23638#0" expanded="true" />
+            <element signature="e#23631#23632#0" expanded="true" />
+            <element signature="e#23710#23884#0" expanded="true" />
+            <element signature="e#23877#23878#0" expanded="true" />
+            <element signature="e#23956#24130#0" expanded="true" />
+            <element signature="e#24123#24124#0" expanded="true" />
+            <element signature="e#24252#24447#0" expanded="true" />
+            <element signature="e#24440#24441#0" expanded="true" />
+            <element signature="e#24532#24714#0" expanded="true" />
+            <element signature="e#24707#24708#0" expanded="true" />
+            <element signature="e#24759#25014#0" expanded="true" />
+            <element signature="e#25009#25010#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2925,14 +2916,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/media/StreamType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="47" selection-start="1279" selection-end="1279" vertical-scroll-proportion="0.0">
+        <state line="22" column="38" selection-start="1112" selection-end="1121" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/Media.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="96" column="8" selection-start="4208" selection-end="4208" vertical-scroll-proportion="-2.890785">
+        <state line="120" column="43" selection-start="5106" selection-end="5106" vertical-scroll-proportion="1.4863482">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
