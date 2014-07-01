@@ -212,7 +212,7 @@ class DataStoreFactory
       @Override
       public void findById( String objectId, int relationsDepth, AsyncCallback<E> responder )
       {
-        findById( objectId, emptyRelations, relationsDepth );
+        findById( objectId, emptyRelations, relationsDepth, responder );
       }
 
       private void findById( String objectId, List<String> relations, int relationsDepth, AsyncCallback<E> responder )

@@ -31,6 +31,8 @@ import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 import com.backendless.property.ObjectProperty;
 import weborb.types.Types;
+import weborb.writer.IObjectSubstitutor;
+import weborb.writer.MessageWriter;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -70,29 +72,48 @@ public final class Persistence
    weborb.types.Types.addClientClassMapping( tableName, clazz );
  }
 
-  public <E> E save( E entity ) throws BackendlessException
+  public <E> E save( final E entity ) throws BackendlessException
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
     checkDeclaredType( entity.getClass() );
-    Map serializedEntity = serializeToMap( entity );
+    final Map serializedEntity = serializeToMap( entity );
+    MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
+    {
+      @Override
+      public Object substitute( Object o )
+      {
+        if( o == entity )
+          return serializedEntity;
+        else
+          return o;
+      }
+    } );
 
     FootprintsManager.getInstance().Inner.putMissingPropsToEntityMap( entity, serializedEntity );
 
-    E newEntity;
-    if( serializedEntity.get( Footprint.OBJECT_ID_FIELD_NAME ) == null )
+    try
     {
-      newEntity = (E) create( entity.getClass(), serializedEntity );
-      FootprintsManager.getInstance().Inner.duplicateFootprintForObject( entity, newEntity );
+      E newEntity;
+      if( serializedEntity.get( Footprint.OBJECT_ID_FIELD_NAME ) == null )
+      {
+        newEntity = (E) create( entity.getClass(), serializedEntity );
+        FootprintsManager.getInstance().Inner.duplicateFootprintForObject( entity, newEntity );
+      }
+      else
+      {
+        newEntity = (E) update( entity.getClass(), serializedEntity );
+        FootprintsManager.getInstance().Inner.updateFootprintForObject( newEntity, entity );
+      }
+
+      return newEntity;
     }
-    else
+    finally
     {
-      newEntity = (E) update( entity.getClass(), serializedEntity );
-      FootprintsManager.getInstance().Inner.updateFootprintForObject( newEntity, entity );
+      MessageWriter.setObjectSubstitutor( null );
     }
 
-    return newEntity;
   }
 
   public <E> void save( final E entity, final AsyncCallback<E> responder )
@@ -103,7 +124,19 @@ public final class Persistence
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
       checkDeclaredType( entity.getClass() );
-      Map serializedEntity = serializeToMap( entity );
+      final Map serializedEntity = serializeToMap( entity );
+
+      MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
+      {
+        @Override
+        public Object substitute( Object o )
+        {
+          if( o == entity )
+            return serializedEntity;
+          else
+            return o;
+        }
+      } );
 
       FootprintsManager.getInstance().Inner.putMissingPropsToEntityMap( entity, serializedEntity );
 
@@ -113,6 +146,7 @@ public final class Persistence
           @Override
           public void handleResponse( E newEntity )
           {
+            MessageWriter.setObjectSubstitutor( null );
             FootprintsManager.getInstance().Inner.duplicateFootprintForObject( entity, newEntity );
 
             if( responder != null )
@@ -122,6 +156,8 @@ public final class Persistence
           @Override
           public void handleFault( BackendlessFault fault )
           {
+            MessageWriter.setObjectSubstitutor( null );
+
             if( responder != null )
               responder.handleFault( fault );
           }
