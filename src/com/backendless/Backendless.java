@@ -42,6 +42,7 @@ public final class Backendless
   public static final Geo Geo = com.backendless.Geo.getInstance();
   public static final Media Media = com.backendless.Media.getInstance();
   public static final Files Files = com.backendless.Files.getInstance();
+  public static final Commerce Commerce = com.backendless.Commerce.getInstance();
   private static String url = "https://api.backendless.com";
   private static IBackendlessService backendlessService;
   private static IBackendlessService.Init backendlessInitService;
@@ -175,7 +176,7 @@ public final class Backendless
     return backendlessService.getSecretKey();
   }
 
-  protected static String getVersion()
+  public static String getVersion()
   {
     if( backendlessService == null )
       throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );

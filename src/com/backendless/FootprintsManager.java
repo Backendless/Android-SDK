@@ -136,11 +136,15 @@ public class FootprintsManager
             putEntityFootprintToCache( instances, dataArray );
         }
         else if( entity instanceof NamedObject )
+        {
           if( !toBeCached.contains( ((NamedObject) entity).getTypedObject() ) )
             putEntityFootprintToCache( instance, ((NamedObject) entity).getTypedObject() );
+        }
         else if( entity instanceof AnonymousObject )
+        {
           if( !toBeCached.contains( ((AnonymousObject) entity).getProperties() ) )
             putEntityFootprintToCache( instance, ((AnonymousObject) entity).getProperties() );
+        }
         else if( entity instanceof ArrayType )
         {
           Object[] entities = (Object[]) ((ArrayType) entity).getArray();
@@ -167,6 +171,7 @@ public class FootprintsManager
 
           Map<String, Object> cachedEntity = (Map<String, Object>) entity;
           persistenceCache.put( instance, Footprint.initFromEntity( cachedEntity ) );
+          toBeCached.remove( cachedEntity );
         }
       }
       catch( Exception e )

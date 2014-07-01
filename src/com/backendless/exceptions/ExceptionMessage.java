@@ -18,8 +18,6 @@
 
 package com.backendless.exceptions;
 
-import weborb.client.Fault;
-
 public class ExceptionMessage
 {
   public final static String ILLEGAL_ARGUMENT_EXCEPTION = "IllegalArgumentException";
@@ -118,4 +116,6 @@ public class ExceptionMessage
   public static final String NULL_ATTACHMENTS = "Attachments cannot be null";
 
   public static final String INIT_BEFORE_USE = "Init storage before use";
+
+  public static final String CAN_NOT_SAVE_LOG = "Can not save log";
 }
