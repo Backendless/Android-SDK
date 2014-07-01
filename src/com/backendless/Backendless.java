@@ -41,8 +41,8 @@ public final class Backendless
   public static final Messaging Messaging = com.backendless.Messaging.getInstance();
   public static final Geo Geo = com.backendless.Geo.getInstance();
   public static final Files Files = com.backendless.Files.getInstance();
-  public static final Events Events = com.backendless.Events.getInstance();
   public static final Commerce Commerce = com.backendless.Commerce.getInstance();
+  public static final Events Events = com.backendless.Events.getInstance();
   private static String url = "https://api.backendless.com";
   private static IBackendlessService backendlessService;
   private static IBackendlessService.Init backendlessInitService;
