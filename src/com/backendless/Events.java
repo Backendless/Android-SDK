@@ -18,7 +18,12 @@ public class Events
     return instance;
   }
 
-  public void dispatch( String eventName, Map eventArgs, AsyncCallback callback )
+  private Events()
+  {
+
+  }
+
+  public void dispatch( String eventName, Map eventArgs, AsyncCallback<Map> callback )
   {
     Invoker.invokeAsync( EVENTS_MANAGER_SERVER_ALIAS, "dispatchEvent", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), eventName, eventArgs }, callback );
   }
