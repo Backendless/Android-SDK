@@ -16,6 +16,7 @@ public class RunnerContext
   private String appId;
   private String userId;
   private String userToken;
+  private String userRole;
   private DeviceType deviceType;
   private Map missingProperties;
 
@@ -46,6 +47,16 @@ public class RunnerContext
   public String getUserToken()
   {
     return userToken;
+  }
+
+  public String getUserRole()
+  {
+    return userRole;
+  }
+
+  public void setUserRole( String userRole )
+  {
+    this.userRole = userRole;
   }
 
   public void setUserToken( String userToken )
