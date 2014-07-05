@@ -10,18 +10,23 @@ import java.util.Map;
 public class Events
 {
   private static final String EVENTS_MANAGER_SERVER_ALIAS = "com.backendless.services.servercode.EventHandler";
-
   private static final Events instance = new Events();
+
+  private Events()
+  {
+
+  }
 
   static Events getInstance()
   {
     return instance;
   }
 
-  private Events()
+  public Map dispatch( String eventName, Map eventArgs )
   {
-
+    return (Map) Invoker.invokeSync( EVENTS_MANAGER_SERVER_ALIAS, "dispatchEvent", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), eventName, eventArgs }  );
   }
+
 
   public void dispatch( String eventName, Map eventArgs, AsyncCallback<Map> callback )
   {
