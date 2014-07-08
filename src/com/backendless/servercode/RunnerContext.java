@@ -2,6 +2,7 @@ package com.backendless.servercode;
 
 import com.backendless.commons.DeviceType;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,13 +17,9 @@ public class RunnerContext
   private String appId;
   private String userId;
   private String userToken;
-  private String userRole;
+  private List<String> userRole;
   private DeviceType deviceType;
   private Map missingProperties;
-
-  public RunnerContext()
-  {
-  }
 
   public String getAppId()
   {
@@ -49,12 +46,12 @@ public class RunnerContext
     return userToken;
   }
 
-  public String getUserRole()
+  public List<String> getUserRole()
   {
     return userRole;
   }
 
-  public void setUserRole( String userRole )
+  public void setUserRole( List<String> userRole )
   {
     this.userRole = userRole;
   }
