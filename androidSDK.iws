@@ -22,14 +22,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa3e4aea-c9d5-420e-b854-3b539143136f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/DataService/tododemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/DataService/tododemo/libs/backendless.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/FileService/filedemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/FileService/filedemo/libs/backendless.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/GeoService/geodemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/GeoService/geodemo/libs/backendless.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/MessagingService/pubsubdemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/MessagingService/pubsubdemo/libs/backendless.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/MessagingService/pushdemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/MessagingService/pushdemo/libs/backendless.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/rolesdemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/UserService/rolesdemo/libs/backendless.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/userservicedemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/UserService/userservicedemo/libs/backendless.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/Media.java" afterPath="$PROJECT_DIR$/src/com/backendless/Media.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.iml" afterPath="$PROJECT_DIR$/androidSDK.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.ipr" afterPath="$PROJECT_DIR$/androidSDK.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.iws" afterPath="$PROJECT_DIR$/androidSDK.iws" />
     </list>
     <ignored path="androidSDK.iws" />
@@ -89,7 +84,7 @@
     <file path="/strings.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1358522864841" ignored="false" />
     <file path="$USER_HOME$/sample_apps/android/EndlessMatchMaker/res/layout/editpreference.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1358262346634" ignored="false" />
     <file path="/editpreference.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1354713193280" ignored="false" />
-    <file path="/fragment.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404136963181" ignored="false" />
+    <file path="/fragment.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404988669605" ignored="false" />
     <file path="$USER_HOME$/sample_apps/android/EndlessMatchMaker/src/com/EndlessMatchMaker/data/models/Travel.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1353532855662" ignored="false" />
     <file path="$USER_HOME$/sample_apps/android/EndlessMatchMaker/src/com/EndlessMatchMaker/data/models/Music.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1353532851739" ignored="false" />
     <file path="$USER_HOME$/sample_apps/android/EndlessMatchMaker/src/com/EndlessMatchMaker/data/models/Hobbies.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1353532846201" ignored="false" />
@@ -112,7 +107,7 @@
     <file path="$PROJECT_DIR$/clients/BackendlessClient/tests/com/client/unitTests/persistenceService/syncTests/SaveNewObjectTests.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1357915005020" ignored="false" />
     <file path="/SaveNewObjectTests.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1356369197519" ignored="false" />
     <file path="/AdaptingResponder.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1358153673012" ignored="false" />
-    <file path="/Dummy.txt" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403865904334" ignored="false" />
+    <file path="/Dummy.txt" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404739213476" ignored="false" />
     <file path="$PROJECT_DIR$/clients/BackendlessClient/tests/com/client/unitTests/geoService/asyncTests/GetPointsTests.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1357898582640" ignored="false" />
     <file path="$PROJECT_DIR$/clients/BackendlessClient/tests/com/client/unitTests/geoService/asyncTests/AddPointTests.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1357898582640" ignored="false" />
     <file path="$PROJECT_DIR$/clients/BackendlessClient/tests/com/client/unitTests/geoService/syncTests/AddPointTests.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1357915005020" ignored="false" />
@@ -182,7 +177,7 @@
     <file path="$USER_HOME$/sample_apps/android/EndlessMatchMaker/src/com/EndlessMatchMaker/data/MusicPreference.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1353409813693" ignored="false" />
     <file path="/File Header.txt.ft" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1353409806545" ignored="false" />
     <file path="/MusicPreference.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1353409704548" ignored="false" />
-    <file path="/a.dummy" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403700604907" ignored="false" />
+    <file path="/a.dummy" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404895931764" ignored="false" />
     <file path="$USER_HOME$/sample_apps/android/EndlessMatchMaker/src/com/EndlessMatchMaker/MainActivity.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1353405225418" ignored="false" />
     <file path="C:/testProjects/fooProject/src/Test.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1357304239670" ignored="false" />
     <file path="/Test.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1357304235870" ignored="false" />
@@ -295,7 +290,7 @@
     <file path="$USER_HOME$/sample_apps/android/EndlessMatchMaker/res/layout/map.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1354022231997" ignored="false" />
     <file path="/EndlessMapActivity.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1353944760225" ignored="false" />
     <file path="/map.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1354014474146" ignored="false" />
-    <file path="/ExceptionMessage.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1357895500176" ignored="false" />
+    <file path="/ExceptionMessage.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404897207297" ignored="false" />
     <file path="/GeoPoint.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1358460371605" ignored="false" />
     <file path="$USER_HOME$/sample_apps/android/EndlessMatchMaker/src/com/EndlessMatchMaker/logic/EndlessMapOverlay.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1353792994161" ignored="false" />
     <file path="/EndlessMapOverlay.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1353792994161" ignored="false" />
@@ -406,7 +401,7 @@
     <file path="$USER_HOME$/sample_apps/shared/EndlessMatchMaker/endlessmatchmaker.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1357134419042" ignored="false" />
     <file path="$PROJECT_DIR$/../../../server/play/src/com/backendless/cache/MemCachedAppVersion.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1354557607829" ignored="false" />
     <file path="$PROJECT_DIR$/../../../server/play/src/com/backendless/cache/MemCachedPermissions.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1354557607829" ignored="false" />
-    <file path="/backendless.config" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403687598171" ignored="false" />
+    <file path="/backendless.config" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404373217543" ignored="false" />
     <file path="$PROJECT_DIR$/clients/BackendlessClient/tests/com/client/unitTests/persistenceService/syncTests/DeleteObjectTests.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1357915005020" ignored="false" />
     <file path="/DeleteObjectTests.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1356390271847" ignored="false" />
     <file path="/BackendlessDataQuery.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1357592277141" ignored="false" />
@@ -1070,7 +1065,7 @@
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/tests/restapi/src/test/servercode/ProcessExecution.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1389875266977" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/tests/restapi/src/utils/Defaults.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1389875266977" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/tests/restapi/src/test/servercode/RunnerExecutor.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1389875266977" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/conf/backendless.config" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403687598171" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/conf/backendless.config" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404375298840" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/management/DeviceRegistrationDto.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1389875298783" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/controllers/Users.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1389875266977" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/controllers/Messaging.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1389875266977" ignored="false" />
@@ -1084,12 +1079,12 @@
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/EndlessTagging/.idea/workspace.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1391093041811" ignored="false" />
     <file path="$PROJECT_DIR$/../AndroidMedia/examples/libstreaming-examples/example3/app/src/net/majorkernelpanic/example3/MainActivity.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401199897114" ignored="false" />
     <file path="$PROJECT_DIR$/src/com/backendless/geo/Media.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1400757398819" ignored="false" />
-    <file path="/Media.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404135544142" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sample_apps/as_video/src/LiveVideoTest.mxml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595424411" ignored="false" />
+    <file path="/Media.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404983472655" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sample_apps/as_video/src/LiveVideoTest.mxml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404376393811" ignored="false" />
     <file path="$PROJECT_DIR$/src/com/backendless/media/q.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1400764292203" ignored="false" />
     <file path="/IOperations.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1400831583657" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/services/persistence/schema/SaveRelationOperation.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401112548834" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/Application.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403874872732" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/Application.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404828382075" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/db/recreatedb/CreateAppSchemas.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1400767729223" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sample_apps/as_video/VideoTest.iws" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401112548834" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/db/recreatedb/SqlCommands.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401102037988" ignored="false" />
@@ -1103,12 +1098,12 @@
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/resources/codegen/ios/ios.xsl" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595140484" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/util/GlobalHelper.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401112524213" ignored="false" />
     <file path="$PROJECT_DIR$/../AndroidMedia/examples/libstreaming-examples/example3/web/index.htm" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401096505465" ignored="false" />
-    <file path="/Application.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403870180944" ignored="false" />
+    <file path="/Application.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404721820914" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/target/scala-2.10/rest_2.10-1.0.pom" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403699712341" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/services/media/MediaServiceOperations.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403873633425" ignored="false" />
     <file path="/MediaServiceOperations.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401103661789" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/management/codegen/CodeGenerationManager.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401112524213" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/management/files/FileManagementService.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401112524213" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/management/files/FileManagementService.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404993208913" ignored="false" />
     <file path="$PROJECT_DIR$/../AndroidMedia/libstreaming/gen/net/majorkernelpanic/backendless/R.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401193900922" ignored="false" />
     <file path="$PROJECT_DIR$/../AndroidMedia/libstreaming/gen/net/majorkernelpanic/backendless/Manifest.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401193900922" ignored="false" />
     <file path="$PROJECT_DIR$/src/com/backendless/media/mediaLib/rtsp/RtcpDeinterleaver.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1401193958880" ignored="false" />
@@ -1141,34 +1136,34 @@
     <file path="$PROJECT_DIR$/../AndroidMedia/libstreaming/src/net/majorkernelpanic/streaming/rtsp/RtspClient.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403009609734" ignored="false" />
     <file path="/StreamQuality.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403017971903" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/src/com/example/TestStream/MyActivity.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403016524898" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/gen/com/example/TestStream/BuildConfig.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595614646" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/gen/com/example/TestStream/BuildConfig.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404728373158" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/res/layout/main.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403080306400" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/res/layout/activity_main.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403771296784" ignored="false" />
     <file path="/activity_main.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403016816850" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/AndroidManifest.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403179400762" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/src/com/example/TestStream/TestStream.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404124349728" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/gen/com/example/TestStream/Manifest.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595581835" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/gen/com/example/TestStream/R.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595581835" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/src/com/example/TestStream/TestStream.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404995065827" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/gen/com/example/TestStream/Manifest.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404299443010" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/gen/com/example/TestStream/R.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404299443010" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/PlayStreamOnWowza/res/layout/activity_main.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403016853530" ignored="false" />
-    <file path="/TestStream.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404124348667" ignored="false" />
+    <file path="/TestStream.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404995064432" ignored="false" />
     <file path="/StreamProtocolType.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403078446250" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/PlayStreamFromWowza/src/com/example/PlayStreamFromWowza/MainActivity.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595119764" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/libs/backendless.jar!/com/backendless/Media.class" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403272374807" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/libs/backendless.jar!/com/backendless/Backendless.class" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403272374807" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/libs/backendless.jar!/com/backendless/FootprintsManager.class" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403272374807" ignored="false" />
     <file path="/VideoQuality.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403081509934" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/ant-build.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595424412" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/ant-build.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404721830956" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/build.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403085197569" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaAppVod/ant-build.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403085165749" ignored="false" />
-    <file path="/ant-build.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403085368574" ignored="false" />
+    <file path="/ant-build.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404721830956" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/OperationMeta.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403085197569" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/HttpUtil.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404113848966" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/MediaEventListener.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404134015198" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/MediaEventListener.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404984460060" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/MediaObjectInfo.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403085197569" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/OperationIdentity.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595048485" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/Media.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404137256280" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/OperationIdentity.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404739215072" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/Media.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404993967203" ignored="false" />
     <file path="$PROJECT_DIR$/../AndroidMedia/libstreaming/src/net/majorkernelpanic/streaming/mp4/MP4Config.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403091690380" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/PlayStreamOnWowza/src/com/example/PlayStreamOnWowza/MainActivity.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403697036563" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/PlayStreamOnWowza/src/com/example/PlayStreamOnWowza/MainActivity.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404301355224" ignored="false" />
     <file path="$PROJECT_DIR$/../AndroidMedia/libstreaming/src/net/majorkernelpanic/streaming/video/VideoQuality.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403090885742" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/TestStream/project.properties" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403103531371" ignored="false" />
     <file path="/RtspClient.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403259545993" ignored="false" />
@@ -1181,7 +1176,7 @@
     <file path="/Session.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403510827802" ignored="false" />
     <file path="/RtspSession.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403271340645" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/PlayStreamOnWowza/project.properties" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595582849" ignored="false" />
-    <file path="/OperationIdentity.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403529268538" ignored="false" />
+    <file path="/OperationIdentity.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404733983254" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/services/media/StreamType.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595048486" ignored="false" />
     <file path="/StreamType.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403534963628" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sample_apps/as_video/out/production/VideoTest/LiveVideoTest.swf" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595119763" ignored="false" />
@@ -1192,10 +1187,10 @@
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/services/persistence/ConsolePersistanceUserValidationDecorator.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595119763" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/services/media/FlvToPngConverter.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403873639188" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/test/controllers/media/MediaTest.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403595119764" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/console/src/newconsole/js/ui/popup/popup.js" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403876821743" ignored="false" />
-    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/SnapshotUtil.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404133495098" ignored="false" />
-    <file path="/SnapshotUtil.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403788842505" ignored="false" />
-    <file path="/MediaEventListener.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404125323431" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/console/src/newconsole/js/ui/popup/popup.js" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404733123003" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/SnapshotUtil.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404984471432" ignored="false" />
+    <file path="/SnapshotUtil.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404983285318" ignored="false" />
+    <file path="/MediaEventListener.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404984454097" ignored="false" />
     <file path="/popup.js" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403686885174" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/client/sdk/android/samples/MediaSamples/PlayStreamOnWowza/gen/com/example/PlayStreamOnWowza/BuildConfig.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403696985573" ignored="false" />
     <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/security/operations/MediaOperations.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403861365459" ignored="false" />
@@ -1204,6 +1199,658 @@
     <file path="/FlvToPngConverter.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403790925172" ignored="false" />
     <file path="/MediaOperations.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403861356434" ignored="false" />
     <file path="/HttpUtil.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1403883949487" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/tab_indicator_v4.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_star.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/progress_medium_white.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/indicator_check_mark_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/numberpicker_input.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ratingbar_small_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/wallpaper_open_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/jog_tab_right_decline.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/toast_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/search_spinner.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/grow_fade_in_from_bottom.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/lockscreen_password_field_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/push_down_in.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/title_bar.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/overshoot_interpolator.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_star_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/notification_bg_low.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/screen_rotate_start_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/switch_track_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/submenu_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/progress_large_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/keyguard_action_assist_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ic_lockscreen_camera.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/screen_rotate_plus_90_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ic_media_route_connecting_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/lock_screen_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_square_overlay.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_check_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ic_lockscreen_unlock.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/screen_rotate_start_frame.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_zoom_up.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ic_lockscreen_handle.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_plus.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ic_media_route_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/wallpaper_intra_open_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/list_highlight_inactive.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/dock_top_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/progress_indeterminate_horizontal.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/screen_rotate_180_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/numberpicker_up_btn.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_keyboard_key_ics.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/interpolator/accelerate_decelerate.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/search_bar_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/load_average_background.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/edit_query_background.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_keyboard_key_trans.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/gallery_thumb.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ratingbar_full_empty_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/edit_text_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/indicator_check_mark_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_global_search.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/list_selected_background.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/box.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/fastscroll_thumb_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable-hdpi/pointer_arrow_icon.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/interpolator/anticipate.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_default.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/lockscreen_forgot_password_button.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/notify_panel_notification_icon_bg_tile.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_default_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ratingbar_small_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/progress_medium_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/spinner_background_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_radio_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ratingbar_full_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/switch_track_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/item_background_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/progress_small.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_cab_done_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/screen_rotate_finish_frame.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/translucent_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/wallpaper_intra_close_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/push_up_in.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/task_open_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/keyguard_security_fade_in.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/recent_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/screen_rotate_finish_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/slow_fade_in.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/wallpaper_close_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/options_panel_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/fast_fade_out.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/slide_in_child_bottom.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/lock_screen_wallpaper_behind_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/screen_rotate_0_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/fade_out.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/toast_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/input_method_fancy_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/screen_rotate_180_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/screen_rotate_180_frame.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/dock_left_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/recents_fade_in.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/wallpaper_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/bounce_interpolator.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/task_close_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/decelerate_interpolator.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_search_dialog.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/wallpaper_close_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/time_picker_dialog.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/screen_rotate_minus_90_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/interpolator/accelerate_quint.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/notification_template_part_time.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/task_open_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/media_controller.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/input_method_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/screen_title_icons.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/recent_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/item_background_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/preferences.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/slide_out_right.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ic_lockscreen_soundon.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/expanded_menu_layout.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/screen_rotate_0_frame.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/interpolator/decelerate_quad.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/seek_thumb.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/preference_child_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/translucent_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/preference.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/activity_close_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/locale_picker_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/dialog_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/screen_simple_overlay_action_mode.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/dock_right_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/screen_rotate_0_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/wallpaper_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/fade_in.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/preference_child.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/spinner_background_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/dock_left_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/light_header_dither.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/keyguard_security_fade_out.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_radio_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/status_bar_item_app_background.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/slide_out_down.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/interpolator/decelerate_quint.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/screen_background_selector_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/push_up_out.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/screen_background_selector_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/push_down_in_no_alpha.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/dock_bottom_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/keyguard_security_animate_out.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/stat_sys_battery_charge.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/input_method_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ic_maps_indicator_current_position_anim.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/options_panel_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/activated_background_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/grow_fade_in_center.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/interpolator/linear.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/progress_small_white.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/dialog_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/choose_account.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/quickcontact_badge_overlay_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/linear_interpolator.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/action_bar_divider.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/search_bar_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/menuitem_checkbox.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/slide_in_right.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/progress_medium.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/input_method_extract_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/time_picker_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/activity_close_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/resolve_list_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/dock_bottom_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/volume_adjust_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/task_close_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/push_down_out_no_alpha.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ic_btn_square_browser_zoom_page_overview.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/push_down_out.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/wallpaper_intra_open_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/anticipate_overshoot_interpolator.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_keyboard_key.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/screen_rotate_minus_90_frame.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/notification_action_tombstone.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/screen_rotate_finish_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/activity_open_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/shrink_fade_out.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/dock_right_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml/autotext.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/app_starting_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/submenu_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/keyguard_security_animate_in.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/lock_screen_behind_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/interpolator/bounce.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/screen_rotate_minus_90_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/interpolator/cycle.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/dock_top_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/screen_user_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/window_move_from_decor.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml/storage_list.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml/password_kbd_popup_template.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml/sms_short_codes.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml/password_kbd_extension.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml/password_kbd_numeric.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml/password_kbd_qwerty.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml/apns.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml/preferred_time_zones.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/interpolator/anticipate_overshoot.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-sw720dp/status_bar_latest_event_ticker.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/interpolator/accelerate_quad.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-sw720dp/status_bar_latest_event_ticker_large_icon.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/interpolator/overshoot.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim-sw720dp/task_close_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-sw600dp/keyguard_navigation.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim-sw720dp/task_open_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim-sw720dp/task_close_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim-sw720dp/task_open_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-sw600dp/keyguard_sim_puk_pin_navigation.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-sw600dp/date_picker_dialog.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-port/keyguard_widget_pager.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml/eri.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-port/keyguard_host_view.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml/time_zones_by_country.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-port/icon_menu_layout.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml/power_profile.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-land/keyguard_host_view.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml/kg_password_kbd_numeric.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-land/keyguard_widget_pager.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml/password_kbd_qwerty_shifted.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-land/keyguard_glow_pad_container.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-land/ssl_certificate.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/textfield_searchview_right_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-land/icon_menu_layout.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/animator/fragment_open_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-land/keyguard_status_area.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/default_navigation.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-land/usb_storage_activity.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_message_area.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/action_mode_close_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml-xlarge/password_kbd_numeric.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml-xlarge/password_kbd_qwerty.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/media_route_list_item_checkable.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_pattern_view.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_widget_remove_drop_target.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/text_drag_thumbnail.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/permissions_package_list_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/transient_notification.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-sw600dp/keyguard_glow_pad_container.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/calendar_view.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/wifi_p2p_dialog.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/select_dialog_singlechoice.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_check_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/silent_mode_indicator.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ratingbar.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/media_button_background.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ratingbar_full.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/edit_text.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/screen_rotate_plus_90_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/progress_small_titlebar.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/slide_in_left.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ratingbar_full_filled_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/wallpaper_intra_close_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ic_clear_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/jog_tab_bar_right_sound_off.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/lockscreen_emergency_button.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/progress_large_white.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/progress_large.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/stat_sys_download_done_static.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ratingbar_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ic_menu_moreoverflow_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/tab_bottom_right_v4.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/edit_text_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/activated_background.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/scrubber_progress_horizontal_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_dropdown.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/secondary_text_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/primary_text_disable_only_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-sw600dp/keyguard.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-xlarge/select_dialog_multichoice_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-xlarge/select_dialog_item_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-xlarge/activity_list.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-xlarge/breadcrumbs_in_fragment.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-xlarge/select_dialog_singlechoice_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-w600dp/preference_list_content_single.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/text_edit_no_paste_window.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/simple_dropdown_hint.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/progress_horizontal_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/numberpicker_down_btn.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/jog_tab_bar_right_decline.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ic_clear.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/jog_tab_bar_right_sound_on.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/progress_small_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_zoom_page.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ratingbar_full_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_keyboard_key_fulltrans.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/status_bar_item_background.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ratingbar_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/scrubber_progress_horizontal_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/preference_information.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/simple_list_item_2_single_choice.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/notification_template_big_base.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/two_line_list_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/seekbar_dialog.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/preference_list_content_single.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable-mdpi/pointer_spot_touch_icon.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable-hdpi/pointer_spot_touch_icon.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/progress_dialog_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/text_edit_side_no_paste_window.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/search_view.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/preference_widget_checkbox.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_selector_view.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/simple_selectable_list_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_emergency_carrier_area_empty.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/web_runtime.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/select_dialog_singlechoice_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/media_route_list_item_collapse_group.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/preference_information_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/icon_menu_item_layout.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/fragment_bread_crumb_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/tab_content.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/list_menu_item_icon.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/simple_dropdown_item_2line.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/permissions_account_and_authtokentype.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/test_list_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/simple_expandable_list_item_1.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/textview_hint.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/alert_dialog_progress.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/screen_simple.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/notification_template_part_chronometer.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/preference_dialog_edittext.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/simple_gallery_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/alert_dialog.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/safe_mode.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/preference_header_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/list_menu_item_layout.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/alert_dialog_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/typing_filter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/list_menu_item_radio.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/media_route_chooser_layout.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_account_view.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/simple_list_item_activated_1.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_emergency_carrier_area.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/input_method_switch_dialog_title.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/notification_template_inbox.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/dialog_title_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/action_menu_layout.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/time_picker.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/choose_type_and_account.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/overlay_display_window.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/media_route_list_item_top_header.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/app_permission_item_money.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/notification_template_big_picture.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/notification_action_list.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable-xhdpi/pointer_arrow_icon.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/preference_list_fragment.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/text_edit_side_paste_window.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/simple_dropdown_item_1line.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/text_edit_action_popup_text.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/web_text_view_dropdown.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/simple_list_item_checked.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/status_bar_latest_event_content.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/notification_intruder_content.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/select_dialog_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/text_edit_suggestions_window.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/webview_select_singlechoice.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_add_widget.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/dialog_title_icons.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/select_dialog_multichoice_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_pin_view.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/app_perms_summary.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/am_compat_mode_dialog.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/twelve_key_entry.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/list_content_simple.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/global_actions_silent_mode.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/heavy_weight_switcher.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/notification_template_big_text.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/remote_views_adapter_default_loading_view.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/preference_category.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/volume_adjust.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/screen.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_sim_puk_view.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/dialog_custom_title.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/simple_list_item_single_choice.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml-xlarge/password_kbd_qwerty_shifted.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/character_picker_button.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml-xlarge/password_kbd_symbols_shift.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_message_area_large.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml-xlarge/password_kbd_symbols.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/preference_widget_seekbar.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable-hdpi/pointer_spot_hover_icon.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/activity_chooser_view_list_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/launch_warning.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/simple_spinner_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_sim_puk_pin_account_navigation.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/simple_expandable_list_item_2.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/progress_dialog.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/date_picker_dialog.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/zoom_browser_accessory_buttons.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/choose_account_row.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyboard_key_preview.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/webview_find.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/recent_apps_icon.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/action_menu_item_layout.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/js_prompt.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/text_edit_suggestion_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/date_picker.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/wifi_p2p_dialog_row.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-sw600dp-port/keyguard_status_area.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/select_dialog_item_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-sw600dp-port/keyguard_host_view.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_face_unlock_view.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/preference_widget_switch.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/list_content.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/date_picker_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/expandable_list_content.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/screen_title.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_status_view.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/action_bar_home.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_password_view.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/simple_list_item_1.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/select_dialog.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/search_bar.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/action_mode_bar.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_multi_user_selector.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/zoom_container.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/global_actions_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/dialog_title_icons_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/screen_user_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/activity_chooser_view.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/wallpaper_open_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/simple_list_item_multiple_choice.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/zoom_magnify.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/character_picker.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/choose_account_type.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/search_dropdown_item_1line.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/secondary_text_nodisable_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/primary_text_focused_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/preference_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/secondary_text_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyboard_popup_keyboard.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/menu/webview_find.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/slide_out_left.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/input_method_extract_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/accelerate_decelerate_interpolator.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/anticipate_interpolator.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/preference_list_content.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/resolver_grid.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/menu_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/zoom_controls.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/auto_complete_list.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/list_gestures_overlay.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/popup_menu_item_layout.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/power_dialog.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/number_picker.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/alert_dialog_progress_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_glow_pad_view.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/ssl_certificate.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/secondary_text_nofocus.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/secondary_text_dark_nodisable.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/search_url_text.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/search_url_text_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/primary_text_light_nodisable.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/secondary_text_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/tab_indicator_text_v4.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_multi_user_avatar.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/action_bar_title_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/browser_link_context_header.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/shrink_fade_out_from_bottom.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/fast_fade_in.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/grow_fade_in.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/recent_apps_dialog.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/breadcrumbs_in_fragment.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/secondary_text_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/primary_text_dark_nodisable.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/primary_text_light_disable_only.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/primary_text_disable_only_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/widget_edittext_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/tertiary_text_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/primary_text_nodisable_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/primary_text_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/secondary_text_nodisable_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/primary_text_dark_focused.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/tertiary_text_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/secondary_text_light_nodisable.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/primary_text_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/tertiary_text_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/primary_text_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/tertiary_text_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/accelerate_interpolator.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/preference_category_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_close.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/spinner_dropdown_background.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/jog_tab_bar_left_unlock.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/simple_list_item_2.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/sms_short_code_confirmation_dialog.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable-hdpi/pointer_spot_anchor_icon.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/dialog_custom_title_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/adaptive_notification_wrapper.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ratingbar_full_empty.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/grid_selector_background.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/minitab_lt.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/grant_credentials_permission.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/screen_progress.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/tab_indicator_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/activity_list_item_2.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_check.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_star_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/editbox_background.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/action_bar_background.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ratingbar_small.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/stat_sys_download.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/switch_inner_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ic_btn_round_more.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_circle.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/activated_background_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_search_dialog_voice.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/jog_tab_bar_right_generic.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/tab_bottom_right.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_dialog.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ic_lockscreen_outerring.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/dark_header_dither.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_minus.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/animator/fragment_close_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/list_highlight_active.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/animator/fragment_open_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/quickcontact_badge_overlay_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/animator/fade_out.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/list_selector_background_transition.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/animator/fragment_fade_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/search_dropdown_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml-en/autotext.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ic_action_assist_generic.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/activated_background_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/list_selector_background_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/list_selector_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/stat_sys_battery.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/jog_tab_right_sound_on.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/background_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/fastscroll_track_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/menuitem_background_solid.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/button_inset.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/search_dropdown_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/list_selector_background_transition_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_toggle_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/animator/fragment_fade_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_cab_done_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/panel_picture_frame_background.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/stat_sys_upload.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/keyguard_expand_challenge_handle.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/submenu_arrow.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_toggle.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/list_selector_background_transition_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/spinner_ab_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ic_menu_moreoverflow_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/switch_inner_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/list_menu_item_checkbox.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/background_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/notification_template_base.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ic_media_route_connecting_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/list_highlight.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/animator/fragment_close_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/progress_horizontal.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/animator/fade_in.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ic_media_route_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/tab_bottom_left.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/jog_tab_right_generic.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_default_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable-mdpi/pointer_spot_hover_icon.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/gallery_item_background.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ratingbar_full_filled.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/expander_group_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/textfield_search.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/menu_selector.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/textfield_searchview_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/fragment_bread_crumbs.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable-mdpi/pointer_arrow_icon.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/spinner_ab_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/select_dialog_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_toggle_bg.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_glow_pad_container.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/jog_tab_left_answer.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/textfield_searchview_right_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_group_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim-land/task_close_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim-land/task_close_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim-land/task_open_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml-mdpi/password_kbd_qwerty.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml-mdpi/password_kbd_qwerty_shifted.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml-land/password_kbd_qwerty_shifted.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/tab_indicator_ab_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_browser_zoom_page_overview.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/settings_header.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/progress_indeterminate_horizontal_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/item_background.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/tab_indicator_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ratingbar_full_empty_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/list_selector_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_group_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/background_cache_hint_selector_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/scrubber_control_selector_holo.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/list_selector_background_transition_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_default_small.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/fastscroll_track_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/list_selector_background.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/jog_tab_bar_left_answer.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/screen_rotate_start_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/tab_bottom_left_v4.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/tab_indicator.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/jog_tab_right_sound_off.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/menuitem_background.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_toggle_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/jog_tab_left_generic.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_default_transparent.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_zoom_down.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/expander_group.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-large/action_mode_close_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/item_background_activated_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/input_method_fancy_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568041" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/shrink_fade_out_center.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/activity_picker_bg.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_browser_zoom_fit_page.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/list_selected_background_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/keyguard_action_assist_enter.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568042" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/slide_in_up.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/media_route_list_item_section_header.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/screen_rotate_plus_90_frame.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/activity_open_exit.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/background_cache_hint_selector_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568043" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/anim/recents_fade_out.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml/password_kbd_symbols_shift.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/interpolator/decelerate_cubic.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/interpolator/accelerate_cubic.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout-port/keyguard_status_area.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/expander_group_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_transport_control_view.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568044" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/AndroidManifest.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/textfield_search_empty.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/spinner_background.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/usb_storage_activity.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/search_dropdown_item_icons_2line.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568045" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/activity_list.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/app_permission_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/keyguard_sim_pin_view.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568046" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/screen_custom_title.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568047" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/primary_text_dark_disable_only.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/primary_text_nodisable_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/color/primary_text_holo_light.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/simple_spinner_dropdown_item.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/layout/always_use_checkbox.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/keyboard_key_feedback.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/jog_tab_bar_left_generic.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568048" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/btn_radio.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/jog_tab_left_unlock.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/xml-land/password_kbd_qwerty.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568049" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/textfield_searchview_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/libs/android.jar!/res/drawable/ratingbar_full_filled_holo_dark.xml" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404214568050" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/MediaRtsp.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404734011160" ignored="false" />
+    <file path="/MediaRtsp.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404730922099" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/media/wowza/workspace/mediaApp/src/com/backendless/media/MediaEventListenerRtsp.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404734007688" ignored="false" />
+    <file path="/MediaEventListenerRtsp.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404733621502" ignored="false" />
+    <file path="$PROJECT_DIR$/../sources.backendless.com/src/server/play/app/com/backendless/management/MediaService.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404992638739" ignored="false" />
+    <file path="/MediaService.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404992634946" ignored="false" />
+    <file path="/FileManagementService.java" changelist="fa3e4aea-c9d5-420e-b854-3b539143136f" time="1404993208913" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -1312,84 +1959,8 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
-      <breakpoint url="file://$PROJECT_DIR$/src/com/backendless/media/lib/rtsp/RtspClient.java" line="355" class="com.backendless.media.lib.rtsp.RtspClient" package="com.backendless.media.lib.rtsp">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/com/backendless/Media.java" line="95" class="com.backendless.Media" package="com.backendless">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/com/backendless/Media.java" line="175" class="com.backendless.Media" package="com.backendless">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/com/backendless/Media.java" line="112" class="com.backendless.Media" package="com.backendless">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/com/backendless/Media.java" line="129" class="com.backendless.Media" package="com.backendless">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-    </line_breakpoints>
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -1403,7 +1974,7 @@
       <file leaf-file-name="Backendless.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/backendless/Backendless.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="151" column="8" selection-start="6088" selection-end="6088" vertical-scroll-proportion="0.0">
+            <state line="196" column="23" selection-start="7416" selection-end="7416" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -1412,18 +1983,36 @@
       <file leaf-file-name="Media.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/backendless/Media.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="120" column="43" selection-start="5106" selection-end="5106" vertical-scroll-proportion="1.4863482">
+            <state line="149" column="61" selection-start="6098" selection-end="6098" vertical-scroll-proportion="0.80546075">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Files.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/backendless/Files.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="41" column="104" selection-start="1772" selection-end="1874" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#0#9710#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StreamType.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/backendless/media/StreamType.java">
+      <file leaf-file-name="SessionBuilder.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/backendless/media/lib/SessionBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="38" selection-start="1112" selection-end="1121" vertical-scroll-proportion="0.0">
+            <state line="149" column="34" selection-start="4602" selection-end="4602" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MP4Config.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/backendless/media/lib/mp4/MP4Config.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="49" column="20" selection-start="2124" selection-end="2124" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -1434,47 +2023,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state line="28" column="27" selection-start="1308" selection-end="1322" vertical-scroll-proportion="0.0">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Session.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/backendless/media/lib/Session.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#10343#10527#0" expanded="true" />
-                <element signature="e#10520#10521#0" expanded="true" />
-                <element signature="e#13859#14059#0" expanded="true" />
-                <element signature="e#14052#14053#0" expanded="true" />
-                <element signature="e#15662#15848#0" expanded="true" />
-                <element signature="e#15841#15842#0" expanded="true" />
-                <element signature="e#18331#18433#0" expanded="true" />
-                <element signature="e#18426#18427#0" expanded="true" />
-                <element signature="e#19341#20417#0" expanded="true" />
-                <element signature="e#20410#20411#0" expanded="true" />
-                <element signature="e#20535#20710#0" expanded="true" />
-                <element signature="e#20703#20704#0" expanded="true" />
-                <element signature="e#21133#22031#0" expanded="true" />
-                <element signature="e#22024#22025#0" expanded="true" />
-                <element signature="e#22603#22949#0" expanded="true" />
-                <element signature="e#22942#22943#0" expanded="true" />
-                <element signature="e#23212#23386#0" expanded="true" />
-                <element signature="e#23379#23380#0" expanded="true" />
-                <element signature="e#23461#23638#0" expanded="true" />
-                <element signature="e#23631#23632#0" expanded="true" />
-                <element signature="e#23710#23884#0" expanded="true" />
-                <element signature="e#23877#23878#0" expanded="true" />
-                <element signature="e#23956#24130#0" expanded="true" />
-                <element signature="e#24123#24124#0" expanded="true" />
-                <element signature="e#24252#24447#0" expanded="true" />
-                <element signature="e#24440#24441#0" expanded="true" />
-                <element signature="e#24532#24714#0" expanded="true" />
-                <element signature="e#24707#24708#0" expanded="true" />
-                <element signature="e#24759#25014#0" expanded="true" />
-                <element signature="e#25009#25010#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -1495,6 +2043,8 @@
     </option>
   </component>
   <component name="GitLogSettings">
+    <option name="mySelectedBranch" value="refs/heads/MediaForAndroid" />
+    <option name="myStructureFilterPaths" />
     <option name="myDateState">
       <MyDateState />
     </option>
@@ -1502,8 +2052,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/com/backendless/media/lib/hw/NV21Convertor.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/media/lib/gl/BackendlessSurfaceView.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/media/lib/gl/SurfaceManager.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/media/lib/gl/TextureManager.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/media/lib/exceptions/CameraInUseException.java" />
@@ -1517,6 +2065,8 @@
         <option value="$PROJECT_DIR$/src/com/backendless/media/StreamType.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/media/StreamQuality.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/media/StreamProtocolType.java" />
+        <option value="$PROJECT_DIR$/src/com/backendless/Backendless.java" />
+        <option value="$PROJECT_DIR$/src/com/backendless/exceptions/ExceptionMessage.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/Media.java" />
       </list>
     </option>
@@ -1727,9 +2277,15 @@
               <option name="myItemId" value="androidSDK" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+              <option name="myItemId" value="androidSDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Android-SDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -1739,6 +2295,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Android-SDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1778,7 +2338,33 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="media" />
+              <option name="myItemId" value="files" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="androidSDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Android-SDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backendless" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="files" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="router" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1818,12 +2404,12 @@
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth1" value="162" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth0" value="163" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="267" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1061" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1059" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth4" value="623" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1061" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="265" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth3" value="163" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth4" value="623" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="261" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth3" value="163" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Android_2_3_3" />
     <property name="FullScreen" value="false" />
@@ -1871,10 +2457,10 @@
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="last.edited.regexp" value="Sample Text" />
     <property name="GenerateAntBuildDialog.backupFiles" value="true" />
-    <property name="options.searchVisible" value="true" />
+    <property name="last.edited.regexp" value="Sample Text" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -1901,6 +2487,132 @@
       <recent name="com" />
       <recent name="com.client" />
     </key>
+  </component>
+  <component name="RestoreUpdateTree">
+    <UpdateInfo date="Moments ago" ActionInfo="_Update">
+      <UpdatedFiles>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated from server" />
+          <option name="myStatusName" value="Changed on server" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CHANGED_ON_SERVER" />
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Updated" />
+            <option name="myStatusName" value="Changed" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="UPDATED" />
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/libs/weborbclient.jar</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/samples/DataService/tododemo/libs/backendless.jar</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/samples/FileService/filedemo/libs/backendless.jar</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/samples/GeoService/geodemo/libs/backendless.jar</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/samples/MessagingService/pubsubdemo/libs/backendless.jar</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/samples/MessagingService/pushdemo/libs/backendless.jar</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/samples/UserService/rolesdemo/libs/backendless.jar</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/samples/UserService/userservicedemo/libs/backendless.jar</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/com/backendless/Backendless.java</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/com/backendless/servercode/RunnerContext.java</PATH>
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Created" />
+            <option name="myStatusName" value="Created" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="CREATED" />
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/com/backendless/Events.java</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/com/backendless/servercode/annotation/BackendlessEvent.java</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/com/backendless/servercode/annotation/BackendlessGrantAccess.java</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/com/backendless/servercode/annotation/BackendlessRejectAccess.java</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/com/backendless/servercode/extension/CustomEventHandler.java</PATH>
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Deleted" />
+            <option name="myStatusName" value="Deleted" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="true" />
+            <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Restored" />
+            <option name="myStatusName" value="Will be restored" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="RESTORED" />
+          </FILE-GROUP>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Modified" />
+          <option name="myStatusName" value="Modified" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MODIFIED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Skipped" />
+          <option name="myStatusName" value="Skipped" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SKIPPED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with conflicts" />
+          <option name="myStatusName" value="Will be merged with conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_CONFLICTS" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with tree conflicts" />
+          <option name="myStatusName" value="Merged with tree conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with property conflicts" />
+          <option name="myStatusName" value="Will be merged with property conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged" />
+          <option name="myStatusName" value="Will be merged" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Not in repository" />
+          <option name="myStatusName" value="Not in repository" />
+          <option name="mySupportsDeletion" value="true" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UNKNOWN" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally added" />
+          <option name="myStatusName" value="Locally added" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_ADDED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally removed" />
+          <option name="myStatusName" value="Locally removed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_REMOVED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Switched" />
+          <option name="myStatusName" value="Switched" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SWITCHED" />
+        </FILE-GROUP>
+      </UpdatedFiles>
+    </UpdateInfo>
   </component>
   <component name="RunManager" selected="JUnit.SaveNewObjectTest.testSaveCircularEntity">
     <configuration default="false" name="DeleteObjectTest.testDeleteObject" type="JUnit" factoryName="JUnit" temporary="true">
@@ -2542,31 +3254,31 @@
     <frame x="64" y="-4" width="1303" height="773" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.86279684" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.8128" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4784" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2932271" sideWeight="0.6528" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17609562" sideWeight="0.6544" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30202776" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19525066" sideWeight="0.086330935" order="9" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1952" sideWeight="0.086330935" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24829157" sideWeight="0.39473686" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2096" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3472" sideWeight="0.9086331" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3456" sideWeight="0.9086331" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24143426" sideWeight="0.4352" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959402" sideWeight="0.6753529" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24143426" sideWeight="0.6528" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.225498" sideWeight="0.7904" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29348987" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="IntelliGuard" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="ASM" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294964" sideWeight="0.80474937" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.70238096" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Regex Tester" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
+      <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.70238096" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Cloverage" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="ConsoleMavenPlugin" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="17" side_tool="false" content_ui="tabs" />
       <window_info id="Code Consultant" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2576,14 +3288,14 @@
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977018" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Properties" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294893" sideWeight="0.5" order="18" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852808" sideWeight="0.6715928" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Maven-2 Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852808" sideWeight="0.6715928" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="UML Diagrams" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Code Graph" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3303505" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="FindBugs-IDEA" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37467018" sideWeight="0.4971223" order="19" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.327212" sideWeight="0.5" order="20" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.327212" sideWeight="0.5" order="20" side_tool="false" content_ui="tabs" />
       <window_info id="Analysis" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="21" side_tool="false" content_ui="tabs" />
       <window_info id="JSON Formatter" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="22" side_tool="false" content_ui="tabs" />
       <window_info id="Graphical Navigator" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2761,172 +3473,115 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/media/lib/gl/BackendlessSurfaceView.java">
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/Media.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="3" selection-start="2375" selection-end="2375" vertical-scroll-proportion="1.300885">
-          <folding>
-            <element signature="e#0#11729#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-            <element signature="e#7525#7729#0" expanded="true" />
-            <element signature="e#7720#7721#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/media/lib/gl/SurfaceManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="46" selection-start="1417" selection-end="1417" vertical-scroll-proportion="0.8761062">
-          <folding>
-            <element signature="e#0#5549#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/media/lib/gl/TextureManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="66" selection-start="1653" selection-end="1653" vertical-scroll-proportion="1.0884956">
-          <folding>
-            <element signature="e#0#9956#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/media/lib/exceptions/CameraInUseException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="13" selection-start="1086" selection-end="1086" vertical-scroll-proportion="0.10380623">
+        <state line="188" column="47" selection-start="7946" selection-end="7946" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/media/lib/exceptions/ConfNotSupportedException.java">
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/HeadersManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="54" selection-start="1278" selection-end="1278" vertical-scroll-proportion="0.31141868">
+        <state line="28" column="27" selection-start="1308" selection-end="1322" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/media/lib/exceptions/InvalidSurfaceException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="21" selection-start="1285" selection-end="1285" vertical-scroll-proportion="0.28546712">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/media/lib/exceptions/StorageUnavailableException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="69" selection-start="1321" selection-end="1321" vertical-scroll-proportion="0.3633218">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/media/lib/audio/AACStream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="53" selection-start="899" selection-end="899" vertical-scroll-proportion="0.3699115">
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#8235#9281#0" expanded="false" />
-            <element signature="e#9274#9275#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/media/lib/audio/AMRNBStream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="72" selection-start="1776" selection-end="1776" vertical-scroll-proportion="0.8495575">
-          <folding>
-            <element signature="e#0#3177#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/media/lib/audio/AudioQuality.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="5" selection-start="1400" selection-end="1400" vertical-scroll-proportion="0.88235295">
-          <folding>
-            <element signature="e#0#2495#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/media/lib/audio/AudioStream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="50" selection-start="1535" selection-end="1535" vertical-scroll-proportion="0.9557522">
-          <folding>
-            <element signature="e#0#3633#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/media/lib/Session.java">
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/Backendless.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#10343#10527#0" expanded="true" />
-            <element signature="e#10520#10521#0" expanded="true" />
-            <element signature="e#13859#14059#0" expanded="true" />
-            <element signature="e#14052#14053#0" expanded="true" />
-            <element signature="e#15662#15848#0" expanded="true" />
-            <element signature="e#15841#15842#0" expanded="true" />
-            <element signature="e#18331#18433#0" expanded="true" />
-            <element signature="e#18426#18427#0" expanded="true" />
-            <element signature="e#19341#20417#0" expanded="true" />
-            <element signature="e#20410#20411#0" expanded="true" />
-            <element signature="e#20535#20710#0" expanded="true" />
-            <element signature="e#20703#20704#0" expanded="true" />
-            <element signature="e#21133#22031#0" expanded="true" />
-            <element signature="e#22024#22025#0" expanded="true" />
-            <element signature="e#22603#22949#0" expanded="true" />
-            <element signature="e#22942#22943#0" expanded="true" />
-            <element signature="e#23212#23386#0" expanded="true" />
-            <element signature="e#23379#23380#0" expanded="true" />
-            <element signature="e#23461#23638#0" expanded="true" />
-            <element signature="e#23631#23632#0" expanded="true" />
-            <element signature="e#23710#23884#0" expanded="true" />
-            <element signature="e#23877#23878#0" expanded="true" />
-            <element signature="e#23956#24130#0" expanded="true" />
-            <element signature="e#24123#24124#0" expanded="true" />
-            <element signature="e#24252#24447#0" expanded="true" />
-            <element signature="e#24440#24441#0" expanded="true" />
-            <element signature="e#24532#24714#0" expanded="true" />
-            <element signature="e#24707#24708#0" expanded="true" />
-            <element signature="e#24759#25014#0" expanded="true" />
-            <element signature="e#25009#25010#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/media/StreamQuality.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="42" selection-start="1328" selection-end="1328" vertical-scroll-proportion="0.3633218">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/media/StreamProtocolType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="29" selection-start="1200" selection-end="1200" vertical-scroll-proportion="0.25041735">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/media/StreamType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="38" selection-start="1112" selection-end="1121" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/Media.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="120" column="43" selection-start="5106" selection-end="5106" vertical-scroll-proportion="1.4863482">
+        <state line="182" column="27" selection-start="7640" selection-end="7640" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/HeadersManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="27" selection-start="1308" selection-end="1322" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/media/lib/video/H264Stream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="70" column="9" selection-start="2872" selection-end="2872" vertical-scroll-proportion="0.3327645" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/media/lib/mp4/MP4Config.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="20" selection-start="2124" selection-end="2124" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/media/lib/SessionBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="149" column="34" selection-start="4602" selection-end="4602" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/servercode/extension/FilesExtender.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="35" selection-start="515" selection-end="525" vertical-scroll-proportion="0.4880546">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/Backendless.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="196" column="23" selection-start="7416" selection-end="7416" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/FilesAndroidExtra.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="19" selection-start="1337" selection-end="1337" vertical-scroll-proportion="0.013840831">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/files/BackendlessFile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="25" selection-start="1557" selection-end="1563" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/UploadFileAsyncTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="6" selection-start="1499" selection-end="1499" vertical-scroll-proportion="0.15929204">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/Files.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="104" selection-start="1772" selection-end="1874" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#0#9710#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/exceptions/ExceptionMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="112" column="73" selection-start="7191" selection-end="7191" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/Media.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="149" column="61" selection-start="6098" selection-end="6098" vertical-scroll-proportion="0.80546075">
+          <folding />
         </state>
       </provider>
     </entry>

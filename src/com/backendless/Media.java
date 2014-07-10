@@ -41,7 +41,6 @@ import java.util.regex.Pattern;
 
 public final class Media
 {
-  private final static String MEDIA_MANAGER_SERVER_ALIAS = "com.backendless.services.media.MediaService";
   private final static String SERVER_URL_LIVE = "10.0.1.9:1935/mediaAppLive/";  //Change to api.backendless.com
   private final static String SERVER_URL_VOD = "10.0.1.9:1935/mediaAppVod/";  //Change to api.backendless.com
   private final static String RTSP_PROTOCOL = StreamProtocolType.RTSP.getValue();
@@ -102,6 +101,7 @@ public final class Media
   {
     String operationType = null;
     String url = null;
+    String subDir = Backendless.getApplicationId().toLowerCase() + "/media/";
 
     if( streamProtocolType == null )
     {
@@ -114,14 +114,14 @@ public final class Media
       {
         operationType = "playLive";
         params = getConnectParams( tube, operationType, streamName);
-        url = RTSP_PROTOCOL + SERVER_URL_LIVE + streamName + params;
+        url = RTSP_PROTOCOL + SERVER_URL_LIVE + "_definst_/" + subDir + streamName + params;
       }
 
       else
       {
         operationType = "playRecord";
         params = getConnectParams( tube, operationType, streamName);
-        url =  RTSP_PROTOCOL + SERVER_URL_VOD + "mp4:" + streamName + ".mp4" + params; //Add File Format
+        url =  RTSP_PROTOCOL + SERVER_URL_VOD + "_definst_/mp4:" + subDir + streamName + ".mp4" + params;
       }
     }
 
@@ -131,14 +131,14 @@ public final class Media
       {
         operationType = "playLive";
         params = getConnectParams( tube, operationType, streamName);
-        url = HLS_PROTOCOL + SERVER_URL_LIVE + streamName + "/playlist.m3u8" + params;
+        url = HLS_PROTOCOL + SERVER_URL_LIVE + "_definst_/" + subDir + streamName + "/playlist.m3u8" + params;
       }
 
       else
       {
         operationType = "playRecord";
         params = getConnectParams( tube, operationType, streamName);
-        url =  HLS_PROTOCOL + SERVER_URL_VOD + "mp4:" + streamName + ".mp4/playlist.m3u8"+ params; //Add File Format
+        url =  HLS_PROTOCOL + SERVER_URL_VOD + "_definst_/mp4:" + subDir + streamName + ".mp4/playlist.m3u8"+ params;
       }
     }
 

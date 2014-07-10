@@ -296,6 +296,7 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$USER_HOME$/tests/android/junit/src/test/NewTest.iml" filepath="$USER_HOME$/tests/android/junit/src/test/NewTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/androidSDK.iml" filepath="$PROJECT_DIR$/androidSDK.iml" />
     </modules>
   </component>
@@ -329,6 +330,28 @@
   </component>
   <component name="WebServicesPlugin" addRequiredLibraries="true" />
   <component name="libraryTable">
+    <library name="android">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/libs/android.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="FacebookSDK">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/libs/FacebookSDK.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="libs">
+      <CLASSES>
+        <root url="file://$PROJECT_DIR$/tests/junit/libs" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+      <jarDirectory url="file://$PROJECT_DIR$/tests/junit/libs" recursive="false" />
+    </library>
     <library name="libs-for-android-sdk">
       <CLASSES>
         <root url="file://$PROJECT_DIR$/libs" />
@@ -337,6 +360,20 @@
       <JAVADOC />
       <SOURCES />
       <jarDirectory url="file://$PROJECT_DIR$/libs" recursive="false" />
+    </library>
+    <library name="maps">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/libs/maps.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="weborbclient">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/libs/weborbclient.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
     </library>
   </component>
   <component name="org.twodividedbyzero.idea.findbugs">
