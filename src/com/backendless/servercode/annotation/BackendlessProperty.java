@@ -11,13 +11,13 @@ import java.lang.annotation.Target;
  * Date: 09.07.14
  * Time: 13:32
  */
-@Target( ElementType.TYPE )
+@Target( ElementType.FIELD )
 @Retention( RetentionPolicy.RUNTIME )
 public @interface BackendlessProperty
 {
   String name();
 
-  String description();
+  String validator() default ".*";
 
-  boolean required();
+  boolean required() default true;
 }

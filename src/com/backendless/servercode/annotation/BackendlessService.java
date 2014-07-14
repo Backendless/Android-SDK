@@ -15,5 +15,5 @@ import java.lang.annotation.Target;
 @Retention( RetentionPolicy.RUNTIME )
 public @interface BackendlessService
 {
-  String name();
+  String value();
 }
