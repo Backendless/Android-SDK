@@ -23,11 +23,11 @@ import com.backendless.async.message.AsyncMessage;
 import com.backendless.cache.CacheService;
 import com.backendless.cache.ICache;
 import com.backendless.core.ResponseCarrier;
+import com.backendless.core.responder.AdaptingResponder;
+import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
-import weborb.client.Fault;
 import weborb.client.IChainedResponder;
-import weborb.client.IResponder;
 import weborb.types.IAdaptingType;
 import weborb.util.io.ISerializer;
 
@@ -46,7 +46,7 @@ public class Cache
   {
   }
 
-  public <T> ICache<T> of( String key, Class<? extends T> type )
+  public <T> ICache<T> with( String key, Class<? extends T> type )
   {
     return new CacheService<T>( type, key );
   }
@@ -61,7 +61,7 @@ public class Cache
         try
         {
           putSync( key, object, expire );
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage( null, callback ) );
+          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage( new Object(), callback ) );
         }
         catch( BackendlessException e )
         {
@@ -111,9 +111,13 @@ public class Cache
     Invoker.invokeSync( CACHE_SERVER_ALIAS, "putBytes", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, bytes, expire }, getChainedResponder() );
   }
 
-  public <T> T getSync( String key, Class<? extends T> clazz )
+  public <T> T getSync( String key, Class<T> clazz )
   {
-    byte[] bytes = Invoker.invokeSync( CACHE_SERVER_ALIAS, "getBytes", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key }, getChainedResponder() );
+    byte[] bytes = Invoker.invokeSync( CACHE_SERVER_ALIAS, "getBytes", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key }, new AdaptingResponder<byte[]>( byte[].class, new PoJoAdaptingPolicy<byte[]>() ) );
+
+    if( bytes == null )
+      return null;
+
     return (T) deserialize( bytes, clazz );
   }
 
@@ -258,30 +262,9 @@ public class Cache
     } );
   }
 
-  private static IChainedResponder getChainedResponder()
+  private static <T> IChainedResponder getChainedResponder()
   {
-    return new IChainedResponder()
-    {
-      private IResponder responder;
-
-      @Override
-      public void setNextResponder( IResponder iResponder )
-      {
-        responder = iResponder;
-      }
-
-      @Override
-      public void responseHandler( Object o )
-      {
-        responder.responseHandler( o );
-      }
-
-      @Override
-      public void errorHandler( Fault fault )
-      {
-        responder.errorHandler( fault );
-      }
-    };
+    return new AdaptingResponder<T>();
   }
 
   private static Object deserialize( byte[] bytes, Class clazz )
