@@ -26,9 +26,17 @@ public interface ICache<T>
 
   void put( T value, int expire, AsyncCallback<Object> callback );
 
+  void put( T value );
+
+  void put( T value, int expire );
+
   void get( AsyncCallback<T> callback );
 
+  T get();
+
   void contains( AsyncCallback<Boolean> callback );
+
+  Boolean contains();
 
   void expire( int seconds, AsyncCallback<Object> callback );
 
@@ -37,16 +45,4 @@ public interface ICache<T>
   void delete( AsyncCallback<Object> callback );
 
   void delete();
-
-  void putSync( T value );
-
-  void putSync( T value, int expire );
-
-  T getSync();
-
-  Boolean containsSync();
-
-  void expireSync( int seconds );
-
-  void deleteSync();
 }

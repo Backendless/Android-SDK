@@ -82,38 +82,26 @@ public class CacheService<T> implements ICache<T>
   }
 
   @Override
-  public void putSync( T value )
+  public void put( T value )
   {
-    Backendless.Cache.putSync( key, value );
+    Backendless.Cache.put( key, value );
   }
 
   @Override
-  public void putSync( T value, int expire )
+  public void put( T value, int expire )
   {
-    Backendless.Cache.putSync( key, value, expire );
+    Backendless.Cache.put( key, value, expire );
   }
 
   @Override
-  public T getSync()
+  public T get()
   {
-    return Backendless.Cache.getSync( key, clazz );
+    return Backendless.Cache.get( key, clazz );
   }
 
   @Override
-  public Boolean containsSync()
+  public Boolean contains()
   {
-    return Backendless.Cache.containsSync( key );
-  }
-
-  @Override
-  public void expireSync( int seconds )
-  {
-    Backendless.Cache.expireSync( key, seconds );
-  }
-
-  @Override
-  public void deleteSync()
-  {
-    Backendless.Cache.deleteSync( key );
+    return Backendless.Cache.contains( key );
   }
 }

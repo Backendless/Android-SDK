@@ -51,7 +51,7 @@ public class Cache
     return new CacheService<T>( type, key );
   }
 
-  public void put( final String key, final Object object, final Integer expire, final AsyncCallback<Object> callback )
+  public void put( final String key, final Object object, final int expire, final AsyncCallback<Object> callback )
   {
     ThreadPoolService.getPoolExecutor().execute( new Runnable()
     {
@@ -60,7 +60,7 @@ public class Cache
       {
         try
         {
-          putSync( key, object, expire );
+          put( key, object, expire );
           ResponseCarrier.getInstance().deliverMessage( new AsyncMessage( new Object(), callback ) );
         }
         catch( BackendlessException e )
@@ -73,65 +73,36 @@ public class Cache
 
   public void put( final String key, final Object object, final AsyncCallback<Object> callback )
   {
-    put( key, object, null, callback );
+    put( key, object, 0, callback );
   }
 
-  public void put( String key, Object object )
+  public void put( final String key, final Object object )
   {
-    put( key, object, (Integer) null );
+    put( key, object, 0 );
   }
 
-  public void put( String key, Object object, Integer expire )
-  {
-    put( key, object, expire, new AsyncCallback<Object>()
-    {
-      @Override
-      public void handleResponse( Object response )
-      {
-
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-
-      }
-    } );
-  }
-
-  public void putSync( String key, Object object )
-  {
-    putSync( key, object, null );
-  }
-
-  public void putSync( String key, Object object, Integer expire )
+  public void put( String key, Object object, int expire )
   {
     byte[] bytes = serialize( object );
-
     Invoker.invokeSync( CACHE_SERVER_ALIAS, "putBytes", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, bytes, expire }, getChainedResponder() );
   }
 
-  public <T> T getSync( String key, Class<T> clazz )
+  public <T> T get( String key, Class<T> type )
   {
     byte[] bytes = Invoker.invokeSync( CACHE_SERVER_ALIAS, "getBytes", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key }, new AdaptingResponder<byte[]>( byte[].class, new PoJoAdaptingPolicy<byte[]>() ) );
 
     if( bytes == null )
       return null;
 
-    return (T) deserialize( bytes, clazz );
-  }
-
-  public Object getSync( String key )
-  {
-    return getSync( key, null );
+    return (T) deserialize( bytes, type );
   }
 
   public void get( String key, AsyncCallback<Object> callback )
   {
-    get( key, callback );
+    get( key, Object.class, callback );
   }
 
-  public <T> void get( final String key, final Class<? extends T> clazz, final AsyncCallback<T> callback )
+  public <T> void get( final String key, final Class<? extends T> type, final AsyncCallback<T> callback )
   {
     ThreadPoolService.getPoolExecutor().execute( new Runnable()
     {
@@ -140,7 +111,7 @@ public class Cache
       {
         try
         {
-          T result = getSync( key, clazz );
+          T result = get( key, type );
           ResponseCarrier.getInstance().deliverMessage( new AsyncMessage( result, callback ) );
         }
         catch( BackendlessException e )
@@ -151,7 +122,7 @@ public class Cache
     } );
   }
 
-  public Boolean containsSync( String key )
+  public Boolean contains( String key )
   {
     return Invoker.invokeSync( CACHE_SERVER_ALIAS, "containsKey", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key }, getChainedResponder() );
   }
@@ -165,7 +136,7 @@ public class Cache
       {
         try
         {
-          Boolean isContains = containsSync( key );
+          Boolean isContains = contains( key );
           ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<Boolean>( isContains, callback ) );
         }
         catch( BackendlessException e )
@@ -176,27 +147,9 @@ public class Cache
     } );
   }
 
-  public void expireSync( String key, int expire )
+  public void expire( String key, int expire )
   {
     Invoker.invokeSync( CACHE_SERVER_ALIAS, "extendLife", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, expire }, getChainedResponder() );
-  }
-
-  public void expire( final String key, final int expire )
-  {
-    expire( key, expire, new AsyncCallback<Object>()
-    {
-      @Override
-      public void handleResponse( Object response )
-      {
-
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-
-      }
-    } );
   }
 
   public void expire( final String key, final int expire, final AsyncCallback<Object> callback )
@@ -208,7 +161,7 @@ public class Cache
       {
         try
         {
-          expireSync( key, expire );
+          expire( key, expire );
           ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<Object>( null, callback ) );
         }
         catch( BackendlessException e )
@@ -219,27 +172,9 @@ public class Cache
     } );
   }
 
-  public void deleteSync( String key )
+  public void delete( String key )
   {
     Invoker.invokeSync( CACHE_SERVER_ALIAS, "delete", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key }, getChainedResponder() );
-  }
-
-  public void delete( final String key )
-  {
-    delete( key, new AsyncCallback<Object>()
-    {
-      @Override
-      public void handleResponse( Object response )
-      {
-
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-
-      }
-    } );
   }
 
   public void delete( final String key, final AsyncCallback<Object> callback )
@@ -251,7 +186,7 @@ public class Cache
       {
         try
         {
-          deleteSync( key );
+          delete( key );
           ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<Object>( null, callback ) );
         }
         catch( BackendlessException e )
@@ -267,7 +202,7 @@ public class Cache
     return new AdaptingResponder<T>();
   }
 
-  private static Object deserialize( byte[] bytes, Class clazz )
+  private static Object deserialize( byte[] bytes, Class type )
   {
     Object object = null;
     try
@@ -275,7 +210,7 @@ public class Cache
       object = weborb.util.io.Serializer.fromBytes( bytes, ISerializer.AMF3, false );
 
       if( object instanceof IAdaptingType )
-        return clazz == null ? ((IAdaptingType) object).defaultAdapt() : ((IAdaptingType) object).adapt( clazz );
+        return type == null ? ((IAdaptingType) object).defaultAdapt() : ((IAdaptingType) object).adapt( type );
     }
     catch( Exception e )
     {
