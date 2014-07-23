@@ -18,7 +18,6 @@
 
 package com.backendless;
 
-import android.app.ProgressDialog;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
