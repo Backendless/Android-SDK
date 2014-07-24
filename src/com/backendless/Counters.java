@@ -37,12 +37,12 @@ public final class Counters
   {
   }
 
-  public IAtomic of( String entityClass )
+  public IAtomic of( String counterName )
   {
-    if( entityClass == null )
+    if( counterName == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-    return AtomicOperationFactory.createDataStore( entityClass );
+    return AtomicOperationFactory.createAtomicCounter( counterName );
   }
 
   public Long getAndIncrement( String counterName )
@@ -56,7 +56,8 @@ public final class Counters
   {
     try
     {
-      Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "getAndIncrement", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName }, new AtomicCallback( responder ) );
+      getAndIncrement( counterName );
+      //Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "getAndIncrement", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName }, new AtomicCallback( responder ) );
     }
     catch( Throwable e )
     {

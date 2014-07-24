@@ -26,7 +26,7 @@ public class AtomicOperationFactory
   {
   }
 
-  protected static IAtomic createDataStore( final String counterName )
+  protected static IAtomic createAtomicCounter( final String counterName )
   {
     return new IAtomic()
     {
