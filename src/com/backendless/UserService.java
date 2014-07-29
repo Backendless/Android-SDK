@@ -737,7 +737,7 @@ public final class UserService
     String userToken = UserTokenStorageFactory.instance().getStorage().get();
     if( userToken != null && !userToken.equals( "" ) )
     {
-      return Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "isValidUserToken", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), userToken } );
+      return Invoker.<Boolean>invokeSync( USER_MANAGER_SERVER_ALIAS, "isValidUserToken", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), userToken } );
     }
     else
     {
