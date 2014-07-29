@@ -11,8 +11,8 @@ import java.lang.annotation.Target;
  * Date: 12/25/13
  * Time: 11:44 AM
  */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
+@Target( ElementType.TYPE )
+@Retention( RetentionPolicy.RUNTIME )
 public @interface BackendlessTimer
 {
   String value();
