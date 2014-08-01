@@ -426,6 +426,12 @@ public final class UserService
         @Override
         public void handleFault( BackendlessFault fault )
         {
+          if( fault.getCode().equals( "3064" ) || fault.getCode().equals( "3091" ) || fault.getCode().equals( "3090" )  || fault.getCode().equals( "3023" ) )
+          {
+            handleResponse( null );
+            return;
+          }
+
           if( responder != null )
             responder.handleFault( fault );
         }
