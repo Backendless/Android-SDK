@@ -53,22 +53,8 @@ public class Cache
 
   public void put( final String key, final Object object, final int expire, final AsyncCallback<Object> callback )
   {
-    ThreadPoolService.getPoolExecutor().execute( new Runnable()
-    {
-      @Override
-      public void run()
-      {
-        try
-        {
-          put( key, object, expire );
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage( new Object(), callback ) );
-        }
-        catch( BackendlessException e )
-        {
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage( new BackendlessFault( e ), callback ) );
-        }
-      }
-    } );
+    byte[] bytes = serialize( object );
+    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "putBytes", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, bytes, expire }, callback );
   }
 
   public void put( final String key, final Object object, final AsyncCallback<Object> callback )
@@ -129,22 +115,7 @@ public class Cache
 
   public void contains( final String key, final AsyncCallback<Boolean> callback )
   {
-    ThreadPoolService.getPoolExecutor().execute( new Runnable()
-    {
-      @Override
-      public void run()
-      {
-        try
-        {
-          Boolean isContains = contains( key );
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<Boolean>( isContains, callback ) );
-        }
-        catch( BackendlessException e )
-        {
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage( new BackendlessFault( e ), callback ) );
-        }
-      }
-    } );
+    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "containsKey", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key }, callback );
   }
 
   public void expire( String key, int expire )
@@ -154,22 +125,7 @@ public class Cache
 
   public void expire( final String key, final int expire, final AsyncCallback<Object> callback )
   {
-    ThreadPoolService.getPoolExecutor().execute( new Runnable()
-    {
-      @Override
-      public void run()
-      {
-        try
-        {
-          expire( key, expire );
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<Object>( null, callback ) );
-        }
-        catch( BackendlessException e )
-        {
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage( new BackendlessFault( e ), callback ) );
-        }
-      }
-    } );
+    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "extendLife", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, expire }, callback );
   }
 
   public void delete( String key )
@@ -179,22 +135,7 @@ public class Cache
 
   public void delete( final String key, final AsyncCallback<Object> callback )
   {
-    ThreadPoolService.getPoolExecutor().execute( new Runnable()
-    {
-      @Override
-      public void run()
-      {
-        try
-        {
-          delete( key );
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<Object>( null, callback ) );
-        }
-        catch( BackendlessException e )
-        {
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage( new BackendlessFault( e ), callback ) );
-        }
-      }
-    } );
+    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "delete", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key }, callback );
   }
 
   private static <T> IChainedResponder getChainedResponder()
