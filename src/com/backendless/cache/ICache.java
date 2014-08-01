@@ -24,11 +24,11 @@ public interface ICache<T>
 {
   void put( T value, AsyncCallback<Object> callback );
 
-  void put( T value, int expire, AsyncCallback<Object> callback );
+  void put( T value, int timeToLive, AsyncCallback<Object> callback );
 
   void put( T value );
 
-  void put( T value, int expire );
+  void put( T value, int timeToLive );
 
   void get( AsyncCallback<T> callback );
 
@@ -38,9 +38,9 @@ public interface ICache<T>
 
   Boolean contains();
 
-  void expire( int seconds, AsyncCallback<Object> callback );
+  void extendLife( int seconds, AsyncCallback<Object> callback );
 
-  void expire( int seconds );
+  void extendLife( int seconds );
 
   void delete( AsyncCallback<Object> callback );
 

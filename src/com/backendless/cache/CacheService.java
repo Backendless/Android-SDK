@@ -40,9 +40,9 @@ public class CacheService<T> implements ICache<T>
   }
 
   @Override
-  public void put( T value, int expire, AsyncCallback<Object> callback )
+  public void put( T value, int timeToLive, AsyncCallback<Object> callback )
   {
-    Backendless.Cache.put( key, value, expire, callback );
+    Backendless.Cache.put( key, value, timeToLive, callback );
   }
 
   @Override
@@ -58,15 +58,15 @@ public class CacheService<T> implements ICache<T>
   }
 
   @Override
-  public void expire( int seconds, AsyncCallback<Object> callback )
+  public void extendLife( int seconds, AsyncCallback<Object> callback )
   {
-    Backendless.Cache.expire( key, seconds, callback );
+    Backendless.Cache.extendLife( key, seconds, callback );
   }
 
   @Override
-  public void expire( int seconds )
+  public void extendLife( int seconds )
   {
-    Backendless.Cache.expire( key, seconds );
+    Backendless.Cache.extendLife( key, seconds );
   }
 
   @Override
@@ -88,9 +88,9 @@ public class CacheService<T> implements ICache<T>
   }
 
   @Override
-  public void put( T value, int expire )
+  public void put( T value, int timeToLive )
   {
-    Backendless.Cache.put( key, value, expire );
+    Backendless.Cache.put( key, value, timeToLive );
   }
 
   @Override
