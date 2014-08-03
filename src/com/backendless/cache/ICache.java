@@ -38,9 +38,13 @@ public interface ICache<T>
 
   Boolean contains();
 
-  void extendLife( int seconds, AsyncCallback<Object> callback );
+  void expireIn( int seconds, AsyncCallback<Object> callback );
 
-  void extendLife( int seconds );
+  void expireIn( int seconds );
+
+  void expireAt( int timestamp, AsyncCallback<Object> callback );
+
+  void expireAt( int timestamp );
 
   void delete( AsyncCallback<Object> callback );
 

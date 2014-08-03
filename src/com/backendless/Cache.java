@@ -118,14 +118,24 @@ public class Cache
     Invoker.invokeAsync( CACHE_SERVER_ALIAS, "containsKey", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key }, callback );
   }
 
-  public void extendLife( String key, int timeToLive )
+  public void expireIn( String key, int timeToLive )
   {
-    Invoker.invokeSync( CACHE_SERVER_ALIAS, "extendLife", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timeToLive }, getChainedResponder() );
+    Invoker.invokeSync( CACHE_SERVER_ALIAS, "expireIn", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timeToLive }, getChainedResponder() );
   }
 
-  public void extendLife( final String key, final int timeToLive, final AsyncCallback<Object> callback )
+  public void expireIn( final String key, final int timeToLive, final AsyncCallback<Object> callback )
   {
-    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "extendLife", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timeToLive }, callback );
+    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "expireIn", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timeToLive }, callback );
+  }
+
+  public void expireAt( String key, int timestamp )
+  {
+    Invoker.invokeSync( CACHE_SERVER_ALIAS, "expireAt", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timestamp }, getChainedResponder() );
+  }
+
+  public void expireAt( final String key, final int timestamp, final AsyncCallback<Object> callback )
+  {
+    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "expireAt", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timestamp }, callback );
   }
 
   public void delete( String key )

@@ -58,15 +58,27 @@ public class CacheService<T> implements ICache<T>
   }
 
   @Override
-  public void extendLife( int seconds, AsyncCallback<Object> callback )
+  public void expireIn( int seconds, AsyncCallback<Object> callback )
   {
-    Backendless.Cache.extendLife( key, seconds, callback );
+    Backendless.Cache.expireIn( key, seconds, callback );
   }
 
   @Override
-  public void extendLife( int seconds )
+  public void expireIn( int seconds )
   {
-    Backendless.Cache.extendLife( key, seconds );
+    Backendless.Cache.expireIn( key, seconds );
+  }
+
+  @Override
+  public void expireAt( int timestamp, AsyncCallback<Object> callback )
+  {
+    Backendless.Cache.expireAt( key, timestamp, callback );
+  }
+
+  @Override
+  public void expireAt( int timestamp )
+  {
+    Backendless.Cache.expireAt( key, timestamp );
   }
 
   @Override
