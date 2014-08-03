@@ -31,6 +31,8 @@ import weborb.client.IChainedResponder;
 import weborb.types.IAdaptingType;
 import weborb.util.io.ISerializer;
 
+import java.util.Date;
+
 public class Cache
 {
   private final static String CACHE_SERVER_ALIAS = "com.backendless.services.redis.CacheService";
@@ -128,13 +130,15 @@ public class Cache
     Invoker.invokeAsync( CACHE_SERVER_ALIAS, "expireIn", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timeToLive }, callback );
   }
 
-  public void expireAt( String key, int timestamp )
+  public void expireAt( String key, Date date )
   {
+    Long timestamp = date.getTime() / 1000;
     Invoker.invokeSync( CACHE_SERVER_ALIAS, "expireAt", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timestamp }, getChainedResponder() );
   }
 
-  public void expireAt( final String key, final int timestamp, final AsyncCallback<Object> callback )
+  public void expireAt( final String key, final Date date, final AsyncCallback<Object> callback )
   {
+    Long timestamp = date.getTime() / 1000;
     Invoker.invokeAsync( CACHE_SERVER_ALIAS, "expireAt", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timestamp }, callback );
   }
 

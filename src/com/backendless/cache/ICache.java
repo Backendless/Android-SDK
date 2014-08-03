@@ -20,6 +20,8 @@ package com.backendless.cache;
 
 import com.backendless.async.callback.AsyncCallback;
 
+import java.util.Date;
+
 public interface ICache<T>
 {
   void put( T value, AsyncCallback<Object> callback );
@@ -42,9 +44,9 @@ public interface ICache<T>
 
   void expireIn( int seconds );
 
-  void expireAt( int timestamp, AsyncCallback<Object> callback );
+  void expireAt( Date date, AsyncCallback<Object> callback );
 
-  void expireAt( int timestamp );
+  void expireAt( Date date );
 
   void delete( AsyncCallback<Object> callback );
 

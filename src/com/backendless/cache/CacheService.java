@@ -21,6 +21,8 @@ package com.backendless.cache;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 
+import java.util.Date;
+
 public class CacheService<T> implements ICache<T>
 {
   private Class<? extends T> clazz;
@@ -70,15 +72,15 @@ public class CacheService<T> implements ICache<T>
   }
 
   @Override
-  public void expireAt( int timestamp, AsyncCallback<Object> callback )
+  public void expireAt( Date date, AsyncCallback<Object> callback )
   {
-    Backendless.Cache.expireAt( key, timestamp, callback );
+    Backendless.Cache.expireAt( key, date, callback );
   }
 
   @Override
-  public void expireAt( int timestamp )
+  public void expireAt( Date date )
   {
-    Backendless.Cache.expireAt( key, timestamp );
+    Backendless.Cache.expireAt( key, date );
   }
 
   @Override
