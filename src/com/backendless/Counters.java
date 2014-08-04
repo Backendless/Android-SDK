@@ -45,6 +45,25 @@ public final class Counters
     return AtomicOperationFactory.createAtomicCounter( counterName );
   }
 
+  public Long get( String counterName )
+  {
+    Object responseValue = Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, "get", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName } );
+    return (Long) responseValue;
+  }
+
+  public void get( String counterName, AsyncCallback<Long> responder )
+  {
+    try
+    {
+      Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "get", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName }, new AtomicCallback( responder ) );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
   public Long getAndIncrement( String counterName )
   {
     Object responseValue = Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, "getAndIncrement", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName } );

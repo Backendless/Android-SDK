@@ -30,6 +30,17 @@ public class AtomicOperationFactory
   {
     return new IAtomic()
     {
+      @Override
+      public Long get()
+      {
+        return Backendless.Counters.get( counterName );
+      }
+
+      @Override
+      public void get( AsyncCallback<Long> responder )
+      {
+        Backendless.Counters.get( counterName, responder );
+      }
 
       @Override
       public Long getAndIncrement()
