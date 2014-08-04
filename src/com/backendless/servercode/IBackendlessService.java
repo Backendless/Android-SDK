@@ -8,7 +8,7 @@ import java.util.List;
  * Date: 23.07.14
  * Time: 16:43
  */
-public interface IBackendlessServiceConfig
+public interface IBackendlessService
 {
   public List<ConfigurationItem> getConfigurationMeta();
 }
