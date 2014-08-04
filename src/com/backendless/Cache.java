@@ -31,6 +31,8 @@ import weborb.client.IChainedResponder;
 import weborb.types.IAdaptingType;
 import weborb.util.io.ISerializer;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Date;
 
 public class Cache
@@ -53,18 +55,18 @@ public class Cache
     return new CacheService<T>( type, key );
   }
 
-  public void put( final String key, final Object object, final int timeToLive, final AsyncCallback<Object> callback )
+  public void put( String key, Object object, int timeToLive, AsyncCallback<Object> callback )
   {
     byte[] bytes = serialize( object );
     Invoker.invokeAsync( CACHE_SERVER_ALIAS, "putBytes", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, bytes, timeToLive }, callback );
   }
 
-  public void put( final String key, final Object object, final AsyncCallback<Object> callback )
+  public void put( String key, Object object, AsyncCallback<Object> callback )
   {
     put( key, object, 0, callback );
   }
 
-  public void put( final String key, final Object object )
+  public void put( String key, Object object )
   {
     put( key, object, 0 );
   }
@@ -75,23 +77,37 @@ public class Cache
     Invoker.invokeSync( CACHE_SERVER_ALIAS, "putBytes", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, bytes, timeToLive }, getChainedResponder() );
   }
 
-  public <T> T get( String key, Class<T> type )
+  public <T> T get( String key, Class<? extends T> type )
   {
     byte[] bytes = Invoker.invokeSync( CACHE_SERVER_ALIAS, "getBytes", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key }, new AdaptingResponder<byte[]>( byte[].class, new PoJoAdaptingPolicy<byte[]>() ) );
 
     if( bytes == null )
       return null;
 
-    return (T) deserialize( bytes, type );
+    Class argType = type.getClass();
+    return (T) deserialize( bytes, argType );
   }
 
-  public void get( String key, AsyncCallback<Object> callback )
+  public <T> void get( final String key, final AsyncCallback<T> callback )
   {
-    get( key, Object.class, callback );
-  }
+    Type[] genericInterfaces = callback.getClass().getGenericInterfaces();
+    Type asyncCallbackInterface = null;
 
-  public <T> void get( final String key, final Class<? extends T> type, final AsyncCallback<T> callback )
-  {
+    for( Type genericInterface : genericInterfaces )
+    {
+      if( !(genericInterface instanceof  ParameterizedType) )
+        continue;
+
+      Type rawType = ((ParameterizedType) genericInterface).getRawType();
+      if( rawType instanceof Class && AsyncCallback.class.isAssignableFrom( (Class) rawType ) )
+      {
+        asyncCallbackInterface = genericInterface;
+        break;
+      }
+    }
+
+    final Type asyncCallbackType = ((ParameterizedType) asyncCallbackInterface).getActualTypeArguments()[ 0 ];
+
     ThreadPoolService.getPoolExecutor().execute( new Runnable()
     {
       @Override
@@ -99,12 +115,12 @@ public class Cache
       {
         try
         {
-          T result = get( key, type );
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage( result, callback ) );
+          T result = (T) get( key, (Class) asyncCallbackType );
+          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<T>( result, callback ) );
         }
         catch( BackendlessException e )
         {
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage( new BackendlessFault( e ), callback ) );
+          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<T>( new BackendlessFault( e ), callback ) );
         }
       }
     } );
@@ -115,30 +131,40 @@ public class Cache
     return Invoker.invokeSync( CACHE_SERVER_ALIAS, "containsKey", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key }, getChainedResponder() );
   }
 
-  public void contains( final String key, final AsyncCallback<Boolean> callback )
+  public void contains( String key, AsyncCallback<Boolean> callback )
   {
     Invoker.invokeAsync( CACHE_SERVER_ALIAS, "containsKey", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key }, callback );
   }
 
-  public void expireIn( String key, int timeToLive )
+  public void expireIn( String key, int seconds )
   {
-    Invoker.invokeSync( CACHE_SERVER_ALIAS, "expireIn", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timeToLive }, getChainedResponder() );
+    Invoker.invokeSync( CACHE_SERVER_ALIAS, "expireIn", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, seconds }, getChainedResponder() );
   }
 
-  public void expireIn( final String key, final int timeToLive, final AsyncCallback<Object> callback )
+  public void expireIn( String key, int seconds, AsyncCallback<Object> callback )
   {
-    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "expireIn", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timeToLive }, callback );
+    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "expireIn", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, seconds }, callback );
   }
 
   public void expireAt( String key, Date date )
   {
-    Long timestamp = date.getTime() / 1000;
+    expireAt( key, date.getTime() );
+  }
+
+  public void expireAt( String key, long timestamp )
+  {
+    timestamp /= 1000;
     Invoker.invokeSync( CACHE_SERVER_ALIAS, "expireAt", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timestamp }, getChainedResponder() );
   }
 
-  public void expireAt( final String key, final Date date, final AsyncCallback<Object> callback )
+  public void expireAt( String key, Date date, AsyncCallback<Object> callback )
   {
-    Long timestamp = date.getTime() / 1000;
+    expireAt( key, date.getTime(), callback );
+  }
+
+  public void expireAt( String key, long timestamp, AsyncCallback<Object> callback )
+  {
+    timestamp /= 1000;
     Invoker.invokeAsync( CACHE_SERVER_ALIAS, "expireAt", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timestamp }, callback );
   }
 
@@ -157,7 +183,7 @@ public class Cache
     return new AdaptingResponder<T>();
   }
 
-  private static Object deserialize( byte[] bytes, Class type )
+  private static Object deserialize( byte[] bytes, Type type )
   {
     Object object = null;
     try

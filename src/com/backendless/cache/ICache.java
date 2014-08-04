@@ -46,7 +46,11 @@ public interface ICache<T>
 
   void expireAt( Date date, AsyncCallback<Object> callback );
 
+  void expireAt( long timestamp, AsyncCallback<Object> callback );
+
   void expireAt( Date date );
+
+  void expireAt( long timestamp );
 
   void delete( AsyncCallback<Object> callback );
 

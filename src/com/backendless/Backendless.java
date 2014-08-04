@@ -49,7 +49,7 @@ public final class Backendless
   private static String url = "https://api.backendless.com";
   private static IBackendlessService backendlessService;
   private static IBackendlessService.Init backendlessInitService;
-  private static Boolean isAndroid;
+  private static Boolean isAndroid = false;
 
   private Backendless()
   {

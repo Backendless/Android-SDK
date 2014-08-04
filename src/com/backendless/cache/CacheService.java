@@ -50,7 +50,7 @@ public class CacheService<T> implements ICache<T>
   @Override
   public void get( AsyncCallback<T> callback )
   {
-    Backendless.Cache.get( key, clazz, callback );
+    Backendless.Cache.get( key, callback );
   }
 
   @Override
@@ -78,10 +78,22 @@ public class CacheService<T> implements ICache<T>
   }
 
   @Override
+  public void expireAt( long timestamp, AsyncCallback<Object> callback )
+  {
+    Backendless.Cache.expireAt( key, timestamp, callback );
+  }
+
+  @Override
   public void expireAt( Date date )
   {
     Backendless.Cache.expireAt( key, date );
   }
+
+  @Override
+  public void expireAt( long timestamp )
+    {
+      Backendless.Cache.expireAt( key, timestamp );
+    }
 
   @Override
   public void delete( AsyncCallback<Object> callback )
@@ -110,7 +122,7 @@ public class CacheService<T> implements ICache<T>
   @Override
   public T get()
   {
-    return Backendless.Cache.get( key, clazz );
+    return (T) Backendless.Cache.get( key, clazz );
   }
 
   @Override
