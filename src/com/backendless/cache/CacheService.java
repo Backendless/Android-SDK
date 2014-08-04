@@ -21,6 +21,8 @@ package com.backendless.cache;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 
+import java.util.Date;
+
 public class CacheService<T> implements ICache<T>
 {
   private Class<? extends T> clazz;
@@ -40,9 +42,9 @@ public class CacheService<T> implements ICache<T>
   }
 
   @Override
-  public void put( T value, int expire, AsyncCallback<Object> callback )
+  public void put( T value, int timeToLive, AsyncCallback<Object> callback )
   {
-    Backendless.Cache.put( key, value, expire, callback );
+    Backendless.Cache.put( key, value, timeToLive, callback );
   }
 
   @Override
@@ -58,15 +60,27 @@ public class CacheService<T> implements ICache<T>
   }
 
   @Override
-  public void expire( int seconds, AsyncCallback<Object> callback )
+  public void expireIn( int seconds, AsyncCallback<Object> callback )
   {
-    Backendless.Cache.expire( key, seconds, callback );
+    Backendless.Cache.expireIn( key, seconds, callback );
   }
 
   @Override
-  public void expire( int seconds )
+  public void expireIn( int seconds )
   {
-    Backendless.Cache.expire( key, seconds );
+    Backendless.Cache.expireIn( key, seconds );
+  }
+
+  @Override
+  public void expireAt( Date date, AsyncCallback<Object> callback )
+  {
+    Backendless.Cache.expireAt( key, date, callback );
+  }
+
+  @Override
+  public void expireAt( Date date )
+  {
+    Backendless.Cache.expireAt( key, date );
   }
 
   @Override
@@ -88,9 +102,9 @@ public class CacheService<T> implements ICache<T>
   }
 
   @Override
-  public void put( T value, int expire )
+  public void put( T value, int timeToLive )
   {
-    Backendless.Cache.put( key, value, expire );
+    Backendless.Cache.put( key, value, timeToLive );
   }
 
   @Override

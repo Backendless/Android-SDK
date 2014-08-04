@@ -31,6 +31,8 @@ import weborb.client.IChainedResponder;
 import weborb.types.IAdaptingType;
 import weborb.util.io.ISerializer;
 
+import java.util.Date;
+
 public class Cache
 {
   private final static String CACHE_SERVER_ALIAS = "com.backendless.services.redis.CacheService";
@@ -51,10 +53,10 @@ public class Cache
     return new CacheService<T>( type, key );
   }
 
-  public void put( final String key, final Object object, final int expire, final AsyncCallback<Object> callback )
+  public void put( final String key, final Object object, final int timeToLive, final AsyncCallback<Object> callback )
   {
     byte[] bytes = serialize( object );
-    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "putBytes", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, bytes, expire }, callback );
+    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "putBytes", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, bytes, timeToLive }, callback );
   }
 
   public void put( final String key, final Object object, final AsyncCallback<Object> callback )
@@ -67,10 +69,10 @@ public class Cache
     put( key, object, 0 );
   }
 
-  public void put( String key, Object object, int expire )
+  public void put( String key, Object object, int timeToLive )
   {
     byte[] bytes = serialize( object );
-    Invoker.invokeSync( CACHE_SERVER_ALIAS, "putBytes", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, bytes, expire }, getChainedResponder() );
+    Invoker.invokeSync( CACHE_SERVER_ALIAS, "putBytes", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, bytes, timeToLive }, getChainedResponder() );
   }
 
   public <T> T get( String key, Class<T> type )
@@ -118,14 +120,26 @@ public class Cache
     Invoker.invokeAsync( CACHE_SERVER_ALIAS, "containsKey", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key }, callback );
   }
 
-  public void expire( String key, int expire )
+  public void expireIn( String key, int timeToLive )
   {
-    Invoker.invokeSync( CACHE_SERVER_ALIAS, "extendLife", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, expire }, getChainedResponder() );
+    Invoker.invokeSync( CACHE_SERVER_ALIAS, "expireIn", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timeToLive }, getChainedResponder() );
   }
 
-  public void expire( final String key, final int expire, final AsyncCallback<Object> callback )
+  public void expireIn( final String key, final int timeToLive, final AsyncCallback<Object> callback )
   {
-    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "extendLife", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, expire }, callback );
+    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "expireIn", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timeToLive }, callback );
+  }
+
+  public void expireAt( String key, Date date )
+  {
+    Long timestamp = date.getTime() / 1000;
+    Invoker.invokeSync( CACHE_SERVER_ALIAS, "expireAt", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timestamp }, getChainedResponder() );
+  }
+
+  public void expireAt( final String key, final Date date, final AsyncCallback<Object> callback )
+  {
+    Long timestamp = date.getTime() / 1000;
+    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "expireAt", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timestamp }, callback );
   }
 
   public void delete( String key )
