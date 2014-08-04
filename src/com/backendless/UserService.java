@@ -387,7 +387,17 @@ public final class UserService
   {
     synchronized( currentUserLock )
     {
-      Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "logout", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } );
+      try
+      {
+        Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "logout", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } );
+      }
+      catch( BackendlessException fault )
+      {
+        if( !isLogoutFaultAllowed( fault.getCode() ) )
+          throw fault;
+        //else everything is OK
+      }
+
       handleLogout();
     }
   }
@@ -426,6 +436,12 @@ public final class UserService
         @Override
         public void handleFault( BackendlessFault fault )
         {
+          if( !isLogoutFaultAllowed( fault.getCode() ) )
+          {
+            handleResponse( null );
+            return;
+          }
+
           if( responder != null )
             responder.handleFault( fault );
         }
@@ -760,5 +776,10 @@ public final class UserService
     {
       responder.handleResponse( CurrentUser() != null );
     }
+  }
+
+  private boolean isLogoutFaultAllowed( String errorCode )
+  {
+    return errorCode.equals( "3064" ) || errorCode.equals( "3091" ) || errorCode.equals( "3090" ) || errorCode.equals( "3023" );
   }
 }
