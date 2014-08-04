@@ -387,7 +387,17 @@ public final class UserService
   {
     synchronized( currentUserLock )
     {
-      Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "logout", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } );
+      try
+      {
+        Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "logout", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } );
+      }
+      catch( BackendlessException fault )
+      {
+        if( !fault.getCode().equals( "3064" ) && !fault.getCode().equals( "3091" ) && !fault.getCode().equals( "3090" )  && !fault.getCode().equals( "3023" ) )
+          throw fault;
+        //else everything is OK
+      }
+
       handleLogout();
     }
   }
