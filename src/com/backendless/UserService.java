@@ -393,7 +393,7 @@ public final class UserService
       }
       catch( BackendlessException fault )
       {
-        if( !fault.getCode().equals( "3064" ) && !fault.getCode().equals( "3091" ) && !fault.getCode().equals( "3090" )  && !fault.getCode().equals( "3023" ) )
+        if( !isLogoutFaultAllowed( fault.getCode() ) )
           throw fault;
         //else everything is OK
       }
@@ -436,7 +436,7 @@ public final class UserService
         @Override
         public void handleFault( BackendlessFault fault )
         {
-          if( fault.getCode().equals( "3064" ) || fault.getCode().equals( "3091" ) || fault.getCode().equals( "3090" )  || fault.getCode().equals( "3023" ) )
+          if( !isLogoutFaultAllowed( fault.getCode() ) )
           {
             handleResponse( null );
             return;
@@ -776,5 +776,10 @@ public final class UserService
     {
       responder.handleResponse( CurrentUser() != null );
     }
+  }
+
+  private boolean isLogoutFaultAllowed( String errorCode )
+  {
+    return errorCode.equals( "3064" ) || errorCode.equals( "3091" ) || errorCode.equals( "3090" ) || errorCode.equals( "3023" );
   }
 }
