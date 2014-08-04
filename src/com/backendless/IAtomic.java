@@ -22,6 +22,10 @@ import com.backendless.async.callback.AsyncCallback;
 
 public interface IAtomic
 {
+  public Long get();
+
+  public void get( AsyncCallback<Long> responder );
+
   public Long getAndIncrement();
 
   public void getAndIncrement( AsyncCallback<Long> responder );
