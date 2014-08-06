@@ -20,6 +20,7 @@ public class RunnerContext
   private List<String> userRole;
   private DeviceType deviceType;
   private Map missingProperties;
+  private Object prematureResult;
 
   public String getAppId()
   {
@@ -79,5 +80,15 @@ public class RunnerContext
   public void setMissingProperties( Map missingProperties )
   {
     this.missingProperties = missingProperties;
+  }
+
+  public Object getPrematureResult()
+  {
+    return prematureResult;
+  }
+
+  public void setPrematureResult( Object prematureResult )
+  {
+    this.prematureResult = prematureResult;
   }
 }
