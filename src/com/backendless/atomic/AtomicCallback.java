@@ -18,14 +18,16 @@
 
 package com.backendless.atomic;
 
+import com.backendless.Counters;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.backendless.utils.ReflectionUtil;
 
-public class AtomicCallback implements AsyncCallback<Object>
+public class AtomicCallback<T> implements AsyncCallback<Object>
 {
-  private final AsyncCallback<Long> realCallback;
+  private final AsyncCallback<T> realCallback;
 
-  public AtomicCallback( AsyncCallback<Long> realCallback )
+  public AtomicCallback( AsyncCallback<T> realCallback )
   {
     this.realCallback = realCallback;
   }
@@ -33,13 +35,19 @@ public class AtomicCallback implements AsyncCallback<Object>
   @Override
   public void handleResponse( Object response )
   {
+    Number numberResult = null;
+
     if( response instanceof Integer )
-      response = Long.valueOf( response.toString() );
+      numberResult = Long.valueOf( response.toString() );
+    else if( response instanceof Double )
+      numberResult = Double.valueOf( response.toString() );
+    else
+      realCallback.handleFault( new BackendlessFault( "Result is not a number. Expecting either Integer or Double, but received " + response.getClass() ) );
 
-    if( response instanceof Double )
-      response = Double.valueOf( response.toString() );
+    Class counterType = (Class) ReflectionUtil.getCallbackGenericType( realCallback );
 
-    realCallback.handleResponse( (Long) response );
+    Number result = Counters.convertToType( numberResult, counterType );
+    realCallback.handleResponse( (T) result );
   }
 
   @Override

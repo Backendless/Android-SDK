@@ -16,45 +16,33 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless;
+package com.backendless.utils;
 
 import com.backendless.async.callback.AsyncCallback;
 
-public interface IAtomic<T>
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
+public class ReflectionUtil
 {
-  public void reset();
+  public static <T> Type getCallbackGenericType( AsyncCallback<T> callback )
+  {
+    Type[] genericInterfaces = callback.getClass().getGenericInterfaces();
+    Type asyncCallbackInterface = null;
 
-  public void reset( AsyncCallback responder );
+    for( Type genericInterface : genericInterfaces )
+    {
+      if( !(genericInterface instanceof ParameterizedType) )
+        continue;
 
-  public T get();
+      Type rawType = ((ParameterizedType) genericInterface).getRawType();
+      if( rawType instanceof Class && AsyncCallback.class.isAssignableFrom( (Class) rawType ) )
+      {
+        asyncCallbackInterface = genericInterface;
+        break;
+      }
+    }
 
-  public void get( AsyncCallback<T> responder );
-
-  public T getAndIncrement();
-
-  public void getAndIncrement( AsyncCallback<T> responder );
-
-  public T incrementAndGet();
-
-  public void incrementAndGet( AsyncCallback<T> responder );
-
-  public T getAndDecrement();
-
-  public void getAndDecrement( AsyncCallback<T> responder );
-
-  public T decrementAndGet();
-
-  public void decrementAndGet( AsyncCallback<T> responder );
-
-  public T addAndGet( Number value );
-
-  public void addAndGet( Number value, AsyncCallback<T> responder );
-
-  public T getAndAdd( Number value );
-
-  public void getAndAdd( Number value, AsyncCallback<T> responder );
-
-  public boolean compareAndSet( Number expected, Number updated );
-
-  public void compareAndSet( Number expected, Number updated, AsyncCallback<Boolean> responder );
+    return ((ParameterizedType) asyncCallbackInterface).getActualTypeArguments()[ 0 ];
+  }
 }

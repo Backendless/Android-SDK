@@ -26,95 +26,107 @@ public class AtomicOperationFactory
   {
   }
 
-  protected static IAtomic createAtomicCounter( final String counterName )
+  protected static <T> IAtomic<T> createAtomicCounter( final String counterName, final Class<? extends T> type )
   {
-    return new IAtomic()
+    return new IAtomic<T>()
     {
       @Override
-      public Long get()
+      public void reset()
       {
-        return Backendless.Counters.get( counterName );
+        Backendless.Counters.reset( counterName );
       }
 
       @Override
-      public void get( AsyncCallback<Long> responder )
+      public void reset( AsyncCallback responder )
+      {
+        Backendless.Counters.reset( counterName, responder );
+      }
+
+      @Override
+      public T get()
+      {
+        return (T) Counters.convertToType( Backendless.Counters.get( counterName ), type );
+      }
+
+      @Override
+      public void get( AsyncCallback<T> responder )
       {
         Backendless.Counters.get( counterName, responder );
       }
 
       @Override
-      public Long getAndIncrement()
+      public T getAndIncrement()
       {
-        return Backendless.Counters.getAndIncrement( counterName );
+        return (T) Counters.convertToType( Backendless.Counters.getAndIncrement( counterName ), type );
       }
 
-      public void getAndIncrement( AsyncCallback<Long> responder )
+      public void getAndIncrement( AsyncCallback<T> responder )
       {
         Backendless.Counters.getAndIncrement( counterName, responder );
       }
 
       @Override
-      public Long incrementAndGet()
+      public T incrementAndGet()
       {
-        return Backendless.Counters.incrementAndGet( counterName );
+        return  (T) Counters.convertToType( Backendless.Counters.incrementAndGet( counterName ), type );
       }
 
-      public void incrementAndGet( AsyncCallback<Long> responder )
+      public void incrementAndGet( AsyncCallback<T> responder )
       {
         Backendless.Counters.incrementAndGet( counterName, responder );
       }
 
       @Override
-      public Long getAndDecrement()
+      public T getAndDecrement()
       {
-        return Backendless.Counters.getAndDecrement( counterName );
+        return  (T) Counters.convertToType( Backendless.Counters.getAndDecrement( counterName ), type );
       }
 
-      public void getAndDecrement( AsyncCallback<Long> responder )
+      public void getAndDecrement( AsyncCallback<T> responder )
       {
         Backendless.Counters.getAndDecrement( counterName, responder );
       }
 
       @Override
-      public Long decrementAndGet()
+      public T decrementAndGet()
       {
-        return Backendless.Counters.decrementAndGet( counterName );
+        return  (T) Counters.convertToType( Backendless.Counters.decrementAndGet( counterName ), type );
       }
 
-      public void decrementAndGet( AsyncCallback<Long> responder )
+      public void decrementAndGet( AsyncCallback<T> responder )
       {
         Backendless.Counters.decrementAndGet( counterName, responder );
       }
 
       @Override
-      public Long addAndGet( Long value )
+      public T addAndGet( Number value )
       {
-        return Backendless.Counters.addAndGet( counterName, value );
+        return  (T) Counters.convertToType( Backendless.Counters.addAndGet( counterName, value ), type );
       }
 
-      public void addAndGet( Long value, AsyncCallback<Long> responder )
+      public void addAndGet( Number value, AsyncCallback<T> responder )
       {
         Backendless.Counters.addAndGet( counterName, value, responder );
       }
 
       @Override
-      public Long getAndAdd( Long value )
+      public T getAndAdd( Number value )
       {
-        return Backendless.Counters.getAndAdd( counterName, value );
+        return  (T) Counters.convertToType( Backendless.Counters.getAndAdd( counterName, value ), type );
       }
 
-      public void getAndAdd( Long value, AsyncCallback<Long> responder )
+      public void getAndAdd( Number value, AsyncCallback<T> responder )
       {
         Backendless.Counters.getAndAdd( counterName, value, responder );
       }
 
       @Override
-      public boolean compareAndSet( Long expected, Long updated )
+      public boolean compareAndSet( Number expected, Number updated )
       {
         return Backendless.Counters.compareAndSet( counterName, expected, updated );
       }
 
-      public void compareAndSet( Long expected, Long updated, AsyncCallback<Boolean> responder )
+      public void compareAndSet( Number expected, Number updated, AsyncCallback<Boolean> responder )
       {
         Backendless.Counters.compareAndSet( counterName, expected, updated, responder );
       }

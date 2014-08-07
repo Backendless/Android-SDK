@@ -27,11 +27,11 @@ import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
+import com.backendless.utils.ReflectionUtil;
 import weborb.client.IChainedResponder;
 import weborb.types.IAdaptingType;
 import weborb.util.io.ISerializer;
 
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Date;
 
@@ -90,23 +90,7 @@ public class Cache
 
   public <T> void get( final String key, final AsyncCallback<T> callback )
   {
-    Type[] genericInterfaces = callback.getClass().getGenericInterfaces();
-    Type asyncCallbackInterface = null;
-
-    for( Type genericInterface : genericInterfaces )
-    {
-      if( !(genericInterface instanceof  ParameterizedType) )
-        continue;
-
-      Type rawType = ((ParameterizedType) genericInterface).getRawType();
-      if( rawType instanceof Class && AsyncCallback.class.isAssignableFrom( (Class) rawType ) )
-      {
-        asyncCallbackInterface = genericInterface;
-        break;
-      }
-    }
-
-    final Type asyncCallbackType = ((ParameterizedType) asyncCallbackInterface).getActualTypeArguments()[ 0 ];
+    final Type asyncCallbackType = ReflectionUtil.getCallbackGenericType( callback );
 
     ThreadPoolService.getPoolExecutor().execute( new Runnable()
     {

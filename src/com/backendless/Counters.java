@@ -37,21 +37,53 @@ public final class Counters
   {
   }
 
+  public static Number convertToType( Number value, Class type )
+  {
+    if( type == Short.class )
+      return value.shortValue();
+    else if( type == Integer.class )
+      return value.intValue();
+    else if( type == Long.class )
+      return value.longValue();
+    else if( type == Float.class )
+      return value.floatValue();
+    else if( type == Double.class )
+      return value.doubleValue();
+    else if( type == Byte.class )
+      return value.byteValue();
+    else
+      throw new RuntimeException( "unsupported data type. Cannot adapt counter value to type - " + type );
+  }
+
   public IAtomic of( String counterName )
   {
     if( counterName == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-    return AtomicOperationFactory.createAtomicCounter( counterName );
+    return of( counterName, Long.class );
+  }
+
+  public <T> IAtomic<T> of( String counterName, Class<? extends T> type )
+  {
+    return AtomicOperationFactory.createAtomicCounter( counterName, type );
+  }
+
+  public void reset( String counterName )
+  {
+    Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, "reset", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName } );
+  }
+
+  public void reset( String counterName, AsyncCallback callback )
+  {
+    Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "reset", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName }, callback );
   }
 
   public Long get( String counterName )
   {
-    Object responseValue = Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, "get", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName } );
-    return (Long) responseValue;
+    return runGetOperation( "get", counterName );
   }
 
-  public void get( String counterName, AsyncCallback<Long> responder )
+  public <T> void get( String counterName, AsyncCallback<T> responder )
   {
     try
     {
@@ -66,17 +98,14 @@ public final class Counters
 
   public Long getAndIncrement( String counterName )
   {
-    Object responseValue = Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, "getAndIncrement", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName } );
-    responseValue = castResponse( responseValue );
-    return (Long) responseValue;
+    return runGetOperation( "getAndIncrement", counterName );
   }
 
-  public void getAndIncrement( String counterName, AsyncCallback<Long> responder )
+  public <T> void getAndIncrement( String counterName, AsyncCallback<T> responder )
   {
     try
     {
-      getAndIncrement( counterName );
-      //Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "getAndIncrement", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName }, new AtomicCallback( responder ) );
+      Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "getAndIncrement", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName }, new AtomicCallback( responder ) );
     }
     catch( Throwable e )
     {
@@ -87,12 +116,10 @@ public final class Counters
 
   public Long incrementAndGet( String counterName )
   {
-    Object responseValue = Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, "incrementAndGet", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName } );
-    responseValue = castResponse( responseValue );
-    return (Long) responseValue;
+    return runGetOperation( "incrementAndGet", counterName );
   }
 
-  public void incrementAndGet( String counterName, AsyncCallback<Long> responder )
+  public <T> void incrementAndGet( String counterName, AsyncCallback<T> responder )
   {
     try
     {
@@ -107,12 +134,10 @@ public final class Counters
 
   public Long getAndDecrement( String counterName )
   {
-    Object responseValue = Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, "getAndDecrement", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName } );
-    responseValue = castResponse( responseValue );
-    return (Long) responseValue;
+    return runGetOperation( "getAndDecrement", counterName );
   }
 
-  public void getAndDecrement( String counterName, AsyncCallback<Long> responder )
+  public <T> void getAndDecrement( String counterName, AsyncCallback<T> responder )
   {
     try
     {
@@ -127,12 +152,10 @@ public final class Counters
 
   public Long decrementAndGet( String counterName )
   {
-    Object responseValue = Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, "decrementAndGet", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName } );
-    responseValue = castResponse( responseValue );
-    return (Long) responseValue;
+    return runGetOperation( "decrementAndGet", counterName );
   }
 
-  public void decrementAndGet( String counterName, AsyncCallback<Long> responder )
+  public <T> void decrementAndGet( String counterName, AsyncCallback<T> responder )
   {
     try
     {
@@ -145,14 +168,12 @@ public final class Counters
     }
   }
 
-  public Long addAndGet( String counterName, Long value )
+  public Long addAndGet( String counterName, Number value )
   {
-    Object responseValue = Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, "addAndGet", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName, value } );
-    responseValue = castResponse( responseValue );
-    return (Long) responseValue;
+    return runGetOperation( "addAndGet", counterName, value );
   }
 
-  public void addAndGet( String counterName, Long value, AsyncCallback<Long> responder )
+  public <T> void addAndGet( String counterName, Number value, AsyncCallback<T> responder )
   {
     try
     {
@@ -165,14 +186,12 @@ public final class Counters
     }
   }
 
-  public Long getAndAdd( String counterName, Long value )
+  public Long getAndAdd( String counterName, Number value )
   {
-    Object responseValue = Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, "getAndAdd", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName, value } );
-    responseValue = castResponse( responseValue );
-    return (Long) responseValue;
+    return runGetOperation( "getAndAdd", counterName, value );
   }
 
-  public void getAndAdd( String counterName, Long value, AsyncCallback<Long> responder )
+  public <T> void getAndAdd( String counterName, Number value, AsyncCallback<T> responder )
   {
     try
     {
@@ -185,14 +204,12 @@ public final class Counters
     }
   }
 
-  public boolean compareAndSet( String counterName, Long expected, Long updated )
+  public boolean compareAndSet( String counterName, Number expected, Number updated )
   {
-    Object responseValue = Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, "compareAndSet", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName, expected, updated } );
-    responseValue = castResponse( responseValue );
-    return (Boolean) responseValue;
+    return (Boolean) Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, "compareAndSet", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName, expected, updated } );
   }
 
-  public void compareAndSet( String counterName, Long expected, Long updated, AsyncCallback<Boolean> responder )
+  public void compareAndSet( String counterName, Number expected, Number updated, AsyncCallback<Boolean> responder )
   {
     try
     {
@@ -205,17 +222,17 @@ public final class Counters
     }
   }
 
-  private Object castResponse( Object response )
+  private Long runGetOperation( String operationName, String counterName )
   {
-    if( response instanceof Integer )
-      response = Long.valueOf( response.toString() );
+    Number responseValue = Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, operationName, new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName } );
+    responseValue = convertToType( responseValue, Long.class );
+    return (Long) responseValue;
+  }
 
-    if( response instanceof Double )
-      response = Long.valueOf( response.toString() );
-
-    if( response instanceof Boolean )
-      response = Boolean.valueOf( response.toString() );
-
-    return response;
+  private Long runGetOperation( String operationName, String counterName, Number value )
+  {
+    Number responseValue = Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, operationName, new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName, value } );
+    responseValue = convertToType( responseValue, Long.class );
+    return (Long) responseValue;
   }
 }
