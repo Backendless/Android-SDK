@@ -41,8 +41,8 @@ import java.util.regex.Pattern;
 
 public final class Media
 {
-  private final static String SERVER_URL_LIVE = "10.0.1.9:1935/mediaAppLive/";  //Change to api.backendless.com
-  private final static String SERVER_URL_VOD = "10.0.1.9:1935/mediaAppVod/";  //Change to api.backendless.com
+  private final static String SERVER_URL_LIVE = "wowza.backendless.com:1935/mediaAppLive/";
+  private final static String SERVER_URL_VOD = "wowza.backendless.com:1935/mediaAppVod/";
   private final static String RTSP_PROTOCOL = StreamProtocolType.RTSP.getValue();
   private final static String HLS_PROTOCOL = StreamProtocolType.HLS.getValue();
   private final static String USER_NAME = "root";
