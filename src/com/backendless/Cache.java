@@ -137,7 +137,6 @@ public class Cache
 
   public void expireAt( String key, long timestamp )
   {
-    timestamp /= 1000;
     Invoker.invokeSync( CACHE_SERVER_ALIAS, "expireAt", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timestamp }, getChainedResponder() );
   }
 
@@ -148,7 +147,6 @@ public class Cache
 
   public void expireAt( String key, long timestamp, AsyncCallback<Object> callback )
   {
-    timestamp /= 1000;
     Invoker.invokeAsync( CACHE_SERVER_ALIAS, "expireAt", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timestamp }, callback );
   }
 
