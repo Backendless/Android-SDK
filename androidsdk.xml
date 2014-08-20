@@ -111,6 +111,10 @@
         <pathelement location="${basedir}/libs/weborbclient.jar"/>
     </path>
 
+    <path id="library.mediaLib.classpath">
+        <pathelement location="${basedir}/libs/mediaLib.jar"/>
+    </path>
+
     <path id="library.backendless.commons.classpath">
         <pathelement location="${basedir}/libs/common-1.0-SNAPSHOT.jar"/>
     </path>
@@ -148,6 +152,7 @@
         <pathelement location="${backendless.output.dir}"/>
         <path refid="library.sdklibs.classpath"/>
         <path refid="library.weborbclient.classpath"/>
+        <path refid="library.mediaLib.classpath"/>
         <path refid="library.backendless.commons.classpath"/>
     </path>
 
@@ -162,6 +167,7 @@
         <pathelement location="${backendless.output.dir}"/>
         <path refid="library.sdklibs.classpath"/>
         <path refid="library.weborbclient.classpath"/>
+        <path refid="library.mediaLib.classpath"/>
         <path refid="library.backendless.commons.classpath"/>
     </path>
 
@@ -238,6 +244,7 @@
             <zipfileset dir="${backendless.output.dir}"/>
             <zipfileset file="${basedir}/META-INF/MANIFEST.MF" prefix="META-INF"/>
             <zipfileset src="${basedir}/libs/weborbclient.jar"/>
+            <zipfileset src="${basedir}/libs/mediaLib.jar"/>
         </jar>
         <copy file="${temp.jar.path.backendless.jar}" tofile="${artifact.temp.output.backendless:jar}/backendless.jar"/>
     </target>

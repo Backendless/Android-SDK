@@ -25,15 +25,11 @@ import android.preference.PreferenceManager;
 import android.view.SurfaceHolder;
 import android.widget.MediaController;
 import android.widget.VideoView;
-import com.backendless.media.StreamProtocolType;
-import com.backendless.media.StreamQuality;
-import com.backendless.media.StreamType;
-import com.backendless.media.lib.Session;
-import com.backendless.media.lib.SessionBuilder;
-import com.backendless.media.lib.audio.AudioQuality;
-import com.backendless.media.lib.gl.BackendlessSurfaceView;
-import com.backendless.media.lib.rtsp.RtspClient;
-import com.backendless.media.lib.video.VideoQuality;
+import com.backendless.media.*;
+import com.backendless.media.audio.AudioQuality;
+import com.backendless.media.gl.BackendlessSurfaceView;
+import com.backendless.media.rtsp.RtspClient;
+import com.backendless.media.video.VideoQuality;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -47,7 +43,7 @@ public final class Media
   private final static String HLS_PROTOCOL = StreamProtocolType.HLS.getValue();
   private final static String USER_NAME = "root";
   private final static String USER_PASSWORD = "123";
-  private String URL;
+  private String url;
   private String params;
 
   private static final Media instance = new Media();
@@ -88,13 +84,13 @@ public final class Media
     else operationType = "publishLiveAndRecord";
 
     params = getConnectParams( tube, operationType, streamName);
-    URL = RTSP_PROTOCOL + SERVER_URL_LIVE + streamName + params;
+    url = RTSP_PROTOCOL + SERVER_URL_LIVE + streamName + params;
 
     Session session = getSession( context, backendlessSurfaceView );
     RtspClient rtspClient = getRtspClient( context, session );
     backendlessSurfaceView.getHolder().addCallback( (SurfaceHolder.Callback) context );
     selectQuality(session, streamQuality);
-    startOrStopStream( context, rtspClient, URL );
+    startOrStopStream( context, rtspClient, url );
   }
 
   private void playStream( Context context, VideoView videoView, StreamProtocolType streamProtocolType, String tube, String streamName, StreamType streamType )
