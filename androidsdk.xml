@@ -137,7 +137,8 @@
     <property name="compiler.args.backendless" value="${compiler.args}"/>
 
     <property name="backendless.output.dir" value="${module.backendless.basedir}/out/production/backendless"/>
-    <property name="backendless.testoutput.dir" value="${module.backendless.basedir}/out/test/backendless"/>
+    <property name="backendless.output.docs.dir" value="${module.backendless.basedir}/out/docs/backendless"/>
+    <property name="backendless.output.test.dir" value="${module.backendless.basedir}/out/test/backendless"/>
 
     <path id="backendless.module.bootclasspath">
         <!-- Paths to be included in compilation bootclasspath -->
@@ -163,7 +164,7 @@
     </path>
 
     <path id="backendless.runtime.module.classpath">
-        <pathelement location="${backendless.testoutput.dir}"/>
+        <pathelement location="${backendless.output.test.dir}"/>
         <pathelement location="${backendless.output.dir}"/>
         <path refid="library.sdklibs.classpath"/>
         <path refid="library.weborbclient.classpath"/>
@@ -188,7 +189,7 @@
 
 
     <target name="compile.module.backendless"
-            depends="compile.module.backendless.production,compile.module.backendless.tests"
+            depends="compile.module.backendless.production,compile.module.backendless.tests, compile.module.backendless.docs"
             description="Compile module backendless"/>
 
     <target name="compile.module.backendless.production" description="Compile module backendless; production classes">
@@ -213,9 +214,20 @@
     <target name="compile.module.backendless.tests" depends="compile.module.backendless.production"
             description="compile module backendless; test classes" unless="skip.tests"/>
 
+    <target name="compile.module.backendless.docs" depends="compile.module.backendless.src"
+            description="Building JavaDocs">
+        <javadoc2 sourcepath="src" destdir="${backendless.output.docs.dir}" encoding="UTF-8"/>
+        <jar basedir="${backendless.output.docs.dir}" destfile="${basedir}/out/backendless-javadoc.jar"/>
+        <delete dir="${backendless.output.docs.dir}"/>
+    </target>
+
+    <target name="compile.module.backendless.src" description="Building Jar with source">
+        <jar basedir="src" destfile="${basedir}/out/backendless-sources.jar"/>
+    </target>
+
     <target name="clean.module.backendless" description="cleanup module">
         <delete dir="${backendless.output.dir}"/>
-        <delete dir="${backendless.testoutput.dir}"/>
+        <delete dir="${backendless.output.test.dir}"/>
     </target>
 
     <target name="init" description="Build initialization">
