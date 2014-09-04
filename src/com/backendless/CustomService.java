@@ -37,12 +37,12 @@ public class CustomService
     return instance;
   }
 
-  public Object invoke( String serviceName, String serviceVersion, String method, Map<String, Object> arguments )
+  public <T> T invoke( String serviceName, String serviceVersion, String method, Map<String, Object> arguments )
   {
-    return Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, "dispatchService", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments } );
+    return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, "dispatchService", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments } );
   }
 
-  public void invoke( String serviceName, String serviceVersion, String method, Map<String, Object> arguments, AsyncCallback<Object> callback )
+  public <E> void invoke( String serviceName, String serviceVersion, String method, Map<String, Object> arguments, AsyncCallback<E> callback )
   {
     Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, "dispatchService", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments }, callback );
   }
