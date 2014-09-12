@@ -64,6 +64,7 @@ public class FootprintsManager
   {
     void putMissingPropsToEntityMap( Object entity, Map entityMap )
     {
+      //put objectId field
       if( !entityMap.containsKey( Footprint.OBJECT_ID_FIELD_NAME ) )
       {
         String objectId = getObjectId( entity );
@@ -72,6 +73,7 @@ public class FootprintsManager
           entityMap.put( Footprint.OBJECT_ID_FIELD_NAME, objectId );
       }
 
+      //put __meta field
       if( !entityMap.containsKey( Footprint.META_FIELD_NAME ) )
       {
         String meta = getMeta( entity );
@@ -80,6 +82,8 @@ public class FootprintsManager
           entityMap.put( Footprint.META_FIELD_NAME, meta );
       }
 
+      //serialize each of ONE_TO_MANY relations recursively
+      //also add ___class filed for each of ONE_TO_MANY relations
       for( Object key : entityMap.keySet() )
       {
         Object value = entityMap.get( key );

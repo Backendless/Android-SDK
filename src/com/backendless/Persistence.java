@@ -93,15 +93,14 @@ public final class Persistence
 
     try
     {
-      E newEntity;
+      E newEntity = (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "save", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity }, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
+
       if( serializedEntity.get( Footprint.OBJECT_ID_FIELD_NAME ) == null )
       {
-        newEntity = (E) create( entity.getClass(), serializedEntity );
         FootprintsManager.getInstance().Inner.duplicateFootprintForObject( entity, newEntity );
       }
       else
       {
-        newEntity = (E) update( entity.getClass(), serializedEntity );
         FootprintsManager.getInstance().Inner.updateFootprintForObject( newEntity, entity );
       }
 
@@ -138,8 +137,10 @@ public final class Persistence
 
       FootprintsManager.getInstance().Inner.putMissingPropsToEntityMap( entity, serializedEntity );
 
+      AsyncCallback<E> callbackOverrider;
       if( serializedEntity.get( Footprint.OBJECT_ID_FIELD_NAME ) == null )
-        create( (Class<E>) entity.getClass(), serializedEntity, new AsyncCallback<E>()
+      {
+        callbackOverrider = new AsyncCallback<E>()
         {
           @Override
           public void handleResponse( E newEntity )
@@ -159,9 +160,11 @@ public final class Persistence
             if( responder != null )
               responder.handleFault( fault );
           }
-        } );
+        };
+      }
       else
-        update( (Class<E>) entity.getClass(), serializedEntity, new AsyncCallback<E>()
+      {
+        callbackOverrider = new AsyncCallback<E>()
         {
           @Override
           public void handleResponse( E newEntity )
@@ -178,7 +181,10 @@ public final class Persistence
             if( responder != null )
               responder.handleFault( fault );
           }
-        } );
+        };
+      }
+
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "save", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity }, callbackOverrider, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
     }
     catch( Throwable e )
     {
