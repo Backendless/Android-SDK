@@ -39,7 +39,7 @@ import java.util.*;
 
 public final class Persistence
 {
-  private final static String PERSISTENCE_MANAGER_SERVER_ALIAS = "com.backendless.services.persistence.PersistenceService";
+  private final static String PERSISTENCE_MANAGER_SERVER_ALIAS = "com.backendless.services.persistence.internal.PersistenceService";
   private final static String DEFAULT_OBJECT_ID_GETTER = "getObjectId";
   public final static String DEFAULT_OBJECT_ID_FIELD = "objectId";
   public final static String DEFAULT_CREATED_FIELD = "created";
@@ -319,6 +319,34 @@ public final class Persistence
       throw new IllegalArgumentException( ExceptionMessage.NULL_ID );
 
     return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), entity.getSimpleName(), id, relations, relationsDepth }, ResponderHelper.getPOJOAdaptingResponder( entity ) );
+  }
+
+  protected <E> E findById( final E entity, List<String> relations, int relationsDepth )
+  {
+    if( entity == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
+
+//    checkDeclaredType( entity.getClass() );
+//
+//    final Map serializedEntity = serializeToMap( entity );
+//
+//    MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
+//    {
+//      @Override
+//      public Object substitute( Object o )
+//      {
+//        if( o == entity )
+//          return serializedEntity;
+//        else
+//          return o;
+//      }
+//    } );
+
+    E foundObject = (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), entity.getClass().getSimpleName(), entity, relations, relationsDepth }, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
+
+//    MessageWriter.setObjectSubstitutor( null );
+
+    return foundObject;
   }
 
   protected <E> void findById( final Class<E> entity, final String id, final List<String> relations,
