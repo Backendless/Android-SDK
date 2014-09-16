@@ -20,8 +20,6 @@ package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
 
-import java.util.Map;
-
 public class CustomService
 {
   private static final String CUSTOM_SERVICE_ALIAS = "com.backendless.services.servercode.CustomServiceHandler";
@@ -37,12 +35,12 @@ public class CustomService
     return instance;
   }
 
-  public <T> T invoke( String serviceName, String serviceVersion, String method, Map<String, Object> arguments )
+  public <T> T invoke( String serviceName, String serviceVersion, String method, Object[] arguments )
   {
     return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, "dispatchService", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments } );
   }
 
-  public <E> void invoke( String serviceName, String serviceVersion, String method, Map<String, Object> arguments, AsyncCallback<E> callback )
+  public <E> void invoke( String serviceName, String serviceVersion, String method, Object[] arguments, AsyncCallback<E> callback )
   {
     Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, "dispatchService", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments }, callback );
   }
