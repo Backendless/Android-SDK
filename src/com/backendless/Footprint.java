@@ -116,15 +116,7 @@ public class Footprint
     return entityFootprint;
   }
 
-  public void initEntity( Object entity )
-  {
-    initObjectId( entity );
-    initCreated( entity );
-    initUpdated( entity );
-    init__meta( entity );
-  }
-
-  private void initObjectId( Object entity )
+  public void initObjectId( Object entity )
   {
     Field objectIdField = null;
     try
@@ -157,117 +149,6 @@ public class Footprint
     if( accessibleChange )
     {
       objectIdField.setAccessible( false );
-      accessibleChange = false;
-    }
-  }
-
-  private void initCreated( Object entity )
-  {
-    Field createdField = null;
-    try
-    {
-      createdField = entity.getClass().getDeclaredField( Footprint.CREATED_FIELD_NAME );
-    }
-    catch( NoSuchFieldException e )
-    {
-      //no field - no value set
-      return;
-    }
-
-    boolean accessibleChange = false;
-
-    if( !createdField.isAccessible() )
-    {
-      createdField.setAccessible( true );
-      accessibleChange = true;
-    }
-
-    try
-    {
-      createdField.set( entity, created );
-    }
-    catch( IllegalAccessException e )
-    {
-      //never thrown
-    }
-
-    if( accessibleChange )
-    {
-      createdField.setAccessible( false );
-      accessibleChange = false;
-    }
-  }
-
-  private void initUpdated( Object entity )
-  {
-    Field updatedField = null;
-    try
-    {
-      updatedField = entity.getClass().getDeclaredField( Footprint.UPDATED_ID_FIELD_NAME );
-    }
-    catch( NoSuchFieldException e )
-    {
-      //no field - no value set
-      return;
-    }
-
-    boolean accessibleChange = false;
-
-    if( !updatedField.isAccessible() )
-    {
-      updatedField.setAccessible( true );
-      accessibleChange = true;
-    }
-
-    try
-    {
-      updatedField.set( entity, updated );
-    }
-    catch( IllegalAccessException e )
-    {
-      //never thrown
-    }
-
-    if( accessibleChange )
-    {
-      updatedField.setAccessible( false );
-      accessibleChange = false;
-    }
-  }
-
-  private void init__meta( Object entity )
-  {
-    Field __metaField = null;
-    try
-    {
-      __metaField = entity.getClass().getDeclaredField( Footprint.META_FIELD_NAME );
-    }
-    catch( NoSuchFieldException e )
-    {
-      //no field - no value set
-      return;
-    }
-
-    boolean accessibleChange = false;
-
-    if( !__metaField.isAccessible() )
-    {
-      __metaField.setAccessible( true );
-      accessibleChange = true;
-    }
-
-    try
-    {
-      __metaField.set( entity, __meta );
-    }
-    catch( IllegalAccessException e )
-    {
-      //never thrown
-    }
-
-    if( accessibleChange )
-    {
-      __metaField.setAccessible( false );
       accessibleChange = false;
     }
   }
