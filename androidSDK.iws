@@ -18,16 +18,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa3e4aea-c9d5-420e-b854-3b539143136f" name="Default" comment="metadata can now contains objects instead of strings (T-6691)">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/DataService/tododemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/DataService/tododemo/libs/backendless.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/FileService/filedemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/FileService/filedemo/libs/backendless.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/GeoService/geodemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/GeoService/geodemo/libs/backendless.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/MessagingService/pubsubdemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/MessagingService/pubsubdemo/libs/backendless.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/MessagingService/pushdemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/MessagingService/pushdemo/libs/backendless.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/rolesdemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/UserService/rolesdemo/libs/backendless.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/userservicedemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/UserService/userservicedemo/libs/backendless.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/Footprint.java" afterPath="$PROJECT_DIR$/src/com/backendless/Footprint.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/Persistence.java" afterPath="$PROJECT_DIR$/src/com/backendless/Persistence.java" />
+    <list default="true" id="fa3e4aea-c9d5-420e-b854-3b539143136f" name="Default" comment="fixed objectId init (T-6514)">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.ipr" afterPath="$PROJECT_DIR$/androidSDK.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.iws" afterPath="$PROJECT_DIR$/androidSDK.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/postprocess.xml" afterPath="$PROJECT_DIR$/postprocess.xml" />
@@ -153,24 +144,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Persistence.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Persistence.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/backendless/Persistence.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="3.2263513" vertical-offset="1265" max-vertical-offset="5040">
-              <caret line="183" column="51" selection-start-line="183" selection-start-column="51" selection-end-line="183" selection-end-column="51" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1295" max-vertical-offset="6810">
+              <caret line="136" column="9" selection-start-line="136" selection-start-column="9" selection-end-line="136" selection-end-column="9" />
               <folding>
-                <element signature="e#2608#2609#0" expanded="true" />
-                <element signature="e#2633#2634#0" expanded="true" />
-                <element signature="method#mapTableToClass#0;class#Persistence#0" expanded="false" />
-                <element signature="e#3587#3792#0" expanded="true" />
-                <element signature="e#3785#3786#0" expanded="true" />
-                <element signature="e#5079#5304#0" expanded="true" />
-                <element signature="e#5295#5296#0" expanded="true" />
                 <element signature="method#create#0;class#Persistence#0" expanded="false" />
                 <element signature="method#create#1;class#Persistence#0" expanded="false" />
+                <element signature="method#handleResponse#0;class#10524:11041" expanded="false" />
                 <element signature="method#remove#0;class#Persistence#0" expanded="false" />
                 <element signature="method#remove#1;class#Persistence#0" expanded="false" />
-                <element signature="method#handleResponse#0;class#10524:11041" expanded="false" />
                 <element signature="method#findById#0;class#Persistence#0" expanded="false" />
                 <element signature="method#findById#1;class#Persistence#0" expanded="false" />
                 <element signature="method#findById#2;class#Persistence#0" expanded="false" />
@@ -207,11 +191,41 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="androidsdk.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/androidsdk.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="360">
+              <caret line="18" column="10" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="postprocess.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/postprocess.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
+              <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="androidSDK.iml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/androidSDK.iml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3135">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Footprint.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/backendless/Footprint.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="720">
-              <caret line="118" column="43" selection-start-line="118" selection-start-column="43" selection-end-line="118" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1710" max-vertical-offset="2355">
+              <caret line="148" column="26" selection-start-line="148" selection-start-column="26" selection-end-line="148" selection-end-column="26" />
               <folding>
                 <element signature="method#toString#0;class#Footprint#0" expanded="false" />
                 <element signature="method#initFromEntity#0;class#Footprint#0" expanded="false" />
@@ -252,7 +266,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="persistence_refactoring" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
   </component>
@@ -277,7 +291,6 @@
         <option value="$PROJECT_DIR$/androidsdk.xml" />
         <option value="$PROJECT_DIR$/src/com/backendless/Media.java" />
         <option value="$PROJECT_DIR$/androidsdk.properties" />
-        <option value="$PROJECT_DIR$/postprocess.xml" />
         <option value="$PROJECT_DIR$/src/com/backendless/FootprintsManager.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/Geo.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/geo/GeoPoint.java" />
@@ -286,8 +299,9 @@
         <option value="$PROJECT_DIR$/src/com/backendless/Files.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/IDataStore.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/DataStoreFactory.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/Persistence.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/Footprint.java" />
+        <option value="$PROJECT_DIR$/src/com/backendless/Persistence.java" />
+        <option value="$PROJECT_DIR$/postprocess.xml" />
       </list>
     </option>
   </component>
@@ -524,24 +538,6 @@
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="androidSDK" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Android-SDK" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="backendless" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -622,11 +618,11 @@
       <recent name="com.client.test" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/libs" />
-      <recent name="$PROJECT_DIR$/src/com/backendless/geo" />
-      <recent name="F:\themidnightcoders.com\trunk\backendless\src\client\sdk\android\clients\BackendlessClient\src\com\backendless\client" />
-      <recent name="F:\themidnightcoders.com\trunk\backendless\src\client\sdk\android\androidSDKlib\libs" />
-      <recent name="F:\themidnightcoders.com\trunk\backendless\src\client\sdk\android\androidSDKlib\src" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/samples/UserService/userservicedemo/libs" />
+      <recent name="$PROJECT_DIR$/samples/UserService/rolesdemo/libs" />
+      <recent name="$PROJECT_DIR$/samples/MessagingService/pushdemo/libs" />
+      <recent name="$PROJECT_DIR$/samples/MessagingService/pubsubdemo/libs" />
     </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="com.backendless" />
@@ -639,6 +635,129 @@
       <recent name="com" />
       <recent name="com.client" />
     </key>
+  </component>
+  <component name="RestoreUpdateTree">
+    <UpdateInfo date="Moments ago" ActionInfo="_Update">
+      <UpdatedFiles>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated from server" />
+          <option name="myStatusName" value="Changed on server" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CHANGED_ON_SERVER" />
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Updated" />
+            <option name="myStatusName" value="Changed" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="UPDATED" />
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/androidSDK.ipr</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/androidSDK.iws</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/postprocess.xml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/samples/DataService/tododemo/libs/backendless.jar</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/samples/FileService/filedemo/libs/backendless.jar</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/samples/GeoService/geodemo/libs/backendless.jar</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/samples/MessagingService/pubsubdemo/libs/backendless.jar</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/samples/MessagingService/pushdemo/libs/backendless.jar</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/samples/UserService/rolesdemo/libs/backendless.jar</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/samples/UserService/userservicedemo/libs/backendless.jar</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/com/backendless/Footprint.java</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/com/backendless/Persistence.java</PATH>
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Created" />
+            <option name="myStatusName" value="Created" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="CREATED" />
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Deleted" />
+            <option name="myStatusName" value="Deleted" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="true" />
+            <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Restored" />
+            <option name="myStatusName" value="Will be restored" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="RESTORED" />
+          </FILE-GROUP>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Modified" />
+          <option name="myStatusName" value="Modified" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MODIFIED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Skipped" />
+          <option name="myStatusName" value="Skipped" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SKIPPED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with conflicts" />
+          <option name="myStatusName" value="Will be merged with conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_CONFLICTS" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with tree conflicts" />
+          <option name="myStatusName" value="Merged with tree conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with property conflicts" />
+          <option name="myStatusName" value="Will be merged with property conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged" />
+          <option name="myStatusName" value="Will be merged" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Not in repository" />
+          <option name="myStatusName" value="Not in repository" />
+          <option name="mySupportsDeletion" value="true" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UNKNOWN" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally added" />
+          <option name="myStatusName" value="Locally added" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_ADDED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally removed" />
+          <option name="myStatusName" value="Locally removed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_REMOVED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Switched" />
+          <option name="myStatusName" value="Switched" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SWITCHED" />
+        </FILE-GROUP>
+      </UpdatedFiles>
+    </UpdateInfo>
   </component>
   <component name="RunManager" selected="JUnit.com.backendless.tests.junit in androidSDK">
     <configuration default="false" name="FindObjectTest.testFindFirstEntity" type="JUnit" factoryName="JUnit" temporary="true">
@@ -1291,13 +1410,13 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30202776" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19525066" sideWeight="0.086330935" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24829157" sideWeight="0.39473686" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.80701756" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.46411484" sideWeight="0.9086331" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46730462" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46411484" sideWeight="0.9086331" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21311475" sideWeight="0.33811802" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959402" sideWeight="0.6753529" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21311475" sideWeight="0.661882" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21311475" sideWeight="0.661882" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2923077" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="IntelliGuard" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -1376,8 +1495,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Import fix" />
-    <MESSAGE value="Push service refactoring" />
     <MESSAGE value="Added android,jar" />
     <MESSAGE value="Removed gcm.jar dependency" />
     <MESSAGE value="Bug fixes" />
@@ -1401,7 +1518,9 @@
     <MESSAGE value="added saveFile methods to Files (T-6742)" />
     <MESSAGE value="added findById method for external databases (T-6655)" />
     <MESSAGE value="changed remove and loadRelations methods to work with external databases (T-6649, T-6662)" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed remove and loadRelations methods to work with external databases (T-6649, T-6662)" />
+    <MESSAGE value="fixed objectId init (T-6514)" />
+    <MESSAGE value="repair" />
+    <option name="LAST_COMMIT_MESSAGE" value="repair" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1624,13 +1743,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/androidSDK.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.390288" vertical-offset="2997" max-vertical-offset="3553">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/push/BackendlessBroadcastReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.44014734" vertical-offset="1750" max-vertical-offset="4896">
@@ -1667,24 +1779,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/androidsdk.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
-          <caret line="18" column="10" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/androidsdk.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="3870" max-vertical-offset="4260">
           <caret line="108" column="0" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/postprocess.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
-          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -1837,8 +1935,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/Footprint.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="720">
-          <caret line="118" column="43" selection-start-line="118" selection-start-column="43" selection-end-line="118" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1710" max-vertical-offset="2355">
+          <caret line="148" column="26" selection-start-line="148" selection-start-column="26" selection-end-line="148" selection-end-column="26" />
           <folding>
             <element signature="method#toString#0;class#Footprint#0" expanded="false" />
             <element signature="method#initFromEntity#0;class#Footprint#0" expanded="false" />
@@ -1849,21 +1947,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/Persistence.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.2263513" vertical-offset="1265" max-vertical-offset="5040">
-          <caret line="183" column="51" selection-start-line="183" selection-start-column="51" selection-end-line="183" selection-end-column="51" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1295" max-vertical-offset="6810">
+          <caret line="136" column="9" selection-start-line="136" selection-start-column="9" selection-end-line="136" selection-end-column="9" />
           <folding>
-            <element signature="e#2608#2609#0" expanded="true" />
-            <element signature="e#2633#2634#0" expanded="true" />
-            <element signature="method#mapTableToClass#0;class#Persistence#0" expanded="false" />
-            <element signature="e#3587#3792#0" expanded="true" />
-            <element signature="e#3785#3786#0" expanded="true" />
-            <element signature="e#5079#5304#0" expanded="true" />
-            <element signature="e#5295#5296#0" expanded="true" />
             <element signature="method#create#0;class#Persistence#0" expanded="false" />
             <element signature="method#create#1;class#Persistence#0" expanded="false" />
+            <element signature="method#handleResponse#0;class#10524:11041" expanded="false" />
             <element signature="method#remove#0;class#Persistence#0" expanded="false" />
             <element signature="method#remove#1;class#Persistence#0" expanded="false" />
-            <element signature="method#handleResponse#0;class#10524:11041" expanded="false" />
             <element signature="method#findById#0;class#Persistence#0" expanded="false" />
             <element signature="method#findById#1;class#Persistence#0" expanded="false" />
             <element signature="method#findById#2;class#Persistence#0" expanded="false" />
@@ -1896,6 +1987,30 @@
             <element signature="method#serializeToMap#0;class#Persistence#0" expanded="false" />
             <element signature="method#getSimpleName#0;class#Persistence#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/androidsdk.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="360">
+          <caret line="18" column="10" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/postprocess.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
+          <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/androidSDK.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3135">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
