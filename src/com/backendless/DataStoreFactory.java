@@ -245,6 +245,30 @@ class DataStoreFactory
       }
 
       @Override
+      public void findById( E entity, AsyncCallback<E> responder )
+      {
+        findById( entity, emptyRelations, responder );
+      }
+
+      @Override
+      public void findById( E entity, List<String> relations, AsyncCallback<E> responder )
+      {
+        findById( entity, relations, 0, responder );
+      }
+
+      @Override
+      public void findById( E entity, int relationsDepth, AsyncCallback<E> responder )
+      {
+        findById( entity, emptyRelations, relationsDepth, responder );
+      }
+
+      @Override
+      public void findById( E entity, List<String> relations, int relationsDepth, AsyncCallback<E> responder )
+      {
+        Backendless.Data.findById( entity, relations, relationsDepth, responder );
+      }
+
+      @Override
       public void loadRelations( E entity, List<String> relations ) throws Exception
       {
         Backendless.Persistence.loadRelations( entity, relations );

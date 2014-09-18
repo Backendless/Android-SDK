@@ -86,6 +86,14 @@ public interface IDataStore<E>
 
   public void findById( String id, int relationsDepth, AsyncCallback<E> responder );
 
+  public void findById( E entity, AsyncCallback<E> responder );
+
+  public void findById( E entity, List<String> relations, AsyncCallback<E> responder );
+
+  public void findById( E entity, int relationsDepth, AsyncCallback<E> responder );
+
+  public void findById( E entity, List<String> relations, int relationsDepth, AsyncCallback<E> responder );
+
   public void loadRelations( E entity, List<String> relations ) throws Exception;
 
   public void loadRelations( E entity, List<String> relations, AsyncCallback<E> responder );

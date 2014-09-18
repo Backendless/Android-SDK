@@ -326,27 +326,7 @@ public final class Persistence
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-//    checkDeclaredType( entity.getClass() );
-//
-//    final Map serializedEntity = serializeToMap( entity );
-//
-//    MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
-//    {
-//      @Override
-//      public Object substitute( Object o )
-//      {
-//        if( o == entity )
-//          return serializedEntity;
-//        else
-//          return o;
-//      }
-//    } );
-
-    E foundObject = (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), entity.getClass().getSimpleName(), entity, relations, relationsDepth }, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
-
-//    MessageWriter.setObjectSubstitutor( null );
-
-    return foundObject;
+    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), entity.getClass().getSimpleName(), entity, relations, relationsDepth }, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
   }
 
   protected <E> void findById( final Class<E> entity, final String id, final List<String> relations,
@@ -381,6 +361,22 @@ public final class Persistence
         throw new IllegalArgumentException( ExceptionMessage.NULL_ID );
 
       Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), entity.getSimpleName(), id, relations, relationsDepth }, responder );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
+  protected <E> void findById( E entity, List<String> relations, int relationsDepth, AsyncCallback<E> responder )
+  {
+    try
+    {
+      if( entity == null )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
+
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), entity.getClass().getSimpleName(), entity, relations, relationsDepth }, responder );
     }
     catch( Throwable e )
     {
