@@ -98,7 +98,6 @@ public final class Persistence
       {
         newEntity = (E) create( entity.getClass(), serializedEntity );
         FootprintsManager.getInstance().Inner.duplicateFootprintForObject( entity, newEntity );
-
       }
       else
       {
