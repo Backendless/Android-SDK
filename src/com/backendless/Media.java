@@ -53,14 +53,14 @@ public final class Media
     return instance;
   }
 
-  public void publishLiveAndRecord( Context context,  BackendlessSurfaceView backendlessSurfaceView, String tube, String streamName, StreamQuality streamQuality )
+  public void publishLiveAndRecord( Context context,  BackendlessSurfaceView backendlessSurfaceView, String tube, String streamName, StreamQuality streamQuality, DisplayOrientation orientation )
   {
-    publishStream( context, backendlessSurfaceView, tube, streamName, streamQuality, StreamType.LiveRecording );
+    publishStream( context, backendlessSurfaceView, tube, streamName, streamQuality, StreamType.LiveRecording, orientation );
   }
 
-  public void publishLive( Context context, BackendlessSurfaceView backendlessSurfaceView, String tube, String streamName, StreamQuality streamQuality )
+  public void publishLive( Context context, BackendlessSurfaceView backendlessSurfaceView, String tube, String streamName, StreamQuality streamQuality, DisplayOrientation orientation )
   {
-    publishStream( context, backendlessSurfaceView, tube, streamName, streamQuality, StreamType.Live );
+    publishStream( context, backendlessSurfaceView, tube, streamName, streamQuality, StreamType.Live, orientation );
   }
 
   public void playLive( Context context, VideoView videoView, StreamProtocolType streamProtocolType, String tube, String streamName )
@@ -74,7 +74,7 @@ public final class Media
   }
 
   private void publishStream( Context context, BackendlessSurfaceView backendlessSurfaceView, String tube, String streamName,
-                              StreamQuality streamQuality, StreamType streamType )
+                              StreamQuality streamQuality, StreamType streamType, DisplayOrientation orientation )
   {
     String operationType;
 
@@ -86,7 +86,7 @@ public final class Media
     params = getConnectParams( tube, operationType, streamName);
     url = RTSP_PROTOCOL + SERVER_URL_LIVE + streamName + params;
 
-    Session session = getSession( context, backendlessSurfaceView );
+    Session session = getSession( context, backendlessSurfaceView, orientation.getValue() );
     RtspClient rtspClient = getRtspClient( context, session );
     backendlessSurfaceView.getHolder().addCallback( (SurfaceHolder.Callback) context );
     selectQuality(session, streamQuality);
@@ -144,7 +144,7 @@ public final class Media
     videoView.start();
   }
 
-  private Session getSession(Context context, BackendlessSurfaceView mBackendlessSurfaceView )
+  private Session getSession(Context context, BackendlessSurfaceView mBackendlessSurfaceView, int orientation )
   {
     Session mSession = SessionBuilder.getInstance()
             .setContext( context )
@@ -154,6 +154,7 @@ public final class Media
             .setSurfaceView( mBackendlessSurfaceView )
             .setPreviewOrientation( 0 )
             .setCallback( (Session.Callback) context )
+            .setCustomOrientation( orientation )
             .build();
 
     return mSession;
