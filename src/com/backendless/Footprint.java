@@ -3,6 +3,7 @@ package com.backendless;
 import weborb.reader.DateType;
 import weborb.reader.StringType;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.Map;
 
@@ -113,5 +114,42 @@ public class Footprint
     }
 
     return entityFootprint;
+  }
+
+  public void initObjectId( Object entity )
+  {
+    Field objectIdField = null;
+    try
+    {
+      objectIdField = entity.getClass().getDeclaredField( Footprint.OBJECT_ID_FIELD_NAME );
+    }
+    catch( NoSuchFieldException e )
+    {
+      //no field - no value set
+      return;
+    }
+
+    boolean accessibleChange = false;
+
+    if( !objectIdField.isAccessible() )
+    {
+      objectIdField.setAccessible( true );
+      accessibleChange = true;
+    }
+
+    try
+    {
+      objectIdField.set( entity, objectId );
+    }
+    catch( IllegalAccessException e )
+    {
+      //never thrown
+    }
+
+    if( accessibleChange )
+    {
+      objectIdField.setAccessible( false );
+      accessibleChange = false;
+    }
   }
 }

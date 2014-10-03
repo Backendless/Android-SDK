@@ -104,6 +104,11 @@ public final class Persistence
         FootprintsManager.getInstance().Inner.updateFootprintForObject( newEntity, entity );
       }
 
+      //put or update footprint's properties to user's properties, if exist
+      Footprint footprint = FootprintsManager.getInstance().getEntityFootprint( newEntity );
+      if( footprint != null )
+        footprint.initObjectId( entity );
+
       return newEntity;
     }
     finally
@@ -147,6 +152,9 @@ public final class Persistence
           {
             MessageWriter.setObjectSubstitutor( null );
             FootprintsManager.getInstance().Inner.duplicateFootprintForObject( entity, newEntity );
+            Footprint footprint = FootprintsManager.getInstance().getEntityFootprint( newEntity );
+            if( footprint != null )
+              footprint.initObjectId( entity );
 
             if( responder != null )
               responder.handleResponse( newEntity );
@@ -170,6 +178,9 @@ public final class Persistence
           public void handleResponse( E newEntity )
           {
             FootprintsManager.getInstance().Inner.updateFootprintForObject( newEntity, entity );
+            Footprint footprint = FootprintsManager.getInstance().getEntityFootprint( newEntity );
+            if( footprint != null )
+              footprint.initObjectId( entity );
 
             if( responder != null )
               responder.handleResponse( newEntity );

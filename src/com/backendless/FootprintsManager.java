@@ -7,20 +7,25 @@ import weborb.reader.NamedObject;
 import java.lang.reflect.Field;
 import java.util.*;
 
+/**
+ * If server sends object <code>object</code> with fields <code>a</code>, <code>b</code>, <code>c</code>
+ * and the client's class declares only fields <code>a</code>, <code>b</code>, then this class saves
+ * field <code>c</code> in memory in order to send it with the next user's request.
+ */
 public class FootprintsManager
 {
   private static final FootprintsManager instance = new FootprintsManager();
-  private final Map<Object, Footprint> persistenceCache = new WeakHashMap<Object, Footprint>();
-  public final Inner Inner = new Inner();
   private static Set<Object> toBeCached = new HashSet<Object>(); //for cyclic entities
+  public final Inner Inner = new Inner();
+  private final Map<Object, Footprint> persistenceCache = new WeakHashMap<Object, Footprint>();
+
+  private FootprintsManager()
+  {
+  }
 
   static FootprintsManager getInstance()
   {
     return instance;
-  }
-
-  private FootprintsManager()
-  {
   }
 
   public Footprint getEntityFootprint( Object entity )
@@ -126,6 +131,15 @@ public class FootprintsManager
       persistenceCache.remove( entity );
     }
 
+    /**
+     * Puts saved entity's footprint to cache.
+     * Key - <code>instance</code>, value - footprint, initialized from <code>instance</code>.
+     * Footprint is just an object, containing only fields
+     * <code>objectId</code>, <code>created</code>, <code>updated</code>, <code>meta</code>.
+     *
+     * @param instance saved object received from server
+     * @param entity IAdaptingType
+     */
     public void putEntityFootprintToCache( Object instance, Object entity )
     {
       toBeCached.add( entity );
