@@ -16,27 +16,27 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.media;
+package com.backendless.io;
 
-public enum StreamQuality
+import weborb.writer.IProtocolFormatter;
+import weborb.writer.ITypeWriter;
+
+import java.io.IOException;
+
+public class DoubleWriter implements ITypeWriter
 {
-  LOW( "320x240, 30 fps, 250 Kbps" ), MEDIUM( "480x360, 30 fps, 300 Kbps" ), HIGH( "640x480, 30 fps, 600 Kbps" );
-
-  /*
-  * LOW - 176x144, 170 Kbps
-  * MEDIUM - 352x288, 300 Kbps
-  * HIGH - 640x480, 600 Kbps
-  */
-  private String value = "";
-
-  private StreamQuality( String value )
+  public void write( Object object, IProtocolFormatter formatter ) throws IOException
   {
-    this.value = value;
+    Number numValue = (Number) object;
+
+    if( numValue instanceof Double && ((Double) numValue).isNaN() )
+      numValue = 0;
+
+    formatter.writeNumber( numValue.doubleValue() );
   }
 
-  public String getValue()
+  public boolean isReferenceableType()
   {
-    return value;
+    return false;
   }
-
 }
