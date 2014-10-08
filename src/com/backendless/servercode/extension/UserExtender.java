@@ -65,11 +65,11 @@ public abstract class UserExtender
   {
   }
 
-  public void beforeUpdateBulk( RunnerContext context, String whereClause, HashMap userValue ) throws Exception
+  public void beforeUpdateBulk( RunnerContext context, String whereClause, HashMap userValues ) throws Exception
   {
   }
 
-  public void afterUpdateBulk( RunnerContext context, String whereClause, HashMap userValue,
+  public void afterUpdateBulk( RunnerContext context, String whereClause, HashMap userValues,
                                ExecutionResult<Integer> result ) throws Exception
   {
   }
