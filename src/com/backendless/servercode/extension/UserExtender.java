@@ -65,11 +65,29 @@ public abstract class UserExtender
   {
   }
 
+  public void beforeUpdateBulk( RunnerContext context, String whereClause, HashMap userValues ) throws Exception
+  {
+  }
+
+  public void afterUpdateBulk( RunnerContext context, String whereClause, HashMap userValues,
+                               ExecutionResult<Integer> result ) throws Exception
+  {
+  }
+
   public void beforeRemove( RunnerContext context, String id ) throws Exception
   {
   }
 
   public void afterRemove( RunnerContext context, String id, ExecutionResult<Long> result ) throws Exception
+  {
+  }
+
+  public void beforeRemoveBulk( RunnerContext context, String whereClause ) throws Exception
+  {
+  }
+
+  public void afterRemoveBulk( RunnerContext context, String whereClause,
+                               ExecutionResult<Integer> result ) throws Exception
   {
   }
 

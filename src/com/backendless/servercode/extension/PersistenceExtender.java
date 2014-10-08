@@ -6,6 +6,7 @@ import com.backendless.property.ObjectProperty;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -41,6 +42,16 @@ public abstract class PersistenceExtender<T>
   {
   }
 
+  public void beforeUpdateBulk( RunnerContext context, String tableName, String whereClause,
+                                HashMap hashmap ) throws Exception
+  {
+  }
+
+  public void afterUpdateBulk( RunnerContext context, String tableName, String whereClause, HashMap hashmap,
+                               ExecutionResult<Integer> result ) throws Exception
+  {
+  }
+
   public void beforeLoadRelations( RunnerContext context, String objectId, String entityName,
                                    String[] relations ) throws Exception
   {
@@ -56,6 +67,15 @@ public abstract class PersistenceExtender<T>
   }
 
   public void afterRemove( RunnerContext context, String objectId, ExecutionResult<Long> removedVal ) throws Exception
+  {
+  }
+
+  public void beforeRemoveBulk( RunnerContext context, String tableName, String whereClause ) throws Exception
+  {
+  }
+
+  public void afterRemoveBulk( RunnerContext context, String tableName, String whereClause,
+                               ExecutionResult<Integer> result ) throws Exception
   {
   }
 
