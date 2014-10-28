@@ -9,7 +9,7 @@ import com.backendless.push.BackendlessBroadcastReceiver;
 public class PushReceiver extends BackendlessBroadcastReceiver
 {
   @Override
-  public void onMessage( Context context, Intent intent )
+  public boolean onMessage( Context context, Intent intent )
   {
     if( PushActivity.handler != null )
     {
@@ -17,6 +17,8 @@ public class PushReceiver extends BackendlessBroadcastReceiver
       message.obj = intent.getStringExtra( PublishOptions.MESSAGE_TAG );
       PushActivity.handler.sendMessage( message );
     }
+
+    return super.onMessage( context, intent );
   }
 
   @Override

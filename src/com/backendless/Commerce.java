@@ -1,3 +1,21 @@
+/*
+ * ********************************************************************************************************************
+ *  <p/>
+ *  BACKENDLESS.COM CONFIDENTIAL
+ *  <p/>
+ *  ********************************************************************************************************************
+ *  <p/>
+ *  Copyright 2012 BACKENDLESS.COM. All Rights Reserved.
+ *  <p/>
+ *  NOTICE: All information contained herein is, and remains the property of Backendless.com and its suppliers,
+ *  if any. The intellectual and technical concepts contained herein are proprietary to Backendless.com and its
+ *  suppliers and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret
+ *  or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden
+ *  unless prior written permission is obtained from Backendless.com.
+ *  <p/>
+ *  ********************************************************************************************************************
+ */
+
 package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
@@ -36,25 +54,25 @@ public final class Commerce
     Invoker.invokeAsync( COMMERCE_MANAGER_SERVER_ALIAS, "validatePlayPurchase", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), packageName, productId, token }, callback );
   }
 
-  public GooglePlaySubscriptionStatus getPlaySubscriptionsStatus( String packageName, String productId, String token )
+  public GooglePlaySubscriptionStatus getPlaySubscriptionsStatus( String packageName, String subscriptionId, String token )
   {
-    return (GooglePlaySubscriptionStatus) Invoker.invokeSync( COMMERCE_MANAGER_SERVER_ALIAS, "getPlaySubscriptionsStatus", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), packageName, productId, token } );
+    return (GooglePlaySubscriptionStatus) Invoker.invokeSync( COMMERCE_MANAGER_SERVER_ALIAS, "getPlaySubscriptionsStatus", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), packageName, subscriptionId, token } );
   }
 
-  public void getPlaySubscriptionsStatus( String packageName, String productId, String token,
+  public void getPlaySubscriptionsStatus( String packageName, String subscriptionId, String token,
                                     AsyncCallback<GooglePlaySubscriptionStatus> callback )
   {
-    Invoker.invokeAsync( COMMERCE_MANAGER_SERVER_ALIAS, "getPlaySubscriptionsStatus", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), packageName, productId, token }, callback );
+    Invoker.invokeAsync( COMMERCE_MANAGER_SERVER_ALIAS, "getPlaySubscriptionsStatus", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), packageName, subscriptionId, token }, callback );
   }
 
-  public void cancelPlaySubscription( String packageName, String productId, String token )
+  public void cancelPlaySubscription( String packageName, String subscriptionId, String token )
   {
-    Invoker.invokeSync( COMMERCE_MANAGER_SERVER_ALIAS, "cancelPlaySubscription", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), packageName, productId, token } );
+    Invoker.invokeSync( COMMERCE_MANAGER_SERVER_ALIAS, "cancelPlaySubscription", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), packageName, subscriptionId, token } );
   }
 
-  public void cancelPlaySubscription( String packageName, String productId, String token,
+  public void cancelPlaySubscription( String packageName, String subscriptionId, String token,
                                     AsyncCallback<Void> callback )
   {
-    Invoker.invokeAsync( COMMERCE_MANAGER_SERVER_ALIAS, "cancelPlaySubscription", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), packageName, productId, token }, callback );
+    Invoker.invokeAsync( COMMERCE_MANAGER_SERVER_ALIAS, "cancelPlaySubscription", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), packageName, subscriptionId, token }, callback );
   }
 }

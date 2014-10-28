@@ -181,7 +181,7 @@ public final class UserService
 
   public void login( final String login, final String password, final AsyncCallback<BackendlessUser> responder )
   {
-     login( login, password, responder, false );
+    login( login, password, responder, false );
   }
 
   public void login( final String login, final String password, final AsyncCallback<BackendlessUser> responder,
@@ -387,7 +387,17 @@ public final class UserService
   {
     synchronized( currentUserLock )
     {
-      Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "logout", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } );
+      try
+      {
+        Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "logout", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } );
+      }
+      catch( BackendlessException fault )
+      {
+        if( !isLogoutFaultAllowed( fault.getCode() ) )
+          throw fault;
+        //else everything is OK
+      }
+
       handleLogout();
     }
   }
@@ -426,6 +436,12 @@ public final class UserService
         @Override
         public void handleFault( BackendlessFault fault )
         {
+          if( !isLogoutFaultAllowed( fault.getCode() ) )
+          {
+            handleResponse( null );
+            return;
+          }
+
           if( responder != null )
             responder.handleFault( fault );
         }
@@ -724,5 +740,46 @@ public final class UserService
           responder.handleFault( fault );
       }
     };
+  }
+
+  /**
+   * if user token has been saved from previous logins, the method checks if the user token is still valid;
+   * if user token is not saved, but user logged in, the method checks if the user session is still valid
+   *
+   * @return true, if user token is valid or user is logged in, else false
+   */
+  public boolean isValidLogin()
+  {
+    String userToken = UserTokenStorageFactory.instance().getStorage().get();
+    if( userToken != null && !userToken.equals( "" ) )
+    {
+      return Invoker.<Boolean>invokeSync( USER_MANAGER_SERVER_ALIAS, "isValidUserToken", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), userToken } );
+    }
+    else
+    {
+      return CurrentUser() != null;
+    }
+  }
+
+  /**
+   * if user token has been saved from previous logins, the method checks if the user token is still valid;
+   * if user token is not saved, but user logged in, the method checks if the user session is still valid
+   */
+  public void isValidLogin( AsyncCallback<Boolean> responder )
+  {
+    String userToken = UserTokenStorageFactory.instance().getStorage().get();
+    if( userToken != null && !userToken.equals( "" ) )
+    {
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "isValidUserToken", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), userToken }, responder );
+    }
+    else
+    {
+      responder.handleResponse( CurrentUser() != null );
+    }
+  }
+
+  private boolean isLogoutFaultAllowed( String errorCode )
+  {
+    return errorCode.equals( "3064" ) || errorCode.equals( "3091" ) || errorCode.equals( "3090" ) || errorCode.equals( "3023" );
   }
 }

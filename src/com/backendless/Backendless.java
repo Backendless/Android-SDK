@@ -21,6 +21,7 @@ package com.backendless;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.io.BackendlessUserFactory;
 import com.backendless.io.BackendlessUserWriter;
+import com.backendless.io.DoubleWriter;
 import com.backendless.persistence.local.UserTokenStorageFactory;
 import com.backendless.servercode.Util;
 import weborb.config.ORBConfig;
@@ -40,9 +41,12 @@ public final class Backendless
   public static final Persistence Data = com.backendless.Persistence.getInstance();
   public static final Messaging Messaging = com.backendless.Messaging.getInstance();
   public static final Geo Geo = com.backendless.Geo.getInstance();
+  public static final Media Media = com.backendless.Media.getInstance();
   public static final Files Files = com.backendless.Files.getInstance();
   public static final Commerce Commerce = com.backendless.Commerce.getInstance();
   public static final Events Events = com.backendless.Events.getInstance();
+  public static final Cache Cache = com.backendless.Cache.getInstance();
+  public static final Counters Counters = com.backendless.Counters.getInstance();
   public static final CustomService CustomService = com.backendless.CustomService.getInstance();
   private static String url = "https://api.backendless.com";
   private static IBackendlessService backendlessService;
@@ -119,6 +123,7 @@ public final class Backendless
 
     HeadersManager.cleanHeaders();
     MessageWriter.addTypeWriter( BackendlessUser.class, new BackendlessUserWriter() );
+    MessageWriter.addTypeWriter( Double.class, new DoubleWriter() );
     ObjectFactories.addArgumentObjectFactory( BackendlessUser.class.getName(), new BackendlessUserFactory() );
     backendlessInitService.initService( context, new IServiceCreatedCallback()
     {
