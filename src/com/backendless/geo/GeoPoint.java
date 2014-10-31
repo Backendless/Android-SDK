@@ -47,7 +47,7 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     this.longitude = (double) longitudeE6 / multiplier;
   }
 
-  public GeoPoint( double latitude, double longitude, List<String> categories, Map<String, String> metadata )
+  public GeoPoint( double latitude, double longitude, List<String> categories, Map<String, Object> metadata )
   {
     this.latitude = latitude;
     this.longitude = longitude;
@@ -55,7 +55,7 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     this.metadata = metadata;
   }
 
-  public GeoPoint( int latitudeE6, int longitudeE6, List<String> categories, Map<String, String> metadata )
+  public GeoPoint( int latitudeE6, int longitudeE6, List<String> categories, Map<String, Object> metadata )
   {
     this.latitude = (double) latitudeE6 / multiplier;
     this.longitude = (double) longitudeE6 / multiplier;
@@ -99,15 +99,15 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     categories.add( category );
   }
 
-  public Map<String, String> getMetadata()
+  public Map<String, Object> getMetadata()
   {
     if( metadata == null )
-      return metadata = new HashMap<String, String>();
+      return metadata = new HashMap<String, Object>();
 
-    return new HashMap<String, String>( metadata );
+    return new HashMap<String, Object>( metadata );
   }
 
-  public String getMetadata( String key )
+  public Object getMetadata( String key )
   {
     if( metadata == null )
       return null;
@@ -115,18 +115,18 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     return metadata.get( key );
   }
 
-  public void putMetadata( String key, String value )
+  public void putMetadata( String key, Object value )
   {
     if( metadata == null )
-      metadata = new HashMap<String, String>();
+      metadata = new HashMap<String, Object>();
 
     metadata.put( key, value );
   }
 
-  public void putAllMetadata( Map<String, String> metadata )
+  public void putAllMetadata( Map<String, Object> metadata )
   {
     if( this.metadata == null )
-      this.metadata = new HashMap<String, String>();
+      this.metadata = new HashMap<String, Object>();
 
     this.metadata.putAll( metadata );
   }
@@ -142,7 +142,7 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     this.categories = categories;
   }
 
-  public void setMetadata( Map<String, String> metadata )
+  public void setMetadata( Map<String, Object> metadata )
   {
     this.metadata = metadata;
   }
