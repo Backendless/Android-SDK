@@ -69,7 +69,7 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
   }
 
   public BackendlessGeoQuery( double latitude, double longitude, double radius, Units units, List<String> categories,
-                              Map<String, Object> metadata )
+                              Map<String, String> metadata )
   {
     this.latitude = latitude;
     this.longitude = longitude;
@@ -82,7 +82,7 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
       includeMeta = true;
   }
 
-  public BackendlessGeoQuery( Map<String, Object> relativeFindMetadata, double relativeFindPercentThreshold )
+  public BackendlessGeoQuery( Map<String, String> relativeFindMetadata, double relativeFindPercentThreshold )
   {
     this.relativeFindMetadata = relativeFindMetadata;
     this.relativeFindPercentThreshold = relativeFindPercentThreshold;
@@ -106,7 +106,7 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     this.categories = categories;
   }
 
-  public BackendlessGeoQuery( Map<String, Object> metadata )
+  public BackendlessGeoQuery( Map<String, String> metadata )
   {
     this.metadata = metadata;
 
@@ -114,9 +114,9 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
       includeMeta = true;
   }
 
-  public BackendlessGeoQuery( String metaKey, Object metaValue )
+  public BackendlessGeoQuery( String metaKey, String metaValue )
   {
-    HashMap<String, Object> metadata = new HashMap<String, Object>();
+    HashMap<String, String> metadata = new HashMap<String, String>();
     metadata.put( metaKey, metaValue );
 
     this.metadata = metadata;
@@ -152,21 +152,21 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     categories.add( category );
   }
 
-  public Map<String, Object> getMetadata()
+  public Map<String, String> getMetadata()
   {
     if( metadata == null )
-      return metadata = new HashMap<String, Object>();
+      return metadata = new HashMap<String, String>();
 
-    return new HashMap<String, Object>( metadata );
+    return new HashMap<String, String>( metadata );
   }
 
-  public void putMetadata( String metadataKey, Object metadataValue )
+  public void putMetadata( String metadataKey, String metadataValue )
   {
     if( metadataKey == null || metadataKey.equals( "" ) || metadataValue == null )
       return;
 
     if( metadata == null )
-      metadata = new HashMap<String, Object>();
+      metadata = new HashMap<String, String>();
 
     metadata.put( metadataKey, metadataValue );
   }
@@ -216,7 +216,7 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     this.offset = offset;
   }
 
-  public void putRelativeFindMetadata( String key, Object value )
+  public void putRelativeFindMetadata( String key, String value )
   {
     relativeFindMetadata.put( key, value );
   }

@@ -97,13 +97,13 @@ public final class Geo
   }
 
   public GeoPoint savePoint( final double latitude, final double longitude,
-                             final Map<String, Object> metadata ) throws BackendlessException
+                             final Map<String, String> metadata ) throws BackendlessException
   {
     return savePoint( latitude, longitude, null, metadata );
   }
 
   public GeoPoint savePoint( double latitude, double longitude, List<String> categories,
-                             final Map<String, Object> metadata ) throws BackendlessException
+                             final Map<String, String> metadata ) throws BackendlessException
   {
     return savePoint( new GeoPoint( latitude, longitude, categories, metadata ) );
   }
@@ -120,13 +120,13 @@ public final class Geo
     return (GeoPoint) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, remoteMethod, new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint } );
   }
 
-  public void savePoint( final double latitude, final double longitude, final Map<String, Object> metadata,
+  public void savePoint( final double latitude, final double longitude, final Map<String, String> metadata,
                          AsyncCallback<GeoPoint> responder )
   {
     savePoint( latitude, longitude, null, metadata, responder );
   }
 
-  public void savePoint( double latitude, double longitude, List<String> categories, Map<String, Object> metadata,
+  public void savePoint( double latitude, double longitude, List<String> categories, Map<String, String> metadata,
                          AsyncCallback<GeoPoint> responder )
   {
     savePoint( new GeoPoint( latitude, longitude, categories, metadata ), responder );
