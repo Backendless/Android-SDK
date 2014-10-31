@@ -74,8 +74,8 @@
 
     <!-- JDK definitions -->
 
-    <property name="jdk.bin.1.7" value="${JAVA_HOME}/bin"/>
-    <path id="jdk.classpath.1.7">
+    <property name="jdk.bin.1.6" value="${JAVA_HOME}/bin"/>
+    <path id="jdk.classpath.1.6">
         <fileset dir="${JAVA_HOME}">
             <include name="jre/lib/alt-rt.jar"/>
             <include name="jre/lib/alt-string.jar"/>
@@ -95,8 +95,8 @@
     </path>
 
     <property name="project.jdk.home" value="${JAVA_HOME}"/>
-    <property name="project.jdk.bin" value="${jdk.bin.1.7}"/>
-    <property name="project.jdk.classpath" value="jdk.classpath.1.7"/>
+    <property name="project.jdk.bin" value="${jdk.bin.1.6}"/>
+    <property name="project.jdk.classpath" value="jdk.classpath.1.6"/>
 
 
     <!-- Project Libraries -->
@@ -131,8 +131,8 @@
 
 
     <property name="module.jdk.home.backendless" value="${JAVA_HOME}"/>
-    <property name="module.jdk.bin.backendless" value="${jdk.bin.1.7}"/>
-    <property name="module.jdk.classpath.backendless" value="jdk.classpath.1.7"/>
+    <property name="module.jdk.bin.backendless" value="${jdk.bin.1.6}"/>
+    <property name="module.jdk.classpath.backendless" value="jdk.classpath.1.6"/>
 
     <property name="compiler.args.backendless" value="${compiler.args}"/>
 
