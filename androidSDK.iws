@@ -18,24 +18,20 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa3e4aea-c9d5-420e-b854-3b539143136f" name="Default" comment="Bug fixes">
+    <list default="true" id="fa3e4aea-c9d5-420e-b854-3b539143136f" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/DataService/tododemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/DataService/tododemo/libs/backendless.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/EndlessMatchMaker/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/EndlessMatchMaker/libs/backendless.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/FileService/filedemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/FileService/filedemo/libs/backendless.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/GeoService/geodemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/GeoService/geodemo/libs/backendless.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/MessagingService/pubsubdemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/MessagingService/pubsubdemo/libs/backendless.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/MessagingService/pushdemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/MessagingService/pushdemo/libs/backendless.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/rolesdemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/UserService/rolesdemo/libs/backendless.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/userservicedemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/UserService/userservicedemo/libs/backendless.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/mediaLib.jar" afterPath="$PROJECT_DIR$/libs/mediaLib.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/weborbclient.jar" afterPath="$PROJECT_DIR$/libs/weborbclient.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/EndlessMatchMaker/src/com/backendless/examples/endless/matchmaker/utils/Defaults.java" afterPath="$PROJECT_DIR$/samples/EndlessMatchMaker/src/com/backendless/examples/endless/matchmaker/utils/Defaults.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/EndlessMatchMaker/EndlessMatchMaker.iml" afterPath="$PROJECT_DIR$/samples/EndlessMatchMaker/EndlessMatchMaker.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/EndlessMatchMaker/src/com/backendless/examples/endless/matchmaker/controllers/LoginActivity.java" afterPath="$PROJECT_DIR$/samples/EndlessMatchMaker/src/com/backendless/examples/endless/matchmaker/controllers/LoginActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/Media.java" afterPath="$PROJECT_DIR$/src/com/backendless/Media.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/common-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/libs/common-1.0-SNAPSHOT.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/geo/BackendlessGeoQuery.java" afterPath="$PROJECT_DIR$/src/com/backendless/geo/BackendlessGeoQuery.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/Geo.java" afterPath="$PROJECT_DIR$/src/com/backendless/Geo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/geo/GeoPoint.java" afterPath="$PROJECT_DIR$/src/com/backendless/geo/GeoPoint.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.ipr" afterPath="$PROJECT_DIR$/androidSDK.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.iws" afterPath="$PROJECT_DIR$/androidSDK.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidsdk.xml" afterPath="$PROJECT_DIR$/androidsdk.xml" />
     </list>
     <ignored path="androidSDK.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -161,7 +157,7 @@
       <file leaf-file-name="Media.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/backendless/Media.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3383">
+            <state vertical-scroll-proportion="0.0" vertical-offset="731" max-vertical-offset="3961">
               <caret line="43" column="40" selection-start-line="43" selection-start-column="40" selection-end-line="43" selection-end-column="40" />
               <folding />
             </state>
@@ -171,7 +167,7 @@
       <file leaf-file-name="Backendless.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/backendless/Backendless.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="527" max-vertical-offset="3060">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1292" max-vertical-offset="3655">
               <caret line="76" column="49" selection-start-line="76" selection-start-column="8" selection-end-line="76" selection-end-column="8" />
               <folding />
             </state>
@@ -181,7 +177,7 @@
       <file leaf-file-name="FilesAndroidExtra.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/backendless/FilesAndroidExtra.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1003">
+            <state vertical-scroll-proportion="0.0" vertical-offset="731" max-vertical-offset="1394">
               <caret line="43" column="32" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
               <folding />
             </state>
@@ -191,18 +187,53 @@
       <file leaf-file-name="Cache.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/backendless/Cache.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="2584">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1700" max-vertical-offset="3502">
               <caret line="100" column="65" selection-start-line="100" selection-start-column="9" selection-end-line="100" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="androidsdk.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="androidsdk.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/androidsdk.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.42078364" vertical-offset="2048" max-vertical-offset="4828">
-              <caret line="135" column="24" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2048" max-vertical-offset="4828">
+              <caret line="124" column="11" selection-start-line="124" selection-start-column="11" selection-end-line="124" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GeoPoint.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/backendless/geo/GeoPoint.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.33044982" vertical-offset="1781" max-vertical-offset="3230">
+              <caret line="162" column="34" selection-start-line="162" selection-start-column="19" selection-end-line="162" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BackendlessGeoQuery.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/backendless/geo/BackendlessGeoQuery.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2797" max-vertical-offset="3400">
+              <caret line="220" column="17" selection-start-line="220" selection-start-column="17" selection-end-line="220" selection-end-column="17" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#3982#3998#0" expanded="true" />
+                <element signature="e#6024#6025#0" expanded="true" />
+                <element signature="e#6072#6073#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Geo.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/backendless/Geo.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2754" max-vertical-offset="5559">
+              <caret line="153" column="30" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -248,6 +279,9 @@
         <option value="$PROJECT_DIR$/src/com/backendless/UserService.java" />
         <option value="$PROJECT_DIR$/src/com/backendless/Backendless.java" />
         <option value="$PROJECT_DIR$/androidsdk.xml" />
+        <option value="$PROJECT_DIR$/src/com/backendless/geo/GeoPoint.java" />
+        <option value="$PROJECT_DIR$/src/com/backendless/Geo.java" />
+        <option value="$PROJECT_DIR$/src/com/backendless/geo/BackendlessGeoQuery.java" />
       </list>
     </option>
   </component>
@@ -324,22 +358,76 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
+      <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="androidSDK" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="androidSDK" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="Android-SDK" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
               <option name="myItemId" value="androidSDK" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Android-SDK" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backendless" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="androidSDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Android-SDK" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backendless" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="geo" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="androidSDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Android-SDK" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -466,54 +554,22 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="ProjectPane">
+      <pane id="PackagesPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="androidSDK" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="androidSDK" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Android-SDK" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="androidSDK" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Android-SDK" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="backendless" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="androidSDK" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Android-SDK" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libs" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -522,21 +578,21 @@
   </component>
   <component name="PropertiesComponent">
     <property name="GenerateAntBuildDialog.generateIdeaHomeProperty" value="false" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="253" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="263" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="169" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="176" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="259" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="175" />
     <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="163" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth1" value="162" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth0" value="163" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="267" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1059" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1061" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="265" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="178" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="699" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="693" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="179" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth4" value="623" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="261" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="176" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth3" value="163" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Android_2_3_3" />
@@ -566,7 +622,7 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
     <property name="GenerateAntBuildDialog.inclineRuntiemClasspath" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../sources.backendless.com/src/client/sdk/android/mediaLib/src/main/java" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../sources.backendless.com/src/server/common/src" />
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="androidsdk" />
     <property name="GenerateAntBuildDialog.enableUiFormCompile" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
@@ -612,119 +668,6 @@
       <recent name="com" />
       <recent name="com.client" />
     </key>
-  </component>
-  <component name="RestoreUpdateTree">
-    <UpdateInfo date="Moments ago" ActionInfo="_Update">
-      <UpdatedFiles>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Updated from server" />
-          <option name="myStatusName" value="Changed on server" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="CHANGED_ON_SERVER" />
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Updated" />
-            <option name="myStatusName" value="Changed" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="UPDATED" />
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/com/backendless/DataStoreFactory.java</PATH>
-            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/com/backendless/IDataStore.java</PATH>
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Created" />
-            <option name="myStatusName" value="Created" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="CREATED" />
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Deleted" />
-            <option name="myStatusName" value="Deleted" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="true" />
-            <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Restored" />
-            <option name="myStatusName" value="Will be restored" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="RESTORED" />
-          </FILE-GROUP>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Modified" />
-          <option name="myStatusName" value="Modified" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MODIFIED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Skipped" />
-          <option name="myStatusName" value="Skipped" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="SKIPPED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with conflicts" />
-          <option name="myStatusName" value="Will be merged with conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_CONFLICTS" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with tree conflicts" />
-          <option name="myStatusName" value="Merged with tree conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with property conflicts" />
-          <option name="myStatusName" value="Will be merged with property conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged" />
-          <option name="myStatusName" value="Will be merged" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Not in repository" />
-          <option name="myStatusName" value="Not in repository" />
-          <option name="mySupportsDeletion" value="true" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="UNKNOWN" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Locally added" />
-          <option name="myStatusName" value="Locally added" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="LOCALLY_ADDED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Locally removed" />
-          <option name="myStatusName" value="Locally removed" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="LOCALLY_REMOVED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Switched" />
-          <option name="myStatusName" value="Switched" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="SWITCHED" />
-        </FILE-GROUP>
-      </UpdatedFiles>
-    </UpdateInfo>
   </component>
   <component name="RunManager" selected="JUnit.com.backendless.tests.junit in androidSDK">
     <configuration default="false" name="FindObjectTest.testFindFirstEntity" type="JUnit" factoryName="JUnit" temporary="true">
@@ -1168,7 +1111,452 @@
       <Port>5050</Port>
     </configuration>
   </component>
-  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="ShelveChangesManager" show_recycled="false">
+    <changelist date="1414759729271">
+      <option name="PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/unres.patch" />
+      <option name="DESCRIPTION" value="unres" />
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/ProfileActivity.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/ProfileActivity.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/FindMatchesActivity$7.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/FindMatchesActivity$7.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/EditPreferencesActivity$2$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/EditPreferencesActivity$2$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/FindMatchesActivity$2.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/FindMatchesActivity$2.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/FindMatchesActivity$10.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/FindMatchesActivity$10.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/models/local/PreferenceTheme.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/PreferenceTheme.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/MatchViewActivity$5$1$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/MatchViewActivity$5$1$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/models/local/Gender.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/Gender.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/R.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/R.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/MatchViewActivity$4.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/MatchViewActivity$4.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/Manifest.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/Manifest.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/R$layout.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/R$layout.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/R$drawable.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/R$drawable.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/FindMatchesActivity$7$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/FindMatchesActivity$7$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/PingsActivity$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/PingsActivity$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/R$dimen.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/R$dimen.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/PingsActivity$2.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/PingsActivity$2.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/R$style.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/R$style.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/views/UIFactory$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/UIFactory$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/FindMatchesActivity$6.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/FindMatchesActivity$6.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/LoginActivity$3$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/LoginActivity$3$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/RegisterActivity$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/RegisterActivity$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/MatchViewActivity$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/MatchViewActivity$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/PushActivity$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/PushActivity$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/DialogMessageActivity.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/DialogMessageActivity.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/RegisterActivity.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/RegisterActivity.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/RegisterActivity$4.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/RegisterActivity$4.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/ProfileActivity$1$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/ProfileActivity$1$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/DialogMessageActivity$1$1$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/DialogMessageActivity$1$1$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/CreateTablesActivity$2.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/CreateTablesActivity$2.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/shared/Lifecycle.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/Lifecycle.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/R$id.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/R$id.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/ProfileActivity$3.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/ProfileActivity$3.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/SendMessageActivity$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/SendMessageActivity$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/RegisterActivity$2.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/RegisterActivity$2.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/MatchViewActivity$5.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/MatchViewActivity$5.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/LoginActivity$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/LoginActivity$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/R$string.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/R$string.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/EditPreferencesActivity$1$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/EditPreferencesActivity$1$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/RegisterActivity$3.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/RegisterActivity$3.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/BuildConfig.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/BuildConfig.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/R$color.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/R$color.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/SendMessageActivity.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/SendMessageActivity.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/EditPreferencesActivity.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/EditPreferencesActivity.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/LoginActivity$2.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/LoginActivity$2.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/FindMatchesActivity$PointsAdapter.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/FindMatchesActivity$PointsAdapter.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/RegisterActivity$5.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/RegisterActivity$5.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/models/persistent/PreferencesDefaults.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/PreferencesDefaults.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/ProfileActivity$2$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/ProfileActivity$2$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/FindMatchesActivity$5.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/FindMatchesActivity$5.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/PingsActivity.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/PingsActivity.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/utils/Defaults.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/Defaults.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/EditPreferencesActivity$2.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/EditPreferencesActivity$2.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/shared/ResponseAsyncCallback.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/ResponseAsyncCallback.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/views/UIFactory$2.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/UIFactory$2.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/EditPreferencesActivity$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/EditPreferencesActivity$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/MatchViewActivity$5$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/MatchViewActivity$5$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/MatchViewActivity$6.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/MatchViewActivity$6.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/PushReceiver.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/PushReceiver.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/FindMatchesActivity$7$1$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/FindMatchesActivity$7$1$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/ProfileActivity$2.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/ProfileActivity$2.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/LoginActivity.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/LoginActivity.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/DialogMessageActivity$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/DialogMessageActivity$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/views/UIFactory.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/UIFactory.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/Manifest$permission.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/Manifest$permission.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/EndlessMatchMaker.apk" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/EndlessMatchMaker.apk" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/PushActivity.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/PushActivity.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/FindMatchesActivity$8.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/FindMatchesActivity$8.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/CreateTablesActivity$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/CreateTablesActivity$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/models/persistent/UserPreferences.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/UserPreferences.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/SendMessageActivity$2$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/SendMessageActivity$2$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/MatchViewActivity$3.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/MatchViewActivity$3.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/FindMatchesActivity$9.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/FindMatchesActivity$9.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/DialogMessageActivity$1$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/DialogMessageActivity$1$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/CreateTablesActivity.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/CreateTablesActivity.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/ProfileActivity$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/ProfileActivity$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/FindMatchesActivity$3.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/FindMatchesActivity$3.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/FindMatchesActivity.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/FindMatchesActivity.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/R$attr.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/R$attr.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/utils/SimpleMath.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/SimpleMath.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/LoginActivity$3.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/LoginActivity$3.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/utils/Log.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/Log.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/FindMatchesActivity$1.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/FindMatchesActivity$1.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/SendMessageActivity$2.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/SendMessageActivity$2.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/MatchViewActivity.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/MatchViewActivity.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/FindMatchesActivity$4.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/FindMatchesActivity$4.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/EditPreferencesActivity$2$2.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/EditPreferencesActivity$2$2.class" />
+      </binary>
+      <binary>
+        <option name="BEFORE_PATH" />
+        <option name="AFTER_PATH" value="samples/EndlessMatchMaker/out/production/EndlessMatchMaker/com/backendless/examples/endless/matchmaker/controllers/MatchViewActivity$2.class" />
+        <option name="SHELVED_PATH" value="$USER_HOME$/.IntelliJIdea13/config/shelf/MatchViewActivity$2.class" />
+      </binary>
+    </changelist>
+  </component>
   <component name="SqlCodeAssistantSettings">
     <option name="dbBrowserSelectedConnection" value="androidSDK" />
   </component>
@@ -1267,6 +1655,8 @@
       <workItem from="1413462208887" duration="979000" />
       <workItem from="1413465744479" duration="713000" />
       <workItem from="1414748988680" duration="2220000" />
+      <workItem from="1414759014432" duration="2836000" />
+      <workItem from="1414763440611" duration="1211000" />
     </task>
     <task id="LOCAL-00002" summary="gg">
       <created>1349270157918</created>
@@ -1460,11 +1850,19 @@
       <created>1412344337656</created>
       <updated>1412344337656</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="unres">
+      <created>1414759730370</created>
+      <updated>1414759730370</updated>
+    </task>
+    <task id="LOCAL-00051" summary="add latest weborbclient.jar">
+      <created>1414760163154</created>
+      <updated>1414760163154</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57913000" />
+    <option name="totallyTimeSpent" value="61960000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1488,13 +1886,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.861244" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37161085" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29308975" sideWeight="0.6492786" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30202776" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1502,15 +1901,15 @@
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19525066" sideWeight="0.086330935" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20893142" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37958533" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3492823" sideWeight="0.9086331" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20174742" sideWeight="0.50079745" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959402" sideWeight="0.6753529" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="JProfiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20730738" sideWeight="0.49920255" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="JProfiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20730738" sideWeight="0.49920255" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2923077" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="IntelliGuard" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Regex Tester" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
@@ -1520,7 +1919,6 @@
       <window_info id="Test Runs" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977018" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Maven-2 Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37161085" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="FindBugs-IDEA" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37467018" sideWeight="0.4971223" order="19" side_tool="false" content_ui="tabs" />
       <window_info id="Analysis" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="21" side_tool="false" content_ui="tabs" />
       <window_info id="ASM" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294964" sideWeight="0.80474937" order="3" side_tool="false" content_ui="tabs" />
@@ -1585,8 +1983,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Refactoring, fixes" />
-    <MESSAGE value="Backendless URL fix" />
     <MESSAGE value="Fixes" />
     <MESSAGE value="URL fix" />
     <MESSAGE value="Switched to a better async invoke logic - from AsyncTask to Handler.Callback. Fixed wrong error message for async calls. Fixed error with empty headers.&#10;" />
@@ -1610,7 +2006,9 @@
     <MESSAGE value="BKNDLSS-6111 added invoke methods" />
     <MESSAGE value="Add route for Wowza on production" />
     <MESSAGE value="media lib update" />
-    <option name="LAST_COMMIT_MESSAGE" value="media lib update" />
+    <MESSAGE value="unres" />
+    <MESSAGE value="add latest weborbclient.jar" />
+    <option name="LAST_COMMIT_MESSAGE" value="add latest weborbclient.jar" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1694,46 +2092,11 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/androidsdk.xml">
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/Geo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="330" max-vertical-offset="3840">
-          <caret line="22" column="31" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2074" max-vertical-offset="6171">
+          <caret line="122" column="106" selection-start-line="122" selection-start-column="78" selection-end-line="122" selection-end-column="106" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/androidsdk.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="90">
-          <caret line="0" column="97" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/files/router/IOutputStreamRouter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="23" column="22" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/exceptions/BackendlessException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="21" column="31" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/exceptions/BackendlessFault.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="46" column="35" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/exceptions/ExceptionMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="1905">
-          <caret line="24" column="73" selection-start-line="24" selection-start-column="73" selection-end-line="24" selection-end-column="73" />
         </state>
       </provider>
     </entry>
@@ -1811,13 +2174,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334" vertical-offset="244" max-vertical-offset="1207">
           <caret line="44" column="94" selection-start-line="44" selection-start-column="94" selection-end-line="44" selection-end-column="94" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/AndroidService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2725527" vertical-offset="0" max-vertical-offset="4539">
-          <caret line="74" column="30" selection-start-line="74" selection-start-column="30" selection-end-line="74" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -1912,13 +2268,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/Geo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1737649" vertical-offset="0" max-vertical-offset="5559">
-          <caret line="33" column="19" selection-start-line="33" selection-start-column="19" selection-end-line="33" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Downloads/adt-bundle-linux-x86_64-20140702/sdk/sources/android-18/android/widget/MediaController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.8983333" vertical-offset="306" max-vertical-offset="11084">
@@ -1966,7 +2315,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
           <caret line="14" column="35" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2050,14 +2398,75 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.15124555" vertical-offset="0" max-vertical-offset="2244">
           <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/androidsdk.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42078364" vertical-offset="2048" max-vertical-offset="4828">
-          <caret line="135" column="24" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2048" max-vertical-offset="4828">
+          <caret line="124" column="11" selection-start-line="124" selection-start-column="11" selection-end-line="124" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/android.jar!/java/util/Map.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334" vertical-offset="145" max-vertical-offset="867">
+          <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/AndroidService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3313253" vertical-offset="842" max-vertical-offset="4488">
+          <caret line="94" column="39" selection-start-line="94" selection-start-column="39" selection-end-line="94" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/android.jar!/java/lang/Object.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33147633" vertical-offset="119" max-vertical-offset="595">
+          <caret line="15" column="41" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../sources.backendless.com/src/server/common/src/main/java/com/backendless/commons/geo/AbstractBackendlessGeoQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1401384" vertical-offset="208" max-vertical-offset="1139">
+          <caret line="20" column="89" selection-start-line="20" selection-start-column="73" selection-end-line="20" selection-end-column="73" />
+          <folding>
+            <element signature="e#583#599#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/geo/BackendlessGeoQuery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2797" max-vertical-offset="3400">
+          <caret line="220" column="17" selection-start-line="220" selection-start-column="17" selection-end-line="220" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3982#3998#0" expanded="true" />
+            <element signature="e#6024#6025#0" expanded="true" />
+            <element signature="e#6072#6073#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/Geo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1938" max-vertical-offset="5559">
+          <caret line="153" column="30" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/geo/GeoPoint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33044982" vertical-offset="1781" max-vertical-offset="3230">
+          <caret line="162" column="34" selection-start-line="162" selection-start-column="19" selection-end-line="162" selection-end-column="19" />
           <folding />
         </state>
       </provider>

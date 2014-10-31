@@ -337,6 +337,7 @@
       <JAVADOC />
       <SOURCES>
         <root url="file://$PROJECT_DIR$/../../sources.backendless.com/src/client/sdk/android/mediaLib/src/main/java" />
+        <root url="file://$PROJECT_DIR$/../../sources.backendless.com/src/server/common/src/main/java" />
       </SOURCES>
       <jarDirectory url="file://$PROJECT_DIR$/libs" recursive="false" />
     </library>
