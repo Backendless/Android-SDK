@@ -47,6 +47,12 @@ public class UserIdStorageFactory
     if( Backendless.isAndroid() && androidUserIdStorage == null )
       throw new IllegalArgumentException( ExceptionMessage.INIT_BEFORE_USE );
 
-    return Backendless.isAndroid() ? androidUserIdStorage : JavaUserIdStorage.instance();
+    if( Backendless.isAndroid() )
+      return androidUserIdStorage;
+
+    if( Backendless.isCodeRunner() )
+      return CodeRunnerUserIdStorage.instance();
+
+    return JavaUserIdStorage.instance();
   }
 }
