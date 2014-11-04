@@ -76,7 +76,7 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     this.radius = radius;
     this.units = units;
     this.categories = categories;
-    this.metadata = metadata;
+    this.setMetadata( metadata );
 
     if( metadata != null )
       includeMeta = true;
@@ -108,7 +108,7 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
 
   public BackendlessGeoQuery( Map<String, String> metadata )
   {
-    this.metadata = metadata;
+    this.setMetadata( metadata );
 
     if( metadata != null )
       includeMeta = true;
@@ -119,7 +119,7 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     HashMap<String, String> metadata = new HashMap<String, String>();
     metadata.put( metaKey, metaValue );
 
-    this.metadata = metadata;
+    this.setMetadata( metadata );
     includeMeta = true;
   }
 
@@ -152,23 +152,15 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     categories.add( category );
   }
 
-  public Map<String, String> getMetadata()
-  {
-    if( metadata == null )
-      return metadata = new HashMap<String, String>();
-
-    return new HashMap<String, String>( metadata );
-  }
-
   public void putMetadata( String metadataKey, String metadataValue )
   {
     if( metadataKey == null || metadataKey.equals( "" ) || metadataValue == null )
       return;
 
-    if( metadata == null )
-      metadata = new HashMap<String, String>();
+    if( objectMetadata == null )
+      objectMetadata = new HashMap<String, Object>();
 
-    metadata.put( metadataKey, metadataValue );
+    objectMetadata.put( metadataKey, metadataValue );
   }
 
   public boolean isIncludeMeta()

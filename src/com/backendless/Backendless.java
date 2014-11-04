@@ -23,7 +23,6 @@ import com.backendless.io.BackendlessUserFactory;
 import com.backendless.io.BackendlessUserWriter;
 import com.backendless.io.DoubleWriter;
 import com.backendless.persistence.local.UserTokenStorageFactory;
-import com.backendless.servercode.Util;
 import weborb.config.ORBConfig;
 import weborb.util.ObjectFactories;
 import weborb.util.log.ILoggingConstants;
@@ -139,7 +138,7 @@ public final class Backendless
     if( backendlessService instanceof StubBackendlessService )
       backendlessService.setAuthKeys( applicationId, secretKey, version );
 
-    if( Util.isCodeRunner() )
+    if( isCodeRunner() )
       return;
 
     String userToken = UserTokenStorageFactory.instance().getStorage().get();
@@ -205,5 +204,10 @@ public final class Backendless
   public static void setUrl( String url )
   {
     Backendless.url = url;
+  }
+
+  public static boolean isCodeRunner()
+  {
+    return Thread.currentThread().getThreadGroup().getName().equals( "CodeRunner secure group" );
   }
 }

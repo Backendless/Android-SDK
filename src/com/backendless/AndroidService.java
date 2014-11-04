@@ -26,7 +26,6 @@ import android.os.IBinder;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.persistence.local.UserIdStorageFactory;
 import com.backendless.persistence.local.UserTokenStorageFactory;
-import com.backendless.servercode.Util;
 import com.backendless.utils.AndroidIO;
 
 import java.io.IOException;
@@ -270,7 +269,7 @@ public class AndroidService extends Service implements IBackendlessService
 
       Context applicationContext = ((Context) arg).getApplicationContext();
 
-      if( !Util.isCodeRunner() )
+      if( !Backendless.isCodeRunner() )
       {
         UserTokenStorageFactory.instance().init( applicationContext );
         UserIdStorageFactory.instance().init( applicationContext );

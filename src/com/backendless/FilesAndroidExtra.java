@@ -34,20 +34,19 @@ public final class FilesAndroidExtra
   }
 
   private FilesAndroidExtra()
-  {}
+  {
+  }
 
-  public BackendlessFile upload( android.graphics.Bitmap bitmap,
-                                 android.graphics.Bitmap.CompressFormat compressFormat, int quality, String name,
-                                 String path ) throws Exception
+  public BackendlessFile upload( android.graphics.Bitmap bitmap, android.graphics.Bitmap.CompressFormat compressFormat,
+                                 int quality, String name, String path ) throws Exception
   {
     checkBitmapAndPath( bitmap, compressFormat, path );
 
     return Backendless.Files.uploadFromStream( new BitmapOutputStreamRouter( bitmap, compressFormat, quality ), name, path );
   }
 
-  public void upload( final android.graphics.Bitmap bitmap,
-                      final android.graphics.Bitmap.CompressFormat compressFormat, final int quality, String name,
-                      String path, final AsyncCallback<BackendlessFile> responder )
+  public void upload( final android.graphics.Bitmap bitmap, final android.graphics.Bitmap.CompressFormat compressFormat,
+                      final int quality, String name, String path, final AsyncCallback<BackendlessFile> responder )
   {
     try
     {
