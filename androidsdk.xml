@@ -195,8 +195,9 @@
     <target name="compile.module.backendless.production" description="Compile module backendless; production classes">
         <mkdir dir="${backendless.output.dir}"/>
         <javac destdir="${backendless.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}"
-               memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.backendless}/javac">
-            <compilerarg line="${compiler.args.backendless}"/>
+               memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.backendless}/javac"
+               source="1.6" target="1.6">
+        <compilerarg line="${compiler.args.backendless}"/>
             <bootclasspath refid="backendless.module.bootclasspath"/>
             <classpath refid="backendless.module.production.classpath"/>
             <src refid="backendless.module.sourcepath"/>
