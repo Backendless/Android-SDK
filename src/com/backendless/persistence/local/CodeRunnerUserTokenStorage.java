@@ -6,7 +6,7 @@ package com.backendless.persistence.local;
  * Date: 11/4/14
  * Time: 13:56
  */
-public class CodeRunnerUserTokenStorage implements IStorage<String>
+class CodeRunnerUserTokenStorage implements IStorage<String>
 {
   private static final CodeRunnerUserTokenStorage instance = new CodeRunnerUserTokenStorage();
   private String userToken;
