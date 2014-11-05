@@ -21,12 +21,12 @@ import java.text.SimpleDateFormat;
 public class Logger
 {
   private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat();
-  private boolean async = true;
+  private boolean async;
   private Class clazz;
 
   public static Logger getLogger( Class clazz )
   {
-    return new Logger( clazz, true );
+    return new Logger( clazz, false );
   }
 
   public static Logger getLogger( Class clazz, boolean async )
@@ -86,7 +86,7 @@ public class Logger
       builder.append( Logger.dumpStack( t ) );
     }
 
-    Thread thread = new Thread()
+    Runnable r = new Runnable()
     {
       @Override
       public void run()
@@ -121,9 +121,9 @@ public class Logger
     };
 
     if( async )
-      thread.start();
+      new Thread( r ).start();
     else
-      thread.run();
+      r.run();
   }
 
   static String dumpStack( Throwable t )
