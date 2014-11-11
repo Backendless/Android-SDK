@@ -25,8 +25,8 @@ public class QueryOptions
 {
   private int pageSize = 10;
   private int offset;
-  private List<String> sortBy;
-  private List<String> related;
+  private List<String> sortBy = new ArrayList<String>();
+  private List<String> related  = new ArrayList<String>();
   private int relationsDepth;
 
   public QueryOptions()
