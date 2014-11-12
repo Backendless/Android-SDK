@@ -47,6 +47,12 @@ public class UserTokenStorageFactory
     if( Backendless.isAndroid() && androidUserTokenStorage == null )
       throw new IllegalArgumentException( ExceptionMessage.INIT_BEFORE_USE );
 
-    return Backendless.isAndroid() ? androidUserTokenStorage : JavaUserTokenStorage.instance();
+    if( Backendless.isAndroid() )
+      return androidUserTokenStorage;
+
+    if( Backendless.isCodeRunner() )
+      return CodeRunnerUserTokenStorage.instance();
+
+    return JavaUserTokenStorage.instance();
   }
 }

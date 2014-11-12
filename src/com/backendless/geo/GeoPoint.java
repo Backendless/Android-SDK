@@ -47,20 +47,20 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     this.longitude = (double) longitudeE6 / multiplier;
   }
 
-  public GeoPoint( double latitude, double longitude, List<String> categories, Map<String, Object> metadata )
+  public GeoPoint( double latitude, double longitude, List<String> categories, Map<String, String> metadata )
   {
     this.latitude = latitude;
     this.longitude = longitude;
     this.categories = categories;
-    this.metadata = metadata;
+    this.setMetadata( metadata );
   }
 
-  public GeoPoint( int latitudeE6, int longitudeE6, List<String> categories, Map<String, Object> metadata )
+  public GeoPoint( int latitudeE6, int longitudeE6, List<String> categories, Map<String, String> metadata )
   {
     this.latitude = (double) latitudeE6 / multiplier;
     this.longitude = (double) longitudeE6 / multiplier;
     this.categories = categories;
-    this.metadata = metadata;
+    this.setMetadata( metadata );
   }
 
   public int getLatitudeE6()
@@ -99,52 +99,33 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     categories.add( category );
   }
 
-  public Map<String, Object> getMetadata()
+  public String getMetadata( String key )
   {
-    if( metadata == null )
-      return metadata = new HashMap<String, Object>();
-
-    return new HashMap<String, Object>( metadata );
-  }
-
-  public Object getMetadata( String key )
-  {
-    if( metadata == null )
+    if( objectMetadata == null )
       return null;
 
-    return metadata.get( key );
+    return (String) objectMetadata.get( key );
   }
 
-  public void putMetadata( String key, Object value )
+  public void putMetadata( String key, String value )
   {
-    if( metadata == null )
-      metadata = new HashMap<String, Object>();
-
-    metadata.put( key, value );
+    addMetadata( key, value );
   }
 
-  public void putAllMetadata( Map<String, Object> metadata )
+  public void putAllMetadata( Map<String, String> metadata )
   {
-    if( this.metadata == null )
-      this.metadata = new HashMap<String, Object>();
-
-    this.metadata.putAll( metadata );
+    super.setMetadata( metadata );
   }
 
   public void clearMetadata()
   {
-    if( this.metadata != null )
-      metadata.clear();
+    if( this.objectMetadata != null )
+      objectMetadata.clear();
   }
 
   public void setCategories( List<String> categories )
   {
     this.categories = categories;
-  }
-
-  public void setMetadata( Map<String, Object> metadata )
-  {
-    this.metadata = metadata;
   }
 
   public Double getDistance()
@@ -164,7 +145,7 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     {
       return true;
     }
-    if( o == null || getClass() != o.getClass() )
+    if( o == null || this.getClass() != o.getClass() )
     {
       return false;
     }
@@ -187,7 +168,7 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     {
       return false;
     }
-    if( metadata != null ? !metadata.equals( geoPoint.metadata ) : geoPoint.metadata != null )
+    if( objectMetadata != null ? !objectMetadata.equals( geoPoint.objectMetadata ) : geoPoint.objectMetadata != null )
     {
       return false;
     }
@@ -210,7 +191,7 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     temp = Double.doubleToLongBits( longitude );
     result = 31 * result + (int) (temp ^ (temp >>> 32));
     result = 31 * result + (categories != null ? categories.hashCode() : 0);
-    result = 31 * result + (metadata != null ? metadata.hashCode() : 0);
+    result = 31 * result + (objectMetadata != null ? objectMetadata.hashCode() : 0);
     result = 31 * result + (distance != null ? distance.hashCode() : 0);
     return result;
   }
@@ -223,7 +204,7 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     sb.append( ", latitude=" ).append( latitude );
     sb.append( ", longitude=" ).append( longitude );
     sb.append( ", categories=" ).append( categories );
-    sb.append( ", metadata=" ).append( metadata );
+    sb.append( ", metadata=" ).append( objectMetadata );
     sb.append( ", distance=" ).append( distance );
     sb.append( '}' );
     return sb.toString();
