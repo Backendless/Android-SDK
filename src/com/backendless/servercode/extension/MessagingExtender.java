@@ -5,8 +5,6 @@ import com.backendless.messaging.*;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
-import java.util.List;
-
 /**
  * Created with IntelliJ IDEA.
  * User: ivanlappo
@@ -50,7 +48,7 @@ public abstract class MessagingExtender
   }
 
   public void afterPoll( RunnerContext context, String subscriptionId,
-                         ExecutionResult<List<Message>> messages ) throws Exception
+                         ExecutionResult<Message[]> messages ) throws Exception
   {
   }
 

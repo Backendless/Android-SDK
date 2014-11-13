@@ -53,7 +53,7 @@ public class BackendlessFault extends Fault
     final StringBuffer sb = new StringBuffer();
     sb.append( getClass().getSimpleName() );
     sb.append( "{ code: '" ).append( getCode() ).append( '\'' );
-    sb.append( ", message; '" ).append( getMessage() ).append( '\'' );
+    sb.append( ", message: '" ).append( getMessage() ).append( '\'' );
     sb.append( " }" );
     return sb.toString();
   }

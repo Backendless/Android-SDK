@@ -32,7 +32,7 @@
                 android:id="@+id/addToDoField" android:textSize="@dimen/normal_text"
                 android:layout_gravity="center_horizontal" android:layout_marginTop="@dimen/small_padding"
                 android:hint="@string/default_todo_hint" android:layout_marginBottom="@dimen/small_padding"
-                android:inputType="textShortMessage|textCapSentences|textAutoComplete|textAutoCorrect"
+                android:inputType="textCapSentences|textAutoComplete|textAutoCorrect"
                 android:imeOptions="actionGo"
                 android:singleLine="true"/>
     </LinearLayout>
