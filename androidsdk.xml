@@ -74,8 +74,8 @@
 
     <!-- JDK definitions -->
 
-    <property name="jdk.bin.1.6" value="${JAVA_HOME}/bin"/>
-    <path id="jdk.classpath.1.6">
+    <property name="jdk.bin.1.7" value="${JAVA_HOME}/bin"/>
+    <path id="jdk.classpath.1.7">
         <fileset dir="${JAVA_HOME}">
             <include name="jre/lib/alt-rt.jar"/>
             <include name="jre/lib/alt-string.jar"/>
@@ -95,8 +95,8 @@
     </path>
 
     <property name="project.jdk.home" value="${JAVA_HOME}"/>
-    <property name="project.jdk.bin" value="${jdk.bin.1.6}"/>
-    <property name="project.jdk.classpath" value="jdk.classpath.1.6"/>
+    <property name="project.jdk.bin" value="${jdk.bin.1.7}"/>
+    <property name="project.jdk.classpath" value="jdk.classpath.1.7"/>
 
 
     <!-- Project Libraries -->
@@ -131,8 +131,8 @@
 
 
     <property name="module.jdk.home.backendless" value="${JAVA_HOME}"/>
-    <property name="module.jdk.bin.backendless" value="${jdk.bin.1.6}"/>
-    <property name="module.jdk.classpath.backendless" value="jdk.classpath.1.6"/>
+    <property name="module.jdk.bin.backendless" value="${jdk.bin.1.7}"/>
+    <property name="module.jdk.classpath.backendless" value="jdk.classpath.1.7"/>
 
     <property name="compiler.args.backendless" value="${compiler.args}"/>
 
@@ -196,7 +196,7 @@
         <mkdir dir="${backendless.output.dir}"/>
         <javac destdir="${backendless.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}"
                memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.backendless}/javac"
-               source="1.6" target="1.6">
+               source="1.7" target="1.7">
         <compilerarg line="${compiler.args.backendless}"/>
             <bootclasspath refid="backendless.module.bootclasspath"/>
             <classpath refid="backendless.module.production.classpath"/>
