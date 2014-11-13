@@ -7,8 +7,6 @@ import com.backendless.geo.GeoPoint;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
-import java.util.List;
-
 /**
  * Created with IntelliJ IDEA.
  * User: ivanlappo
@@ -53,7 +51,7 @@ public abstract class GeoExtender
   }
 
   public void afterGetCategories( RunnerContext context,
-                                  ExecutionResult<List<GeoCategory>> categories ) throws Exception
+                                  ExecutionResult<GeoCategory[]> categories ) throws Exception
   {
   }
 

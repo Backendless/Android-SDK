@@ -25,7 +25,6 @@ import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -113,7 +112,7 @@ public abstract class UserExtender
   {
   }
 
-  public void afterDescribe( RunnerContext context, ExecutionResult<List<UserProperty>> result ) throws Exception
+  public void afterDescribe( RunnerContext context, ExecutionResult<UserProperty[]> result ) throws Exception
   {
   }
 
