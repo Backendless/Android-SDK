@@ -72,11 +72,15 @@ public interface IDataStore<E>
 
   public E findById( String id, int relationsDepth ) throws BackendlessException;
 
+  public E findById( String id, List<String> relations, int relationsDepth ) throws BackendlessException;
+
   public void findById( String id, AsyncCallback<E> responder );
 
   public void findById( String id, List<String> relations, AsyncCallback<E> responder );
 
   public void findById( String id, int relationsDepth, AsyncCallback<E> responder );
+
+  public void findById( String id, List<String> relations, int relationsDepth, AsyncCallback<E> responder );
 
   public void loadRelations( E entity, List<String> relations ) throws Exception;
 

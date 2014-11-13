@@ -1,3 +1,21 @@
+/*
+ * ********************************************************************************************************************
+ *  <p/>
+ *  BACKENDLESS.COM CONFIDENTIAL
+ *  <p/>
+ *  ********************************************************************************************************************
+ *  <p/>
+ *  Copyright 2012 BACKENDLESS.COM. All Rights Reserved.
+ *  <p/>
+ *  NOTICE: All information contained herein is, and remains the property of Backendless.com and its suppliers,
+ *  if any. The intellectual and technical concepts contained herein are proprietary to Backendless.com and its
+ *  suppliers and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret
+ *  or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden
+ *  unless prior written permission is obtained from Backendless.com.
+ *  <p/>
+ *  ********************************************************************************************************************
+ */
+
 package com.backendless.servercode.extension;
 
 import com.backendless.BackendlessCollection;
@@ -6,6 +24,7 @@ import com.backendless.property.ObjectProperty;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -41,6 +60,16 @@ public abstract class PersistenceExtender<T>
   {
   }
 
+  public void beforeUpdateBulk( RunnerContext context, String tableName, String whereClause,
+                                HashMap hashmap ) throws Exception
+  {
+  }
+
+  public void afterUpdateBulk( RunnerContext context, String tableName, String whereClause, HashMap hashmap,
+                               ExecutionResult<Integer> result ) throws Exception
+  {
+  }
+
   public void beforeLoadRelations( RunnerContext context, String objectId, String entityName,
                                    String[] relations ) throws Exception
   {
@@ -56,6 +85,15 @@ public abstract class PersistenceExtender<T>
   }
 
   public void afterRemove( RunnerContext context, String objectId, ExecutionResult<Long> removedVal ) throws Exception
+  {
+  }
+
+  public void beforeRemoveBulk( RunnerContext context, String tableName, String whereClause ) throws Exception
+  {
+  }
+
+  public void afterRemoveBulk( RunnerContext context, String tableName, String whereClause,
+                               ExecutionResult<Integer> result ) throws Exception
   {
   }
 

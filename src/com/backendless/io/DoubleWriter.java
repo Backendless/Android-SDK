@@ -16,43 +16,27 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.persistence.local;
+package com.backendless.io;
 
-import android.content.Context;
-import com.backendless.Backendless;
-import com.backendless.exceptions.ExceptionMessage;
+import weborb.writer.IProtocolFormatter;
+import weborb.writer.ITypeWriter;
 
-public class UserTokenStorageFactory
+import java.io.IOException;
+
+public class DoubleWriter implements ITypeWriter
 {
-  static final String key = "user-token";
-  private static AndroidUserTokenStorage androidUserTokenStorage;
-  private static UserTokenStorageFactory instance = new UserTokenStorageFactory();
-
-  public static UserTokenStorageFactory instance()
+  public void write( Object object, IProtocolFormatter formatter ) throws IOException
   {
-    return instance;
+    Number numValue = (Number) object;
+
+    if( numValue instanceof Double && ((Double) numValue).isNaN() )
+      numValue = 0;
+
+    formatter.writeNumber( numValue.doubleValue() );
   }
 
-  private UserTokenStorageFactory()
+  public boolean isReferenceableType()
   {
-  }
-
-  public void init( Context context )
-  {
-    androidUserTokenStorage = new AndroidUserTokenStorage( context );
-  }
-
-  public IStorage<String> getStorage()
-  {
-    if( Backendless.isAndroid() && androidUserTokenStorage == null )
-      throw new IllegalArgumentException( ExceptionMessage.INIT_BEFORE_USE );
-
-    if( Backendless.isAndroid() )
-      return androidUserTokenStorage;
-
-    if( Backendless.isCodeRunner() )
-      return CodeRunnerUserTokenStorage.instance();
-
-    return JavaUserTokenStorage.instance();
+    return false;
   }
 }

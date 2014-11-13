@@ -192,7 +192,8 @@ class DataStoreFactory
         return Backendless.Persistence.findById( entityClass, objectId, emptyRelations, relationsDepth );
       }
 
-      private E findById( String objectId, List<String> relations, int relationsDepth ) throws BackendlessException
+      @Override
+      public E findById( String objectId, List<String> relations, int relationsDepth ) throws BackendlessException
       {
         return Backendless.Persistence.findById( entityClass, objectId, relations, relationsDepth );
       }
@@ -215,7 +216,8 @@ class DataStoreFactory
         findById( objectId, emptyRelations, relationsDepth, responder );
       }
 
-      private void findById( String objectId, List<String> relations, int relationsDepth, AsyncCallback<E> responder )
+      @Override
+      public void findById( String objectId, List<String> relations, int relationsDepth, AsyncCallback<E> responder )
       {
         Backendless.Persistence.findById( entityClass, objectId, relations, relationsDepth, responder );
       }

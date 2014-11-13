@@ -1,3 +1,21 @@
+/*
+ * ********************************************************************************************************************
+ *  <p/>
+ *  BACKENDLESS.COM CONFIDENTIAL
+ *  <p/>
+ *  ********************************************************************************************************************
+ *  <p/>
+ *  Copyright 2012 BACKENDLESS.COM. All Rights Reserved.
+ *  <p/>
+ *  NOTICE: All information contained herein is, and remains the property of Backendless.com and its suppliers,
+ *  if any. The intellectual and technical concepts contained herein are proprietary to Backendless.com and its
+ *  suppliers and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret
+ *  or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden
+ *  unless prior written permission is obtained from Backendless.com.
+ *  <p/>
+ *  ********************************************************************************************************************
+ */
+
 package com.backendless.servercode.extension;
 
 import com.backendless.BackendlessCollection;
@@ -7,7 +25,6 @@ import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -65,6 +82,15 @@ public abstract class UserExtender
   {
   }
 
+  public void beforeUpdateBulk( RunnerContext context, String whereClause, HashMap userValues ) throws Exception
+  {
+  }
+
+  public void afterUpdateBulk( RunnerContext context, String whereClause, HashMap userValues,
+                               ExecutionResult<Integer> result ) throws Exception
+  {
+  }
+
   public void beforeRemove( RunnerContext context, String id ) throws Exception
   {
   }
@@ -73,11 +99,20 @@ public abstract class UserExtender
   {
   }
 
+  public void beforeRemoveBulk( RunnerContext context, String whereClause ) throws Exception
+  {
+  }
+
+  public void afterRemoveBulk( RunnerContext context, String whereClause,
+                               ExecutionResult<Integer> result ) throws Exception
+  {
+  }
+
   public void beforeDescribe( RunnerContext context ) throws Exception
   {
   }
 
-  public void afterDescribe( RunnerContext context, ExecutionResult<List<UserProperty>> result ) throws Exception
+  public void afterDescribe( RunnerContext context, ExecutionResult<UserProperty[]> result ) throws Exception
   {
   }
 

@@ -16,43 +16,24 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.persistence.local;
+package com.backendless.media;
 
-import android.content.Context;
-import com.backendless.Backendless;
-import com.backendless.exceptions.ExceptionMessage;
-
-public class UserTokenStorageFactory
+public enum DisplayOrientation
 {
-  static final String key = "user-token";
-  private static AndroidUserTokenStorage androidUserTokenStorage;
-  private static UserTokenStorageFactory instance = new UserTokenStorageFactory();
+  //It should be 0, 90, 180, or 270.</p>
+  LEFT_LANDSCAPE( 0 ), RIGHT_LANDSCAPE( 180 ), PORTRAIT( 90 ), PORTRAIT_UPSIDE_DOWN(270);
 
-  public static UserTokenStorageFactory instance()
+  private int value;
+
+  private DisplayOrientation( int value )
   {
-    return instance;
+    this.value = value;
   }
 
-  private UserTokenStorageFactory()
+  public int getValue()
   {
+    return value;
   }
 
-  public void init( Context context )
-  {
-    androidUserTokenStorage = new AndroidUserTokenStorage( context );
-  }
 
-  public IStorage<String> getStorage()
-  {
-    if( Backendless.isAndroid() && androidUserTokenStorage == null )
-      throw new IllegalArgumentException( ExceptionMessage.INIT_BEFORE_USE );
-
-    if( Backendless.isAndroid() )
-      return androidUserTokenStorage;
-
-    if( Backendless.isCodeRunner() )
-      return CodeRunnerUserTokenStorage.instance();
-
-    return JavaUserTokenStorage.instance();
-  }
 }

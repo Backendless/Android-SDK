@@ -6,13 +6,9 @@ package com.backendless.commerce;
 public class GooglePlaySubscriptionStatus
 {
   private boolean autoRenewing;
-  private long initiationTimestampMsec;
+  private long startTimeMillis;
   private String kind;
-  private long validUntilTimestampMsec;
-
-  public GooglePlaySubscriptionStatus()
-  {
-  }
+  private long expiryTimeMillis;
 
   public boolean isAutoRenewing()
   {
@@ -24,14 +20,14 @@ public class GooglePlaySubscriptionStatus
     this.autoRenewing = autoRenewing;
   }
 
-  public long getInitiationTimestampMsec()
+  public long getStartTimeMillis()
   {
-    return initiationTimestampMsec;
+    return startTimeMillis;
   }
 
-  public void setInitiationTimestampMsec( long initiationTimestampMsec )
+  public void setStartTimeMillis( long startTimeMillis )
   {
-    this.initiationTimestampMsec = initiationTimestampMsec;
+    this.startTimeMillis = startTimeMillis;
   }
 
   public String getKind()
@@ -44,13 +40,13 @@ public class GooglePlaySubscriptionStatus
     this.kind = kind;
   }
 
-  public long getValidUntilTimestampMsec()
+  public long getExpiryTimeMillis()
   {
-    return validUntilTimestampMsec;
+    return expiryTimeMillis;
   }
 
-  public void setValidUntilTimestampMsec( long validUntilTimestampMsec )
+  public void setExpiryTimeMillis( long expiryTimeMillis )
   {
-    this.validUntilTimestampMsec = validUntilTimestampMsec;
+    this.expiryTimeMillis = expiryTimeMillis;
   }
 }
