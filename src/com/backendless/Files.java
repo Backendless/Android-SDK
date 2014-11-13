@@ -51,8 +51,7 @@ public final class Files
   public final FilesAndroidExtra Android = FilesAndroidExtra.getInstance();
 
   private Files()
-  {
-  }
+  {}
 
   static Files getInstance()
   {
@@ -74,24 +73,16 @@ public final class Files
   private void checkFileAndPath( File file, String path )
   {
     if( file == null )
-    {
       throw new NullPointerException( ExceptionMessage.NULL_FILE );
-    }
 
     if( path == null )
-    {
       throw new NullPointerException( ExceptionMessage.NULL_PATH );
-    }
 
     if( !file.exists() )
-    {
       throw new IllegalArgumentException( ExceptionMessage.WRONG_FILE );
-    }
 
     if( !file.canRead() )
-    {
       throw new IllegalArgumentException( ExceptionMessage.NOT_READABLE_FILE );
-    }
   }
 
   public BackendlessFile uploadFromStream( IOutputStreamRouter outputStreamRouter, String name,
@@ -111,9 +102,7 @@ public final class Files
       connection.addRequestProperty( "Content-Type", "multipart/form-data; boundary=" + boundary );
 
       for( String key : HeadersManager.getInstance().getHeaders().keySet() )
-      {
         connection.addRequestProperty( key, HeadersManager.getInstance().getHeaders().get( key ) );
-      }
 
       outputStreamRouter.setOutputStream( connection.getOutputStream() );
       PrintWriter writer = new PrintWriter( new OutputStreamWriter( outputStreamRouter.getOutputStream(), "UTF-8" ), true );
@@ -162,9 +151,7 @@ public final class Files
         String fileUrl = null;
 
         while( matcher.find() )
-        {
           fileUrl = matcher.group( MESSAGE_POSITION );
-        }
 
         return new BackendlessFile( fileUrl );
       }
@@ -184,9 +171,7 @@ public final class Files
     finally
     {
       if( connection != null )
-      {
         connection.disconnect();
-      }
     }
   }
 
@@ -198,9 +183,7 @@ public final class Files
     for( int i = 0; i < splitedStr.length; i++ )
     {
       if( i != 0 )
-      {
         result += "/";
-      }
 
       result += URLEncoder.encode( splitedStr[ i ], "UTF-8" );
     }
@@ -224,18 +207,14 @@ public final class Files
     catch( Throwable e )
     {
       if( responder != null )
-      {
         responder.handleFault( new BackendlessFault( e ) );
-      }
     }
   }
 
   public void remove( String fileUrl ) throws BackendlessException
   {
     if( fileUrl == null )
-    {
       throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
-    }
 
     Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectory", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), fileUrl } );
   }
@@ -243,9 +222,7 @@ public final class Files
   public void removeDirectory( String directoryPath ) throws BackendlessException
   {
     if( directoryPath == null )
-    {
       throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
-    }
 
     Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectory", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), directoryPath } );
   }
@@ -255,18 +232,14 @@ public final class Files
     try
     {
       if( fileUrl == null )
-      {
         throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
-      }
 
       Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectory", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), fileUrl }, responder );
     }
     catch( Throwable e )
     {
       if( responder != null )
-      {
         responder.handleFault( new BackendlessFault( e ) );
-      }
     }
   }
 
@@ -275,18 +248,14 @@ public final class Files
     try
     {
       if( directoryPath == null )
-      {
         throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
-      }
 
       Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectory", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), directoryPath }, responder );
     }
     catch( Throwable e )
     {
       if( responder != null )
-      {
         responder.handleFault( new BackendlessFault( e ) );
-      }
     }
   }
 
