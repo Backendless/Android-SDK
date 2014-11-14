@@ -261,16 +261,20 @@ public final class Files
 
   public void saveFile( String filePathName, byte[] fileContent )
   {
-    String fileName = filePathName.substring( filePathName.lastIndexOf( "/" ) );
-    String path = filePathName.substring( 0, filePathName.lastIndexOf( "/" ) );
-
-    saveFile( path, fileName, fileContent );
+    saveFile( filePathName, fileContent, false );
   }
 
   public void saveFile( String filePathName, byte[] fileContent, boolean overwrite )
   {
-    String fileName = filePathName.substring( filePathName.lastIndexOf( "/" ) );
-    String path = filePathName.substring( 0, filePathName.lastIndexOf( "/" ) );
+    int slashIndex = filePathName.lastIndexOf( "/" );
+    String fileName = filePathName;
+    String path = "/";
+
+    if( slashIndex >= 0 )
+    {
+      fileName = filePathName.substring( slashIndex + 1 );
+      path = filePathName.substring( 0, slashIndex + 1 );
+    }
 
     saveFile( path, fileName, fileContent, overwrite );
   }
