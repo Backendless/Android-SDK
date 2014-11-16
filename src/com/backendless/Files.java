@@ -259,6 +259,62 @@ public final class Files
     }
   }
 
+  public void saveFile( String filePathName, byte[] fileContent )
+  {
+    saveFile( filePathName, fileContent, false );
+  }
+
+  public void saveFile( String filePathName, byte[] fileContent, boolean overwrite )
+  {
+    int slashIndex = filePathName.lastIndexOf( "/" );
+    String fileName = filePathName;
+    String path = "/";
+
+    if( slashIndex >= 0 )
+    {
+      fileName = filePathName.substring( slashIndex + 1 );
+      path = filePathName.substring( 0, slashIndex + 1 );
+    }
+
+    saveFile( path, fileName, fileContent, overwrite );
+  }
+
+  public void saveFile( String path, String fileName, byte[] fileContent )
+  {
+    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, fileName, fileContent } );
+  }
+
+  public void saveFile( String path, String fileName, byte[] fileContent, boolean overwrite )
+  {
+    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, fileName, fileContent, overwrite } );
+  }
+
+  public void saveFile( String filePathName, byte[] fileContent, AsyncCallback<Void> responder )
+  {
+    String fileName = filePathName.substring( filePathName.lastIndexOf( "/" ) );
+    String path = filePathName.substring( 0, filePathName.lastIndexOf( "/" ) );
+
+    saveFile( path, fileName, fileContent, responder );
+  }
+
+  public void saveFile( String filePathName, byte[] fileContent, boolean overwrite, AsyncCallback<Void> responder )
+  {
+    String fileName = filePathName.substring( filePathName.lastIndexOf( "/" ) );
+    String path = filePathName.substring( 0, filePathName.lastIndexOf( "/" ) );
+
+    saveFile( path, fileName, fileContent, overwrite, responder );
+  }
+
+  public void saveFile( String path, String fileName, byte[] fileContent, AsyncCallback<Void> responder )
+  {
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, fileName, fileContent }, responder );
+  }
+
+  public void saveFile( String path, String fileName, byte[] fileContent, boolean overwrite, AsyncCallback<Void> responder )
+  {
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, fileName, fileContent, overwrite }, responder );
+  }
+
   private class EmptyUploadCallback implements UploadCallback
   {
     public void onProgressUpdate( Integer progress )

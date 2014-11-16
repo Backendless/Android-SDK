@@ -746,6 +746,13 @@ public final class Persistence
     if( clazz.equals( backendlessUserClass ) )
       return "Users";
     else
-      return clazz.getSimpleName();
+    {
+      String mappedName = weborb.types.Types.getMappedClientClass( clazz.getName() );
+
+      if( mappedName != null )
+        return mappedName;
+      else
+        return clazz.getSimpleName();
+    }
   }
 }
