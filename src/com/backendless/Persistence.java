@@ -97,12 +97,12 @@ public final class Persistence
       if( serializedEntity.get( Footprint.OBJECT_ID_FIELD_NAME ) == null )
       {
         newEntity = (E) create( entity.getClass(), serializedEntity );
-        FootprintsManager.getInstance().Inner.duplicateFootprintForObject( entity, newEntity );
+        FootprintsManager.getInstance().Inner.duplicateFootprintForObject( serializedEntity, entity, newEntity );
       }
       else
       {
         newEntity = (E) update( entity.getClass(), serializedEntity );
-        FootprintsManager.getInstance().Inner.updateFootprintForObject( newEntity, entity );
+        FootprintsManager.getInstance().Inner.updateFootprintForObject( serializedEntity, newEntity, entity );
       }
 
       //put or update footprint's properties to user's properties, if exist
@@ -150,7 +150,7 @@ public final class Persistence
           public void handleResponse( E newEntity )
           {
             MessageWriter.setObjectSubstitutor( null );
-            FootprintsManager.getInstance().Inner.duplicateFootprintForObject( entity, newEntity );
+            FootprintsManager.getInstance().Inner.duplicateFootprintForObject( serializedEntity, entity, newEntity );
             Footprint footprint = FootprintsManager.getInstance().getEntityFootprint( newEntity );
             if( footprint != null )
               footprint.initObjectId( entity );
@@ -174,7 +174,7 @@ public final class Persistence
           @Override
           public void handleResponse( E newEntity )
           {
-            FootprintsManager.getInstance().Inner.updateFootprintForObject( newEntity, entity );
+            FootprintsManager.getInstance().Inner.updateFootprintForObject( serializedEntity, newEntity, entity );
             Footprint footprint = FootprintsManager.getInstance().getEntityFootprint( newEntity );
             if( footprint != null )
               footprint.initObjectId( entity );
@@ -257,7 +257,7 @@ public final class Persistence
       throw new IllegalArgumentException( ExceptionMessage.NULL_ID );
 
     Object result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), id } );
-    FootprintsManager.getInstance().Inner.removeFootprintForObject( entity );
+    FootprintsManager.getInstance().Inner.removeFootprintForObject( serializeToMap( entity ), entity );
 
     return ((Number) result).longValue();
   }
@@ -279,7 +279,7 @@ public final class Persistence
         @Override
         public void handleResponse( Object response )
         {
-          FootprintsManager.getInstance().Inner.removeFootprintForObject( entity );
+          FootprintsManager.getInstance().Inner.removeFootprintForObject( serializeToMap( entity ), entity );
 
           if( responder == null )
             return;
@@ -724,6 +724,23 @@ public final class Persistence
 
     HashMap result = new HashMap();
     weborb.util.ObjectInspector.getObjectProperties( entity.getClass(), entity, result, new ArrayList(), true, true );
+
+    //put ___class field, otherwise server will not be able to detect class
+    result.put( "___class", entity.getClass().getSimpleName() );
+
+    //recursively serialize object properties
+    Set<Map.Entry> entries = result.entrySet();
+    for(Map.Entry entry : entries)
+    {
+      //if instance of user object
+      if( entry.getValue() != null && !(entry.getValue() instanceof String) )
+      {
+        //serialize and put into result
+        Map serialized = serializeToMap( entry.getValue() );
+        Object key = entry.getKey();
+        result.put( key, serialized );
+      }
+    }
 
     return result;
   }
