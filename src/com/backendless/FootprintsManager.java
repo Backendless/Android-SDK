@@ -71,13 +71,21 @@ public class FootprintsManager
 
   public class Inner
   {
+    /**
+     * Puts missing properties like objectId, ___meta etc. into entity map.
+     *
+     * @param entity entity object
+     * @param entityMap entity map
+     */
     void putMissingPropsToEntityMap( Object entity, Map entityMap )
     {
+      //to avoid endless recursion
       if( marked.contains( entity ) )
         return;
       else
         marked.add( entity );
 
+      //put objectId if exists in cache
       if( !entityMap.containsKey( Footprint.OBJECT_ID_FIELD_NAME ) )
       {
         String objectId = getObjectId( entity );
@@ -86,6 +94,7 @@ public class FootprintsManager
           entityMap.put( Footprint.OBJECT_ID_FIELD_NAME, objectId );
       }
 
+      //put __meta if exists in cache
       if( !entityMap.containsKey( Footprint.META_FIELD_NAME ) )
       {
         String meta = getMeta( entity );
@@ -98,11 +107,15 @@ public class FootprintsManager
       {
         Object value = entityMap.get( key );
 
+        //recursively restore inner objects' properties
         if( value instanceof Map )
         {
           try
           {
+            //get inner object
+            //looks for getter method and invokes it
             Object entityField = new PropertyDescriptor( (String) key, entity.getClass() ).getReadMethod().invoke( entity );
+
             putMissingPropsToEntityMap( entityField, (Map) value );
           }
           catch( IllegalAccessException e )
@@ -138,13 +151,23 @@ public class FootprintsManager
       marked.remove( entity );
     }
 
+    /**
+     * When the object is created on server, client gets new instance of it. In order to remember the system fields
+     * (objectId, __meta etc.) it is required to duplicate the old instance in cache.
+     *
+     * @param serialized entity's map used to iterate through fields and duplicate footprints recursively
+     * @param newEntity entity from server
+     * @param oldEntity old entity (the one on which a method was called)
+     */
     void duplicateFootprintForObject( Map serialized, Object newEntity, Object oldEntity )
     {
+      //to avoid endless recursion
       if( marked.contains( newEntity ) )
         return;
       else
         marked.add( newEntity );
 
+      //iterate through fields in the object and duplicate entities recursively
       Set<Map.Entry> entries = serialized.entrySet();
       for( Map.Entry entry : entries )
       {
@@ -152,6 +175,7 @@ public class FootprintsManager
         {
           try
           {
+            //find read method for field and get object value
             Object newEntityField = new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
             Object oldEntityField = new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
 
@@ -180,13 +204,22 @@ public class FootprintsManager
       marked.remove( newEntity );
     }
 
+    /**
+     * Updates footprint for entity.
+     *
+     * @param serialized entity's map used to iterate through fields and update footprints recursively
+     * @param newEntity entity from server
+     * @param oldEntity entity on which a method was called (.save(), .create() etc.)
+     */
     void updateFootprintForObject( Map serialized, Object newEntity, Object oldEntity )
     {
+      //to avoid endless recursion
       if( marked.contains( newEntity ) )
         return;
       else
         marked.add( newEntity );
 
+      //update footprints recursively
       Set<Map.Entry> entries = serialized.entrySet();
       for( Map.Entry entry : entries )
       {
@@ -194,6 +227,7 @@ public class FootprintsManager
         {
           try
           {
+            //find getter method and call it to get object property
             Object newEntityField = new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
             Object oldEntityField = new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
 
@@ -222,13 +256,21 @@ public class FootprintsManager
       marked.remove( newEntity );
     }
 
+    /**
+     * Removes entity's footprint from cache.
+     *
+     * @param serialized entity's map used to iterate through fields and remove footprints recursively
+     * @param entity entity to be removed
+     */
     void removeFootprintForObject( Map serialized, Object entity )
     {
+      //to avoid endless recursion
       if( marked.contains( entity ) )
         return;
       else
         marked.add( entity );
 
+      //iterate through object's properties and remove footprints recursively
       Set<Map.Entry> entries = serialized.entrySet();
       for( Map.Entry entry : entries )
       {
@@ -236,9 +278,10 @@ public class FootprintsManager
         {
           try
           {
+            //find getter method and call it to retrieve object property
             Object entityField = new PropertyDescriptor( (String) entry.getKey(), entity.getClass() ).getReadMethod().invoke( entity );
 
-            removeFootprintForObject( (Map) entry.getValue(), entity );
+            removeFootprintForObject( (Map) entry.getValue(), entityField );
           }
           catch( IllegalAccessException e )
           {
@@ -271,6 +314,7 @@ public class FootprintsManager
      */
     public void putEntityFootprintToCache( Object instance, Object entity )
     {
+      //to avoid endless recursion
       if( marked.contains( entity ) )
         return;
       else

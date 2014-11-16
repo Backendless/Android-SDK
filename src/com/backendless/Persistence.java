@@ -725,13 +725,17 @@ public final class Persistence
     HashMap result = new HashMap();
     weborb.util.ObjectInspector.getObjectProperties( entity.getClass(), entity, result, new ArrayList(), true, true );
 
+    //put ___class field, otherwise server will not be able to detect class
     result.put( "___class", entity.getClass().getSimpleName() );
 
+    //recursively serialize object properties
     Set<Map.Entry> entries = result.entrySet();
     for(Map.Entry entry : entries)
     {
+      //if instance of user object
       if( entry.getValue() != null && !(entry.getValue() instanceof String) )
       {
+        //serialize and put into result
         Map serialized = serializeToMap( entry.getValue() );
         Object key = entry.getKey();
         result.put( key, serialized );
