@@ -116,7 +116,6 @@ public final class Persistence
     {
       MessageWriter.setObjectSubstitutor( null );
     }
-
   }
 
   public <E> void save( final E entity, final AsyncCallback<E> responder )
@@ -717,30 +716,69 @@ public final class Persistence
     }
   }
 
+  static Set<Object> marked = new HashSet<Object>();
+
   static <T> Map serializeToMap( T entity )
   {
-    if( entity.getClass().equals( backendlessUserClass ) )
-      return ((BackendlessUser) entity).getProperties();
+    //avoid endless recursion
+    marked.add( entity );
 
-    HashMap result = new HashMap();
-    weborb.util.ObjectInspector.getObjectProperties( entity.getClass(), entity, result, new ArrayList(), true, true );
+    Map result = new HashMap();
+
+    if( entity.getClass().equals( backendlessUserClass ) )
+    {
+      result = ((BackendlessUser) entity).getProperties();
+    }
+    else
+    {
+      weborb.util.ObjectInspector.getObjectProperties( entity.getClass(), entity, (HashMap) result, new ArrayList(), true, true );
+    }
 
     //put ___class field, otherwise server will not be able to detect class
-    result.put( "___class", entity.getClass().getSimpleName() );
+    result.put( "___class", entity.getClass().getCanonicalName() );
 
     //recursively serialize object properties
     Set<Map.Entry> entries = result.entrySet();
-    for(Map.Entry entry : entries)
+    for( Map.Entry entry : entries )
     {
-      //if instance of user object
-      if( entry.getValue() != null && !(entry.getValue() instanceof String) )
+      //check if entry is collection
+      if( entry.getValue() instanceof Collection )
       {
-        //serialize and put into result
-        Map serialized = serializeToMap( entry.getValue() );
+        Collection collection = (Collection) entry.getValue();
+        Collection newCollection = new ArrayList();
+
+        for( Object item : collection )
+        {
+          //if instance of user object
+          //check if class if user-defined
+          // http://stackoverflow.com/questions/8703678/how-can-i-check-if-a-class-belongs-to-java-jdk
+          if( item != null && item.getClass().getClassLoader() != "".getClass().getClassLoader() && !marked.contains( item ) )
+          {
+            //serialize and put into result
+            Map serialized = serializeToMap( item );
+            newCollection.add( serialized );
+          }
+        }
+
         Object key = entry.getKey();
-        result.put( key, serialized );
+        result.put( key, newCollection );
+      }
+      else
+      {
+        //if instance of user object
+        //check if class if user-defined
+        // http://stackoverflow.com/questions/8703678/how-can-i-check-if-a-class-belongs-to-java-jdk
+        if( entry.getValue() != null && entry.getValue().getClass().getClassLoader() != "".getClass().getClassLoader() && !marked.contains( entry.getValue() ))
+        {
+          //serialize and put into result
+          Map serialized = serializeToMap( entry.getValue() );
+          Object key = entry.getKey();
+          result.put( key, serialized );
+        }
       }
     }
+
+    marked.remove( entity );
 
     return result;
   }

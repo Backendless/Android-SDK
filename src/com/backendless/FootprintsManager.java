@@ -74,7 +74,7 @@ public class FootprintsManager
     /**
      * Puts missing properties like objectId, ___meta etc. into entity map.
      *
-     * @param entity entity object
+     * @param entity    entity object
      * @param entityMap entity map
      */
     void putMissingPropsToEntityMap( Object entity, Map entityMap )
@@ -103,14 +103,14 @@ public class FootprintsManager
           entityMap.put( Footprint.META_FIELD_NAME, meta );
       }
 
-      for( Object key : entityMap.keySet() )
+      try
       {
-        Object value = entityMap.get( key );
-
-        //recursively restore inner objects' properties
-        if( value instanceof Map )
+        for( Object key : entityMap.keySet() )
         {
-          try
+          Object value = entityMap.get( key );
+
+          //recursively restore inner objects' properties
+          if( value instanceof Map )
           {
             //get inner object
             //looks for getter method and invokes it
@@ -118,37 +118,41 @@ public class FootprintsManager
 
             putMissingPropsToEntityMap( entityField, (Map) value );
           }
-          catch( IllegalAccessException e )
-          {
-            throw new BackendlessException( e );
-          }
-          catch( InvocationTargetException e )
-          {
-            throw new BackendlessException( e );
-          }
-          catch( IntrospectionException e )
-          {
-            throw new BackendlessException( e );
-          }
-        }
 
-        if( value instanceof Collection )
-        {
-          Collection coll = (Collection) value;
-          ArrayList newCollection = new ArrayList();
-          entityMap.put( key, newCollection );
-
-          for( Object relatedEntity : coll )
+          if( value instanceof Collection )
           {
-            Map map = Persistence.serializeToMap( relatedEntity );
-            putMissingPropsToEntityMap( relatedEntity, map );
-            map.put( "___class", relatedEntity.getClass().getCanonicalName() );
-            newCollection.add( map );
+            //get inner object collection
+            //looks for getter method and invokes it
+            Collection entityCollection = (Collection) new PropertyDescriptor( (String) key, entity.getClass() ).getReadMethod().invoke( entity );
+            //retrieve map collection
+            Collection mapCollection = (Collection) value;
+
+            //serialize every object in collection and put its missing properties
+            Iterator entityCollectionIterator = entityCollection.iterator();
+            Iterator mapCollectionIterator = mapCollection.iterator();
+            while( entityCollectionIterator.hasNext() )
+            {
+              putMissingPropsToEntityMap( entityCollectionIterator.next(), (Map) mapCollectionIterator.next() );
+            }
           }
         }
       }
-
-      marked.remove( entity );
+      catch( InvocationTargetException e )
+      {
+        throw new BackendlessException( e );
+      }
+      catch( IntrospectionException e )
+      {
+        throw new BackendlessException( e );
+      }
+      catch( IllegalAccessException e )
+      {
+        throw new BackendlessException( e );
+      }
+      finally
+      {
+        marked.remove( entity );
+      }
     }
 
     /**
@@ -156,8 +160,8 @@ public class FootprintsManager
      * (objectId, __meta etc.) it is required to duplicate the old instance in cache.
      *
      * @param serialized entity's map used to iterate through fields and duplicate footprints recursively
-     * @param newEntity entity from server
-     * @param oldEntity old entity (the one on which a method was called)
+     * @param newEntity  entity from server
+     * @param oldEntity  old entity (the one on which a method was called)
      */
     void duplicateFootprintForObject( Map serialized, Object newEntity, Object oldEntity )
     {
@@ -167,13 +171,13 @@ public class FootprintsManager
       else
         marked.add( newEntity );
 
-      //iterate through fields in the object and duplicate entities recursively
-      Set<Map.Entry> entries = serialized.entrySet();
-      for( Map.Entry entry : entries )
+      try
       {
-        if( entry.getValue() instanceof Map )
+        //iterate through fields in the object and duplicate entities recursively
+        Set<Map.Entry> entries = serialized.entrySet();
+        for( Map.Entry entry : entries )
         {
-          try
+          if( entry.getValue() instanceof Map )
           {
             //find read method for field and get object value
             Object newEntityField = new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
@@ -181,35 +185,53 @@ public class FootprintsManager
 
             duplicateFootprintForObject( (Map) entry.getValue(), newEntityField, oldEntityField );
           }
-          catch( IllegalAccessException e )
+          else if( entry.getValue() instanceof Collection )
           {
-            throw new BackendlessException( e );
-          }
-          catch( InvocationTargetException e )
-          {
-            throw new BackendlessException( e );
-          }
-          catch( IntrospectionException e )
-          {
-            throw new BackendlessException( e );
+            Collection newObjectCollection = (Collection) new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
+            Collection oldObjectCollection = (Collection) new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
+            Collection mapCollection = (Collection) entry.getValue();
+
+            Iterator newObjectCollectionIterator = newObjectCollection.iterator();
+            Iterator oldObjectCollectionIterator = oldObjectCollection.iterator();
+            Iterator mapCollectionIterator = mapCollection.iterator();
+            while( oldObjectCollectionIterator.hasNext() )
+            {
+              duplicateFootprintForObject( (Map) mapCollectionIterator.next(), newObjectCollectionIterator.next(), oldObjectCollectionIterator.next() );
+            }
           }
         }
+
+        Footprint footprint = persistenceCache.get( oldEntity );
+
+        if( footprint != null )
+        {
+          persistenceCache.put( newEntity, footprint );
+        }
       }
-
-      Footprint footprint = persistenceCache.get( oldEntity );
-
-      if( footprint != null )
-        persistenceCache.put( newEntity, footprint );
-
-      marked.remove( newEntity );
+      catch( IllegalAccessException e )
+      {
+        throw new BackendlessException( e );
+      }
+      catch( InvocationTargetException e )
+      {
+        throw new BackendlessException( e );
+      }
+      catch( IntrospectionException e )
+      {
+        throw new BackendlessException( e );
+      }
+      finally
+      {
+        marked.remove( newEntity );
+      }
     }
 
     /**
      * Updates footprint for entity.
      *
      * @param serialized entity's map used to iterate through fields and update footprints recursively
-     * @param newEntity entity from server
-     * @param oldEntity entity on which a method was called (.save(), .create() etc.)
+     * @param newEntity  entity from server
+     * @param oldEntity  entity on which a method was called (.save(), .create() etc.)
      */
     void updateFootprintForObject( Map serialized, Object newEntity, Object oldEntity )
     {
@@ -219,13 +241,13 @@ public class FootprintsManager
       else
         marked.add( newEntity );
 
-      //update footprints recursively
-      Set<Map.Entry> entries = serialized.entrySet();
-      for( Map.Entry entry : entries )
+      try
       {
-        if( entry.getValue() instanceof Map )
+        //update footprints recursively
+        Set<Map.Entry> entries = serialized.entrySet();
+        for( Map.Entry entry : entries )
         {
-          try
+          if( entry.getValue() instanceof Map )
           {
             //find getter method and call it to get object property
             Object newEntityField = new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
@@ -233,34 +255,50 @@ public class FootprintsManager
 
             updateFootprintForObject( (Map) entry.getValue(), newEntityField, oldEntityField );
           }
-          catch( IllegalAccessException e )
+          else if( entry.getValue() instanceof Collection )
           {
-            throw new BackendlessException( e );
-          }
-          catch( InvocationTargetException e )
-          {
-            throw new BackendlessException( e );
-          }
-          catch( IntrospectionException e )
-          {
-            throw new BackendlessException( e );
+            Collection newObjectCollection = (Collection) new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
+            Collection oldObjectCollection = (Collection) new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
+            Collection mapCollection = (Collection) entry.getValue();
+
+            Iterator mapCollectionIterator = mapCollection.iterator();
+            Iterator oldObjectCollectionIterator = oldObjectCollection.iterator();
+            Iterator newObjectCollectionIterator = newObjectCollection.iterator();
+            while( oldObjectCollectionIterator.hasNext() )
+            {
+              updateFootprintForObject( (Map) mapCollectionIterator.next(), newObjectCollectionIterator.next(), oldObjectCollectionIterator.next() );
+            }
           }
         }
+
+        Footprint footprint = persistenceCache.get( newEntity );
+
+        persistenceCache.put( oldEntity, footprint );
+        removeFootprintForObject( serialized, newEntity );
       }
-
-      Footprint footprint = persistenceCache.get( newEntity );
-
-      persistenceCache.put( oldEntity, footprint );
-      removeFootprintForObject( serialized, newEntity );
-
-      marked.remove( newEntity );
+      catch( IllegalAccessException e )
+      {
+        throw new BackendlessException( e );
+      }
+      catch( InvocationTargetException e )
+      {
+        throw new BackendlessException( e );
+      }
+      catch( IntrospectionException e )
+      {
+        throw new BackendlessException( e );
+      }
+      finally
+      {
+        marked.remove( newEntity );
+      }
     }
 
     /**
      * Removes entity's footprint from cache.
      *
      * @param serialized entity's map used to iterate through fields and remove footprints recursively
-     * @param entity entity to be removed
+     * @param entity     entity to be removed
      */
     void removeFootprintForObject( Map serialized, Object entity )
     {
@@ -270,37 +308,50 @@ public class FootprintsManager
       else
         marked.add( entity );
 
-      //iterate through object's properties and remove footprints recursively
-      Set<Map.Entry> entries = serialized.entrySet();
-      for( Map.Entry entry : entries )
+      try
       {
-        if( entry.getValue() instanceof Map )
+        //iterate through object's properties and remove footprints recursively
+        Set<Map.Entry> entries = serialized.entrySet();
+        for( Map.Entry entry : entries )
         {
-          try
+          if( entry.getValue() instanceof Map )
           {
             //find getter method and call it to retrieve object property
             Object entityField = new PropertyDescriptor( (String) entry.getKey(), entity.getClass() ).getReadMethod().invoke( entity );
-
             removeFootprintForObject( (Map) entry.getValue(), entityField );
           }
-          catch( IllegalAccessException e )
+          else if( entry.getValue() instanceof Collection )
           {
-            throw new BackendlessException( e );
-          }
-          catch( InvocationTargetException e )
-          {
-            throw new BackendlessException( e );
-          }
-          catch( IntrospectionException e )
-          {
-            throw new BackendlessException( e );
+            Collection objectCollection = (Collection) new PropertyDescriptor( (String) entry.getKey(), entity.getClass() ).getReadMethod().invoke( entity );
+            Collection mapCollection = (Collection) entry.getValue();
+
+            Iterator objectCollectionIterator = objectCollection.iterator();
+            Iterator mapCollectionIterator = mapCollection.iterator();
+            while( objectCollectionIterator.hasNext() )
+            {
+              removeFootprintForObject( (Map) mapCollectionIterator.next(), objectCollectionIterator.next() );
+            }
           }
         }
+
+        persistenceCache.remove( entity );
       }
-
-      persistenceCache.remove( entity );
-
-      marked.remove( entity );
+      catch( IllegalAccessException e )
+      {
+        throw new BackendlessException( e );
+      }
+      catch( InvocationTargetException e )
+      {
+        throw new BackendlessException( e );
+      }
+      catch( IntrospectionException e )
+      {
+        throw new BackendlessException( e );
+      }
+      finally
+      {
+        marked.remove( entity );
+      }
     }
 
     /**
@@ -310,7 +361,7 @@ public class FootprintsManager
      * <code>objectId</code>, <code>created</code>, <code>updated</code>, <code>meta</code>.
      *
      * @param instance saved object received from server
-     * @param entity IAdaptingType
+     * @param entity   IAdaptingType
      */
     public void putEntityFootprintToCache( Object instance, Object entity )
     {
