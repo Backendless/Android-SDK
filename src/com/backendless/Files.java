@@ -259,12 +259,12 @@ public final class Files
     }
   }
 
-  public void saveFile( String filePathName, byte[] fileContent )
+  public String saveFile( String filePathName, byte[] fileContent )
   {
-    saveFile( filePathName, fileContent, false );
+    return saveFile( filePathName, fileContent, false );
   }
 
-  public void saveFile( String filePathName, byte[] fileContent, boolean overwrite )
+  public String saveFile( String filePathName, byte[] fileContent, boolean overwrite )
   {
     int slashIndex = filePathName.lastIndexOf( "/" );
     String fileName = filePathName;
@@ -276,17 +276,17 @@ public final class Files
       path = filePathName.substring( 0, slashIndex + 1 );
     }
 
-    saveFile( path, fileName, fileContent, overwrite );
+    return saveFile( path, fileName, fileContent, overwrite );
   }
 
-  public void saveFile( String path, String fileName, byte[] fileContent )
+  public String saveFile( String path, String fileName, byte[] fileContent )
   {
-    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, fileName, fileContent } );
+    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, fileName, fileContent } );
   }
 
-  public void saveFile( String path, String fileName, byte[] fileContent, boolean overwrite )
+  public String saveFile( String path, String fileName, byte[] fileContent, boolean overwrite )
   {
-    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, fileName, fileContent, overwrite } );
+    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, fileName, fileContent, overwrite } );
   }
 
   public void saveFile( String filePathName, byte[] fileContent, AsyncCallback<String> responder )
