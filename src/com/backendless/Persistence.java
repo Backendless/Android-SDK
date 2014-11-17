@@ -97,12 +97,12 @@ public final class Persistence
       if( serializedEntity.get( Footprint.OBJECT_ID_FIELD_NAME ) == null )
       {
         newEntity = (E) create( entity.getClass(), serializedEntity );
-        FootprintsManager.getInstance().Inner.duplicateFootprintForObject( entity, newEntity );
+        FootprintsManager.getInstance().Inner.duplicateFootprintForObject( serializedEntity, entity, newEntity );
       }
       else
       {
         newEntity = (E) update( entity.getClass(), serializedEntity );
-        FootprintsManager.getInstance().Inner.updateFootprintForObject( newEntity, entity );
+        FootprintsManager.getInstance().Inner.updateFootprintForObject( serializedEntity, newEntity, entity );
       }
 
       //put or update footprint's properties to user's properties, if exist
@@ -116,7 +116,6 @@ public final class Persistence
     {
       MessageWriter.setObjectSubstitutor( null );
     }
-
   }
 
   public <E> void save( final E entity, final AsyncCallback<E> responder )
@@ -150,7 +149,7 @@ public final class Persistence
           public void handleResponse( E newEntity )
           {
             MessageWriter.setObjectSubstitutor( null );
-            FootprintsManager.getInstance().Inner.duplicateFootprintForObject( entity, newEntity );
+            FootprintsManager.getInstance().Inner.duplicateFootprintForObject( serializedEntity, entity, newEntity );
             Footprint footprint = FootprintsManager.getInstance().getEntityFootprint( newEntity );
             if( footprint != null )
               footprint.initObjectId( entity );
@@ -174,7 +173,7 @@ public final class Persistence
           @Override
           public void handleResponse( E newEntity )
           {
-            FootprintsManager.getInstance().Inner.updateFootprintForObject( newEntity, entity );
+            FootprintsManager.getInstance().Inner.updateFootprintForObject( serializedEntity, newEntity, entity );
             Footprint footprint = FootprintsManager.getInstance().getEntityFootprint( newEntity );
             if( footprint != null )
               footprint.initObjectId( entity );
@@ -257,7 +256,7 @@ public final class Persistence
       throw new IllegalArgumentException( ExceptionMessage.NULL_ID );
 
     Object result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), id } );
-    FootprintsManager.getInstance().Inner.removeFootprintForObject( entity );
+    FootprintsManager.getInstance().Inner.removeFootprintForObject( serializeToMap( entity ), entity );
 
     return ((Number) result).longValue();
   }
@@ -279,7 +278,7 @@ public final class Persistence
         @Override
         public void handleResponse( Object response )
         {
-          FootprintsManager.getInstance().Inner.removeFootprintForObject( entity );
+          FootprintsManager.getInstance().Inner.removeFootprintForObject( serializeToMap( entity ), entity );
 
           if( responder == null )
             return;
@@ -717,13 +716,69 @@ public final class Persistence
     }
   }
 
+  static Set<Object> marked = new HashSet<Object>();
+
   static <T> Map serializeToMap( T entity )
   {
-    if( entity.getClass().equals( backendlessUserClass ) )
-      return ((BackendlessUser) entity).getProperties();
+    //avoid endless recursion
+    marked.add( entity );
 
-    HashMap result = new HashMap();
-    weborb.util.ObjectInspector.getObjectProperties( entity.getClass(), entity, result, new ArrayList(), true, true );
+    Map result = new HashMap();
+
+    if( entity.getClass().equals( backendlessUserClass ) )
+    {
+      result = ((BackendlessUser) entity).getProperties();
+    }
+    else
+    {
+      weborb.util.ObjectInspector.getObjectProperties( entity.getClass(), entity, (HashMap) result, new ArrayList(), true, true );
+    }
+
+    //put ___class field, otherwise server will not be able to detect class
+    result.put( "___class", entity.getClass().getCanonicalName() );
+
+    //recursively serialize object properties
+    Set<Map.Entry> entries = result.entrySet();
+    for( Map.Entry entry : entries )
+    {
+      //check if entry is collection
+      if( entry.getValue() instanceof Collection )
+      {
+        Collection collection = (Collection) entry.getValue();
+        Collection newCollection = new ArrayList();
+
+        for( Object item : collection )
+        {
+          //if instance of user object
+          //check if class if user-defined
+          // http://stackoverflow.com/questions/8703678/how-can-i-check-if-a-class-belongs-to-java-jdk
+          if( item != null && item.getClass().getClassLoader() != "".getClass().getClassLoader() && !marked.contains( item ) )
+          {
+            //serialize and put into result
+            Map serialized = serializeToMap( item );
+            newCollection.add( serialized );
+          }
+        }
+
+        Object key = entry.getKey();
+        result.put( key, newCollection );
+      }
+      else
+      {
+        //if instance of user object
+        //check if class if user-defined
+        // http://stackoverflow.com/questions/8703678/how-can-i-check-if-a-class-belongs-to-java-jdk
+        if( entry.getValue() != null && entry.getValue().getClass().getClassLoader() != "".getClass().getClassLoader() && !marked.contains( entry.getValue() ))
+        {
+          //serialize and put into result
+          Map serialized = serializeToMap( entry.getValue() );
+          Object key = entry.getKey();
+          result.put( key, serialized );
+        }
+      }
+    }
+
+    marked.remove( entity );
 
     return result;
   }
