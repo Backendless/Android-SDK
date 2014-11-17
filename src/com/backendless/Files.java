@@ -289,7 +289,7 @@ public final class Files
     Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, fileName, fileContent, overwrite } );
   }
 
-  public void saveFile( String filePathName, byte[] fileContent, AsyncCallback<Void> responder )
+  public void saveFile( String filePathName, byte[] fileContent, AsyncCallback<String> responder )
   {
     String fileName = filePathName.substring( filePathName.lastIndexOf( "/" ) );
     String path = filePathName.substring( 0, filePathName.lastIndexOf( "/" ) );
@@ -297,7 +297,7 @@ public final class Files
     saveFile( path, fileName, fileContent, responder );
   }
 
-  public void saveFile( String filePathName, byte[] fileContent, boolean overwrite, AsyncCallback<Void> responder )
+  public void saveFile( String filePathName, byte[] fileContent, boolean overwrite, AsyncCallback<String> responder )
   {
     String fileName = filePathName.substring( filePathName.lastIndexOf( "/" ) );
     String path = filePathName.substring( 0, filePathName.lastIndexOf( "/" ) );
@@ -305,12 +305,12 @@ public final class Files
     saveFile( path, fileName, fileContent, overwrite, responder );
   }
 
-  public void saveFile( String path, String fileName, byte[] fileContent, AsyncCallback<Void> responder )
+  public void saveFile( String path, String fileName, byte[] fileContent, AsyncCallback<String> responder )
   {
     Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, fileName, fileContent }, responder );
   }
 
-  public void saveFile( String path, String fileName, byte[] fileContent, boolean overwrite, AsyncCallback<Void> responder )
+  public void saveFile( String path, String fileName, byte[] fileContent, boolean overwrite, AsyncCallback<String> responder )
   {
     Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, fileName, fileContent, overwrite }, responder );
   }
