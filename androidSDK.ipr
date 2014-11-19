@@ -295,7 +295,6 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$USER_HOME$/tests/android/junit/src/test/NewTest.iml" filepath="$USER_HOME$/tests/android/junit/src/test/NewTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/androidSDK.iml" filepath="$PROJECT_DIR$/androidSDK.iml" />
     </modules>
   </component>
@@ -335,9 +334,7 @@
         <root url="file://$PROJECT_DIR$/libs" />
       </CLASSES>
       <JAVADOC />
-      <SOURCES>
-        <root url="file://$PROJECT_DIR$/../../sources.backendless.com/src/client/sdk/android/mediaLib/src/main/java" />
-      </SOURCES>
+      <SOURCES />
       <jarDirectory url="file://$PROJECT_DIR$/libs" recursive="false" />
     </library>
   </component>

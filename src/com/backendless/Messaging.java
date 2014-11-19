@@ -445,7 +445,7 @@ public final class Messaging
     return cancel.getStatus() == PublishStatusEnum.CANCELLED;
   }
 
-  public void cancel( String messageId, AsyncCallback<Boolean> responder )
+  public void cancel( String messageId, AsyncCallback<MessageStatus> responder )
   {
     try
     {
