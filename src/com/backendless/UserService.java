@@ -436,7 +436,7 @@ public final class UserService
         @Override
         public void handleFault( BackendlessFault fault )
         {
-          if( !isLogoutFaultAllowed( fault.getCode() ) )
+          if( isLogoutFaultAllowed( fault.getCode() ) )
           {
             handleResponse( null );
             return;
