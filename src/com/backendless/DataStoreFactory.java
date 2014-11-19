@@ -199,6 +199,30 @@ class DataStoreFactory
       }
 
       @Override
+      public E findById( E entity )
+      {
+        return findById( entity, emptyRelations );
+      }
+
+      @Override
+      public E findById( E entity, List<String> relations )
+      {
+        return findById( entity, relations, 0 );
+      }
+
+      @Override
+      public E findById( E entity, int relationsDepth )
+      {
+        return findById( entity, emptyRelations, relationsDepth );
+      }
+
+      @Override
+      public E findById( E entity, List<String> relations, int relationsDepth )
+      {
+        return Backendless.Data.findById( entity, relations, relationsDepth );
+      }
+
+      @Override
       public void findById( String objectId, AsyncCallback<E> responder )
       {
         findById( objectId, emptyRelations, responder );
@@ -220,6 +244,30 @@ class DataStoreFactory
       public void findById( String objectId, List<String> relations, int relationsDepth, AsyncCallback<E> responder )
       {
         Backendless.Persistence.findById( entityClass, objectId, relations, relationsDepth, responder );
+      }
+
+      @Override
+      public void findById( E entity, AsyncCallback<E> responder )
+      {
+        findById( entity, emptyRelations, responder );
+      }
+
+      @Override
+      public void findById( E entity, List<String> relations, AsyncCallback<E> responder )
+      {
+        findById( entity, relations, 0, responder );
+      }
+
+      @Override
+      public void findById( E entity, int relationsDepth, AsyncCallback<E> responder )
+      {
+        findById( entity, emptyRelations, relationsDepth, responder );
+      }
+
+      @Override
+      public void findById( E entity, List<String> relations, int relationsDepth, AsyncCallback<E> responder )
+      {
+        Backendless.Data.findById( entity, relations, relationsDepth, responder );
       }
 
       @Override
