@@ -69,7 +69,7 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
   }
 
   public BackendlessGeoQuery( double latitude, double longitude, double radius, Units units, List<String> categories,
-                              Map<String, String> metadata )
+                              Map<String, Object> metadata )
   {
     this.latitude = latitude;
     this.longitude = longitude;
@@ -106,7 +106,7 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     this.categories = categories;
   }
 
-  public BackendlessGeoQuery( Map<String, String> metadata )
+  public BackendlessGeoQuery( Map<String, Object> metadata )
   {
     this.setMetadata( metadata );
 
@@ -114,9 +114,9 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
       includeMeta = true;
   }
 
-  public BackendlessGeoQuery( String metaKey, String metaValue )
+  public BackendlessGeoQuery( String metaKey, Object metaValue )
   {
-    HashMap<String, String> metadata = new HashMap<String, String>();
+    HashMap<String, Object> metadata = new HashMap<String, Object>();
     metadata.put( metaKey, metaValue );
 
     this.setMetadata( metadata );
@@ -152,15 +152,15 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     categories.add( category );
   }
 
-  public void putMetadata( String metadataKey, String metadataValue )
+  public void putMetadata( String metadataKey, Object metadataValue )
   {
     if( metadataKey == null || metadataKey.equals( "" ) || metadataValue == null )
       return;
 
-    if( objectMetadata == null )
-      objectMetadata = new HashMap<String, Object>();
+    if( metadata == null )
+      metadata = new HashMap<String, Object>();
 
-    objectMetadata.put( metadataKey, metadataValue );
+    metadata.put( metadataKey, metadataValue );
   }
 
   public boolean isIncludeMeta()

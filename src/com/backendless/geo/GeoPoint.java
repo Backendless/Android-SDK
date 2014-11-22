@@ -47,7 +47,7 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     this.longitude = (double) longitudeE6 / multiplier;
   }
 
-  public GeoPoint( double latitude, double longitude, List<String> categories, Map<String, String> metadata )
+  public GeoPoint( double latitude, double longitude, List<String> categories, Map<String, Object> metadata )
   {
     this.latitude = latitude;
     this.longitude = longitude;
@@ -55,7 +55,7 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     this.setMetadata( metadata );
   }
 
-  public GeoPoint( int latitudeE6, int longitudeE6, List<String> categories, Map<String, String> metadata )
+  public GeoPoint( int latitudeE6, int longitudeE6, List<String> categories, Map<String, Object> metadata )
   {
     this.latitude = (double) latitudeE6 / multiplier;
     this.longitude = (double) longitudeE6 / multiplier;
@@ -99,12 +99,12 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     categories.add( category );
   }
 
-  public String getMetadata( String key )
+  public Object getMetadata( String key )
   {
-    if( objectMetadata == null )
+    if( metadata == null )
       return null;
 
-    return (String) objectMetadata.get( key );
+    return metadata.get( key );
   }
 
   public void putMetadata( String key, String value )
@@ -112,15 +112,15 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     addMetadata( key, value );
   }
 
-  public void putAllMetadata( Map<String, String> metadata )
+  public void putAllMetadata( Map<String, Object> metadata )
   {
     super.setMetadata( metadata );
   }
 
   public void clearMetadata()
   {
-    if( this.objectMetadata != null )
-      objectMetadata.clear();
+    if( this.metadata != null )
+      metadata.clear();
   }
 
   public void setCategories( List<String> categories )
@@ -168,7 +168,7 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     {
       return false;
     }
-    if( objectMetadata != null ? !objectMetadata.equals( geoPoint.objectMetadata ) : geoPoint.objectMetadata != null )
+    if( metadata != null ? !metadata.equals( geoPoint.metadata ) : geoPoint.metadata != null )
     {
       return false;
     }
@@ -191,7 +191,7 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     temp = Double.doubleToLongBits( longitude );
     result = 31 * result + (int) (temp ^ (temp >>> 32));
     result = 31 * result + (categories != null ? categories.hashCode() : 0);
-    result = 31 * result + (objectMetadata != null ? objectMetadata.hashCode() : 0);
+    result = 31 * result + (metadata != null ? metadata.hashCode() : 0);
     result = 31 * result + (distance != null ? distance.hashCode() : 0);
     return result;
   }
@@ -204,7 +204,7 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     sb.append( ", latitude=" ).append( latitude );
     sb.append( ", longitude=" ).append( longitude );
     sb.append( ", categories=" ).append( categories );
-    sb.append( ", metadata=" ).append( objectMetadata );
+    sb.append( ", metadata=" ).append( metadata );
     sb.append( ", distance=" ).append( distance );
     sb.append( '}' );
     return sb.toString();
