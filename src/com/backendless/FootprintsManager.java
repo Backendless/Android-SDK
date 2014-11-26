@@ -4,9 +4,6 @@ import com.backendless.exceptions.BackendlessException;
 import weborb.reader.AnonymousObject;
 import weborb.reader.ArrayType;
 import weborb.reader.NamedObject;
-
-import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -114,7 +111,7 @@ public class FootprintsManager
           {
             //get inner object
             //looks for getter method and invokes it
-            Object entityField = new PropertyDescriptor( (String) key, entity.getClass() ).getReadMethod().invoke( entity );
+            Object entityField = entity.getClass().getField( (String) key ).get( entity );// new PropertyDescriptor( (String) key, entity.getClass() ).getReadMethod().invoke( entity );
 
             putMissingPropsToEntityMap( entityField, (Map) value );
           }
@@ -123,7 +120,7 @@ public class FootprintsManager
           {
             //get inner object collection
             //looks for getter method and invokes it
-            Collection entityCollection = (Collection) new PropertyDescriptor( (String) key, entity.getClass() ).getReadMethod().invoke( entity );
+            Collection entityCollection = (Collection)entity.getClass().getField( (String) key ).get( entity );// new PropertyDescriptor( (String) key, entity.getClass() ).getReadMethod().invoke( entity );
             //retrieve map collection
             Collection mapCollection = (Collection) value;
 
@@ -137,11 +134,7 @@ public class FootprintsManager
           }
         }
       }
-      catch( InvocationTargetException e )
-      {
-        throw new BackendlessException( e );
-      }
-      catch( IntrospectionException e )
+      catch( NoSuchFieldException e )
       {
         throw new BackendlessException( e );
       }
@@ -180,15 +173,15 @@ public class FootprintsManager
           if( entry.getValue() instanceof Map )
           {
             //find read method for field and get object value
-            Object newEntityField = new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
-            Object oldEntityField = new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
+            Object newEntityField = newEntity.getClass().getField( (String) entry.getKey() ).get( newEntity );// new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
+            Object oldEntityField = oldEntity.getClass().getField( (String) entry.getKey() ).get( oldEntity );//new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
 
             duplicateFootprintForObject( (Map) entry.getValue(), newEntityField, oldEntityField );
           }
           else if( entry.getValue() instanceof Collection )
           {
-            Collection newObjectCollection = (Collection) new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
-            Collection oldObjectCollection = (Collection) new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
+            Collection newObjectCollection = (Collection)newEntity.getClass().getField( (String) entry.getKey() ).get( newEntity );// new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
+            Collection oldObjectCollection = (Collection)oldEntity.getClass().getField( (String) entry.getKey() ).get( oldEntity );// new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
             Collection mapCollection = (Collection) entry.getValue();
 
             Iterator newObjectCollectionIterator = newObjectCollection.iterator();
@@ -212,11 +205,7 @@ public class FootprintsManager
       {
         throw new BackendlessException( e );
       }
-      catch( InvocationTargetException e )
-      {
-        throw new BackendlessException( e );
-      }
-      catch( IntrospectionException e )
+      catch( NoSuchFieldException e )
       {
         throw new BackendlessException( e );
       }
@@ -250,15 +239,15 @@ public class FootprintsManager
           if( entry.getValue() instanceof Map )
           {
             //find getter method and call it to get object property
-            Object newEntityField = new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
-            Object oldEntityField = new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
+            Object newEntityField = newEntity.getClass().getField( (String) entry.getKey() ).get( newEntity );//new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
+            Object oldEntityField = oldEntity.getClass().getField( (String) entry.getKey() ).get( oldEntity );//new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
 
             updateFootprintForObject( (Map) entry.getValue(), newEntityField, oldEntityField );
           }
           else if( entry.getValue() instanceof Collection )
           {
-            Collection newObjectCollection = (Collection) new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
-            Collection oldObjectCollection = (Collection) new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
+            Collection newObjectCollection = (Collection) newEntity.getClass().getField( (String) entry.getKey() ).get( newEntity );//new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
+            Collection oldObjectCollection = (Collection) oldEntity.getClass().getField( (String) entry.getKey() ).get( oldEntity );//new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
             Collection mapCollection = (Collection) entry.getValue();
 
             Iterator mapCollectionIterator = mapCollection.iterator();
@@ -280,11 +269,7 @@ public class FootprintsManager
       {
         throw new BackendlessException( e );
       }
-      catch( InvocationTargetException e )
-      {
-        throw new BackendlessException( e );
-      }
-      catch( IntrospectionException e )
+      catch( NoSuchFieldException e )
       {
         throw new BackendlessException( e );
       }
@@ -317,12 +302,12 @@ public class FootprintsManager
           if( entry.getValue() instanceof Map )
           {
             //find getter method and call it to retrieve object property
-            Object entityField = new PropertyDescriptor( (String) entry.getKey(), entity.getClass() ).getReadMethod().invoke( entity );
+            Object entityField = entity.getClass().getField( (String) entry.getKey() ).get( entity );//new PropertyDescriptor( (String) entry.getKey(), entity.getClass() ).getReadMethod().invoke( entity );
             removeFootprintForObject( (Map) entry.getValue(), entityField );
           }
           else if( entry.getValue() instanceof Collection )
           {
-            Collection objectCollection = (Collection) new PropertyDescriptor( (String) entry.getKey(), entity.getClass() ).getReadMethod().invoke( entity );
+            Collection objectCollection = (Collection) entity.getClass().getField( (String) entry.getKey() ).get( entity );//new PropertyDescriptor( (String) entry.getKey(), entity.getClass() ).getReadMethod().invoke( entity );
             Collection mapCollection = (Collection) entry.getValue();
 
             Iterator objectCollectionIterator = objectCollection.iterator();
@@ -340,11 +325,7 @@ public class FootprintsManager
       {
         throw new BackendlessException( e );
       }
-      catch( InvocationTargetException e )
-      {
-        throw new BackendlessException( e );
-      }
-      catch( IntrospectionException e )
+      catch( NoSuchFieldException e )
       {
         throw new BackendlessException( e );
       }
