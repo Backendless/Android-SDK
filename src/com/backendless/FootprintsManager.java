@@ -100,6 +100,7 @@ public class FootprintsManager
           entityMap.put( Footprint.META_FIELD_NAME, meta );
       }
 
+      /*
       try
       {
         for( Object key : entityMap.keySet() )
@@ -145,7 +146,7 @@ public class FootprintsManager
       finally
       {
         marked.remove( entity );
-      }
+      }     */
     }
 
     /**
