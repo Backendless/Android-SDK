@@ -726,9 +726,12 @@ public final class Persistence
     }
   }
 
+  //used to avoid endless recursion
   static Set<Object> marked = new HashSet<Object>();
+  //used to serialize objects with cyclic relations
+  static Map<Object, Map> serializedCache = new HashMap<Object, Map>();
 
-  static <T> Map serializeToMap( T entity )
+  public static <T> Map serializeToMap( T entity )
   {
     //avoid endless recursion
     marked.add( entity );
@@ -743,6 +746,8 @@ public final class Persistence
     {
       weborb.util.ObjectInspector.getObjectProperties( entity.getClass(), entity, (HashMap) result, new ArrayList(), true, true );
     }
+
+    serializedCache.put( entity, result );
 
     //put ___class field, otherwise server will not be able to detect class
     result.put( "___class", entity.getClass().getCanonicalName() );
@@ -762,11 +767,19 @@ public final class Persistence
           //if instance of user object
           //check if class if user-defined
           // http://stackoverflow.com/questions/8703678/how-can-i-check-if-a-class-belongs-to-java-jdk
-          if( item != null && item.getClass().getClassLoader() != "".getClass().getClassLoader() && !marked.contains( item ) )
+          if( item != null && item.getClass().getClassLoader() != "".getClass().getClassLoader() )
           {
-            //serialize and put into result
-            Map serialized = serializeToMap( item );
-            newCollection.add( serialized );
+            if( marked.contains( item ) ) //cyclic relation
+            {
+              //take from cache and substitute
+              newCollection.add( serializedCache.get( item ) );
+            }
+            else //not cyclic relation
+            {
+              //serialize and put into result
+              Map serialized = serializeToMap( item );
+              newCollection.add( serialized );
+            }
           }
         }
 
@@ -778,12 +791,19 @@ public final class Persistence
         //if instance of user object
         //check if class if user-defined
         // http://stackoverflow.com/questions/8703678/how-can-i-check-if-a-class-belongs-to-java-jdk
-        if( entry.getValue() != null && entry.getValue().getClass().getClassLoader() != "".getClass().getClassLoader() && !marked.contains( entry.getValue() ))
+        if( entry.getValue() != null && entry.getValue().getClass().getClassLoader() != "".getClass().getClassLoader() )
         {
-          //serialize and put into result
-          Map serialized = serializeToMap( entry.getValue() );
-          Object key = entry.getKey();
-          result.put( key, serialized );
+          if( marked.contains( entry.getValue() ) ) //cyclic relation
+          {
+            //take from cache and substitute
+            result.put( entry.getKey(), serializedCache.get( entry.getValue() ) );
+          }
+          else //not cyclic relation
+          {
+            //serialize and put into result
+            Map serialized = serializeToMap( entry.getValue() );
+            result.put( entry.getKey(), serialized );
+          }
         }
       }
     }
