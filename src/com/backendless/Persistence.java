@@ -28,6 +28,7 @@ import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 import com.backendless.property.ObjectProperty;
 import com.backendless.utils.ResponderHelper;
+import weborb.client.IChainedResponder;
 import weborb.types.Types;
 import weborb.writer.IObjectSubstitutor;
 import weborb.writer.MessageWriter;
@@ -360,7 +361,7 @@ public final class Persistence
       if( id == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ID );
 
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity ), id, relations, relationsDepth }, responder );
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity ), id, relations, relationsDepth }, responder, ResponderHelper.getPOJOAdaptingResponder( entity ) );
     }
     catch( Throwable e )
     {
@@ -376,7 +377,9 @@ public final class Persistence
       if( entity == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity, relations, relationsDepth }, responder );
+      IChainedResponder chainedResponder = new AdaptingResponder<E>( (Class<E>) entity.getClass(), new PoJoAdaptingPolicy<E>() );
+      Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity, relations, relationsDepth };
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args, responder, chainedResponder );
     }
     catch( Throwable e )
     {
@@ -390,7 +393,9 @@ public final class Persistence
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY_NAME );
 
-    E loadedRelations = (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity, relations }, new AdaptingResponder<E>( (Class<E>) entity.getClass(), new PoJoAdaptingPolicy<E>() ) );
+    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity, relations };
+    IChainedResponder chainedResponder = new AdaptingResponder<E>( (Class<E>) entity.getClass(), new PoJoAdaptingPolicy<E>() );
+    E loadedRelations = (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, chainedResponder );
     loadRelationsToEntity( entity, loadedRelations, relations );
   }
 
@@ -401,7 +406,8 @@ public final class Persistence
       if( entity == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity, relations }, new AsyncCallback<E>()
+      Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity, relations };
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, new AsyncCallback<E>()
       {
         @Override
         public void handleResponse( E loadedRelations )
