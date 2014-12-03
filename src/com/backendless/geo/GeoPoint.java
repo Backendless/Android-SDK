@@ -21,10 +21,7 @@ package com.backendless.geo;
 import com.backendless.commons.geo.BaseGeoPoint;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GeoPoint extends BaseGeoPoint implements Serializable
 {
@@ -83,12 +80,12 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     this.longitude = (double) longitudeE6 / multiplier;
   }
 
-  public List<String> getCategories()
+  public Collection<String> getCategories()
   {
     if( categories == null )
-      return categories = new ArrayList<String>();
+      return categories = new HashSet<String>();
 
-    return new ArrayList<String>( categories );
+    return new HashSet<String>( categories );
   }
 
   public void addCategory( String category )
@@ -123,9 +120,9 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
       metadata.clear();
   }
 
-  public void setCategories( List<String> categories )
+  public void setCategories( Collection<String> categories )
   {
-    this.categories = categories;
+    this.categories = new HashSet<String>( categories );
   }
 
   public Double getDistance()
