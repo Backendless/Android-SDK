@@ -24,6 +24,8 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.files.BackendlessFile;
+import com.backendless.files.FileRolePermission;
+import com.backendless.files.FileUserPermission;
 import com.backendless.files.router.FileOutputStreamRouter;
 import com.backendless.files.router.IOutputStreamRouter;
 import weborb.v3types.GUID;
@@ -51,7 +53,8 @@ public final class Files
   public final FilesAndroidExtra Android = FilesAndroidExtra.getInstance();
 
   private Files()
-  {}
+  {
+  }
 
   static Files getInstance()
   {
@@ -280,7 +283,8 @@ public final class Files
     Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, fileName, fileContent }, responder );
   }
 
-  public void saveFile( String path, String fileName, byte[] fileContent, boolean overwrite, AsyncCallback<String> responder )
+  public void saveFile( String path, String fileName, byte[] fileContent, boolean overwrite,
+                        AsyncCallback<String> responder )
   {
     Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, fileName, fileContent, overwrite }, responder );
   }
@@ -288,6 +292,46 @@ public final class Files
   public void saveFile( String filePathName, byte[] fileContent, boolean overwrite, AsyncCallback<String> responder )
   {
     Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), filePathName, fileContent, overwrite }, responder );
+  }
+
+  public void updateUserPermission( String userId, FileUserPermission permission )
+  {
+    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "updateUserPermission", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), userId, permission } );
+  }
+
+  public void updateUserPermission( String userId, FileUserPermission permission, AsyncCallback<Void> responder )
+  {
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "updateUserPermission", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), userId, permission }, responder );
+  }
+
+  public void updatePermissionForAllUsers( FileUserPermission permission )
+  {
+    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "updatePermissionForAllUsers", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), permission } );
+  }
+
+  public void updatePermissionForAllUsers( FileUserPermission permission, AsyncCallback<Void> responder )
+  {
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "updatePermissionForAllUsers", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), permission }, responder );
+  }
+
+  public void updateRolePermissions( String roleName, FileRolePermission permission )
+  {
+    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "updateRolePermissions", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), roleName, permission } );
+  }
+
+  public void updateRolePermissions( String roleName, FileRolePermission permission, AsyncCallback<Void> responder )
+  {
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "updateRolePermissions", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), roleName, permission }, responder );
+  }
+
+  public void updateRolePermissionsForAllRoles( FileRolePermission permission )
+  {
+    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "updateRolePermissionsForAllRoles", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), permission } );
+  }
+
+  public void updateRolePermissionsForAllRoles( FileRolePermission permission, AsyncCallback<Void> responder )
+  {
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "updateRolePermissionsForAllRoles", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), permission }, responder );
   }
 
   private class EmptyUploadCallback implements UploadCallback
