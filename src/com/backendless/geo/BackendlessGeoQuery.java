@@ -38,6 +38,14 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
   {
   }
 
+  /**
+   * Creates a query to search by coordinates, pointing also page size and offset.
+   *
+   * @param latitude  latitude to search for
+   * @param longitude longitude to search for
+   * @param pageSize  page size of the resulting collection
+   * @param offset    offset of the resulting collection
+   */
   public BackendlessGeoQuery( double latitude, double longitude, int pageSize, int offset )
   {
     this.latitude = latitude;
@@ -46,11 +54,24 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     this.offset = offset;
   }
 
+  /**
+   * Creates a query to search in categories.
+   *
+   * @param categories categories to search in
+   */
   public BackendlessGeoQuery( List<String> categories )
   {
     this.categories = categories;
   }
 
+  /**
+   * Creates a query to search in radius.
+   *
+   * @param latitude  latitude of the center point
+   * @param longitude longitude of the center point
+   * @param radius    radius of the circle
+   * @param units     measurement units
+   */
   public BackendlessGeoQuery( double latitude, double longitude, double radius, Units units )
   {
     this.latitude = latitude;
@@ -93,9 +114,17 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     this.searchRectangle = new double[] { topLeft.getLatitude(), topLeft.getLongitude(), bottomRight.getLatitude(), bottomRight.getLongitude() };
   }
 
-  public BackendlessGeoQuery( double NWLat, double NWLon, double SELat, double SWLon )
+  /**
+   * Creates a query used for search in rectangle.
+   *
+   * @param NWLat north-west corner latitude
+   * @param NWLon north-west corner longitude
+   * @param SELat south-east corner latitude
+   * @param SELon south-east corner longitude
+   */
+  public BackendlessGeoQuery( double NWLat, double NWLon, double SELat, double SELon )
   {
-    this.searchRectangle = new double[] { NWLat, NWLon, SELat, SWLon };
+    this.searchRectangle = new double[] { NWLat, NWLon, SELat, SELon };
   }
 
   public BackendlessGeoQuery( double NWLat, double NWLon, double SELat, double SWLon, Units units,
@@ -106,6 +135,11 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     this.categories = categories;
   }
 
+  /**
+   * Creates a query used for search by metadata.
+   *
+   * @param metadata metadata to search by
+   */
   public BackendlessGeoQuery( Map<String, Object> metadata )
   {
     this.setMetadata( metadata );
