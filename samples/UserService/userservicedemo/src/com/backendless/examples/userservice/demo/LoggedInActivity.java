@@ -42,7 +42,8 @@ public class LoggedInActivity extends Activity
           public void handleResponse( Void response )
           {
             super.handleResponse( response );
-            setResult( RESULT_OK, new Intent() );
+            startActivity( new Intent( getBaseContext(), MainActivity.class ) );
+            finish();
           }
         } );
       }
