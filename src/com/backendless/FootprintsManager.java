@@ -4,8 +4,8 @@ import com.backendless.exceptions.BackendlessException;
 import weborb.reader.AnonymousObject;
 import weborb.reader.ArrayType;
 import weborb.reader.NamedObject;
+
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
@@ -181,8 +181,8 @@ public class FootprintsManager
           }
           else if( entry.getValue() instanceof Collection )
           {
-            Collection newObjectCollection = (Collection)newEntity.getClass().getField( (String) entry.getKey() ).get( newEntity );// new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
-            Collection oldObjectCollection = (Collection)oldEntity.getClass().getField( (String) entry.getKey() ).get( oldEntity );// new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
+            Collection newObjectCollection = (Collection) newEntity.getClass().getField( (String) entry.getKey() ).get( newEntity );// new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
+            Collection oldObjectCollection = (Collection) oldEntity.getClass().getField( (String) entry.getKey() ).get( oldEntity );// new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
             Collection mapCollection = (Collection) entry.getValue();
 
             Iterator newObjectCollectionIterator = newObjectCollection.iterator();
@@ -237,18 +237,76 @@ public class FootprintsManager
         Set<Map.Entry> entries = serialized.entrySet();
         for( Map.Entry entry : entries )
         {
+          String key = (String) entry.getKey();
+          String upperKey = ((String) entry.getKey()).substring( 0, 1 ).toUpperCase().concat( ((String) entry.getKey()).substring( 1 ) );
+
           if( entry.getValue() instanceof Map )
           {
             //find getter method and call it to get object property
-            Object newEntityField = newEntity.getClass().getField( (String) entry.getKey() ).get( newEntity );//new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
-            Object oldEntityField = oldEntity.getClass().getField( (String) entry.getKey() ).get( oldEntity );//new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
+            Object newEntityField;
+            try
+            {
+              Field declaredField = newEntity.getClass().getDeclaredField( key );
+              declaredField.setAccessible( true );
+              newEntityField = declaredField.get( newEntity );//new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
+            }
+            catch( NoSuchFieldException nfe )
+            {
+              //try to find field with first letter in uppercase
+              Field declaredField = newEntity.getClass().getDeclaredField( upperKey );
+              declaredField.setAccessible( true );
+              newEntityField = declaredField.get( newEntity );
+            }
+
+            Object oldEntityField;
+            try
+            {
+              Field declaredField = oldEntity.getClass().getDeclaredField( key );
+              declaredField.setAccessible( true );
+              oldEntityField = declaredField.get( oldEntity );//new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
+            }
+            catch( NoSuchFieldException nfe )
+            {
+              //try to find field with first letter in uppercase
+              Field declaredField = oldEntity.getClass().getDeclaredField( upperKey );
+              declaredField.setAccessible( true );
+              oldEntityField = declaredField.get( oldEntity );
+            }
 
             updateFootprintForObject( (Map) entry.getValue(), newEntityField, oldEntityField );
           }
           else if( entry.getValue() instanceof Collection )
           {
-            Collection newObjectCollection = (Collection) newEntity.getClass().getField( (String) entry.getKey() ).get( newEntity );//new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
-            Collection oldObjectCollection = (Collection) oldEntity.getClass().getField( (String) entry.getKey() ).get( oldEntity );//new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
+            Collection newObjectCollection;
+            try
+            {
+              Field declaredField = newEntity.getClass().getDeclaredField( key );
+              declaredField.setAccessible( true );
+              newObjectCollection = (Collection) declaredField.get( newEntity );//new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
+            }
+            catch( NoSuchFieldException nfe )
+            {
+              //try to find field with first letter in uppercase
+              Field declaredField = newEntity.getClass().getDeclaredField( upperKey );
+              declaredField.setAccessible( true );
+              newObjectCollection = (Collection) declaredField.get( newEntity );
+            }
+
+            Collection oldObjectCollection;
+            try
+            {
+              Field declaredField = oldEntity.getClass().getDeclaredField( key );
+              declaredField.setAccessible( true );
+              oldObjectCollection = (Collection) declaredField.get( oldEntity );//new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
+            }
+            catch( NoSuchFieldException nfe )
+            {
+              //try to find field with first letter in uppercase
+              Field declaredField = oldEntity.getClass().getDeclaredField( upperKey );
+              declaredField.setAccessible( true );
+              oldObjectCollection = (Collection) declaredField.get( oldEntity );
+            }
+
             Collection mapCollection = (Collection) entry.getValue();
 
             Iterator mapCollectionIterator = mapCollection.iterator();
