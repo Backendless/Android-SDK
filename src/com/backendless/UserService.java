@@ -317,101 +317,63 @@ public final class UserService
       }
   }
 
-  public void loginWithFacebookSdk( android.app.Activity context, AsyncCallback<BackendlessUser> responder )
+  public void loginWithFacebookSdk( android.app.Activity context, final AsyncCallback<BackendlessUser> responder )
   {
     loginWithFacebookSdk( context, null, null, responder );
   }
 
-  public void loginWithFacebookSdk( android.app.Activity context, Map<String, String> facebookFieldsMappings,
-                                    AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithFacebookSdk( context, facebookFieldsMappings, null, responder );
-  }
-
-  public void loginWithFacebookSdk( android.app.Activity context, Map<String, String> facebookFieldsMappings,
-                                    List<String> permissions, AsyncCallback<BackendlessUser> responder )
+  public void loginWithFacebookSdk( android.app.Activity context, final Map<String, String> facebookFieldsMappings,
+                                    List<String> permissions, final AsyncCallback<BackendlessUser> responder )
   {
     getUserServiceAndroidExtra().loginWithFacebookSdk( context, facebookFieldsMappings, permissions, responder );
   }
 
-  public void loginWithFacebook( android.app.Activity context, AsyncCallback<BackendlessUser> responder )
+  public void loginWithFacebook( android.app.Activity context, final AsyncCallback<BackendlessUser> responder )
   {
-    loginWithFacebook( context, null, null, null, responder, false );
-  }
-
-  public void loginWithFacebook( android.app.Activity context, AsyncCallback<BackendlessUser> responder,
-                                 boolean stayLoggedIn )
-  {
-    loginWithFacebook( context, null, null, null, responder, stayLoggedIn );
+    loginWithFacebook( context, null, null, null, responder );
   }
 
   public void loginWithFacebook( android.app.Activity context, android.webkit.WebView webView,
-                                 AsyncCallback<BackendlessUser> responder )
+                                 final AsyncCallback<BackendlessUser> responder )
   {
-    loginWithFacebook( context, webView, null, null, responder, false );
+    loginWithFacebook( context, webView, null, null, responder );
   }
 
   public void loginWithFacebook( android.app.Activity context, android.webkit.WebView webView,
-                                 AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+                                 final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
   {
     loginWithFacebook( context, webView, null, null, responder, stayLoggedIn );
   }
 
   public void loginWithFacebook( android.app.Activity context, android.webkit.WebView webView,
-                                 Map<String, String> facebookFieldsMappings, AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithFacebook( context, webView, facebookFieldsMappings, null, responder, false );
-  }
-
-  public void loginWithFacebook( android.app.Activity context, Map<String, String> facebookFieldsMappings,
-                                 AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithFacebook( context, null, facebookFieldsMappings, null, responder, false );
-  }
-
-  public void loginWithFacebook( android.app.Activity context, Map<String, String> facebookFieldsMappings,
-                                 List<String> permissions, AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithFacebook( context, null, facebookFieldsMappings, permissions, responder, false );
-  }
-
-  public void loginWithFacebook( android.app.Activity context, Map<String, String> facebookFieldsMappings,
-                                 AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
-  {
-    loginWithFacebook( context, null, facebookFieldsMappings, null, responder, stayLoggedIn );
-  }
-
-  public void loginWithFacebook( android.app.Activity context, android.webkit.WebView webView,
                                  Map<String, String> facebookFieldsMappings, List<String> permissions,
-                                 AsyncCallback<BackendlessUser> responder )
+                                 final AsyncCallback<BackendlessUser> responder )
   {
     loginWithFacebook( context, webView, facebookFieldsMappings, permissions, responder, false );
   }
 
   public void loginWithFacebook( android.app.Activity context, android.webkit.WebView webView,
-                                 Map<String, String> facebookFieldsMappings, AsyncCallback<BackendlessUser> responder,
-                                 boolean stayLoggedIn )
-  {
-    loginWithFacebook( context, webView, facebookFieldsMappings, null, responder, stayLoggedIn );
-  }
-
-  public void loginWithFacebook( android.app.Activity context, Map<String, String> facebookFieldsMappings,
-                                 List<String> permissions, AsyncCallback<BackendlessUser> responder,
-                                 boolean stayLoggedIn )
-  {
-    loginWithFacebook( context, null, facebookFieldsMappings, permissions, responder, stayLoggedIn );
-  }
-
-  public void loginWithFacebook( android.app.Activity context, android.webkit.WebView webView,
                                  Map<String, String> facebookFieldsMappings, List<String> permissions,
-                                 AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+                                 final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
   {
     getUserServiceAndroidExtra().loginWithFacebook( context, webView, facebookFieldsMappings, permissions, getUserLoginAsyncHandler( responder, stayLoggedIn ) );
   }
 
   public void loginWithTwitter( android.app.Activity context, AsyncCallback<BackendlessUser> responder )
   {
-    loginWithTwitter( context, null, null, responder );
+    loginWithTwitter( context, null, null, responder, false );
+  }
+
+  public void loginWithTwitter( android.app.Activity context, android.webkit.WebView webView,
+                                AsyncCallback<BackendlessUser> responder )
+  {
+    loginWithTwitter( context, webView, null, responder, false );
+  }
+
+  public void loginWithTwitter( android.app.Activity context, Map<String, String> twitterFieldsMappings,
+                                AsyncCallback<BackendlessUser> responder )
+  {
+    loginWithTwitter( context, null, twitterFieldsMappings, responder, false );
   }
 
   public void loginWithTwitter( android.app.Activity context, AsyncCallback<BackendlessUser> responder,
@@ -424,6 +386,18 @@ public final class UserService
                                 Map<String, String> twitterFieldsMappings, AsyncCallback<BackendlessUser> responder )
   {
     loginWithTwitter( context, webView, twitterFieldsMappings, responder, false );
+  }
+
+  public void loginWithTwitter( android.app.Activity context, android.webkit.WebView webView,
+                                AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  {
+    loginWithTwitter( context, webView, null, responder, stayLoggedIn );
+  }
+
+  public void loginWithTwitter( android.app.Activity context, Map<String, String> twitterFieldsMappings,
+                                AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  {
+    loginWithTwitter( context, null, twitterFieldsMappings, responder, stayLoggedIn );
   }
 
   public void loginWithTwitter( android.app.Activity context, android.webkit.WebView webView,
