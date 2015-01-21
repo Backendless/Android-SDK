@@ -18,7 +18,9 @@
 
 package com.backendless.core.responder.policy;
 
+import com.backendless.BackendlessClusteredCollection;
 import com.backendless.BackendlessCollection;
+import com.backendless.geo.GeoCluster;
 import weborb.client.Fault;
 import weborb.client.IResponder;
 import weborb.exceptions.AdaptingException;
@@ -36,7 +38,7 @@ public class CollectionAdaptingPolicy<E> implements IAdaptingPolicy<E>
 
     try
     {
-      BackendlessCollection<E> list = createListOfType( clazz );
+      BackendlessCollection<E> list = createListOfType( clazz, entity );
 
       AnonymousObject bodyValue = (AnonymousObject) ((NamedObject) entity).getTypedObject();
       ArrayType data = (ArrayType) bodyValue.getProperties().get( "data" );
@@ -46,7 +48,16 @@ public class CollectionAdaptingPolicy<E> implements IAdaptingPolicy<E>
         Object[] dataArray = (Object[]) data.getArray();
 
         for( int i = 0; i < dataArray.length; i++ )
-          ((NamedObject) dataArray[ i ]).setDefaultType( clazz );
+        {
+          if( ((NamedObject) dataArray[ i ]).getObjectName().contains( GeoCluster.class.getSimpleName() ) )
+          {
+            ((NamedObject) dataArray[ i ]).setDefaultType( GeoCluster.class );
+          }
+          else
+          {
+            ((NamedObject) dataArray[ i ]).setDefaultType( clazz );
+          }
+        }
       }
 
       result = (BackendlessCollection<?>) entity.adapt( list.getClass() );
@@ -65,8 +76,12 @@ public class CollectionAdaptingPolicy<E> implements IAdaptingPolicy<E>
     return result;
   }
 
-  private static <E> BackendlessCollection<E> createListOfType( Class<E> type )
+  private static <E> BackendlessCollection<E> createListOfType( Class<E> type, IAdaptingType entity )
   {
+    if( entity instanceof NamedObject && ((NamedObject) entity).getObjectName().contains( BackendlessClusteredCollection.class.getSimpleName() ) )
+    {
+      return new BackendlessClusteredCollection<E>();
+    }
     return new BackendlessCollection<E>();
   }
 }

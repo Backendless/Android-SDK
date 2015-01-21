@@ -118,4 +118,6 @@ public class ExceptionMessage
   public static final String INIT_BEFORE_USE = "Init storage before use";
 
   public static final String CAN_NOT_SAVE_LOG = "Can not save log";
+
+  public final static String WRONG_CLUSTERISATION_QUERY = "Wrong clusterization parameter's values. All values should be positive number";
 }
