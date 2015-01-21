@@ -361,7 +361,19 @@ public final class UserService
 
   public void loginWithTwitter( android.app.Activity context, AsyncCallback<BackendlessUser> responder )
   {
-    loginWithTwitter( context, null, null, responder );
+    loginWithTwitter( context, null, null, responder, false );
+  }
+
+  public void loginWithTwitter( android.app.Activity context, android.webkit.WebView webView,
+                                AsyncCallback<BackendlessUser> responder )
+  {
+    loginWithTwitter( context, webView, null, responder, false );
+  }
+
+  public void loginWithTwitter( android.app.Activity context, Map<String, String> twitterFieldsMappings,
+                                AsyncCallback<BackendlessUser> responder )
+  {
+    loginWithTwitter( context, null, twitterFieldsMappings, responder, false );
   }
 
   public void loginWithTwitter( android.app.Activity context, AsyncCallback<BackendlessUser> responder,
@@ -374,6 +386,18 @@ public final class UserService
                                 Map<String, String> twitterFieldsMappings, AsyncCallback<BackendlessUser> responder )
   {
     loginWithTwitter( context, webView, twitterFieldsMappings, responder, false );
+  }
+
+  public void loginWithTwitter( android.app.Activity context, android.webkit.WebView webView,
+                                AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  {
+    loginWithTwitter( context, webView, null, responder, stayLoggedIn );
+  }
+
+  public void loginWithTwitter( android.app.Activity context, Map<String, String> twitterFieldsMappings,
+                                AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  {
+    loginWithTwitter( context, null, twitterFieldsMappings, responder, stayLoggedIn );
   }
 
   public void loginWithTwitter( android.app.Activity context, android.webkit.WebView webView,
