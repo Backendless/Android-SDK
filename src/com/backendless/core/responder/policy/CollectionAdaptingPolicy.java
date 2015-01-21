@@ -18,8 +18,8 @@
 
 package com.backendless.core.responder.policy;
 
-import com.backendless.BackendlessClusteredCollection;
 import com.backendless.BackendlessCollection;
+import com.backendless.geo.BackendlessGeoCollection;
 import com.backendless.geo.GeoCluster;
 import weborb.client.Fault;
 import weborb.client.IResponder;
@@ -78,9 +78,9 @@ public class CollectionAdaptingPolicy<E> implements IAdaptingPolicy<E>
 
   private static <E> BackendlessCollection<E> createListOfType( Class<E> type, IAdaptingType entity )
   {
-    if( entity instanceof NamedObject && ((NamedObject) entity).getObjectName().contains( BackendlessClusteredCollection.class.getSimpleName() ) )
+    if( entity instanceof NamedObject && ((NamedObject) entity).getObjectName().contains( BackendlessGeoCollection.class.getSimpleName() ) )
     {
-      return new BackendlessClusteredCollection<E>();
+      return new BackendlessGeoCollection<E>();
     }
     return new BackendlessCollection<E>();
   }

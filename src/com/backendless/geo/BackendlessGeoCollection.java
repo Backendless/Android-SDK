@@ -16,7 +16,7 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless;/*
+package com.backendless.geo;/*
  * ********************************************************************************************************************
  *  <p/>
  *  BACKENDLESS.COM CONFIDENTIAL
@@ -34,19 +34,21 @@ package com.backendless;/*
  *  ********************************************************************************************************************
  */
 
+import com.backendless.BackendlessCollection;
+
 /**
  * Created by baas on 20.01.15.
  */
-public class BackendlessClusteredCollection<E> extends BackendlessCollection<E>
+public class BackendlessGeoCollection<E> extends BackendlessCollection<E>
 {
-  private boolean clustered;
+  private Boolean clustered;
 
-  public boolean isClustered()
+  public Boolean getClustered()
   {
     return clustered;
   }
 
-  public void setClustered( boolean clustered )
+  public void setClustered( Boolean clustered )
   {
     this.clustered = clustered;
   }
@@ -54,12 +56,12 @@ public class BackendlessClusteredCollection<E> extends BackendlessCollection<E>
   @Override
   protected BackendlessCollection<E> newInstance()
   {
-    BackendlessClusteredCollection<E> result = new BackendlessClusteredCollection<E>();
+    BackendlessGeoCollection<E> result = new BackendlessGeoCollection<E>();
     result.setData( getData() );
     result.setQuery( getQuery() );
     result.setType( getType() );
     result.setTotalObjects( getTotalObjects() );
-    result.setClustered( isClustered() );
+    result.setClustered( getClustered() );
 
     return result;
   }
