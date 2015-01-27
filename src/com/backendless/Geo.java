@@ -354,9 +354,9 @@ public final class Geo
     if( geoQuery.getPageSize() < 0 )
       throw new IllegalArgumentException( ExceptionMessage.WRONG_PAGE_SIZE );
 
-    if(geoQuery.getDpp() > 0 || geoQuery.getDpi() > 0 || geoQuery.getSize() > 0){
-      if(geoQuery.getDpp() < 0 || geoQuery.getDpi() < 0 || geoQuery.getSize() < 0){
-        throw new IllegalArgumentException( ExceptionMessage.WRONG_OFFSET );
+    if(geoQuery.getDpp() != null ){
+      if(geoQuery.getDpp() < 0 || geoQuery.getSize() == null || geoQuery.getSize() < 0){
+        throw new IllegalArgumentException( ExceptionMessage.WRONG_CLUSTERISATION_QUERY );
       }
     }
   }

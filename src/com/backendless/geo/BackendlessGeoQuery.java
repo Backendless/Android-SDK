@@ -18,7 +18,6 @@
 
 package com.backendless.geo;
 
-import android.util.DisplayMetrics;
 import com.backendless.IBackendlessQuery;
 import com.backendless.commons.geo.AbstractBackendlessGeoQuery;
 
@@ -29,8 +28,6 @@ import java.util.Map;
 
 public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements IBackendlessQuery
 {
-  private final int DEFAULT_CLUSTER_SIZE = 30;
-
   private Units units;
   private boolean includeMeta = true;
   private double[] searchRectangle;
@@ -250,12 +247,12 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     relativeFindMetadata.put( key, value );
   }
 
-  public void initClustering( DisplayMetrics metrics, double westLong, double eastLong )
+  public void initClustering( double westLong, double eastLong, int mapWidth )
   {
-    initClustering( metrics, westLong, eastLong, DEFAULT_CLUSTER_SIZE );
+    initClustering( westLong, eastLong, mapWidth, CLUSTER_SIZE_DEFAULT_VALUE );
   }
 
-  public void initClustering( DisplayMetrics metrics, double westLong, double eastLong, int size )
+  public void initClustering(double westLong, double eastLong, int mapWidth, int size )
   {
     double longDiff = eastLong - westLong;
     if( longDiff < 0 )
@@ -263,11 +260,10 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
       longDiff += 360;
     }
 
-    double degreePerPixel = longDiff / metrics.widthPixels;
-    int dotsPerInch = (int) (metrics.density * 160f);
+    double degreePerPixel = longDiff /mapWidth;
     int clusterSize = size;
 
-    setClusteringParams( degreePerPixel, dotsPerInch, clusterSize );
+    setClusteringParams( degreePerPixel, clusterSize );
   }
 
   @Override
