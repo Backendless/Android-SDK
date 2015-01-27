@@ -18,6 +18,8 @@
 
 package com.backendless.geo;
 
+import com.backendless.Backendless;
+import com.backendless.async.callback.AsyncCallback;
 import com.backendless.commons.geo.BaseGeoPoint;
 
 import java.io.Serializable;
@@ -133,6 +135,17 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
   public void setDistance( Double distance )
   {
     this.distance = distance;
+  }
+
+  public Map<String, Object> loadMetadata(){
+
+    metadata = Backendless.Geo.loadMetadata( this.getObjectId() );
+    return metadata;
+  }
+
+  public void loadMetadata(final AsyncCallback<Map<String, Object>> responder){
+
+    Backendless.Geo.loadMetadata( this.getObjectId(), responder );
   }
 
   @Override

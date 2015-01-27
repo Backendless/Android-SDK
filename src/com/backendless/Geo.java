@@ -168,6 +168,11 @@ public final class Geo
     CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
     BackendlessCollection<GeoPoint> result = (BackendlessCollection<GeoPoint>) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getPoints", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoQuery }, new AdaptingResponder<GeoPoint>( GeoPoint.class, adaptingPolicy ) );
 
+    if( result instanceof BackendlessGeoCollection )
+    {
+      Backendless.Cache.put( Messaging.DEVICE_ID + "." + BackendlessGeoQuery.class.getSimpleName(), geoQuery );
+    }
+
     result.setQuery( geoQuery );
     result.setType( GeoPoint.class );
 
@@ -181,6 +186,11 @@ public final class Geo
     {
       checkGeoQuery( geoQuery );
       CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
+
+      if( geoQuery.getDpp() != null && geoQuery.getDpp() > 0 )
+      {
+        Backendless.Cache.put( Messaging.DEVICE_ID + "." + BackendlessGeoQuery.class.getSimpleName(), geoQuery );
+      }
 
       Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getPoints", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoQuery }, new AsyncCallback<BackendlessCollection<GeoPoint>>()
       {
@@ -280,6 +290,42 @@ public final class Geo
       {
         if( responder != null )
           responder.handleResponse( Arrays.asList( response ) );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        if( responder != null )
+          responder.handleFault( fault );
+      }
+    } );
+  }
+
+  public Map<String, Object> loadMetadata( final String pointId )
+  {
+    BackendlessGeoQuery query = null;
+    if( pointId.matches( "^[1-9]\\d*$" ) )
+    {
+      query = Backendless.Cache.get( Messaging.DEVICE_ID + "." + BackendlessGeoQuery.class.getSimpleName(), BackendlessGeoQuery.class );
+    }
+    return (Map<String, Object>) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), pointId, query } );
+  }
+
+  public void loadMetadata( final String pointId, final AsyncCallback<Map<String, Object>> responder )
+  {
+    BackendlessGeoQuery query = null;
+    if( pointId.matches( "^[1-9]\\d*$" ) )
+    {
+      query = Backendless.Cache.get( Messaging.DEVICE_ID + "." + BackendlessGeoQuery.class.getSimpleName(), BackendlessGeoQuery.class );
+    }
+
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), pointId, query }, new AsyncCallback<Map<String, Object>>()
+    {
+      @Override
+      public void handleResponse( Map<String, Object> response )
+      {
+        if( responder != null )
+          responder.handleResponse( response );
       }
 
       @Override
