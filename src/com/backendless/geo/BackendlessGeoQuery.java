@@ -29,7 +29,7 @@ import java.util.Map;
 public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements IBackendlessQuery
 {
   private Units units;
-  private boolean includeMeta = true;
+  private boolean includeMeta;
   private double[] searchRectangle;
   private int pageSize = 100;
   private int offset;
