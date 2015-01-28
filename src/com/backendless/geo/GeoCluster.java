@@ -18,9 +18,6 @@
 
 package com.backendless.geo;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * Created by baas on 20.01.15.
  */
@@ -28,34 +25,8 @@ public class GeoCluster extends GeoPoint
 {
   private int totalPoints;
 
-  public GeoCluster()
+  private GeoCluster()
   {
-  }
-
-  public GeoCluster( Double latitude, Double longitude, int totalPoints )
-  {
-    super( latitude, longitude );
-    this.totalPoints = totalPoints;
-  }
-
-  public GeoCluster( double latitude, double longitude, List<String> categories, Map<String, Object> metadata,
-                     int totalPoints )
-  {
-    super( latitude, longitude, categories, metadata );
-    this.totalPoints = totalPoints;
-  }
-
-  public GeoCluster( int latitudeE6, int longitudeE6, int totalPoints )
-  {
-    super( latitudeE6, longitudeE6 );
-    this.totalPoints = totalPoints;
-  }
-
-  public GeoCluster( int latitudeE6, int longitudeE6, List<String> categories, Map<String, Object> metadata,
-                     int totalPoints )
-  {
-    super( latitudeE6, longitudeE6, categories, metadata );
-    this.totalPoints = totalPoints;
   }
 
   public int getTotalPoints()
