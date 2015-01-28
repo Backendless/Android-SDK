@@ -153,7 +153,11 @@ public final class GCMRegistrar
     if( registrationInfo == null )
       requesRegistration( context, senderId, channels, expiration );
     else
-      sendInternalRegistration( context, registrationInfo );
+    {
+      GCMRegistrar.resetBackoff( context );
+      BackendlessBroadcastReceiver.setSenderId( "" );
+      requesRegistration( context, senderId, channels, expiration );
+    }
   }
 
   private static void sendInternalRegistration( Context context, RegistrationInfo registrationInfo )
