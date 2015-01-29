@@ -168,13 +168,12 @@ public final class Geo
     CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
     BackendlessCollection<GeoPoint> result = (BackendlessCollection<GeoPoint>) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getPoints", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoQuery }, new AdaptingResponder<GeoPoint>( GeoPoint.class, adaptingPolicy ) );
 
-    if( result instanceof BackendlessGeoCollection )
-    {
-      Backendless.Cache.put( Messaging.DEVICE_ID + "." + BackendlessGeoQuery.class.getSimpleName(), geoQuery );
-    }
-
     result.setQuery( geoQuery );
     result.setType( GeoPoint.class );
+
+    if(geoQuery.getDpp() != null && geoQuery.getDpp() > 0){
+      setReferenceToCluster( result );
+    }
 
     return result;
   }
@@ -187,11 +186,6 @@ public final class Geo
       checkGeoQuery( geoQuery );
       CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
 
-      if( geoQuery.getDpp() != null && geoQuery.getDpp() > 0 )
-      {
-        Backendless.Cache.put( Messaging.DEVICE_ID + "." + BackendlessGeoQuery.class.getSimpleName(), geoQuery );
-      }
-
       Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getPoints", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoQuery }, new AsyncCallback<BackendlessCollection<GeoPoint>>()
       {
         @Override
@@ -199,6 +193,10 @@ public final class Geo
         {
           response.setQuery( geoQuery );
           response.setType( GeoPoint.class );
+
+          if(geoQuery.getDpp() != null && geoQuery.getDpp() > 0){
+            setReferenceToCluster( response );
+          }
 
           if( responder != null )
             responder.handleResponse( response );
@@ -335,6 +333,15 @@ public final class Geo
           responder.handleFault( fault );
       }
     } );
+  }
+
+  private void setReferenceToCluster(BackendlessCollection<GeoPoint> collection){
+    for( GeoPoint geoPoint : collection.getData() )
+    {
+      if(geoPoint instanceof GeoCluster){
+        ((GeoCluster)geoPoint).setBackendlessGeoQuery( (BackendlessGeoQuery) collection.getQuery() );
+      }
+    }
   }
 
   private void checkCategoryName( String categoryName ) throws BackendlessException

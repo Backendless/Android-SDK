@@ -247,21 +247,20 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     relativeFindMetadata.put( key, value );
   }
 
-  public void initClustering( double westLong, double eastLong, int mapWidth )
+  public void setClusteringParams( double westLongitude, double eastLongitude, int mapWidth )
   {
-    initClustering( westLong, eastLong, mapWidth, CLUSTER_SIZE_DEFAULT_VALUE );
+    setClusteringParams( westLongitude, eastLongitude, mapWidth, CLUSTER_SIZE_DEFAULT_VALUE );
   }
 
-  public void initClustering(double westLong, double eastLong, int mapWidth, int size )
+  public void setClusteringParams(double westLongitude, double eastLongitude, int mapWidth, int clusterSize )
   {
-    double longDiff = eastLong - westLong;
+    double longDiff = eastLongitude - westLongitude;
     if( longDiff < 0 )
     {
       longDiff += 360;
     }
 
     double degreePerPixel = longDiff /mapWidth;
-    int clusterSize = size;
 
     setClusteringParams( degreePerPixel, clusterSize );
   }
