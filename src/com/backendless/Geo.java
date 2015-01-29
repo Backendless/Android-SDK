@@ -171,7 +171,8 @@ public final class Geo
     result.setQuery( geoQuery );
     result.setType( GeoPoint.class );
 
-    if(geoQuery.getDpp() != null && geoQuery.getDpp() > 0){
+    if( geoQuery.getDpp() != null && geoQuery.getDpp() > 0 )
+    {
       setReferenceToCluster( result );
     }
 
@@ -194,7 +195,8 @@ public final class Geo
           response.setQuery( geoQuery );
           response.setType( GeoPoint.class );
 
-          if(geoQuery.getDpp() != null && geoQuery.getDpp() > 0){
+          if( geoQuery.getDpp() != null && geoQuery.getDpp() > 0 )
+          {
             setReferenceToCluster( response );
           }
 
@@ -216,7 +218,8 @@ public final class Geo
     }
   }
 
-  public BackendlessCollection<SearchMatchesResult> relativeFind( BackendlessGeoQuery geoQuery ) throws BackendlessException
+  public BackendlessCollection<SearchMatchesResult> relativeFind(
+          BackendlessGeoQuery geoQuery ) throws BackendlessException
   {
     if( geoQuery == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_GEO_QUERY );
@@ -298,12 +301,13 @@ public final class Geo
       }
     } );
   }
-
+  
   private void setReferenceToCluster(BackendlessCollection<GeoPoint> collection){
     for( GeoPoint geoPoint : collection.getData() )
     {
-      if(geoPoint instanceof GeoCluster){
-        ((GeoCluster)geoPoint).setBackendlessGeoQuery( (BackendlessGeoQuery) collection.getQuery() );
+      if( geoPoint instanceof GeoCluster )
+      {
+        ((GeoCluster) geoPoint).setGeoQuery( (BackendlessGeoQuery) collection.getQuery() );
       }
     }
   }
@@ -371,8 +375,10 @@ public final class Geo
     if( geoQuery.getPageSize() < 0 )
       throw new IllegalArgumentException( ExceptionMessage.WRONG_PAGE_SIZE );
 
-    if(geoQuery.getDpp() != null ){
-      if(geoQuery.getDpp() < 0 || geoQuery.getSize() == null || geoQuery.getSize() < 0){
+    if( geoQuery.getDpp() != null )
+    {
+      if( geoQuery.getDpp() < 0 || geoQuery.getClusterSize() == null || geoQuery.getClusterSize() < 0 )
+      {
         throw new IllegalArgumentException( ExceptionMessage.WRONG_CLUSTERISATION_QUERY );
       }
     }

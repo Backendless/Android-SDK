@@ -24,7 +24,7 @@ package com.backendless.geo;
 public class GeoCluster extends GeoPoint
 {
   private int totalPoints;
-  private BackendlessGeoQuery backendlessGeoQuery;
+  private BackendlessGeoQuery geoQuery;
 
   public int getTotalPoints()
   {
@@ -36,14 +36,14 @@ public class GeoCluster extends GeoPoint
     this.totalPoints = totalPoints;
   }
 
-  public BackendlessGeoQuery getBackendlessGeoQuery()
+  public BackendlessGeoQuery getGeoQuery()
   {
-    return backendlessGeoQuery;
+    return geoQuery;
   }
 
-  public void setBackendlessGeoQuery( BackendlessGeoQuery backendlessGeoQuery )
+  public void setGeoQuery( BackendlessGeoQuery geoQuery )
   {
-    this.backendlessGeoQuery = backendlessGeoQuery;
+    this.geoQuery = geoQuery;
   }
 
   @Override

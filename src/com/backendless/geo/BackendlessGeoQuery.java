@@ -260,7 +260,7 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
       longDiff += 360;
     }
 
-    double degreePerPixel = longDiff /mapWidth;
+    double degreePerPixel = longDiff / mapWidth;
 
     setClusteringParams( degreePerPixel, clusterSize );
   }
@@ -282,6 +282,8 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     result.setWhereClause( whereClause );
     result.setRelativeFindMetadata( relativeFindMetadata );
     result.setRelativeFindPercentThreshold( relativeFindPercentThreshold );
+    result.setDpp( dpp );
+    result.setClusterSize( clusterSize );
 
     return result;
   }
