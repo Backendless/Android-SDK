@@ -171,6 +171,10 @@ public final class Geo
     result.setQuery( geoQuery );
     result.setType( GeoPoint.class );
 
+    if(geoQuery.getDpp() != null && geoQuery.getDpp() > 0){
+      setReferenceToCluster( result );
+    }
+
     return result;
   }
 
@@ -189,6 +193,10 @@ public final class Geo
         {
           response.setQuery( geoQuery );
           response.setType( GeoPoint.class );
+
+          if(geoQuery.getDpp() != null && geoQuery.getDpp() > 0){
+            setReferenceToCluster( response );
+          }
 
           if( responder != null )
             responder.handleResponse( response );
@@ -289,6 +297,15 @@ public final class Geo
           responder.handleFault( fault );
       }
     } );
+  }
+
+  private void setReferenceToCluster(BackendlessCollection<GeoPoint> collection){
+    for( GeoPoint geoPoint : collection.getData() )
+    {
+      if(geoPoint instanceof GeoCluster){
+        ((GeoCluster)geoPoint).setBackendlessGeoQuery( (BackendlessGeoQuery) collection.getQuery() );
+      }
+    }
   }
 
   private void checkCategoryName( String categoryName ) throws BackendlessException

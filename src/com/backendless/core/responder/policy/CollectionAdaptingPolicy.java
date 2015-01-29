@@ -19,8 +19,6 @@
 package com.backendless.core.responder.policy;
 
 import com.backendless.BackendlessCollection;
-import com.backendless.geo.BackendlessGeoCollection;
-import com.backendless.geo.GeoCluster;
 import weborb.client.Fault;
 import weborb.client.IResponder;
 import weborb.exceptions.AdaptingException;
@@ -38,7 +36,7 @@ public class CollectionAdaptingPolicy<E> implements IAdaptingPolicy<E>
 
     try
     {
-      BackendlessCollection<E> list = createListOfType( clazz, entity );
+      BackendlessCollection<E> list = createListOfType( clazz );
 
       AnonymousObject bodyValue = (AnonymousObject) ((NamedObject) entity).getTypedObject();
       ArrayType data = (ArrayType) bodyValue.getProperties().get( "data" );
@@ -49,11 +47,13 @@ public class CollectionAdaptingPolicy<E> implements IAdaptingPolicy<E>
 
         for( int i = 0; i < dataArray.length; i++ )
         {
-          if( ((NamedObject) dataArray[ i ]).getObjectName().contains( GeoCluster.class.getSimpleName() ) )
+          try
           {
-            ((NamedObject) dataArray[ i ]).setDefaultType( GeoCluster.class );
+            String expectedClassName = clazz.getCanonicalName();
+            String comingClassName = ((NamedObject) dataArray[ i ]).getObjectName();
+            ( (NamedObject) dataArray[ i ] ).setDefaultType( Class.forName( expectedClassName.substring( 0, expectedClassName.lastIndexOf( '.' ) ) + comingClassName.substring( comingClassName.lastIndexOf( '.' ) ) ) );
           }
-          else
+          catch( ClassNotFoundException e )
           {
             ((NamedObject) dataArray[ i ]).setDefaultType( clazz );
           }
@@ -76,12 +76,8 @@ public class CollectionAdaptingPolicy<E> implements IAdaptingPolicy<E>
     return result;
   }
 
-  private static <E> BackendlessCollection<E> createListOfType( Class<E> type, IAdaptingType entity )
+  private static <E> BackendlessCollection<E> createListOfType( Class<E> type )
   {
-    if( entity instanceof NamedObject && ((NamedObject) entity).getObjectName().contains( BackendlessGeoCollection.class.getSimpleName() ) )
-    {
-      return new BackendlessGeoCollection<E>();
-    }
     return new BackendlessCollection<E>();
   }
 }
