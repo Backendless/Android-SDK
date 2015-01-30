@@ -29,7 +29,7 @@ import java.util.Map;
 public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements IBackendlessQuery
 {
   private Units units;
-  private boolean includeMeta = true;
+  private boolean includeMeta;
   private double[] searchRectangle;
   private int pageSize = 100;
   private int offset;
@@ -247,6 +247,24 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     relativeFindMetadata.put( key, value );
   }
 
+  public void setClusteringParams( double westLongitude, double eastLongitude, int mapWidth )
+  {
+    setClusteringParams( westLongitude, eastLongitude, mapWidth, CLUSTER_SIZE_DEFAULT_VALUE );
+  }
+
+  public void setClusteringParams(double westLongitude, double eastLongitude, int mapWidth, int clusterSize )
+  {
+    double longDiff = eastLongitude - westLongitude;
+    if( longDiff < 0 )
+    {
+      longDiff += 360;
+    }
+
+    double degreePerPixel = longDiff / mapWidth;
+
+    setClusteringParams( degreePerPixel, clusterSize );
+  }
+
   @Override
   public BackendlessGeoQuery newInstance()
   {
@@ -264,6 +282,8 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     result.setWhereClause( whereClause );
     result.setRelativeFindMetadata( relativeFindMetadata );
     result.setRelativeFindPercentThreshold( relativeFindPercentThreshold );
+    result.setDpp( dpp );
+    result.setClusterSize( clusterSize );
 
     return result;
   }

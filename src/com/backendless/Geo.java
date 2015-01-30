@@ -171,6 +171,11 @@ public final class Geo
     result.setQuery( geoQuery );
     result.setType( GeoPoint.class );
 
+    if( geoQuery.getDpp() != null && geoQuery.getDpp() > 0 )
+    {
+      setReferenceToCluster( result );
+    }
+
     return result;
   }
 
@@ -190,6 +195,11 @@ public final class Geo
           response.setQuery( geoQuery );
           response.setType( GeoPoint.class );
 
+          if( geoQuery.getDpp() != null && geoQuery.getDpp() > 0 )
+          {
+            setReferenceToCluster( response );
+          }
+
           if( responder != null )
             responder.handleResponse( response );
         }
@@ -208,7 +218,8 @@ public final class Geo
     }
   }
 
-  public BackendlessCollection<SearchMatchesResult> relativeFind( BackendlessGeoQuery geoQuery ) throws BackendlessException
+  public BackendlessCollection<SearchMatchesResult> relativeFind(
+          BackendlessGeoQuery geoQuery ) throws BackendlessException
   {
     if( geoQuery == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_GEO_QUERY );
@@ -291,6 +302,61 @@ public final class Geo
     } );
   }
 
+  public GeoPoint loadMetadata( final GeoPoint geoPoint )
+  {
+    Map<String, Object> metadata;
+    if( geoPoint instanceof GeoCluster )
+    {
+      metadata = (Map<String, Object>) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId(), ((GeoCluster) geoPoint).getGeoQuery() } );
+    }
+    else
+    {
+      metadata = (Map<String, Object>) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId(), null } );
+    }
+
+    geoPoint.setMetadata( metadata );
+    return geoPoint;
+  }
+
+  public void loadMetadata( final GeoPoint geoPoint, final AsyncCallback<GeoPoint> responder )
+  {
+    AsyncCallback<Map<String, Object>> invoker = new AsyncCallback<Map<String, Object>>()
+    {
+      @Override
+      public void handleResponse( Map<String, Object> response )
+      {
+        geoPoint.setMetadata( response );
+
+        if( responder != null )
+          responder.handleResponse( geoPoint );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        if( responder != null )
+          responder.handleFault( fault );
+      }
+    };
+
+    if(geoPoint instanceof GeoCluster){
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId(), ((GeoCluster) geoPoint).getGeoQuery() }, invoker);
+    } else {
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId(), null }, invoker);
+    }
+  }
+
+
+  private void setReferenceToCluster(BackendlessCollection<GeoPoint> collection){
+    for( GeoPoint geoPoint : collection.getData() )
+    {
+      if( geoPoint instanceof GeoCluster )
+      {
+        ((GeoCluster) geoPoint).setGeoQuery( (BackendlessGeoQuery) collection.getQuery() );
+      }
+    }
+  }
+
   private void checkCategoryName( String categoryName ) throws BackendlessException
   {
     if( categoryName == null )
@@ -353,5 +419,13 @@ public final class Geo
 
     if( geoQuery.getPageSize() < 0 )
       throw new IllegalArgumentException( ExceptionMessage.WRONG_PAGE_SIZE );
+
+    if( geoQuery.getDpp() != null )
+    {
+      if( geoQuery.getDpp() < 0 || geoQuery.getClusterSize() == null || geoQuery.getClusterSize() < 0 )
+      {
+        throw new IllegalArgumentException( ExceptionMessage.WRONG_CLUSTERISATION_QUERY );
+      }
+    }
   }
 }
