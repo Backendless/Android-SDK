@@ -18,13 +18,16 @@
 
 package com.backendless.geo;
 
+import com.backendless.exceptions.BackendlessException;
+import com.backendless.exceptions.ExceptionMessage;
+
 /**
  * Created by baas on 20.01.15.
  */
 public class GeoCluster extends GeoPoint
 {
   private int totalPoints;
-  private BackendlessGeoQuery geoQuery;
+  private BackendlessGeoQuery geoQuery = null;
 
   public int getTotalPoints()
   {
@@ -43,7 +46,14 @@ public class GeoCluster extends GeoPoint
 
   public void setGeoQuery( BackendlessGeoQuery geoQuery )
   {
-    this.geoQuery = geoQuery;
+    if( this.geoQuery == null )
+    {
+      this.geoQuery = geoQuery;
+    }
+    else
+    {
+      throw new BackendlessException( ExceptionMessage.GEO_QUERY_SET_PERMISSION );
+    }
   }
 
   @Override
@@ -81,14 +91,14 @@ public class GeoCluster extends GeoPoint
   {
     int result;
     long temp;
-      result = objectId.hashCode();
-      result = 31 * result + totalPoints;
-      temp = Double.doubleToLongBits( latitude );
-      result = 31 * result + (int) (temp ^ (temp >>> 32));
-      temp = Double.doubleToLongBits( longitude );
-      result = 31 * result + (int) (temp ^ (temp >>> 32));
-      result = 31 * result + (categories != null ? categories.hashCode() : 0);
-      result = 31 * result + (metadata != null ? metadata.hashCode() : 0);
+    result = objectId.hashCode();
+    result = 31 * result + totalPoints;
+    temp = Double.doubleToLongBits( latitude );
+    result = 31 * result + (int) (temp ^ (temp >>> 32));
+    temp = Double.doubleToLongBits( longitude );
+    result = 31 * result + (int) (temp ^ (temp >>> 32));
+    result = 31 * result + (categories != null ? categories.hashCode() : 0);
+    result = 31 * result + (metadata != null ? metadata.hashCode() : 0);
     return result;
   }
 

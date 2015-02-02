@@ -348,11 +348,12 @@ public final class Geo
 
 
   private void setReferenceToCluster(BackendlessCollection<GeoPoint> collection){
+    BackendlessGeoQuery geoQuery = new ProtectedBackendlessGeoQuery( (BackendlessGeoQuery) collection.getQuery() );
     for( GeoPoint geoPoint : collection.getData() )
     {
       if( geoPoint instanceof GeoCluster )
       {
-        ((GeoCluster) geoPoint).setGeoQuery( (BackendlessGeoQuery) collection.getQuery() );
+        ((GeoCluster) geoPoint).setGeoQuery( geoQuery );
       }
     }
   }

@@ -21,10 +21,7 @@ package com.backendless.geo;
 import com.backendless.IBackendlessQuery;
 import com.backendless.commons.geo.AbstractBackendlessGeoQuery;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements IBackendlessQuery
 {
@@ -252,7 +249,7 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     setClusteringParams( westLongitude, eastLongitude, mapWidth, CLUSTER_SIZE_DEFAULT_VALUE );
   }
 
-  public void setClusteringParams(double westLongitude, double eastLongitude, int mapWidth, int clusterSize )
+  public void setClusteringParams( double westLongitude, double eastLongitude, int mapWidth, int clusterGridSize )
   {
     double longDiff = eastLongitude - westLongitude;
     if( longDiff < 0 )
@@ -262,7 +259,7 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
 
     double degreePerPixel = longDiff / mapWidth;
 
-    setClusteringParams( degreePerPixel, clusterSize );
+    setClusteringParams( degreePerPixel, clusterGridSize );
   }
 
   @Override
@@ -285,6 +282,64 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     result.setDpp( dpp );
     result.setClusterSize( clusterSize );
 
+    return result;
+  }
+
+  @Override
+  public boolean equals( Object o )
+  {
+    if( this == o )
+      return true;
+    if( o == null || getClass() != o.getClass() )
+      return false;
+
+    BackendlessGeoQuery geoQuery = (BackendlessGeoQuery) o;
+
+    if( categories != null ? !categories.equals( super.categories ) : super.categories != null )
+      return false;
+    if( metadata != null ? !metadata.equals( super.metadata ) : super.metadata != null )
+      return false;
+    if( latitude != null ? !latitude.equals( super.latitude ) : super.latitude != null )
+      return false;
+    if( longitude != null ? !longitude.equals( super.longitude ) : super.longitude != null )
+      return false;
+    if( radius != null ? !radius.equals( super.radius ) : super.radius != null )
+      return false;
+    if( !Arrays.equals( searchRectangle, geoQuery.searchRectangle ) )
+      return false;
+    if( units != geoQuery.units )
+      return false;
+    if( Double.compare( super.relativeFindPercentThreshold, relativeFindPercentThreshold ) != 0 )
+      return false;
+    if( relativeFindMetadata != null ? !relativeFindMetadata.equals( super.relativeFindMetadata ) : super.relativeFindMetadata != null )
+      return false;
+    if( whereClause != null ? !whereClause.equals( super.whereClause ) : super.whereClause != null )
+      return false;
+    if( clusterSize != null ? !clusterSize.equals( super.clusterSize ) : super.clusterSize != null )
+      return false;
+    if( dpp != null ? !dpp.equals( super.dpp ) : super.dpp != null )
+      return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    int result = categories != null ? categories.hashCode() : 0;
+    long temp;
+    result = 31 * result + (metadata != null ? metadata.hashCode() : 0);
+    result = 31 * result + (latitude != null ? latitude.hashCode() : 0);
+    result = 31 * result + (longitude != null ? longitude.hashCode() : 0);
+    result = 31 * result + (radius != null ? radius.hashCode() : 0);
+    result = 31 * result + (searchRectangle != null ? Arrays.hashCode( searchRectangle ) : 0);
+    result = 31 * result + (units != null ? units.hashCode() : 0);
+    result = 31 * result + (relativeFindMetadata != null ? relativeFindMetadata.hashCode() : 0);
+    temp = Double.doubleToLongBits( relativeFindPercentThreshold );
+    result = 31 * result + (int) (temp ^ (temp >>> 32));
+    result = 31 * result + (whereClause != null ? whereClause.hashCode() : 0);
+    result = 31 * result + (dpp != null ? dpp.hashCode() : 0);
+    result = 31 * result + (clusterSize != null ? clusterSize.hashCode() : 0);
     return result;
   }
 }
