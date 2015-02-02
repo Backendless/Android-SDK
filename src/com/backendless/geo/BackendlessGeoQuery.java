@@ -249,7 +249,7 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     setClusteringParams( westLongitude, eastLongitude, mapWidth, CLUSTER_SIZE_DEFAULT_VALUE );
   }
 
-  public void setClusteringParams( double westLongitude, double eastLongitude, int mapWidth, int clusterSize )
+  public void setClusteringParams( double westLongitude, double eastLongitude, int mapWidth, int clusterGridSize )
   {
     double longDiff = eastLongitude - westLongitude;
     if( longDiff < 0 )
@@ -259,7 +259,7 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
 
     double degreePerPixel = longDiff / mapWidth;
 
-    setClusteringParams( degreePerPixel, clusterSize );
+    setClusteringParams( degreePerPixel, clusterGridSize );
   }
 
   @Override

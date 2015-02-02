@@ -213,7 +213,7 @@ public class ProtectedBackendlessGeoQuery extends BackendlessGeoQuery
   }
 
   @Override
-  public void setClusteringParams( double westLongitude, double eastLongitude, int mapWidth, int clusterSize )
+  public void setClusteringParams( double westLongitude, double eastLongitude, int mapWidth, int clusterGridSize )
   {
     throw new BackendlessException( String.format( ExceptionMessage.GEO_QUERY_METHOD_PERMISSION, "setClusteringParams" ) );
   }
