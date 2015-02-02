@@ -764,10 +764,17 @@ public final class Persistence
     Set<Map.Entry> entries = result.entrySet();
     for( Map.Entry entry : entries )
     {
+      if( entry.getValue() instanceof GeoPoint )
+        continue;
+
       //check if entry is collection
       if( entry.getValue() instanceof Collection )
       {
         Collection collection = (Collection) entry.getValue();
+
+        if( collection.isEmpty() || collection.iterator().next() instanceof GeoPoint )
+          continue;
+
         Collection newCollection = new ArrayList();
 
         for( Object item : collection )
@@ -777,10 +784,6 @@ public final class Persistence
           // http://stackoverflow.com/questions/8703678/how-can-i-check-if-a-class-belongs-to-java-jdk
           if( item != null && item.getClass().getClassLoader() != "".getClass().getClassLoader() )
           {
-            //if entry is GeoPoint, don't serialize
-            if( entry.getValue() instanceof GeoPoint )
-              continue;
-
             if( marked.contains( item ) ) //cyclic relation
             {
               //take from cache and substitute
@@ -800,10 +803,6 @@ public final class Persistence
       }
       else //not collection
       {
-        //if entry is GeoPoint, don't serialize
-        if( entry.getValue() instanceof GeoPoint )
-          continue;
-
         //if instance of user object
         //check if class if user-defined
         // http://stackoverflow.com/questions/8703678/how-can-i-check-if-a-class-belongs-to-java-jdk
