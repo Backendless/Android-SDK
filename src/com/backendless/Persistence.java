@@ -24,6 +24,7 @@ import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.geo.GeoPoint;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 import com.backendless.property.ObjectProperty;
@@ -763,10 +764,17 @@ public final class Persistence
     Set<Map.Entry> entries = result.entrySet();
     for( Map.Entry entry : entries )
     {
+      if( entry.getValue() instanceof GeoPoint )
+        continue;
+
       //check if entry is collection
       if( entry.getValue() instanceof Collection )
       {
         Collection collection = (Collection) entry.getValue();
+
+        if( collection.isEmpty() || collection.iterator().next() instanceof GeoPoint )
+          continue;
+
         Collection newCollection = new ArrayList();
 
         for( Object item : collection )
@@ -793,7 +801,7 @@ public final class Persistence
         Object key = entry.getKey();
         result.put( key, newCollection );
       }
-      else
+      else //not collection
       {
         //if instance of user object
         //check if class if user-defined
