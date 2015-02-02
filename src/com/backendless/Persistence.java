@@ -24,6 +24,7 @@ import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.geo.GeoPoint;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 import com.backendless.property.ObjectProperty;
@@ -776,6 +777,10 @@ public final class Persistence
           // http://stackoverflow.com/questions/8703678/how-can-i-check-if-a-class-belongs-to-java-jdk
           if( item != null && item.getClass().getClassLoader() != "".getClass().getClassLoader() )
           {
+            //if entry is GeoPoint, don't serialize
+            if( entry.getValue() instanceof GeoPoint )
+              continue;
+
             if( marked.contains( item ) ) //cyclic relation
             {
               //take from cache and substitute
@@ -793,8 +798,12 @@ public final class Persistence
         Object key = entry.getKey();
         result.put( key, newCollection );
       }
-      else
+      else //not collection
       {
+        //if entry is GeoPoint, don't serialize
+        if( entry.getValue() instanceof GeoPoint )
+          continue;
+
         //if instance of user object
         //check if class if user-defined
         // http://stackoverflow.com/questions/8703678/how-can-i-check-if-a-class-belongs-to-java-jdk
