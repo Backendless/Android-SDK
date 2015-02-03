@@ -46,6 +46,7 @@ public final class Geo
   private Geo()
   {
     Types.addClientClassMapping( "com.backendless.geo.model.GeoPoint", GeoPoint.class );
+    Types.addClientClassMapping( "com.backendless.geo.model.GeoCluster", GeoCluster.class );
     Types.addClientClassMapping( "com.backendless.geo.model.SearchMatchesResult", SearchMatchesResult.class );
     Types.addClientClassMapping( "com.backendless.geo.BackendlessGeoQuery", BackendlessGeoQuery.class );
     Types.addClientClassMapping( "com.backendless.geo.model.GeoCategory", GeoCategory.class );
