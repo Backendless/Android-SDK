@@ -46,19 +46,7 @@ public class CollectionAdaptingPolicy<E> implements IAdaptingPolicy<E>
         Object[] dataArray = (Object[]) data.getArray();
 
         for( int i = 0; i < dataArray.length; i++ )
-        {
-          try
-          {
-            String expectedClassName = clazz.getCanonicalName();
-            String comingClassName = ((NamedObject) dataArray[ i ]).getObjectName();
-            String lookingForClass = expectedClassName.contains( "." ) ? expectedClassName.substring( 0, expectedClassName.lastIndexOf( '.' ) ) + comingClassName.substring( comingClassName.lastIndexOf( '.' ) ) : expectedClassName;
-            ((NamedObject) dataArray[ i ]).setDefaultType( Class.forName( lookingForClass ) );
-          }
-          catch( ClassNotFoundException e )
-          {
-            ((NamedObject) dataArray[ i ]).setDefaultType( clazz );
-          }
-        }
+          ((NamedObject) dataArray[ i ]).setDefaultType( clazz );
       }
 
       result = (BackendlessCollection<?>) entity.adapt( list.getClass() );
