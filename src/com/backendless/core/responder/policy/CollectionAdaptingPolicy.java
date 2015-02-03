@@ -51,7 +51,8 @@ public class CollectionAdaptingPolicy<E> implements IAdaptingPolicy<E>
           {
             String expectedClassName = clazz.getCanonicalName();
             String comingClassName = ((NamedObject) dataArray[ i ]).getObjectName();
-            ( (NamedObject) dataArray[ i ] ).setDefaultType( Class.forName( expectedClassName.substring( 0, expectedClassName.lastIndexOf( '.' ) ) + comingClassName.substring( comingClassName.lastIndexOf( '.' ) ) ) );
+            String lookingForClass = expectedClassName.contains( "." ) ? expectedClassName.substring( 0, expectedClassName.lastIndexOf( '.' ) ) + comingClassName.substring( comingClassName.lastIndexOf( '.' ) ) : expectedClassName;
+            ((NamedObject) dataArray[ i ]).setDefaultType( Class.forName( lookingForClass ) );
           }
           catch( ClassNotFoundException e )
           {

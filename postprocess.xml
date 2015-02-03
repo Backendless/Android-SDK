@@ -25,6 +25,6 @@
         <copy file="out/backendless.jar" todir="samples/MessagingService/pushdemo/libs" overwrite="true"/>
         <copy file="out/backendless.jar" todir="samples/UserService/userservicedemo/libs" overwrite="true"/>
         <copy file="out/backendless.jar" todir="samples/UserService/rolesdemo/libs" overwrite="true"/>
-        <copy file="out/backendless.jar" todir="../../tests/android/junit/libs" overwrite="true"/>
+        <copy file="out/backendless.jar" todir="/home/scadge/backendless/src/client/tests/android/junit/libs" overwrite="true"/>
     </target>
 </project>
