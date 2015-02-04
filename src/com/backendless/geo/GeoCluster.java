@@ -105,7 +105,7 @@ public class GeoCluster extends GeoPoint
   @Override
   public String toString()
   {
-    final StringBuilder sb = new StringBuilder( "GeoPoint{" );
+    final StringBuilder sb = new StringBuilder( "GeoCluster{" );
     sb.append( "objectId='" ).append( objectId ).append( '\'' );
     sb.append( ", latitude=" ).append( latitude );
     sb.append( ", longitude=" ).append( longitude );
