@@ -189,13 +189,13 @@ public class ProtectedBackendlessGeoQuery extends BackendlessGeoQuery
   }
 
   @Override
-  public Integer getClusterSize()
+  public Integer getClusterGridSize()
   {
-    return geoQuery.getClusterSize();
+    return geoQuery.getClusterGridSize();
   }
 
   @Override
-  public void setClusterSize( Integer clusterSize )
+  public void setClusterGridSize( Integer clusterSize )
   {
     throw new BackendlessException( String.format( ExceptionMessage.GEO_QUERY_METHOD_PERMISSION, "setClusterSize" ) );
   }

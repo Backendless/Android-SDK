@@ -340,15 +340,18 @@ public final class Geo
       }
     };
 
-    if(geoPoint instanceof GeoCluster){
-      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId(), ((GeoCluster) geoPoint).getGeoQuery() }, invoker);
-    } else {
-      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId(), null }, invoker);
+    if( geoPoint instanceof GeoCluster )
+    {
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId(), ((GeoCluster) geoPoint).getGeoQuery() }, invoker );
+    }
+    else
+    {
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId(), null }, invoker );
     }
   }
 
-
-  private void setReferenceToCluster(BackendlessCollection<GeoPoint> collection){
+  private void setReferenceToCluster( BackendlessCollection<GeoPoint> collection )
+  {
     BackendlessGeoQuery geoQuery = new ProtectedBackendlessGeoQuery( (BackendlessGeoQuery) collection.getQuery() );
     for( GeoPoint geoPoint : collection.getData() )
     {
@@ -424,7 +427,7 @@ public final class Geo
 
     if( geoQuery.getDpp() != null )
     {
-      if( geoQuery.getDpp() < 0 || geoQuery.getClusterSize() == null || geoQuery.getClusterSize() < 0 )
+      if( geoQuery.getDpp() < 0 || (geoQuery.getClusterGridSize() != null && geoQuery.getClusterGridSize() < 0) )
       {
         throw new IllegalArgumentException( ExceptionMessage.WRONG_CLUSTERISATION_QUERY );
       }
