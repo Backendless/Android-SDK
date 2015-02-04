@@ -280,7 +280,7 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     result.setRelativeFindMetadata( relativeFindMetadata );
     result.setRelativeFindPercentThreshold( relativeFindPercentThreshold );
     result.setDpp( dpp );
-    result.setClusterSize( clusterSize );
+    result.setClusterGridSize( clusterGridSize );
 
     return result;
   }
@@ -315,7 +315,7 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
       return false;
     if( whereClause != null ? !whereClause.equals( super.whereClause ) : super.whereClause != null )
       return false;
-    if( clusterSize != null ? !clusterSize.equals( super.clusterSize ) : super.clusterSize != null )
+    if( clusterGridSize != null ? !clusterGridSize.equals( super.clusterGridSize ) : super.clusterGridSize != null )
       return false;
     if( dpp != null ? !dpp.equals( super.dpp ) : super.dpp != null )
       return false;
@@ -339,7 +339,7 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     result = 31 * result + (int) (temp ^ (temp >>> 32));
     result = 31 * result + (whereClause != null ? whereClause.hashCode() : 0);
     result = 31 * result + (dpp != null ? dpp.hashCode() : 0);
-    result = 31 * result + (clusterSize != null ? clusterSize.hashCode() : 0);
+    result = 31 * result + (clusterGridSize != null ? clusterGridSize.hashCode() : 0);
     return result;
   }
 }
