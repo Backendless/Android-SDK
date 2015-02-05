@@ -392,9 +392,29 @@ public final class Persistence
   protected <E> void loadRelations( final E entity, final List<String> relations ) throws Exception
   {
     if( entity == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY_NAME );
+    {
+      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
+    }
 
-    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity, relations };
+    checkDeclaredType( entity.getClass() );
+    final Map serializedEntity = serializeToMap( entity );
+    MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
+    {
+      @Override
+      public Object substitute( Object o )
+      {
+        if( o == entity )
+        {
+          return serializedEntity;
+        }
+        else
+        {
+          return o;
+        }
+      }
+    } );
+
+    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), serializedEntity, relations };
     IChainedResponder chainedResponder = new AdaptingResponder<E>( (Class<E>) entity.getClass(), new PoJoAdaptingPolicy<E>() );
     E loadedRelations = (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, chainedResponder );
     loadRelationsToEntity( entity, loadedRelations, relations );
@@ -407,7 +427,26 @@ public final class Persistence
       if( entity == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-      Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity, relations };
+      checkDeclaredType( entity.getClass() );
+      final Map serializedEntity = serializeToMap( entity );
+
+      MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
+      {
+        @Override
+        public Object substitute( Object o )
+        {
+          if( o == entity )
+          {
+            return serializedEntity;
+          }
+          else
+          {
+            return o;
+          }
+        }
+      } );
+
+      Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), serializedEntity, relations };
       Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, new AsyncCallback<E>()
       {
         @Override
