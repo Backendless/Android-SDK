@@ -19,7 +19,9 @@
 package com.backendless.io;
 
 import com.backendless.BackendlessUser;
+import weborb.reader.AnonymousObject;
 import weborb.reader.NamedObject;
+import weborb.reader.ReferenceCache;
 import weborb.types.IAdaptingType;
 import weborb.util.IArgumentObjectFactory;
 
@@ -37,18 +39,30 @@ public class BackendlessUserFactory implements IArgumentObjectFactory
     if( iAdaptingType.getClass().getName().equals( "weborb.reader.NullType" ))
       return null;
 
-    HashMap props = null;
+      ReferenceCache refCache = ReferenceCache.getInstance();
+      BackendlessUser backendlessUser;
+
+      if( refCache.hasObject( iAdaptingType, BackendlessUser.class ) )
+      {
+          return refCache.getObject( iAdaptingType, BackendlessUser.class );
+      }
+      else
+      {
+          backendlessUser = new BackendlessUser();
+          refCache.addObject( iAdaptingType, BackendlessUser.class, backendlessUser );
+      }
+
+    HashMap props;
 
     try
     {
-     props = (HashMap) iAdaptingType.adapt( HashMap.class );
+      props = (HashMap) iAdaptingType.adapt( HashMap.class );
     }
     catch( Throwable t )
     {
       props = new HashMap();
     }
 
-    BackendlessUser backendlessUser = new BackendlessUser();
     backendlessUser.setProperties( props );
     return backendlessUser;
   }
