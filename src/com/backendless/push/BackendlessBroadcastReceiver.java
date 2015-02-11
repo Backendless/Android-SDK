@@ -251,7 +251,6 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
       if( isInternal )
       {
         onRegistered( context, registrationId );
-        return;
       }
 
       GCMRegistrar.resetBackoff( context );
