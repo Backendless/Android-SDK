@@ -24,6 +24,7 @@ import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.geo.GeoPoint;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.QueryOptions;
 import com.backendless.property.ObjectProperty;
@@ -391,9 +392,29 @@ public final class Persistence
   protected <E> void loadRelations( final E entity, final List<String> relations ) throws Exception
   {
     if( entity == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY_NAME );
+    {
+      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
+    }
 
-    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity, relations };
+    checkDeclaredType( entity.getClass() );
+    final Map serializedEntity = serializeToMap( entity );
+    MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
+    {
+      @Override
+      public Object substitute( Object o )
+      {
+        if( o == entity )
+        {
+          return serializedEntity;
+        }
+        else
+        {
+          return o;
+        }
+      }
+    } );
+
+    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), serializedEntity, relations };
     IChainedResponder chainedResponder = new AdaptingResponder<E>( (Class<E>) entity.getClass(), new PoJoAdaptingPolicy<E>() );
     E loadedRelations = (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, chainedResponder );
     loadRelationsToEntity( entity, loadedRelations, relations );
@@ -406,7 +427,26 @@ public final class Persistence
       if( entity == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-      Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity, relations };
+      checkDeclaredType( entity.getClass() );
+      final Map serializedEntity = serializeToMap( entity );
+
+      MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
+      {
+        @Override
+        public Object substitute( Object o )
+        {
+          if( o == entity )
+          {
+            return serializedEntity;
+          }
+          else
+          {
+            return o;
+          }
+        }
+      } );
+
+      Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), serializedEntity, relations };
       Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, new AsyncCallback<E>()
       {
         @Override
@@ -763,10 +803,17 @@ public final class Persistence
     Set<Map.Entry> entries = result.entrySet();
     for( Map.Entry entry : entries )
     {
+      if( entry.getValue() instanceof GeoPoint )
+        continue;
+
       //check if entry is collection
       if( entry.getValue() instanceof Collection )
       {
         Collection collection = (Collection) entry.getValue();
+
+        if( collection.isEmpty() || collection.iterator().next() instanceof GeoPoint )
+          continue;
+
         Collection newCollection = new ArrayList();
 
         for( Object item : collection )
@@ -793,7 +840,7 @@ public final class Persistence
         Object key = entry.getKey();
         result.put( key, newCollection );
       }
-      else
+      else //not collection
       {
         //if instance of user object
         //check if class if user-defined

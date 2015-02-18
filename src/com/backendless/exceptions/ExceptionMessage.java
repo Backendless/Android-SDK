@@ -120,4 +120,7 @@ public class ExceptionMessage
   public static final String CAN_NOT_SAVE_LOG = "Can not save log";
 
   public final static String WRONG_CLUSTERISATION_QUERY = "Wrong clusterization parameter's values. All values should be positive number";
+
+  public final static String GEO_QUERY_METHOD_PERMISSION = "Changing the %s property may result in invalid cluster formation. As a result the property is immutable and cannot be changed";
+  public final static String GEO_QUERY_SET_PERMISSION = "A geo query cannot be assigned to a cluster";
 }
