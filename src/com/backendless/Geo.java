@@ -374,8 +374,17 @@ public final class Geo
       throw new IllegalArgumentException( ExceptionMessage.DEFAULT_CATEGORY_NAME );
   }
 
-  private void checkCoordinates( double latitude, double longitude ) throws BackendlessException
+  private void checkCoordinates( Double latitude, Double longitude ) throws BackendlessException
   {
+    if( latitude == null && longitude == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_COORDINATES );
+
+    if( latitude == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_LATITUDE );
+
+    if( longitude == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_LONGITUDE );
+
     if( latitude > 90 || latitude < -90 )
       throw new IllegalArgumentException( ExceptionMessage.WRONG_LATITUDE_VALUE );
 
