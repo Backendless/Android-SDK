@@ -389,7 +389,7 @@ public final class Persistence
     }
   }
 
-  protected <E> void loadRelations( final E entity, final List<String> relations ) throws Exception
+  protected <E> void loadRelations( final E entity, final List<String> relations ) throws BackendlessException
   {
     if( entity == null )
     {
@@ -481,8 +481,7 @@ public final class Persistence
     }
   }
 
-  private <E> void loadRelationsToEntity( E entity, E loadedRelations,
-                                          List<String> relations ) throws IllegalAccessException
+  private <E> void loadRelationsToEntity( E entity, E loadedRelations, List<String> relations )
   {
     if( entity.getClass().equals( backendlessUserClass ) )
     {
@@ -502,7 +501,17 @@ public final class Persistence
         if( !declaredField.isAccessible() )
           declaredField.setAccessible( true );
 
-        declaredField.set( entity, declaredField.get( loadedRelations ) );
+        try
+        {
+          Object fieldValue = declaredField.get( loadedRelations );
+          declaredField.set( entity, fieldValue );
+        }
+        catch( IllegalAccessException e )
+        {
+          //actually, won't be ever thrown because field was set accessible several lines above
+          String message = String.format( ExceptionMessage.FIELD_NOT_ACCESSIBLE, declaredField.getName() ) + ": " + e.getMessage();
+          throw new BackendlessException( message );
+        }
       }
     }
   }
