@@ -21,9 +21,10 @@ package com.backendless.geo;
 import com.backendless.IBackendlessQuery;
 import com.backendless.commons.geo.AbstractBackendlessGeoQuery;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements IBackendlessQuery
+public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements IBackendlessQuery, Serializable
 {
   private Units units;
   private boolean includeMeta;
