@@ -49,6 +49,12 @@ public class BackendlessException extends RuntimeException
     backendlessFault = new BackendlessFault( code, message );
   }
 
+  public BackendlessException( BackendlessFault fault )
+  {
+    super( fault.getMessage() == null ? fault.getDetail() : fault.getMessage() );
+    backendlessFault = fault;
+  }
+
   public String getCode()
   {
     return backendlessFault.getCode();
