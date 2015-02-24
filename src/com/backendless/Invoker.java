@@ -124,12 +124,7 @@ class Invoker
 
     public void errorHandler( Fault fault )
     {
-      String message = fault.getMessage();
-
-      if( message == null )
-        message = fault.getDetail();
-
-      this.exception = new BackendlessException( fault.getCode(), message );
+      this.exception = new BackendlessException( new BackendlessFault( fault ) );
     }
 
     public Object getResult() throws BackendlessException
