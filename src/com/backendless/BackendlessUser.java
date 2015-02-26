@@ -18,10 +18,11 @@
 
 package com.backendless;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BackendlessUser
+public class BackendlessUser implements Serializable
 {
   private final Map<String, Object> properties = new HashMap<String, Object>();
 

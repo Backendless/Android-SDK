@@ -24,12 +24,12 @@ public class BackendlessFault extends Fault
 {
   public BackendlessFault( Fault fault )
   {
-    this( fault.getCode(), fault.getMessage() );
+    super( fault.getMessage(), fault.getDetail(), fault.getCode() );
   }
 
   public BackendlessFault( String faultCode, String message )
   {
-    super( message, null, String.valueOf( faultCode ) );
+    super( message, null, faultCode );
   }
 
   public BackendlessFault( String message )

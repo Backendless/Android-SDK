@@ -271,7 +271,7 @@ class DataStoreFactory
       }
 
       @Override
-      public void loadRelations( E entity, List<String> relations ) throws Exception
+      public void loadRelations( E entity, List<String> relations ) throws BackendlessException
       {
         Backendless.Persistence.loadRelations( entity, relations );
       }
