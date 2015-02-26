@@ -23,22 +23,22 @@ class UserServiceAndroidExtra
   private UserServiceAndroidExtra()
   {}
 
-  HashMap<String, Object> loginWithFacebookSession( com.facebook.Session facebookSession,
+  BackendlessUser loginWithFacebookSession( com.facebook.Session facebookSession,
                                                     com.facebook.model.GraphUser facebookUser,
                                                     Map<String, String> facebookFieldsMappings )
   {
     FacebookBundle facebookBundle = getFacebookRequestBundle( facebookSession, facebookUser );
     Object[] requestData = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), facebookBundle.socialUserId, facebookBundle.accessToken, facebookBundle.expirationDate, facebookBundle.permissions, facebookFieldsMappings };
-    HashMap<String, Object> invokeResult = (HashMap<String, Object>) Invoker.invokeSync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithFacebook", requestData );
+    BackendlessUser invokeResult = Invoker.invokeSync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithFacebook", requestData );
 
-    HeadersManager.getInstance().addHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY, (String) invokeResult.get( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() ) );
+    HeadersManager.getInstance().addHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY, (String) invokeResult.getProperty( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() ) );
 
     return invokeResult;
   }
 
   void loginWithFacebookSession( com.facebook.Session facebookSession, com.facebook.model.GraphUser facebookUser,
                                  Map<String, String> facebookFieldsMappings,
-                                 AsyncCallback<HashMap<String, Object>> responder )
+                                 AsyncCallback<BackendlessUser> responder )
   {
 
     FacebookBundle facebookBundle = getFacebookRequestBundle( facebookSession, facebookUser );
@@ -72,18 +72,18 @@ class UserServiceAndroidExtra
 
   void loginWithFacebook( android.app.Activity context, android.webkit.WebView webView,
                           Map<String, String> facebookFieldsMappings, List<String> permissions,
-                          final AsyncCallback<HashMap<String, Object>> responder )
+                          final AsyncCallback<BackendlessUser> responder )
   {
     new AbstractSocialLoginStrategy.Builder( context, webView, AbstractSocialLoginStrategy.SocialType.FACEBOOK, facebookFieldsMappings, permissions, getSocialDialogResponder( responder ) ).build().run();
   }
 
   void loginWithTwitter( android.app.Activity context, android.webkit.WebView webView,
-                         Map<String, String> twitterFieldsMappings, AsyncCallback<HashMap<String, Object>> responder )
+                         Map<String, String> twitterFieldsMappings, AsyncCallback<BackendlessUser> responder )
   {
     new AbstractSocialLoginStrategy.Builder( context, webView, AbstractSocialLoginStrategy.SocialType.TWITTER, twitterFieldsMappings, null, getSocialDialogResponder( responder ) ).build().run();
   }
 
-  private AsyncCallback<JSONObject> getSocialDialogResponder( final AsyncCallback<HashMap<String, Object>> responder )
+  private AsyncCallback<JSONObject> getSocialDialogResponder( final AsyncCallback<BackendlessUser> responder )
   {
     return new AsyncCallback<JSONObject>()
     {
@@ -92,13 +92,13 @@ class UserServiceAndroidExtra
       {
         try
         {
-          HashMap<String, Object> result = new HashMap<String, Object>();
+          BackendlessUser result = new BackendlessUser();
 
           Iterator keys = response.keys();
           while( keys.hasNext() )
           {
             String key = String.valueOf( keys.next() );
-            result.put( key, response.get( key ) );
+            result.setProperty( key, response.get( key ) );
           }
 
           if( responder != null )

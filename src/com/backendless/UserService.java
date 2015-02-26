@@ -28,7 +28,11 @@ import com.backendless.property.AbstractProperty;
 import com.backendless.property.UserProperty;
 import weborb.types.Types;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class UserService
 {
@@ -49,6 +53,7 @@ public final class UserService
   {
     Types.addClientClassMapping( "com.backendless.services.users.property.AbstractProperty", AbstractProperty.class );
     Types.addClientClassMapping( "com.backendless.services.users.property.UserProperty", UserProperty.class );
+    Types.addClientClassMapping( "Users", BackendlessUser.class );
   }
 
   public BackendlessUser CurrentUser()
@@ -173,7 +178,7 @@ public final class UserService
       if( password == null || password.equals( "" ) )
         throw new IllegalArgumentException( ExceptionMessage.NULL_PASSWORD );
 
-      handleUserLogin( (HashMap<String, Object>) Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), login, password } ), stayLoggedIn );
+      handleUserLogin( (BackendlessUser) Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), login, password } ), stayLoggedIn );
 
       return currentUser;
     }
@@ -719,14 +724,15 @@ public final class UserService
     currentUser.setProperties( user.getProperties() );
   }
 
-  private void handleUserLogin( Map<String, Object> invokeResult, boolean stayLoggedIn )
+  private void handleUserLogin( BackendlessUser invokeResult, boolean stayLoggedIn )
   {
-    String userToken = (String) invokeResult.get( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() );
+    String userToken = (String) invokeResult.getProperty( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() );
     HeadersManager.getInstance().addHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY, userToken );
 
-    for( String key : invokeResult.keySet() )
+    final Map<String, Object> properties = invokeResult.getProperties();
+    for( String key : properties.keySet() )
       if( !key.equals( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() ) )
-        currentUser.setProperty( key, invokeResult.get( key ) );
+        currentUser.setProperty( key, properties.get( key ) );
 
     if( stayLoggedIn )
     {
@@ -735,13 +741,13 @@ public final class UserService
     }
   }
 
-  private AsyncCallback<HashMap<String, Object>> getUserLoginAsyncHandler(
+  private AsyncCallback<BackendlessUser> getUserLoginAsyncHandler(
           final AsyncCallback<BackendlessUser> responder, final boolean stayLoggedIn )
   {
-    return new AsyncCallback<HashMap<String, Object>>()
+    return new AsyncCallback<BackendlessUser>()
     {
       @Override
-      public void handleResponse( HashMap<String, Object> response )
+      public void handleResponse( BackendlessUser response )
       {
         try
         {
