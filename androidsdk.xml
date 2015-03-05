@@ -116,7 +116,7 @@
     </path>
 
     <path id="library.backendless.commons.classpath">
-        <pathelement location="${basedir}/libs/common-1.0-SNAPSHOT.jar"/>
+        <pathelement location="${basedir}/libs/commons-2.0.2.jar"/>
     </path>
 
 
@@ -251,7 +251,7 @@
         <property name="artifact.temp.output.backendless:jar" value="${artifacts.temp.dir}/backendless_jar"/>
         <mkdir dir="${artifact.temp.output.backendless:jar}"/>
 
-        <unjar dest="${backendless.output.dir}" src="${basedir}/libs/common-1.0-SNAPSHOT.jar"/>
+        <unjar dest="${backendless.output.dir}" src="${basedir}/libs/commons-2.0.2.jar"/>
 
         <jar destfile="${temp.jar.path.backendless.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
             <zipfileset dir="${backendless.output.dir}"/>
