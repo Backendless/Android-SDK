@@ -139,7 +139,7 @@ public class PointsActivity extends Activity
       else
         holder = (ViewHolder) convertView.getTag();
 
-      holder.city.setText( pointsList.get( position ).getMetadata( Defaults.CITY_TAG ) );
+      holder.city.setText( String.valueOf(pointsList.get( position ).getMetadata( Defaults.CITY_TAG )) ));
       holder.latitude.setText( String.valueOf( pointsList.get( position ).getLatitude() ) );
       holder.longitude.setText( String.valueOf( pointsList.get( position ).getLongitude() ) );
 

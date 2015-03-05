@@ -16,37 +16,62 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.examples.userservice.demo;
+package com.backendless.files;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import com.backendless.Backendless;
+import com.backendless.utils.PermissionTypes;
 
-public class LoggedInActivity extends Activity
+public abstract class Permission
 {
-  public void onCreate( Bundle savedInstanceState )
-  {
-    super.onCreate( savedInstanceState );
-    setContentView( R.layout.loggedin );
+  protected String folder;
+  protected PermissionTypes access;
+  protected FileOperation operation;
 
-    findViewById( R.id.logoutButton ).setOnClickListener( new View.OnClickListener()
-    {
-      @Override
-      public void onClick( View view )
-      {
-        Backendless.UserService.logout( new DefaultCallback<Void>( LoggedInActivity.this )
-        {
-          @Override
-          public void handleResponse( Void response )
-          {
-            super.handleResponse( response );
-            startActivity( new Intent( getBaseContext(), MainActivity.class ) );
-            finish();
-          }
-        } );
-      }
-    } );
+  protected Permission( String folder, PermissionTypes access, FileOperation operation )
+  {
+    this.folder = folder;
+    this.access = access;
+    this.operation = operation;
   }
+
+  public Permission()
+  {
+  }
+
+  public boolean hasAccess()
+  {
+    return access.equals( PermissionTypes.GRANT ) ;
+  }
+
+  public String getFolder()
+  {
+    return folder;
+  }
+
+  public PermissionTypes getAccess()
+  {
+    return access;
+  }
+
+  public FileOperation getOperation()
+  {
+    return operation;
+  }
+
+  public void setFolder( String folder )
+  {
+    this.folder = folder;
+  }
+
+  public void setAccess( PermissionTypes access )
+  {
+    this.access = access;
+  }
+
+  public void setOperation( FileOperation operation )
+  {
+    this.operation = operation;
+  }
+
+
 }
+

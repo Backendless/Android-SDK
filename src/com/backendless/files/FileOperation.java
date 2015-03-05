@@ -16,37 +16,10 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.examples.userservice.demo;
+package com.backendless.files;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import com.backendless.Backendless;
-
-public class LoggedInActivity extends Activity
+public enum FileOperation
 {
-  public void onCreate( Bundle savedInstanceState )
-  {
-    super.onCreate( savedInstanceState );
-    setContentView( R.layout.loggedin );
+  READ, DELETE, WRITE, PERMISSION
 
-    findViewById( R.id.logoutButton ).setOnClickListener( new View.OnClickListener()
-    {
-      @Override
-      public void onClick( View view )
-      {
-        Backendless.UserService.logout( new DefaultCallback<Void>( LoggedInActivity.this )
-        {
-          @Override
-          public void handleResponse( Void response )
-          {
-            super.handleResponse( response );
-            startActivity( new Intent( getBaseContext(), MainActivity.class ) );
-            finish();
-          }
-        } );
-      }
-    } );
-  }
 }

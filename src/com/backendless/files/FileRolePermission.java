@@ -16,37 +16,18 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.examples.userservice.demo;
+package com.backendless.files;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import com.backendless.Backendless;
+import com.backendless.utils.PermissionTypes;
 
-public class LoggedInActivity extends Activity
+public class FileRolePermission extends Permission
 {
-  public void onCreate( Bundle savedInstanceState )
+  protected FileRolePermission( String folder, PermissionTypes access, FileOperation operation )
   {
-    super.onCreate( savedInstanceState );
-    setContentView( R.layout.loggedin );
+    super(folder, access, operation );
+  }
 
-    findViewById( R.id.logoutButton ).setOnClickListener( new View.OnClickListener()
-    {
-      @Override
-      public void onClick( View view )
-      {
-        Backendless.UserService.logout( new DefaultCallback<Void>( LoggedInActivity.this )
-        {
-          @Override
-          public void handleResponse( Void response )
-          {
-            super.handleResponse( response );
-            startActivity( new Intent( getBaseContext(), MainActivity.class ) );
-            finish();
-          }
-        } );
-      }
-    } );
+  public FileRolePermission()
+  {
   }
 }

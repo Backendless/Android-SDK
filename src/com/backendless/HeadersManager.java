@@ -21,7 +21,6 @@ package com.backendless;
 import com.backendless.commons.DeviceType;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.ExceptionMessage;
-import com.backendless.servercode.Util;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -52,7 +51,7 @@ public class HeadersManager
           instance.addHeader( HeadersEnum.APP_ID_NAME, Backendless.getApplicationId() );
           instance.addHeader( HeadersEnum.SECRET_KEY_NAME, Backendless.getSecretKey() );
 
-          if( Util.isCodeRunner() )
+          if( Backendless.isCodeRunner() )
             instance.addHeader( HeadersEnum.APP_TYPE_NAME, DeviceType.BL.name() );
           else
             instance.addHeader( HeadersEnum.APP_TYPE_NAME, DeviceType.ANDROID.name() );

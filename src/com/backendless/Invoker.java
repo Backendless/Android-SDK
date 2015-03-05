@@ -20,8 +20,8 @@ package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.async.message.AsyncMessage;
-import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.core.ResponseCarrier;
+import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
@@ -124,7 +124,12 @@ class Invoker
 
     public void errorHandler( Fault fault )
     {
-      this.exception = new BackendlessException( fault.getCode(), fault.getMessage() );
+      String message = fault.getMessage();
+
+      if( message == null )
+        message = fault.getDetail();
+
+      this.exception = new BackendlessException( fault.getCode(), message );
     }
 
     public Object getResult() throws BackendlessException

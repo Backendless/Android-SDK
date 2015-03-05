@@ -6,9 +6,9 @@ package com.backendless.commerce;
 public class GooglePlayPurchaseStatus
 {
   private String kind;
-  private Long purchaseTime;
-  private Integer purchaseState;
-  private Integer consumptionState;
+  private long purchaseTimeMillis;
+  private int purchaseState;
+  private int consumptionState;
   private String developerPayload;
 
   public String getKind()
@@ -21,32 +21,32 @@ public class GooglePlayPurchaseStatus
     this.kind = kind;
   }
 
-  public Long getPurchaseTime()
+  public long getPurchaseTimeMillis()
   {
-    return purchaseTime;
+    return purchaseTimeMillis;
   }
 
-  public void setPurchaseTime( Long purchaseTime )
+  public void setPurchaseTimeMillis( long purchaseTimeMillis )
   {
-    this.purchaseTime = purchaseTime;
+    this.purchaseTimeMillis = purchaseTimeMillis;
   }
 
-  public Integer getPurchaseState()
+  public int getPurchaseState()
   {
     return purchaseState;
   }
 
-  public void setPurchaseState( Integer purchaseState )
+  public void setPurchaseState( int purchaseState )
   {
     this.purchaseState = purchaseState;
   }
 
-  public Integer getConsumptionState()
+  public int getConsumptionState()
   {
     return consumptionState;
   }
 
-  public void setConsumptionState( Integer consumptionState )
+  public void setConsumptionState( int consumptionState )
   {
     this.consumptionState = consumptionState;
   }
