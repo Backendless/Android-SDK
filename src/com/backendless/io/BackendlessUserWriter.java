@@ -19,6 +19,8 @@
 package com.backendless.io;
 
 import com.backendless.BackendlessUser;
+import com.backendless.Persistence;
+import com.backendless.UserService;
 import weborb.writer.IProtocolFormatter;
 import weborb.writer.ITypeWriter;
 import weborb.writer.MessageWriter;
@@ -34,7 +36,7 @@ public class BackendlessUserWriter implements ITypeWriter
     BackendlessUser user = (BackendlessUser) o;
 
     Map<String, Object> props = user.getProperties();
-    props.put( "___class", "Users" );
+    props.put( Persistence.REST_CLASS_FIELD, UserService.USERS_TABLE_NAME );
     props.put(  "objectId", user.getUserId() );
     MessageWriter.writeObject( props, iProtocolFormatter );
   }

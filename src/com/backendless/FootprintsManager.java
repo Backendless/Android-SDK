@@ -24,7 +24,7 @@ public class FootprintsManager
   {
   }
 
-  static FootprintsManager getInstance()
+  public static FootprintsManager getInstance()
   {
     return instance;
   }
@@ -74,14 +74,8 @@ public class FootprintsManager
      * @param entity    entity object
      * @param entityMap entity map
      */
-    void putMissingPropsToEntityMap( Object entity, Map entityMap )
+    public void putMissingPropsToEntityMap( Object entity, Map entityMap )
     {
-      //to avoid endless recursion
-      if( marked.contains( entity ) )
-        return;
-      else
-        marked.add( entity );
-
       //put objectId if exists in cache
       if( !entityMap.containsKey( Footprint.OBJECT_ID_FIELD_NAME ) )
       {
@@ -99,54 +93,6 @@ public class FootprintsManager
         if( meta != null )
           entityMap.put( Footprint.META_FIELD_NAME, meta );
       }
-
-      /*
-      try
-      {
-        for( Object key : entityMap.keySet() )
-        {
-          Object value = entityMap.get( key );
-
-          //recursively restore inner objects' properties
-          if( value instanceof Map )
-          {
-            //get inner object
-            //looks for getter method and invokes it
-            Object entityField = entity.getClass().getField( (String) key ).get( entity );// new PropertyDescriptor( (String) key, entity.getClass() ).getReadMethod().invoke( entity );
-
-            putMissingPropsToEntityMap( entityField, (Map) value );
-          }
-
-          if( value instanceof Collection )
-          {
-            //get inner object collection
-            //looks for getter method and invokes it
-            Collection entityCollection = (Collection)entity.getClass().getField( (String) key ).get( entity );// new PropertyDescriptor( (String) key, entity.getClass() ).getReadMethod().invoke( entity );
-            //retrieve map collection
-            Collection mapCollection = (Collection) value;
-
-            //serialize every object in collection and put its missing properties
-            Iterator entityCollectionIterator = entityCollection.iterator();
-            Iterator mapCollectionIterator = mapCollection.iterator();
-            while( entityCollectionIterator.hasNext() )
-            {
-              putMissingPropsToEntityMap( entityCollectionIterator.next(), (Map) mapCollectionIterator.next() );
-            }
-          }
-        }
-      }
-      catch( NoSuchFieldException e )
-      {
-        throw new BackendlessException( e );
-      }
-      catch( IllegalAccessException e )
-      {
-        throw new BackendlessException( e );
-      }
-      finally
-      {
-        marked.remove( entity );
-      }     */
     }
 
     /**
@@ -155,7 +101,7 @@ public class FootprintsManager
      *
      * @param serialized entity's map used to iterate through fields and duplicate footprints recursively
      * @param newEntity  entity from server
-     * @param oldEntity  old entity (the one on which a method was called)
+     * @param oldEntity  entity on which a method was called (.save(), .create() etc.)
      */
     void duplicateFootprintForObject( Map serialized, Object newEntity, Object oldEntity )
     {

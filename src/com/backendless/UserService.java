@@ -28,11 +28,7 @@ import com.backendless.property.AbstractProperty;
 import com.backendless.property.UserProperty;
 import weborb.types.Types;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class UserService
 {
@@ -41,6 +37,8 @@ public final class UserService
 
   private final static BackendlessUser currentUser = new BackendlessUser();
   private final static Object currentUserLock = new Object();
+
+  public static final String USERS_TABLE_NAME = "Users";
 
   private static final UserService instance = new UserService();
 

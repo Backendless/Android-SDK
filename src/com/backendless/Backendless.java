@@ -46,7 +46,7 @@ public final class Backendless
   public static final Events Events = com.backendless.Events.getInstance();
   public static final Cache Cache = com.backendless.Cache.getInstance();
   public static final Counters Counters = com.backendless.Counters.getInstance();
-  private static String url = "https://api.backendless.com";
+  private static String url = "http://10.0.1.53:9000";
   private static IBackendlessService backendlessService;
   private static IBackendlessService.Init backendlessInitService;
   private static Boolean isAndroid;
