@@ -1,6 +1,7 @@
 package com.backendless;
 
 import com.backendless.exceptions.BackendlessException;
+import com.backendless.geo.GeoPoint;
 import weborb.reader.AnonymousObject;
 import weborb.reader.ArrayType;
 import weborb.reader.NamedObject;
@@ -37,7 +38,9 @@ public class FootprintsManager
   public String getObjectId( Object entity )
   {
     if( persistenceCache.containsKey( entity ) )
+    {
       return getEntityFootprint( entity ).getObjectId();
+    }
 
     return null;
   }
@@ -45,7 +48,9 @@ public class FootprintsManager
   public String getMeta( Object entity )
   {
     if( persistenceCache.containsKey( entity ) )
+    {
       return getEntityFootprint( entity ).get__meta();
+    }
 
     return null;
   }
@@ -53,7 +58,9 @@ public class FootprintsManager
   public Date getCreated( Object entity )
   {
     if( persistenceCache.containsKey( entity ) )
+    {
       return getEntityFootprint( entity ).getCreated();
+    }
 
     return null;
   }
@@ -61,7 +68,9 @@ public class FootprintsManager
   public Date getUpdated( Object entity )
   {
     if( persistenceCache.containsKey( entity ) )
+    {
       return getEntityFootprint( entity ).getUpdated();
+    }
 
     return null;
   }
@@ -82,7 +91,9 @@ public class FootprintsManager
         String objectId = getObjectId( entity );
 
         if( objectId != null )
+        {
           entityMap.put( Footprint.OBJECT_ID_FIELD_NAME, objectId );
+        }
       }
 
       //put __meta if exists in cache
@@ -91,7 +102,9 @@ public class FootprintsManager
         String meta = getMeta( entity );
 
         if( meta != null )
+        {
           entityMap.put( Footprint.META_FIELD_NAME, meta );
+        }
       }
     }
 
@@ -99,15 +112,17 @@ public class FootprintsManager
      * When the object is created on server, client gets new instance of it. In order to remember the system fields
      * (objectId, __meta etc.) it is required to duplicate the old instance in cache.
      *
-     * @param serialized entity's map used to iterate through fields and duplicate footprints recursively
-     * @param persistedEntity  entity from server
-     * @param initialEntity  entity on which a method was called (.save(), .create() etc.)
+     * @param serialized      entity's map used to iterate through fields and duplicate footprints recursively
+     * @param persistedEntity entity from server
+     * @param initialEntity   entity on which a method was called (.save(), .create() etc.)
      */
     void duplicateFootprintForObject( Map serialized, Object persistedEntity, Object initialEntity )
     {
       //to avoid endless recursion
       if( marked.contains( persistedEntity ) )
+      {
         return;
+      }
       else
       {
         marked.add( persistedEntity );
@@ -136,6 +151,12 @@ public class FootprintsManager
           }
           else if( entry.getValue() instanceof Collection )
           {
+            // TODO: discuss and decide what to do with GeoPoints here
+            if( ((Collection) entry.getValue()).iterator().next() instanceof GeoPoint )
+            {
+              continue;
+            }
+
             // retrieve persisted entity's field value (which is collection)
             Field persistedEntityField = persistedEntity.getClass().getDeclaredField( (String) entry.getKey() );
             persistedEntityField.setAccessible( true ); // in case the field is private
@@ -191,9 +212,13 @@ public class FootprintsManager
     {
       //to avoid endless recursion
       if( marked.contains( newEntity ) )
+      {
         return;
+      }
       else
+      {
         marked.add( newEntity );
+      }
 
       try
       {
@@ -312,9 +337,13 @@ public class FootprintsManager
     {
       //to avoid endless recursion
       if( marked.contains( entity ) )
+      {
         return;
+      }
       else
+      {
         marked.add( entity );
+      }
 
       try
       {
@@ -380,9 +409,13 @@ public class FootprintsManager
     {
       //to avoid endless recursion
       if( marked.contains( entity ) )
+      {
         return;
+      }
       else
+      {
         marked.add( entity );
+      }
 
       try
       {
@@ -407,7 +440,9 @@ public class FootprintsManager
           Object[] arrayInstance = instance instanceof List ? ((List) instance).toArray() : (Object[]) instance;
 
           for( int i = 0; i < arrayInstance.length; i++ )
+          {
             putEntityFootprintToCache( arrayInstance[ i ], entities[ i ] );
+          }
         }
         else
         {
