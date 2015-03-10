@@ -100,16 +100,18 @@ public class FootprintsManager
      * (objectId, __meta etc.) it is required to duplicate the old instance in cache.
      *
      * @param serialized entity's map used to iterate through fields and duplicate footprints recursively
-     * @param newEntity  entity from server
-     * @param oldEntity  entity on which a method was called (.save(), .create() etc.)
+     * @param persistedEntity  entity from server
+     * @param initialEntity  entity on which a method was called (.save(), .create() etc.)
      */
-    void duplicateFootprintForObject( Map serialized, Object newEntity, Object oldEntity )
+    void duplicateFootprintForObject( Map serialized, Object persistedEntity, Object initialEntity )
     {
       //to avoid endless recursion
-      if( marked.contains( newEntity ) )
+      if( marked.contains( persistedEntity ) )
         return;
       else
-        marked.add( newEntity );
+      {
+        marked.add( persistedEntity );
+      }
 
       try
       {
@@ -119,33 +121,49 @@ public class FootprintsManager
         {
           if( entry.getValue() instanceof Map )
           {
-            //find read method for field and get object value
-            Object newEntityField = newEntity.getClass().getField( (String) entry.getKey() ).get( newEntity );// new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
-            Object oldEntityField = oldEntity.getClass().getField( (String) entry.getKey() ).get( oldEntity );//new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
+            // retrieve persisted entity's field value
+            Field persistedEntityField = persistedEntity.getClass().getDeclaredField( (String) entry.getKey() );
+            persistedEntityField.setAccessible( true ); // in case the field is private
+            Object persistedEntityFieldValue = persistedEntityField.get( persistedEntity );
 
-            duplicateFootprintForObject( (Map) entry.getValue(), newEntityField, oldEntityField );
+            // retrieve initial entity's field value
+            Field initialEntityField = initialEntity.getClass().getDeclaredField( (String) entry.getKey() );
+            initialEntityField.setAccessible( true ); // in case the field is private
+            Object initialEntityFieldValue = initialEntityField.get( initialEntity );
+
+            // duplicate footprint recursively
+            duplicateFootprintForObject( (Map) entry.getValue(), persistedEntityFieldValue, initialEntityFieldValue );
           }
           else if( entry.getValue() instanceof Collection )
           {
-            Collection newObjectCollection = (Collection) newEntity.getClass().getField( (String) entry.getKey() ).get( newEntity );// new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
-            Collection oldObjectCollection = (Collection) oldEntity.getClass().getField( (String) entry.getKey() ).get( oldEntity );// new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
+            // retrieve persisted entity's field value (which is collection)
+            Field persistedEntityField = persistedEntity.getClass().getDeclaredField( (String) entry.getKey() );
+            persistedEntityField.setAccessible( true ); // in case the field is private
+            Collection persistedEntityFieldValue = (Collection) persistedEntityField.get( persistedEntity );
+
+            // retrieve initial entity's field value (which is collection)
+            Field initialEntityField = initialEntity.getClass().getDeclaredField( (String) entry.getKey() );
+            initialEntityField.setAccessible( true ); // in case the field is private
+            Collection initialEntityFieldValue = (Collection) initialEntityField.get( initialEntity );
+
             Collection mapCollection = (Collection) entry.getValue();
 
-            Iterator newObjectCollectionIterator = newObjectCollection.iterator();
-            Iterator oldObjectCollectionIterator = oldObjectCollection.iterator();
+            // recursively duplicate footprint for each object in collection
+            Iterator persistedEntityFieldValueIterator = persistedEntityFieldValue.iterator();
+            Iterator initialEntityFieldValueIterator = initialEntityFieldValue.iterator();
             Iterator mapCollectionIterator = mapCollection.iterator();
-            while( oldObjectCollectionIterator.hasNext() )
+            while( initialEntityFieldValueIterator.hasNext() )
             {
-              duplicateFootprintForObject( (Map) mapCollectionIterator.next(), newObjectCollectionIterator.next(), oldObjectCollectionIterator.next() );
+              duplicateFootprintForObject( (Map) mapCollectionIterator.next(), persistedEntityFieldValueIterator.next(), initialEntityFieldValueIterator.next() );
             }
           }
         }
 
-        Footprint footprint = persistenceCache.get( oldEntity );
+        Footprint footprint = persistenceCache.get( initialEntity );
 
         if( footprint != null )
         {
-          persistenceCache.put( newEntity, footprint );
+          persistenceCache.put( persistedEntity, footprint );
         }
       }
       catch( IllegalAccessException e )
@@ -158,7 +176,7 @@ public class FootprintsManager
       }
       finally
       {
-        marked.remove( newEntity );
+        marked.remove( persistedEntity );
       }
     }
 
@@ -306,16 +324,25 @@ public class FootprintsManager
         {
           if( entry.getValue() instanceof Map )
           {
-            //find getter method and call it to retrieve object property
-            Object entityField = entity.getClass().getField( (String) entry.getKey() ).get( entity );//new PropertyDescriptor( (String) entry.getKey(), entity.getClass() ).getReadMethod().invoke( entity );
-            removeFootprintForObject( (Map) entry.getValue(), entityField );
+            // retrieve entity field value
+            Field entityField = entity.getClass().getDeclaredField( (String) entry.getKey() );
+            entityField.setAccessible( true ); // in case the field is private
+            Object entityFieldValue = entityField.get( entity );
+
+            // remove footprints recursively
+            removeFootprintForObject( (Map) entry.getValue(), entityFieldValue );
           }
           else if( entry.getValue() instanceof Collection )
           {
-            Collection objectCollection = (Collection) entity.getClass().getField( (String) entry.getKey() ).get( entity );//new PropertyDescriptor( (String) entry.getKey(), entity.getClass() ).getReadMethod().invoke( entity );
+            // retrieve entity field value (which is collection)
+            Field entityField = entity.getClass().getDeclaredField( (String) entry.getKey() );
+            entityField.setAccessible( true ); // in case the field is private
+            Collection entityFieldValue = (Collection) entityField.get( entity );
+
             Collection mapCollection = (Collection) entry.getValue();
 
-            Iterator objectCollectionIterator = objectCollection.iterator();
+            // remove footprints recursively for each object in collection
+            Iterator objectCollectionIterator = entityFieldValue.iterator();
             Iterator mapCollectionIterator = mapCollection.iterator();
             while( objectCollectionIterator.hasNext() )
             {
