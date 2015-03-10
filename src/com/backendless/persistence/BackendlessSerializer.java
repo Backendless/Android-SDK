@@ -15,7 +15,6 @@ import java.util.*;
  */
 public class BackendlessSerializer
 {
-  static Set<Object> marked = new HashSet<Object>(  );
   //used to serialize objects with cyclic relations
   static Map<Object, Map<String, Object>> serializedCache = new HashMap<Object, Map<String, Object>>();
 
@@ -96,7 +95,7 @@ public class BackendlessSerializer
         {
           if( !isBelongsJdk( listEntryItem.getClass() ) )
           {
-            newCollection.add( geoOrMakeSerializedObject( listEntryItem ) );
+            newCollection.add( getOrMakeSerializedObject( listEntryItem ) );
           }
         }
 
@@ -106,7 +105,7 @@ public class BackendlessSerializer
       {
         if( !isBelongsJdk( entityEntryValue.getClass() ) )
         {
-          entityEntry.setValue( geoOrMakeSerializedObject( entityEntryValue ) );
+          entityEntry.setValue( getOrMakeSerializedObject( entityEntryValue ) );
         }
       }
     }
@@ -122,7 +121,7 @@ public class BackendlessSerializer
    * @param entityEntryValue object to be serialized
    * @return Map formed from given object
    */
-  private static Map<String, Object> geoOrMakeSerializedObject( Object entityEntryValue )
+  private static Map<String, Object> getOrMakeSerializedObject( Object entityEntryValue )
   {
     if( serializedCache.containsKey( entityEntryValue ) ) //cyclic relation
     {
@@ -134,6 +133,27 @@ public class BackendlessSerializer
       //serialize and put into result
       return serializeToMap( entityEntryValue );
     }
+  }
+
+  /**
+   * Serializes entities inside BackendlessUser properties.
+   *
+   * @param user BackendlessUser whose properties need to be serialized
+   */
+  public static void serializeUserProperties( BackendlessUser user )
+  {
+    Map<String, Object> serializedProperties = user.getProperties();
+
+    Set<Map.Entry<String, Object>> properties = serializedProperties.entrySet();
+    for( Map.Entry<String, Object> property : properties )
+    {
+      if( !isBelongsJdk( property.getValue().getClass() ) )
+      {
+        property.setValue( serializeToMap( property.getValue() ) );
+      }
+    }
+
+    user.setProperties( serializedProperties );
   }
 
   /**
