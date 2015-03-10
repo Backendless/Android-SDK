@@ -83,7 +83,7 @@ public final class Persistence
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
     checkDeclaredType( entity.getClass() );
-    final Map serializedEntity = BackendlessSerializer.serializeToMap( entity );
+    final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
     MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
     {
       @Override
@@ -132,7 +132,7 @@ public final class Persistence
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
       checkDeclaredType( entity.getClass() );
-      final Map serializedEntity = BackendlessSerializer.serializeToMap( entity );
+      final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
 
       MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
       {
@@ -402,7 +402,7 @@ public final class Persistence
     }
 
     checkDeclaredType( entity.getClass() );
-    final Map serializedEntity = BackendlessSerializer.serializeToMap( entity );
+    final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
     MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
     {
       @Override
@@ -433,7 +433,7 @@ public final class Persistence
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
       checkDeclaredType( entity.getClass() );
-      final Map serializedEntity = BackendlessSerializer.serializeToMap( entity );
+      final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
 
       MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
       {

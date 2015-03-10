@@ -2,11 +2,11 @@ package com.backendless;
 
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.geo.GeoPoint;
+import com.backendless.utils.ReflectionUtil;
 import weborb.reader.AnonymousObject;
 import weborb.reader.ArrayType;
 import weborb.reader.NamedObject;
 
-import java.lang.reflect.Field;
 import java.util.*;
 
 /**
@@ -112,11 +112,12 @@ public class FootprintsManager
      * When the object is created on server, client gets new instance of it. In order to remember the system fields
      * (objectId, __meta etc.) it is required to duplicate the old instance in cache.
      *
-     * @param serialized      entity's map used to iterate through fields and duplicate footprints recursively
+     * @param serializedEntity      entity's map used to iterate through fields and duplicate footprints recursively
      * @param persistedEntity entity from server
      * @param initialEntity   entity on which a method was called (.save(), .create() etc.)
      */
-    void duplicateFootprintForObject( Map serialized, Object persistedEntity, Object initialEntity )
+    void duplicateFootprintForObject( Map<String, Object> serializedEntity, Object persistedEntity,
+                                      Object initialEntity )
     {
       //to avoid endless recursion
       if( marked.contains( persistedEntity ) )
@@ -131,23 +132,19 @@ public class FootprintsManager
       try
       {
         //iterate through fields in the object and duplicate entities recursively
-        Set<Map.Entry> entries = serialized.entrySet();
-        for( Map.Entry entry : entries )
+        Set<Map.Entry<String, Object>> entries = serializedEntity.entrySet();
+        for( Map.Entry<String, Object> entry : entries )
         {
           if( entry.getValue() instanceof Map )
           {
             // retrieve persisted entity's field value
-            Field persistedEntityField = persistedEntity.getClass().getDeclaredField( (String) entry.getKey() );
-            persistedEntityField.setAccessible( true ); // in case the field is private
-            Object persistedEntityFieldValue = persistedEntityField.get( persistedEntity );
+            Object persistedEntityFieldValue = ReflectionUtil.getFieldValue( persistedEntity, entry.getKey() );
 
             // retrieve initial entity's field value
-            Field initialEntityField = initialEntity.getClass().getDeclaredField( (String) entry.getKey() );
-            initialEntityField.setAccessible( true ); // in case the field is private
-            Object initialEntityFieldValue = initialEntityField.get( initialEntity );
+            Object initialEntityFieldValue = ReflectionUtil.getFieldValue( initialEntity, entry.getKey() );
 
             // duplicate footprint recursively
-            duplicateFootprintForObject( (Map) entry.getValue(), persistedEntityFieldValue, initialEntityFieldValue );
+            duplicateFootprintForObject( (Map<String, Object>) entry.getValue(), persistedEntityFieldValue, initialEntityFieldValue );
           }
           else if( entry.getValue() instanceof Collection )
           {
@@ -158,14 +155,10 @@ public class FootprintsManager
             }
 
             // retrieve persisted entity's field value (which is collection)
-            Field persistedEntityField = persistedEntity.getClass().getDeclaredField( (String) entry.getKey() );
-            persistedEntityField.setAccessible( true ); // in case the field is private
-            Collection persistedEntityFieldValue = (Collection) persistedEntityField.get( persistedEntity );
+            Collection persistedEntityFieldValue = (Collection) ReflectionUtil.getFieldValue( persistedEntity, entry.getKey() );
 
             // retrieve initial entity's field value (which is collection)
-            Field initialEntityField = initialEntity.getClass().getDeclaredField( (String) entry.getKey() );
-            initialEntityField.setAccessible( true ); // in case the field is private
-            Collection initialEntityFieldValue = (Collection) initialEntityField.get( initialEntity );
+            Collection initialEntityFieldValue = (Collection) ReflectionUtil.getFieldValue( initialEntity, entry.getKey() );
 
             Collection mapCollection = (Collection) entry.getValue();
 
@@ -187,10 +180,6 @@ public class FootprintsManager
           persistenceCache.put( persistedEntity, footprint );
         }
       }
-      catch( IllegalAccessException e )
-      {
-        throw new BackendlessException( e );
-      }
       catch( NoSuchFieldException e )
       {
         throw new BackendlessException( e );
@@ -208,7 +197,7 @@ public class FootprintsManager
      * @param newEntity  entity from server
      * @param oldEntity  entity on which a method was called (.save(), .create() etc.)
      */
-    void updateFootprintForObject( Map serialized, Object newEntity, Object oldEntity )
+    void updateFootprintForObject( Map<String, Object> serialized, Object newEntity, Object oldEntity )
     {
       //to avoid endless recursion
       if( marked.contains( newEntity ) )
@@ -223,11 +212,11 @@ public class FootprintsManager
       try
       {
         //update footprints recursively
-        Set<Map.Entry> entries = serialized.entrySet();
-        for( Map.Entry entry : entries )
+        Set<Map.Entry<String, Object>> entries = serialized.entrySet();
+        for( Map.Entry<String, Object> entry : entries )
         {
-          String key = (String) entry.getKey();
-          String upperKey = ((String) entry.getKey()).substring( 0, 1 ).toUpperCase().concat( ((String) entry.getKey()).substring( 1 ) );
+          String key = entry.getKey();
+          String upperKey = entry.getKey().substring( 0, 1 ).toUpperCase().concat( entry.getKey().substring( 1 ) );
 
           if( entry.getValue() instanceof Map )
           {
@@ -235,31 +224,23 @@ public class FootprintsManager
             Object newEntityField;
             try
             {
-              Field declaredField = newEntity.getClass().getDeclaredField( key );
-              declaredField.setAccessible( true );
-              newEntityField = declaredField.get( newEntity );//new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
+              newEntityField = ReflectionUtil.getFieldValue( newEntity, key );
             }
             catch( NoSuchFieldException nfe )
             {
               //try to find field with first letter in uppercase
-              Field declaredField = newEntity.getClass().getDeclaredField( upperKey );
-              declaredField.setAccessible( true );
-              newEntityField = declaredField.get( newEntity );
+              newEntityField = ReflectionUtil.getFieldValue( newEntity, upperKey );
             }
 
             Object oldEntityField;
             try
             {
-              Field declaredField = oldEntity.getClass().getDeclaredField( key );
-              declaredField.setAccessible( true );
-              oldEntityField = declaredField.get( oldEntity );//new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
+              oldEntityField = ReflectionUtil.getFieldValue( oldEntity, key );
             }
             catch( NoSuchFieldException nfe )
             {
               //try to find field with first letter in uppercase
-              Field declaredField = oldEntity.getClass().getDeclaredField( upperKey );
-              declaredField.setAccessible( true );
-              oldEntityField = declaredField.get( oldEntity );
+              oldEntityField = ReflectionUtil.getFieldValue( oldEntity, upperKey );
             }
 
             updateFootprintForObject( (Map) entry.getValue(), newEntityField, oldEntityField );
@@ -269,31 +250,23 @@ public class FootprintsManager
             Collection newObjectCollection;
             try
             {
-              Field declaredField = newEntity.getClass().getDeclaredField( key );
-              declaredField.setAccessible( true );
-              newObjectCollection = (Collection) declaredField.get( newEntity );//new PropertyDescriptor( (String) entry.getKey(), newEntity.getClass() ).getReadMethod().invoke( newEntity );
+              newObjectCollection = (Collection) ReflectionUtil.getFieldValue( newEntity, key );
             }
             catch( NoSuchFieldException nfe )
             {
               //try to find field with first letter in uppercase
-              Field declaredField = newEntity.getClass().getDeclaredField( upperKey );
-              declaredField.setAccessible( true );
-              newObjectCollection = (Collection) declaredField.get( newEntity );
+              newObjectCollection = (Collection) ReflectionUtil.getFieldValue( newEntity, upperKey );
             }
 
             Collection oldObjectCollection;
             try
             {
-              Field declaredField = oldEntity.getClass().getDeclaredField( key );
-              declaredField.setAccessible( true );
-              oldObjectCollection = (Collection) declaredField.get( oldEntity );//new PropertyDescriptor( (String) entry.getKey(), oldEntity.getClass() ).getReadMethod().invoke( oldEntity );
+              oldObjectCollection = (Collection) ReflectionUtil.getFieldValue( oldEntity, key );
             }
             catch( NoSuchFieldException nfe )
             {
               //try to find field with first letter in uppercase
-              Field declaredField = oldEntity.getClass().getDeclaredField( upperKey );
-              declaredField.setAccessible( true );
-              oldObjectCollection = (Collection) declaredField.get( oldEntity );
+              oldObjectCollection = (Collection) ReflectionUtil.getFieldValue( oldEntity, upperKey );
             }
 
             Collection mapCollection = (Collection) entry.getValue();
@@ -313,10 +286,6 @@ public class FootprintsManager
         persistenceCache.put( oldEntity, footprint );
         removeFootprintForObject( serialized, newEntity );
       }
-      catch( IllegalAccessException e )
-      {
-        throw new BackendlessException( e );
-      }
       catch( NoSuchFieldException e )
       {
         throw new BackendlessException( e );
@@ -330,10 +299,10 @@ public class FootprintsManager
     /**
      * Removes entity's footprint from cache.
      *
-     * @param serialized entity's map used to iterate through fields and remove footprints recursively
+     * @param serializedEntity entity's map used to iterate through fields and remove footprints recursively
      * @param entity     entity to be removed
      */
-    void removeFootprintForObject( Map serialized, Object entity )
+    void removeFootprintForObject( Map<String, Object> serializedEntity, Object entity )
     {
       //to avoid endless recursion
       if( marked.contains( entity ) )
@@ -348,25 +317,21 @@ public class FootprintsManager
       try
       {
         //iterate through object's properties and remove footprints recursively
-        Set<Map.Entry> entries = serialized.entrySet();
-        for( Map.Entry entry : entries )
+        Set<Map.Entry<String, Object>> entries = serializedEntity.entrySet();
+        for( Map.Entry<String, Object> entry : entries )
         {
           if( entry.getValue() instanceof Map )
           {
             // retrieve entity field value
-            Field entityField = entity.getClass().getDeclaredField( (String) entry.getKey() );
-            entityField.setAccessible( true ); // in case the field is private
-            Object entityFieldValue = entityField.get( entity );
+            Object entityFieldValue = ReflectionUtil.getFieldValue( entity, entry.getKey() );
 
             // remove footprints recursively
-            removeFootprintForObject( (Map) entry.getValue(), entityFieldValue );
+            removeFootprintForObject( (Map<String, Object>) entry.getValue(), entityFieldValue );
           }
           else if( entry.getValue() instanceof Collection )
           {
             // retrieve entity field value (which is collection)
-            Field entityField = entity.getClass().getDeclaredField( (String) entry.getKey() );
-            entityField.setAccessible( true ); // in case the field is private
-            Collection entityFieldValue = (Collection) entityField.get( entity );
+            Collection entityFieldValue = (Collection) ReflectionUtil.getFieldValue( entity, entry.getKey() );
 
             Collection mapCollection = (Collection) entry.getValue();
 
@@ -375,16 +340,12 @@ public class FootprintsManager
             Iterator mapCollectionIterator = mapCollection.iterator();
             while( objectCollectionIterator.hasNext() )
             {
-              removeFootprintForObject( (Map) mapCollectionIterator.next(), objectCollectionIterator.next() );
+              removeFootprintForObject( (Map<String, Object>) mapCollectionIterator.next(), objectCollectionIterator.next() );
             }
           }
         }
 
         persistenceCache.remove( entity );
-      }
-      catch( IllegalAccessException e )
-      {
-        throw new BackendlessException( e );
       }
       catch( NoSuchFieldException e )
       {
@@ -453,7 +414,7 @@ public class FootprintsManager
 
             if( entityEntryValue instanceof NamedObject || entityEntryValue instanceof ArrayType )
             {
-              Object innerInstance = getObjectFieldByName( instance, entityEntry.getKey() );
+              Object innerInstance = ReflectionUtil.getFieldValue( instance, entityEntry.getKey() );
               putEntityFootprintToCache( innerInstance, entityEntry.getValue() );
             }
           }
@@ -467,15 +428,6 @@ public class FootprintsManager
       }
 
       marked.remove( entity );
-    }
-
-    private Object getObjectFieldByName( Object instance,
-                                         String fieldName ) throws NoSuchFieldException, IllegalAccessException
-    {
-      Field field = instance.getClass().getDeclaredField( fieldName );
-      field.setAccessible( true );
-
-      return field.get( instance );
     }
   }
 }
