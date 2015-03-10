@@ -147,9 +147,10 @@ public class BackendlessSerializer
     Set<Map.Entry<String, Object>> properties = serializedProperties.entrySet();
     for( Map.Entry<String, Object> property : properties )
     {
-      if( !isBelongsJdk( property.getValue().getClass() ) )
+      Object propertyValue = property.getValue();
+      if( propertyValue != null && !isBelongsJdk( propertyValue.getClass() ) )
       {
-        property.setValue( serializeToMap( property.getValue() ) );
+        property.setValue( serializeToMap( propertyValue ) );
       }
     }
 
