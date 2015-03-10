@@ -22,17 +22,14 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.persistence.local.UserIdStorageFactory;
 import com.backendless.persistence.local.UserTokenStorageFactory;
 import com.backendless.property.AbstractProperty;
 import com.backendless.property.UserProperty;
 import weborb.types.Types;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class UserService
 {
@@ -41,6 +38,8 @@ public final class UserService
 
   private final static BackendlessUser currentUser = new BackendlessUser();
   private final static Object currentUserLock = new Object();
+
+  public static final String USERS_TABLE_NAME = "Users";
 
   private static final UserService instance = new UserService();
 
@@ -75,6 +74,9 @@ public final class UserService
   public BackendlessUser register( BackendlessUser user ) throws BackendlessException
   {
     checkUserToBeProper( user );
+
+    BackendlessSerializer.serializeUserProperties( user );
+
     user.putProperties( (HashMap<String, Object>) Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "register", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), user.getProperties() } ) );
 
     return user;
@@ -85,6 +87,8 @@ public final class UserService
     try
     {
       checkUserToBeProper( user );
+
+      BackendlessSerializer.serializeUserProperties( user );
 
       Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "register", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), user.getProperties() }, new AsyncCallback<HashMap<String, Object>>()
       {
@@ -116,6 +120,8 @@ public final class UserService
   {
     checkUserToBeProperForUpdate( user );
 
+    BackendlessSerializer.serializeUserProperties( user );
+
     if( user.getUserId() != null && user.getUserId().equals( "" ) )
       throw new IllegalArgumentException( ExceptionMessage.WRONG_USER_ID );
 
@@ -129,6 +135,8 @@ public final class UserService
     try
     {
       checkUserToBeProperForUpdate( user );
+
+      BackendlessSerializer.serializeUserProperties( user );
 
       if( user.getUserId() != null && user.getUserId().equals( "" ) )
         throw new IllegalArgumentException( ExceptionMessage.WRONG_USER_ID );

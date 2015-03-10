@@ -34,6 +34,12 @@ public class BackendlessUser implements Serializable
   {
   }
 
+  /**
+   * Returns a COPY of user's properties
+   * (this means if you modify the return value, actual user properties won't be modified)
+   *
+   * @return a COPY of this user's properties
+   */
   public Map<String, Object> getProperties()
   {
     return new HashMap<String, Object>( properties );

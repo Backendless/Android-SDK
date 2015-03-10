@@ -128,4 +128,6 @@ public class ExceptionMessage
   public final static String GEO_QUERY_SET_PERMISSION = "A geo query cannot be assigned to a cluster";
 
   public final static String FIELD_NOT_ACCESSIBLE = "Field %s is not accessible";
+
+  public final static String ANONYMOUS_CLASSES_PROHIBITED = "Anonymous class properties are prohibited: %s";
 }
