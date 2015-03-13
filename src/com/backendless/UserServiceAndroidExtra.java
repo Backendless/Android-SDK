@@ -1,6 +1,8 @@
 package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.core.responder.AdaptingResponder;
+import com.backendless.core.responder.policy.BackendlessUserAdaptingPolicy;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.helpers.NonCachingTokenFacebookSession;
@@ -29,7 +31,7 @@ class UserServiceAndroidExtra
   {
     FacebookBundle facebookBundle = getFacebookRequestBundle( facebookSession, facebookUser );
     Object[] requestData = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), facebookBundle.socialUserId, facebookBundle.accessToken, facebookBundle.expirationDate, facebookBundle.permissions, facebookFieldsMappings };
-    BackendlessUser invokeResult = Invoker.invokeSync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithFacebook", requestData );
+    BackendlessUser invokeResult = Invoker.invokeSync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithFacebook", requestData, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
 
     HeadersManager.getInstance().addHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY, (String) invokeResult.getProperty( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() ) );
 
@@ -43,7 +45,7 @@ class UserServiceAndroidExtra
 
     FacebookBundle facebookBundle = getFacebookRequestBundle( facebookSession, facebookUser );
     Object[] requestData = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), facebookBundle.socialUserId, facebookBundle.accessToken, facebookBundle.expirationDate, facebookBundle.permissions, facebookFieldsMappings };
-    Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithFacebook", requestData, responder );
+    Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithFacebook", requestData, responder, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
   }
 
   void loginWithFacebookSdk( android.app.Activity context, final Map<String, String> facebookFieldsMappings,
