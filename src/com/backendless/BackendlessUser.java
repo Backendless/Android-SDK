@@ -18,10 +18,13 @@
 
 package com.backendless;
 
+import java.io.Serializable;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
-public class BackendlessUser
+public class BackendlessUser implements Serializable
 {
   private final Map<String, Object> properties = new HashMap<String, Object>();
 
@@ -33,6 +36,12 @@ public class BackendlessUser
   {
   }
 
+  /**
+   * Returns a COPY of user's properties
+   * (this means if you modify the return value, actual user properties won't be modified)
+   *
+   * @return a COPY of this user's properties
+   */
   public Map<String, Object> getProperties()
   {
     return new HashMap<String, Object>( properties );
@@ -118,6 +127,11 @@ public class BackendlessUser
     }
   }
 
+  public Object removeProperty( String key )
+  {
+    return properties.remove( key );
+  }
+
   @Override
   public boolean equals( Object o )
   {
@@ -135,9 +149,35 @@ public class BackendlessUser
     return true;
   }
 
+  private Object marker = new Object();
+
   @Override
   public int hashCode()
   {
-    return properties.hashCode();
+    Set<Object> refCache = new HashSet<Object>(  );
+    return hashCode( refCache );
+  }
+
+  private int hashCode(Set<Object> refCache)
+  {
+    if(refCache.contains( marker ))
+      return 0;
+
+    refCache.add( marker );
+
+    int hashCode = 0;
+
+    for( Object value : properties.values() )
+    {
+      if(value == null)
+        continue;
+
+      if(value instanceof BackendlessUser)
+        hashCode += ((BackendlessUser) value).hashCode( refCache );
+      else
+        hashCode += value.hashCode();
+    }
+
+    return hashCode;
   }
 }

@@ -46,6 +46,7 @@ public final class Geo
   private Geo()
   {
     Types.addClientClassMapping( "com.backendless.geo.model.GeoPoint", GeoPoint.class );
+    Types.addClientClassMapping( "com.backendless.geo.model.GeoCluster", GeoCluster.class );
     Types.addClientClassMapping( "com.backendless.geo.model.SearchMatchesResult", SearchMatchesResult.class );
     Types.addClientClassMapping( "com.backendless.geo.BackendlessGeoQuery", BackendlessGeoQuery.class );
     Types.addClientClassMapping( "com.backendless.geo.model.GeoCategory", GeoCategory.class );
@@ -171,6 +172,11 @@ public final class Geo
     result.setQuery( geoQuery );
     result.setType( GeoPoint.class );
 
+    if( geoQuery.getDpp() != null && geoQuery.getDpp() > 0 )
+    {
+      setReferenceToCluster( result );
+    }
+
     return result;
   }
 
@@ -190,6 +196,11 @@ public final class Geo
           response.setQuery( geoQuery );
           response.setType( GeoPoint.class );
 
+          if( geoQuery.getDpp() != null && geoQuery.getDpp() > 0 )
+          {
+            setReferenceToCluster( response );
+          }
+
           if( responder != null )
             responder.handleResponse( response );
         }
@@ -208,7 +219,8 @@ public final class Geo
     }
   }
 
-  public BackendlessCollection<SearchMatchesResult> relativeFind( BackendlessGeoQuery geoQuery ) throws BackendlessException
+  public BackendlessCollection<SearchMatchesResult> relativeFind(
+          BackendlessGeoQuery geoQuery ) throws BackendlessException
   {
     if( geoQuery == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_GEO_QUERY );
@@ -291,6 +303,109 @@ public final class Geo
     } );
   }
 
+  public GeoPoint loadMetadata( final GeoPoint geoPoint )
+  {
+    Map<String, Object> metadata;
+    if( geoPoint instanceof GeoCluster )
+    {
+      metadata = (Map<String, Object>) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId(), ((GeoCluster) geoPoint).getGeoQuery() } );
+    }
+    else
+    {
+      metadata = (Map<String, Object>) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId(), null } );
+    }
+
+    geoPoint.setMetadata( metadata );
+    return geoPoint;
+  }
+
+  public void loadMetadata( final GeoPoint geoPoint, final AsyncCallback<GeoPoint> responder )
+  {
+    AsyncCallback<Map<String, Object>> invoker = new AsyncCallback<Map<String, Object>>()
+    {
+      @Override
+      public void handleResponse( Map<String, Object> response )
+      {
+        geoPoint.setMetadata( response );
+
+        if( responder != null )
+          responder.handleResponse( geoPoint );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        if( responder != null )
+          responder.handleFault( fault );
+      }
+    };
+
+    if( geoPoint instanceof GeoCluster )
+    {
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId(), ((GeoCluster) geoPoint).getGeoQuery() }, invoker );
+    }
+    else
+    {
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId(), null }, invoker );
+    }
+  }
+
+  public BackendlessCollection<GeoPoint> loadGeoPoints( final GeoCluster geoCluster )
+  {
+    CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
+    BackendlessCollection<GeoPoint> result = (BackendlessCollection<GeoPoint>) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "loadGeoPoints", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoCluster.getObjectId(), geoCluster.getGeoQuery() }, new AdaptingResponder<GeoPoint>( GeoPoint.class, adaptingPolicy ) );
+
+    result.setQuery( geoCluster.getGeoQuery() );
+    result.setType( GeoPoint.class );
+
+    return result;
+  }
+
+  public void loadGeoPoints( final GeoCluster geoCluster, final AsyncCallback<BackendlessCollection<GeoPoint>> responder )
+  {
+    try
+    {
+      CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
+
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadGeoPoints", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoCluster.getObjectId(), geoCluster.getGeoQuery() }, new AsyncCallback<BackendlessCollection<GeoPoint>>()
+      {
+        @Override
+        public void handleResponse( BackendlessCollection<GeoPoint> response )
+        {
+          response.setQuery( geoCluster.getGeoQuery() );
+          response.setType( GeoPoint.class );
+
+          if( responder != null )
+            responder.handleResponse( response );
+        }
+
+        @Override
+        public void handleFault( BackendlessFault fault )
+        {
+          responder.handleFault( fault );
+        }
+      }, new AdaptingResponder<GeoPoint>( GeoPoint.class, adaptingPolicy ) );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
+  
+  private void setReferenceToCluster( BackendlessCollection<GeoPoint> collection )
+  {
+    BackendlessGeoQuery geoQuery = new ProtectedBackendlessGeoQuery( (BackendlessGeoQuery) collection.getQuery() );
+    for( GeoPoint geoPoint : collection.getData() )
+    {
+      if( geoPoint instanceof GeoCluster )
+      {
+        ((GeoCluster) geoPoint).setGeoQuery( geoQuery );
+      }
+    }
+  }
+
   private void checkCategoryName( String categoryName ) throws BackendlessException
   {
     if( categoryName == null )
@@ -303,8 +418,17 @@ public final class Geo
       throw new IllegalArgumentException( ExceptionMessage.DEFAULT_CATEGORY_NAME );
   }
 
-  private void checkCoordinates( double latitude, double longitude ) throws BackendlessException
+  private void checkCoordinates( Double latitude, Double longitude ) throws BackendlessException
   {
+    if( latitude == null && longitude == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_COORDINATES );
+
+    if( latitude == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_LATITUDE );
+
+    if( longitude == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_LONGITUDE );
+
     if( latitude > 90 || latitude < -90 )
       throw new IllegalArgumentException( ExceptionMessage.WRONG_LATITUDE_VALUE );
 
@@ -353,5 +477,13 @@ public final class Geo
 
     if( geoQuery.getPageSize() < 0 )
       throw new IllegalArgumentException( ExceptionMessage.WRONG_PAGE_SIZE );
+
+    if( geoQuery.getDpp() != null )
+    {
+      if( geoQuery.getDpp() < 0 || (geoQuery.getClusterGridSize() != null && geoQuery.getClusterGridSize() < 0) )
+      {
+        throw new IllegalArgumentException( ExceptionMessage.WRONG_CLUSTERISATION_QUERY );
+      }
+    }
   }
 }

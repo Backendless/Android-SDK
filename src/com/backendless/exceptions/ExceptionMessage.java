@@ -72,6 +72,9 @@ public class ExceptionMessage
 
   public final static String WRONG_FILE = "cannot read the file.";
 
+  public final static String NULL_COORDINATES = "Coordinates cannot be null";
+  public final static String NULL_LATITUDE = "Latitude cannot be null";
+  public final static String NULL_LONGITUDE = "Longitude cannot be null";
   public final static String WRONG_LATITUDE_VALUE = "Latitude value should be between -90 and 90.";
   public final static String WRONG_LONGITUDE_VALUE = "Longitude value should be between -180 and 180.";
 
@@ -118,4 +121,13 @@ public class ExceptionMessage
   public static final String INIT_BEFORE_USE = "Init storage before use";
 
   public static final String CAN_NOT_SAVE_LOG = "Can not save log";
+
+  public final static String WRONG_CLUSTERISATION_QUERY = "Wrong clusterization parameter's values. All values should be positive number";
+
+  public final static String GEO_QUERY_METHOD_PERMISSION = "Changing the %s property may result in invalid cluster formation. As a result the property is immutable and cannot be changed";
+  public final static String GEO_QUERY_SET_PERMISSION = "A geo query cannot be assigned to a cluster";
+
+  public final static String FIELD_NOT_ACCESSIBLE = "Field %s is not accessible";
+
+  public final static String ANONYMOUS_CLASSES_PROHIBITED = "Anonymous class properties are prohibited: %s";
 }

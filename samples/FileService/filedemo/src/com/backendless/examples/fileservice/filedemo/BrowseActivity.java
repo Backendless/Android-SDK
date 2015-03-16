@@ -25,6 +25,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -56,7 +57,11 @@ public class BrowseActivity extends Activity
     setContentView( R.layout.browse );
 
     padding = (int) getResources().getDimension( R.dimen.micro_padding );
-    itemWidth = (getWindowManager().getDefaultDisplay().getWidth() - (2 * (int) getResources().getDimension( R.dimen.default_margin ))) / 3;
+
+    DisplayMetrics displayMetrics = new DisplayMetrics();
+    getWindowManager().getDefaultDisplay().getMetrics( displayMetrics );
+    int screenWidth = displayMetrics.widthPixels;
+    itemWidth = (screenWidth - (2 * (int) getResources().getDimension( R.dimen.default_margin ))) / 3;
 
     GridView gridView = (GridView) findViewById( R.id.gridView );
     imageAdapter = new ImageAdapter( this );
@@ -65,8 +70,7 @@ public class BrowseActivity extends Activity
     Toast.makeText( BrowseActivity.this, "Downloading images...", Toast.LENGTH_SHORT ).show();
 
     BackendlessDataQuery backendlessDataQuery = new BackendlessDataQuery();
-    backendlessDataQuery.setPageSize( 100 );
-    backendlessDataQuery.setQueryOptions( new QueryOptions( "uploaded" ) );
+    backendlessDataQuery.setQueryOptions( new QueryOptions( 100, 0, "uploaded" ) );
     Backendless.Persistence.of( ImageEntity.class ).find( backendlessDataQuery, new AsyncCallback<BackendlessCollection<ImageEntity>>()
     {
       @Override
@@ -173,7 +177,7 @@ public class BrowseActivity extends Activity
       else
         imageView = (ImageView) convertView;
 
-      imageView.setImageBitmap( getItem( position ) );
+      imageView.setImageBitmap( getItem( position ) ); // Load image into ImageView
 
       return imageView;
     }

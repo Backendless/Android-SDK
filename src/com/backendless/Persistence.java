@@ -25,6 +25,7 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.persistence.BackendlessDataQuery;
+import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.persistence.QueryOptions;
 import com.backendless.property.ObjectProperty;
 import com.backendless.utils.ResponderHelper;
@@ -36,7 +37,9 @@ import weborb.writer.MessageWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public final class Persistence
 {
@@ -47,11 +50,14 @@ public final class Persistence
   public final static String DEFAULT_UPDATED_FIELD = "updated";
   public final static String DEFAULT_META_FIELD = "__meta";
 
+  public final static String REST_CLASS_FIELD = "___class";
+
+  public final static String PARCELABLE_CREATOR_FIELD_NAME = "CREATOR";
+
   public final static String LOAD_ALL_RELATIONS = "*";
   public final static DataPermission Permissions = new DataPermission();
 
   private static final Persistence instance = new Persistence();
-  private static final Class backendlessUserClass = BackendlessUser.class;
 
   static Persistence getInstance()
   {
@@ -77,7 +83,7 @@ public final class Persistence
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
     checkDeclaredType( entity.getClass() );
-    final Map serializedEntity = serializeToMap( entity );
+    final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
     MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
     {
       @Override
@@ -126,7 +132,7 @@ public final class Persistence
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
       checkDeclaredType( entity.getClass() );
-      final Map serializedEntity = serializeToMap( entity );
+      final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
 
       MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
       {
@@ -258,7 +264,7 @@ public final class Persistence
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
     Object result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity } );
-    FootprintsManager.getInstance().Inner.removeFootprintForObject( serializeToMap( entity ), entity );
+    FootprintsManager.getInstance().Inner.removeFootprintForObject( BackendlessSerializer.serializeToMap( entity ), entity );
 
     return ((Number) result).longValue();
   }
@@ -275,7 +281,7 @@ public final class Persistence
         @Override
         public void handleResponse( Object response )
         {
-          FootprintsManager.getInstance().Inner.removeFootprintForObject( serializeToMap( entity ), entity );
+          FootprintsManager.getInstance().Inner.removeFootprintForObject( BackendlessSerializer.serializeToMap( entity ), entity );
 
           if( responder == null )
             return;
@@ -388,12 +394,32 @@ public final class Persistence
     }
   }
 
-  protected <E> void loadRelations( final E entity, final List<String> relations ) throws Exception
+  protected <E> void loadRelations( final E entity, final List<String> relations ) throws BackendlessException
   {
     if( entity == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY_NAME );
+    {
+      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
+    }
 
-    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity, relations };
+    checkDeclaredType( entity.getClass() );
+    final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
+    MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
+    {
+      @Override
+      public Object substitute( Object o )
+      {
+        if( o == entity )
+        {
+          return serializedEntity;
+        }
+        else
+        {
+          return o;
+        }
+      }
+    } );
+
+    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), serializedEntity, relations };
     IChainedResponder chainedResponder = new AdaptingResponder<E>( (Class<E>) entity.getClass(), new PoJoAdaptingPolicy<E>() );
     E loadedRelations = (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, chainedResponder );
     loadRelationsToEntity( entity, loadedRelations, relations );
@@ -406,7 +432,26 @@ public final class Persistence
       if( entity == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-      Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity, relations };
+      checkDeclaredType( entity.getClass() );
+      final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
+
+      MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
+      {
+        @Override
+        public Object substitute( Object o )
+        {
+          if( o == entity )
+          {
+            return serializedEntity;
+          }
+          else
+          {
+            return o;
+          }
+        }
+      } );
+
+      Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), serializedEntity, relations };
       Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, new AsyncCallback<E>()
       {
         @Override
@@ -441,10 +486,9 @@ public final class Persistence
     }
   }
 
-  private <E> void loadRelationsToEntity( E entity, E loadedRelations,
-                                          List<String> relations ) throws IllegalAccessException
+  private <E> void loadRelationsToEntity( E entity, E loadedRelations, List<String> relations )
   {
-    if( entity.getClass().equals( backendlessUserClass ) )
+    if( entity.getClass().equals( BackendlessUser.class ) )
     {
       BackendlessUser userWithRelations = (BackendlessUser) loadedRelations;
       BackendlessUser sourceUser = (BackendlessUser) entity;
@@ -462,7 +506,17 @@ public final class Persistence
         if( !declaredField.isAccessible() )
           declaredField.setAccessible( true );
 
-        declaredField.set( entity, declaredField.get( loadedRelations ) );
+        try
+        {
+          Object fieldValue = declaredField.get( loadedRelations );
+          declaredField.set( entity, fieldValue );
+        }
+        catch( IllegalAccessException e )
+        {
+          //actually, won't be ever thrown because field was set accessible several lines above
+          String message = String.format( ExceptionMessage.FIELD_NOT_ACCESSIBLE, declaredField.getName() ) + ": " + e.getMessage();
+          throw new BackendlessException( message );
+        }
       }
     }
   }
@@ -732,98 +786,12 @@ public final class Persistence
     }
   }
 
-  //used to avoid endless recursion
-  static Set<Object> marked = new HashSet<Object>();
-  //used to serialize objects with cyclic relations
-  static Map<Object, Map> serializedCache = new HashMap<Object, Map>();
-
-  public static <T> Map serializeToMap( T entity )
+  public static String getSimpleName( Class clazz )
   {
-    //avoid endless recursion
-    marked.add( entity );
-
-    Map result = new HashMap();
-
-    if( entity.getClass().equals( backendlessUserClass ) )
+    if( clazz.equals( BackendlessUser.class ) )
     {
-      result = ((BackendlessUser) entity).getProperties();
+      return UserService.USERS_TABLE_NAME;
     }
-    else
-    {
-      weborb.util.ObjectInspector.getObjectProperties( entity.getClass(), entity, (HashMap) result, new ArrayList(), true, true );
-    }
-
-    serializedCache.put( entity, result );
-    FootprintsManager.getInstance().Inner.putMissingPropsToEntityMap( entity, result );
-
-    //put ___class field, otherwise server will not be able to detect class
-    result.put( "___class", getSimpleName( entity.getClass() ) );
-
-    //recursively serialize object properties
-    Set<Map.Entry> entries = result.entrySet();
-    for( Map.Entry entry : entries )
-    {
-      //check if entry is collection
-      if( entry.getValue() instanceof Collection )
-      {
-        Collection collection = (Collection) entry.getValue();
-        Collection newCollection = new ArrayList();
-
-        for( Object item : collection )
-        {
-          //if instance of user object
-          //check if class if user-defined
-          // http://stackoverflow.com/questions/8703678/how-can-i-check-if-a-class-belongs-to-java-jdk
-          if( item != null && item.getClass().getClassLoader() != "".getClass().getClassLoader() )
-          {
-            if( marked.contains( item ) ) //cyclic relation
-            {
-              //take from cache and substitute
-              newCollection.add( serializedCache.get( item ) );
-            }
-            else //not cyclic relation
-            {
-              //serialize and put into result
-              Map serialized = serializeToMap( item );
-              newCollection.add( serialized );
-            }
-          }
-        }
-
-        Object key = entry.getKey();
-        result.put( key, newCollection );
-      }
-      else
-      {
-        //if instance of user object
-        //check if class if user-defined
-        // http://stackoverflow.com/questions/8703678/how-can-i-check-if-a-class-belongs-to-java-jdk
-        if( entry.getValue() != null && entry.getValue().getClass().getClassLoader() != "".getClass().getClassLoader() )
-        {
-          if( marked.contains( entry.getValue() ) ) //cyclic relation
-          {
-            //take from cache and substitute
-            result.put( entry.getKey(), serializedCache.get( entry.getValue() ) );
-          }
-          else //not cyclic relation
-          {
-            //serialize and put into result
-            Map serialized = serializeToMap( entry.getValue() );
-            result.put( entry.getKey(), serialized );
-          }
-        }
-      }
-    }
-
-    marked.remove( entity );
-
-    return result;
-  }
-
-  private static String getSimpleName( Class clazz )
-  {
-    if( clazz.equals( backendlessUserClass ) )
-      return "Users";
     else
     {
       String mappedName = weborb.types.Types.getMappedClientClass( clazz.getName() );

@@ -20,11 +20,63 @@ package com.backendless.utils;
 
 import com.backendless.async.callback.AsyncCallback;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 public class ReflectionUtil
 {
+  /**
+   * Retrieves the value of the field with given name from the given object.
+   *
+   * @param object    object containing the field
+   * @param fieldName name of the field
+   * @return Object, which is the value of the given field in the given object; null, if for some reason setAccessible(true) didn't work
+   * @throws NoSuchFieldException if object doesn't have a field with such name
+   */
+  public static Object getFieldValue( Object object, String fieldName ) throws NoSuchFieldException
+  {
+    Field field = getField( object.getClass(), fieldName );
+    field.setAccessible( true );
+
+    try
+    {
+      return field.get( object );
+    }
+    catch( IllegalAccessException e )
+    {
+      // shouldn't ever be thrown, because setAccessible(true) was called before
+      return null;
+    }
+  }
+
+  /**
+   * Retrieves a Field with a given name from the given class or its superclass.
+   *
+   * @param clazz     Class containing the field
+   * @param fieldName name of the field
+   * @return Field with given name from given class
+   * @throws NoSuchFieldException if class doesn't have a field with such name
+   */
+  public static Field getField( Class clazz, String fieldName ) throws NoSuchFieldException
+  {
+    try
+    {
+      return clazz.getDeclaredField( fieldName );
+    }
+    catch( NoSuchFieldException noSuchFieldException )
+    {
+      if( clazz.getSuperclass() != null )
+      {
+        return getField( clazz.getSuperclass(), fieldName );
+      }
+      else
+      {
+        throw noSuchFieldException;
+      }
+    }
+  }
+
   public static <T> Type getCallbackGenericType( AsyncCallback<T> callback )
   {
     Type[] genericInterfaces = callback.getClass().getGenericInterfaces();

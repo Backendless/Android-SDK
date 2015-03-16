@@ -19,24 +19,33 @@
 package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.core.responder.AdaptingResponder;
+import com.backendless.core.responder.policy.BackendlessUserAdaptingPolicy;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.persistence.local.UserIdStorageFactory;
 import com.backendless.persistence.local.UserTokenStorageFactory;
 import com.backendless.property.AbstractProperty;
 import com.backendless.property.UserProperty;
 import weborb.types.Types;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class UserService
 {
   final static String USER_MANAGER_SERVER_ALIAS = "com.backendless.services.users.UserService";
   private final static String PREFS_NAME = "backendless_pref";
 
-  private final static BackendlessUser currentUser = new BackendlessUser();
+  private static BackendlessUser currentUser = new BackendlessUser();
   private final static Object currentUserLock = new Object();
+
+  public static final String USERS_TABLE_NAME = "Users";
 
   private static final UserService instance = new UserService();
 
@@ -49,6 +58,7 @@ public final class UserService
   {
     Types.addClientClassMapping( "com.backendless.services.users.property.AbstractProperty", AbstractProperty.class );
     Types.addClientClassMapping( "com.backendless.services.users.property.UserProperty", UserProperty.class );
+    Types.addClientClassMapping( "Users", BackendlessUser.class );
   }
 
   public BackendlessUser CurrentUser()
@@ -70,9 +80,15 @@ public final class UserService
   public BackendlessUser register( BackendlessUser user ) throws BackendlessException
   {
     checkUserToBeProper( user );
-    user.putProperties( (HashMap<String, Object>) Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "register", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), user.getProperties() } ) );
 
-    return user;
+    BackendlessSerializer.serializeUserProperties( user );
+    String password = user.getPassword();
+    BackendlessUser userToReturn = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "register", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), user.getProperties() }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
+    user.clearProperties();
+    userToReturn.setPassword( password );
+    user.putProperties( userToReturn.getProperties() );
+
+    return userToReturn;
   }
 
   public void register( final BackendlessUser user, final AsyncCallback<BackendlessUser> responder )
@@ -81,15 +97,19 @@ public final class UserService
     {
       checkUserToBeProper( user );
 
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "register", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), user.getProperties() }, new AsyncCallback<HashMap<String, Object>>()
+      BackendlessSerializer.serializeUserProperties( user );
+
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "register", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), user.getProperties() }, new AsyncCallback<BackendlessUser>()
       {
         @Override
-        public void handleResponse( HashMap<String, Object> response )
+        public void handleResponse( BackendlessUser response )
         {
-          user.putProperties( response );
+          response.setPassword( user.getPassword() );
+          user.clearProperties();
+          user.putProperties( response.getProperties() );
 
           if( responder != null )
-            responder.handleResponse( user );
+            responder.handleResponse( response );
         }
 
         @Override
@@ -98,7 +118,7 @@ public final class UserService
           if( responder != null )
             responder.handleFault( fault );
         }
-      } );
+      }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
     }
     catch( BackendlessException e )
     {
@@ -111,12 +131,16 @@ public final class UserService
   {
     checkUserToBeProperForUpdate( user );
 
+    BackendlessSerializer.serializeUserProperties( user );
+
     if( user.getUserId() != null && user.getUserId().equals( "" ) )
       throw new IllegalArgumentException( ExceptionMessage.WRONG_USER_ID );
 
-    user.putProperties( (HashMap<String, Object>) Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "update", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), user.getProperties() } ) );
+    BackendlessUser userToReturn = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "update", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), user.getProperties() }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
+    user.clearProperties();
+    user.putProperties( userToReturn.getProperties() );
 
-    return user;
+    return userToReturn;
   }
 
   public void update( final BackendlessUser user, final AsyncCallback<BackendlessUser> responder )
@@ -125,18 +149,21 @@ public final class UserService
     {
       checkUserToBeProperForUpdate( user );
 
+      BackendlessSerializer.serializeUserProperties( user );
+
       if( user.getUserId() != null && user.getUserId().equals( "" ) )
         throw new IllegalArgumentException( ExceptionMessage.WRONG_USER_ID );
 
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "update", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), user.getProperties() }, new AsyncCallback<HashMap<String, Object>>()
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "update", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), user.getProperties() }, new AsyncCallback<BackendlessUser>()
       {
         @Override
-        public void handleResponse( HashMap<String, Object> response )
+        public void handleResponse( BackendlessUser response )
         {
-          user.putProperties( response );
+          user.clearProperties();
+          user.putProperties( response.getProperties() );
 
           if( responder != null )
-            responder.handleResponse( user );
+            responder.handleResponse( response );
         }
 
         @Override
@@ -145,7 +172,7 @@ public final class UserService
           if( responder != null )
             responder.handleFault( fault );
         }
-      } );
+      }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
     }
     catch( Throwable e )
     {
@@ -173,7 +200,7 @@ public final class UserService
       if( password == null || password.equals( "" ) )
         throw new IllegalArgumentException( ExceptionMessage.NULL_PASSWORD );
 
-      handleUserLogin( (HashMap<String, Object>) Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), login, password } ), stayLoggedIn );
+      handleUserLogin( Invoker.<BackendlessUser>invokeSync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), login, password }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) ), stayLoggedIn );
 
       return currentUser;
     }
@@ -214,7 +241,7 @@ public final class UserService
           if( password == null || password.equals( "" ) )
             throw new IllegalArgumentException( ExceptionMessage.NULL_PASSWORD );
           else
-            Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), login, password }, getUserLoginAsyncHandler( responder, stayLoggedIn ) );
+            Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), login, password }, getUserLoginAsyncHandler( responder, stayLoggedIn ) , new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
         }
       }
       catch( Throwable e )
@@ -361,7 +388,19 @@ public final class UserService
 
   public void loginWithTwitter( android.app.Activity context, AsyncCallback<BackendlessUser> responder )
   {
-    loginWithTwitter( context, null, null, responder );
+    loginWithTwitter( context, null, null, responder, false );
+  }
+
+  public void loginWithTwitter( android.app.Activity context, android.webkit.WebView webView,
+                                AsyncCallback<BackendlessUser> responder )
+  {
+    loginWithTwitter( context, webView, null, responder, false );
+  }
+
+  public void loginWithTwitter( android.app.Activity context, Map<String, String> twitterFieldsMappings,
+                                AsyncCallback<BackendlessUser> responder )
+  {
+    loginWithTwitter( context, null, twitterFieldsMappings, responder, false );
   }
 
   public void loginWithTwitter( android.app.Activity context, AsyncCallback<BackendlessUser> responder,
@@ -374,6 +413,18 @@ public final class UserService
                                 Map<String, String> twitterFieldsMappings, AsyncCallback<BackendlessUser> responder )
   {
     loginWithTwitter( context, webView, twitterFieldsMappings, responder, false );
+  }
+
+  public void loginWithTwitter( android.app.Activity context, android.webkit.WebView webView,
+                                AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  {
+    loginWithTwitter( context, webView, null, responder, stayLoggedIn );
+  }
+
+  public void loginWithTwitter( android.app.Activity context, Map<String, String> twitterFieldsMappings,
+                                AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  {
+    loginWithTwitter( context, null, twitterFieldsMappings, responder, stayLoggedIn );
   }
 
   public void loginWithTwitter( android.app.Activity context, android.webkit.WebView webView,
@@ -404,7 +455,7 @@ public final class UserService
 
   private void handleLogout()
   {
-    currentUser.clearProperties();
+    currentUser = new BackendlessUser();
     HeadersManager.getInstance().removeHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY );
     UserTokenStorageFactory.instance().getStorage().set( "" );
     UserIdStorageFactory.instance().getStorage().set( "" );
@@ -695,14 +746,13 @@ public final class UserService
     currentUser.setProperties( user.getProperties() );
   }
 
-  private void handleUserLogin( Map<String, Object> invokeResult, boolean stayLoggedIn )
+  private void handleUserLogin( BackendlessUser invokeResult, boolean stayLoggedIn )
   {
-    String userToken = (String) invokeResult.get( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() );
+    String userToken = (String) invokeResult.getProperty( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() );
     HeadersManager.getInstance().addHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY, userToken );
 
-    for( String key : invokeResult.keySet() )
-      if( !key.equals( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() ) )
-        currentUser.setProperty( key, invokeResult.get( key ) );
+    currentUser = invokeResult;
+    currentUser.removeProperty( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() );
 
     if( stayLoggedIn )
     {
@@ -711,13 +761,13 @@ public final class UserService
     }
   }
 
-  private AsyncCallback<HashMap<String, Object>> getUserLoginAsyncHandler(
+  private AsyncCallback<BackendlessUser> getUserLoginAsyncHandler(
           final AsyncCallback<BackendlessUser> responder, final boolean stayLoggedIn )
   {
-    return new AsyncCallback<HashMap<String, Object>>()
+    return new AsyncCallback<BackendlessUser>()
     {
       @Override
-      public void handleResponse( HashMap<String, Object> response )
+      public void handleResponse( BackendlessUser response )
       {
         try
         {

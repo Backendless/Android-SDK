@@ -139,6 +139,7 @@ public class HeadersManager
     USER_TOKEN_KEY( "user-token" ), LOGGED_IN_KEY( "logged-in" ), SESSION_TIME_OUT_KEY( "session-time-out" ),
     APP_ID_NAME( "application-id" ), SECRET_KEY_NAME( "secret-key" ), APP_TYPE_NAME( "application-type" ),
     API_VERSION( "api-version" ), UI_STATE( "uiState" );
+
     private String header;
 
     HeadersEnum( String header )

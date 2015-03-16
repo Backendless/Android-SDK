@@ -16,34 +16,21 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.io;
+package com.backendless.core.responder.policy;
 
 import com.backendless.BackendlessUser;
-import com.backendless.Persistence;
-import com.backendless.UserService;
-import weborb.writer.IProtocolFormatter;
-import weborb.writer.ITypeWriter;
-import weborb.writer.MessageWriter;
+import weborb.client.IResponder;
+import weborb.reader.AnonymousObject;
+import weborb.types.IAdaptingType;
 
-import java.io.IOException;
-import java.util.Map;
-
-public class BackendlessUserWriter implements ITypeWriter
+public class BackendlessUserAdaptingPolicy extends PoJoAdaptingPolicy<BackendlessUser>
 {
   @Override
-  public void write( Object o, IProtocolFormatter iProtocolFormatter ) throws IOException
+  public Object adapt( Class<BackendlessUser> clazz, IAdaptingType entity, IResponder nextResponder )
   {
-    BackendlessUser user = (BackendlessUser) o;
+    if(entity instanceof AnonymousObject)
+      ((AnonymousObject) entity).setDefaultType( BackendlessUser.class );
 
-    Map<String, Object> props = user.getProperties();
-    props.put( Persistence.REST_CLASS_FIELD, UserService.USERS_TABLE_NAME );
-    props.put(  "objectId", user.getUserId() );
-    MessageWriter.writeObject( props, iProtocolFormatter );
-  }
-
-  @Override
-  public boolean isReferenceableType()
-  {
-    return false;
+    return super.adapt( clazz, entity, nextResponder );
   }
 }
