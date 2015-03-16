@@ -82,9 +82,10 @@ public final class UserService
     checkUserToBeProper( user );
 
     BackendlessSerializer.serializeUserProperties( user );
-
+    String password = user.getPassword();
     BackendlessUser userToReturn = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "register", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), user.getProperties() }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
     user.clearProperties();
+    userToReturn.setPassword( password );
     user.putProperties( userToReturn.getProperties() );
 
     return userToReturn;
@@ -103,6 +104,7 @@ public final class UserService
         @Override
         public void handleResponse( BackendlessUser response )
         {
+          response.setPassword( user.getPassword() );
           user.clearProperties();
           user.putProperties( response.getProperties() );
 
