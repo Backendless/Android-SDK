@@ -1,3 +1,21 @@
+/*
+ * ********************************************************************************************************************
+ *  <p/>
+ *  BACKENDLESS.COM CONFIDENTIAL
+ *  <p/>
+ *  ********************************************************************************************************************
+ *  <p/>
+ *  Copyright 2012 BACKENDLESS.COM. All Rights Reserved.
+ *  <p/>
+ *  NOTICE: All information contained herein is, and remains the property of Backendless.com and its suppliers,
+ *  if any. The intellectual and technical concepts contained herein are proprietary to Backendless.com and its
+ *  suppliers and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret
+ *  or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden
+ *  unless prior written permission is obtained from Backendless.com.
+ *  <p/>
+ *  ********************************************************************************************************************
+ */
+
 package com.backendless.persistence;
 
 import com.backendless.Backendless;
@@ -8,16 +26,19 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.geo.GeoPoint;
 
-import java.util.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Handles object to Map serialization for Backendless services.
  */
 public class BackendlessSerializer
 {
-  //used to serialize objects with cyclic relations
-  static Map<Object, Map<String, Object>> serializedCache = new HashMap<Object, Map<String, Object>>();
-
   /**
    * Serializes Object to Map using WebOrb's serializer.
    *
@@ -26,9 +47,20 @@ public class BackendlessSerializer
    */
   public static Map<String, Object> serializeToMap( Object entity )
   {
+    return (Map<String, Object>) serializeToMap( entity, new HashMap<Object, Map<String, Object>>(  ) );
+  }
+
+
+  private static Object serializeToMap( Object entity,  Map<Object, Map<String, Object>> serializedCache )
+  {
+    if(entity.getClass().isArray())
+    {
+      return serializeArray( entity, serializedCache );
+    }
+
     Map<String, Object> serializedEntity = new HashMap<String, Object>();
 
-    if( entity.getClass().equals( BackendlessUser.class ) )
+    if( entity.getClass() == BackendlessUser.class )
     {
       serializedEntity = ((BackendlessUser) entity).getProperties();
     }
@@ -89,13 +121,13 @@ public class BackendlessSerializer
           throw new BackendlessException( String.format( ExceptionMessage.ANONYMOUS_CLASSES_PROHIBITED, entityEntry.getKey() ) );
         }
 
-        List<Map<String, Object>> newCollection = new ArrayList<Map<String, Object>>();
+        List<Object> newCollection = new ArrayList<Object>();
 
         for( Object listEntryItem : listEntry )
         {
           if( !isBelongsJdk( listEntryItem.getClass() ) )
           {
-            newCollection.add( getOrMakeSerializedObject( listEntryItem ) );
+            newCollection.add( getOrMakeSerializedObject( listEntryItem, serializedCache ) );
           }
         }
 
@@ -105,14 +137,24 @@ public class BackendlessSerializer
       {
         if( !isBelongsJdk( entityEntryValue.getClass() ) )
         {
-          entityEntry.setValue( getOrMakeSerializedObject( entityEntryValue ) );
+          entityEntry.setValue( getOrMakeSerializedObject( entityEntryValue, serializedCache ) );
         }
       }
     }
 
-    serializedCache.remove( entity );
-
     return serializedEntity;
+  }
+
+  private static Object serializeArray( Object entity, Map<Object, Map<String, Object>> serializedCache )
+  {
+    int length = Array.getLength( entity );
+    Object[] objects = new Object[length];
+    for( int i = 0; i < length; i++ )
+    {
+      objects[i] = getOrMakeSerializedObject( Array.get( entity, i ), serializedCache );
+    }
+
+    return objects;
   }
 
   /**
@@ -121,7 +163,7 @@ public class BackendlessSerializer
    * @param entityEntryValue object to be serialized
    * @return Map formed from given object
    */
-  private static Map<String, Object> getOrMakeSerializedObject( Object entityEntryValue )
+  private static Object getOrMakeSerializedObject( Object entityEntryValue,  Map<Object, Map<String, Object>> serializedCache )
   {
     if( serializedCache.containsKey( entityEntryValue ) ) //cyclic relation
     {
@@ -131,7 +173,7 @@ public class BackendlessSerializer
     else //not cyclic relation
     {
       //serialize and put into result
-      return serializeToMap( entityEntryValue );
+      return serializeToMap( entityEntryValue, serializedCache );
     }
   }
 
@@ -150,7 +192,7 @@ public class BackendlessSerializer
       Object propertyValue = property.getValue();
       if( propertyValue != null && !isBelongsJdk( propertyValue.getClass() ) )
       {
-        property.setValue( serializeToMap( propertyValue ) );
+        property.setValue( serializeToMap( propertyValue, new HashMap<Object, Map<String, Object>>(  )  ) );
       }
     }
 
