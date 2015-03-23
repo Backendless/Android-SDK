@@ -88,7 +88,7 @@ public class ExceptionMessage
 
   public final static String WRONG_SUBSCRIPTION_STATE = "cannot resume a subscription, which is not paused.";
   public final static String WRONG_EXPIRATION_DATE = "Wrong expiration date";
-
+  public final static String RECIPIENT_MISSING = "Push notification recipient is missing: call DeliveryOptions.setPushBroadcast() or DeliveryOptions.setPushSinglecast()";
   public final static String WRONG_POLLING_INTERVAL = "Wrong polling interval";
   public final static String DEVICE_NOT_REGISTERED = "Device is not registered.";
 
