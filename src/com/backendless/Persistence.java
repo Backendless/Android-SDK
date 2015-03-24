@@ -788,7 +788,7 @@ public final class Persistence
 
   public static String getSimpleName( Class clazz )
   {
-    if( clazz.equals( BackendlessUser.class ) )
+    if( clazz == BackendlessUser.class )
     {
       return UserService.USERS_TABLE_NAME;
     }
