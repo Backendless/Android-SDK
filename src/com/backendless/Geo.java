@@ -448,6 +448,32 @@ public final class Geo
     }
   }
 
+  public int runOnStayAction( String geoFenceName )
+  {
+    return Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName } );
+  }
+
+  public void runOnStayAction( String geoFenceName,
+                             final AsyncCallback<Integer> responder )
+  {
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName }, new AsyncCallback<Integer>()
+    {
+      @Override
+      public void handleResponse( Integer response )
+      {
+        if( responder != null )
+          responder.handleResponse( response );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        if( responder != null )
+          responder.handleFault( fault );
+      }
+    } );
+  }
+
   public void startGeofenceMonitoring( GeoPoint geoPoint ) throws Exception
   {
     IState state = GeoFenceMonitoring.getInstance().getState();
