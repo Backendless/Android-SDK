@@ -16,13 +16,12 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless;
-
-import android.location.Location;
+package com.backendless.geo.geofence;
 
 /**
- * Created by julia
+ * Created by baas on 01.04.15.
  */
-public interface BackendlessLocationListener {
-    public void onLocationChanged(Location location);
+public enum FenceType
+{
+  CIRCLE, RECT, SHAPE
 }

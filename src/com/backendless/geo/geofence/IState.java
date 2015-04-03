@@ -16,12 +16,17 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.geo;
+package com.backendless.geo.geofence;
+
+import android.location.Location;
+
 
 /**
- * Created by baas on 01.04.15.
+ * Created by baas on 03.04.15.
  */
-public enum FenceType
+public interface IState
 {
-  CIRCLE, RECT, SHAPE
+  public void callOnEnter( GeoFence geoFence, Location location );
+  public void callOnStay( GeoFence geoFence, Location location );
+  public void callOnExit( GeoFence geoFence, Location location );
 }

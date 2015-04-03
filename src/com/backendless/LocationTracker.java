@@ -25,96 +25,121 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by julia
  */
-public class LocationTracker implements LocationListener {
-    private final int MIN_TIME = 60 * 1000; // 1 minute
-    private final int MIN_DISTANCE = 10; // meters
+public class LocationTracker implements LocationListener
+{
+  private final int MIN_TIME = 60 * 1000; // 1 minute
+  private final int MIN_DISTANCE = 10; // meters
 
-    private final LocationManager locationManager;
-    private final Map<String, BackendlessLocationListener> locationListeners;
-    private String provider;
-    private static LocationTracker instance;
+  private final LocationManager locationManager;
+  private final Map<String, IBackendlessLocationListener> locationListeners;
+  private String provider;
 
-    private LocationTracker() {
-        Context context = ((AndroidService) AndroidService.recoverService()).getApplicationContext();
-        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        locationListeners = new HashMap<String, BackendlessLocationListener>();
+  private LocationTracker()
+  {
+    Context context = ((AndroidService) AndroidService.recoverService()).getApplicationContext();
+    locationManager = (LocationManager) context.getSystemService( Context.LOCATION_SERVICE );
+    locationListeners = Collections.synchronizedMap( new HashMap<String, IBackendlessLocationListener>() );
+  }
+
+  public static class SingletonHolder
+  {
+    public static final LocationTracker HOLDER_INSTANCE = new LocationTracker();
+  }
+
+  public static LocationTracker getInstance()
+  {
+    return SingletonHolder.HOLDER_INSTANCE;
+  }
+
+  @Override
+  public void onLocationChanged( Location location )
+  {
+    if( location != null )
+      locationChanged( location );
+  }
+
+  @Override
+  public void onStatusChanged( String s, int i, Bundle bundle )
+  {
+    listenBestProvider();
+  }
+
+  @Override
+  public void onProviderEnabled( String s )
+  {
+    listenBestProvider();
+  }
+
+  @Override
+  public void onProviderDisabled( String s )
+  {
+    if( s.equals( provider ) )
+    {
+      listenBestProvider();
     }
+  }
 
-    public static LocationTracker getInstance() {
-        if (instance == null) {
-            instance = new LocationTracker();
-        }
-        return instance;
+  public boolean isContainListener( String name )
+  {
+    return locationListeners.containsKey( name );
+  }
+
+  public IBackendlessLocationListener findListener( String name )
+  {
+    return locationListeners.get( name );
+  }
+
+  public void addListeners( String name, IBackendlessLocationListener locationListener )
+  {
+    this.locationListeners.put( name, locationListener );
+
+    firstListen( locationListener );
+  }
+
+  public void removeListener( String name )
+  {
+    locationListeners.remove( name );
+    if( locationListeners.size() == 0 )
+    {
+      locationManager.removeUpdates( this );
     }
+  }
 
-    @Override
-    public void onLocationChanged(Location location) {
-        if (location != null)
-            locationChanged(location);
+  private void listenBestProvider()
+  {
+    String bestProvider = locationManager.getBestProvider( new Criteria(), true );
+    if( !bestProvider.equals( provider ) )
+    {
+      listenProvider( bestProvider );
     }
+  }
 
-    @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
-        listenBestProvider();
+  private void listenProvider( String provider )
+  {
+    this.provider = provider;
+    locationManager.removeUpdates( this );
+    locationManager.requestLocationUpdates( this.provider, MIN_TIME, MIN_DISTANCE, this );
+  }
+
+  private void firstListen( IBackendlessLocationListener locationListener )
+  {
+    Location location = locationManager.getLastKnownLocation( provider );
+    if( location != null )
+      locationListener.onLocationChanged( location );
+  }
+
+  private void locationChanged( Location location )
+  {
+    for( String name : locationListeners.keySet() )
+    {
+      locationListeners.get( name ).onLocationChanged( location );
     }
-
-    @Override
-    public void onProviderEnabled(String s) {
-        listenBestProvider();
-    }
-
-    @Override
-    public void onProviderDisabled(String s) {
-        if (s.equals(provider)) {
-            listenBestProvider();
-        }
-    }
-
-    public boolean isContainListener(String name) {
-        return locationListeners.containsKey(name);
-    }
-
-    public void addListeners(String name, BackendlessLocationListener locationListener) {
-        this.locationListeners.put(name, locationListener);
-
-        firstListen(locationListener);
-    }
-
-    public void removeListener(String name) {
-        locationListeners.remove(name);
-        if (locationListeners.size() == 0) {
-            locationManager.removeUpdates(this);
-        }
-    }
-
-    private void listenBestProvider() {
-        String bestProvider = locationManager.getBestProvider(new Criteria(), true);
-        if (!bestProvider.equals(provider)) {
-            listenProvider(bestProvider);
-        }
-    }
-
-    private void listenProvider(String provider) {
-        this.provider = provider;
-        locationManager.removeUpdates(this);
-        locationManager.requestLocationUpdates(this.provider, MIN_TIME, MIN_DISTANCE, this);
-    }
-
-    private void firstListen(BackendlessLocationListener locationListener) {
-        Location location = locationManager.getLastKnownLocation(provider);
-        if (location != null)
-            locationListener.onLocationChanged(location);
-    }
-
-    private void locationChanged(Location location) {
-        for (String name : locationListeners.keySet()) {
-            locationListeners.get(name).onLocationChanged(location);
-        }
-    }
+  }
 }

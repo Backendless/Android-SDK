@@ -25,11 +25,10 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.geo.*;
+import com.backendless.geo.geofence.*;
 import weborb.types.Types;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class Geo
 {
@@ -449,32 +448,108 @@ public final class Geo
     }
   }
 
-  public void startGeofenceMonitoring( GeoPoint geoPoint )
+  public void startGeofenceMonitoring( GeoPoint geoPoint ) throws Exception
   {
-    List<GeoFence> geoFences = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } );
+    IState state = GeoFenceMonitoring.getInstance().getState();
+
+    validateState( state, geoPoint );
+
+    if( state instanceof WaitingState )
+      state = new ServerState( geoPoint );
+
+    Set<GeoFence> geoFences = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } );
+
+    addFenceMonitoring( geoFences, state );
   }
 
-  public void startGeofenceMonitoring( GeofenceCallback callback )
+  public void startGeofenceMonitoring( IGeofenceCallback callback ) throws Exception
   {
-    List<GeoFence> geoFences = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } );
+    IState state = GeoFenceMonitoring.getInstance().getState();
+
+    validateState( state, callback );
+
+    if( state instanceof WaitingState )
+      state = new ClientState( callback );
+
+    Set<GeoFence> geoFences = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } );
+    addFenceMonitoring( geoFences, state );
   }
 
-  public void startGeofenceMonitoring( String geofenceName, GeoPoint geoPoint )
+  public void startGeofenceMonitoring( String geofenceName, GeoPoint geoPoint ) throws Exception
   {
+    IState state = GeoFenceMonitoring.getInstance().getState();
+
+    validateState( state, geoPoint );
+
+    if( state instanceof WaitingState )
+      state = new ServerState( geoPoint );
+
     GeoFence geoFence = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getFence", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geofenceName } );
+    addFenceMonitoring( new HashSet<GeoFence>( Arrays.asList( geoFence ) ), state );
   }
 
-  public void startGeofenceMonitoring( String geofenceName, GeofenceCallback callback )
+  public void startGeofenceMonitoring( String geofenceName, IGeofenceCallback callback ) throws Exception
   {
+    IState state = GeoFenceMonitoring.getInstance().getState();
+
+    validateState( state, callback );
+
+    if( state instanceof WaitingState )
+      state = new ClientState( callback );
+
     GeoFence geoFence = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getFence", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geofenceName } );
+    addFenceMonitoring( new HashSet<GeoFence>( Arrays.asList( geoFence ) ), state );
   }
 
   public void stopGeofenceMonitoring()
   {
+    GeoFenceMonitoring.getInstance().removeGeoFences();
+    LocationTracker.getInstance().removeListener( GeoFenceMonitoring.NAME );
   }
 
   public void stopGeofenceMonitoring( String geofenceName )
   {
+    GeoFenceMonitoring.getInstance().removeGeoFence( geofenceName );
+    if( GeoFenceMonitoring.getInstance().getState() instanceof WaitingState )
+    {
+      LocationTracker.getInstance().removeListener( GeoFenceMonitoring.NAME );
+    }
+  }
+
+  private void addFenceMonitoring( Set<GeoFence> geoFences, IState state )
+  {
+
+    if( geoFences.isEmpty() )
+    {
+      return;
+    }
+
+    GeoFenceMonitoring.getInstance().setState( state );
+
+    GeoFenceMonitoring.getInstance().addGeoFences( geoFences );
+
+    if( !LocationTracker.getInstance().isContainListener( GeoFenceMonitoring.NAME ) )
+    {
+      LocationTracker.getInstance().addListeners( GeoFenceMonitoring.NAME, GeoFenceMonitoring.getInstance() );
+    }
+  }
+
+  private void validateState( IState state, GeoPoint geoPoint ) throws Exception
+  {
+    if( state instanceof ClientState )
+      throw new Exception();
+
+    if( state instanceof ServerState && !((ServerState) state).equalGeoPoint( geoPoint ) )
+      throw new Exception();
+  }
+
+  private void validateState( IState state, IGeofenceCallback callback ) throws Exception
+  {
+    if( state instanceof ServerState )
+      throw new Exception();
+
+    if( state instanceof ClientState && !((ClientState) state).equalGeofenceCallback( callback ) )
+      throw new Exception();
   }
 
   private void complementResponse( BackendlessCollection<GeoPoint> collection, BackendlessGeoQuery query )

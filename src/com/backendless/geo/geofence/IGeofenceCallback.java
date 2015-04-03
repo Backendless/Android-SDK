@@ -16,16 +16,16 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.geo;
+package com.backendless.geo.geofence;
 
 /**
  * Created by baas on 01.04.15.
  */
-public interface GeofenceCallback
+public interface IGeofenceCallback
 {
-  void geoPointEntered( String geofenceName, String geofenceId, long latitude, long longitude );
+  void geoPointEntered( String geofenceName, String geofenceId, double latitude, double longitude );
 
-  void geoPointStayed( String geofenceName, String geofenceId, long latitude, long longitude );
+  void geoPointStayed( String geofenceName, String geofenceId, double latitude, double longitude );
 
-  void geoPointExited( String geofenceName, String geofenceId, long latitude, long longitude );
+  void geoPointExited( String geofenceName, String geofenceId, double latitude, double longitude );
 }

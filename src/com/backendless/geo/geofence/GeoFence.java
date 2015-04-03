@@ -16,7 +16,9 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.geo;
+package com.backendless.geo.geofence;
+
+import com.backendless.geo.GeoPoint;
 
 import java.util.List;
 
@@ -33,6 +35,15 @@ public class GeoFence
   private List<GeoPoint> nodes;
   private GeoPoint nwPoint;
   private GeoPoint sePoint;
+
+  public GeoFence()
+  {
+  }
+
+  public GeoFence( String geofenceName )
+  {
+    this.geofenceName = geofenceName;
+  }
 
   public String getObjectId()
   {
@@ -112,5 +123,27 @@ public class GeoFence
   public void setSePoint( GeoPoint sePoint )
   {
     this.sePoint = sePoint;
+  }
+
+  @Override
+  public boolean equals( Object o )
+  {
+    if( this == o )
+      return true;
+    if( o == null || getClass() != o.getClass() )
+      return false;
+
+    GeoFence geoFence = (GeoFence) o;
+
+    if( !geofenceName.equals( geoFence.geofenceName ) )
+      return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return geofenceName.hashCode();
   }
 }
