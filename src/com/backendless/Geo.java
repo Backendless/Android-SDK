@@ -548,10 +548,10 @@ public final class Geo
 
   private Set<GeoFence> getFences()
   {
-    return Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } );
+    return new HashSet<GeoFence>( Arrays.asList( Invoker.<GeoFence[]>invokeSync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } ) ) );
   }
 
-  private GeoFence getFence(String geofenceName)
+  private GeoFence getFence( String geofenceName )
   {
     return Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getFence", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geofenceName } );
   }
