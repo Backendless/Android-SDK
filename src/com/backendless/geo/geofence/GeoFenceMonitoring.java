@@ -43,8 +43,8 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
   private Set<GeoFence> geoFences = Collections.synchronizedSet( new HashSet<GeoFence>() );
   private Set<GeoFence> pointFences = new HashSet<GeoFence>();
 
-  private final IState DEFAULT_STATE = new WaitingState();
-  private IState state = DEFAULT_STATE;
+  private final ICallback DEFAULT_STATE = new NonCallback();
+  private ICallback state = DEFAULT_STATE;
 
   private Location location;
 
@@ -161,12 +161,12 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
     state = DEFAULT_STATE;
   }
 
-  public IState getState()
+  public ICallback getState()
   {
     return state;
   }
 
-  public void setState( IState state )
+  public void setState( ICallback state )
   {
     this.state = state;
   }

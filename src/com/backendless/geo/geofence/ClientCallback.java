@@ -23,11 +23,11 @@ import android.location.Location;
 /**
  * Created by baas on 03.04.15.
  */
-public class ClientState implements IState
+public class ClientCallback implements ICallback
 {
   private IGeofenceCallback geofenceCallback;
 
-  public ClientState( IGeofenceCallback geofenceCallback )
+  public ClientCallback( IGeofenceCallback geofenceCallback )
   {
     this.geofenceCallback = geofenceCallback;
   }

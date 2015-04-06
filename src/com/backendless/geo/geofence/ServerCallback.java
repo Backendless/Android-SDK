@@ -19,16 +19,17 @@
 package com.backendless.geo.geofence;
 
 import android.location.Location;
+import com.backendless.Backendless;
 import com.backendless.geo.GeoPoint;
 
 /**
  * Created by baas on 03.04.15.
  */
-public class ServerState implements IState
+public class ServerCallback implements ICallback
 {
   private GeoPoint geoPoint;
 
-  public ServerState( GeoPoint geoPoint )
+  public ServerCallback( GeoPoint geoPoint )
   {
     this.geoPoint = geoPoint;
   }
@@ -37,18 +38,21 @@ public class ServerState implements IState
   public void callOnEnter( GeoFence geoFence, Location location )
   {
     updatePoint( location );
+    Backendless.Geo.onGeofenceServerCallback( "onEnterGeofence", geoFence.getObjectId(), geoPoint );
   }
 
   @Override
   public void callOnStay( GeoFence geoFence, Location location )
   {
     updatePoint( location );
+    Backendless.Geo.onGeofenceServerCallback( "onStayGeofence", geoFence.getObjectId(), geoPoint );
   }
 
   @Override
   public void callOnExit( GeoFence geoFence, Location location )
   {
     updatePoint( location );
+    Backendless.Geo.onGeofenceServerCallback( "onExitGeofence", geoFence.getObjectId(), geoPoint );
   }
 
   private void updatePoint( Location location )

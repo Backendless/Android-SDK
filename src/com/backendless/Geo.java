@@ -448,13 +448,12 @@ public final class Geo
     }
   }
 
-  public int runOnStayAction( String geoFenceName )
+  public int runOnStayAction( String geoFenceName ) throws BackendlessException
   {
     return Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName } );
   }
 
-  public void runOnStayAction( String geoFenceName,
-                             final AsyncCallback<Integer> responder )
+  public void runOnStayAction( String geoFenceName, final AsyncCallback<Integer> responder ) throws BackendlessException
   {
     Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName }, new AsyncCallback<Integer>()
     {
@@ -474,56 +473,56 @@ public final class Geo
     } );
   }
 
-  public void startGeofenceMonitoring( GeoPoint geoPoint ) throws Exception
+  public void startGeofenceMonitoring( GeoPoint geoPoint ) throws BackendlessException
   {
-    IState state = GeoFenceMonitoring.getInstance().getState();
+    ICallback state = GeoFenceMonitoring.getInstance().getState();
 
     validateState( state, geoPoint );
 
-    if( state instanceof WaitingState )
-      state = new ServerState( geoPoint );
+    if( state instanceof NonCallback )
+      state = new ServerCallback( geoPoint );
 
-    Set<GeoFence> geoFences = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } );
+    Set<GeoFence> geoFences = getFences();
 
     addFenceMonitoring( geoFences, state );
   }
 
-  public void startGeofenceMonitoring( IGeofenceCallback callback ) throws Exception
+  public void startGeofenceMonitoring( IGeofenceCallback callback ) throws BackendlessException
   {
-    IState state = GeoFenceMonitoring.getInstance().getState();
+    ICallback state = GeoFenceMonitoring.getInstance().getState();
 
     validateState( state, callback );
 
-    if( state instanceof WaitingState )
-      state = new ClientState( callback );
+    if( state instanceof NonCallback )
+      state = new ClientCallback( callback );
 
-    Set<GeoFence> geoFences = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } );
+    Set<GeoFence> geoFences = getFences();
     addFenceMonitoring( geoFences, state );
   }
 
-  public void startGeofenceMonitoring( String geofenceName, GeoPoint geoPoint ) throws Exception
+  public void startGeofenceMonitoring( String geofenceName, GeoPoint geoPoint ) throws BackendlessException
   {
-    IState state = GeoFenceMonitoring.getInstance().getState();
+    ICallback state = GeoFenceMonitoring.getInstance().getState();
 
     validateState( state, geoPoint );
 
-    if( state instanceof WaitingState )
-      state = new ServerState( geoPoint );
+    if( state instanceof NonCallback )
+      state = new ServerCallback( geoPoint );
 
-    GeoFence geoFence = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getFence", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geofenceName } );
+    GeoFence geoFence = getFence( geofenceName );
     addFenceMonitoring( new HashSet<GeoFence>( Arrays.asList( geoFence ) ), state );
   }
 
-  public void startGeofenceMonitoring( String geofenceName, IGeofenceCallback callback ) throws Exception
+  public void startGeofenceMonitoring( String geofenceName, IGeofenceCallback callback ) throws BackendlessException
   {
-    IState state = GeoFenceMonitoring.getInstance().getState();
+    ICallback state = GeoFenceMonitoring.getInstance().getState();
 
     validateState( state, callback );
 
-    if( state instanceof WaitingState )
-      state = new ClientState( callback );
+    if( state instanceof NonCallback )
+      state = new ClientCallback( callback );
 
-    GeoFence geoFence = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getFence", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geofenceName } );
+    GeoFence geoFence = getFence( geofenceName );
     addFenceMonitoring( new HashSet<GeoFence>( Arrays.asList( geoFence ) ), state );
   }
 
@@ -536,13 +535,28 @@ public final class Geo
   public void stopGeofenceMonitoring( String geofenceName )
   {
     GeoFenceMonitoring.getInstance().removeGeoFence( geofenceName );
-    if( GeoFenceMonitoring.getInstance().getState() instanceof WaitingState )
+    if( GeoFenceMonitoring.getInstance().getState() instanceof NonCallback )
     {
       LocationTracker.getInstance().removeListener( GeoFenceMonitoring.NAME );
     }
   }
 
-  private void addFenceMonitoring( Set<GeoFence> geoFences, IState state )
+  public void onGeofenceServerCallback( String method, String geofenceId, GeoPoint geoPoint )
+  {
+    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, method, new Object[] { geofenceId, geoPoint } );
+  }
+
+  private Set<GeoFence> getFences()
+  {
+    return Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } );
+  }
+
+  private GeoFence getFence(String geofenceName)
+  {
+    return Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getFence", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geofenceName } );
+  }
+
+  private void addFenceMonitoring( Set<GeoFence> geoFences, ICallback state )
   {
 
     if( geoFences.isEmpty() )
@@ -560,22 +574,22 @@ public final class Geo
     }
   }
 
-  private void validateState( IState state, GeoPoint geoPoint ) throws Exception
+  private void validateState( ICallback state, GeoPoint geoPoint ) throws BackendlessException
   {
-    if( state instanceof ClientState )
-      throw new Exception();
+    if( state instanceof ClientCallback )
+      throw new BackendlessException();
 
-    if( state instanceof ServerState && !((ServerState) state).equalGeoPoint( geoPoint ) )
-      throw new Exception();
+    if( state instanceof ServerCallback && !((ServerCallback) state).equalGeoPoint( geoPoint ) )
+      throw new BackendlessException();
   }
 
-  private void validateState( IState state, IGeofenceCallback callback ) throws Exception
+  private void validateState( ICallback state, IGeofenceCallback callback ) throws BackendlessException
   {
-    if( state instanceof ServerState )
-      throw new Exception();
+    if( state instanceof ServerCallback )
+      throw new BackendlessException();
 
-    if( state instanceof ClientState && !((ClientState) state).equalGeofenceCallback( callback ) )
-      throw new Exception();
+    if( state instanceof ClientCallback && !((ClientCallback) state).equalGeofenceCallback( callback ) )
+      throw new BackendlessException();
   }
 
   private void complementResponse( BackendlessCollection<GeoPoint> collection, BackendlessGeoQuery query )

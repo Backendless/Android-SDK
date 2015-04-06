@@ -20,13 +20,26 @@ package com.backendless.geo.geofence;
 
 import android.location.Location;
 
-
 /**
  * Created by baas on 03.04.15.
  */
-public interface IState
+public class NonCallback implements ICallback
 {
-  public void callOnEnter( GeoFence geoFence, Location location );
-  public void callOnStay( GeoFence geoFence, Location location );
-  public void callOnExit( GeoFence geoFence, Location location );
+  @Override
+  public void callOnEnter( GeoFence geoFence, Location location )
+  {
+
+  }
+
+  @Override
+  public void callOnStay( GeoFence geoFence, Location location )
+  {
+
+  }
+
+  @Override
+  public void callOnExit( GeoFence geoFence, Location location )
+  {
+
+  }
 }
