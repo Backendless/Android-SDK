@@ -81,7 +81,6 @@ class DataStoreFactory
         return Backendless.Persistence.first( entityClass, relations, relationsDepth );
       }
 
-      @Override
       public void findFirst( final AsyncCallback<E> responder )
       {
         Backendless.Persistence.first( entityClass, responder );
