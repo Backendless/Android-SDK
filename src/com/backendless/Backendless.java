@@ -165,7 +165,7 @@ public final class Backendless
     }
   }
 
-  protected static String getApplicationId()
+  public static String getApplicationId()
   {
     if( backendlessService == null )
       throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
@@ -173,7 +173,7 @@ public final class Backendless
     return backendlessService.getApplicationId();
   }
 
-  protected static String getSecretKey()
+  public static String getSecretKey()
   {
     if( backendlessService == null )
       throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
