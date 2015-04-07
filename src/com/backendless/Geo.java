@@ -18,6 +18,7 @@
 
 package com.backendless;
 
+import android.widget.Toast;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.core.responder.policy.CollectionAdaptingPolicy;
@@ -28,7 +29,10 @@ import com.backendless.geo.*;
 import com.backendless.geo.geofence.*;
 import weborb.types.Types;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 
 public final class Geo
 {
@@ -475,55 +479,46 @@ public final class Geo
 
   public void startGeofenceMonitoring( GeoPoint geoPoint ) throws BackendlessException
   {
-    ICallback state = GeoFenceMonitoring.getInstance().getState();
+    validateMonitoringCallback( geoPoint );
 
-    validateState( state, geoPoint );
+    ICallback bCallback = GeoFenceMonitoring.getInstance().getCallback();
+    if( bCallback instanceof NonCallback )
+      bCallback = new ServerCallback( geoPoint );
 
-    if( state instanceof NonCallback )
-      state = new ServerCallback( geoPoint );
-
-    Set<GeoFence> geoFences = getFences();
-
-    addFenceMonitoring( geoFences, state );
+    startGeofenceMonitoring( bCallback );
   }
 
   public void startGeofenceMonitoring( IGeofenceCallback callback ) throws BackendlessException
   {
-    ICallback state = GeoFenceMonitoring.getInstance().getState();
+    validateMonitoringCallback( callback );
 
-    validateState( state, callback );
+    ICallback bCallback = GeoFenceMonitoring.getInstance().getCallback();
+    if( bCallback instanceof NonCallback )
+      bCallback = new ClientCallback( callback );
 
-    if( state instanceof NonCallback )
-      state = new ClientCallback( callback );
-
-    Set<GeoFence> geoFences = getFences();
-    addFenceMonitoring( geoFences, state );
+    startGeofenceMonitoring( bCallback );
   }
 
   public void startGeofenceMonitoring( String geofenceName, GeoPoint geoPoint ) throws BackendlessException
   {
-    ICallback state = GeoFenceMonitoring.getInstance().getState();
+    validateMonitoringCallback( geoPoint );
 
-    validateState( state, geoPoint );
+    ICallback bCallback = GeoFenceMonitoring.getInstance().getCallback();
+    if( bCallback instanceof NonCallback )
+      bCallback = new ServerCallback( geoPoint );
 
-    if( state instanceof NonCallback )
-      state = new ServerCallback( geoPoint );
-
-    GeoFence geoFence = getFence( geofenceName );
-    addFenceMonitoring( new HashSet<GeoFence>( Arrays.asList( geoFence ) ), state );
+    startGeofenceMonitoring( bCallback, geofenceName );
   }
 
   public void startGeofenceMonitoring( String geofenceName, IGeofenceCallback callback ) throws BackendlessException
   {
-    ICallback state = GeoFenceMonitoring.getInstance().getState();
+    validateMonitoringCallback( callback );
 
-    validateState( state, callback );
+    ICallback bCallback = GeoFenceMonitoring.getInstance().getCallback();
+    if( bCallback instanceof NonCallback )
+      bCallback = new ClientCallback( callback );
 
-    if( state instanceof NonCallback )
-      state = new ClientCallback( callback );
-
-    GeoFence geoFence = getFence( geofenceName );
-    addFenceMonitoring( new HashSet<GeoFence>( Arrays.asList( geoFence ) ), state );
+    startGeofenceMonitoring( bCallback, geofenceName );
   }
 
   public void stopGeofenceMonitoring()
@@ -535,7 +530,7 @@ public final class Geo
   public void stopGeofenceMonitoring( String geofenceName )
   {
     GeoFenceMonitoring.getInstance().removeGeoFence( geofenceName );
-    if( GeoFenceMonitoring.getInstance().getState() instanceof NonCallback )
+    if( GeoFenceMonitoring.getInstance().getCallback() instanceof NonCallback )
     {
       LocationTracker.getInstance().removeListener( GeoFenceMonitoring.NAME );
     }
@@ -546,27 +541,54 @@ public final class Geo
     Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, method, new Object[] { geofenceId, geoPoint } );
   }
 
-  private Set<GeoFence> getFences()
+  private void startGeofenceMonitoring( final ICallback callback )
   {
-    return new HashSet<GeoFence>( Arrays.asList( Invoker.<GeoFence[]>invokeSync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } ) ) );
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() }, new AsyncCallback<GeoFence[]>()
+    {
+      @Override
+      public void handleResponse( GeoFence[] geoFences )
+      {
+        addFenceMonitoring( callback, geoFences );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+      }
+    } );
   }
 
-  private GeoFence getFence( String geofenceName )
+  private void startGeofenceMonitoring( final ICallback callback, String geofenceName )
   {
-    return Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getFence", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geofenceName } );
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFence", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geofenceName }, new AsyncCallback<GeoFence>()
+    {
+      @Override
+      public void handleResponse( GeoFence geoFences )
+      {
+        addFenceMonitoring( callback, geoFences );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+      }
+    } );
   }
 
-  private void addFenceMonitoring( Set<GeoFence> geoFences, ICallback state )
+  private void addFenceMonitoring( ICallback callback, GeoFence... geoFences )
   {
 
-    if( geoFences.isEmpty() )
+    Toast.makeText( ((AndroidService) AndroidService.recoverService()).getApplicationContext(), "getfences", Toast.LENGTH_SHORT ).show();
+    if( geoFences.length == 0 )
     {
       return;
     }
 
-    GeoFenceMonitoring.getInstance().setState( state );
+    Toast.makeText( ((AndroidService) AndroidService.recoverService()).getApplicationContext(), "START", Toast.LENGTH_SHORT ).show();
 
-    GeoFenceMonitoring.getInstance().addGeoFences( geoFences );
+    GeoFenceMonitoring.getInstance().setCallback( callback );
+
+    GeoFenceMonitoring.getInstance().addGeoFences( new HashSet<GeoFence>( Arrays.asList( geoFences ) ) );
 
     if( !LocationTracker.getInstance().isContainListener( GeoFenceMonitoring.NAME ) )
     {
@@ -574,22 +596,15 @@ public final class Geo
     }
   }
 
-  private void validateState( ICallback state, GeoPoint geoPoint ) throws BackendlessException
+  private void validateMonitoringCallback( Object object ) throws BackendlessException
   {
-    if( state instanceof ClientCallback )
-      throw new BackendlessException();
+    ICallback callback = GeoFenceMonitoring.getInstance().getCallback();
 
-    if( state instanceof ServerCallback && !((ServerCallback) state).equalGeoPoint( geoPoint ) )
-      throw new BackendlessException();
-  }
+    if( callback instanceof NonCallback )
+      return;
 
-  private void validateState( ICallback state, IGeofenceCallback callback ) throws BackendlessException
-  {
-    if( state instanceof ServerCallback )
-      throw new BackendlessException();
-
-    if( state instanceof ClientCallback && !((ClientCallback) state).equalGeofenceCallback( callback ) )
-      throw new BackendlessException();
+    if( !callback.equalCallbackParameter( object ) )
+      throw new BackendlessException( ExceptionMessage.GEOFENCE_MONITORING_WRONG_ARGUMENTS );
   }
 
   private void complementResponse( BackendlessCollection<GeoPoint> collection, BackendlessGeoQuery query )

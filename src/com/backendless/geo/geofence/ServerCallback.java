@@ -55,14 +55,17 @@ public class ServerCallback implements ICallback
     Backendless.Geo.onGeofenceServerCallback( "onExitGeofence", geoFence.getObjectId(), geoPoint );
   }
 
+  @Override
+  public boolean equalCallbackParameter( Object object )
+  {
+    if(object.getClass() != GeoPoint.class)
+    return false;
+    return this.geoPoint.getMetadata().equals( ((GeoPoint)object).getMetadata() ) && this.geoPoint.getCategories().equals( ((GeoPoint)object).getCategories() );
+  }
+
   private void updatePoint( Location location )
   {
     geoPoint.setLatitude( location.getLatitude() );
     geoPoint.setLongitude( location.getLongitude() );
-  }
-
-  public boolean equalGeoPoint( GeoPoint geoPoint )
-  {
-    return this.geoPoint.getMetadata().equals( geoPoint.getMetadata() ) && this.geoPoint.getCategories().equals( geoPoint.getCategories() );
   }
 }

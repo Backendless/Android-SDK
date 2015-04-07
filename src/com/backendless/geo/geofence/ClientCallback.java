@@ -50,8 +50,11 @@ public class ClientCallback implements ICallback
     geofenceCallback.geoPointExited( geoFence.getGeofenceName(), geoFence.getObjectId(), location.getLatitude(), location.getLongitude() );
   }
 
-  public boolean equalGeofenceCallback(IGeofenceCallback geofenceCallback)
+  @Override
+  public boolean equalCallbackParameter( Object object )
   {
-    return this.geofenceCallback.equals( geofenceCallback );
+    if(object.getClass() != geofenceCallback.getClass())
+      return false;
+    return this.geofenceCallback.equals( object );
   }
 }

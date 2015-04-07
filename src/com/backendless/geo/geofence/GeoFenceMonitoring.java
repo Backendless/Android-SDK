@@ -44,7 +44,7 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
   private Set<GeoFence> pointFences = new HashSet<GeoFence>();
 
   private final ICallback DEFAULT_STATE = new NonCallback();
-  private ICallback state = DEFAULT_STATE;
+  private ICallback callback = DEFAULT_STATE;
 
   private Location location;
 
@@ -87,7 +87,7 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
   {
     for( GeoFence geoFence : geoFences )
     {
-      state.callOnEnter( geoFence, location );
+      callback.callOnEnter( geoFence, location );
     }
   }
 
@@ -111,7 +111,7 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
   {
     for( GeoFence geoFence : geoFences )
     {
-      state.callOnExit( geoFence, location );
+      callback.callOnExit( geoFence, location );
     }
   }
 
@@ -133,7 +133,7 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
     if( location != null && isPoinInFence( new GeoPoint( location.getLatitude(), location.getLongitude() ), geoFence ) )
     {
       pointFences.add( geoFence );
-      state.callOnEnter( geoFence, location );
+      callback.callOnEnter( geoFence, location );
       addOnStay( geoFence );
     }
   }
@@ -149,7 +149,7 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
 
     if( geoFences.isEmpty() )
     {
-      state = DEFAULT_STATE;
+      callback = DEFAULT_STATE;
     }
   }
 
@@ -158,17 +158,17 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
     onStaySet.clear();
     pointFences.clear();
     geoFences.clear();
-    state = DEFAULT_STATE;
+    callback = DEFAULT_STATE;
   }
 
-  public ICallback getState()
+  public ICallback getCallback()
   {
-    return state;
+    return callback;
   }
 
-  public void setState( ICallback state )
+  public void setCallback( ICallback callback )
   {
-    this.state = state;
+    this.callback = callback;
   }
 
   private Set<GeoFence> findGeoPointsFence( GeoPoint geoPoint, Set<GeoFence> geoFences )
@@ -251,7 +251,7 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
       @Override
       public void run()
       {
-        state.callOnEnter( geoFence, location );
+        callback.callOnEnter( geoFence, location );
         cancelOnStay( geoFence );
       }
     }, geoFence.getOnStayDuration(), TimeUnit.SECONDS );

@@ -130,4 +130,6 @@ public class ExceptionMessage
   public final static String FIELD_NOT_ACCESSIBLE = "Field %s is not accessible";
 
   public final static String ANONYMOUS_CLASSES_PROHIBITED = "Anonymous class properties are prohibited: %s";
+
+  public final static String GEOFENCE_MONITORING_WRONG_ARGUMENTS = "Wrong arguments for Geofence monitoring. The parameters for monitoring are different from previous";
 }

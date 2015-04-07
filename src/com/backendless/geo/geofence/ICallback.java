@@ -29,4 +29,5 @@ public interface ICallback
   public void callOnEnter( GeoFence geoFence, Location location );
   public void callOnStay( GeoFence geoFence, Location location );
   public void callOnExit( GeoFence geoFence, Location location );
+  public boolean equalCallbackParameter( Object object );
 }

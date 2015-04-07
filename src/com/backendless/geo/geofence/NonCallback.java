@@ -42,4 +42,10 @@ public class NonCallback implements ICallback
   {
 
   }
+
+  @Override
+  public boolean equalCallbackParameter( Object object )
+  {
+    return true;
+  }
 }
