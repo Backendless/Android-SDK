@@ -40,7 +40,7 @@ public abstract class AbstractFilePermission
   {
     String method = "updateUserPermission";
     Object[] args = buildArgs( fileOrDirURL, userId, false, PermissionTypes.GRANT );
-    serverCall( responder, method, args, fileOrDirURL.getClass() );
+    serverCall( responder, method, args );
   }
 
   public void denyForUser( String userId, String fileOrDirURL )
@@ -52,7 +52,7 @@ public abstract class AbstractFilePermission
   {
     String method = "updateUserPermission";
     Object[] args = buildArgs( fileOrDirURL, userId, false, PermissionTypes.DENY );
-    serverCall( responder, method, args, null );
+    serverCall( responder, method, args );
   }
 
   public void grantForRole( String roleName, String fileOrDirURL )
@@ -64,7 +64,7 @@ public abstract class AbstractFilePermission
   {
     String method = "updateRolePermission";
     Object[] args = buildArgs( fileOrDirURL, roleName, true, PermissionTypes.GRANT );
-    serverCall( responder, method, args, fileOrDirURL.getClass() );
+    serverCall( responder, method, args );
   }
 
   public void denyForRole( String roleName, String fileOrDirURL )
@@ -76,7 +76,7 @@ public abstract class AbstractFilePermission
   {
     String method = "updateRolePermission";
     Object[] args = buildArgs( fileOrDirURL, roleName, true, PermissionTypes.DENY );
-    serverCall( responder, method, args, null );
+    serverCall( responder, method, args );
   }
 
   public void grantForAllUsers( String fileOrDirURL )
@@ -88,7 +88,7 @@ public abstract class AbstractFilePermission
   {
     String method = "updatePermissionForAllUsers";
     Object[] args = buildArgs( fileOrDirURL, null, false, PermissionTypes.GRANT );
-    serverCall( responder, method, args, fileOrDirURL.getClass() );
+    serverCall( responder, method, args );
   }
 
   public void denyForAllUsers( String fileOrDirURL )
@@ -100,7 +100,7 @@ public abstract class AbstractFilePermission
   {
     String method = "updatePermissionForAllUsers";
     Object[] args = buildArgs( fileOrDirURL, null, false, PermissionTypes.DENY);
-    serverCall( responder, method, args, null );
+    serverCall( responder, method, args );
   }
 
   public void grantForAllRoles( String fileOrDirURL )
@@ -112,7 +112,7 @@ public abstract class AbstractFilePermission
   {
     String method = "updateRolePermissionsForAllRoles";
     Object[] args = buildArgs( fileOrDirURL, null, false, PermissionTypes.GRANT );
-    serverCall( responder, method, args, fileOrDirURL.getClass() );
+    serverCall( responder, method, args );
   }
 
   public void denyForAllRoles( String fileOrDirURL )
@@ -124,7 +124,7 @@ public abstract class AbstractFilePermission
   {
     String method = "updateRolePermissionsForAllRoles";
     Object[] args = buildArgs( fileOrDirURL, null, true, PermissionTypes.DENY );
-    serverCall( responder, method, args, null );
+    serverCall( responder, method, args );
   }
 
   private Object[] buildArgs( String fileOrDirURL, String principal, boolean isRole, PermissionTypes permissionType )
@@ -146,11 +146,11 @@ public abstract class AbstractFilePermission
       return new Object[]{appId, version, permission};
   }
 
-  private void serverCall( AsyncCallback responder, String method, Object[] args, Class type )
+  private void serverCall( AsyncCallback responder, String method, Object[] args )
   {
     if( responder == null )
-      Invoker.invokeSync( PERMISSION_SERVICE, method, args, new AdaptingResponder( type, new PoJoAdaptingPolicy() ) );
+      Invoker.invokeSync( PERMISSION_SERVICE, method, args, new AdaptingResponder( null, new PoJoAdaptingPolicy() ) );
     else
-      Invoker.invokeAsync( PERMISSION_SERVICE, method, args, responder, new AdaptingResponder( type, new PoJoAdaptingPolicy() ) );
+      Invoker.invokeAsync( PERMISSION_SERVICE, method, args, responder, new AdaptingResponder( null, new PoJoAdaptingPolicy() ) );
   }
 }
