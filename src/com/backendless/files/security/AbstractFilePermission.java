@@ -31,103 +31,103 @@ public abstract class AbstractFilePermission
 
   protected abstract FileOperation getOperation();
 
-  public <T> void grantForUser( String userId, String fileOrDirURL )
+  public void grantForUser( String userId, String fileOrDirURL )
   {
     grantForUser( userId, fileOrDirURL, null );
   }
 
-  public <T> void grantForUser( String userId, String fileOrDirURL, AsyncCallback<Void> responder )
+  public void grantForUser( String userId, String fileOrDirURL, AsyncCallback<Void> responder )
   {
     String method = "updateUserPermission";
     Object[] args = buildArgs( fileOrDirURL, userId, false, PermissionTypes.GRANT );
     serverCall( responder, method, args, fileOrDirURL.getClass() );
   }
 
-  public <T> void denyForUser( String userId, String fileOrDirURL )
+  public void denyForUser( String userId, String fileOrDirURL )
   {
     denyForUser( userId, fileOrDirURL, null );
   }
 
-  public <T> void denyForUser( String userId, String fileOrDirURL, AsyncCallback<T> responder )
+  public void denyForUser( String userId, String fileOrDirURL, AsyncCallback responder )
   {
     String method = "updateUserPermission";
     Object[] args = buildArgs( fileOrDirURL, userId, false, PermissionTypes.DENY );
     serverCall( responder, method, args, null );
   }
 
-  public <T> void grantForRole( String roleName, String fileOrDirURL )
+  public void grantForRole( String roleName, String fileOrDirURL )
   {
     grantForRole( roleName, fileOrDirURL, null );
   }
 
-  public <T> void grantForRole( String roleName, String fileOrDirURL, AsyncCallback<T> responder )
+  public void grantForRole( String roleName, String fileOrDirURL, AsyncCallback responder )
   {
     String method = "updateRolePermission";
     Object[] args = buildArgs( fileOrDirURL, roleName, true, PermissionTypes.GRANT );
     serverCall( responder, method, args, fileOrDirURL.getClass() );
   }
 
-  public <T> void denyForRole( String roleName, String fileOrDirURL )
+  public void denyForRole( String roleName, String fileOrDirURL )
   {
     denyForRole( roleName, fileOrDirURL, null );
   }
 
-  public <T> void denyForRole( String roleName, String fileOrDirURL, AsyncCallback<T> responder )
+  public void denyForRole( String roleName, String fileOrDirURL, AsyncCallback responder )
   {
     String method = "updateRolePermission";
     Object[] args = buildArgs( fileOrDirURL, roleName, true, PermissionTypes.DENY );
     serverCall( responder, method, args, null );
   }
 
-  public <T> void grantForAllUsers( String fileOrDirURL )
+  public void grantForAllUsers( String fileOrDirURL )
   {
     grantForAllUsers( fileOrDirURL, null );
   }
 
-  public <T> void grantForAllUsers( String fileOrDirURL, AsyncCallback<T> responder )
+  public void grantForAllUsers( String fileOrDirURL, AsyncCallback responder )
   {
     String method = "updatePermissionForAllUsers";
     Object[] args = buildArgs( fileOrDirURL, null, false, PermissionTypes.GRANT );
     serverCall( responder, method, args, fileOrDirURL.getClass() );
   }
 
-  public <T> void denyForAllUsers( String fileOrDirURL )
+  public void denyForAllUsers( String fileOrDirURL )
   {
     denyForAllUsers( fileOrDirURL, null );
   }
 
-  public <T> void denyForAllUsers( String fileOrDirURL, AsyncCallback<T> responder )
+  public void denyForAllUsers( String fileOrDirURL, AsyncCallback responder )
   {
     String method = "updatePermissionForAllUsers";
     Object[] args = buildArgs( fileOrDirURL, null, false, PermissionTypes.DENY);
     serverCall( responder, method, args, null );
   }
 
-  public <T> void grantForAllRoles( String fileOrDirURL )
+  public void grantForAllRoles( String fileOrDirURL )
   {
     grantForAllRoles( fileOrDirURL, null );
   }
 
-  public <T> void grantForAllRoles( String fileOrDirURL, AsyncCallback<T> responder )
+  public void grantForAllRoles( String fileOrDirURL, AsyncCallback responder )
   {
     String method = "updateRolePermissionsForAllRoles";
     Object[] args = buildArgs( fileOrDirURL, null, false, PermissionTypes.GRANT );
     serverCall( responder, method, args, fileOrDirURL.getClass() );
   }
 
-  public <T> void denyForAllRoles( String fileOrDirURL )
+  public void denyForAllRoles( String fileOrDirURL )
   {
     denyForAllRoles( fileOrDirURL, null );
   }
 
-  public <T> void denyForAllRoles( String fileOrDirURL, AsyncCallback<T> responder )
+  public void denyForAllRoles( String fileOrDirURL, AsyncCallback responder )
   {
     String method = "updateRolePermissionsForAllRoles";
     Object[] args = buildArgs( fileOrDirURL, null, true, PermissionTypes.DENY );
     serverCall( responder, method, args, null );
   }
 
-  private <T> Object[] buildArgs( String fileOrDirURL, String principal, boolean isRole, PermissionTypes permissionType )
+  private Object[] buildArgs( String fileOrDirURL, String principal, boolean isRole, PermissionTypes permissionType )
   {
     String appId = Backendless.getApplicationId();
     String version = Backendless.getVersion();
@@ -146,11 +146,11 @@ public abstract class AbstractFilePermission
       return new Object[]{appId, version, permission};
   }
 
-  private <T> void serverCall( AsyncCallback<T> responder, String method, Object[] args, Class type )
+  private void serverCall( AsyncCallback responder, String method, Object[] args, Class type )
   {
     if( responder == null )
-      Invoker.invokeSync( PERMISSION_SERVICE, method, args, new AdaptingResponder<T>( type, new PoJoAdaptingPolicy<T>() ) );
+      Invoker.invokeSync( PERMISSION_SERVICE, method, args, new AdaptingResponder( type, new PoJoAdaptingPolicy() ) );
     else
-      Invoker.invokeAsync( PERMISSION_SERVICE, method, args, responder, new AdaptingResponder<T>( type, new PoJoAdaptingPolicy<T>() ) );
+      Invoker.invokeAsync( PERMISSION_SERVICE, method, args, responder, new AdaptingResponder( type, new PoJoAdaptingPolicy() ) );
   }
 }
