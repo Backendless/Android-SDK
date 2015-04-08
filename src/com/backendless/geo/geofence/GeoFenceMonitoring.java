@@ -66,21 +66,24 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
   public void onLocationChanged( Location location )
   {
     this.location = location;
-    Set<GeoFence> oldFences, newFences;
+    Set<GeoFence> oldFences, newFences, currFence;
 
-    oldFences = pointFences;
-    pointFences = findGeoPointsFence( new GeoPoint( location.getLatitude(), location.getLongitude() ), geoFences );
-    newFences = new HashSet<GeoFence>( pointFences );
+    synchronized( this )
+    {
+      oldFences = pointFences;
+      currFence = findGeoPointsFence( new GeoPoint( location.getLatitude(), location.getLongitude() ), new HashSet<GeoFence>( geoFences ) );
+      newFences = new HashSet<GeoFence>( currFence );
 
-    newFences.removeAll( oldFences );
-    oldFences.removeAll( pointFences );
+      newFences.removeAll( oldFences );
+      oldFences.removeAll( currFence );
 
-    callOnEnter( newFences );
-    callOnStay( newFences );
-    callOnExit( oldFences );
-    cancelOnStay( oldFences );
+      callOnEnter( newFences );
+      callOnStay( newFences );
+      callOnExit( oldFences );
+      cancelOnStay( oldFences );
 
-    pointFences = newFences;
+      pointFences = newFences;
+    }
   }
 
   private void callOnEnter( Set<GeoFence> geoFences )
