@@ -95,7 +95,8 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
   {
     for( GeoFence geoFence : geoFences )
     {
-      addOnStay( geoFence );
+      if( geoFence.getOnStayDuration() > 0 )
+        addOnStay( geoFence );
     }
   }
 

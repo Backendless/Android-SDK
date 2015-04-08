@@ -98,6 +98,11 @@ public class LocationTracker implements LocationListener
 
   public void addListeners( String name, IBackendlessLocationListener locationListener )
   {
+
+    if( locationListeners.isEmpty() )
+    {
+      listenBestProvider();
+    }
     this.locationListeners.put( name, locationListener );
 
     firstListen( locationListener );
@@ -130,7 +135,14 @@ public class LocationTracker implements LocationListener
 
   private void firstListen( IBackendlessLocationListener locationListener )
   {
-    Location location = locationManager.getLastKnownLocation( provider );
+    Location location = null;
+    try
+    {
+      location = locationManager.getLastKnownLocation( provider );
+    }
+    catch( Exception ex )
+    {
+    }
     if( location != null )
       locationListener.onLocationChanged( location );
   }

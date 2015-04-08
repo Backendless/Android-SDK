@@ -18,7 +18,6 @@
 
 package com.backendless;
 
-import android.widget.Toast;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.core.responder.policy.CollectionAdaptingPolicy;
@@ -538,7 +537,18 @@ public final class Geo
 
   public void onGeofenceServerCallback( String method, String geofenceId, GeoPoint geoPoint )
   {
-    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, method, new Object[] { geofenceId, geoPoint } );
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, method, new Object[] { geofenceId, geoPoint }, new AsyncCallback<Void>()
+    {
+      @Override
+      public void handleResponse( Void v )
+      {
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+      }
+    } );
   }
 
   private void startGeofenceMonitoring( final ICallback callback )
@@ -578,13 +588,10 @@ public final class Geo
   private void addFenceMonitoring( ICallback callback, GeoFence... geoFences )
   {
 
-    Toast.makeText( ((AndroidService) AndroidService.recoverService()).getApplicationContext(), "getfences", Toast.LENGTH_SHORT ).show();
     if( geoFences.length == 0 )
     {
       return;
     }
-
-    Toast.makeText( ((AndroidService) AndroidService.recoverService()).getApplicationContext(), "START", Toast.LENGTH_SHORT ).show();
 
     GeoFenceMonitoring.getInstance().setCallback( callback );
 
