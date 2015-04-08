@@ -38,7 +38,7 @@ public abstract class AbstractDataPermission
   public <T> void grantForUser( String userId, T dataObject, AsyncCallback<T> responder )
   {
     String method = "updateUserPermission";
-    Object[] args = { Backendless.getApplicationId(), Backendless.getVersion(), dataObject.getClass().getSimpleName(), userId, Persistence.getEntityId( dataObject ), getOperation(), PermissionTypes.GRANT };
+    Object[] args = buildArgs( dataObject, userId, PermissionTypes.GRANT );
     serverCall( responder, method, args, dataObject.getClass() );
   }
 
@@ -50,84 +50,101 @@ public abstract class AbstractDataPermission
   public <T> void denyForUser( String userId, T dataObject, AsyncCallback<T> responder )
   {
     String method = "updateUserPermission";
-    Object[] args = { Backendless.getApplicationId(), Backendless.getVersion(), dataObject.getClass().getSimpleName(), userId, Persistence.getEntityId( dataObject ), getOperation(), PermissionTypes.DENY };
+    Object[] args = buildArgs( dataObject, userId, PermissionTypes.DENY );
     serverCall( responder, method, args, null );
   }
 
-  public <T> void grantForRole( String roleName, Object dataObject )
+  public <T> void grantForRole( String roleName, T dataObject )
   {
     grantForRole( roleName, dataObject, null );
   }
 
-  public <T> void grantForRole( String roleName, Object dataObject, AsyncCallback<T> responder )
+  public <T> void grantForRole( String roleName, T dataObject, AsyncCallback<T> responder )
   {
     String method = "updateRolePermission";
-    Object[] args = { Backendless.getApplicationId(), Backendless.getVersion(), dataObject.getClass().getSimpleName(), roleName, Persistence.getEntityId( dataObject ), getOperation(), PermissionTypes.GRANT };
+    Object[] args = buildArgs( dataObject, roleName, PermissionTypes.GRANT );
     serverCall( responder, method, args, dataObject.getClass() );
   }
 
-  public <T> void denyForRole( String roleName, Object dataObject )
+  public <T> void denyForRole( String roleName, T dataObject )
   {
     denyForRole( roleName, dataObject, null );
   }
 
-  public <T> void denyForRole( String roleName, Object dataObject, AsyncCallback<T> responder )
+  public <T> void denyForRole( String roleName, T dataObject, AsyncCallback<T> responder )
   {
     String method = "updateRolePermission";
-    Object[] args = { Backendless.getApplicationId(), Backendless.getVersion(), dataObject.getClass().getSimpleName(), roleName, Persistence.getEntityId( dataObject ), getOperation(), PermissionTypes.DENY };
+    Object[] args = buildArgs( dataObject, roleName, PermissionTypes.DENY );
     serverCall( responder, method, args, null );
   }
 
-  public <T> void grantForAllUsers( Object dataObject )
+  public <T> void grantForAllUsers( T dataObject )
   {
     grantForAllUsers( dataObject, null );
   }
 
-  public <T> void grantForAllUsers( Object dataObject, AsyncCallback<T> responder )
+  public <T> void grantForAllUsers( T dataObject, AsyncCallback<T> responder )
   {
     String method = "updateAllUserPermission";
-    Object[] args = { Backendless.getApplicationId(), Backendless.getVersion(), dataObject.getClass().getSimpleName(), Persistence.getEntityId( dataObject ), getOperation(), PermissionTypes.GRANT };
+    Object[] args = buildArgs( dataObject, null, PermissionTypes.GRANT );
     serverCall( responder, method, args, dataObject.getClass() );
   }
 
-  public <T> void denyForAllUsers( Object dataObject )
+  public <T> void denyForAllUsers( T dataObject )
   {
     denyForAllUsers( dataObject, null );
   }
 
-  public <T> void denyForAllUsers( Object dataObject, AsyncCallback<T> responder )
+  public <T> void denyForAllUsers( T dataObject, AsyncCallback<T> responder )
   {
     String method = "updateAllUserPermission";
-    Object[] args = { Backendless.getApplicationId(), Backendless.getVersion(), dataObject.getClass().getSimpleName(), Persistence.getEntityId( dataObject ), getOperation(), PermissionTypes.DENY };
+    Object[] args = buildArgs( dataObject, null, PermissionTypes.DENY);
     serverCall( responder, method, args, null );
   }
 
-  public <T> void grantForAllRoles( Object dataObject )
+  public <T> void grantForAllRoles( T dataObject )
   {
     grantForAllRoles( dataObject, null );
   }
 
-  public <T> void grantForAllRoles( Object dataObject, AsyncCallback<T> responder )
+  public <T> void grantForAllRoles( T dataObject, AsyncCallback<T> responder )
   {
     String method = "updateAllRolePermission";
-    Object[] args = { Backendless.getApplicationId(), Backendless.getVersion(), dataObject.getClass().getSimpleName(), Persistence.getEntityId( dataObject ), getOperation(), PermissionTypes.GRANT };
+    Object[] args = buildArgs( dataObject, null, PermissionTypes.GRANT );
     serverCall( responder, method, args, dataObject.getClass() );
   }
 
-  public <T> void denyForAllRoles( Object dataObject )
+  public <T> void denyForAllRoles( T dataObject )
   {
     denyForAllRoles( dataObject, null );
   }
 
-  public <T> void denyForAllRoles( Object dataObject, AsyncCallback<T> responder )
+  public <T> void denyForAllRoles( T dataObject, AsyncCallback<T> responder )
   {
     String method = "updateAllRolePermission";
-    Object[] args = { Backendless.getApplicationId(), Backendless.getVersion(), dataObject.getClass().getSimpleName(), Persistence.getEntityId( dataObject ), getOperation(), PermissionTypes.DENY };
+    Object[] args = buildArgs( dataObject, null, PermissionTypes.DENY );
     serverCall( responder, method, args, null );
+  }
+
+  private <T> Object[] buildArgs( T dataObject, String principal, PermissionTypes permissionType )
+  {
+    String appId = Backendless.getApplicationId();
+    String version = Backendless.getVersion();
+    String tableName = Persistence.getSimpleName( dataObject.getClass() );
+    String objectId = Persistence.getEntityId( dataObject );
+    PersistenceOperations operation = getOperation();
+
+    if( principal != null )
+      return new Object[] { appId, version, tableName, principal, objectId, operation, permissionType };
+    else
+      return new Object[] { appId, version, tableName, objectId, operation, permissionType };
   }
 
   private <T> void serverCall( AsyncCallback<T> responder, String method, Object[] args, Class type )
   {
-    Invoker.invokeAsync( PERMISSION_SERVICE, method, args, responder, new AdaptingResponder<T>( type, new PoJoAdaptingPolicy<T>() ) );
+    if( responder == null )
+      Invoker.invokeSync( PERMISSION_SERVICE, method, args, new AdaptingResponder<T>( type, new PoJoAdaptingPolicy<T>() ) );
+    else
+      Invoker.invokeAsync( PERMISSION_SERVICE, method, args, responder, new AdaptingResponder<T>( type, new PoJoAdaptingPolicy<T>() ) );
   }
 }

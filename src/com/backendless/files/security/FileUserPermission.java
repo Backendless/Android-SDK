@@ -16,13 +16,13 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.files;
+package com.backendless.files.security;
 
 import com.backendless.utils.PermissionTypes;
 
 public class FileUserPermission extends Permission
 {
-  protected FileUserPermission( String folder, PermissionTypes access, FileOperation operation )
+  protected FileUserPermission( String folder, PermissionTypes access, FileOperations operation )
   {
     super(folder, access, operation );
   }

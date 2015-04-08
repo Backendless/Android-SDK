@@ -80,13 +80,14 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     this.longitude = (double) longitudeE6 / multiplier;
   }
 
+  /* Removing since the same accessor is declared in the base class.
   public Collection<String> getCategories()
   {
     if( categories == null )
       return categories = new HashSet<String>();
 
     return new HashSet<String>( categories );
-  }
+  }*/
 
   public void addCategory( String category )
   {

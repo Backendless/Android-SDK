@@ -16,18 +16,62 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.files;
+package com.backendless.files.security;
 
 import com.backendless.utils.PermissionTypes;
 
-public class FileRolePermission extends Permission
+public abstract class Permission
 {
-  protected FileRolePermission( String folder, PermissionTypes access, FileOperation operation )
+  protected String folder;
+  protected PermissionTypes access;
+  protected FileOperations operations;
+
+  protected Permission( String folder, PermissionTypes access, FileOperations operations )
   {
-    super(folder, access, operation );
+    this.folder = folder;
+    this.access = access;
+    this.operations = this.operations;
   }
 
-  public FileRolePermission()
+  public Permission()
   {
   }
+
+  public boolean hasAccess()
+  {
+    return access.equals( PermissionTypes.GRANT ) ;
+  }
+
+  public String getFolder()
+  {
+    return folder;
+  }
+
+  public PermissionTypes getAccess()
+  {
+    return access;
+  }
+
+  public FileOperations getOperations()
+  {
+    return operations;
+  }
+
+  public void setFolder( String folder )
+  {
+    this.folder = folder;
+  }
+
+  public void setAccess( PermissionTypes access )
+  {
+    this.access = access;
+  }
+
+  public void setOperations( FileOperations operations )
+  {
+    this.operations = operations;
+  }
+
+
 }
+

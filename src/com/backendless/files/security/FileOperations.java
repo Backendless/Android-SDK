@@ -16,62 +16,9 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.files;
+package com.backendless.files.security;
 
-import com.backendless.utils.PermissionTypes;
-
-public abstract class Permission
+public enum FileOperations
 {
-  protected String folder;
-  protected PermissionTypes access;
-  protected FileOperation operation;
-
-  protected Permission( String folder, PermissionTypes access, FileOperation operation )
-  {
-    this.folder = folder;
-    this.access = access;
-    this.operation = operation;
-  }
-
-  public Permission()
-  {
-  }
-
-  public boolean hasAccess()
-  {
-    return access.equals( PermissionTypes.GRANT ) ;
-  }
-
-  public String getFolder()
-  {
-    return folder;
-  }
-
-  public PermissionTypes getAccess()
-  {
-    return access;
-  }
-
-  public FileOperation getOperation()
-  {
-    return operation;
-  }
-
-  public void setFolder( String folder )
-  {
-    this.folder = folder;
-  }
-
-  public void setAccess( PermissionTypes access )
-  {
-    this.access = access;
-  }
-
-  public void setOperation( FileOperation operation )
-  {
-    this.operation = operation;
-  }
-
-
+  READ, DELETE, WRITE, PERMISSION
 }
-
