@@ -29,7 +29,7 @@ public abstract class AbstractFilePermission
 {
   private static final String PERMISSION_SERVICE = "com.backendless.services.file.FileService";
 
-  protected abstract FileOperations getOperation();
+  protected abstract FileOperation getOperation();
 
   public <T> void grantForUser( String userId, String fileOrDirURL )
   {
@@ -131,7 +131,7 @@ public abstract class AbstractFilePermission
   {
     String appId = Backendless.getApplicationId();
     String version = Backendless.getVersion();
-    FileOperations operation = getOperation();
+    FileOperation operation = getOperation();
 
       Permission permission;
 
