@@ -478,44 +478,28 @@ public final class Geo
 
   public void startGeofenceMonitoring( GeoPoint geoPoint ) throws BackendlessException
   {
-    validateMonitoringCallback( geoPoint );
-
-    ICallback bCallback = GeoFenceMonitoring.getInstance().getCallback();
-    if( bCallback instanceof NonCallback )
-      bCallback = new ServerCallback( geoPoint );
+    ICallback bCallback = new ServerCallback( geoPoint );
 
     startGeofenceMonitoring( bCallback );
   }
 
   public void startGeofenceMonitoring( IGeofenceCallback callback ) throws BackendlessException
   {
-    validateMonitoringCallback( callback );
-
-    ICallback bCallback = GeoFenceMonitoring.getInstance().getCallback();
-    if( bCallback instanceof NonCallback )
-      bCallback = new ClientCallback( callback );
+    ICallback bCallback = new ClientCallback( callback );
 
     startGeofenceMonitoring( bCallback );
   }
 
   public void startGeofenceMonitoring( String geofenceName, GeoPoint geoPoint ) throws BackendlessException
   {
-    validateMonitoringCallback( geoPoint );
-
-    ICallback bCallback = GeoFenceMonitoring.getInstance().getCallback();
-    if( bCallback instanceof NonCallback )
-      bCallback = new ServerCallback( geoPoint );
+    ICallback bCallback = new ServerCallback( geoPoint );
 
     startGeofenceMonitoring( bCallback, geofenceName );
   }
 
   public void startGeofenceMonitoring( String geofenceName, IGeofenceCallback callback ) throws BackendlessException
   {
-    validateMonitoringCallback( callback );
-
-    ICallback bCallback = GeoFenceMonitoring.getInstance().getCallback();
-    if( bCallback instanceof NonCallback )
-      bCallback = new ClientCallback( callback );
+    ICallback bCallback = new ClientCallback( callback );
 
     startGeofenceMonitoring( bCallback, geofenceName );
   }
@@ -529,7 +513,7 @@ public final class Geo
   public void stopGeofenceMonitoring( String geofenceName )
   {
     GeoFenceMonitoring.getInstance().removeGeoFence( geofenceName );
-    if( GeoFenceMonitoring.getInstance().getCallback() instanceof NonCallback )
+    if( !GeoFenceMonitoring.getInstance().isMonitoring() )
     {
       LocationTracker.getInstance().removeListener( GeoFenceMonitoring.NAME );
     }
@@ -593,25 +577,19 @@ public final class Geo
       return;
     }
 
-    GeoFenceMonitoring.getInstance().setCallback( callback );
-
-    GeoFenceMonitoring.getInstance().addGeoFences( new HashSet<GeoFence>( Arrays.asList( geoFences ) ) );
+    if( geoFences.length == 1 )
+    {
+      GeoFenceMonitoring.getInstance().addGeoFence( geoFences[ 0 ], callback );
+    }
+    else
+    {
+      GeoFenceMonitoring.getInstance().addGeoFences( new HashSet<GeoFence>( Arrays.asList( geoFences ) ), callback );
+    }
 
     if( !LocationTracker.getInstance().isContainListener( GeoFenceMonitoring.NAME ) )
     {
       LocationTracker.getInstance().addListeners( GeoFenceMonitoring.NAME, GeoFenceMonitoring.getInstance() );
     }
-  }
-
-  private void validateMonitoringCallback( Object object ) throws BackendlessException
-  {
-    ICallback callback = GeoFenceMonitoring.getInstance().getCallback();
-
-    if( callback instanceof NonCallback )
-      return;
-
-    if( !callback.equalCallbackParameter( object ) )
-      throw new BackendlessException( ExceptionMessage.GEOFENCE_MONITORING_WRONG_ARGUMENTS );
   }
 
   private void complementResponse( BackendlessCollection<GeoPoint> collection, BackendlessGeoQuery query )

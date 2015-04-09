@@ -29,7 +29,6 @@ public class GeoFence
 {
   private String objectId;
   private String geofenceName;
-  private boolean isActive;
   private long onStayDuration;
   private FenceType type;
   private List<GeoPoint> nodes;
@@ -63,16 +62,6 @@ public class GeoFence
   public void setGeofenceName( String geofenceName )
   {
     this.geofenceName = geofenceName;
-  }
-
-  public boolean isActive()
-  {
-    return isActive;
-  }
-
-  public void setActive( boolean isActive )
-  {
-    this.isActive = isActive;
   }
 
   public long getOnStayDuration()

@@ -20,12 +20,12 @@ package com.backendless.geo.geofence;
 
 import android.location.Location;
 import com.backendless.IBackendlessLocationListener;
+import com.backendless.exceptions.BackendlessException;
+import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.geo.GeoMath;
 import com.backendless.geo.GeoPoint;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -40,11 +40,8 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
   private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
   private Set<GeoFence> onStaySet = Collections.synchronizedSet( new HashSet<GeoFence>() );
 
-  private Set<GeoFence> geoFences = Collections.synchronizedSet( new HashSet<GeoFence>() );
+  private Map<GeoFence, ICallback> fencesToCallback = Collections.synchronizedMap( new HashMap<GeoFence, ICallback>() );
   private Set<GeoFence> pointFences = new HashSet<GeoFence>();
-
-  private final ICallback DEFAULT_STATE = new NonCallback();
-  private ICallback callback = DEFAULT_STATE;
 
   private Location location;
 
@@ -71,7 +68,7 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
     synchronized( this )
     {
       oldFences = pointFences;
-      currFence = findGeoPointsFence( new GeoPoint( location.getLatitude(), location.getLongitude() ), new HashSet<GeoFence>( geoFences ) );
+      currFence = findGeoPointsFence( new GeoPoint( location.getLatitude(), location.getLongitude() ), fencesToCallback.keySet() );
       newFences = new HashSet<GeoFence>( currFence );
 
       newFences.removeAll( oldFences );
@@ -90,7 +87,7 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
   {
     for( GeoFence geoFence : geoFences )
     {
-      callback.callOnEnter( geoFence, location );
+      fencesToCallback.get( geoFence ).callOnEnter( geoFence, location );
     }
   }
 
@@ -115,25 +112,36 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
   {
     for( GeoFence geoFence : geoFences )
     {
-      callback.callOnExit( geoFence, location );
+      fencesToCallback.get( geoFence ).callOnExit( geoFence, location );
     }
   }
 
-  public void addGeoFences( Set<GeoFence> geoFences )
+  public void addGeoFences( Set<GeoFence> geoFences, ICallback callback )
   {
+    if( !fencesToCallback.isEmpty() )
+      throw new BackendlessException( ExceptionMessage.GEOFENCES_MONITORING );
+
     for( GeoFence geoFence : geoFences )
     {
-      addGeoFence( geoFence );
+      addGeoFence( geoFence, callback );
     }
   }
 
-  public void addGeoFence( GeoFence geoFence )
+  public void addGeoFence( GeoFence geoFence, ICallback callback )
   {
+    if( fencesToCallback.containsKey( geoFence ) )
+    {
+      if( !fencesToCallback.get( geoFence ).equalCallbackParameter( callback ) )
+        throw new BackendlessException( String.format( ExceptionMessage.GEOFENCE_ALREADY_MONITORING, geoFence.getGeofenceName() ) );
+      return;
+    }
+
     if( !isDefiniteRect( geoFence.getNwPoint(), geoFence.getSePoint() ) )
     {
       definiteRect( geoFence );
     }
-    this.geoFences.add( geoFence );
+    this.fencesToCallback.put( geoFence, callback );
+
     if( location != null && isPoinInFence( new GeoPoint( location.getLatitude(), location.getLongitude() ), geoFence ) )
     {
       pointFences.add( geoFence );
@@ -145,15 +153,11 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
   public void removeGeoFence( String geoFenceName )
   {
     GeoFence removed = new GeoFence( geoFenceName );
-    if( geoFences.remove( removed ) )
+    if( fencesToCallback.containsKey( removed ) )
     {
+      fencesToCallback.remove( removed );
       cancelOnStay( removed );
       pointFences.remove( removed );
-    }
-
-    if( geoFences.isEmpty() )
-    {
-      callback = DEFAULT_STATE;
     }
   }
 
@@ -161,18 +165,12 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
   {
     onStaySet.clear();
     pointFences.clear();
-    geoFences.clear();
-    callback = DEFAULT_STATE;
+    fencesToCallback.clear();
   }
 
-  public ICallback getCallback()
+  public boolean isMonitoring()
   {
-    return callback;
-  }
-
-  public void setCallback( ICallback callback )
-  {
-    this.callback = callback;
+    return !fencesToCallback.isEmpty();
   }
 
   private Set<GeoFence> findGeoPointsFence( GeoPoint geoPoint, Set<GeoFence> geoFences )
@@ -255,7 +253,7 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
       @Override
       public void run()
       {
-        callback.callOnEnter( geoFence, location );
+        fencesToCallback.get( geoFence ).callOnStay( geoFence, location );
         cancelOnStay( geoFence );
       }
     }, geoFence.getOnStayDuration(), TimeUnit.SECONDS );
