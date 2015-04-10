@@ -251,7 +251,8 @@ public final class Geo
         @Override
         public void handleFault( BackendlessFault fault )
         {
-          responder.handleFault( fault );
+          if( responder != null )
+            responder.handleFault( fault );
         }
       }, new AdaptingResponder<GeoPoint>( GeoPoint.class, adaptingPolicy ) );
     }
@@ -308,7 +309,8 @@ public final class Geo
         @Override
         public void handleFault( BackendlessFault fault )
         {
-          responder.handleFault( fault );
+          if( responder != null )
+            responder.handleFault( fault );
         }
       }, new AdaptingResponder<SearchMatchesResult>( SearchMatchesResult.class, adaptingPolicy ) );
     }
@@ -393,7 +395,6 @@ public final class Geo
     }
   }
 
-  
   private void setReferenceToCluster( BackendlessCollection<GeoPoint> collection )
   {
     BackendlessGeoQuery geoQuery = new ProtectedBackendlessGeoQuery( (BackendlessGeoQuery) collection.getQuery() );
