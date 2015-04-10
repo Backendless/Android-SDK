@@ -476,32 +476,36 @@ public final class Geo
     } );
   }
 
-  public void startGeofenceMonitoring( GeoPoint geoPoint ) throws BackendlessException
+  public void startGeofenceMonitoring( GeoPoint geoPoint,
+                                       final AsyncCallback<Void> responder ) throws BackendlessException
   {
     ICallback bCallback = new ServerCallback( geoPoint );
 
-    startGeofenceMonitoring( bCallback );
+    startGeofenceMonitoring( bCallback, responder );
   }
 
-  public void startGeofenceMonitoring( IGeofenceCallback callback ) throws BackendlessException
+  public void startGeofenceMonitoring( IGeofenceCallback callback,
+                                       final AsyncCallback<Void> responder ) throws BackendlessException
   {
     ICallback bCallback = new ClientCallback( callback );
 
-    startGeofenceMonitoring( bCallback );
+    startGeofenceMonitoring( bCallback, responder );
   }
 
-  public void startGeofenceMonitoring( String geofenceName, GeoPoint geoPoint ) throws BackendlessException
+  public void startGeofenceMonitoring( String geofenceName, GeoPoint geoPoint,
+                                       final AsyncCallback<Void> responder ) throws BackendlessException
   {
     ICallback bCallback = new ServerCallback( geoPoint );
 
-    startGeofenceMonitoring( bCallback, geofenceName );
+    startGeofenceMonitoring( bCallback, geofenceName, responder );
   }
 
-  public void startGeofenceMonitoring( String geofenceName, IGeofenceCallback callback ) throws BackendlessException
+  public void startGeofenceMonitoring( String geofenceName, IGeofenceCallback callback,
+                                       final AsyncCallback<Void> responder ) throws BackendlessException
   {
     ICallback bCallback = new ClientCallback( callback );
 
-    startGeofenceMonitoring( bCallback, geofenceName );
+    startGeofenceMonitoring( bCallback, geofenceName, responder );
   }
 
   public void stopGeofenceMonitoring()
@@ -535,36 +539,53 @@ public final class Geo
     } );
   }
 
-  private void startGeofenceMonitoring( final ICallback callback )
+  private void startGeofenceMonitoring( final ICallback callback, final AsyncCallback<Void> responder )
   {
     Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() }, new AsyncCallback<GeoFence[]>()
     {
       @Override
       public void handleResponse( GeoFence[] geoFences )
       {
-        addFenceMonitoring( callback, geoFences );
+        try
+        {
+          addFenceMonitoring( callback, geoFences );
+        }
+        catch( Exception ex )
+        {
+          responder.handleFault( new BackendlessFault( ex ) );
+        }
       }
 
       @Override
       public void handleFault( BackendlessFault fault )
       {
+        responder.handleFault( fault );
       }
     } );
   }
 
-  private void startGeofenceMonitoring( final ICallback callback, String geofenceName )
+  private void startGeofenceMonitoring( final ICallback callback, String geofenceName,
+                                        final AsyncCallback<Void> responder )
   {
     Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFence", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geofenceName }, new AsyncCallback<GeoFence>()
     {
       @Override
       public void handleResponse( GeoFence geoFences )
       {
-        addFenceMonitoring( callback, geoFences );
+        try
+        {
+          addFenceMonitoring( callback, geoFences );
+        }
+        catch( Exception ex )
+        {
+          responder.handleFault( new BackendlessFault( ex ) );
+        }
       }
 
       @Override
       public void handleFault( BackendlessFault fault )
       {
+        responder.handleFault( fault );
       }
     } );
   }
