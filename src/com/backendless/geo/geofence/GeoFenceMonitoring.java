@@ -43,7 +43,7 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
   private Map<GeoFence, ICallback> fencesToCallback = Collections.synchronizedMap( new HashMap<GeoFence, ICallback>() );
   private Set<GeoFence> pointFences = new HashSet<GeoFence>();
 
-  private Location location;
+  private volatile Location location;
 
   private GeoFenceMonitoring()
   {
@@ -62,11 +62,11 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
   @Override
   public void onLocationChanged( Location location )
   {
-    this.location = location;
     Set<GeoFence> oldFences, newFences, currFence;
 
     synchronized( this )
     {
+      this.location = location;
       oldFences = pointFences;
       currFence = findGeoPointsFence( new GeoPoint( location.getLatitude(), location.getLongitude() ), fencesToCallback.keySet() );
       newFences = new HashSet<GeoFence>( currFence );
