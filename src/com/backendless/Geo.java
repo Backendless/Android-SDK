@@ -454,7 +454,7 @@ public final class Geo
 
   public int runOnStayAction( String geoFenceName ) throws BackendlessException
   {
-    return Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName } );
+    return (Integer) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName } );
   }
 
   public void runOnStayAction( String geoFenceName, final AsyncCallback<Integer> responder ) throws BackendlessException
