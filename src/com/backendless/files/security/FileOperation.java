@@ -18,7 +18,7 @@
 
 package com.backendless.files.security;
 
-public enum FileOperations
+public enum FileOperation
 {
   READ, DELETE, WRITE, PERMISSION
 }

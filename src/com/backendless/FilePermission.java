@@ -19,7 +19,7 @@
 package com.backendless;
 
 import com.backendless.files.security.AbstractFilePermission;
-import com.backendless.files.security.FileOperations;
+import com.backendless.files.security.FileOperation;
 
 public class FilePermission
 {
@@ -31,36 +31,36 @@ public class FilePermission
     public static class Read extends AbstractFilePermission
     {
         @Override
-        protected FileOperations getOperation()
+        protected FileOperation getOperation()
         {
-            return FileOperations.READ;
+            return FileOperation.READ;
         }
     }
 
     public static class Delete extends AbstractFilePermission
     {
         @Override
-        protected FileOperations getOperation()
+        protected FileOperation getOperation()
         {
-            return FileOperations.DELETE;
+            return FileOperation.DELETE;
         }
     }
 
     public static class Write extends AbstractFilePermission
     {
         @Override
-        protected FileOperations getOperation()
+        protected FileOperation getOperation()
         {
-            return FileOperations.WRITE;
+            return FileOperation.WRITE;
         }
     }
 
     public static class Permission extends AbstractFilePermission
     {
         @Override
-        protected FileOperations getOperation()
+        protected FileOperation getOperation()
         {
-            return FileOperations.PERMISSION;
+            return FileOperation.PERMISSION;
         }
     }
 }

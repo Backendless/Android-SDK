@@ -24,13 +24,13 @@ public abstract class Permission
 {
   protected String folder;
   protected PermissionTypes access;
-  protected FileOperations operations;
+  protected FileOperation operation;
 
-  protected Permission( String folder, PermissionTypes access, FileOperations operations )
+  protected Permission( String folder, PermissionTypes access, FileOperation operation )
   {
     this.folder = folder;
     this.access = access;
-    this.operations = this.operations;
+    this.operation = operation;
   }
 
   public Permission()
@@ -52,9 +52,9 @@ public abstract class Permission
     return access;
   }
 
-  public FileOperations getOperations()
+  public FileOperation getOperation()
   {
-    return operations;
+    return operation;
   }
 
   public void setFolder( String folder )
@@ -67,11 +67,9 @@ public abstract class Permission
     this.access = access;
   }
 
-  public void setOperations( FileOperations operations )
+  public void setOperation( FileOperation operation )
   {
-    this.operations = operations;
+    this.operation = operation;
   }
-
-
 }
 

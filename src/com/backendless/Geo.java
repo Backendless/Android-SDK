@@ -221,6 +221,50 @@ public final class Geo
     }
   }
 
+  public BackendlessCollection<GeoPoint> getPoints( final GeoCluster geoCluster )
+  {
+    CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
+    BackendlessCollection<GeoPoint> result = (BackendlessCollection<GeoPoint>) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "loadGeoPoints", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoCluster.getObjectId(), geoCluster.getGeoQuery() }, new AdaptingResponder<GeoPoint>( GeoPoint.class, adaptingPolicy ) );
+
+    result.setQuery( geoCluster.getGeoQuery() );
+    result.setType( GeoPoint.class );
+
+    return result;
+  }
+
+  public void getPoints( final GeoCluster geoCluster, final AsyncCallback<BackendlessCollection<GeoPoint>> responder )
+  {
+    try
+    {
+      CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
+
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadGeoPoints", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoCluster.getObjectId(), geoCluster.getGeoQuery() }, new AsyncCallback<BackendlessCollection<GeoPoint>>()
+      {
+        @Override
+        public void handleResponse( BackendlessCollection<GeoPoint> response )
+        {
+          response.setQuery( geoCluster.getGeoQuery() );
+          response.setType( GeoPoint.class );
+
+          if( responder != null )
+            responder.handleResponse( response );
+        }
+
+        @Override
+        public void handleFault( BackendlessFault fault )
+        {
+          if( responder != null )
+            responder.handleFault( fault );
+        }
+      }, new AdaptingResponder<GeoPoint>( GeoPoint.class, adaptingPolicy ) );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
   public BackendlessCollection<SearchMatchesResult> relativeFind(
           BackendlessGeoQuery geoQuery ) throws BackendlessException
   {
@@ -322,7 +366,8 @@ public final class Geo
         @Override
         public void handleFault( BackendlessFault fault )
         {
-          responder.handleFault( fault );
+          if( responder != null )
+            responder.handleFault( fault );
         }
       }, new AdaptingResponder<SearchMatchesResult>( SearchMatchesResult.class, adaptingPolicy ) );
     }
@@ -404,50 +449,6 @@ public final class Geo
     else
     {
       Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId(), null }, invoker );
-    }
-  }
-
-  public BackendlessCollection<GeoPoint> loadGeoPoints( final GeoCluster geoCluster )
-  {
-    CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
-    BackendlessCollection<GeoPoint> result = (BackendlessCollection<GeoPoint>) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "loadGeoPoints", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoCluster.getObjectId(), geoCluster.getGeoQuery() }, new AdaptingResponder<GeoPoint>( GeoPoint.class, adaptingPolicy ) );
-
-    result.setQuery( geoCluster.getGeoQuery() );
-    result.setType( GeoPoint.class );
-
-    return result;
-  }
-
-  public void loadGeoPoints( final GeoCluster geoCluster,
-                             final AsyncCallback<BackendlessCollection<GeoPoint>> responder )
-  {
-    try
-    {
-      CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
-
-      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadGeoPoints", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoCluster.getObjectId(), geoCluster.getGeoQuery() }, new AsyncCallback<BackendlessCollection<GeoPoint>>()
-      {
-        @Override
-        public void handleResponse( BackendlessCollection<GeoPoint> response )
-        {
-          response.setQuery( geoCluster.getGeoQuery() );
-          response.setType( GeoPoint.class );
-
-          if( responder != null )
-            responder.handleResponse( response );
-        }
-
-        @Override
-        public void handleFault( BackendlessFault fault )
-        {
-          responder.handleFault( fault );
-        }
-      }, new AdaptingResponder<GeoPoint>( GeoPoint.class, adaptingPolicy ) );
-    }
-    catch( Throwable e )
-    {
-      if( responder != null )
-        responder.handleFault( new BackendlessFault( e ) );
     }
   }
 

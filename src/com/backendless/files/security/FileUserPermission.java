@@ -22,7 +22,7 @@ import com.backendless.utils.PermissionTypes;
 
 public class FileUserPermission extends Permission
 {
-  protected FileUserPermission( String folder, PermissionTypes access, FileOperations operation )
+  protected FileUserPermission( String folder, PermissionTypes access, FileOperation operation )
   {
     super(folder, access, operation );
   }
