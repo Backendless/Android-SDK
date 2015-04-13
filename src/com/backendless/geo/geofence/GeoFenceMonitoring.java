@@ -19,11 +19,11 @@
 package com.backendless.geo.geofence;
 
 import android.location.Location;
-import com.backendless.IBackendlessLocationListener;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.geo.GeoMath;
 import com.backendless.geo.GeoPoint;
+import com.backendless.geo.IBackendlessLocationListener;
 
 import java.util.*;
 import java.util.concurrent.Executors;
