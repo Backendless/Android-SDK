@@ -16,36 +16,14 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.geo.geofence;
+package com.backendless.geo;
 
 import android.location.Location;
 
 /**
- * Created by baas on 03.04.15.
+ * Created by julia
  */
-public class NonCallback implements ICallback
+public interface IBackendlessLocationListener
 {
-  @Override
-  public void callOnEnter( GeoFence geoFence, Location location )
-  {
-
-  }
-
-  @Override
-  public void callOnStay( GeoFence geoFence, Location location )
-  {
-
-  }
-
-  @Override
-  public void callOnExit( GeoFence geoFence, Location location )
-  {
-
-  }
-
-  @Override
-  public boolean equalCallbackParameter( Object object )
-  {
-    return true;
-  }
+  public void onLocationChanged( Location location );
 }

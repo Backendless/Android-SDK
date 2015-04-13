@@ -24,6 +24,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import com.backendless.geo.IBackendlessLocationListener;
 
 import java.util.Collections;
 import java.util.HashMap;

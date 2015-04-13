@@ -526,7 +526,7 @@ public final class Geo
 
   public void onGeofenceServerCallback( String method, String geofenceId, GeoPoint geoPoint )
   {
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, method, new Object[] { geofenceId, geoPoint }, new AsyncCallback<Void>()
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, method, new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geofenceId, geoPoint }, new AsyncCallback<Void>()
     {
       @Override
       public void handleResponse( Void v )
@@ -550,10 +550,14 @@ public final class Geo
         try
         {
           addFenceMonitoring( callback, geoFences );
+
+          if( responder != null )
+              responder.handleResponse( null );
         }
         catch( Exception ex )
         {
-          responder.handleFault( new BackendlessFault( ex ) );
+          if( responder != null )
+            responder.handleFault( new BackendlessFault( ex ) );
         }
       }
 
@@ -576,10 +580,14 @@ public final class Geo
         try
         {
           addFenceMonitoring( callback, geoFences );
+
+          if( responder != null )
+              responder.handleResponse( null );
         }
         catch( Exception ex )
         {
-          responder.handleFault( new BackendlessFault( ex ) );
+          if( responder != null )
+            responder.handleFault( new BackendlessFault( ex ) );
         }
       }
 
