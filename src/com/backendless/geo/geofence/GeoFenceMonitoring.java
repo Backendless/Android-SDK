@@ -142,7 +142,7 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
     }
     this.fencesToCallback.put( geoFence, callback );
 
-    if( location != null && isPoinInFence( new GeoPoint( location.getLatitude(), location.getLongitude() ), geoFence ) )
+    if( location != null && isPointInFence( new GeoPoint( location.getLatitude(), location.getLongitude() ), geoFence ) )
     {
       pointFences.add( geoFence );
       callback.callOnEnter( geoFence, location );
@@ -180,7 +180,7 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
     for( GeoFence geoFence : geoFences )
     {
 
-      if( isPoinInFence( geoPoint, geoFence ) )
+      if( isPointInFence( geoPoint, geoFence ) )
       {
         pointFences.add( geoFence );
       }
@@ -189,7 +189,7 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
     return pointFences;
   }
 
-  private boolean isPoinInFence( GeoPoint geoPoint, GeoFence geoFence )
+  private boolean isPointInFence( GeoPoint geoPoint, GeoFence geoFence )
   {
     if( !GeoMath.isPointInRectangular( geoPoint, geoFence.getNwPoint(), geoFence.getSePoint() ) )
     {
