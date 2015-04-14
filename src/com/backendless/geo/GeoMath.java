@@ -85,7 +85,7 @@ public class GeoMath
 
   public static double[] getOutRectangle( GeoPoint center, GeoPoint bounded )
   {
-    return getOutRectangle( center.getLatitude(), center.getLongitude(), distance( center.getLatitude(), center.getLatitude(), bounded.getLatitude(), bounded.getLongitude() ) );
+    return getOutRectangle( center.getLatitude(), center.getLongitude(), distance( center.getLatitude(), center.getLongitude(), bounded.getLatitude(), bounded.getLongitude() ) );
   }
 
   // for shape
