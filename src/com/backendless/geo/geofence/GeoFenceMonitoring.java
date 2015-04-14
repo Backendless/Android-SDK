@@ -79,7 +79,7 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
       callOnExit( oldFences );
       cancelOnStay( oldFences );
 
-      pointFences = newFences;
+      pointFences = currFence;
     }
   }
 
@@ -246,15 +246,17 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
 
   private void addOnStay( final GeoFence geoFence )
   {
-    onStaySet.add( geoFence );
-    geoFence.getOnStayDuration();
+    onStaySet.add(geoFence);
     scheduledExecutorService.schedule( new Runnable()
     {
       @Override
       public void run()
       {
-        fencesToCallback.get( geoFence ).callOnStay( geoFence, location );
-        cancelOnStay( geoFence );
+        if( onStaySet.contains(geoFence) )
+        {
+          fencesToCallback.get(geoFence).callOnStay(geoFence, location);
+          cancelOnStay(geoFence);
+        }
       }
     }, geoFence.getOnStayDuration(), TimeUnit.SECONDS );
   }
