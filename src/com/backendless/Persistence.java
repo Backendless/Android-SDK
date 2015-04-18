@@ -28,6 +28,7 @@ import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.persistence.QueryOptions;
 import com.backendless.property.ObjectProperty;
+import com.backendless.utils.ReflectionUtil;
 import com.backendless.utils.ResponderHelper;
 import weborb.client.IChainedResponder;
 import weborb.types.Types;
@@ -264,14 +265,16 @@ public final class Persistence
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
     Object result;
-    if( ResponderHelper.needsPhantomCache( entity.getClass() ) )
+
+    try
+    {
+      ReflectionUtil.getField( entity.getClass(), Persistence.DEFAULT_OBJECT_ID_FIELD ); // check if objectId field exists
+      result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity } );
+    }
+    catch( NoSuchFieldException nfe )
     {
       String objectId = FootprintsManager.getInstance().getObjectId( entity );
       result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), objectId } );
-    }
-    else
-    {
-      result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity } );
     }
 
     FootprintsManager.getInstance().Inner.removeFootprintForObject( BackendlessSerializer.serializeToMap( entity ), entity );
@@ -286,11 +289,11 @@ public final class Persistence
       if( entity == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-      if( ResponderHelper.needsPhantomCache( entity.getClass() ) )
+      try
       {
-        // remove by objectId
-        String objectId = FootprintsManager.getInstance().getObjectId( entity );
-        Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), objectId }, new AsyncCallback<Object>()
+        ReflectionUtil.getField( entity.getClass(), Persistence.DEFAULT_OBJECT_ID_FIELD ); // check if objectId field exists
+        // remove by entity
+        Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity }, new AsyncCallback<Object>()
         {
           @Override
           public void handleResponse( Object response )
@@ -311,10 +314,11 @@ public final class Persistence
           }
         } );
       }
-      else
+      catch( NoSuchFieldException nfe )
       {
-        // remove by entity
-        Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity }, new AsyncCallback<Object>()
+        // remove by objectId from footprint
+        String objectId = FootprintsManager.getInstance().getObjectId( entity );
+        Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), objectId }, new AsyncCallback<Object>()
         {
           @Override
           public void handleResponse( Object response )
@@ -372,15 +376,16 @@ public final class Persistence
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-    if( ResponderHelper.needsPhantomCache( entity.getClass() ) )
+    try
     {
-      // find by id
+      ReflectionUtil.getField( entity.getClass(), Persistence.DEFAULT_OBJECT_ID_FIELD ); // check if objectId field exists
+      return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity, relations, relationsDepth }, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
+    }
+    catch( NoSuchFieldException e ) // no objectId
+    {
+      // find by id from footprint
       String objectId = FootprintsManager.getInstance().getObjectId( entity );
       return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), objectId, relations, relationsDepth }, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
-    }
-    else
-    {
-      return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity, relations, relationsDepth }, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
     }
   }
 
@@ -433,14 +438,16 @@ public final class Persistence
 
       IChainedResponder chainedResponder = new AdaptingResponder<E>( (Class<E>) entity.getClass(), new PoJoAdaptingPolicy<E>() );
       Object[] args;
-      if( ResponderHelper.needsPhantomCache( entity.getClass() ) )
+
+      try
+      {
+        ReflectionUtil.getField( entity.getClass(), Persistence.DEFAULT_OBJECT_ID_FIELD ); // check if objectId field exists
+        args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity, relations, relationsDepth };
+      }
+      catch( NoSuchFieldException nfe ) // no objectId
       {
         String objectId = FootprintsManager.getInstance().getObjectId( entity );
         args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), objectId, relations, relationsDepth };
-      }
-      else
-      {
-        args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity, relations, relationsDepth };
       }
 
       Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args, responder, chainedResponder );
