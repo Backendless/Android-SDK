@@ -132,4 +132,6 @@ public class ExceptionMessage
 
   public final static String GEOFENCE_ALREADY_MONITORING = "The % geofence is already being monitored. Monitoring of the geofence must be stopped before you start it again";
   public final static String GEOFENCES_MONITORING = "Cannot start geofence monitoring for all available geofences. There is another monitoring session in progress on the client-side. Make sure to stop all monitoring sessions before starting it for all available geo fences.";
+
+  public final static String INVALID_LOG_POLICY = "Al least number of messages or time frequency must be in positive value";
 }
