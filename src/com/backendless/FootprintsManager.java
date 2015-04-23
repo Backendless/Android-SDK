@@ -112,9 +112,9 @@ public class FootprintsManager
      * When the object is created on server, client gets new instance of it. In order to remember the system fields
      * (objectId, __meta etc.) it is required to duplicate the old instance in cache.
      *
-     * @param serializedEntity      entity's map used to iterate through fields and duplicate footprints recursively
-     * @param persistedEntity entity from server
-     * @param initialEntity   entity on which a method was called (.save(), .create() etc.)
+     * @param serializedEntity entity's map used to iterate through fields and duplicate footprints recursively
+     * @param persistedEntity  entity from server
+     * @param initialEntity    entity on which a method was called (.save(), .create() etc.)
      */
     void duplicateFootprintForObject( Map<String, Object> serializedEntity, Object persistedEntity,
                                       Object initialEntity )
@@ -247,6 +247,11 @@ public class FootprintsManager
           }
           else if( entry.getValue() instanceof Collection )
           {
+            if( ((Collection) entry.getValue()).iterator().next() instanceof GeoPoint )
+            {
+              continue;
+            }
+
             Collection newObjectCollection;
             try
             {
@@ -300,7 +305,7 @@ public class FootprintsManager
      * Removes entity's footprint from cache.
      *
      * @param serializedEntity entity's map used to iterate through fields and remove footprints recursively
-     * @param entity     entity to be removed
+     * @param entity           entity to be removed
      */
     void removeFootprintForObject( Map<String, Object> serializedEntity, Object entity )
     {
