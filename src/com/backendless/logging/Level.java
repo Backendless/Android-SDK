@@ -23,5 +23,5 @@ package com.backendless.logging;
  */
 public enum Level
 {
-  FATAL, ERROR, WARN, INFO, DEBUG
+  FATAL, ERROR, WARN, INFO, DEBUG, TRACE
 }

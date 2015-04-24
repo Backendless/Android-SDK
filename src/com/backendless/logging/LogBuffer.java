@@ -94,7 +94,7 @@ public class LogBuffer
       scheduledFuture.cancel( true );
     }
 
-    if( numOfMessages > 1 && timeFrequency > 0 )
+    if( timeFrequency > 0 )
     {
       if( scheduledExecutorService == null )
       {
@@ -123,7 +123,7 @@ public class LogBuffer
 
     logMessages.add( new LogMessage( logger, level, new Date( System.currentTimeMillis() ), message, exception != null ? getStackTrace( exception ) : null ) );
 
-    if( logMessages.size() >= numOfMessages )
+    if( numOfMessages > 1 && logMessages.size() >= numOfMessages )
     {
       flush();
     }

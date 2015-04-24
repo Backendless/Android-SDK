@@ -79,4 +79,8 @@ public class Logger
   {
     logBufer.enqueue( name, Level.FATAL, message, t );
   }
+
+  public void trace( String message ){
+    logBufer.enqueue( name, Level.TRACE, message, null );
+  }
 }
