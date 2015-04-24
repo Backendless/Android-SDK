@@ -24,10 +24,11 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.files.BackendlessFile;
-import com.backendless.files.security.FileRolePermission;
-import com.backendless.files.security.FileUserPermission;
 import com.backendless.files.router.FileOutputStreamRouter;
 import com.backendless.files.router.IOutputStreamRouter;
+import com.backendless.files.security.FileRolePermission;
+import com.backendless.files.security.FileUserPermission;
+import weborb.types.Types;
 import weborb.v3types.GUID;
 
 import java.io.*;
@@ -54,6 +55,8 @@ public final class Files
 
   private Files()
   {
+    Types.addClientClassMapping( "com.backendless.services.file.permissions.FileRolePermission", FileRolePermission.class );
+    Types.addClientClassMapping( "com.backendless.services.file.permissions.FileUserPermission", FileUserPermission.class );
   }
 
   static Files getInstance()
