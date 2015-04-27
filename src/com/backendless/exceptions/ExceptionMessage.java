@@ -130,6 +130,8 @@ public class ExceptionMessage
 
   public final static String ANONYMOUS_CLASSES_PROHIBITED = "Anonymous class properties are prohibited: %s";
 
-  public final static String GEOFENCE_ALREADY_MONITORING = "The % geofence is already being monitored. Monitoring of the geofence must be stopped before you start it again";
+  public final static String GEOFENCE_ALREADY_MONITORING = "The %s geofence is already being monitored. Monitoring of the geofence must be stopped before you start it again";
   public final static String GEOFENCES_MONITORING = "Cannot start geofence monitoring for all available geofences. There is another monitoring session in progress on the client-side. Make sure to stop all monitoring sessions before starting it for all available geo fences.";
+
+  public final static String NOT_FOUND_PROVIDER = "The provider for tracking location was not found. Please, check is you add permission android.permission.ACCESS_FINE_LOCATION";
 }

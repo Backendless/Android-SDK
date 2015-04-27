@@ -35,7 +35,7 @@ import java.util.Map;
 
 public final class Geo
 {
-  private final static String GEO_MANAGER_SERVER_ALIAS = "com.backendless.services.geo.GeoService";
+  public final static String GEO_MANAGER_SERVER_ALIAS = "com.backendless.services.geo.GeoService";
   private final static String DEFAULT_CATEGORY_NAME = "Default";
 
   private static final Geo instance = new Geo();
@@ -522,22 +522,6 @@ public final class Geo
     {
       LocationTracker.getInstance().removeListener( GeoFenceMonitoring.NAME );
     }
-  }
-
-  public void onGeofenceServerCallback( String method, String geofenceId, GeoPoint geoPoint )
-  {
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, method, new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geofenceId, geoPoint }, new AsyncCallback<Void>()
-    {
-      @Override
-      public void handleResponse( Void v )
-      {
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-      }
-    } );
   }
 
   private void startGeofenceMonitoring( final ICallback callback, final AsyncCallback<Void> responder )
