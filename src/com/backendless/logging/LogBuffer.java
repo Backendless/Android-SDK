@@ -115,7 +115,7 @@ public class LogBuffer
 
   void enqueue( String logger, Level level, String message, Throwable exception )
   {
-    if( numOfMessages == 1 || timeFrequency == 0 )
+    if( numOfMessages == 1 )
     {
       reportSingleLogMessage( logger, level, message, exception != null ? getStackTrace( exception ) : null );
       return;
