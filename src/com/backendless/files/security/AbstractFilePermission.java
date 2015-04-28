@@ -62,7 +62,7 @@ public abstract class AbstractFilePermission
 
   public void grantForRole( String roleName, String fileOrDirURL, AsyncCallback responder )
   {
-    String method = "updateRolePermission";
+    String method = "updateRolePermissions";
     Object[] args = buildArgs( fileOrDirURL, roleName, true, PermissionTypes.GRANT );
     serverCall( responder, method, args );
   }
@@ -74,7 +74,7 @@ public abstract class AbstractFilePermission
 
   public void denyForRole( String roleName, String fileOrDirURL, AsyncCallback responder )
   {
-    String method = "updateRolePermission";
+    String method = "updateRolePermissions";
     Object[] args = buildArgs( fileOrDirURL, roleName, true, PermissionTypes.DENY );
     serverCall( responder, method, args );
   }
