@@ -111,7 +111,7 @@ public abstract class AbstractFilePermission
   public void grantForAllRoles( String fileOrDirURL, AsyncCallback responder )
   {
     String method = "updateRolePermissionsForAllRoles";
-    Object[] args = buildArgs( fileOrDirURL, null, false, PermissionTypes.GRANT );
+    Object[] args = buildArgs( fileOrDirURL, null, true, PermissionTypes.GRANT );
     serverCall( responder, method, args );
   }
 
