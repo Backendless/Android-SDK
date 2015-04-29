@@ -536,7 +536,7 @@ public final class Geo
           addFenceMonitoring( callback, geoFences );
 
           if( responder != null )
-              responder.handleResponse( null );
+            responder.handleResponse( null );
         }
         catch( Exception ex )
         {
@@ -566,7 +566,7 @@ public final class Geo
           addFenceMonitoring( callback, geoFences );
 
           if( responder != null )
-              responder.handleResponse( null );
+            responder.handleResponse( null );
         }
         catch( Exception ex )
         {
@@ -602,7 +602,15 @@ public final class Geo
 
     if( !LocationTracker.getInstance().isContainListener( GeoFenceMonitoring.NAME ) )
     {
-      LocationTracker.getInstance().addListeners( GeoFenceMonitoring.NAME, GeoFenceMonitoring.getInstance() );
+      try
+      {
+        LocationTracker.getInstance().addListeners( GeoFenceMonitoring.NAME, GeoFenceMonitoring.getInstance() );
+      }
+      catch( RuntimeException e )
+      {
+        GeoFenceMonitoring.getInstance().removeGeoFences();
+        throw e;
+      }
     }
   }
 
