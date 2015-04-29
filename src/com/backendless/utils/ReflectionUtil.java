@@ -77,6 +77,34 @@ public class ReflectionUtil
     }
   }
 
+  /**
+   * Checks whether given class contains a field with given name.
+   * Recursively checks superclasses.
+   *
+   * @param clazz     Class in which to search for a field
+   * @param fieldName name of the field
+   * @return {@code true} if given class or one of its superclasses contains field with given name, else {@code false}
+   */
+  public static boolean hasField( Class clazz, String fieldName )
+  {
+    try
+    {
+      clazz.getDeclaredField( fieldName );
+      return true;
+    }
+    catch( NoSuchFieldException nfe )
+    {
+      if( clazz.getSuperclass() != null )
+      {
+        return hasField( clazz.getSuperclass(), fieldName );
+      }
+      else
+      {
+        return false;
+      }
+    }
+  }
+
   public static <T> Type getCallbackGenericType( AsyncCallback<T> callback )
   {
     Type[] genericInterfaces = callback.getClass().getGenericInterfaces();

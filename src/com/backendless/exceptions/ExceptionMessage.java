@@ -41,7 +41,6 @@ public class ExceptionMessage
   public final static String DEFAULT_CATEGORY_NAME = "cannot add or delete a default category name.";
   public final static String EMPTY_CATEGORY_NAME = "Geo category name can not be empty.";
 
-
   public final static String NULL_ENTITY = "Entity cannot be null.";
   public final static String NULL_ENTITY_NAME = "Entity name cannot be null or empty.";
   public final static String NULL_ID = "Id cannot be null or empty.";
@@ -130,4 +129,7 @@ public class ExceptionMessage
   public final static String FIELD_NOT_ACCESSIBLE = "Field %s is not accessible";
 
   public final static String ANONYMOUS_CLASSES_PROHIBITED = "Anonymous class properties are prohibited: %s";
+
+  public final static String GEOFENCE_ALREADY_MONITORING = "The % geofence is already being monitored. Monitoring of the geofence must be stopped before you start it again";
+  public final static String GEOFENCES_MONITORING = "Cannot start geofence monitoring for all available geofences. There is another monitoring session in progress on the client-side. Make sure to stop all monitoring sessions before starting it for all available geo fences.";
 }

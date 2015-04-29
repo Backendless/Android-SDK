@@ -16,7 +16,7 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.files;
+package com.backendless.files.security;
 
 import com.backendless.utils.PermissionTypes;
 

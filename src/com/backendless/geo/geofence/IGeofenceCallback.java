@@ -16,19 +16,16 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.files;
+package com.backendless.geo.geofence;
 
-import com.backendless.utils.PermissionTypes;
-
-public class FileUserPermission extends Permission
+/**
+ * Created by baas on 01.04.15.
+ */
+public interface IGeofenceCallback
 {
-  protected FileUserPermission( String folder, PermissionTypes access, FileOperation operation )
-  {
-    super(folder, access, operation );
-  }
+  void geoPointEntered( String geofenceName, String geofenceId, double latitude, double longitude );
 
-  public FileUserPermission()
-  {
-  }
+  void geoPointStayed( String geofenceName, String geofenceId, double latitude, double longitude );
 
+  void geoPointExited( String geofenceName, String geofenceId, double latitude, double longitude );
 }
