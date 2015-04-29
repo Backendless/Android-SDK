@@ -31,7 +31,7 @@ import weborb.client.IResponder;
 import weborb.client.WeborbClient;
 
 @SuppressWarnings("unchecked")
-class Invoker
+public class Invoker
 {
   private static final String URL_ENDING = "/" + Backendless.getVersion() + "/binary";
   private static final String DESTINATION = "GenericDestination";
@@ -59,12 +59,12 @@ class Invoker
     return weborbClient;
   }
 
-  protected static <T> void invokeAsync( String className, String methodName, Object[] args, AsyncCallback<T> callback )
+  public static <T> void invokeAsync( String className, String methodName, Object[] args, AsyncCallback<T> callback )
   {
     invokeAsync( className, methodName, args, callback, null );
   }
 
-  protected static <T> void invokeAsync( final String className, final String methodName, final Object[] args,
+    public static <T> void invokeAsync( final String className, final String methodName, final Object[] args,
                                          final AsyncCallback<T> callback, final IChainedResponder responder )
   {
     ThreadPoolService.getPoolExecutor().execute( new Runnable()
@@ -85,7 +85,7 @@ class Invoker
     } );
   }
 
-  protected static <T> T invokeSync( String className, String methodName, Object[] args,
+    public static <T> T invokeSync( String className, String methodName, Object[] args,
                                      IChainedResponder chainedResponder ) throws BackendlessException
   {
     SyncResponder invokeResponder = new SyncResponder();
@@ -107,7 +107,7 @@ class Invoker
     return (T) invokeResponder.getResult();
   }
 
-  protected static <T> T invokeSync( String className, String methodName, Object[] args ) throws BackendlessException
+    public static <T> T invokeSync( String className, String methodName, Object[] args ) throws BackendlessException
   {
     return (T) invokeSync( className, methodName, args, null );
   }

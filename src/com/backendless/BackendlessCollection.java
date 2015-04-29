@@ -74,7 +74,7 @@ public class BackendlessCollection<E> extends AbstractBackendlessCollection<E>
   }
 
   //Download page logic
-  private BackendlessCollection<E> downloadPage( int pageSize, int offset ) throws BackendlessException
+  private BackendlessCollection<E> downloadPage( int pageSize, int offset )  throws BackendlessException
   {
     checkQuery();
     IBackendlessQuery tempQuery = query.newInstance();
