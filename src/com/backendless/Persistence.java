@@ -102,7 +102,7 @@ public final class Persistence
     {
       E newEntity = (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "save", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), serializedEntity }, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
 
-      if( serializedEntity.get( Footprint.OBJECT_ID_FIELD_NAME ) == null )
+      if( serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) == null )
       {
         FootprintsManager.getInstance().Inner.duplicateFootprintForObject( serializedEntity, entity, newEntity );
       }
@@ -149,7 +149,7 @@ public final class Persistence
      // FootprintsManager.getInstance().Inner.putMissingPropsToEntityMap( entity, serializedEntity );
 
       AsyncCallback<E> callbackOverrider;
-      if( serializedEntity.get( Footprint.OBJECT_ID_FIELD_NAME ) == null )
+      if( serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) == null )
       {
         callbackOverrider = new AsyncCallback<E>()
         {
@@ -263,7 +263,17 @@ public final class Persistence
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-    Object result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity } );
+    Object result;
+    if( ResponderHelper.needsPhantomCache( entity.getClass() ) )
+    {
+      String objectId = FootprintsManager.getInstance().getObjectId( entity );
+      result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), objectId } );
+    }
+    else
+    {
+      result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity } );
+    }
+
     FootprintsManager.getInstance().Inner.removeFootprintForObject( BackendlessSerializer.serializeToMap( entity ), entity );
 
     return ((Number) result).longValue();
@@ -276,26 +286,55 @@ public final class Persistence
       if( entity == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity }, new AsyncCallback<Object>()
+      if( ResponderHelper.needsPhantomCache( entity.getClass() ) )
       {
-        @Override
-        public void handleResponse( Object response )
+        // remove by objectId
+        String objectId = FootprintsManager.getInstance().getObjectId( entity );
+        Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), objectId }, new AsyncCallback<Object>()
         {
-          FootprintsManager.getInstance().Inner.removeFootprintForObject( BackendlessSerializer.serializeToMap( entity ), entity );
+          @Override
+          public void handleResponse( Object response )
+          {
+            FootprintsManager.getInstance().Inner.removeFootprintForObject( BackendlessSerializer.serializeToMap( entity ), entity );
 
-          if( responder == null )
-            return;
+            if( responder == null )
+              return;
 
-          responder.handleResponse( ((Number) response).longValue() );
-        }
+            responder.handleResponse( ((Number) response).longValue() );
+          }
 
-        @Override
-        public void handleFault( BackendlessFault fault )
+          @Override
+          public void handleFault( BackendlessFault fault )
+          {
+            if( responder != null )
+              responder.handleFault( fault );
+          }
+        } );
+      }
+      else
+      {
+        // remove by entity
+        Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity }, new AsyncCallback<Object>()
         {
-          if( responder != null )
-            responder.handleFault( fault );
-        }
-      } );
+          @Override
+          public void handleResponse( Object response )
+          {
+            FootprintsManager.getInstance().Inner.removeFootprintForObject( BackendlessSerializer.serializeToMap( entity ), entity );
+
+            if( responder == null )
+              return;
+
+            responder.handleResponse( ((Number) response).longValue() );
+          }
+
+          @Override
+          public void handleFault( BackendlessFault fault )
+          {
+            if( responder != null )
+              responder.handleFault( fault );
+          }
+        } );
+      }
     }
     catch( Throwable e )
     {
@@ -333,7 +372,16 @@ public final class Persistence
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-    return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity, relations, relationsDepth }, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
+    if( ResponderHelper.needsPhantomCache( entity.getClass() ) )
+    {
+      // find by id
+      String objectId = FootprintsManager.getInstance().getObjectId( entity );
+      return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), objectId, relations, relationsDepth }, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
+    }
+    else
+    {
+      return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity, relations, relationsDepth }, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
+    }
   }
 
   protected <E> void findById( final Class<E> entity, final String id, final List<String> relations,
@@ -384,7 +432,17 @@ public final class Persistence
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
       IChainedResponder chainedResponder = new AdaptingResponder<E>( (Class<E>) entity.getClass(), new PoJoAdaptingPolicy<E>() );
-      Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity, relations, relationsDepth };
+      Object[] args;
+      if( ResponderHelper.needsPhantomCache( entity.getClass() ) )
+      {
+        String objectId = FootprintsManager.getInstance().getObjectId( entity );
+        args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), objectId, relations, relationsDepth };
+      }
+      else
+      {
+        args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entity, relations, relationsDepth };
+      }
+
       Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args, responder, chainedResponder );
     }
     catch( Throwable e )

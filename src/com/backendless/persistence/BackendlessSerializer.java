@@ -27,12 +27,7 @@ import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.geo.GeoPoint;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Handles object to Map serialization for Backendless services.
@@ -56,6 +51,11 @@ public class BackendlessSerializer
     if(entity.getClass().isArray())
     {
       return serializeArray( entity, serializedCache );
+    }
+
+    if( entity.getClass().isEnum() )
+    {
+      return ((Enum) entity).name();
     }
 
     Map<String, Object> serializedEntity = new HashMap<String, Object>();
@@ -192,7 +192,7 @@ public class BackendlessSerializer
       Object propertyValue = property.getValue();
       if( propertyValue != null && !isBelongsJdk( propertyValue.getClass() ) )
       {
-        property.setValue( serializeToMap( propertyValue, new HashMap<Object, Map<String, Object>>(  )  ) );
+        property.setValue( serializeToMap( propertyValue, new HashMap<Object, Map<String, Object>>() ) );
       }
     }
 
