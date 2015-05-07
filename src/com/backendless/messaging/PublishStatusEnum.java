@@ -20,5 +20,5 @@ package com.backendless.messaging;
 
 public enum PublishStatusEnum
 {
-  FAILED, PUBLISHED, SCHEDULED, CANCELLED
+  FAILED, PUBLISHED, SCHEDULED, CANCELLED, UNKNOWN
 }

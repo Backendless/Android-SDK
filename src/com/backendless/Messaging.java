@@ -441,6 +441,32 @@ public final class Messaging
     publish( null, message, publishOptions, deliveryOptions, responder );
   }
 
+  public MessageStatus getMessageStatus( String messageId )
+  {
+    if( messageId == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_MESSAGE_ID );
+    MessageStatus messageStatus = Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "getMessageStatus", new Object[]
+            { Backendless.getApplicationId(), Backendless.getVersion(), messageId } );
+
+    return messageStatus;
+  }
+
+  public void getMessageStatus( String messageId, AsyncCallback<MessageStatus> responder )
+  {
+    try
+    {
+      if( messageId == null )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_MESSAGE_ID );
+
+      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "getMessageStatus", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), messageId }, responder );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
   public boolean cancel( String messageId ) throws BackendlessException
   {
     if( messageId == null )
