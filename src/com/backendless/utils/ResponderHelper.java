@@ -49,7 +49,7 @@ public class ResponderHelper
     return new AdaptingResponder<E>( entity, policy );
   }
 
-  private static <T> boolean needsPhantomCache( Class<T> entityClass ) throws BackendlessException
+  public static <T> boolean needsPhantomCache( Class<T> entityClass ) throws BackendlessException
   {
     try
     {
