@@ -86,24 +86,24 @@ public class FootprintsManager
     public void putMissingPropsToEntityMap( Object entity, Map entityMap )
     {
       //put objectId if exists in cache
-      if( !entityMap.containsKey( Footprint.OBJECT_ID_FIELD_NAME ) )
+      if( !entityMap.containsKey( Persistence.DEFAULT_OBJECT_ID_FIELD ) )
       {
         String objectId = getObjectId( entity );
 
         if( objectId != null )
         {
-          entityMap.put( Footprint.OBJECT_ID_FIELD_NAME, objectId );
+          entityMap.put( Persistence.DEFAULT_OBJECT_ID_FIELD, objectId );
         }
       }
 
       //put __meta if exists in cache
-      if( !entityMap.containsKey( Footprint.META_FIELD_NAME ) )
+      if( !entityMap.containsKey( Persistence.DEFAULT_META_FIELD ) )
       {
         String meta = getMeta( entity );
 
         if( meta != null )
         {
-          entityMap.put( Footprint.META_FIELD_NAME, meta );
+          entityMap.put( Persistence.DEFAULT_META_FIELD, meta );
         }
       }
     }

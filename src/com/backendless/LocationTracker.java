@@ -24,6 +24,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import com.backendless.exceptions.BackendlessException;
+import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.geo.IBackendlessLocationListener;
 
 import java.util.Collections;
@@ -121,6 +123,10 @@ public class LocationTracker implements LocationListener
   private void listenBestProvider()
   {
     String bestProvider = locationManager.getBestProvider( new Criteria(), true );
+
+    if( bestProvider == null )
+      throw new BackendlessException( ExceptionMessage.NOT_FOUND_PROVIDER );
+
     if( !bestProvider.equals( provider ) )
     {
       listenProvider( bestProvider );

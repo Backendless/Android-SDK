@@ -87,7 +87,7 @@ public class ExceptionMessage
 
   public final static String WRONG_SUBSCRIPTION_STATE = "cannot resume a subscription, which is not paused.";
   public final static String WRONG_EXPIRATION_DATE = "Wrong expiration date";
-
+  public final static String RECIPIENT_MISSING = "Push notification recipient is missing: use either DeliveryOptions.setPushBroadcast() or DeliveryOptions.setPushSinglecast() to set the recipients";
   public final static String WRONG_POLLING_INTERVAL = "Wrong polling interval";
   public final static String DEVICE_NOT_REGISTERED = "Device is not registered.";
 
@@ -130,8 +130,10 @@ public class ExceptionMessage
 
   public final static String ANONYMOUS_CLASSES_PROHIBITED = "Anonymous class properties are prohibited: %s";
 
-  public final static String GEOFENCE_ALREADY_MONITORING = "The % geofence is already being monitored. Monitoring of the geofence must be stopped before you start it again";
+  public final static String GEOFENCE_ALREADY_MONITORING = "The %s geofence is already being monitored. Monitoring of the geofence must be stopped before you start it again";
   public final static String GEOFENCES_MONITORING = "Cannot start geofence monitoring for all available geofences. There is another monitoring session in progress on the client-side. Make sure to stop all monitoring sessions before starting it for all available geo fences.";
+
+  public final static String NOT_FOUND_PROVIDER = "The provider for tracking location cannot be found. Please check if the permission android.permission.ACCESS_FINE_LOCATION has been added to the application manifest.";
 
   public final static String INVALID_LOG_POLICY = "Either the number of messages or the time frequency must be a positive value";
 }

@@ -180,4 +180,21 @@ public class BackendlessUser implements Serializable
 
     return hashCode;
   }
+
+  @Override
+  public String toString()
+  {
+    StringBuilder sb = new StringBuilder();
+    sb.append( "BackendlessUser{" );
+
+    for( Map.Entry<String, Object> property : properties.entrySet() )
+    {
+      sb.append( property.getKey() ).append( "=" ).append( property.getValue() ).append( ", " );
+    }
+
+    sb.delete( sb.length() - 2, sb.length() );
+    sb.append( "}" );
+
+    return sb.toString();
+  }
 }
