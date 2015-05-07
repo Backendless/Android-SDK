@@ -37,7 +37,7 @@ public class BackendlessUserWriter implements ITypeWriter
 
     Map<String, Object> props = user.getProperties();
     props.put( Persistence.REST_CLASS_FIELD, UserService.USERS_TABLE_NAME );
-    props.put(  "objectId", user.getUserId() );
+    props.put( BackendlessUser.ID_KEY, user.getUserId() );
     MessageWriter.writeObject( props, iProtocolFormatter );
   }
 

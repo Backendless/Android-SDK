@@ -9,11 +9,6 @@ import java.util.Map;
 
 public class Footprint
 {
-  public final static String OBJECT_ID_FIELD_NAME = "objectId";
-  public final static String CREATED_FIELD_NAME = "created";
-  public final static String UPDATED_ID_FIELD_NAME = "updated";
-  public final static String META_FIELD_NAME = "__meta";
-
   private String objectId;
   private Date created;
   private Date updated;
@@ -81,33 +76,33 @@ public class Footprint
   {
     Footprint entityFootprint = new Footprint();
 
-    if( entity.containsKey( Footprint.OBJECT_ID_FIELD_NAME ) )
+    if( entity.containsKey( Persistence.DEFAULT_OBJECT_ID_FIELD ) )
     {
-      Object objectId = entity.get( Footprint.OBJECT_ID_FIELD_NAME );
+      Object objectId = entity.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
       if( objectId instanceof StringType )
         entityFootprint.setObjectId( (String) ((StringType) objectId).defaultAdapt() );
     }
 
-    if( entity.containsKey( Footprint.CREATED_FIELD_NAME ) )
+    if( entity.containsKey( Persistence.DEFAULT_CREATED_FIELD ) )
     {
-      Object created = entity.get( Footprint.CREATED_FIELD_NAME );
+      Object created = entity.get( Persistence.DEFAULT_CREATED_FIELD );
 
       if( created instanceof DateType )
         entityFootprint.setCreated( (Date) ((DateType) created).defaultAdapt() );
     }
 
-    if( entity.containsKey( Footprint.UPDATED_ID_FIELD_NAME ) )
+    if( entity.containsKey( Persistence.DEFAULT_UPDATED_FIELD ) )
     {
-      Object updated = entity.get( Footprint.UPDATED_ID_FIELD_NAME );
+      Object updated = entity.get( Persistence.DEFAULT_UPDATED_FIELD );
 
       if( updated instanceof DateType )
         entityFootprint.setUpdated( (Date) ((DateType) updated).defaultAdapt() );
     }
 
-    if( entity.containsKey( Footprint.META_FIELD_NAME ) )
+    if( entity.containsKey( Persistence.DEFAULT_META_FIELD ) )
     {
-      Object meta = entity.get( Footprint.META_FIELD_NAME );
+      Object meta = entity.get( Persistence.DEFAULT_META_FIELD );
 
       if( meta instanceof StringType )
         entityFootprint.set__meta( (String) ((StringType) meta).defaultAdapt() );
@@ -121,7 +116,7 @@ public class Footprint
     Field objectIdField = null;
     try
     {
-      objectIdField = entity.getClass().getDeclaredField( Footprint.OBJECT_ID_FIELD_NAME );
+      objectIdField = entity.getClass().getDeclaredField( Persistence.DEFAULT_OBJECT_ID_FIELD );
     }
     catch( NoSuchFieldException e )
     {
@@ -129,12 +124,9 @@ public class Footprint
       return;
     }
 
-    boolean accessibleChange = false;
-
     if( !objectIdField.isAccessible() )
     {
       objectIdField.setAccessible( true );
-      accessibleChange = true;
     }
 
     try
@@ -144,12 +136,6 @@ public class Footprint
     catch( IllegalAccessException e )
     {
       //never thrown
-    }
-
-    if( accessibleChange )
-    {
-      objectIdField.setAccessible( false );
-      accessibleChange = false;
     }
   }
 }
