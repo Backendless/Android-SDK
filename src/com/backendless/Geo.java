@@ -35,7 +35,7 @@ import java.util.Map;
 
 public final class Geo
 {
-  private final static String GEO_MANAGER_SERVER_ALIAS = "com.backendless.services.geo.GeoService";
+  public final static String GEO_MANAGER_SERVER_ALIAS = "com.backendless.services.geo.GeoService";
   private final static String DEFAULT_CATEGORY_NAME = "Default";
 
   private static final Geo instance = new Geo();
@@ -524,22 +524,6 @@ public final class Geo
     }
   }
 
-  public void onGeofenceServerCallback( String method, String geofenceId, GeoPoint geoPoint )
-  {
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, method, new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geofenceId, geoPoint }, new AsyncCallback<Void>()
-    {
-      @Override
-      public void handleResponse( Void v )
-      {
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-      }
-    } );
-  }
-
   private void startGeofenceMonitoring( final ICallback callback, final AsyncCallback<Void> responder )
   {
     Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() }, new AsyncCallback<GeoFence[]>()
@@ -552,7 +536,7 @@ public final class Geo
           addFenceMonitoring( callback, geoFences );
 
           if( responder != null )
-              responder.handleResponse( null );
+            responder.handleResponse( null );
         }
         catch( Exception ex )
         {
@@ -582,7 +566,7 @@ public final class Geo
           addFenceMonitoring( callback, geoFences );
 
           if( responder != null )
-              responder.handleResponse( null );
+            responder.handleResponse( null );
         }
         catch( Exception ex )
         {
@@ -618,7 +602,15 @@ public final class Geo
 
     if( !LocationTracker.getInstance().isContainListener( GeoFenceMonitoring.NAME ) )
     {
-      LocationTracker.getInstance().addListeners( GeoFenceMonitoring.NAME, GeoFenceMonitoring.getInstance() );
+      try
+      {
+        LocationTracker.getInstance().addListeners( GeoFenceMonitoring.NAME, GeoFenceMonitoring.getInstance() );
+      }
+      catch( RuntimeException e )
+      {
+        GeoFenceMonitoring.getInstance().removeGeoFences();
+        throw e;
+      }
     }
   }
 
