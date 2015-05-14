@@ -90,6 +90,7 @@ public class PointsActivity extends Activity
     radiusBar.setProgress( radius );
     backendlessGeoQuery = new BackendlessGeoQuery( latitude, longitude, radius, Units.KILOMETERS );
     backendlessGeoQuery.addCategory( Defaults.SAMPLE_CATEGORY );
+    backendlessGeoQuery.setIncludeMeta( true );
     searchPoints();
   }
 
@@ -139,7 +140,7 @@ public class PointsActivity extends Activity
       else
         holder = (ViewHolder) convertView.getTag();
 
-      holder.city.setText( String.valueOf(pointsList.get( position ).getMetadata( Defaults.CITY_TAG )) ));
+      holder.city.setText( String.valueOf(pointsList.get( position ).getMetadata( Defaults.CITY_TAG )) );
       holder.latitude.setText( String.valueOf( pointsList.get( position ).getLatitude() ) );
       holder.longitude.setText( String.valueOf( pointsList.get( position ).getLongitude() ) );
 
