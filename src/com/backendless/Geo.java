@@ -452,6 +452,56 @@ public final class Geo
     }
   }
 
+  public int runOnEnterAction( String geoFenceName ) throws BackendlessException
+  {
+    return (Integer) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnEnterAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName } );
+  }
+
+  public void runOnEnterAction( String geoFenceName, final AsyncCallback<Integer> responder ) throws BackendlessException
+  {
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnEnterAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName }, new AsyncCallback<Integer>()
+    {
+      @Override
+      public void handleResponse( Integer response )
+      {
+        if( responder != null )
+          responder.handleResponse( response );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        if( responder != null )
+          responder.handleFault( fault );
+      }
+    } );
+  }
+
+  public void runOnEnterAction( String geoFenceName, GeoPoint geoPoint ) throws BackendlessException
+  {
+    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnEnterAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName, geoPoint } );
+  }
+
+  public void runOnEnterAction( String geoFenceName, GeoPoint geoPoint, final AsyncCallback<Void> responder ) throws BackendlessException
+  {
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnEnterAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName, geoPoint }, new AsyncCallback<Void>()
+    {
+      @Override
+      public void handleResponse( Void response )
+      {
+        if( responder != null )
+          responder.handleResponse( response );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        if( responder != null )
+          responder.handleFault( fault );
+      }
+    } );
+  }
+
   public int runOnStayAction( String geoFenceName ) throws BackendlessException
   {
     return (Integer) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName } );
@@ -463,6 +513,81 @@ public final class Geo
     {
       @Override
       public void handleResponse( Integer response )
+      {
+        if( responder != null )
+          responder.handleResponse( response );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        if( responder != null )
+          responder.handleFault( fault );
+      }
+    } );
+  }
+
+  public void runOnStayAction( String geoFenceName, GeoPoint geoPoint ) throws BackendlessException
+  {
+    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName, geoPoint } );
+  }
+
+  public void runOnStayAction( String geoFenceName, GeoPoint geoPoint, final AsyncCallback<Void> responder ) throws BackendlessException
+  {
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName, geoPoint }, new AsyncCallback<Void>()
+    {
+      @Override
+      public void handleResponse( Void response )
+      {
+        if( responder != null )
+          responder.handleResponse( response );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        if( responder != null )
+          responder.handleFault( fault );
+      }
+    } );
+  }
+
+  public int runOnExitAction( String geoFenceName ) throws BackendlessException
+  {
+    return (Integer) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnExitAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName } );
+  }
+
+  public void runOnExitAction( String geoFenceName, final AsyncCallback<Integer> responder ) throws BackendlessException
+  {
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnExitAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName }, new AsyncCallback<Integer>()
+    {
+      @Override
+      public void handleResponse( Integer response )
+      {
+        if( responder != null )
+          responder.handleResponse( response );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        if( responder != null )
+          responder.handleFault( fault );
+      }
+    } );
+  }
+
+  public void runOnExitAction( String geoFenceName, GeoPoint geoPoint ) throws BackendlessException
+  {
+    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnExitAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName, geoPoint } );
+  }
+
+  public void runOnExitAction( String geoFenceName, GeoPoint geoPoint, final AsyncCallback<Void> responder ) throws BackendlessException
+  {
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnExitAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName, geoPoint }, new AsyncCallback<Void>()
+    {
+      @Override
+      public void handleResponse( Void response )
       {
         if( responder != null )
           responder.handleResponse( response );
