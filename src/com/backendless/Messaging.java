@@ -367,7 +367,7 @@ public final class Messaging
 
     if( deliveryOptions.getPushBroadcast() == 0 && deliveryOptions.getPushSinglecast().isEmpty() )
     {
-      throw new IllegalArgumentException( ExceptionMessage.RECIPIENT_MISSING );
+      deliveryOptions.setPushBroadcast( PushBroadcastMask.ALL );
     }
 
     return (MessageStatus) Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "publish", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channelName, message, publishOptions, deliveryOptions } );
