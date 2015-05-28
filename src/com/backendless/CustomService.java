@@ -42,7 +42,7 @@ public class CustomService
     return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, "dispatchService", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments } );
   }
 
-   public <T> T invoke( String serviceName, String serviceVersion, String method, Object[] arguments, Class<? extends T> clazz )
+   public <T> T invoke( String serviceName, String serviceVersion, String method, Object[] arguments, Class<?> clazz )
   {
     return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, "dispatchService", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments }, new AdaptingResponder( clazz, new PoJoAdaptingPolicy() ) );
   }
@@ -52,7 +52,7 @@ public class CustomService
     Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, "dispatchService", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments }, callback );
   }
 
-  public <E> void invoke( String serviceName, String serviceVersion, String method, Object[] arguments, Class<? extends E> clazz, AsyncCallback<E> callback )
+  public <E> void invoke( String serviceName, String serviceVersion, String method, Object[] arguments, Class<?> clazz, AsyncCallback<E> callback )
   {
     Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, "dispatchService", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments }, callback, new AdaptingResponder( clazz, new PoJoAdaptingPolicy() ) );
   }
