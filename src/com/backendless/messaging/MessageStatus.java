@@ -22,6 +22,7 @@ public class MessageStatus implements Comparable<MessageStatus>
 {
   private String messageId;
   private PublishStatusEnum status;
+  private String errorMessage;
 
   public MessageStatus()
   {
@@ -100,5 +101,15 @@ public class MessageStatus implements Comparable<MessageStatus>
       return statusDiff;
 
     return this.messageId == null ? (arg.getMessageId() == null ? 0 : -1) : this.messageId.compareTo( arg.getMessageId() );
+  }
+
+  public String getErrorMessage()
+  {
+    return errorMessage;
+  }
+
+  public void setErrorMessage( String errorMessage )
+  {
+    this.errorMessage = errorMessage;
   }
 }
