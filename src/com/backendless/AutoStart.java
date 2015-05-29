@@ -16,19 +16,26 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.geo.geofence;
+package com.backendless;
 
-import android.location.Location;
-
-import java.io.Serializable;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import com.backendless.geo.LocationTracker;
 
 /**
- * Created by baas on 03.04.15.
+ * Created by baas on 26.05.15.
  */
-public interface ICallback extends Serializable
+public class AutoStart extends BroadcastReceiver
 {
-  public void callOnEnter( GeoFence geoFence, Location location );
-  public void callOnStay( GeoFence geoFence, Location location );
-  public void callOnExit( GeoFence geoFence, Location location );
-  public boolean equalCallbackParameter( Object object );
+
+  @Override
+  public void onReceive( Context context, Intent intent )
+  {
+    if( intent.getAction().equals( Intent.ACTION_REBOOT ) )
+    {
+      Intent serviceIntent = new Intent( context.getApplicationContext(), LocationTracker.class );
+      context.startService( serviceIntent );
+    }
+  }
 }

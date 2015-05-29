@@ -19,12 +19,13 @@
 package com.backendless.geo;
 
 import android.location.Location;
-import weborb.writer.IUseDirectFieldAccess;
+
+import java.io.Serializable;
 
 /**
  * Created by julia
  */
-public interface IBackendlessLocationListener extends IUseDirectFieldAccess
+public interface IBackendlessLocationListener extends Serializable
 {
   public void onLocationChanged( Location location );
 
