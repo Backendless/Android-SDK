@@ -211,6 +211,10 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
 
   private boolean isPointInFence( GeoPoint geoPoint, GeoFence geoFence )
   {
+    if(geoFence.getNwPoint() == null || geoFence.getSePoint() == null)
+    {
+      definiteRect( geoFence );
+    }
     if( !GeoMath.isPointInRectangular( geoPoint, geoFence.getNwPoint(), geoFence.getSePoint() ) )
     {
       return false;

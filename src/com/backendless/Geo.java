@@ -640,13 +640,23 @@ public final class Geo
 
   public void stopGeofenceMonitoring()
   {
-    ((GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME )).removeGeoFences();
+    GeoFenceMonitoring geoFenceMonitoring = ((GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME ));
+    if( geoFenceMonitoring == null )
+    {
+      return;
+    }
+    geoFenceMonitoring.removeGeoFences();
     LocationTracker.getInstance().removeListener( GeoFenceMonitoring.NAME );
   }
 
   public void stopGeofenceMonitoring( String geofenceName )
   {
-    GeoFenceMonitoring.getInstance().removeGeoFence( geofenceName );
+    GeoFenceMonitoring geoFenceMonitoring = ((GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME ));
+    if( geoFenceMonitoring == null )
+    {
+      return;
+    }
+    geoFenceMonitoring.removeGeoFence( geofenceName );
     if( !((GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME )).isMonitoring() )
     {
       LocationTracker.getInstance().removeListener( GeoFenceMonitoring.NAME );
@@ -720,11 +730,7 @@ public final class Geo
       return;
     }
 
-    GeoFenceMonitoring geoFenceMonitoring = (GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME );
-    if( geoFenceMonitoring == null )
-    {
-      geoFenceMonitoring = GeoFenceMonitoring.getInstance();
-    }
+    GeoFenceMonitoring geoFenceMonitoring = getGeoFenceMonitoring();
 
     if( geoFences.length == 1 )
     {
@@ -744,6 +750,17 @@ public final class Geo
       GeoFenceMonitoring.getInstance().removeGeoFences();
       throw e;
     }
+  }
+
+  private GeoFenceMonitoring getGeoFenceMonitoring()
+  {
+    GeoFenceMonitoring geoFenceMonitoring = (GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME );
+    if( geoFenceMonitoring == null )
+    {
+      geoFenceMonitoring = GeoFenceMonitoring.getInstance();
+    }
+
+    return geoFenceMonitoring;
   }
 
   private void complementResponse( BackendlessCollection<GeoPoint> collection, BackendlessGeoQuery query )
