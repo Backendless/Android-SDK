@@ -19,11 +19,14 @@
 package com.backendless.geo;
 
 import android.location.Location;
+import weborb.writer.IUseDirectFieldAccess;
 
 /**
  * Created by julia
  */
-public interface IBackendlessLocationListener
+public interface IBackendlessLocationListener extends IUseDirectFieldAccess
 {
   public void onLocationChanged( Location location );
+
+  public void onLocationChanged( Location oldLocation, Location newLocation );
 }

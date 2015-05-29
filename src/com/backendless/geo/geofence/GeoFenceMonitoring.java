@@ -24,6 +24,7 @@ import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.geo.GeoMath;
 import com.backendless.geo.GeoPoint;
 import com.backendless.geo.IBackendlessLocationListener;
+import com.backendless.geo.LocationTracker;
 
 import java.util.*;
 import java.util.concurrent.Executors;
@@ -37,7 +38,7 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
 {
   public static String NAME = "GeoFenceMonitoring";
 
-  private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+  private static ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
   private Set<GeoFence> onStaySet = Collections.synchronizedSet( new HashSet<GeoFence>() );
 
   private Map<GeoFence, ICallback> fencesToCallback = Collections.synchronizedMap( new HashMap<GeoFence, ICallback>() );
@@ -45,7 +46,7 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
 
   private volatile Location location;
 
-  private GeoFenceMonitoring()
+  public GeoFenceMonitoring()
   {
   }
 
@@ -81,6 +82,25 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
 
       pointFences = currFence;
     }
+  }
+
+  @Override
+  public void onLocationChanged( Location oldLocation, Location newLocation )
+  {
+    if( newLocation == null )
+    {
+      pointFences.clear();
+      onStaySet.clear();
+      return;
+    }
+
+    if( oldLocation.distanceTo( newLocation ) > LocationTracker.ACCEPTABLE_DISTANCE )
+    {
+      pointFences.clear();
+      onStaySet.clear();
+    }
+
+    onLocationChanged( newLocation );
   }
 
   private void callOnEnter( Set<GeoFence> geoFences )
@@ -246,16 +266,16 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
 
   private void addOnStay( final GeoFence geoFence )
   {
-    onStaySet.add(geoFence);
+    onStaySet.add( geoFence );
     scheduledExecutorService.schedule( new Runnable()
     {
       @Override
       public void run()
       {
-        if( onStaySet.contains(geoFence) )
+        if( onStaySet.contains( geoFence ) )
         {
-          fencesToCallback.get(geoFence).callOnStay(geoFence, location);
-          cancelOnStay(geoFence);
+          fencesToCallback.get( geoFence ).callOnStay( geoFence, location );
+          cancelOnStay( geoFence );
         }
       }
     }, geoFence.getOnStayDuration(), TimeUnit.SECONDS );
