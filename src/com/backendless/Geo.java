@@ -486,7 +486,7 @@ public final class Geo
   public void runOnEnterAction( String geoFenceName, GeoPoint geoPoint,
                                 final AsyncCallback<Void> responder ) throws BackendlessException
   {
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnEnterAction", new Object[] { AndroidService.recoverService().getApplicationId(), AndroidService.recoverService().getVersion(), geoFenceName, geoPoint }, new AsyncCallback<Void>()
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnEnterAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName, geoPoint }, new AsyncCallback<Void>()
     {
       @Override
       public void handleResponse( Void response )
@@ -511,7 +511,7 @@ public final class Geo
 
   public void runOnStayAction( String geoFenceName, final AsyncCallback<Integer> responder ) throws BackendlessException
   {
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { AndroidService.recoverService().getApplicationId(), AndroidService.recoverService().getVersion(), geoFenceName }, new AsyncCallback<Integer>()
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName }, new AsyncCallback<Integer>()
     {
       @Override
       public void handleResponse( Integer response )
@@ -537,7 +537,7 @@ public final class Geo
   public void runOnStayAction( String geoFenceName, GeoPoint geoPoint,
                                final AsyncCallback<Void> responder ) throws BackendlessException
   {
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { AndroidService.recoverService().getApplicationId(), AndroidService.recoverService().getVersion(), geoFenceName, geoPoint }, new AsyncCallback<Void>()
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName, geoPoint }, new AsyncCallback<Void>()
     {
       @Override
       public void handleResponse( Void response )
@@ -665,7 +665,7 @@ public final class Geo
 
   private void startGeofenceMonitoring( final ICallback callback, final AsyncCallback<Void> responder )
   {
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { AndroidService.recoverService().getApplicationId(), AndroidService.recoverService().getVersion() }, new AsyncCallback<GeoFence[]>()
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() }, new AsyncCallback<GeoFence[]>()
     {
       @Override
       public void handleResponse( GeoFence[] geoFences )
