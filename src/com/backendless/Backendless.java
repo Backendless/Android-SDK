@@ -50,6 +50,7 @@ public final class Backendless
   public static final Cache Cache = com.backendless.Cache.getInstance();
   public static final Counters Counters = com.backendless.Counters.getInstance();
   public static final CustomService CustomService = com.backendless.CustomService.getInstance();
+  public static final Logging Logging = com.backendless.Logging.getInstance();
   private static String url = "https://api.backendless.com";
   private static IBackendlessService backendlessService;
   private static IBackendlessService.Init backendlessInitService;
