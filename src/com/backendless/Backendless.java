@@ -18,7 +18,10 @@
 
 package com.backendless;
 
+import android.content.Context;
+import android.content.Intent;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.geo.LocationTracker;
 import com.backendless.io.BackendlessUserFactory;
 import com.backendless.io.BackendlessUserWriter;
 import com.backendless.io.DoubleWriter;
@@ -147,6 +150,12 @@ public final class Backendless
 
     if( userToken != null && !userToken.equals( "" ) )
       HeadersManager.getInstance().addHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY, userToken );
+
+    if( context != null && LocationTracker.getInstance() == null)
+    {
+      Intent intent = new Intent( ((Context) context).getApplicationContext(), LocationTracker.class );
+      ((Context) context).getApplicationContext().startService( intent );
+    }
   }
 
   public static void setUIState( String state )

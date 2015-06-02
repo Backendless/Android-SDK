@@ -20,10 +20,6 @@ package com.backendless.geo.geofence;
 
 import android.location.Location;
 import com.backendless.Backendless;
-import com.backendless.Geo;
-import com.backendless.Invoker;
-import com.backendless.async.callback.AsyncCallback;
-import com.backendless.exceptions.BackendlessFault;
 import com.backendless.geo.GeoPoint;
 
 /**
@@ -42,21 +38,21 @@ public class ServerCallback implements ICallback
   public void callOnEnter( GeoFence geoFence, Location location )
   {
     updatePoint( location );
-    onGeofenceServerCallback( "onEnterGeofence", geoFence.getObjectId(), geoPoint );
+    Backendless.Geo.runOnEnterAction( geoFence.getGeofenceName(), geoPoint, null );
   }
 
   @Override
   public void callOnStay( GeoFence geoFence, Location location )
   {
     updatePoint( location );
-    onGeofenceServerCallback( "onStayGeofence", geoFence.getObjectId(), geoPoint );
+    Backendless.Geo.runOnStayAction( geoFence.getGeofenceName(), geoPoint, null );
   }
 
   @Override
   public void callOnExit( GeoFence geoFence, Location location )
   {
     updatePoint( location );
-    onGeofenceServerCallback( "onExitGeofence", geoFence.getObjectId(), geoPoint );
+    Backendless.Geo.runOnExitAction( geoFence.getGeofenceName(), geoPoint, null );
   }
 
   @Override
@@ -71,21 +67,5 @@ public class ServerCallback implements ICallback
   {
     geoPoint.setLatitude( location.getLatitude() );
     geoPoint.setLongitude( location.getLongitude() );
-  }
-
-  private void onGeofenceServerCallback( String method, String geofenceId, GeoPoint geoPoint )
-  {
-    Invoker.invokeAsync( Geo.GEO_MANAGER_SERVER_ALIAS, method, new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geofenceId, geoPoint }, new AsyncCallback<Void>()
-    {
-      @Override
-      public void handleResponse( Void v )
-      {
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-      }
-    } );
   }
 }

@@ -452,6 +452,58 @@ public final class Geo
     }
   }
 
+  public int runOnEnterAction( String geoFenceName ) throws BackendlessException
+  {
+    return (Integer) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnEnterAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName } );
+  }
+
+  public void runOnEnterAction( String geoFenceName,
+                                final AsyncCallback<Integer> responder ) throws BackendlessException
+  {
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnEnterAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName }, new AsyncCallback<Integer>()
+    {
+      @Override
+      public void handleResponse( Integer response )
+      {
+        if( responder != null )
+          responder.handleResponse( response );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        if( responder != null )
+          responder.handleFault( fault );
+      }
+    } );
+  }
+
+  public void runOnEnterAction( String geoFenceName, GeoPoint geoPoint ) throws BackendlessException
+  {
+    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnEnterAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName, geoPoint } );
+  }
+
+  public void runOnEnterAction( String geoFenceName, GeoPoint geoPoint,
+                                final AsyncCallback<Void> responder ) throws BackendlessException
+  {
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnEnterAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName, geoPoint }, new AsyncCallback<Void>()
+    {
+      @Override
+      public void handleResponse( Void response )
+      {
+        if( responder != null )
+          responder.handleResponse( response );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        if( responder != null )
+          responder.handleFault( fault );
+      }
+    } );
+  }
+
   public int runOnStayAction( String geoFenceName ) throws BackendlessException
   {
     return (Integer) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName } );
@@ -463,6 +515,83 @@ public final class Geo
     {
       @Override
       public void handleResponse( Integer response )
+      {
+        if( responder != null )
+          responder.handleResponse( response );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        if( responder != null )
+          responder.handleFault( fault );
+      }
+    } );
+  }
+
+  public void runOnStayAction( String geoFenceName, GeoPoint geoPoint ) throws BackendlessException
+  {
+    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName, geoPoint } );
+  }
+
+  public void runOnStayAction( String geoFenceName, GeoPoint geoPoint,
+                               final AsyncCallback<Void> responder ) throws BackendlessException
+  {
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName, geoPoint }, new AsyncCallback<Void>()
+    {
+      @Override
+      public void handleResponse( Void response )
+      {
+        if( responder != null )
+          responder.handleResponse( response );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        if( responder != null )
+          responder.handleFault( fault );
+      }
+    } );
+  }
+
+  public int runOnExitAction( String geoFenceName ) throws BackendlessException
+  {
+    return (Integer) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnExitAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName } );
+  }
+
+  public void runOnExitAction( String geoFenceName, final AsyncCallback<Integer> responder ) throws BackendlessException
+  {
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnExitAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName }, new AsyncCallback<Integer>()
+    {
+      @Override
+      public void handleResponse( Integer response )
+      {
+        if( responder != null )
+          responder.handleResponse( response );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        if( responder != null )
+          responder.handleFault( fault );
+      }
+    } );
+  }
+
+  public void runOnExitAction( String geoFenceName, GeoPoint geoPoint ) throws BackendlessException
+  {
+    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnExitAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName, geoPoint } );
+  }
+
+  public void runOnExitAction( String geoFenceName, GeoPoint geoPoint,
+                               final AsyncCallback<Void> responder ) throws BackendlessException
+  {
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnExitAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName, geoPoint }, new AsyncCallback<Void>()
+    {
+      @Override
+      public void handleResponse( Void response )
       {
         if( responder != null )
           responder.handleResponse( response );
@@ -511,14 +640,24 @@ public final class Geo
 
   public void stopGeofenceMonitoring()
   {
-    GeoFenceMonitoring.getInstance().removeGeoFences();
+    GeoFenceMonitoring geoFenceMonitoring = ((GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME ));
+    if( geoFenceMonitoring == null )
+    {
+      return;
+    }
+    geoFenceMonitoring.removeGeoFences();
     LocationTracker.getInstance().removeListener( GeoFenceMonitoring.NAME );
   }
 
   public void stopGeofenceMonitoring( String geofenceName )
   {
-    GeoFenceMonitoring.getInstance().removeGeoFence( geofenceName );
-    if( !GeoFenceMonitoring.getInstance().isMonitoring() )
+    GeoFenceMonitoring geoFenceMonitoring = ((GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME ));
+    if( geoFenceMonitoring == null )
+    {
+      return;
+    }
+    geoFenceMonitoring.removeGeoFence( geofenceName );
+    if( !((GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME )).isMonitoring() )
     {
       LocationTracker.getInstance().removeListener( GeoFenceMonitoring.NAME );
     }
@@ -591,27 +730,37 @@ public final class Geo
       return;
     }
 
+    GeoFenceMonitoring geoFenceMonitoring = getGeoFenceMonitoring();
+
     if( geoFences.length == 1 )
     {
-      GeoFenceMonitoring.getInstance().addGeoFence( geoFences[ 0 ], callback );
+      geoFenceMonitoring.addGeoFence( geoFences[ 0 ], callback );
     }
     else
     {
-      GeoFenceMonitoring.getInstance().addGeoFences( new HashSet<GeoFence>( Arrays.asList( geoFences ) ), callback );
+      geoFenceMonitoring.addGeoFences( new HashSet<GeoFence>( Arrays.asList( geoFences ) ), callback );
     }
 
-    if( !LocationTracker.getInstance().isContainListener( GeoFenceMonitoring.NAME ) )
+    try
     {
-      try
-      {
-        LocationTracker.getInstance().addListeners( GeoFenceMonitoring.NAME, GeoFenceMonitoring.getInstance() );
-      }
-      catch( RuntimeException e )
-      {
-        GeoFenceMonitoring.getInstance().removeGeoFences();
-        throw e;
-      }
+      LocationTracker.getInstance().addListener( GeoFenceMonitoring.NAME, geoFenceMonitoring );
     }
+    catch( RuntimeException e )
+    {
+      GeoFenceMonitoring.getInstance().removeGeoFences();
+      throw e;
+    }
+  }
+
+  private GeoFenceMonitoring getGeoFenceMonitoring()
+  {
+    GeoFenceMonitoring geoFenceMonitoring = (GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME );
+    if( geoFenceMonitoring == null )
+    {
+      geoFenceMonitoring = GeoFenceMonitoring.getInstance();
+    }
+
+    return geoFenceMonitoring;
   }
 
   private void complementResponse( BackendlessCollection<GeoPoint> collection, BackendlessGeoQuery query )

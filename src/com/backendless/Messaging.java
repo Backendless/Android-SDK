@@ -367,7 +367,7 @@ public final class Messaging
 
     if( deliveryOptions.getPushBroadcast() == 0 && deliveryOptions.getPushSinglecast().isEmpty() )
     {
-      throw new IllegalArgumentException( ExceptionMessage.RECIPIENT_MISSING );
+      deliveryOptions.setPushBroadcast( PushBroadcastMask.ALL );
     }
 
     return (MessageStatus) Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "publish", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channelName, message, publishOptions, deliveryOptions } );
@@ -439,6 +439,32 @@ public final class Messaging
                        final AsyncCallback<MessageStatus> responder )
   {
     publish( null, message, publishOptions, deliveryOptions, responder );
+  }
+
+  public MessageStatus getMessageStatus( String messageId )
+  {
+    if( messageId == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_MESSAGE_ID );
+    MessageStatus messageStatus = Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "getMessageStatus", new Object[]
+            { Backendless.getApplicationId(), Backendless.getVersion(), messageId } );
+
+    return messageStatus;
+  }
+
+  public void getMessageStatus( String messageId, AsyncCallback<MessageStatus> responder )
+  {
+    try
+    {
+      if( messageId == null )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_MESSAGE_ID );
+
+      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "getMessageStatus", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), messageId }, responder );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
   }
 
   public boolean cancel( String messageId ) throws BackendlessException
