@@ -55,4 +55,13 @@ public class ExecutionResult<T>
   {
     this.exception = exception;
   }
+
+  @Override
+  public String toString()
+  {
+    return "ExecutionResult{" +
+            "exception=" + exception +
+            ", result=" + result +
+            '}';
+  }
 }
