@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ *********************************************************************************************************************
+  ~  <p/>
+  ~  BACKENDLESS.COM CONFIDENTIAL
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  ~  <p/>
+  ~  Copyright 2012 BACKENDLESS.COM. All Rights Reserved.
+  ~  <p/>
+  ~  NOTICE: All information contained herein is, and remains the property of Backendless.com and its suppliers,
+  ~  if any. The intellectual and technical concepts contained herein are proprietary to Backendless.com and its
+  ~  suppliers and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret
+  ~  or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden
+  ~  unless prior written permission is obtained from Backendless.com.
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  -->
+
+<resources>
+    <string name="app_name">FenceDemo</string>
+
+    <!--Fence test layout-->
+    <string name="fence_test_activity_name">Fence Demo</string>
+    <string name="fence_name_field">Fence name:</string>
+    <string name="start_fence_monitoring_button">Start fence monitoring</string>
+    <string name="stop_fence_monitoring_button">Stop fence monitoring</string>
+    <string name="run_on_enter_button">Run onEnter</string>
+    <string name="run_on_stay_button">Run onStay</string>
+    <string name="run_on_exit_button">Run onExit</string>
+    <string name="get_points_button">Get points from fence</string>
+    <string name="use_custom_callback">Custom callback</string>
+    <string name="run_for_each_point">Run for each found point</string>
+</resources>
