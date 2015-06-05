@@ -171,11 +171,11 @@ public class LocationTracker extends Service implements LocationListener
     saveLocationListeners();
   }
 
-  public void setLocationTrackerParameters( int minTime, int minDistance, int acceptedDistance )
+  public void setLocationTrackerParameters( int minTime, int minDistance, int acceptedDistanceAfterReboot )
   {
     this.minTime = minTime;
     this.minDistance = minDistance;
-    this.ACCEPTABLE_DISTANCE = acceptedDistance;
+    this.ACCEPTABLE_DISTANCE = acceptedDistanceAfterReboot;
 
     if(!locationListeners.isEmpty())
     {
