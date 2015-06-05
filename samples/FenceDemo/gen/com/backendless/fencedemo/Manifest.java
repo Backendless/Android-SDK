@@ -16,16 +16,10 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.geo;
+/*___Generated_by_IDEA___*/
 
-import android.location.Location;
+package com.backendless.fencedemo;
 
-/**
- * Created by julia
- */
-public interface IBackendlessLocationListener
-{
-  public void onLocationChanged( Location location );
-
-  public void onLocationChanged( Location oldLocation, Location newLocation );
+/* This stub is only used by the IDE. It is NOT the Manifest class actually packed into the APK */
+public final class Manifest {
 }

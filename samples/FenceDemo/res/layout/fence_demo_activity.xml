@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ *********************************************************************************************************************
+  ~  <p/>
+  ~  BACKENDLESS.COM CONFIDENTIAL
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  ~  <p/>
+  ~  Copyright 2012 BACKENDLESS.COM. All Rights Reserved.
+  ~  <p/>
+  ~  NOTICE: All information contained herein is, and remains the property of Backendless.com and its suppliers,
+  ~  if any. The intellectual and technical concepts contained herein are proprietary to Backendless.com and its
+  ~  suppliers and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret
+  ~  or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden
+  ~  unless prior written permission is obtained from Backendless.com.
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" android:weightSum="1">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/fence_test_activity_name"
+            android:id="@+id/textView3" android:layout_gravity="center_horizontal"/>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+            android:weightSum="1">
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/fence_name_field"
+                    android:id="@+id/textView4"/>
+            <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fence_name" android:layout_weight="1"/>
+        </LinearLayout>
+        <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/use_custom_callback"
+                android:id="@+id/customCallbackToggle" android:layout_gravity="center_horizontal" android:checked="false"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/start_fence_monitoring_button"
+                android:id="@+id/start_fence_monitoring_button" android:layout_gravity="center_horizontal"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stop_fence_monitoring_button"
+                android:id="@+id/stop_fence_monitoring_button" android:layout_gravity="center_horizontal"/>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" android:orientation="horizontal"
+                android:gravity="center_horizontal">
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/run_on_enter_button"
+                    android:id="@+id/run_onenter_button"/>
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/run_on_stay_button"
+                    android:id="@+id/run_onstay_button" android:layout_gravity="center_vertical"/>
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/run_on_exit_button"
+                    android:id="@+id/run_onexit_button"/>
+        </LinearLayout>
+        <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/run_for_each_point"
+                android:id="@+id/run_for_each_point_toggle" android:checked="false"
+                android:layout_gravity="center_horizontal"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/get_points_button"
+                android:id="@+id/get_points_button" android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
+</LinearLayout>

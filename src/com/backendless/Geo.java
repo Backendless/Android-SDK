@@ -606,6 +606,11 @@ public final class Geo
     } );
   }
 
+  public void setLocationTrackerParameters( int minTime, int minDistance, int acceptedDistanceAfterReboot )
+  {
+    LocationTracker.getInstance().setLocationTrackerParameters( minTime, minDistance, acceptedDistanceAfterReboot );
+  }
+
   public void startGeofenceMonitoring( GeoPoint geoPoint,
                                        final AsyncCallback<Void> responder ) throws BackendlessException
   {

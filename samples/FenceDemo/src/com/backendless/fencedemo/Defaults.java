@@ -16,16 +16,12 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.geo;
+package com.backendless.fencedemo;
 
-import android.location.Location;
-
-/**
- * Created by julia
- */
-public interface IBackendlessLocationListener
+public class Defaults
 {
-  public void onLocationChanged( Location location );
-
-  public void onLocationChanged( Location oldLocation, Location newLocation );
+  public static final String APPLICATION_ID = "DCB3FFDF-823A-C5D2-FFB8-13F4B3611A00";
+  public static final String SECRET_KEY = "5E381EC0-3887-1CE2-FFCF-4F5D1F892100";
+  public static final String VERSION = "v1";
+  public static final String SERVER_URL = "http://10.0.1.57:9000";
 }
