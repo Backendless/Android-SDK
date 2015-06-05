@@ -20,12 +20,10 @@ package com.backendless.geo;
 
 import android.location.Location;
 
-import java.io.Serializable;
-
 /**
  * Created by julia
  */
-public interface IBackendlessLocationListener extends Serializable
+public interface IBackendlessLocationListener
 {
   public void onLocationChanged( Location location );
 
