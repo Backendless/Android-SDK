@@ -18,6 +18,8 @@
 
 package com.backendless.logging;
 
+import com.backendless.exceptions.ExceptionMessage;
+
 /**
  * Created by baas on 21.04.15.
  */
@@ -33,6 +35,9 @@ public class Logger
 
   public static Logger getLogger( String name )
   {
+    if( name == null || name.trim().isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.INVALID_LOG_NAME );
+
     return new Logger( name );
   }
 
@@ -71,7 +76,8 @@ public class Logger
     logBufer.enqueue( name, Level.ERROR, message, t );
   }
 
-  public void fatal( String message ){
+  public void fatal( String message )
+  {
     logBufer.enqueue( name, Level.FATAL, message, null );
   }
 
@@ -80,7 +86,8 @@ public class Logger
     logBufer.enqueue( name, Level.FATAL, message, t );
   }
 
-  public void trace( String message ){
+  public void trace( String message )
+  {
     logBufer.enqueue( name, Level.TRACE, message, null );
   }
 }
