@@ -37,9 +37,9 @@ public class Logging
   {
   }
 
-  public void setLogReportingPolicy( int numOfMessages, int timeFrequencyMS )
+  public void setLogReportingPolicy( int numOfMessages, int timeFrequencyInSeconds )
   {
-    LogBuffer.getInstance().setLogReportingPolicy( numOfMessages, timeFrequencyMS );
+    LogBuffer.getInstance().setLogReportingPolicy( numOfMessages, timeFrequencyInSeconds );
   }
 
   public Logger getLogger( Class clazz )

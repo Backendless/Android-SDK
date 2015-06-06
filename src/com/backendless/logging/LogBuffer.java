@@ -38,7 +38,7 @@ import java.util.concurrent.TimeUnit;
 public class LogBuffer
 {
   private static final int NUM_OF_MESSAGES = 100;
-  private static final int TIME_FREQUENCY = 1000 * 60 * 5; // 5 minutes
+  private static final int TIME_FREQUENCY = 60 * 5; // 5 minutes
   private static final String LOGGING_SERVER_ALIAS = "com.backendless.services.logging.LogService";
   private static final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 
@@ -126,7 +126,7 @@ public class LogBuffer
       {
         flush();
       }
-    }, timeFrequency, TimeUnit.MILLISECONDS );
+    }, timeFrequency, TimeUnit.SECONDS );
   }
 
   private String getStackTrace( Throwable t )
