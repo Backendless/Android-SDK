@@ -16,16 +16,27 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.geo;
+package com.backendless.fencedemo;
 
-import android.location.Location;
+import com.backendless.geo.geofence.IGeofenceCallback;
 
 /**
- * Created by julia
+ * Created by who on 4/22/15.
  */
-public interface IBackendlessLocationListener
+public class CustomCallBack implements IGeofenceCallback
 {
-  public void onLocationChanged( Location location );
 
-  public void onLocationChanged( Location oldLocation, Location newLocation );
+  @Override
+  public void geoPointEntered(String geofenceName, String geofenceId, double latitude, double longitude) {
+  }
+
+  @Override
+  public void geoPointStayed(String geofenceName, String geofenceId, double latitude, double longitude) {
+
+  }
+
+  @Override
+  public void geoPointExited(String geofenceName, String geofenceId, double latitude, double longitude) {
+
+  }
 }
