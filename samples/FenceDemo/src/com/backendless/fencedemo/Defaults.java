@@ -20,8 +20,7 @@ package com.backendless.fencedemo;
 
 public class Defaults
 {
-  public static final String APPLICATION_ID = "DCB3FFDF-823A-C5D2-FFB8-13F4B3611A00";
-  public static final String SECRET_KEY = "5E381EC0-3887-1CE2-FFCF-4F5D1F892100";
+  public static final String APPLICATION_ID = "";
+  public static final String SECRET_KEY = "";
   public static final String VERSION = "v1";
-  public static final String SERVER_URL = "http://10.0.1.57:9000";
 }

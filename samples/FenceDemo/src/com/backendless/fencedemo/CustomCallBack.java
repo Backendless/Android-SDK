@@ -18,25 +18,24 @@
 
 package com.backendless.fencedemo;
 
+import android.util.Log;
 import com.backendless.geo.geofence.IGeofenceCallback;
 
-/**
- * Created by who on 4/22/15.
- */
 public class CustomCallBack implements IGeofenceCallback
 {
 
   @Override
   public void geoPointEntered(String geofenceName, String geofenceId, double latitude, double longitude) {
+      Log.i("GeoFence", "Point enters in fence: " + geofenceName);
   }
 
   @Override
   public void geoPointStayed(String geofenceName, String geofenceId, double latitude, double longitude) {
-
+      Log.i("GeoFence", "Point stay in fence: " + geofenceName);
   }
 
   @Override
   public void geoPointExited(String geofenceName, String geofenceId, double latitude, double longitude) {
-
+      Log.i("GeoFence", "Point exit from fence: " + geofenceName);
   }
 }

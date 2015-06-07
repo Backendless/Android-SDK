@@ -45,7 +45,6 @@ public class FenceDemo extends Activity
     super.onCreate( savedInstanceState );
     setContentView( R.layout.fence_demo_activity );
 
-    Backendless.setUrl( Defaults.SERVER_URL );
     Backendless.initApp( getBaseContext(), Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION );
     startService( new Intent( this, AndroidService.class ) );
 
