@@ -18,6 +18,7 @@
 
 package com.backendless;
 
+import android.content.res.Resources;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.core.responder.policy.CollectionAdaptingPolicy;
@@ -645,17 +646,22 @@ public final class Geo
 
   public void stopGeofenceMonitoring()
   {
+    if( LocationTracker.getInstance() == null )
+      return;
+
     GeoFenceMonitoring geoFenceMonitoring = ((GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME ));
     if( geoFenceMonitoring == null )
-    {
       return;
-    }
+
     geoFenceMonitoring.removeGeoFences();
     LocationTracker.getInstance().removeListener( GeoFenceMonitoring.NAME );
   }
 
   public void stopGeofenceMonitoring( String geofenceName )
   {
+    if( LocationTracker.getInstance() == null )
+      return;
+
     GeoFenceMonitoring geoFenceMonitoring = ((GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME ));
     if( geoFenceMonitoring == null )
     {
@@ -670,14 +676,17 @@ public final class Geo
 
   private void startGeofenceMonitoring( final ICallback callback, final AsyncCallback<Void> responder )
   {
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() }, new AsyncCallback<GeoFence[]>()
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() }, new AsyncCallback<Object[]>()
     {
       @Override
-      public void handleResponse( GeoFence[] geoFences )
+      public void handleResponse( Object[] geoFences )
       {
         try
         {
-          addFenceMonitoring( callback, geoFences );
+          if( geoFences.length == 0 || !(geoFences instanceof GeoFence[]) )
+            throw new Resources.NotFoundException( ExceptionMessage.NOT_FOUND_GEOFENCE );
+
+          addFenceMonitoring( callback, (GeoFence[]) geoFences );
 
           if( responder != null )
             responder.handleResponse( null );
