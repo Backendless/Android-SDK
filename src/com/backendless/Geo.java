@@ -19,7 +19,6 @@
 package com.backendless;
 
 import android.content.res.Resources;
-import android.util.AndroidException;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.core.responder.policy.CollectionAdaptingPolicy;
@@ -645,10 +644,10 @@ public final class Geo
     startGeofenceMonitoring( bCallback, geofenceName, responder );
   }
 
-  public void stopGeofenceMonitoring() throws AndroidException
+  public void stopGeofenceMonitoring() throws NullPointerException
   {
     if( LocationTracker.getInstance() == null )
-      throw new AndroidException( ExceptionMessage.NOT_ADD_SERVICE_TO_MANIFEST );
+      throw new NullPointerException( ExceptionMessage.NOT_ADD_SERVICE_TO_MANIFEST );
 
     GeoFenceMonitoring geoFenceMonitoring = ((GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME ));
     if( geoFenceMonitoring == null )
@@ -658,10 +657,10 @@ public final class Geo
     LocationTracker.getInstance().removeListener( GeoFenceMonitoring.NAME );
   }
 
-  public void stopGeofenceMonitoring( String geofenceName ) throws AndroidException
+  public void stopGeofenceMonitoring( String geofenceName ) throws NullPointerException
   {
     if( LocationTracker.getInstance() == null )
-      throw new AndroidException( ExceptionMessage.NOT_ADD_SERVICE_TO_MANIFEST );
+      throw new NullPointerException( ExceptionMessage.NOT_ADD_SERVICE_TO_MANIFEST );
 
     GeoFenceMonitoring geoFenceMonitoring = ((GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME ));
     if( geoFenceMonitoring == null )
@@ -737,7 +736,7 @@ public final class Geo
     } );
   }
 
-  private void addFenceMonitoring( ICallback callback, GeoFence... geoFences ) throws AndroidException
+  private void addFenceMonitoring( ICallback callback, GeoFence... geoFences ) throws NullPointerException
   {
 
     if( geoFences.length == 0 )
@@ -767,10 +766,10 @@ public final class Geo
     }
   }
 
-  private GeoFenceMonitoring getGeoFenceMonitoring() throws AndroidException
+  private GeoFenceMonitoring getGeoFenceMonitoring() throws NullPointerException
   {
     if( LocationTracker.getInstance() == null )
-      throw new AndroidException( ExceptionMessage.NOT_ADD_SERVICE_TO_MANIFEST );
+      throw new NullPointerException( ExceptionMessage.NOT_ADD_SERVICE_TO_MANIFEST );
 
     GeoFenceMonitoring geoFenceMonitoring = (GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME );
     if( geoFenceMonitoring == null )
