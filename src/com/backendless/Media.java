@@ -25,9 +25,10 @@ import android.preference.PreferenceManager;
 import android.view.SurfaceHolder;
 import android.widget.MediaController;
 import android.widget.VideoView;
+
 import com.backendless.media.*;
 import com.backendless.media.audio.AudioQuality;
-import com.backendless.media.gl.BackendlessSurfaceView;
+import com.backendless.media.gl.SurfaceView;
 import com.backendless.media.rtsp.RtspClient;
 import com.backendless.media.video.VideoQuality;
 
@@ -53,12 +54,14 @@ public final class Media
     return instance;
   }
 
-  public void publishLiveAndRecord( Context context,  BackendlessSurfaceView backendlessSurfaceView, String tube, String streamName, StreamQuality streamQuality, DisplayOrientation orientation )
+  public void publishLiveAndRecord( Context context, SurfaceView backendlessSurfaceView, String tube, String streamName,
+      StreamQuality streamQuality, DisplayOrientation orientation )
   {
     publishStream( context, backendlessSurfaceView, tube, streamName, streamQuality, StreamType.LiveRecording, orientation );
   }
 
-  public void publishLive( Context context, BackendlessSurfaceView backendlessSurfaceView, String tube, String streamName, StreamQuality streamQuality, DisplayOrientation orientation )
+  public void publishLive( Context context, SurfaceView backendlessSurfaceView, String tube, String streamName,
+      StreamQuality streamQuality, DisplayOrientation orientation )
   {
     publishStream( context, backendlessSurfaceView, tube, streamName, streamQuality, StreamType.Live, orientation );
   }
@@ -73,7 +76,7 @@ public final class Media
     playStream( context, videoView, streamProtocolType, tube, streamName, StreamType.Available );
   }
 
-  private void publishStream( Context context, BackendlessSurfaceView backendlessSurfaceView, String tube, String streamName,
+  private void publishStream( Context context, SurfaceView backendlessSurfaceView, String tube, String streamName,
                               StreamQuality streamQuality, StreamType streamType, DisplayOrientation orientation )
   {
     String operationType;
@@ -144,17 +147,16 @@ public final class Media
     videoView.start();
   }
 
-  private Session getSession(Context context, BackendlessSurfaceView mBackendlessSurfaceView, int orientation )
+  private Session getSession( Context context, SurfaceView mSurfaceView, int orientation )
   {
     Session mSession = SessionBuilder.getInstance()
             .setContext( context )
             .setAudioEncoder( SessionBuilder.AUDIO_AAC )
             .setAudioQuality( new AudioQuality( 8000, 16000 ) )
             .setVideoEncoder( SessionBuilder.VIDEO_H264 )
-            .setSurfaceView( mBackendlessSurfaceView )
+.setSurfaceView( mSurfaceView )
             .setPreviewOrientation( 0 )
             .setCallback( (Session.Callback) context )
-            .setCustomOrientation( orientation )
             .build();
 
     return mSession;
