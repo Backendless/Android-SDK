@@ -19,6 +19,7 @@
 package com.backendless;
 
 import android.content.res.Resources;
+import android.util.AndroidException;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.core.responder.policy.CollectionAdaptingPolicy;
@@ -644,10 +645,10 @@ public final class Geo
     startGeofenceMonitoring( bCallback, geofenceName, responder );
   }
 
-  public void stopGeofenceMonitoring()
+  public void stopGeofenceMonitoring() throws AndroidException
   {
     if( LocationTracker.getInstance() == null )
-      return;
+      throw new AndroidException( ExceptionMessage.NOT_ADD_SERVICE_TO_MANIFEST );
 
     GeoFenceMonitoring geoFenceMonitoring = ((GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME ));
     if( geoFenceMonitoring == null )
@@ -657,10 +658,10 @@ public final class Geo
     LocationTracker.getInstance().removeListener( GeoFenceMonitoring.NAME );
   }
 
-  public void stopGeofenceMonitoring( String geofenceName )
+  public void stopGeofenceMonitoring( String geofenceName ) throws AndroidException
   {
     if( LocationTracker.getInstance() == null )
-      return;
+      throw new AndroidException( ExceptionMessage.NOT_ADD_SERVICE_TO_MANIFEST );
 
     GeoFenceMonitoring geoFenceMonitoring = ((GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME ));
     if( geoFenceMonitoring == null )
@@ -736,7 +737,7 @@ public final class Geo
     } );
   }
 
-  private void addFenceMonitoring( ICallback callback, GeoFence... geoFences )
+  private void addFenceMonitoring( ICallback callback, GeoFence... geoFences ) throws AndroidException
   {
 
     if( geoFences.length == 0 )
@@ -766,8 +767,11 @@ public final class Geo
     }
   }
 
-  private GeoFenceMonitoring getGeoFenceMonitoring()
+  private GeoFenceMonitoring getGeoFenceMonitoring() throws AndroidException
   {
+    if( LocationTracker.getInstance() == null )
+      throw new AndroidException( ExceptionMessage.NOT_ADD_SERVICE_TO_MANIFEST );
+
     GeoFenceMonitoring geoFenceMonitoring = (GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME );
     if( geoFenceMonitoring == null )
     {
