@@ -100,7 +100,7 @@ public final class Media
   {
     String operationType = null;
     String url = null;
-    String subDir = Backendless.getApplicationId().toLowerCase() + "/media/";
+    String subDir = Backendless.getApplicationId().toLowerCase() + "/files/media/";
 
     if( streamProtocolType == null )
     {
