@@ -16,17 +16,26 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.examples.userservice.rolesdemo;
+package com.backendless.fencedemo;
 
-public class Defaults
+import android.util.Log;
+import com.backendless.geo.geofence.IGeofenceCallback;
+
+public class CustomCallBack implements IGeofenceCallback
 {
-  public static final String IDENTITY = "email";
-  public static final String ROLE_TAG = "role";
 
-  public static final String READ_WRITE_ROLE = "ReadWriteRole";
-  public static final String READ_ROLE = "ReadOnlyRole";
+  @Override
+  public void geoPointEntered(String geofenceName, String geofenceId, double latitude, double longitude) {
+      Log.i("GeoFence", "Point enters in fence: " + geofenceName);
+  }
 
-  public static final String APP_ID = "";
-  public static final String SECRET_KEY = "";
-  public static final String VERSION = "v1";
+  @Override
+  public void geoPointStayed(String geofenceName, String geofenceId, double latitude, double longitude) {
+      Log.i("GeoFence", "Point stay in fence: " + geofenceName);
+  }
+
+  @Override
+  public void geoPointExited(String geofenceName, String geofenceId, double latitude, double longitude) {
+      Log.i("GeoFence", "Point exit from fence: " + geofenceName);
+  }
 }

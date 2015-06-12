@@ -25,6 +25,8 @@ import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 public class CustomService
 {
   private static final String CUSTOM_SERVICE_ALIAS = "com.backendless.services.servercode.CustomServiceHandler";
+  private static final String METHOD_NAME_ALIAS = "dispatchService";
+
   private static final CustomService instance = new CustomService();
 
   private CustomService()
@@ -39,21 +41,21 @@ public class CustomService
 
   public <T> T invoke( String serviceName, String serviceVersion, String method, Object[] arguments )
   {
-    return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, "dispatchService", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments } );
+    return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments } );
   }
 
    public <T> T invoke( String serviceName, String serviceVersion, String method, Object[] arguments, Class<?> clazz )
   {
-    return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, "dispatchService", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments }, new AdaptingResponder( clazz, new PoJoAdaptingPolicy() ) );
+    return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments }, new AdaptingResponder( clazz, new PoJoAdaptingPolicy() ) );
   }
 
   public <E> void invoke( String serviceName, String serviceVersion, String method, Object[] arguments, AsyncCallback<E> callback )
   {
-    Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, "dispatchService", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments }, callback );
+    Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments }, callback );
   }
 
   public <E> void invoke( String serviceName, String serviceVersion, String method, Object[] arguments, Class<?> clazz, AsyncCallback<E> callback )
   {
-    Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, "dispatchService", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments }, callback, new AdaptingResponder( clazz, new PoJoAdaptingPolicy() ) );
+    Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments }, callback, new AdaptingResponder( clazz, new PoJoAdaptingPolicy() ) );
   }
 }

@@ -20,12 +20,13 @@ package com.backendless.geo.geofence;
 
 import com.backendless.geo.GeoPoint;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by baas on 01.04.15.
  */
-public class GeoFence
+public class GeoFence implements Serializable
 {
   private String objectId;
   private String geofenceName;

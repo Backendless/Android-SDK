@@ -135,4 +135,13 @@ public class Logger
     pw.close();
     return sw.toString();
   }
+
+  @Override
+  public String toString()
+  {
+    return "Logger{" +
+            "async=" + async +
+            ", clazz=" + clazz +
+            '}';
+  }
 }

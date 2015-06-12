@@ -16,17 +16,12 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.examples.userservice.rolesdemo;
+package com.backendless.logging;
 
-public class Defaults
+/**
+ * Created by baas on 21.04.15.
+ */
+public enum Level
 {
-  public static final String IDENTITY = "email";
-  public static final String ROLE_TAG = "role";
-
-  public static final String READ_WRITE_ROLE = "ReadWriteRole";
-  public static final String READ_ROLE = "ReadOnlyRole";
-
-  public static final String APP_ID = "";
-  public static final String SECRET_KEY = "";
-  public static final String VERSION = "v1";
+  FATAL, ERROR, WARN, INFO, DEBUG, TRACE
 }

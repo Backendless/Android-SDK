@@ -91,4 +91,18 @@ public class RunnerContext
   {
     this.prematureResult = prematureResult;
   }
+
+  @Override
+  public String toString()
+  {
+    return "RunnerContext{" +
+            "appId='" + appId + '\'' +
+            ", userId='" + userId + '\'' +
+            ", userToken='" + userToken + '\'' +
+            ", userRole=" + userRole +
+            ", deviceType=" + deviceType +
+            ", missingProperties=" + missingProperties +
+            ", prematureResult=" + prematureResult +
+            '}';
+  }
 }

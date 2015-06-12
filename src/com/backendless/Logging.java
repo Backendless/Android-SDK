@@ -16,17 +16,44 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.examples.userservice.rolesdemo;
+package com.backendless;
 
-public class Defaults
+import com.backendless.logging.LogBuffer;
+import com.backendless.logging.Logger;
+
+/**
+ * Created by baas on 20.04.15.
+ */
+public class Logging
 {
-  public static final String IDENTITY = "email";
-  public static final String ROLE_TAG = "role";
+  private static final Logging instance = new Logging();
 
-  public static final String READ_WRITE_ROLE = "ReadWriteRole";
-  public static final String READ_ROLE = "ReadOnlyRole";
+  static Logging getInstance()
+  {
+    return instance;
+  }
 
-  public static final String APP_ID = "";
-  public static final String SECRET_KEY = "";
-  public static final String VERSION = "v1";
+  private Logging()
+  {
+  }
+
+  public void setLogReportingPolicy( int numOfMessages, int timeFrequencyInSeconds )
+  {
+    LogBuffer.getInstance().setLogReportingPolicy( numOfMessages, timeFrequencyInSeconds );
+  }
+
+  public Logger getLogger( Class clazz )
+  {
+    return Logger.getLogger( clazz );
+  }
+
+  public Logger getLogger( String loggerName )
+  {
+    return Logger.getLogger( loggerName );
+  }
+
+  public void flush()
+  {
+    LogBuffer.getInstance().flush();
+  }
 }

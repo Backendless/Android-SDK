@@ -16,17 +16,10 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.examples.userservice.rolesdemo;
+/*___Generated_by_IDEA___*/
 
-public class Defaults
-{
-  public static final String IDENTITY = "email";
-  public static final String ROLE_TAG = "role";
+package com.backendless.fencedemo;
 
-  public static final String READ_WRITE_ROLE = "ReadWriteRole";
-  public static final String READ_ROLE = "ReadOnlyRole";
-
-  public static final String APP_ID = "";
-  public static final String SECRET_KEY = "";
-  public static final String VERSION = "v1";
+/* This stub is only used by the IDE. It is NOT the R class actually packed into the APK */
+public final class R {
 }

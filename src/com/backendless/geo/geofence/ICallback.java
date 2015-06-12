@@ -20,11 +20,12 @@ package com.backendless.geo.geofence;
 
 import android.location.Location;
 
+import java.io.Serializable;
 
 /**
  * Created by baas on 03.04.15.
  */
-public interface ICallback
+public interface ICallback extends Serializable
 {
   public void callOnEnter( GeoFence geoFence, Location location );
   public void callOnStay( GeoFence geoFence, Location location );

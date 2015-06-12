@@ -26,4 +26,6 @@ import android.location.Location;
 public interface IBackendlessLocationListener
 {
   public void onLocationChanged( Location location );
+
+  public void onLocationChanged( Location oldLocation, Location newLocation );
 }
