@@ -27,9 +27,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
-import android.net.Uri;
-import android.widget.MediaController;
-import android.widget.VideoView;
+import android.view.SurfaceHolder;
 
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.media.DisplayOrientation;
@@ -45,11 +43,10 @@ import com.backendless.media.video.VideoQuality;
 
 public final class Media
 {
+  private static final String MEDIA_FILES_LOCATION = "/files/media/";
   private static final String HLS_PLAYLIST_CONSTANT = "/playlist.m3u8";
   private final static String WOWZA_SERVER_IP = "10.0.1.48"; // TODO
                                                              // wowza.backendless.com
-  private final static String SERVER_URL_LIVE = "wowza.backendless.com:1935/mediaAppLive/";
-  private final static String SERVER_URL_VOD = "wowza.backendless.com:1935/mediaAppVod/";
   private final static String WOWZA_SERVER_LIVE_APP_NAME = "mediaAppLive";
   private final static String WOWZA_SERVER_VOD_APP_NAME = "mediaAppVod";
   private final static String RTSP_PROTOCOL = StreamProtocolType.RTSP.getValue();
@@ -58,9 +55,7 @@ public final class Media
   private RtspClient rtspClient;
   private Session session;
   private MediaPlayer mediaPlayer;
-  private SurfaceView surfaceView;
   
-  private String params;// TODO delete
 
   private static final Media instance = new Media();
 
@@ -135,13 +130,16 @@ public final class Media
     mediaPlayer.reset();
   }
 
-  public void configure( Context context, SurfaceView mSurfaceView, DisplayOrientation orientation )
+  public void configureForPublish( Context context, SurfaceView mSurfaceView, DisplayOrientation orientation )
   {
-    surfaceView = mSurfaceView;
-    session = getSession( context, surfaceView, orientation.getValue() );
+    session = getSession( context, mSurfaceView, orientation.getValue() );
     rtspClient = getRtspClient( context, session );
+  }
+
+  public void configureForPlay( SurfaceHolder mSurfaceHolder )
+  {
     mediaPlayer = new MediaPlayer();
-    mediaPlayer.setDisplay( surfaceView.getHolder() );
+    mediaPlayer.setDisplay( mSurfaceHolder );
     mediaPlayer.setAudioStreamType( AudioManager.STREAM_MUSIC );
     mediaPlayer.setOnPreparedListener( new OnPreparedListener() {
 
@@ -179,6 +177,7 @@ public final class Media
   {
     checkSessionIsNull();
     checkRtspClientIsNull();
+    mediaPlayer.reset();
     if( streamName == null || streamName.isEmpty() )
     {
       streamName = "Default";
@@ -233,7 +232,7 @@ public final class Media
     }
     else
     {
-      // session.stopPreview();
+      session.stopPreview();
       mediaPlayer.reset();
 
       if( streamProtocolType == null )
@@ -248,8 +247,6 @@ public final class Media
 
       String streamName = getStreamName( fileName, streamProtocolType );
       String url = protocol + wowzaAddress + streamName + params;
-      System.out.println( "url = " + url );
-
       mediaPlayer.setDataSource( url );
       mediaPlayer.prepare();
       mediaPlayer.start();
@@ -259,7 +256,7 @@ public final class Media
 
   private String getStreamName( String fileName, StreamProtocolType protocol )
   {
-    String subDir = Backendless.getApplicationId().toLowerCase() + "/files/media/";
+    String subDir = Backendless.getApplicationId().toLowerCase() + MEDIA_FILES_LOCATION;
     String hlsAdditionalParameter = ( protocol == StreamProtocolType.HLS ) ? HLS_PLAYLIST_CONSTANT : "";
     return subDir + fileName + hlsAdditionalParameter;
   }
@@ -274,7 +271,7 @@ public final class Media
     {
       return HLS_PROTOCOL;
     }
-    throw new BackendlessException( "Backendless Android SDK not support type '" + streamProtocolType + "'" );
+    throw new BackendlessException( "Backendless Android SDK not supported protocol type '" + streamProtocolType + "'" );
   }
 
   private Session getSession( Context context, SurfaceView mSurfaceView, int orientation )
@@ -341,63 +338,4 @@ public final class Media
     return rtspClient;
   }
   
-  public void playLive( Context context, VideoView videoView, StreamProtocolType streamProtocolType, String tube, String streamName )
-  {
-    playStream( context, videoView, streamProtocolType, tube, streamName, StreamType.RECORDING );
-  }
-
-  public void playRecord( Context context, VideoView videoView, StreamProtocolType streamProtocolType, String tube, String streamName )
-  {
-    playStream( context, videoView, streamProtocolType, tube, streamName, StreamType.AVAILABLE );
-  }
-  
-  private void playStream( Context context, VideoView videoView, StreamProtocolType streamProtocolType, String tube, String streamName, StreamType streamType )
-  {
-    String operationType = null;
-    String url = null;
-    String subDir = Backendless.getApplicationId().toLowerCase() + "/files/media/";
-
-    if( streamProtocolType == null )
-    {
-      streamProtocolType = StreamProtocolType.RTSP;
-    }
-    if(  streamProtocolType.equals( StreamProtocolType.RTSP ))
-    {
-      if( streamType.getValue() == 2  )
-      {
-        operationType = "playLive";
-        params = getConnectParams( tube, operationType, streamName);
-        url = RTSP_PROTOCOL + SERVER_URL_LIVE + "_definst_/" + subDir + streamName + params;
-      }
-
-      else
-      {
-        operationType = "playRecord";
-        params = getConnectParams( tube, operationType, streamName);
-        url =  RTSP_PROTOCOL + SERVER_URL_VOD + "_definst_/mp4:" + subDir + streamName + ".mp4" + params;
-      }
-    }
-
-    if( streamProtocolType.equals( StreamProtocolType.HLS ))
-    {
-      if( streamType.getValue() == 2 )
-      {
-        operationType = "playLive";
-        params = getConnectParams( tube, operationType, streamName);
-        url = HLS_PROTOCOL + SERVER_URL_LIVE + "_definst_/" + subDir + streamName + "/playlist.m3u8" + params;
-      }
-
-      else
-      {
-        operationType = "playRecord";
-        params = getConnectParams( tube, operationType, streamName);
-        url =  HLS_PROTOCOL + SERVER_URL_VOD + "_definst_/mp4:" + subDir + streamName + ".mp4/playlist.m3u8"+ params;
-      }
-    }
-
-    videoView.setVideoURI( Uri.parse( url ));
-    videoView.setMediaController(new MediaController( context ));
-    videoView.requestFocus();
-    videoView.start();
-  }
 }
