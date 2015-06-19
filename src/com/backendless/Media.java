@@ -45,7 +45,8 @@ public final class Media
 {
   private static final String MEDIA_FILES_LOCATION = "/files/media/";
   private static final String HLS_PLAYLIST_CONSTANT = "/playlist.m3u8";
-  private final static String WOWZA_SERVER_IP = "wowza.backendless.com";
+  private final static String WOWZA_SERVER_IP = "10.0.1.48"; // TODO
+                                                             // wowza.backendless.com
   private final static String WOWZA_SERVER_LIVE_APP_NAME = "mediaAppLive";
   private final static String WOWZA_SERVER_VOD_APP_NAME = "mediaAppVod";
   private final static String RTSP_PROTOCOL = StreamProtocolType.RTSP.getValue();
@@ -123,12 +124,6 @@ public final class Media
     rtspClient.release();
   }
 
-  public void stopPlaying()
-  {
-    checkPlayerIsNull();
-    mediaPlayer.reset();
-  }
-
   public void configureForPublish( Context context, SurfaceView mSurfaceView, DisplayOrientation orientation )
   {
     session = getSession( context, mSurfaceView, orientation.getValue() );
@@ -176,6 +171,7 @@ public final class Media
   {
     checkSessionIsNull();
     checkRtspClientIsNull();
+    streamName = streamName.trim();
     mediaPlayer.reset();
     if( streamName == null || streamName.isEmpty() )
     {
@@ -224,6 +220,7 @@ public final class Media
       throws IllegalArgumentException, SecurityException, IllegalStateException, IOException
   {
     checkPlayerIsNull();
+    fileName = fileName.trim();
     if( mediaPlayer.isPlaying() )
     {
       mediaPlayer.stop();
