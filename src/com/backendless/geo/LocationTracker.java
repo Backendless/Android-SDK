@@ -34,10 +34,11 @@ import android.util.Log;
 import com.backendless.Backendless;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.geo.geofence.GeoFenceMonitoring;
 import weborb.util.io.ISerializer;
 import weborb.util.io.Serializer;
 
-import java.io.*;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,8 +55,8 @@ public class LocationTracker extends Service implements LocationListener
   private static final String LOCATION = "location";
   private static final String LOCATION_LISTENERS = "locationListeners";
 
-  private static final int MIN_TIME = 60 * 1000; // 1 minute
-  private static final int MIN_DISTANCE = 10; // meters
+  private int minTime = 60 * 1000; // 1 minute
+  private int minDistance = 10; // meters
   public static float ACCEPTABLE_DISTANCE = 30; // meters
 
   private static LocationTracker instance;
@@ -170,10 +171,25 @@ public class LocationTracker extends Service implements LocationListener
     saveLocationListeners();
   }
 
+  public void setLocationTrackerParameters( int minTime, int minDistance, int acceptedDistanceAfterReboot )
+  {
+    this.minTime = minTime;
+    this.minDistance = minDistance;
+    this.ACCEPTABLE_DISTANCE = acceptedDistanceAfterReboot;
+
+    if(!locationListeners.isEmpty())
+    {
+      locationManager.removeUpdates( this );
+      listenBestProvider();
+    }
+  }
+
   private void init()
   {
     locationManager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
     locationListeners = Collections.synchronizedMap( new HashMap<String, IBackendlessLocationListener>() );
+    Backendless.Data.mapTableToClass( Location.class.getSimpleName(), Location.class );
+    Backendless.Data.mapTableToClass( GeoFenceMonitoring.class.getSimpleName(), GeoFenceMonitoring.class );
   }
 
   private void listenBestProvider()
@@ -193,7 +209,7 @@ public class LocationTracker extends Service implements LocationListener
   {
     this.provider = provider;
     locationManager.removeUpdates( this );
-    locationManager.requestLocationUpdates( this.provider, MIN_TIME, MIN_DISTANCE, this );
+    locationManager.requestLocationUpdates( this.provider, minTime, minDistance, this );
   }
 
   private void firstListen( IBackendlessLocationListener locationListener )
@@ -243,74 +259,42 @@ public class LocationTracker extends Service implements LocationListener
 
   private void initLocationListeners()
   {
-    File file = new File( getApplicationContext().getDir( "data", MODE_PRIVATE ), LOCATION_LISTENERS );
-    ObjectInputStream inputStream = null;
-    try
-    {
-      inputStream = new ObjectInputStream( new FileInputStream( file ) );
+    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences( getApplicationContext() );
+    String locationListenersStr = sharedPref.getString( LOCATION_LISTENERS, null );
 
-      Map<String, IBackendlessLocationListener> serializedListeners = null;
+    if( locationListenersStr != null )
+    {
       try
       {
-        serializedListeners = (Map<String, IBackendlessLocationListener>) inputStream.readObject();
+        Map<String, IBackendlessLocationListener> serializedListeners = (Map<String, IBackendlessLocationListener>) Serializer.fromBytes( Base64.decode( locationListenersStr, Base64.DEFAULT ), ISerializer.AMF3, false );
         if( serializedListeners != null )
         {
           locationListeners = serializedListeners;
         }
       }
-      catch( ClassNotFoundException e )
+      catch( IOException e )
       {
         Log.e( "Cannot get location listeners", e.getMessage() );
-      }
-    }
-    catch( IOException e )
-    {
-      Log.e( "Cannot get location listeners", e.getMessage() );
-    }
-    finally
-    {
-      if( inputStream != null )
-      {
-        try
-        {
-          inputStream.close();
-        }
-        catch( IOException e )
-        {
-
-        }
       }
     }
   }
 
   private void saveLocationListeners()
   {
-    File file = new File( getApplicationContext().getDir( "data", MODE_PRIVATE ), LOCATION_LISTENERS );
-    ObjectOutputStream outputStream = null;
+    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences( getApplicationContext() );
+    SharedPreferences.Editor editor = sharedPref.edit();
+
     try
     {
-      outputStream = new ObjectOutputStream( new FileOutputStream( file ) );
-      outputStream.writeObject( locationListeners );
+      editor.putString( LOCATION_LISTENERS, Base64.encodeToString( Serializer.toBytes( locationListeners, ISerializer.AMF3 ), Base64.DEFAULT ) );
     }
-    catch( IOException e )
+    catch( Exception e )
     {
       Log.e( "Cannot save location listeners", e.getMessage() );
     }
-    finally
-    {
-      if( outputStream != null )
-      {
-        try
-        {
-          outputStream.flush();
-          outputStream.close();
-        }
-        catch( IOException e )
-        {
+    editor.apply();
 
-        }
-      }
-    }
+    super.onDestroy();
   }
 
   private void changeLocation()

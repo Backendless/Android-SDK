@@ -38,14 +38,14 @@ import java.util.concurrent.TimeUnit;
 public class LogBuffer
 {
   private static final int NUM_OF_MESSAGES = 100;
-  private static final int TIME_FREQUENCY = 1000 * 60 * 5; // 5 minutes
-  private final static String LOGGING_SERVER_ALIAS = "com.backendless.services.logging.LogService";
+  private static final int TIME_FREQUENCY = 60 * 5; // 5 minutes
+  private static final String LOGGING_SERVER_ALIAS = "com.backendless.services.logging.LogService";
+  private static final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 
   private int numOfMessages;
   private int timeFrequency;
-  private Set<LogMessage> logMessages;
 
-  private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+  private Set<LogMessage> logMessages;
   private ScheduledFuture<?> scheduledFuture;
 
   public static class SingletonHolder
@@ -92,24 +92,12 @@ public class LogBuffer
     if( scheduledFuture != null )
     {
       scheduledFuture.cancel( true );
+      scheduledFuture = null;
     }
 
     if( timeFrequency > 0 )
     {
-      if( scheduledExecutorService == null )
-      {
-        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-      }
-
       scheduledTask();
-    }
-    else
-    {
-      if( scheduledExecutorService != null )
-      {
-        scheduledExecutorService.shutdown();
-        scheduledExecutorService = null;
-      }
     }
   }
 
@@ -138,7 +126,7 @@ public class LogBuffer
       {
         flush();
       }
-    }, timeFrequency, TimeUnit.MILLISECONDS );
+    }, timeFrequency, TimeUnit.SECONDS );
   }
 
   private String getStackTrace( Throwable t )

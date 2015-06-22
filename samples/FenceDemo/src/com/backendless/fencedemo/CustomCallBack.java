@@ -16,44 +16,26 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless;
+package com.backendless.fencedemo;
 
-import com.backendless.logging.LogBuffer;
-import com.backendless.logging.Logger;
+import android.util.Log;
+import com.backendless.geo.geofence.IGeofenceCallback;
 
-/**
- * Created by baas on 20.04.15.
- */
-public class Logging
+public class CustomCallBack implements IGeofenceCallback
 {
-  private static final Logging instance = new Logging();
 
-  static Logging getInstance()
-  {
-    return instance;
+  @Override
+  public void geoPointEntered(String geofenceName, String geofenceId, double latitude, double longitude) {
+      Log.i("GeoFence", "Point enters in fence: " + geofenceName);
   }
 
-  private Logging()
-  {
+  @Override
+  public void geoPointStayed(String geofenceName, String geofenceId, double latitude, double longitude) {
+      Log.i("GeoFence", "Point stay in fence: " + geofenceName);
   }
 
-  public void setLogReportingPolicy( int numOfMessages, int timeFrequencyInSeconds )
-  {
-    LogBuffer.getInstance().setLogReportingPolicy( numOfMessages, timeFrequencyInSeconds );
-  }
-
-  public Logger getLogger( Class clazz )
-  {
-    return Logger.getLogger( clazz );
-  }
-
-  public Logger getLogger( String loggerName )
-  {
-    return Logger.getLogger( loggerName );
-  }
-
-  public void flush()
-  {
-    LogBuffer.getInstance().flush();
+  @Override
+  public void geoPointExited(String geofenceName, String geofenceId, double latitude, double longitude) {
+      Log.i("GeoFence", "Point exit from fence: " + geofenceName);
   }
 }

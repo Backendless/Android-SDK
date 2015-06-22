@@ -16,44 +16,10 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless;
+/*___Generated_by_IDEA___*/
 
-import com.backendless.logging.LogBuffer;
-import com.backendless.logging.Logger;
+package com.backendless.fencedemo;
 
-/**
- * Created by baas on 20.04.15.
- */
-public class Logging
-{
-  private static final Logging instance = new Logging();
-
-  static Logging getInstance()
-  {
-    return instance;
-  }
-
-  private Logging()
-  {
-  }
-
-  public void setLogReportingPolicy( int numOfMessages, int timeFrequencyInSeconds )
-  {
-    LogBuffer.getInstance().setLogReportingPolicy( numOfMessages, timeFrequencyInSeconds );
-  }
-
-  public Logger getLogger( Class clazz )
-  {
-    return Logger.getLogger( clazz );
-  }
-
-  public Logger getLogger( String loggerName )
-  {
-    return Logger.getLogger( loggerName );
-  }
-
-  public void flush()
-  {
-    LogBuffer.getInstance().flush();
-  }
+/* This stub is only used by the IDE. It is NOT the R class actually packed into the APK */
+public final class R {
 }
