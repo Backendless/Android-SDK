@@ -41,11 +41,26 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
-import com.backendless.messaging.*;
+import com.backendless.messaging.BodyParts;
+import com.backendless.messaging.DeliveryMethodEnum;
+import com.backendless.messaging.DeliveryOptions;
+import com.backendless.messaging.Message;
+import com.backendless.messaging.MessageStatus;
+import com.backendless.messaging.PublishOptions;
+import com.backendless.messaging.PublishStatusEnum;
+import com.backendless.messaging.PushBroadcastMask;
+import com.backendless.messaging.SubscriptionOptions;
 import com.backendless.push.GCMRegistrar;
 import weborb.types.Types;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public final class Messaging
 {
@@ -57,6 +72,7 @@ public final class Messaging
   private final static String OS;
   private final static String OS_VERSION;
   private static final Messaging instance = new Messaging();
+  private static final Map<String,Subscription> subscriptions = new HashMap();
 
   private Messaging()
   {
@@ -512,22 +528,26 @@ public final class Messaging
     subscription.setChannelName( channelName );
     subscription.setSubscriptionId( subscriptionId );
 
-    if( pollingInterval != 0 )
-      subscription.setPollingInterval( pollingInterval );
+    if ( subscriptionOptions.getSubscriptionMethod() == DeliveryMethodEnum.PULL)
+    {
+      if( pollingInterval != 0 )
+        subscription.setPollingInterval( pollingInterval );
 
-    subscription.onSubscribe( subscriptionResponder );
+      subscription.onSubscribe( subscriptionResponder );
+    }
 
     return subscription;
   }
 
-  private String subscribeForPollingAccess( String channelName,
-                                            SubscriptionOptions subscriptionOptions ) throws BackendlessException
+  private String subscribeForPollingAccess( String channelName, SubscriptionOptions subscriptionOptions ) throws BackendlessException
   {
     if( channelName == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_CHANNEL_NAME );
 
     if( subscriptionOptions == null )
       subscriptionOptions = new SubscriptionOptions();
+
+    subscriptionOptions.setDeviceId( Messaging.DEVICE_ID );
 
     return Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionOptions } );
   }
@@ -568,7 +588,7 @@ public final class Messaging
   }
 
   public void subscribe( final String channelName, final AsyncCallback<List<Message>> subscriptionResponder,
-                         SubscriptionOptions subscriptionOptions, final int pollingInterval,
+                         final SubscriptionOptions subscriptionOptions, final int pollingInterval,
                          final AsyncCallback<Subscription> responder )
   {
     try
@@ -591,6 +611,7 @@ public final class Messaging
             subscription.setPollingInterval( pollingInterval );
 
           subscription.onSubscribe( subscriptionResponder );
+
 
           if( responder != null )
             responder.handleResponse( subscription );
@@ -621,6 +642,8 @@ public final class Messaging
 
       if( subscriptionOptions == null )
         subscriptionOptions = new SubscriptionOptions();
+
+      subscriptionOptions.setDeviceId( Messaging.DEVICE_ID );
 
       Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionOptions }, responder );
     }
@@ -809,5 +832,15 @@ public final class Messaging
       if( responder != null )
         responder.handleFault( new BackendlessFault( e ) );
     }
+  }
+
+  public Subscription getSubscription( String chanelName )
+  {
+    return subscriptions.get( chanelName );
+  }
+
+  public void setSubscription( String chanelName, Subscription subscription )
+  {
+    subscriptions.put( chanelName, subscription );
   }
 }
