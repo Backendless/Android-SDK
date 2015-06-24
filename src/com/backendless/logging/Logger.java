@@ -36,7 +36,7 @@ public class Logger
   public static Logger getLogger( String name )
   {
     if( name == null || name.trim().isEmpty() )
-      throw new IllegalArgumentException( ExceptionMessage.INVALID_LOG_NAME );
+      throw new IllegalArgumentException( ExceptionMessage.EMPTY_LOG_NAME);
 
     return new Logger( name );
   }
