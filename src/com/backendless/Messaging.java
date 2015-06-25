@@ -73,6 +73,7 @@ public final class Messaging
   private final static String OS_VERSION;
   private static final Messaging instance = new Messaging();
   private static final Map<String,Subscription> subscriptions = new HashMap();
+  private AsyncCallback<Void> deviceRegistrationCallback;
 
   private Messaging()
   {
@@ -146,6 +147,8 @@ public final class Messaging
   public void registerDevice( final String GCMSenderID, final List<String> channels, final Date expiration,
                               final AsyncCallback<Void> callback )
   {
+    deviceRegistrationCallback = callback;
+
     new AsyncTask<Void, Void, RuntimeException>()
     {
       @Override
@@ -172,22 +175,22 @@ public final class Messaging
         }
       }
 
-      @Override
-      protected void onPostExecute( RuntimeException result )
-      {
-        if( result != null )
-        {
-          if( callback == null )
-            throw result;
-
-          callback.handleFault( new BackendlessFault( result ) );
-        }
-        else
-        {
-          if( callback != null )
-            callback.handleResponse( null );
-        }
-      }
+//      @Override
+//      protected void onPostExecute( RuntimeException result )
+//      {
+//        if( result != null )
+//        {
+//          if( callback == null )
+//            throw result;
+//
+//          callback.handleFault( new BackendlessFault( result ) );
+//        }
+//        else
+//        {
+//          if( callback != null )
+//            callback.handleResponse( null );
+//        }
+//      }
     }.execute();
   }
 
@@ -528,7 +531,7 @@ public final class Messaging
     subscription.setChannelName( channelName );
     subscription.setSubscriptionId( subscriptionId );
 
-    if ( subscriptionOptions.getSubscriptionMethod() == DeliveryMethodEnum.PULL)
+    if ( subscriptionOptions.getDeliveryMethod() == DeliveryMethodEnum.PULL)
     {
       if( pollingInterval != 0 )
         subscription.setPollingInterval( pollingInterval );
@@ -645,6 +648,13 @@ public final class Messaging
 
       subscriptionOptions.setDeviceId( Messaging.DEVICE_ID );
 
+      if ( subscriptionOptions.getDeliveryMethod() == null )
+
+        if ( Backendless.isAndroid() )
+          subscriptionOptions.setDeliveryMethod( DeliveryMethodEnum.PUSH );
+        else
+          subscriptionOptions.setDeliveryMethod( DeliveryMethodEnum.PULL );
+
       Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionOptions }, responder );
     }
     catch( Throwable e )
@@ -717,7 +727,7 @@ public final class Messaging
         @Override
         public void handleFault( BackendlessFault fault )
         {
-          if( responder != null )
+          if( responder != null ) 
             responder.handleFault( fault );
         }
       } );
@@ -842,5 +852,10 @@ public final class Messaging
   public void setSubscription( String chanelName, Subscription subscription )
   {
     subscriptions.put( chanelName, subscription );
+  }
+
+  public AsyncCallback<Void> getDeviceRegistrationCallback()
+  {
+    return deviceRegistrationCallback;
   }
 }

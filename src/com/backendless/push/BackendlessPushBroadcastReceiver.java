@@ -29,6 +29,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
 import android.os.SystemClock;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.RemoteViews;
 import com.backendless.Backendless;
@@ -144,10 +145,8 @@ public class BackendlessPushBroadcastReceiver extends BroadcastReceiver
   {
   }
 
-  final public boolean onMessage( Context context, Intent intent )
+  public boolean onMessage( Context context, Intent intent )
   {
-
-
     return true;
   }
 
@@ -211,7 +210,7 @@ public class BackendlessPushBroadcastReceiver extends BroadcastReceiver
       {
         Subscription subscription = Backendless.Messaging.getSubscription( chanelName );
 
-        if (pushMessage.equals( NOTIFICATION_STRING ))
+        if ( pushMessage.isEmpty() )
         {
           List<Message> messages = Backendless.Messaging.pollMessages( chanelName, subscription.getSubscriptionId() );
 
@@ -219,7 +218,8 @@ public class BackendlessPushBroadcastReceiver extends BroadcastReceiver
         }
         else
         {
-          byte[] byteMessage = CompressUtils.decompress( CompressUtils.stringToByteArray( pushMessage ) );
+          byte[] byteMessage = Base64.decode( pushMessage, Base64.DEFAULT );
+          byteMessage = CompressUtils.decompress( byteMessage );
           Message message = BackendlessSerializer.deserializeAMF( byteMessage );
 
           subscription.handlerMessage( Arrays.asList( message ) );
