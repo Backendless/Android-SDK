@@ -43,14 +43,17 @@ import com.backendless.media.video.VideoQuality;
 
 public final class Media
 {
-  private static final String MEDIA_FILES_LOCATION = "/files/media/";
-  private static final String HLS_PLAYLIST_CONSTANT = "/playlist.m3u8";
+
   private final static String WOWZA_SERVER_IP = "wowza.backendless.com";
   private final static String WOWZA_SERVER_LIVE_APP_NAME = "mediaAppLive";
   private final static String WOWZA_SERVER_VOD_APP_NAME = "mediaAppVod";
+  private final static Integer WOWZA_SERVER_PORT = 1935;
+
   private final static String RTSP_PROTOCOL = StreamProtocolType.RTSP.getValue();
   private final static String HLS_PROTOCOL = StreamProtocolType.HLS.getValue();
-  private final static Integer WOWZA_SERVER_PORT = 1935;
+
+  private static final String MEDIA_FILES_LOCATION = "/files/media/";
+  private static final String HLS_PLAYLIST_CONSTANT = "/playlist.m3u8";
   private RtspClient rtspClient;
   private Session session;
   private MediaPlayer mediaPlayer;
@@ -79,6 +82,12 @@ public final class Media
   {
     checkSessionIsNull();
     session.setVideoQuality( videoQuality );
+  }
+
+  public void setAudioQuality( int sampleRate, int bitRate )
+  {
+    checkSessionIsNull();
+    session.setAudioQuality( new AudioQuality( bitRate, bitRate ) );
   }
 
   public void switchCamera()
@@ -123,6 +132,12 @@ public final class Media
     rtspClient.release();
   }
 
+  /**
+   * <p>
+   * default video quality to 176x144 20fps 500Kbps<br/>
+   * default audio quality to 8000 sampleRate 32000 bitRate
+   * </p>
+   */
   public void configureForPublish( Context context, SurfaceView mSurfaceView, DisplayOrientation orientation )
   {
     session = getSession( context, mSurfaceView, orientation.getValue() );
@@ -272,7 +287,7 @@ public final class Media
   private Session getSession( Context context, SurfaceView mSurfaceView, int orientation )
   {
     Session mSession = SessionBuilder.getInstance().setContext( context ).setAudioEncoder( SessionBuilder.AUDIO_AAC )
-        .setAudioQuality( new AudioQuality( 8000, 16000 ) ).setVideoEncoder( SessionBuilder.VIDEO_H264 ).setSurfaceView( mSurfaceView )
+        .setVideoEncoder( SessionBuilder.VIDEO_H264 ).setSurfaceView( mSurfaceView )
         .setPreviewOrientation( orientation ).setCallback( (Session.Callback) context ).build();
 
     return mSession;
