@@ -247,7 +247,10 @@ public class FootprintsManager
           }
           else if( entry.getValue() instanceof Collection )
           {
-            if( ((Collection) entry.getValue()).iterator().next() instanceof GeoPoint )
+            Collection valueCollection = (Collection) entry.getValue();
+            Iterator valueIterator = valueCollection.iterator();
+
+            if( valueIterator.hasNext() && valueIterator.next() instanceof GeoPoint )
             {
               continue;
             }

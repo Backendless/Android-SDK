@@ -18,6 +18,7 @@
 
 package com.backendless;
 
+import android.content.res.Resources;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.core.responder.policy.CollectionAdaptingPolicy;
@@ -643,19 +644,24 @@ public final class Geo
     startGeofenceMonitoring( bCallback, geofenceName, responder );
   }
 
-  public void stopGeofenceMonitoring()
+  public void stopGeofenceMonitoring() throws NullPointerException
   {
+    if( LocationTracker.getInstance() == null )
+      throw new NullPointerException( ExceptionMessage.NOT_ADD_SERVICE_TO_MANIFEST );
+
     GeoFenceMonitoring geoFenceMonitoring = ((GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME ));
     if( geoFenceMonitoring == null )
-    {
       return;
-    }
+
     geoFenceMonitoring.removeGeoFences();
     LocationTracker.getInstance().removeListener( GeoFenceMonitoring.NAME );
   }
 
-  public void stopGeofenceMonitoring( String geofenceName )
+  public void stopGeofenceMonitoring( String geofenceName ) throws NullPointerException
   {
+    if( LocationTracker.getInstance() == null )
+      throw new NullPointerException( ExceptionMessage.NOT_ADD_SERVICE_TO_MANIFEST );
+
     GeoFenceMonitoring geoFenceMonitoring = ((GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME ));
     if( geoFenceMonitoring == null )
     {
@@ -670,14 +676,17 @@ public final class Geo
 
   private void startGeofenceMonitoring( final ICallback callback, final AsyncCallback<Void> responder )
   {
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() }, new AsyncCallback<GeoFence[]>()
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() }, new AsyncCallback<Object[]>()
     {
       @Override
-      public void handleResponse( GeoFence[] geoFences )
+      public void handleResponse( Object[] geoFences )
       {
         try
         {
-          addFenceMonitoring( callback, geoFences );
+          if( geoFences.length == 0 || !(geoFences instanceof GeoFence[]) )
+            throw new Resources.NotFoundException( ExceptionMessage.NOT_FOUND_GEOFENCE );
+
+          addFenceMonitoring( callback, (GeoFence[]) geoFences );
 
           if( responder != null )
             responder.handleResponse( null );
@@ -727,7 +736,7 @@ public final class Geo
     } );
   }
 
-  private void addFenceMonitoring( ICallback callback, GeoFence... geoFences )
+  private void addFenceMonitoring( ICallback callback, GeoFence... geoFences ) throws NullPointerException
   {
 
     if( geoFences.length == 0 )
@@ -757,8 +766,11 @@ public final class Geo
     }
   }
 
-  private GeoFenceMonitoring getGeoFenceMonitoring()
+  private GeoFenceMonitoring getGeoFenceMonitoring() throws NullPointerException
   {
+    if( LocationTracker.getInstance() == null )
+      throw new NullPointerException( ExceptionMessage.NOT_ADD_SERVICE_TO_MANIFEST );
+
     GeoFenceMonitoring geoFenceMonitoring = (GeoFenceMonitoring) LocationTracker.getInstance().getListener( GeoFenceMonitoring.NAME );
     if( geoFenceMonitoring == null )
     {
