@@ -38,6 +38,7 @@ import java.util.Iterator;
 public class FenceDemo extends Activity
 {
   private EditText fenceNameField;
+  private GeoPoint geoPoint;
 
   @Override
   public void onCreate( Bundle savedInstanceState )
@@ -48,7 +49,19 @@ public class FenceDemo extends Activity
     Backendless.initApp( getBaseContext(), Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION );
     startService( new Intent( this, AndroidService.class ) );
 
+    initGeoPoint();
     initUI();
+  }
+
+  private void initGeoPoint()
+  {
+    // to create a geopoint
+    geoPoint = new GeoPoint(  );
+
+    //to add metadata for the created geopoint (optionally)
+    geoPoint.addMetadata( "number", 7 );
+    geoPoint.addMetadata( "string", "backendless" );
+    geoPoint.addMetadata( "__deviceId", Backendless.Messaging.DEVICE_ID );
   }
 
   private void initUI()
@@ -137,7 +150,7 @@ public class FenceDemo extends Activity
       }
       else
       {
-        Backendless.Geo.startGeofenceMonitoring( new GeoPoint( 10.1, 10.1 ), new AsyncCallback<Void>()
+        Backendless.Geo.startGeofenceMonitoring( geoPoint, new AsyncCallback<Void>()
         {
           @Override
           public void handleResponse( Void aVoid )
@@ -174,7 +187,7 @@ public class FenceDemo extends Activity
       }
       else
       {
-        Backendless.Geo.startGeofenceMonitoring( fenceName, new GeoPoint(), new AsyncCallback<Void>()
+        Backendless.Geo.startGeofenceMonitoring( fenceName, geoPoint, new AsyncCallback<Void>()
         {
           @Override
           public void handleResponse( Void aVoid )
