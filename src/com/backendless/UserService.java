@@ -461,6 +461,17 @@ public final class UserService
     getUserServiceAndroidExtra().loginWithGooglePlus( context, webView, googlePlusFieldsMappings, permissions, getUserLoginAsyncHandler( responder, stayLoggedIn ) );
   }
 
+  public void loginWithGooglePlusSdk( String accessToken, final AsyncCallback<BackendlessUser> responder )
+  {
+    loginWithGooglePlusSdk( accessToken, null, null, responder );
+  }
+
+  public void loginWithGooglePlusSdk( String accessToken, final Map<String, String> fieldsMappings,
+                                    List<String> permissions, final AsyncCallback<BackendlessUser> responder )
+  {
+    getUserServiceAndroidExtra().loginWithGooglePlusSdk( accessToken, fieldsMappings, permissions, responder );
+  }
+
   public void logout() throws BackendlessException
   {
     synchronized( currentUserLock )
