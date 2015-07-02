@@ -18,6 +18,10 @@
 
 package com.backendless;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.accounts.AccountManagerFuture;
+import android.os.Bundle;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.core.responder.policy.BackendlessUserAdaptingPolicy;
@@ -37,6 +41,7 @@ import java.util.Map;
 class UserServiceAndroidExtra
 {
   private static final UserServiceAndroidExtra instance = new UserServiceAndroidExtra();
+  private static final String GOOGLE_ACCOUNT_TYPE = "com.google";
 
   static UserServiceAndroidExtra getInstance()
   {
@@ -106,9 +111,14 @@ class UserServiceAndroidExtra
     new AbstractSocialLoginStrategy.Builder( context, webView, AbstractSocialLoginStrategy.SocialType.TWITTER, twitterFieldsMappings, null, getSocialDialogResponder( responder ) ).build().run();
   }
 
-  void loginWithGooglePlusSdk( String accessToken, final Map<String, String> fieldsMappings,
+  void loginWithGooglePlusSdk( android.app.Activity context, String accessToken, final Map<String, String> fieldsMappings,
                              List<String> permissions, final AsyncCallback<BackendlessUser> responder )
   {
+    AccountManager accountManager = AccountManager.get( context );
+    accountManager.invalidateAuthToken( GOOGLE_ACCOUNT_TYPE, null );
+    Account[] accounts = accountManager.getAccountsByType( GOOGLE_ACCOUNT_TYPE );
+    AccountManagerFuture<Bundle> futur = accountManager.getAuthToken( accounts[ 0 ], "oauth2:https://www.googleapis.com/auth/analytics.readonly", null, context, null, null);
+
     Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithGooglePlus", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), accessToken, permissions, fieldsMappings }, new AsyncCallback<BackendlessUser>()
     {
       @Override
