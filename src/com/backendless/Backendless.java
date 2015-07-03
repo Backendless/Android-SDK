@@ -43,7 +43,7 @@ public final class Backendless
   public static final Persistence Data = com.backendless.Persistence.getInstance();
   public static final Messaging Messaging = com.backendless.Messaging.getInstance();
   public static final Geo Geo = com.backendless.Geo.getInstance();
-  public static final Media Media = com.backendless.Media.getInstance();
+
   public static final Files Files = com.backendless.Files.getInstance();
   public static final Commerce Commerce = com.backendless.Commerce.getInstance();
   public static final Events Events = com.backendless.Events.getInstance();
@@ -51,6 +51,7 @@ public final class Backendless
   public static final Counters Counters = com.backendless.Counters.getInstance();
   public static final CustomService CustomService = com.backendless.CustomService.getInstance();
   public static final Logging Logging = com.backendless.Logging.getInstance();
+  public static Media Media;
   private static String url = "https://api.backendless.com";
   private static IBackendlessService backendlessService;
   private static IBackendlessService.Init backendlessInitService;
@@ -87,6 +88,7 @@ public final class Backendless
     {
       backendlessService = AndroidService.recoverService();
       backendlessInitService = new AndroidService.Init();
+      Media = com.backendless.Media.getInstance();
     }
     else
       backendlessInitService = new JavaService.Init();
