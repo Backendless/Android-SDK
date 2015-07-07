@@ -151,8 +151,6 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
   {
     if( fencesToCallback.containsKey( geoFence ) )
     {
-      if( !fencesToCallback.get( geoFence ).equalCallbackParameter( callback ) )
-        throw new BackendlessException( String.format( ExceptionMessage.GEOFENCE_ALREADY_MONITORING, geoFence.getGeofenceName() ) );
       return;
     }
 
@@ -168,6 +166,12 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
       callback.callOnEnter( geoFence, location );
       addOnStay( geoFence );
     }
+  }
+
+  public boolean isContainGeoFence( String geoFenceName )
+  {
+    GeoFence geoFence = new GeoFence( geoFenceName );
+    return fencesToCallback.containsKey( geoFence );
   }
 
   public void removeGeoFence( String geoFenceName )
@@ -193,6 +197,11 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
     return !fencesToCallback.isEmpty();
   }
 
+  public int countFences()
+  {
+    return fencesToCallback.size();
+  }
+
   private Set<GeoFence> findGeoPointsFence( GeoPoint geoPoint, Set<GeoFence> geoFences )
   {
     Set<GeoFence> pointFences = new HashSet<GeoFence>();
@@ -211,7 +220,7 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
 
   private boolean isPointInFence( GeoPoint geoPoint, GeoFence geoFence )
   {
-    if(geoFence.getNwPoint() == null || geoFence.getSePoint() == null)
+    if( geoFence.getNwPoint() == null || geoFence.getSePoint() == null )
     {
       definiteRect( geoFence );
     }
