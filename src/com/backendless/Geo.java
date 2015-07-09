@@ -709,10 +709,10 @@ public final class Geo
   private void startGeofenceMonitoring( final ICallback callback, String geofenceName,
                                         final AsyncCallback<Void> responder )
   {
-//     if (GeoFenceMonitoring.getInstance().isContainGeoFence( geofenceName ))
+//     if (GeoFenceMonitoring.getInstance().containsGeoFence( geofenceName ))
 //       throw new BackendlessException( String.format( ExceptionMessage.GEOFENCE_ALREADY_MONITORING, geofenceName ) );
 
-    if ( GeoFenceMonitoring.getInstance().isContainGeoFence( geofenceName ) && responder != null )
+    if ( GeoFenceMonitoring.getInstance().containsGeoFence( geofenceName ) && responder != null )
     {
       responder.handleFault( new BackendlessFault( String.format( ExceptionMessage.GEOFENCE_ALREADY_MONITORING, geofenceName ) ) );
       return;
