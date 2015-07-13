@@ -676,7 +676,7 @@ public final class Geo
 
   private void startGeofenceMonitoring( final ICallback callback, final AsyncCallback<Void> responder )
   {
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), GeoFenceMonitoring.getInstance().countFences() }, new AsyncCallback<Object[]>()
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() }, new AsyncCallback<Object[]>()
     {
       @Override
       public void handleResponse( Object[] geoFences )
@@ -718,7 +718,7 @@ public final class Geo
       return;
     }
 
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFence", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geofenceName, GeoFenceMonitoring.getInstance().countFences() }, new AsyncCallback<GeoFence>()
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFence", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geofenceName }, new AsyncCallback<GeoFence>()
     {
       @Override
       public void handleResponse( GeoFence geoFences )

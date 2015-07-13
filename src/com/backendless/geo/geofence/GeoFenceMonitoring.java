@@ -226,10 +226,10 @@ public class GeoFenceMonitoring implements IBackendlessLocationListener
     return !fencesToCallback.isEmpty();
   }
 
-  public int countFences()
-  {
-    return fencesToCallback.size();
-  }
+//  public int countFences()
+//  {
+//    return fencesToCallback.size();
+//  }
 
   private Set<GeoFence> findGeoPointsFence( GeoPoint geoPoint, Set<GeoFence> geoFences )
   {
