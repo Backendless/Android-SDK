@@ -27,6 +27,10 @@ public class ClientCallback implements ICallback
 {
   private IGeofenceCallback geofenceCallback;
 
+  public ClientCallback()
+  {
+  }
+
   public ClientCallback( IGeofenceCallback geofenceCallback )
   {
     this.geofenceCallback = geofenceCallback;
@@ -56,5 +60,13 @@ public class ClientCallback implements ICallback
     if(object.getClass() != geofenceCallback.getClass())
       return false;
     return this.geofenceCallback.equals( object );
+  }
+
+  public IGeofenceCallback getGeofenceCallback() {
+    return geofenceCallback;
+  }
+
+  public void setGeofenceCallback( IGeofenceCallback geofenceCallback ) {
+    this.geofenceCallback = geofenceCallback;
   }
 }

@@ -29,6 +29,10 @@ public class ServerCallback implements ICallback
 {
   private GeoPoint geoPoint;
 
+  public ServerCallback()
+  {
+  }
+
   public ServerCallback( GeoPoint geoPoint )
   {
     this.geoPoint = geoPoint;
@@ -61,6 +65,16 @@ public class ServerCallback implements ICallback
     if(object.getClass() != GeoPoint.class)
     return false;
     return this.geoPoint.getMetadata().equals( ((GeoPoint)object).getMetadata() ) && this.geoPoint.getCategories().equals( ((GeoPoint)object).getCategories() );
+  }
+
+  public GeoPoint getGeoPoint()
+  {
+    return geoPoint;
+  }
+
+  public void setGeoPoint( GeoPoint geoPoint )
+  {
+    this.geoPoint = geoPoint;
   }
 
   private void updatePoint( Location location )

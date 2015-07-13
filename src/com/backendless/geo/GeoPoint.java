@@ -105,7 +105,7 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     return metadata.get( key );
   }
 
-  public void putMetadata( String key, String value )
+  public void putMetadata( String key, Object value )
   {
     addMetadata( key, value );
   }
