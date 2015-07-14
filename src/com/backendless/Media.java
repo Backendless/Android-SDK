@@ -57,6 +57,7 @@ public final class Media
   private RtspClient rtspClient;
   private Session session;
   private MediaPlayer mediaPlayer;
+  private StreamProtocolType protocolType;
   
 
   private static final Media instance = new Media();
@@ -126,7 +127,7 @@ public final class Media
     session.release();
   }
 
-  public void releaseClint()
+  public void releaseClient()
   {
     checkRtspClientIsNull();
     rtspClient.release();
@@ -144,8 +145,19 @@ public final class Media
     rtspClient = getRtspClient( context, session );
   }
 
+  /**
+   * StreamProtocolType sets to default value - RTSP
+   * 
+   * @param mSurfaceHolder
+   */
   public void configureForPlay( SurfaceHolder mSurfaceHolder )
   {
+    configureForPlay( mSurfaceHolder, StreamProtocolType.RTSP );
+  }
+
+  public void configureForPlay( SurfaceHolder mSurfaceHolder, StreamProtocolType protocolType )
+  {
+    this.protocolType = protocolType;
     mediaPlayer = new MediaPlayer();
     mediaPlayer.setDisplay( mSurfaceHolder );
     mediaPlayer.setAudioStreamType( AudioManager.STREAM_MUSIC );
@@ -169,16 +181,16 @@ public final class Media
     publishStreamOrStop( tube, streamName, StreamType.LIVE );
   }
 
-  public void playLiveOrStop( Context context, MediaPlayer mediaPlayer, StreamProtocolType streamProtocolType, String tube,
+  public void playLiveOrStop( Context context, String tube,
       String streamName ) throws IllegalArgumentException, SecurityException, IllegalStateException, IOException
   {
-    playStreamOrStop( streamProtocolType, tube, streamName, StreamType.RECORDING );
+    playStreamOrStop( tube, streamName, StreamType.RECORDING );
   }
 
-  public void playRecordOrStop( Context context, MediaPlayer mediaPlayer, StreamProtocolType streamProtocolType, String tube,
+  public void playRecordOrStop( Context context, String tube,
       String streamName ) throws IllegalArgumentException, SecurityException, IllegalStateException, IOException
   {
-    playStreamOrStop( streamProtocolType, tube, streamName, StreamType.AVAILABLE );
+    playStreamOrStop( tube, streamName, StreamType.AVAILABLE );
   }
 
   private void publishStreamOrStop( String tube, String streamName, StreamType streamType )
@@ -186,7 +198,10 @@ public final class Media
     checkSessionIsNull();
     checkRtspClientIsNull();
     streamName = streamName.trim();
-    mediaPlayer.reset();
+    if( mediaPlayer != null )
+    {
+      mediaPlayer.reset();
+    }
     if( streamName == null || streamName.isEmpty() )
     {
       streamName = "Default";
@@ -230,7 +245,7 @@ public final class Media
     return ( streamType == StreamType.LIVE ) ? "publishLive" : "publishRecorded";
   }
 
-  private void playStreamOrStop( StreamProtocolType streamProtocolType, String tube, String fileName, StreamType streamType )
+  private void playStreamOrStop( String tube, String fileName, StreamType streamType )
       throws IllegalArgumentException, SecurityException, IllegalStateException, IOException
   {
     checkPlayerIsNull();
@@ -242,20 +257,23 @@ public final class Media
     }
     else
     {
-      session.stopPreview();
+      if( session != null )
+      {
+        session.stopPreview();
+      }
       mediaPlayer.reset();
 
-      if( streamProtocolType == null )
+      if( protocolType == null )
       {
-        streamProtocolType = StreamProtocolType.RTSP;
+        protocolType = StreamProtocolType.RTSP;
       }
-      String protocol = getProtocol( streamProtocolType );
+      String protocol = getProtocol( protocolType );
       String operationType = ( streamType == StreamType.RECORDING ) ? "playLive" : "playRecorded";
       String wowzaAddress = WOWZA_SERVER_IP + ":" + WOWZA_SERVER_PORT + "/"
           + ( ( streamType == StreamType.RECORDING ) ? WOWZA_SERVER_LIVE_APP_NAME : WOWZA_SERVER_VOD_APP_NAME ) + "/_definst_/";
       String params = getConnectParams( tube, operationType, fileName );
 
-      String streamName = getStreamName( fileName, streamProtocolType );
+      String streamName = getStreamName( fileName, protocolType );
       String url = protocol + wowzaAddress + streamName + params;
       mediaPlayer.setDataSource( url );
       mediaPlayer.prepare();
@@ -346,6 +364,16 @@ public final class Media
       rtspClient.setCallback( (RtspClient.Callback) context );
     }
     return rtspClient;
+  }
+
+  public StreamProtocolType getProtocolType()
+  {
+    return protocolType;
+  }
+
+  public void setProtocolType( StreamProtocolType protocolType )
+  {
+    this.protocolType = protocolType;
   }
   
 }
