@@ -27,25 +27,40 @@ import java.util.List;
  */
 public class InvocationContext
 {
-  private static RunnerContext runnerContext;
+  static private String appId;
+  static private String userId;
+  static private List<String> userRoles;
+  static private DeviceType deviceType;
 
-  public static RunnerContext getRunnerContext()
+  private InvocationContext()
   {
-    return runnerContext;
   }
 
-  public static void setRunnerContext( RunnerContext runnerContext )
+  private static void setContext( String appId, String userId, List<String> userRoles, DeviceType deviceType )
   {
-    InvocationContext.runnerContext = runnerContext;
+    InvocationContext.appId = appId;
+    InvocationContext.userId = userId;
+    InvocationContext.userRoles = userRoles;
+    InvocationContext.deviceType = deviceType;
   }
 
-  public static void setRunnerContext(String appId, String userId, List<String> userRoles, DeviceType deviceType)
+  public static String getAppId()
   {
-    RunnerContext runnerContext = new RunnerContext();
-    runnerContext.setAppId( appId );
-    runnerContext.setUserId( userId );
-    runnerContext.setUserRole( userRoles );
-    runnerContext.setDeviceType( deviceType );
-    InvocationContext.runnerContext = runnerContext;
+    return appId;
+  }
+
+  public static String getUserId()
+  {
+    return userId;
+  }
+
+  public static List<String> getUserRoles()
+  {
+    return userRoles;
+  }
+
+  public static DeviceType getDeviceType()
+  {
+    return deviceType;
   }
 }
