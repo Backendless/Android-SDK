@@ -36,12 +36,12 @@ public class InvocationContext
   {
   }
 
-  private static void setContext( String appId, String userId, List<String> userRoles, DeviceType deviceType )
+  private static void setContext( String appId, String userId, List<String> userRoles, String deviceType )
   {
     InvocationContext.appId = appId;
     InvocationContext.userId = userId;
     InvocationContext.userRoles = userRoles;
-    InvocationContext.deviceType = deviceType;
+    InvocationContext.deviceType = DeviceType.valueOf( deviceType );
   }
 
   public static String getAppId()
