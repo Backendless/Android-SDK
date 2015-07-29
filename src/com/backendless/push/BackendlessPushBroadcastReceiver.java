@@ -29,20 +29,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
 import android.os.SystemClock;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.RemoteViews;
 import com.backendless.Backendless;
+import com.backendless.Subscription;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.backendless.messaging.Message;
 import com.backendless.messaging.PublishOptions;
+import com.backendless.persistence.BackendlessSerializer;
+import com.backendless.utils.CompressUtils;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class BackendlessBroadcastReceiver extends BroadcastReceiver
+public class BackendlessPushBroadcastReceiver extends BroadcastReceiver
 {
+  private static final String NOTIFICATION_STRING = "{n}";
+
   private static final String TAG = "BackendlessBroadcastReceiver";
   private static final Random random = new Random();
 
@@ -53,7 +60,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
 
   private static final String WAKELOCK_KEY = "GCM_LIB";
   private static PowerManager.WakeLock wakeLock;
-  private static final Object LOCK = BackendlessBroadcastReceiver.class;
+  private static final Object LOCK = BackendlessPushBroadcastReceiver.class;
 
   //Fields are placed here because this class is most strongly referenced by android
   private static String persistedSenderId;
@@ -67,28 +74,28 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
 
   private static int notificationId = 1;
 
-  public BackendlessBroadcastReceiver()
+  public BackendlessPushBroadcastReceiver()
   {
   }
 
-  public BackendlessBroadcastReceiver( String senderId )
+  public BackendlessPushBroadcastReceiver( String senderId )
   {
-    BackendlessBroadcastReceiver.persistedSenderId = senderId;
+    BackendlessPushBroadcastReceiver.persistedSenderId = senderId;
   }
 
   protected static void setSenderId( String senderId )
   {
-    BackendlessBroadcastReceiver.persistedSenderId = senderId;
+    BackendlessPushBroadcastReceiver.persistedSenderId = senderId;
   }
 
   protected static void setRegistrationExpiration( long registrationExpiration )
   {
-    BackendlessBroadcastReceiver.persistedRegistrationExpiration = registrationExpiration;
+    BackendlessPushBroadcastReceiver.persistedRegistrationExpiration = registrationExpiration;
   }
 
   protected static void setChannels( List<String> channels )
   {
-    BackendlessBroadcastReceiver.persistedChannels = (String[]) channels.toArray();
+    BackendlessPushBroadcastReceiver.persistedChannels = (String[]) channels.toArray();
   }
 
   private static String getSenderId()
@@ -192,10 +199,39 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
 
   private void handleMessage( final Context context, Intent intent )
   {
+    boolean showPushNotification;
 
     try
     {
-      boolean showPushNotification = onMessage( context, intent );
+      String pushMessage = intent.getStringExtra( "message" );
+      String chanelName = intent.getStringExtra( NOTIFICATION_STRING );
+
+      if (chanelName != null )
+      {
+        Subscription subscription = Backendless.Messaging.getSubscription( chanelName );
+
+        if ( pushMessage.isEmpty() )
+        {
+          List<Message> messages = Backendless.Messaging.pollMessages( chanelName, subscription.getSubscriptionId() );
+
+          subscription.handlerMessage( messages );
+        }
+        else
+        {
+          byte[] byteMessage = Base64.decode( pushMessage, Base64.DEFAULT );
+          byteMessage = CompressUtils.decompress( byteMessage );
+          Message message = BackendlessSerializer.deserializeAMF( byteMessage );
+
+          subscription.handlerMessage( Arrays.asList( message ) );
+        }
+
+        showPushNotification = false;
+      }
+      else
+      {
+        showPushNotification = onMessage( context, intent );
+      }
+
 
       if( showPushNotification )
       {
@@ -260,10 +296,6 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
       GCMRegistrar.resetBackoff( context );
       GCMRegistrar.setGCMdeviceToken( context, registrationId );
       registerFurther( context, registrationId );
-
-      AsyncCallback<Void> callback = Backendless.Messaging.getDeviceRegistrationCallback();
-      callback.handleResponse( null );
-
       return;
     }
 
@@ -293,12 +325,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
     }
     else
     {
-      AsyncCallback<Void> callback = Backendless.Messaging.getDeviceRegistrationCallback();
-
-      if (callback == null)
-        onError( context, error );
-      else
-        callback.handleFault( new BackendlessFault( error ) );
+      onError( context, error );
     }
   }
 

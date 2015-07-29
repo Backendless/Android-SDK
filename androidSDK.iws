@@ -18,27 +18,36 @@
     </artifacts-to-build>
   </component>
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/com/backendless/Geo.java" line="40" mnemonic="7" />
+    <bookmark url="file://$PROJECT_DIR$/../backendless/src/server/play/app/com/backendless/services/messaging/operation/MessagingOperationsService.java" description="Backendless" line="262" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa3e4aea-c9d5-420e-b854-3b539143136f" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/samples/UserService/getuserroles/out/production/getuserroles/com/example/getuserroles/MyActivity$1$1$1.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/getuserroles/out/production/getuserroles/com/example/getuserroles/Defaults.class" afterPath="$PROJECT_DIR$/samples/UserService/getuserroles/out/production/getuserroles/com/example/getuserroles/Defaults.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/getuserroles/out/production/getuserroles/com/example/getuserroles/MyActivity$1$1.class" afterPath="$PROJECT_DIR$/samples/UserService/getuserroles/out/production/getuserroles/com/example/getuserroles/MyActivity$1$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/getuserroles/out/production/getuserroles/com/example/getuserroles/MyActivity$1.class" afterPath="$PROJECT_DIR$/samples/UserService/getuserroles/out/production/getuserroles/com/example/getuserroles/MyActivity$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/getuserroles/out/production/getuserroles/com/example/getuserroles/MyActivity.class" afterPath="$PROJECT_DIR$/samples/UserService/getuserroles/out/production/getuserroles/com/example/getuserroles/MyActivity.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/getuserroles/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/UserService/getuserroles/libs/backendless.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/getuserroles/out/production/getuserroles/getuserroles.apk" afterPath="$PROJECT_DIR$/samples/UserService/getuserroles/out/production/getuserroles/getuserroles.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/getuserroles/gen/com/example/getuserroles/BuildConfig.java" afterPath="$PROJECT_DIR$/samples/UserService/getuserroles/gen/com/example/getuserroles/BuildConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/getuserroles/src/com/example/getuserroles/Defaults.java" afterPath="$PROJECT_DIR$/samples/UserService/getuserroles/src/com/example/getuserroles/Defaults.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/getuserroles/src/com/example/getuserroles/MyActivity.java" afterPath="$PROJECT_DIR$/samples/UserService/getuserroles/src/com/example/getuserroles/MyActivity.java" />
+    <list default="true" id="fa3e4aea-c9d5-420e-b854-3b539143136f" name="Default" comment="added getErrorMessage method in MessageStatus class">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/backendless/push/BackendlessPushBroadcastReceiver.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/backendless/messaging/DeliveryMethodEnum.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/backendless.jar" afterPath="$PROJECT_DIR$/out/backendless.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/DataService/tododemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/DataService/tododemo/libs/backendless.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/FileService/filedemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/FileService/filedemo/libs/backendless.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/GeoService/geodemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/GeoService/geodemo/libs/backendless.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/MessagingService/pubsubdemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/MessagingService/pubsubdemo/libs/backendless.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/MessagingService/pushdemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/MessagingService/pushdemo/libs/backendless.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/rolesdemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/UserService/rolesdemo/libs/backendless.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/userservicedemo/libs/backendless.jar" afterPath="$PROJECT_DIR$/samples/UserService/userservicedemo/libs/backendless.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/persistence/BackendlessSerializer.java" afterPath="$PROJECT_DIR$/src/com/backendless/persistence/BackendlessSerializer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/Messaging.java" afterPath="$PROJECT_DIR$/src/com/backendless/Messaging.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/Subscription.java" afterPath="$PROJECT_DIR$/src/com/backendless/Subscription.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/backendless/messaging/SubscriptionOptions.java" afterPath="$PROJECT_DIR$/src/com/backendless/messaging/SubscriptionOptions.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.iml" afterPath="$PROJECT_DIR$/androidSDK.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.ipr" afterPath="$PROJECT_DIR$/androidSDK.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidSDK.iws" afterPath="$PROJECT_DIR$/androidSDK.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/getuserroles/.idea/libraries/libs.xml" afterPath="$PROJECT_DIR$/samples/UserService/getuserroles/.idea/libraries/libs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/samples/UserService/getuserroles/.idea/workspace.xml" afterPath="$PROJECT_DIR$/samples/UserService/getuserroles/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/androidsdk.properties" afterPath="$PROJECT_DIR$/androidsdk.properties" />
     </list>
     <ignored path="androidSDK.iws" />
     <ignored path=".idea/workspace.xml" />
+    <ignored path="$PROJECT_DIR$/out/" />
+    <ignored path="$PROJECT_DIR$/clients/" />
+    <ignored path=".idea/dataSources.local.xml" />
+    <ignored path="$PROJECT_DIR$/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,12 +112,11 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="F:\themidnightcoders.com\trunk\backendless\src\client\sdk\android" />
   </component>
-  <component name="DaemonCodeAnalyzer">
-    <disable_hints />
-  </component>
   <component name="DatabaseView">
-    <flatten value="false" />
-    <groupTables value="false" />
+    <option name="FLATTEN" value="false" />
+    <option name="GROUP_BY_TYPE" value="true" />
+    <option name="SORT_CHILDREN" value="false" />
+    <option name="SHOW_TABLE_CONSTRAINTS" value="true" />
   </component>
   <component name="DebuggerManager">
     <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" converted="true">
@@ -224,8 +232,8 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <ui_properties converted="true" />
     <breakpoint_rules converted="true" />
+    <ui_properties converted="true" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
@@ -234,43 +242,99 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Backendless.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/backendless/Backendless.java">
+      <file leaf-file-name="Subscription.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/backendless/Subscription.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2652" max-vertical-offset="3723">
-              <caret line="156" column="8" selection-start-line="156" selection-start-column="8" selection-end-line="156" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="137" column="14" selection-start-line="137" selection-start-column="14" selection-end-line="137" selection-end-column="14" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Media.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/backendless/Media.java">
+      <file leaf-file-name="DeliveryMethodEnum.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/backendless/messaging/DeliveryMethodEnum.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5483871" vertical-offset="986" max-vertical-offset="3638">
-              <caret line="96" column="60" selection-start-line="96" selection-start-column="3" selection-end-line="96" selection-end-column="3" />
+            <state vertical-scroll-proportion="0.10445683">
+              <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Messaging.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/backendless/Messaging.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="680" column="92" selection-start-line="680" selection-start-column="86" selection-end-line="680" selection-end-column="92" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="method#registerDevice#4;class#Messaging#0" expanded="false" />
+                <element signature="method#unregisterDevice#1;class#Messaging#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StreamType.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/backendless/media/StreamType.java">
+      <file leaf-file-name="BackendlessBroadcastReceiver.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/backendless/push/BackendlessBroadcastReceiver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="374" max-vertical-offset="969">
-              <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="133" column="3" selection-start-line="133" selection-start-column="3" selection-end-line="133" selection-end-column="3" />
+              <folding>
+                <element signature="e#2808#2809#0" expanded="true" />
+                <element signature="e#2875#2876#0" expanded="true" />
+                <element signature="e#2935#2936#0" expanded="true" />
+                <element signature="e#3002#3003#0" expanded="true" />
+                <element signature="e#3380#3381#0" expanded="true" />
+                <element signature="e#3414#3415#0" expanded="true" />
+                <element signature="e#4502#4503#0" expanded="true" />
+                <element signature="e#4523#4524#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BackendlessPushBroadcastReceiver.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/backendless/push/BackendlessPushBroadcastReceiver.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="37" column="41" selection-start-line="37" selection-start-column="41" selection-end-line="37" selection-end-column="41" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HeadersManager.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/backendless/HeadersManager.java">
+      <file leaf-file-name="BackendlessSerializer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/backendless/persistence/BackendlessSerializer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="2720">
-              <caret line="27" column="27" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="225" column="25" selection-start-line="225" selection-start-column="25" selection-end-line="225" selection-end-column="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#7389#7390#0" expanded="true" />
+                <element signature="e#7462#7463#0" expanded="true" />
+                <element signature="e#7516#7517#0" expanded="true" />
+                <element signature="e#7560#7561#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CompressUtils.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/backendless/utils/CompressUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="79" column="40" selection-start-line="79" selection-start-column="23" selection-end-line="79" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Message.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/backendless/messaging/Message.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -296,25 +360,26 @@
       <MyDateState />
     </option>
   </component>
+  <component name="GradleLocalSettings">
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
+  </component>
   <component name="IdeDocumentHistory">
-    <option name="changedFiles">
+    <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/backendless/media/lib/hw/NV21Convertor.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/media/lib/gl/BackendlessSurfaceView.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/media/lib/gl/SurfaceManager.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/media/lib/gl/TextureManager.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/media/lib/exceptions/CameraInUseException.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/media/lib/exceptions/ConfNotSupportedException.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/media/lib/exceptions/InvalidSurfaceException.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/media/lib/exceptions/StorageUnavailableException.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/media/lib/audio/AACStream.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/media/lib/audio/AMRNBStream.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/media/lib/audio/AudioQuality.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/media/lib/audio/AudioStream.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/media/StreamType.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/media/StreamQuality.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/media/StreamProtocolType.java" />
-        <option value="$PROJECT_DIR$/src/com/backendless/Media.java" />
+        <option value="$PROJECT_DIR$/src/com/backendless/messaging/MessageStatus.java" />
+        <option value="$PROJECT_DIR$/src/com/backendless/Geo.java" />
+        <option value="$PROJECT_DIR$/src/com/backendless/BackendlessUser.java" />
+        <option value="$PROJECT_DIR$/src/com/backendless/messaging/SubscriptionOptions.java" />
+        <option value="$PROJECT_DIR$/src/com/backendless/Messaging.java" />
+        <option value="$PROJECT_DIR$/src/com/backendless/messaging/AndroidHandler.java" />
+        <option value="$PROJECT_DIR$/src/com/backendless/Subscription.java" />
+        <option value="$PROJECT_DIR$/src/com/backendless/push/BackendlessBroadcastReceiver.java" />
+        <option value="$PROJECT_DIR$/src/com/backendless/persistence/BackendlessSerializer.java" />
+        <option value="$PROJECT_DIR$/src/com/backendless/utils/CompressUtils.java" />
+        <option value="$PROJECT_DIR$/src/com/backendless/messaging/MessageDTO.java" />
+        <option value="$PROJECT_DIR$/src/com/backendless/push/BackendlessPushBroadcastReceiver.java" />
       </list>
     </option>
   </component>
@@ -323,6 +388,10 @@
       <facet id="androidSDK/invalid/Obfuscation" />
     </ignored-facets>
   </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+  </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
     <option name="FILTER_WARNINGS" value="false" />
@@ -330,8 +399,22 @@
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
   </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Bundled (Maven 3)" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
   <component name="MavenProjectNavigator">
-    <treeState />
+    <treeState>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+      </PATH>
+    </treeState>
   </component>
   <component name="MavenRunner">
     <option name="jreName" value="#JAVA_INTERNAL" />
@@ -339,12 +422,12 @@
   <component name="NamedScopeManager">
     <scope name="androidSDK" pattern="(file[androidSDK]:*&amp;&amp;!file[BackendlessTestClient]:*/||file[androidSDK]:*/)&amp;&amp;!file[BackendlessClient]:*/" />
     <scope name="BackendlessClient" pattern="!file[androidSDK]:*/&amp;&amp;!file[BackendlessTestClient]:*/||file[BackendlessClient]:*/" />
+    <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="65" />
-    <option name="y" value="28" />
-    <option name="width" value="1301" />
-    <option name="height" value="772" />
+    <option name="y" value="23" />
+    <option name="width" value="1440" />
+    <option name="height" value="838" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -369,9 +452,6 @@
     <ConfirmationsSetting value="1" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
-  <component name="ProjectReloadState">
-    <option name="STATE" value="0" />
-  </component>
   <component name="ProjectStructureProblems">
     <ignored-problems>
       <problem id="module-circular-dependency(project:general)" />
@@ -395,6 +475,146 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="androidSDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="androidSDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Android-SDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="androidSDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Android-SDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backendless" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="androidSDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Android-SDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backendless" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="utils" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="androidSDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Android-SDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backendless" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="push" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="androidSDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Android-SDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backendless" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="persistence" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="androidSDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Android-SDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="backendless" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="messaging" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="androidSDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Android-SDK" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="out" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="Scope">
         <subPane subId="androidSDK">
           <PATH>
@@ -537,16 +757,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="androidSDK" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -595,7 +806,7 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
     <property name="GenerateAntBuildDialog.inclineRuntiemClasspath" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/Forex-Java/Dukascopy/pom.xml" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../backendless-codegen/testApp1-Codegen/testApp1-Codegen.ipr" />
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="androidsdk" />
     <property name="GenerateAntBuildDialog.enableUiFormCompile" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
@@ -618,12 +829,18 @@
     <property name="GenerateAntBuildDialog.backupFiles" value="true" />
     <property name="options.searchVisible" value="true" />
     <property name="dynamic.classpath" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="SearchEverywhereHistoryKey" value="Ser&#9;FILE&#9;file:///Users/mikhail/projects/Android-SDK/src/com/backendless/persistence/BackendlessSerializer.java&#10;seria&#9;PSI&#9;JAVA://com.backendless.persistence.BackendlessSerializer&#10;Subscr&#9;FILE&#9;file:///Users/mikhail/projects/Android-SDK/src/com/backendless/Subscription.java&#10;Bac&#9;FILE&#9;file:///Users/mikhail/projects/Android-SDK/src/com/backendless/push/BackendlessBroadcastReceiver.java&#10;registerD&#9;PSI&#9;JAVA://com.backendless.Messaging#registerDevice&#10;BackendlessBroadcastReceiver&#9;FILE&#9;file:///Users/mikhail/projects/Android-SDK/src/com/backendless/push/BackendlessBroadcastReceiver.java&#10;registerDevice&#9;PSI&#9;JAVA://com.backendless.Messaging#registerDevice&#10;regist&#9;PSI&#9;JAVA://com.backendless.DeviceRegistration&#10;device&#9;PSI&#9;JAVA://com.backendless.DeviceRegistration&#10;SubscriptionOptions&#9;FILE&#9;file:///Users/mikhail/projects/Android-SDK/src/com/backendless/messaging/SubscriptionOptions.java&#10;Geo&#9;PSI&#9;JAVA://com.backendless.Geo&#10;BackendlessUse&#9;PSI&#9;JAVA://com.backendless.BackendlessUser&#10;subscribeForPollingAccess&#9;null&#9;null&#10;registeron&#9;PSI&#9;JAVA://com.backendless.Messaging#registerDeviceOnServer&#10;Messag&#9;FILE&#9;file:///Users/mikhail/projects/Android-SDK/src/com/backendless/messaging/MessageStatus.java" />
+    <property name="OverrideImplement.overriding.sorted" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
       <recent name="com.client.test" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.backendless.utils" />
+      <recent name="com.backendless.push" />
+      <recent name="com.backendless.messaging" />
       <recent name="com.backendless.media.lib.rtcp" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -806,14 +1023,24 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails">
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
       <module name="" />
-      <setting name="vmparams" value="" />
-      <setting name="cmdLine" value="run-app" />
-      <setting name="depsClasspath" value="false" />
-      <setting name="passParentEnv" value="true" />
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <setting name="launchBrowser" value="false" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
@@ -837,70 +1064,28 @@
       <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
-    <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
-      <method />
-    </configuration>
-    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" package_name="" scope="Class">
-      <option name="BCName" value="" />
-      <option name="launcherParameters">
-        <LauncherParameters>
-          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
-          <option name="launcherType" value="OSDefault" />
-          <option name="newPlayerInstance" value="false" />
-          <option name="playerPath" value="/Applications/Flash Player Debugger.app" />
-        </LauncherParameters>
-      </option>
-      <option name="moduleName" value="" />
-      <option name="trusted" value="true" />
-      <method />
-    </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
+      <module />
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
       <option name="HEIGHT" value="300" />
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="SUITE_NAME" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="GROUP_NAME" />
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="OUTPUT_DIRECTORY" />
-      <option name="ANNOTATION_TYPE" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <option name="USE_DEFAULT_REPORTERS" value="false" />
-      <option name="PROPERTIES_FILE" />
+      <module name="" />
       <envs />
-      <properties />
-      <listeners />
       <method />
     </configuration>
     <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
@@ -920,62 +1105,6 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="" />
       <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" runner="idea" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="JUnit" factoryName="JUnit">
-      <extension name="coverage" enabled="false" merge="false" runner="idea" />
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
-    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
-      <module name="" />
-      <option name="ACTIVITY_CLASS" value="" />
-      <option name="MODE" value="default_activity" />
-      <option name="DEPLOY" value="true" />
-      <option name="ARTIFACT_NAME" value="" />
-      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
-      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
-      <option name="PREFERRED_AVD" value="" />
-      <option name="USE_COMMAND_LINE" value="true" />
-      <option name="COMMAND_LINE" value="" />
-      <option name="WIPE_USER_DATA" value="false" />
-      <option name="DISABLE_BOOT_ANIMATION" value="false" />
-      <option name="NETWORK_SPEED" value="full" />
-      <option name="NETWORK_LATENCY" value="none" />
-      <option name="CLEAR_LOGCAT" value="false" />
-      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
-      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
     <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
@@ -1011,6 +1140,180 @@
       <option name="screenWidth" value="0" />
       <option name="url" value="http://" />
       <option name="usbDebugPort" value="7936" />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" package_name="" scope="Class">
+      <option name="BCName" value="" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="/Applications/Flash Player Debugger.app" />
+        </LauncherParameters>
+      </option>
+      <option name="moduleName" value="" />
+      <option name="trusted" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails">
+      <module name="" />
+      <setting name="vmparams" value="" />
+      <setting name="cmdLine" value="run-app" />
+      <setting name="depsClasspath" value="false" />
+      <setting name="passParentEnv" value="true" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <setting name="launchBrowser" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="ScalaTestRunConfiguration" factoryName="ScalaTest">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <extension name="scalaCoverage" />
+      <module name="" />
+      <setting name="path" value="" />
+      <setting name="package" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="testName" value="" />
+      <setting name="testKind" value="Class" />
+      <setting name="showProgressMessages" value="true" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Specs2RunConfiguration" factoryName="Specs2">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <extension name="scalaCoverage" />
+      <module name="" />
+      <setting name="path" value="" />
+      <setting name="package" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="testName" value="" />
+      <setting name="testKind" value="Class" />
+      <setting name="showProgressMessages" value="true" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <pass-parent-envs>true</pass-parent-envs>
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="osgi.bnd.run" factoryName="Run Launcher">
+      <method />
+    </configuration>
+    <configuration default="true" type="osgi.bnd.run" factoryName="Test Launcher (JUnit)">
+      <method />
+    </configuration>
+    <configuration default="true" type="uTestRunConfiguration" factoryName="utest">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <extension name="scalaCoverage" />
+      <module name="" />
+      <setting name="path" value="" />
+      <setting name="package" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="testName" value="" />
+      <setting name="testKind" value="Class" />
+      <setting name="showProgressMessages" value="true" />
+      <envs />
       <method />
     </configuration>
     <configuration default="false" name="TestClient" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -1091,6 +1394,11 @@
       <Port>5050</Port>
     </configuration>
   </component>
+  <component name="SbtLocalSettings">
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
+  </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SqlCodeAssistantSettings">
     <option name="dbBrowserSelectedConnection" value="androidSDK" />
@@ -1151,6 +1459,9 @@
       <constraint name="arg2" within="" contains="" />
     </replaceConfiguration>
   </component>
+  <component name="StructureViewFactory">
+    <option name="ACTIVE_ACTIONS" value=",ALPHA_COMPARATOR" />
+  </component>
   <component name="SvnConfiguration" myUseAcceleration="nothing" cleanupOnStartRun="true" SSL_PROTOCOLS="sslv3">
     <configuration>C:\Users\Michael\AppData\Roaming\Subversion</configuration>
     <supportedVersion>125</supportedVersion>
@@ -1160,217 +1471,326 @@
     <task active="true" id="Default" summary="Default task">
       <changelist id="fa3e4aea-c9d5-420e-b854-3b539143136f" name="Default" comment="" />
       <created>1346939934083</created>
+      <option name="number" value="Default" />
       <updated>1349270174939</updated>
       <workItem from="1415351563170" duration="737000" />
       <workItem from="1415352363295" duration="15000" />
       <workItem from="1415360572753" duration="204000" />
       <workItem from="1416216205544" duration="10000" />
-    </task>
-    <task id="LOCAL-00002" summary="gg">
-      <created>1349270157918</created>
-      <updated>1349270170268</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Added authorization data persisting. Minor refactoring.">
-      <created>1353107856105</created>
-      <updated>1353107856105</updated>
+      <workItem from="1432891867943" duration="917000" />
+      <workItem from="1432893087248" duration="1457000" />
+      <workItem from="1432894698853" duration="618000" />
+      <workItem from="1433583591447" duration="1632000" />
+      <workItem from="1433587924377" duration="1045000" />
+      <workItem from="1433750764846" duration="2273000" />
+      <workItem from="1433756980394" duration="2339000" />
+      <workItem from="1433929600824" duration="590000" />
+      <workItem from="1434114183243" duration="643000" />
+      <workItem from="1434453787653" duration="1187000" />
+      <workItem from="1434540245812" duration="3911000" />
+      <workItem from="1434549073822" duration="428000" />
+      <workItem from="1434634192093" duration="15258000" />
+      <workItem from="1434962648941" duration="10837000" />
     </task>
     <task id="LOCAL-00004" summary="Adaptation logic implemented. Minor refactoring and fixes.">
       <created>1353274234104</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
       <updated>1353274234104</updated>
     </task>
     <task id="LOCAL-00005" summary="Minor refactoring">
       <created>1353363671107</created>
+      <option name="number" value="00005" />
+      <option name="project" value="LOCAL" />
       <updated>1353363671107</updated>
     </task>
     <task id="LOCAL-00006" summary="Init method doesn`t throw exception">
       <created>1353496091101</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
       <updated>1353496091101</updated>
     </task>
     <task id="LOCAL-00007" summary="Error adoptation fix. &#10;Fix of wrong AdaptResponder usage for an AyncInvoker.&#10;Fixes for findFirst and findLast.">
       <created>1353503534102</created>
+      <option name="number" value="00007" />
+      <option name="project" value="LOCAL" />
       <updated>1353503534102</updated>
     </task>
     <task id="LOCAL-00008" summary="Bug fixes and refactoring.">
       <created>1354114645102</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
       <updated>1354114645102</updated>
     </task>
     <task id="LOCAL-00009" summary="Build file fix">
       <created>1354115530101</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
       <updated>1354115530101</updated>
     </task>
     <task id="LOCAL-00010" summary="Minor fixes">
       <created>1354223688101</created>
+      <option name="number" value="00010" />
+      <option name="project" value="LOCAL" />
       <updated>1354223688101</updated>
     </task>
     <task id="LOCAL-00011" summary="BackendlessCollectionResponder critical fix: after handling an ErrorMsg, adaptation doesn't break.">
       <created>1354229387065</created>
+      <option name="number" value="00011" />
+      <option name="project" value="LOCAL" />
       <updated>1354229387065</updated>
     </task>
     <task id="LOCAL-00012" summary="Read time extended. GeoService coordinates check fix.">
       <created>1354286229102</created>
+      <option name="number" value="00012" />
+      <option name="project" value="LOCAL" />
       <updated>1354286229102</updated>
     </task>
     <task id="LOCAL-00013" summary="Switched back timeout">
       <created>1354518548136</created>
+      <option name="number" value="00013" />
+      <option name="project" value="LOCAL" />
       <updated>1354518548136</updated>
     </task>
     <task id="LOCAL-00014" summary="BackendlessCollection, PersistenceService and GeoService critical fixes">
       <created>1354543606103</created>
+      <option name="number" value="00014" />
+      <option name="project" value="LOCAL" />
       <updated>1354543606103</updated>
     </task>
     <task id="LOCAL-00015" summary="Minor fixes">
       <created>1354575685103</created>
+      <option name="number" value="00015" />
+      <option name="project" value="LOCAL" />
       <updated>1354575685103</updated>
     </task>
     <task id="LOCAL-00016" summary="Code update">
       <created>1355477380103</created>
+      <option name="number" value="00016" />
+      <option name="project" value="LOCAL" />
       <updated>1355477380103</updated>
     </task>
     <task id="LOCAL-00017" summary="Services moved to Backendless class. Push service refactoring (removed receiver). Cleanup. Device registration refactoring (switched to async only - needed for android sdk &gt; 12 API level).">
       <created>1355861407102</created>
+      <option name="number" value="00017" />
+      <option name="project" value="LOCAL" />
       <updated>1355861407102</updated>
     </task>
     <task id="LOCAL-00018" summary="Refactoring, fixes">
       <created>1356103427103</created>
+      <option name="number" value="00018" />
+      <option name="project" value="LOCAL" />
       <updated>1356103427103</updated>
     </task>
     <task id="LOCAL-00019" summary="Backendless URL fix">
       <created>1356120788101</created>
+      <option name="number" value="00019" />
+      <option name="project" value="LOCAL" />
       <updated>1356120788101</updated>
     </task>
     <task id="LOCAL-00020" summary="Fixes">
       <created>1356130464102</created>
+      <option name="number" value="00020" />
+      <option name="project" value="LOCAL" />
       <updated>1356130464102</updated>
     </task>
     <task id="LOCAL-00021" summary="Bug fixes">
       <created>1356385121124</created>
+      <option name="number" value="00021" />
+      <option name="project" value="LOCAL" />
       <updated>1356385121124</updated>
     </task>
     <task id="LOCAL-00022" summary="Bug fixes">
       <created>1356446759102</created>
+      <option name="number" value="00022" />
+      <option name="project" value="LOCAL" />
       <updated>1356446759102</updated>
     </task>
     <task id="LOCAL-00023" summary="Bug fixes">
       <created>1356453273101</created>
+      <option name="number" value="00023" />
+      <option name="project" value="LOCAL" />
       <updated>1356453273101</updated>
     </task>
     <task id="LOCAL-00024" summary="URL fix">
       <created>1356454426106</created>
+      <option name="number" value="00024" />
+      <option name="project" value="LOCAL" />
       <updated>1356454426106</updated>
     </task>
     <task id="LOCAL-00025" summary="Switched to a better async invoke logic - from AsyncTask to Handler.Callback. Fixed wrong error message for async calls. Fixed error with empty headers.&#10;">
       <created>1356479424102</created>
+      <option name="number" value="00025" />
+      <option name="project" value="LOCAL" />
       <updated>1356479424102</updated>
     </task>
     <task id="LOCAL-00026" summary="Project update">
       <created>1356694742104</created>
+      <option name="number" value="00026" />
+      <option name="project" value="LOCAL" />
       <updated>1356694742104</updated>
     </task>
     <task id="LOCAL-00027" summary="Subscription fix: if server sends an empty result, sdk shouldn't pass it to responder.">
       <created>1356778878112</created>
+      <option name="number" value="00027" />
+      <option name="project" value="LOCAL" />
       <updated>1356778878112</updated>
     </task>
     <task id="LOCAL-00028" summary="Added Backendless.setURL(String URL). &#10;Async invokes moved to threads pool.">
       <created>1356794995103</created>
+      <option name="number" value="00028" />
+      <option name="project" value="LOCAL" />
       <updated>1356794995103</updated>
     </task>
     <task id="LOCAL-00029" summary="Refactoring">
       <created>1357291242105</created>
+      <option name="number" value="00029" />
+      <option name="project" value="LOCAL" />
       <updated>1357291242105</updated>
     </task>
     <task id="LOCAL-00030" summary="Refactoring">
       <created>1357292839102</created>
+      <option name="number" value="00030" />
+      <option name="project" value="LOCAL" />
       <updated>1357292839102</updated>
     </task>
     <task id="LOCAL-00031" summary="Refactoring">
       <created>1357310934102</created>
+      <option name="number" value="00031" />
+      <option name="project" value="LOCAL" />
       <updated>1357310934102</updated>
     </task>
     <task id="LOCAL-00032" summary="Import fix">
       <created>1357311246104</created>
+      <option name="number" value="00032" />
+      <option name="project" value="LOCAL" />
       <updated>1357311246104</updated>
     </task>
     <task id="LOCAL-00033" summary="Push service refactoring">
       <created>1357546509103</created>
+      <option name="number" value="00033" />
+      <option name="project" value="LOCAL" />
       <updated>1357546509103</updated>
     </task>
     <task id="LOCAL-00034" summary="Push service refactoring">
       <created>1357546728102</created>
+      <option name="number" value="00034" />
+      <option name="project" value="LOCAL" />
       <updated>1357546728102</updated>
     </task>
     <task id="LOCAL-00035" summary="Push service refactoring">
       <created>1357546854102</created>
+      <option name="number" value="00035" />
+      <option name="project" value="LOCAL" />
       <updated>1357546854102</updated>
     </task>
     <task id="LOCAL-00036" summary="Added android,jar">
       <created>1357553560102</created>
+      <option name="number" value="00036" />
+      <option name="project" value="LOCAL" />
       <updated>1357553560102</updated>
     </task>
     <task id="LOCAL-00037" summary="Removed gcm.jar dependency">
       <created>1357555818101</created>
+      <option name="number" value="00037" />
+      <option name="project" value="LOCAL" />
       <updated>1357555818101</updated>
     </task>
     <task id="LOCAL-00038" summary="Bug fixes">
       <created>1357596641103</created>
+      <option name="number" value="00038" />
+      <option name="project" value="LOCAL" />
       <updated>1357596641103</updated>
     </task>
     <task id="LOCAL-00039" summary="Refactoring">
       <created>1357826928104</created>
+      <option name="number" value="00039" />
+      <option name="project" value="LOCAL" />
       <updated>1357826928104</updated>
     </task>
     <task id="LOCAL-00040" summary="Exceptions logic refactoring. Minor refactoring.">
       <created>1357909778103</created>
+      <option name="number" value="00040" />
+      <option name="project" value="LOCAL" />
       <updated>1357909778103</updated>
     </task>
     <task id="LOCAL-00041" summary="Added regexp for parsing fileservice exceptions from server">
       <created>1357928154101</created>
+      <option name="number" value="00041" />
+      <option name="project" value="LOCAL" />
       <updated>1357928154101</updated>
     </task>
     <task id="LOCAL-00042" summary="Code cosmetics">
       <created>1358155967113</created>
+      <option name="number" value="00042" />
+      <option name="project" value="LOCAL" />
       <updated>1358155967113</updated>
     </task>
     <task id="LOCAL-00043" summary="Messaging fix">
       <created>1358256242105</created>
+      <option name="number" value="00043" />
+      <option name="project" value="LOCAL" />
       <updated>1358256242106</updated>
     </task>
     <task id="LOCAL-00044" summary="set and get for url">
       <created>1358259750103</created>
+      <option name="number" value="00044" />
+      <option name="project" value="LOCAL" />
       <updated>1358259750103</updated>
     </task>
     <task id="LOCAL-00045" summary="Fixed unregister bug. BackendlessFault encapsulated inside BackendlessException.">
       <created>1360915599166</created>
+      <option name="number" value="00045" />
+      <option name="project" value="LOCAL" />
       <updated>1360915599166</updated>
     </task>
     <task id="LOCAL-00046" summary="FileService refactoring - async invocation changed to ThreadPool + Handler instead of AsyncTask">
       <created>1361817543135</created>
+      <option name="number" value="00046" />
+      <option name="project" value="LOCAL" />
       <updated>1361817543135</updated>
     </task>
     <task id="LOCAL-00047" summary="Video implementation start">
       <created>1401196019816</created>
+      <option name="number" value="00047" />
+      <option name="project" value="LOCAL" />
       <updated>1401196019816</updated>
     </task>
     <task id="LOCAL-00048" summary="Add main level implementation">
       <created>1403002917699</created>
+      <option name="number" value="00048" />
+      <option name="project" value="LOCAL" />
       <updated>1403002917699</updated>
     </task>
     <task id="LOCAL-00049" summary="add methods for media part 1">
       <created>1403104084103</created>
+      <option name="number" value="00049" />
+      <option name="project" value="LOCAL" />
       <updated>1403104084103</updated>
     </task>
     <task id="LOCAL-00050" summary="refactoring">
       <created>1403770298805</created>
+      <option name="number" value="00050" />
+      <option name="project" value="LOCAL" />
       <updated>1403770298805</updated>
     </task>
     <task id="LOCAL-00051" summary="BKNDLSS-7252 - fixed">
       <created>1415360644966</created>
+      <option name="number" value="00051" />
+      <option name="project" value="LOCAL" />
       <updated>1415360644966</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="added getErrorMessage method in MessageStatus class">
+      <created>1432892397644</created>
+      <option name="number" value="00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1432892397644</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="966000" />
+    <option name="totallyTimeSpent" value="44101000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1393,31 +1813,32 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="28" width="1301" height="772" extended-state="6" />
-    <editor active="false" />
+    <frame x="0" y="23" width="1440" height="838" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.861244" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2932271" sideWeight="0.6528" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47453085" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29399142" sideWeight="0.6528" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297568" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30202776" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24829157" sideWeight="0.39473686" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19525066" sideWeight="0.086330935" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2096" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24829157" sideWeight="0.39473686" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20911528" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34615386" sideWeight="0.9086331" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24143426" sideWeight="0.4352" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32959402" sideWeight="0.6753529" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23247497" sideWeight="0.60589814" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32904148" sideWeight="0.6753529" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="JProfiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20333599" sideWeight="0.6528" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23247497" sideWeight="0.3941019" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29348987" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="IntelliGuard" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.861244" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Regex Tester" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Cloverage" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1426,10 +1847,9 @@
       <window_info id="Test Runs" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977018" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Maven-2 Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4784" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="FindBugs-IDEA" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37467018" sideWeight="0.4971223" order="19" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3472" sideWeight="0.9086331" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Analysis" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="21" side_tool="false" content_ui="tabs" />
+      <window_info id="JProfiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="ASM" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294964" sideWeight="0.80474937" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.70238096" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
@@ -1444,6 +1864,7 @@
       <window_info id="Code Graph" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3303505" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Android Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.327212" sideWeight="0.5" order="20" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="JSON Formatter" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="22" side_tool="false" content_ui="tabs" />
       <window_info id="Graphical Navigator" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39868203" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1489,10 +1910,6 @@
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <option name="myTodoPanelSettings">
-      <TodoPanelSettings />
-    </option>
-    <MESSAGE value="Fixes" />
     <MESSAGE value="URL fix" />
     <MESSAGE value="Switched to a better async invoke logic - from AsyncTask to Handler.Callback. Fixed wrong error message for async calls. Fixed error with empty headers.&#10;" />
     <MESSAGE value="Project update" />
@@ -1517,7 +1934,8 @@
     <MESSAGE value="add methods for media part 1" />
     <MESSAGE value="refactoring" />
     <MESSAGE value="BKNDLSS-7252 - fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="BKNDLSS-7252 - fixed" />
+    <MESSAGE value="added getErrorMessage method in MessageStatus class" />
+    <option name="LAST_COMMIT_MESSAGE" value="added getErrorMessage method in MessageStatus class" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1565,31 +1983,26 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/backendless/Media.java</url>
-          <line>91</line>
+          <line>94</line>
           <properties />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/backendless/Media.java</url>
-          <line>172</line>
+          <line>174</line>
           <properties />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/backendless/Media.java</url>
-          <line>108</line>
+          <url>file://$PROJECT_DIR$/src/com/backendless/messaging/GenericMessagingHandler.java</url>
+          <line>42</line>
           <properties />
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/backendless/Media.java</url>
-          <line>125</line>
-          <properties />
-          <option name="timeStamp" value="4" />
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="5" />
+      <option name="time" value="14" />
     </breakpoint-manager>
+    <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -1613,176 +2026,435 @@
         <filter targetName="artifact.backendless:jar" isVisible="true" />
         <filter targetName="build.all.artifacts" isVisible="true" />
         <filter targetName="all" isVisible="true" />
+        <filter targetName="compile.module.backendless.docs" isVisible="true" />
+        <filter targetName="compile.module.backendless.src" isVisible="true" />
       </targetFilters>
       <expanded value="true" />
     </buildFile>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/media/StreamType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/HeadersManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="27" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/Backendless.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2652" max-vertical-offset="3723">
+        <state vertical-scroll-proportion="0.0">
           <caret line="156" column="8" selection-start-line="156" selection-start-column="8" selection-end-line="156" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/Media.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="986" max-vertical-offset="3638">
+        <state vertical-scroll-proportion="0.0">
           <caret line="88" column="27" selection-start-line="88" selection-start-column="27" selection-end-line="88" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/media/StreamType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="374" max-vertical-offset="969">
+        <state vertical-scroll-proportion="0.0">
           <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/HeadersManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="2720">
+        <state vertical-scroll-proportion="0.0">
           <caret line="27" column="27" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/Backendless.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2652" max-vertical-offset="3723">
+        <state vertical-scroll-proportion="0.0">
           <caret line="156" column="8" selection-start-line="156" selection-start-column="8" selection-end-line="156" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/Media.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1190" max-vertical-offset="3638">
+        <state vertical-scroll-proportion="0.0">
           <caret line="103" column="26" selection-start-line="103" selection-start-column="26" selection-end-line="103" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/media/StreamType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="374" max-vertical-offset="969">
+        <state vertical-scroll-proportion="0.0">
           <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/HeadersManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="2720">
+        <state vertical-scroll-proportion="0.0">
           <caret line="27" column="27" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/Backendless.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2652" max-vertical-offset="3723">
+        <state vertical-scroll-proportion="0.0">
           <caret line="156" column="8" selection-start-line="156" selection-start-column="8" selection-end-line="156" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/Media.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1190" max-vertical-offset="3638">
+        <state vertical-scroll-proportion="0.0">
           <caret line="103" column="26" selection-start-line="103" selection-start-column="26" selection-end-line="103" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/media/StreamType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="374" max-vertical-offset="969">
+        <state vertical-scroll-proportion="0.0">
           <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/HeadersManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="2720">
+        <state vertical-scroll-proportion="0.0">
           <caret line="27" column="27" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/Backendless.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2652" max-vertical-offset="3723">
-          <caret line="156" column="8" selection-start-line="156" selection-start-column="8" selection-end-line="156" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/Media.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1717" max-vertical-offset="3689">
+        <state vertical-scroll-proportion="0.0">
           <caret line="120" column="43" selection-start-line="120" selection-start-column="7" selection-end-line="120" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/media/StreamType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="374" max-vertical-offset="969">
+        <state vertical-scroll-proportion="0.0">
           <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/backendless/HeadersManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="2720">
-          <caret line="27" column="27" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/media/StreamQuality.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3633218" vertical-offset="0" max-vertical-offset="0">
+        <state vertical-scroll-proportion="0.3633218">
           <caret line="30" column="42" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/media/StreamProtocolType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25041735" vertical-offset="0" max-vertical-offset="0">
+        <state vertical-scroll-proportion="0.25041735">
           <caret line="26" column="29" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/HeadersManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09605123">
+          <caret line="27" column="27" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/media/StreamType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="374" max-vertical-offset="969">
+        <state vertical-scroll-proportion="0.095846646">
           <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/backendless/Media.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5483871" vertical-offset="986" max-vertical-offset="3638">
-          <caret line="96" column="60" selection-start-line="96" selection-start-column="3" selection-end-line="96" selection-end-column="3" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="96" column="3" selection-start-line="96" selection-start-column="3" selection-end-line="96" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/Backendless.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.5696378">
+          <caret line="156" column="8" selection-start-line="156" selection-start-column="8" selection-end-line="156" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/androidsdk.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="199" column="58" selection-start-line="199" selection-start-column="58" selection-end-line="199" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/messaging/BodyParts.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/messaging/PublishMessageInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/messaging/PublishStatusEnum.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="12" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/messaging/PushBroadcastMask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/messaging/PushPolicyEnum.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="12" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/BackendlessUser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.6093917">
+          <caret line="198" column="3" selection-start-line="198" selection-start-column="3" selection-end-line="198" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/Geo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21758242">
+          <caret line="123" column="11" selection-start-line="123" selection-start-column="11" selection-end-line="123" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/samples/EndlessMatchMaker/src/com/backendless/examples/endless/matchmaker/controllers/SendMessageActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="65" column="4" selection-start-line="65" selection-start-column="4" selection-end-line="65" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/DeviceRegistration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1527495">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/messaging/MessageStatus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.49592668">
+          <caret line="82" column="26" selection-start-line="82" selection-start-column="26" selection-end-line="82" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/messaging/SubscriptionOptions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#2642#0" expanded="false" />
+            <element signature="e#1321#1322#0" expanded="false" />
+            <element signature="e#1372#1373#0" expanded="false" />
+            <element signature="e#1429#1430#0" expanded="false" />
+            <element signature="e#1471#1472#0" expanded="false" />
+            <element signature="e#1849#1850#0" expanded="false" />
+            <element signature="e#1878#1879#0" expanded="false" />
+            <element signature="e#1936#1937#0" expanded="false" />
+            <element signature="e#1978#1979#0" expanded="false" />
+            <element signature="e#2013#2014#0" expanded="false" />
+            <element signature="e#2038#2039#0" expanded="false" />
+            <element signature="e#2088#2089#0" expanded="false" />
+            <element signature="e#2122#2123#0" expanded="false" />
+            <element signature="e#2157#2158#0" expanded="false" />
+            <element signature="e#2182#2183#0" expanded="false" />
+            <element signature="e#2232#2233#0" expanded="false" />
+            <element signature="e#2266#2267#0" expanded="false" />
+            <element signature="e#2323#2324#0" expanded="false" />
+            <element signature="e#2358#2359#0" expanded="false" />
+            <element signature="e#2529#2530#0" expanded="false" />
+            <element signature="e#2554#2555#0" expanded="false" />
+            <element signature="e#2604#2605#0" expanded="false" />
+            <element signature="e#2638#2639#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/messaging/GenericMessagingHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18703242">
+          <caret line="32" column="9" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/messaging/IMessageHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.39276809">
+          <caret line="21" column="17" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-macosx/sources/android-22/android/content/Intent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5058" column="18" selection-start-line="5058" selection-start-column="18" selection-end-line="5058" selection-end-column="18" />
+          <folding>
+            <element signature="e#230869#230870#0" expanded="true" />
+            <element signature="e#230940#230941#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-sdk-macosx/sources/android-22/android/content/BroadcastReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.885794">
+          <caret line="208" column="22" selection-start-line="208" selection-start-column="22" selection-end-line="208" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/push/GCMRegistrar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6239554">
+          <caret line="272" column="6" selection-start-line="272" selection-start-column="6" selection-end-line="272" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/messaging/PublishOptions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.88022286">
+          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/messaging/AndroidHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31337047">
+          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="46" selection-end-column="80" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/push/RegistrationInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37604457">
+          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding>
+            <element signature="e#1416#1417#0" expanded="true" />
+            <element signature="e#1447#1448#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/utils/CompressUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="79" column="40" selection-start-line="79" selection-start-column="23" selection-end-line="79" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/Messaging.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="680" column="92" selection-start-line="680" selection-start-column="86" selection-end-line="680" selection-end-column="92" />
+          <folding>
+            <element signature="method#registerDevice#4;class#Messaging#0" expanded="false" />
+            <element signature="method#unregisterDevice#1;class#Messaging#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/persistence/BackendlessSerializer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="225" column="25" selection-start-line="225" selection-start-column="25" selection-end-line="225" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#7389#7390#0" expanded="true" />
+            <element signature="e#7462#7463#0" expanded="true" />
+            <element signature="e#7516#7517#0" expanded="true" />
+            <element signature="e#7560#7561#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/push/BackendlessBroadcastReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="133" column="3" selection-start-line="133" selection-start-column="3" selection-end-line="133" selection-end-column="3" />
+          <folding>
+            <element signature="e#2808#2809#0" expanded="true" />
+            <element signature="e#2875#2876#0" expanded="true" />
+            <element signature="e#2935#2936#0" expanded="true" />
+            <element signature="e#3002#3003#0" expanded="true" />
+            <element signature="e#3380#3381#0" expanded="true" />
+            <element signature="e#3414#3415#0" expanded="true" />
+            <element signature="e#4502#4503#0" expanded="true" />
+            <element signature="e#4523#4524#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/Subscription.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="137" column="14" selection-start-line="137" selection-start-column="14" selection-end-line="137" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/messaging/Message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/push/BackendlessPushBroadcastReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="37" column="41" selection-start-line="37" selection-start-column="41" selection-end-line="37" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/backendless/messaging/DeliveryMethodEnum.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.10445683">
+          <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1793,9 +2465,9 @@
         <settings>
           <artifact-editor>
             <show-content>
-              <type id="library" />
               <type id="jpa-descriptors" />
               <type id="artifact" />
+              <type id="library" />
               <type id="javaee-facet-resources" />
             </show-content>
           </artifact-editor>
@@ -1848,7 +2520,7 @@
       </state>
       <state key="JdkListConfigurable.UI">
         <settings>
-          <last-edited>1.6</last-edited>
+          <last-edited>1.7</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1865,6 +2537,7 @@
             <option name="proportions">
               <list>
                 <option value="0.3713163" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
@@ -1913,4 +2586,3 @@
     </states>
   </component>
 </project>
-
