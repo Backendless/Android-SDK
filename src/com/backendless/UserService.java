@@ -31,11 +31,7 @@ import com.backendless.property.AbstractProperty;
 import com.backendless.property.UserProperty;
 import weborb.types.Types;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class UserService
 {
@@ -529,10 +525,7 @@ public final class UserService
     if( id == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
 
-    BackendlessUser result = new BackendlessUser();
-    result.putProperties( (HashMap<String, Object>) Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), id, new ArrayList() } ) );
-
-    return result;
+    return Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), id, new ArrayList() } );
   }
 
   public void findById( final String id, final AsyncCallback<BackendlessUser> responder )
@@ -542,16 +535,13 @@ public final class UserService
       if( id == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
 
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), id, new ArrayList() }, new AsyncCallback<HashMap<String, Object>>()
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), id, new ArrayList() }, new AsyncCallback<BackendlessUser>()
       {
         @Override
-        public void handleResponse( HashMap<String, Object> response )
+        public void handleResponse( BackendlessUser response )
         {
-          BackendlessUser result = new BackendlessUser();
-          result.putProperties( response );
-
           if( responder != null )
-            responder.handleResponse( result );
+            responder.handleResponse( response );
         }
 
         @Override

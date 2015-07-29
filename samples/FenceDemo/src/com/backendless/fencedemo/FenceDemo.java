@@ -38,6 +38,7 @@ import java.util.Iterator;
 public class FenceDemo extends Activity
 {
   private EditText fenceNameField;
+  private GeoPoint geoPoint;
 
   @Override
   public void onCreate( Bundle savedInstanceState )
@@ -45,11 +46,22 @@ public class FenceDemo extends Activity
     super.onCreate( savedInstanceState );
     setContentView( R.layout.fence_demo_activity );
 
-    Backendless.setUrl( Defaults.SERVER_URL );
     Backendless.initApp( getBaseContext(), Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION );
     startService( new Intent( this, AndroidService.class ) );
 
+    initGeoPoint();
     initUI();
+  }
+
+  private void initGeoPoint()
+  {
+    // to create a geopoint
+    geoPoint = new GeoPoint(  );
+
+    //to add metadata for the created geopoint (optionally)
+    geoPoint.addMetadata( "number", 7 );
+    geoPoint.addMetadata( "string", "backendless" );
+    geoPoint.addMetadata( "__deviceId", Backendless.Messaging.DEVICE_ID );
   }
 
   private void initUI()
@@ -121,7 +133,6 @@ public class FenceDemo extends Activity
     {
       if( useCustomCallback )
       {
-        // start monitoring all geofences with custom callback
         Backendless.Geo.startGeofenceMonitoring( customCallback, new AsyncCallback<Void>()
         {
           @Override
@@ -139,8 +150,7 @@ public class FenceDemo extends Activity
       }
       else
       {
-        // start monitoring all geofences with server callback
-        Backendless.Geo.startGeofenceMonitoring( new GeoPoint( 10.1, 10.1 ), new AsyncCallback<Void>()
+        Backendless.Geo.startGeofenceMonitoring( geoPoint, new AsyncCallback<Void>()
         {
           @Override
           public void handleResponse( Void aVoid )
@@ -160,7 +170,6 @@ public class FenceDemo extends Activity
     {
       if( useCustomCallback )
       {
-        // start monitoring geofence with name @fenceName with custom callback
         Backendless.Geo.startGeofenceMonitoring( fenceName, customCallback, new AsyncCallback<Void>()
         {
           @Override
@@ -178,8 +187,7 @@ public class FenceDemo extends Activity
       }
       else
       {
-        // start monitoring geofence with name @fenceName with server callback
-        Backendless.Geo.startGeofenceMonitoring( fenceName, new GeoPoint(), new AsyncCallback<Void>()
+        Backendless.Geo.startGeofenceMonitoring( fenceName, geoPoint, new AsyncCallback<Void>()
         {
           @Override
           public void handleResponse( Void aVoid )
@@ -205,7 +213,6 @@ public class FenceDemo extends Activity
     {
       try
       {
-        // stop monitoring all geofences
         Backendless.Geo.stopGeofenceMonitoring();
         Toast.makeText( FenceDemo.this, "Success", Toast.LENGTH_SHORT ).show();
       }
@@ -218,7 +225,6 @@ public class FenceDemo extends Activity
     {
       try
       {
-        // stop monitoring geofence with name @fenceName
         Backendless.Geo.stopGeofenceMonitoring( fenceName );
         Toast.makeText( FenceDemo.this, "Success. Fence name: " + fenceName, Toast.LENGTH_SHORT ).show();
       }
@@ -240,7 +246,6 @@ public class FenceDemo extends Activity
     }
     else
     {
-      // run On Enter Action from geofence name @fenceName
       Backendless.Geo.runOnEnterAction( fenceName, new AsyncCallback<Integer>()
       {
         @Override
@@ -268,7 +273,6 @@ public class FenceDemo extends Activity
     }
     else
     {
-      // run On Stay Action from geofence name @fenceName
       Backendless.Geo.runOnStayAction( fenceName, new AsyncCallback<Integer>()
       {
         @Override
@@ -297,7 +301,6 @@ public class FenceDemo extends Activity
     }
     else
     {
-      // run On Exit Action from geofence name @fenceName
       Backendless.Geo.runOnExitAction( fenceName, new AsyncCallback<Integer>()
       {
         @Override
@@ -326,7 +329,6 @@ public class FenceDemo extends Activity
     }
     else
     {
-      // get all geopoints from geofence name @fenceName
       Backendless.Geo.getPoints( fenceName, new AsyncCallback<BackendlessCollection<GeoPoint>>()
       {
         @Override
@@ -342,8 +344,7 @@ public class FenceDemo extends Activity
             while( iterator.hasNext() )
             {
               GeoPoint point = iterator.next();
-              
-              // run On Enter Action for geopoint @point with geofence name @fenceName action
+              // run action for each
               Backendless.Geo.runOnEnterAction( fenceName, point, new AsyncCallback<Void>()
               {
                 @Override
@@ -359,7 +360,6 @@ public class FenceDemo extends Activity
                 }
               } );
 
-              // run On Exit Action for geopoint @point with geofence name @fenceName action
               Backendless.Geo.runOnExitAction( fenceName, point, new AsyncCallback<Void>()
               {
                 @Override
@@ -375,7 +375,6 @@ public class FenceDemo extends Activity
                 }
               } );
 
-              // run On Stay Action for geopoint @point with geofence name @fenceName action
               Backendless.Geo.runOnStayAction( fenceName, point, new AsyncCallback<Void>()
               {
                 @Override

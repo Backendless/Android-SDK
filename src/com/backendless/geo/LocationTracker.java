@@ -54,6 +54,8 @@ public class LocationTracker extends Service implements LocationListener
   private static final String URL = "url";
   private static final String LOCATION = "location";
   private static final String LOCATION_LISTENERS = "locationListeners";
+  private static final String LOCATION_LATITUDE_TAG = "locationLatitude";
+  private static final String LOCATION_LONGITUDE_TAG = "locationLongitude";
 
   private int minTime = 60 * 1000; // 1 minute
   private int minDistance = 10; // meters
@@ -319,16 +321,27 @@ public class LocationTracker extends Service implements LocationListener
   private Location getSavedLocation()
   {
     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences( getApplicationContext() );
-    String locationStr = sharedPref.getString( LOCATION, null );
+//    String locationStr = sharedPref.getString( LOCATION, null );
+    String locationLatitudeString = sharedPref.getString( LOCATION_LATITUDE_TAG, null );
+    String locationLongitudeString = sharedPref.getString( LOCATION_LONGITUDE_TAG, null );
+    Location savedLocation = new Location( provider );
 
-    if( locationStr == null )
+//    if( locationStr == null )
+//    {
+//      return null;
+//    }
+
+    if ( locationLatitudeString == null || locationLongitudeString == null )
     {
       return null;
     }
 
     try
     {
-      return (Location) Serializer.fromBytes( Base64.decode( locationStr, Base64.DEFAULT ), ISerializer.AMF3, false );
+      savedLocation.setLatitude( (Double) Serializer.fromBytes( Base64.decode( locationLatitudeString, Base64.DEFAULT ), ISerializer.AMF3, false ) );
+      savedLocation.setLongitude( (Double) Serializer.fromBytes( Base64.decode( locationLongitudeString, Base64.DEFAULT ), ISerializer.AMF3, false ) );
+      return savedLocation;
+//      return (Location) Serializer.fromBytes( Base64.decode( locationStr, Base64.DEFAULT ), ISerializer.AMF3, false );
     }
     catch( IOException e )
     {
@@ -343,7 +356,9 @@ public class LocationTracker extends Service implements LocationListener
     SharedPreferences.Editor editor = sharedPref.edit();
     try
     {
-      editor.putString( LOCATION, Base64.encodeToString( Serializer.toBytes( location, ISerializer.AMF3 ), Base64.DEFAULT ) );
+      editor.putString( LOCATION_LATITUDE_TAG, Base64.encodeToString( Serializer.toBytes( location.getLatitude(), ISerializer.AMF3 ), Base64.DEFAULT ) );
+      editor.putString( LOCATION_LONGITUDE_TAG, Base64.encodeToString( Serializer.toBytes( location.getLongitude(), ISerializer.AMF3 ), Base64.DEFAULT ) );
+//      editor.putString( LOCATION, Base64.encodeToString( Serializer.toBytes(location, ISerializer.AMF3), Base64.DEFAULT ) );
     }
     catch( Exception e )
     {

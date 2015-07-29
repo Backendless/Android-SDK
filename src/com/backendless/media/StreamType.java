@@ -20,7 +20,7 @@ package com.backendless.media;
 
 public enum StreamType
 {
-  Available( 0 ), Live( 1 ), Recording( 2 ), LiveRecording( 3 ), NotAvailable( 4 );
+  AVAILABLE( 0 ), LIVE( 1 ), RECORDING( 2 ), LIVE_RECORDING( 3 ), NOT_AVAILABLE( 4 );
   private int value;
 
   private StreamType( int value )
@@ -37,16 +37,16 @@ public enum StreamType
   {
 
     if( "live".equals( streamType ) )
-      return Live;
+      return LIVE;
 
     if( "live-record".equals( streamType ) )
-      return LiveRecording;
+      return LIVE_RECORDING;
 
     if( "play-live".equals( streamType ) )
-      return Recording;
+      return RECORDING;
 
     if( "play-record".equals( streamType ) )
-      return Available;
+      return AVAILABLE;
     throw new UnsupportedOperationException();
   }
 }

@@ -16,29 +16,51 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.media;
+package com.backendless.servercode;
 
-public enum StreamQuality
+import com.backendless.commons.DeviceType;
+
+import java.util.List;
+
+/**
+ * Created by oleg on 22.07.15.
+ */
+public class InvocationContext
 {
-  LOW_170( "176x144, 30 fps, 170 Kbps" ), LOW_200( "176x144, 30 fps, 200 Kbps" ), LOW_250( "176x144, 30 fps, 250 Kbps" ), 
-  MEDIUM_250( "320x240, 30 fps, 250 Kbps" ), MEDIUM_300( "352x288, 30 fps, 300 Kbps" ), MEDIUM_400( "352x288, 30 fps, 400 Kbps" ), 
-  HIGH_600( "640x480, 30 fps, 600 Kbps" );
+  static private String appId;
+  static private String userId;
+  static private List<String> userRoles;
+  static private DeviceType deviceType;
 
-  /*
-  * LOW - 176x144, 170 Kbps
-  * MEDIUM - 352x288, 300 Kbps
-  * HIGH - 640x480, 600 Kbps
-  */
-  private String value = "";
-
-  private StreamQuality( String value )
+  private InvocationContext()
   {
-    this.value = value;
   }
 
-  public String getValue()
+  private static void setContext( String appId, String userId, List<String> userRoles, String deviceType )
   {
-    return value;
+    InvocationContext.appId = appId;
+    InvocationContext.userId = userId;
+    InvocationContext.userRoles = userRoles;
+    InvocationContext.deviceType = DeviceType.valueOf( deviceType );
   }
 
+  public static String getAppId()
+  {
+    return appId;
+  }
+
+  public static String getUserId()
+  {
+    return userId;
+  }
+
+  public static List<String> getUserRoles()
+  {
+    return userRoles;
+  }
+
+  public static DeviceType getDeviceType()
+  {
+    return deviceType;
+  }
 }

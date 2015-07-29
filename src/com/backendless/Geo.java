@@ -709,6 +709,15 @@ public final class Geo
   private void startGeofenceMonitoring( final ICallback callback, String geofenceName,
                                         final AsyncCallback<Void> responder )
   {
+//     if (GeoFenceMonitoring.getInstance().containsGeoFence( geofenceName ))
+//       throw new BackendlessException( String.format( ExceptionMessage.GEOFENCE_ALREADY_MONITORING, geofenceName ) );
+
+    if ( GeoFenceMonitoring.getInstance().containsGeoFence( geofenceName ) && responder != null )
+    {
+      responder.handleFault( new BackendlessFault( String.format( ExceptionMessage.GEOFENCE_ALREADY_MONITORING, geofenceName ) ) );
+      return;
+    }
+
     Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFence", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geofenceName }, new AsyncCallback<GeoFence>()
     {
       @Override
