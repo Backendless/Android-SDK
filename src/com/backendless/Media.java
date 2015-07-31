@@ -345,7 +345,6 @@ public final class Media
     {
       rtspClient.setServerAddress( WOWZA_SERVER_IP, WOWZA_SERVER_PORT );
       rtspClient.setStreamPath( "/" + WOWZA_SERVER_LIVE_APP_NAME + "/" + streamName + params );
-      rtspClient.setTransportMode( RtspClient.TRANSPORT_TCP );
       rtspClient.startStream();
     }
     else
