@@ -44,7 +44,7 @@ import com.backendless.media.video.VideoQuality;
 public final class Media
 {
 
-  private final static String WOWZA_SERVER_IP = "wowza.backendless.com";
+  private final static String WOWZA_SERVER_IP = "media.backendless.com";
   private final static String WOWZA_SERVER_LIVE_APP_NAME = "mediaAppLive";
   private final static String WOWZA_SERVER_VOD_APP_NAME = "mediaAppVod";
   private final static Integer WOWZA_SERVER_PORT = 1935;
@@ -115,7 +115,7 @@ public final class Media
     return session.getCamera();
   }
 
-  public void stopClintStream()
+  public void stopClientStream()
   {
     checkRtspClientIsNull();
     rtspClient.stopStream();
@@ -345,6 +345,7 @@ public final class Media
     {
       rtspClient.setServerAddress( WOWZA_SERVER_IP, WOWZA_SERVER_PORT );
       rtspClient.setStreamPath( "/" + WOWZA_SERVER_LIVE_APP_NAME + "/" + streamName + params );
+      rtspClient.setTransportMode( RtspClient.TRANSPORT_TCP );
       rtspClient.startStream();
     }
     else
