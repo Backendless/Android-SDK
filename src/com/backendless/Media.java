@@ -18,17 +18,11 @@
 
 package com.backendless;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.view.SurfaceHolder;
-
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.media.DisplayOrientation;
 import com.backendless.media.Session;
@@ -40,6 +34,11 @@ import com.backendless.media.audio.AudioQuality;
 import com.backendless.media.gl.SurfaceView;
 import com.backendless.media.rtsp.RtspClient;
 import com.backendless.media.video.VideoQuality;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class Media
 {

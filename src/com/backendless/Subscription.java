@@ -19,6 +19,8 @@
 package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessException;
+import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.messaging.AndroidHandler;
 import com.backendless.messaging.GenericMessagingHandler;
@@ -42,6 +44,8 @@ public class Subscription
   private IMessageHandler handler;
   private ScheduledFuture<?> currentTask;
   private ScheduledExecutorService executor;
+  //private DeliveryMethodEnum subscriptionMethod = DeliveryMethodEnum.PULL;
+  private AsyncCallback<List<Message>> subscriptionResponder;
 
   public Subscription()
   {
@@ -99,8 +103,14 @@ public class Subscription
   protected synchronized void onSubscribe( final AsyncCallback<List<Message>> subscriptionResponder )
   {
     executor = Executors.newSingleThreadScheduledExecutor( ThreadFactoryService.getThreadFactory() );
-    handler = Backendless.isAndroid() ? new AndroidHandler( subscriptionResponder, this ) : new GenericMessagingHandler( subscriptionResponder, this );
-    executor.scheduleWithFixedDelay( handler.getSubscriptionThread(), 0, pollingInterval, TimeUnit.MILLISECONDS );
+    handler = Backendless.isAndroid() ? new AndroidHandler( subscriptionResponder, this) : new GenericMessagingHandler( subscriptionResponder, this );
+
+    this.subscriptionResponder = subscriptionResponder;
+
+    if ( !Backendless.isAndroid() )
+      executor.scheduleWithFixedDelay( handler.getSubscriptionThread(), 0, pollingInterval, TimeUnit.MILLISECONDS );
+
+    Backendless.Messaging.setSubscription( channelName, this );
   }
 
   public synchronized void pauseSubscription()
@@ -123,5 +133,13 @@ public class Subscription
       executor = Executors.newSingleThreadScheduledExecutor( ThreadFactoryService.getThreadFactory() );
       executor.scheduleWithFixedDelay( subscriptionThread, 0, pollingInterval, TimeUnit.MILLISECONDS );
     }
+  }
+
+  public void handlerMessage(List<Message> messages)
+  {
+    if( messages instanceof BackendlessException )
+      subscriptionResponder.handleFault( new BackendlessFault( (BackendlessException) messages ) );
+    else
+      subscriptionResponder.handleResponse( messages );
   }
 }

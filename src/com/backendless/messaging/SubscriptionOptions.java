@@ -25,6 +25,8 @@ public class SubscriptionOptions
   private String subscriberId;
   private String subtopic;
   private String selector;
+  private DeliveryMethodEnum deliveryMethod;
+  private String deviceId;
 
   public SubscriptionOptions()
   {
@@ -77,5 +79,25 @@ public class SubscriptionOptions
   public void setSelector( String selector )
   {
     this.selector = selector;
+  }
+
+  public DeliveryMethodEnum getDeliveryMethod()
+  {
+    return deliveryMethod;
+  }
+
+  public void setDeliveryMethod( DeliveryMethodEnum deliveryMethod )
+  {
+    this.deliveryMethod = deliveryMethod;
+  }
+
+  public String getDeviceId()
+  {
+    return deviceId;
+  }
+
+  public void setDeviceId( String deviceId )
+  {
+    this.deviceId = deviceId;
   }
 }
