@@ -24,6 +24,7 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.files.BackendlessFile;
+import com.backendless.files.FileInfo;
 import com.backendless.files.router.FileOutputStreamRouter;
 import com.backendless.files.router.IOutputStreamRouter;
 import com.backendless.files.security.FileRolePermission;
@@ -57,6 +58,8 @@ public final class Files
   {
     Types.addClientClassMapping( "com.backendless.services.file.permissions.FileRolePermission", FileRolePermission.class );
     Types.addClientClassMapping( "com.backendless.services.file.permissions.FileUserPermission", FileUserPermission.class );
+    Types.addClientClassMapping( "com.backendless.management.files.FileInfo", FileInfo.class );
+    Types.addClientClassMapping( "com.backendless.management.files.ArrayFileInfoWrapper", BackendlessCollection.class );
   }
 
   static Files getInstance()
@@ -295,6 +298,46 @@ public final class Files
   public void saveFile( String filePathName, byte[] fileContent, boolean overwrite, AsyncCallback<String> responder )
   {
     Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), filePathName, fileContent, overwrite }, responder );
+  }
+
+  public BackendlessCollection<FileInfo> listing( String path, String pattern, boolean recursive)
+  {
+    return listing( path, pattern, recursive, BackendlessSimpleQuery.DEFAULT_PAGE_SIZE, BackendlessSimpleQuery.DEFAULT_OFFSET );
+  }
+
+  public BackendlessCollection<FileInfo> listing( String path, String pattern, boolean recursive, int pagesize, int offset)
+  {
+    BackendlessCollection<FileInfo> collection = Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "listing", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, pattern, recursive, pagesize, offset });
+    collection.setQuery( new BackendlessSimpleQuery(pagesize, offset));
+    return collection;
+  }
+
+  public void listing( String path, String pattern, boolean recursive,
+                       final AsyncCallback<BackendlessCollection<FileInfo>> responder)
+  {
+    listing( path, pattern, recursive, BackendlessSimpleQuery.DEFAULT_PAGE_SIZE, BackendlessSimpleQuery.DEFAULT_OFFSET, responder );
+  }
+
+  public void listing( String path, String pattern, boolean recursive, final int pagesize, final int offset,
+                                                  final AsyncCallback<BackendlessCollection<FileInfo>> responder)
+  {
+            Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "listing", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, pattern, recursive, pagesize, offset }, new AsyncCallback<BackendlessCollection<FileInfo>>()
+            {
+              @Override
+              public void handleResponse( BackendlessCollection<FileInfo> response )
+              {
+                response.setQuery( new BackendlessSimpleQuery(pagesize, offset));
+                if(responder != null)
+                  responder.handleResponse( response );
+              }
+
+              @Override
+              public void handleFault( BackendlessFault fault )
+              {
+                if(responder != null)
+                  responder.handleFault( fault );
+              }
+            } );
   }
 
   private class EmptyUploadCallback implements UploadCallback
