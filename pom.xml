@@ -105,6 +105,14 @@
             <scope>system</scope>
         </dependency>
 
+        <dependency>
+            <groupId>android.support.v4</groupId>
+            <artifactId>client</artifactId>
+            <version>22</version>
+            <systemPath>${pom.basedir}/libs/android.support.v4.jar</systemPath>
+            <scope>system</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
