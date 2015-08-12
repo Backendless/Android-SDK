@@ -139,4 +139,9 @@ public class BackendlessDataQuery implements IBackendlessQuery
 
     return result;
   }
+
+  public static BackendlessDataQuery build()
+  {
+    return new BackendlessDataQuery(  );
+  }
 }

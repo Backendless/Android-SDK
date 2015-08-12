@@ -19,10 +19,12 @@
 package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.async.callback.MapCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.persistence.BackendlessDataQuery;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IDataStore<E>
 {
@@ -101,4 +103,28 @@ public interface IDataStore<E>
   public void loadRelations( E entity, List<String> relations ) throws BackendlessException;
 
   public void loadRelations( E entity, List<String> relations, AsyncCallback<E> responder );
+
+
+  public BackendlessCollection<E> aggregate();
+
+  public BackendlessCollection<E> aggregate( BackendlessDataQuery dataQueryOptions );
+
+  public <T> T aggregate( Class<? extends T> result );
+
+  public <T> T aggregate( BackendlessDataQuery dataQueryOptions, Class<? extends T> result );
+
+  public <T extends Map> BackendlessCollection<T> aggregate( BackendlessDataQuery dataQueryOptions, Class<T> result );
+
+  public void aggregate(AsyncCallback<BackendlessCollection<E>> responder);
+
+  public void aggregate( BackendlessDataQuery dataQueryOptions, AsyncCallback<BackendlessCollection<E>> responder );
+
+  public <T> void aggregate( Class<? extends T> result, AsyncCallback<T> responder );
+
+  public <T> void aggregate( BackendlessDataQuery dataQueryOptions, Class<? extends T> result, AsyncCallback<T> responder );
+
+  public void aggregate( BackendlessDataQuery dataQueryOptions, MapCallback responder );
+
+
+
 }

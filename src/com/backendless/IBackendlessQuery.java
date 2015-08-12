@@ -18,6 +18,8 @@
 
 package com.backendless;
 
+import com.backendless.persistence.BackendlessDataQuery;
+
 public interface IBackendlessQuery
 {
   int getOffset();
@@ -29,4 +31,17 @@ public interface IBackendlessQuery
   void setOffset( int offset );
 
   IBackendlessQuery newInstance();
+
+  BackendlessDataQuery pageSize( int pageSize );
+
+  BackendlessDataQuery offset( int offset );
+
+  BackendlessDataQuery where( String whereClause );
+
+  BackendlessDataQuery having( String havingClause );
+
+  BackendlessDataQuery addAggregationFn( IAggregationFunction function );
+
+  BackendlessDataQuery addGroupBy( String property );
+
 }
