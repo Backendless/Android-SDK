@@ -54,6 +54,7 @@ public class ExceptionMessage
 
   public final static String NULL_FILE = "File cannot be null.";
   public final static String NULL_PATH = "File path cannot be null or empty.";
+  public final static String NULL_NAME = "File name cannot be null or empty.";
   public final static String NULL_BITMAP = "Bitmap cannot be null";
   public final static String NULL_COMPRESS_FORMAT = "CompressFormat cannot be null";
 

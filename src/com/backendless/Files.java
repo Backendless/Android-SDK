@@ -300,6 +300,66 @@ public final class Files
     Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), filePathName, fileContent, overwrite }, responder );
   }
 
+  public void renameFile( String oldPathName, String newName ) throws BackendlessException
+  {
+    if( oldPathName == null || oldPathName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
+    if( newName == null || newName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
+
+    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "renameFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), oldPathName, newName } );
+  }
+
+  public void renameFile( String oldPathName, String newName, AsyncCallback<String> responder ) throws BackendlessException
+  {
+    if( oldPathName == null || oldPathName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
+    if( newName == null || newName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
+
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "renameFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), oldPathName, newName }, responder );
+  }
+
+  public void copyFile( String sourcePathName, String targetPathName ) throws BackendlessException
+  {
+    if( sourcePathName == null || sourcePathName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
+    if( targetPathName == null || targetPathName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
+
+    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "copyFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPathName } );
+  }
+
+  public void copyFile( String sourcePathName, String targetPathName, AsyncCallback<String> responder ) throws BackendlessException
+  {
+    if( sourcePathName == null || sourcePathName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
+    if( targetPathName == null || targetPathName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
+
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "copyFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPathName }, responder );
+  }
+
+  public void moveFile( String sourcePathName, String targetPathName ) throws BackendlessException
+  {
+    if( sourcePathName == null || sourcePathName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
+    if( targetPathName == null || targetPathName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
+
+    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "moveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPathName } );
+  }
+
+  public void moveFile( String sourcePathName, String targetPathName, AsyncCallback<String> responder ) throws BackendlessException
+  {
+    if( sourcePathName == null || sourcePathName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
+    if( targetPathName == null || targetPathName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
+
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "moveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPathName }, responder );
+  }
+
   public BackendlessCollection<FileInfo> listing( String path, String pattern, boolean recursive)
   {
     return listing( path, pattern, recursive, BackendlessSimpleQuery.DEFAULT_PAGE_SIZE, BackendlessSimpleQuery.DEFAULT_OFFSET );
