@@ -114,7 +114,7 @@ public final class Media
   public void setAudioQuality( int sampleRate, int bitRate )
   {
     checkSessionIsNull();
-    session.setAudioQuality( new AudioQuality( bitRate, bitRate ) );
+    session.setAudioQuality( new AudioQuality( sampleRate, bitRate ) );
   }
 
   public void switchCamera()
