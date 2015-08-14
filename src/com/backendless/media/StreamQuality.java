@@ -24,11 +24,6 @@ public enum StreamQuality
   MEDIUM_250( "320x240, 30 fps, 250 Kbps" ), MEDIUM_300( "352x288, 30 fps, 300 Kbps" ), MEDIUM_400( "352x288, 30 fps, 400 Kbps" ), 
   HIGH_600( "640x480, 30 fps, 600 Kbps" );
 
-  /*
-  * LOW - 176x144, 170 Kbps
-  * MEDIUM - 352x288, 300 Kbps
-  * HIGH - 640x480, 600 Kbps
-  */
   private String value = "";
 
   private StreamQuality( String value )
