@@ -58,7 +58,6 @@ public final class Media
   private Session session;
   private MediaPlayer mediaPlayer;
   private StreamProtocolType protocolType;
-  
 
   private static final Media instance = new Media();
 
@@ -73,16 +72,43 @@ public final class Media
     session.toggleFlash();
   }
 
-  public VideoQuality getVideoQuality()
+  public StreamQuality getStreamQuality()
   {
     checkSessionIsNull();
-    return session.getVideoTrack().getVideoQuality();
+    // "176x144, 30 fps, 170 Kbps"
+    VideoQuality videoQuality = session.getVideoTrack().getVideoQuality();
+    int width = videoQuality.resX;
+    int height = videoQuality.resY;
+    int framerate = videoQuality.framerate;
+    int bitrate = videoQuality.bitrate;
+    StreamQuality streamQuality = StreamQuality.valueOf( width + "x" + height + ", " + framerate + "fps, " + bitrate + " Kbps" );
+    return streamQuality;
   }
 
-  public void setVideoQuality( VideoQuality videoQuality )
+  public void setStreamQuality( StreamQuality streamQuality )
   {
     checkSessionIsNull();
+    if( streamQuality == null )
+    {
+      return;
+    }
+    VideoQuality videoQuality = convertVideoQuality( streamQuality );
     session.setVideoQuality( videoQuality );
+  }
+
+  private VideoQuality convertVideoQuality( StreamQuality streamQuality )
+  {
+    Pattern pattern = Pattern.compile( "(\\d+)x(\\d+)\\D+(\\d+)\\D+(\\d+)" );
+    Matcher matcher = pattern.matcher( streamQuality.getValue() );
+
+    matcher.find();
+    int width = Integer.parseInt( matcher.group( 1 ) );
+    int height = Integer.parseInt( matcher.group( 2 ) );
+    int framerate = Integer.parseInt( matcher.group( 3 ) );
+    int bitrate = Integer.parseInt( matcher.group( 4 ) ) * 1000;
+
+    VideoQuality videoQuality = new VideoQuality( width, height, framerate, bitrate );
+    return videoQuality;
   }
 
   public void setAudioQuality( int sampleRate, int bitRate )
@@ -107,12 +133,6 @@ public final class Media
   {
     checkSessionIsNull();
     session.stopPreview();
-  }
-
-  public int getCamera()
-  {
-    checkSessionIsNull();
-    return session.getCamera();
   }
 
   public void stopClientStream()
@@ -181,14 +201,14 @@ public final class Media
     publishStreamOrStop( tube, streamName, StreamType.LIVE );
   }
 
-  public void playLiveOrStop( Context context, String tube,
-      String streamName ) throws IllegalArgumentException, SecurityException, IllegalStateException, IOException
+  public void playLiveOrStop( String tube, String streamName ) throws IllegalArgumentException, SecurityException,
+      IllegalStateException, IOException
   {
     playStreamOrStop( tube, streamName, StreamType.RECORDING );
   }
 
-  public void playRecordOrStop( Context context, String tube,
-      String streamName ) throws IllegalArgumentException, SecurityException, IllegalStateException, IOException
+  public void playRecordOrStop( String tube, String streamName ) throws IllegalArgumentException, SecurityException,
+      IllegalStateException, IOException
   {
     playStreamOrStop( tube, streamName, StreamType.AVAILABLE );
   }
@@ -197,19 +217,25 @@ public final class Media
   {
     checkSessionIsNull();
     checkRtspClientIsNull();
-    streamName = streamName.trim();
     if( mediaPlayer != null )
     {
       mediaPlayer.reset();
     }
     if( streamName == null || streamName.isEmpty() )
     {
-      streamName = "Default";
+      streamName = "default";
     }
-
+    else
+    {
+      streamName = streamName.trim().replace( '.', '_' );
+    }
     if( tube == null || tube.isEmpty() )
     {
-      tube = "Default";
+      tube = "default";
+    }
+    else
+    {
+      tube = tube.trim();
     }
     String operationType = getOperationType( streamType );
     String params = getConnectParams( tube, operationType, streamName );
@@ -245,11 +271,26 @@ public final class Media
     return ( streamType == StreamType.LIVE ) ? "publishLive" : "publishRecorded";
   }
 
-  private void playStreamOrStop( String tube, String fileName, StreamType streamType )
-      throws IllegalArgumentException, SecurityException, IllegalStateException, IOException
+  private void playStreamOrStop( String tube, String streamName, StreamType streamType ) throws IllegalArgumentException,
+      SecurityException, IllegalStateException, IOException
   {
     checkPlayerIsNull();
-    fileName = fileName.trim();
+    if( streamName == null || streamName.isEmpty() )
+    {
+      streamName = "default";
+    }
+    else
+    {
+      streamName = streamName.trim().replace( '.', '_' );
+    }
+    if( tube == null || tube.isEmpty() )
+    {
+      tube = "default";
+    }
+    else
+    {
+      tube = tube.trim();
+    }
     if( mediaPlayer.isPlaying() )
     {
       mediaPlayer.stop();
@@ -271,10 +312,10 @@ public final class Media
       String operationType = ( streamType == StreamType.RECORDING ) ? "playLive" : "playRecorded";
       String wowzaAddress = WOWZA_SERVER_IP + ":" + WOWZA_SERVER_PORT + "/"
           + ( ( streamType == StreamType.RECORDING ) ? WOWZA_SERVER_LIVE_APP_NAME : WOWZA_SERVER_VOD_APP_NAME ) + "/_definst_/";
-      String params = getConnectParams( tube, operationType, fileName );
+      String params = getConnectParams( tube, operationType, streamName );
 
-      String streamName = getStreamName( fileName, protocolType );
-      String url = protocol + wowzaAddress + streamName + params;
+      String streamPath = getStreamName( streamName, protocolType );
+      String url = protocol + wowzaAddress + streamPath + params;
       mediaPlayer.setDataSource( url );
       mediaPlayer.prepare();
       mediaPlayer.start();
@@ -305,8 +346,8 @@ public final class Media
   private Session getSession( Context context, SurfaceView mSurfaceView, int orientation )
   {
     Session mSession = SessionBuilder.getInstance().setContext( context ).setAudioEncoder( SessionBuilder.AUDIO_AAC )
-        .setVideoEncoder( SessionBuilder.VIDEO_H264 ).setSurfaceView( mSurfaceView )
-        .setPreviewOrientation( orientation ).setCallback( (Session.Callback) context ).build();
+        .setVideoEncoder( SessionBuilder.VIDEO_H264 ).setSurfaceView( mSurfaceView ).setPreviewOrientation( orientation )
+        .setCallback( (Session.Callback) context ).build();
 
     return mSession;
   }
@@ -323,19 +364,6 @@ public final class Media
     paramsToSend = "?application-id=" + map.get( "application-id" ) + "&version=" + Backendless.getVersion() + "&identity="
         + map.get( "identity" ) + "&tube=" + tube + "&operationType=" + operationType + "&streamName=" + streamName;
     return paramsToSend;
-  }
-
-  @SuppressWarnings( "unused" )
-  private void selectQuality( Session session, StreamQuality streamQuality )
-  {
-    Pattern pattern = Pattern.compile( "(\\d+)x(\\d+)\\D+(\\d+)\\D+(\\d+)" );
-    Matcher matcher = pattern.matcher( streamQuality.getValue() );
-    matcher.find();
-    int width = Integer.parseInt( matcher.group( 1 ) );
-    int height = Integer.parseInt( matcher.group( 2 ) );
-    int framerate = Integer.parseInt( matcher.group( 3 ) );
-    int bitrate = Integer.parseInt( matcher.group( 4 ) ) * 1000;
-    session.setVideoQuality( new VideoQuality( width, height, framerate, bitrate ) );
   }
 
   // Connects/disconnects to the RTSP server and starts/stops the stream
@@ -375,5 +403,5 @@ public final class Media
   {
     this.protocolType = protocolType;
   }
-  
+
 }
