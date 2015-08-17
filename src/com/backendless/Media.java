@@ -34,7 +34,7 @@ import com.backendless.media.DisplayOrientation;
 import com.backendless.media.Session;
 import com.backendless.media.SessionBuilder;
 import com.backendless.media.StreamProtocolType;
-import com.backendless.media.StreamQuality;
+import com.backendless.media.StreamVideoQuality;
 import com.backendless.media.StreamType;
 import com.backendless.media.audio.AudioQuality;
 import com.backendless.media.gl.SurfaceView;
@@ -44,7 +44,7 @@ import com.backendless.media.video.VideoQuality;
 public final class Media
 {
 
-  private final static String WOWZA_SERVER_IP = "media.backendless.com";
+  private final static String WOWZA_SERVER_IP = ( true ) ? "10.0.1.48" : "media.backendless.com";
   private final static String WOWZA_SERVER_LIVE_APP_NAME = "mediaAppLive";
   private final static String WOWZA_SERVER_VOD_APP_NAME = "mediaAppVod";
   private final static Integer WOWZA_SERVER_PORT = 1935;
@@ -72,7 +72,7 @@ public final class Media
     session.toggleFlash();
   }
 
-  public StreamQuality getStreamQuality()
+  public StreamVideoQuality getStreamQuality()
   {
     checkSessionIsNull();
     // "176x144, 30 fps, 170 Kbps"
@@ -81,11 +81,12 @@ public final class Media
     int height = videoQuality.resY;
     int framerate = videoQuality.framerate;
     int bitrate = videoQuality.bitrate;
-    StreamQuality streamQuality = StreamQuality.valueOf( width + "x" + height + ", " + framerate + "fps, " + bitrate + " Kbps" );
+    StreamVideoQuality streamQuality = StreamVideoQuality.getFromString( width + "x" + height + ", " + framerate + "fps, " + bitrate
+        + " Kbps" );
     return streamQuality;
   }
 
-  public void setStreamQuality( StreamQuality streamQuality )
+  public void setVideoQuality( StreamVideoQuality streamQuality )
   {
     checkSessionIsNull();
     if( streamQuality == null )
@@ -96,7 +97,7 @@ public final class Media
     session.setVideoQuality( videoQuality );
   }
 
-  private VideoQuality convertVideoQuality( StreamQuality streamQuality )
+  private VideoQuality convertVideoQuality( StreamVideoQuality streamQuality )
   {
     Pattern pattern = Pattern.compile( "(\\d+)x(\\d+)\\D+(\\d+)\\D+(\\d+)" );
     Matcher matcher = pattern.matcher( streamQuality.getValue() );
