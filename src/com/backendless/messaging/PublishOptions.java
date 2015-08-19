@@ -49,6 +49,8 @@ public class PublishOptions
   public final static String WP_TILE_BACK_BACKGROUND_IMAGE = "wp-backImage";
   public final static String WP_TILE_BACK_CONTENT = "wp-backContent";
   public final static String WP_RAW_DATA = "wp-raw";
+  public final static String WP_CONTENT_TAG = "wp-content";
+  public final static String WP_BADGE_TAG = "wp-badge";
 
   public PublishOptions()
   {
