@@ -165,12 +165,6 @@ public final class Media
     rtspClient = getRtspClient( context, session );
   }
 
-  public void configureForPublish( Context context, Session.Callback callback, SurfaceView mSurfaceView, DisplayOrientation orientation )
-  {
-    session = getSession( context, callback, mSurfaceView, orientation.getValue() );
-    rtspClient = getRtspClient( context, session );
-  }
-
   /**
    * StreamProtocolType sets to default value - RTSP
    * 
@@ -354,15 +348,6 @@ public final class Media
     Session mSession = SessionBuilder.getInstance().setContext( context ).setAudioEncoder( SessionBuilder.AUDIO_AAC )
         .setVideoEncoder( SessionBuilder.VIDEO_H264 ).setSurfaceView( mSurfaceView ).setPreviewOrientation( orientation )
         .setCallback( (Session.Callback) context ).build();
-
-    return mSession;
-  }
-
-  private Session getSession( Context context, Session.Callback callback, SurfaceView mSurfaceView, int orientation )
-  {
-    Session mSession = SessionBuilder.getInstance().setContext( context ).setAudioEncoder( SessionBuilder.AUDIO_AAC )
-        .setVideoEncoder( SessionBuilder.VIDEO_H264 ).setSurfaceView( mSurfaceView ).setPreviewOrientation( orientation )
-        .setCallback( callback ).build();
 
     return mSession;
   }
