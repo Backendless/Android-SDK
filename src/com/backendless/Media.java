@@ -34,8 +34,8 @@ import com.backendless.media.DisplayOrientation;
 import com.backendless.media.Session;
 import com.backendless.media.SessionBuilder;
 import com.backendless.media.StreamProtocolType;
-import com.backendless.media.StreamVideoQuality;
 import com.backendless.media.StreamType;
+import com.backendless.media.StreamVideoQuality;
 import com.backendless.media.audio.AudioQuality;
 import com.backendless.media.gl.SurfaceView;
 import com.backendless.media.rtsp.RtspClient;
@@ -81,8 +81,7 @@ public final class Media
     int framerate = videoQuality.framerate;
     int bitrate = videoQuality.bitrate;
     StreamVideoQuality streamQuality = StreamVideoQuality.getFromString( width + "x" + height + ", " + framerate + " fps, " + bitrate
-        / 1000
-        + " Kbps" );
+        / 1000 + " Kbps" );
     return streamQuality;
   }
 
@@ -202,14 +201,14 @@ public final class Media
     publishStreamOrStop( tube, streamName, StreamType.LIVE );
   }
 
-  public void playLiveOrStop( String tube, String streamName ) throws IllegalArgumentException, SecurityException,
-      IllegalStateException, IOException
+  public void playLiveOrStop( String tube, String streamName ) throws IllegalArgumentException, SecurityException, IllegalStateException,
+      IOException
   {
     playStreamOrStop( tube, streamName, StreamType.RECORDING );
   }
 
-  public void playRecordOrStop( String tube, String streamName ) throws IllegalArgumentException, SecurityException,
-      IllegalStateException, IOException
+  public void playRecordOrStop( String tube, String streamName ) throws IllegalArgumentException, SecurityException, IllegalStateException,
+      IOException
   {
     playStreamOrStop( tube, streamName, StreamType.AVAILABLE );
   }
@@ -318,7 +317,7 @@ public final class Media
       String streamPath = getStreamName( streamName, protocolType );
       String url = protocol + wowzaAddress + streamPath + params;
       mediaPlayer.setDataSource( url );
-      mediaPlayer.prepare();
+      mediaPlayer.prepareAsync();
       mediaPlayer.start();
     }
 
