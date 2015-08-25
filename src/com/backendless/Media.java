@@ -192,7 +192,7 @@ public final class Media
   /**
    * <p>
    * default video quality to 176x144 20fps 500Kbps<br/>
-   * default audio quality to 8000 sampleRate 32000 bitRate
+   * default audio quality to 16 000 sampleRate 272000 bitRate
    * </p>
    */
   public void configureForPublish( Context context, SurfaceView mSurfaceView, DisplayOrientation orientation )
@@ -227,29 +227,29 @@ public final class Media
     } );
   }
 
-  public void recordVideo( String tube, String streamName )
+  public void recordVideo( String tube, String streamName ) throws BackendlessException
   {
     startRtspStream( tube, streamName, StreamType.LIVE_RECORDING );
   }
 
-  public void broadcastLiveVideo( String tube, String streamName )
+  public void broadcastLiveVideo( String tube, String streamName ) throws BackendlessException
   {
     startRtspStream( tube, streamName, StreamType.LIVE );
   }
 
   public void playLiveVideo( String tube, String streamName ) throws IllegalArgumentException, SecurityException, IllegalStateException,
-      IOException
+      IOException, BackendlessException
   {
     playStream( tube, streamName, StreamType.RECORDING );
   }
 
   public void playOnDemandVideo( String tube, String streamName ) throws IllegalArgumentException, SecurityException,
-      IllegalStateException, IOException
+      IllegalStateException, IOException, BackendlessException
   {
     playStream( tube, streamName, StreamType.AVAILABLE );
   }
 
-  private void startRtspStream( String tube, String streamName, StreamType streamType )
+  private void startRtspStream( String tube, String streamName, StreamType streamType ) throws BackendlessException
   {
     checkSessionIsNull();
     checkRtspClientIsNull();
@@ -287,8 +287,8 @@ public final class Media
     return ( streamType == StreamType.LIVE ) ? "publishLive" : "publishRecorded";
   }
 
-  private void playStream( String tube, String streamName, StreamType streamType ) throws IllegalArgumentException,
-      SecurityException, IllegalStateException, IOException
+  private void playStream( String tube, String streamName, StreamType streamType ) throws IllegalArgumentException, SecurityException,
+      IllegalStateException, IOException, BackendlessException
   {
     checkPlayerIsNull();
     if( mediaPlayer.isPlaying() )
@@ -402,7 +402,7 @@ public final class Media
   }
 
   // Connects/disconnects to the RTSP server and starts/stops the stream
-  private void startStream( RtspClient rtspClient, String streamName, String params )
+  private void startStream( RtspClient rtspClient, String streamName, String params ) throws BackendlessException
   {
     if( rtspClient.isStreaming() )
     {
