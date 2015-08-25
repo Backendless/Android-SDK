@@ -135,7 +135,7 @@ public final class Media
     session.stopPreview();
   }
 
-  public void stopClientStream()
+  private void stopClientStream()
   {
     checkRtspClientIsNull();
     rtspClient.stopStream();
@@ -153,13 +153,13 @@ public final class Media
     rtspClient.release();
   }
 
-  public boolean isRtspClientBussy()
+  public boolean isPublishing()
   {
     checkRtspClientIsNull();
     return rtspClient.isStreaming();
   }
 
-  public boolean isMediaPlayerBussy()
+  public boolean isMediaPlayerBusy()
   {
     checkPlayerIsNull();
     return mediaPlayer.isPlaying();
