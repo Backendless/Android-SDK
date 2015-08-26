@@ -264,16 +264,7 @@ public final class Media
     startStream( rtspClient, streamName, params );
   }
 
-  public void stopBroadcast()
-  {
-    checkRtspClientIsNull();
-    if( rtspClient.isStreaming() )
-    {
-      stopClientStream();
-    }
-  }
-
-  public void stopRecording()
+  public void stopPublishing()
   {
     checkRtspClientIsNull();
     if( rtspClient.isStreaming() )
