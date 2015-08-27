@@ -70,12 +70,12 @@ public abstract class PersistenceExtender<T>
   {
   }
 
-  public void beforeLoadRelations( RunnerContext context, String objectId, String entityName,
+  public void beforeLoadRelations( RunnerContext context, Object objectId, String entityName,
                                    String[] relations ) throws Exception
   {
   }
 
-  public void afterLoadRelations( RunnerContext context, String objectId, String entityName, String[] relations,
+  public void afterLoadRelations( RunnerContext context, Object objectId, String entityName, String[] relations,
                                   ExecutionResult<Map> entity ) throws Exception
   {
   }
