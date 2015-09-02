@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
 @Retention( value = RetentionPolicy.RUNTIME )
 public @interface BackendlessConfig
 {
-  String value();
+  String displayName() default "";
 
   boolean required() default false;
 
