@@ -262,7 +262,6 @@
             <zipfileset file="${basedir}/META-INF/MANIFEST.MF" prefix="META-INF"/>
             <zipfileset src="${basedir}/libs/weborbclient.jar"/>
             <zipfileset src="${basedir}/libs/mediaLib.jar"/>
-            <zipfileset src="${basedir}/libs/android.support.v4.jar"/>
         </jar>
         <copy file="${temp.jar.path.backendless.jar}" tofile="${artifact.temp.output.backendless:jar}/backendless.jar"/>
     </target>
