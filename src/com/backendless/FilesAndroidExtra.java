@@ -18,6 +18,8 @@
 
 package com.backendless;
 
+import android.graphics.Bitmap;
+
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
@@ -37,21 +39,32 @@ public final class FilesAndroidExtra
   {
   }
 
-  public BackendlessFile upload( android.graphics.Bitmap bitmap, android.graphics.Bitmap.CompressFormat compressFormat,
-                                 int quality, String name, String path ) throws Exception
+  public BackendlessFile upload( Bitmap bitmap, Bitmap.CompressFormat compressFormat,
+                     int quality, String name, String path ) throws Exception
   {
-    checkBitmapAndPath( bitmap, compressFormat, path );
-
-    return Backendless.Files.uploadFromStream( new BitmapOutputStreamRouter( bitmap, compressFormat, quality ), name, path );
+    return upload( bitmap, compressFormat, quality, name, path, false );
   }
 
-  public void upload( final android.graphics.Bitmap bitmap, final android.graphics.Bitmap.CompressFormat compressFormat,
-                      final int quality, String name, String path, final AsyncCallback<BackendlessFile> responder )
+  public BackendlessFile upload( Bitmap bitmap, Bitmap.CompressFormat compressFormat,
+                                 int quality, String name, String path, boolean overwrite ) throws Exception
+  {
+    checkBitmapAndPath( bitmap, compressFormat, path );
+    return Backendless.Files.uploadFromStream( new BitmapOutputStreamRouter( bitmap, compressFormat, quality ), name, path, overwrite );
+  }
+
+  public void upload( final Bitmap bitmap, final Bitmap.CompressFormat compressFormat,
+      final int quality, String name, String path, final AsyncCallback<BackendlessFile> responder )
+  {
+    upload( bitmap, compressFormat, quality, name, path, false, responder );
+  }
+
+  public void upload( final Bitmap bitmap, final Bitmap.CompressFormat compressFormat,
+                      final int quality, String name, String path, boolean overwrite, final AsyncCallback<BackendlessFile> responder )
   {
     try
     {
       checkBitmapAndPath( bitmap, compressFormat, path );
-      new UploadBitmapAsyncTask().executeThis( bitmap, compressFormat, quality, name, path, responder );
+      new UploadBitmapAsyncTask().executeThis( bitmap, compressFormat, quality, name, path, overwrite, responder );
     }
     catch( Throwable e )
     {
@@ -60,8 +73,7 @@ public final class FilesAndroidExtra
     }
   }
 
-  private void checkBitmapAndPath( android.graphics.Bitmap bitmap,
-                                   android.graphics.Bitmap.CompressFormat compressFormat, String path )
+  private void checkBitmapAndPath( Bitmap bitmap, Bitmap.CompressFormat compressFormat, String path )
   {
     if( bitmap == null )
       throw new NullPointerException( ExceptionMessage.NULL_BITMAP );

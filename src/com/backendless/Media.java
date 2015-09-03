@@ -44,7 +44,7 @@ import com.backendless.media.video.VideoQuality;
 public final class Media
 {
 
-  private final static String WOWZA_SERVER_IP = "media.backendless.com";
+  private final static String WOWZA_SERVER_IP = ( true ) ? "10.0.1.48" : "media.backendless.com";
   private final static String WOWZA_SERVER_LIVE_APP_NAME = "mediaAppLive";
   private final static String WOWZA_SERVER_VOD_APP_NAME = "mediaAppVod";
   private final static Integer WOWZA_SERVER_PORT = 1935;
