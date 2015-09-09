@@ -26,6 +26,7 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.geo.*;
+import com.backendless.geo.beacon.Presence;
 import com.backendless.geo.geofence.*;
 import weborb.types.Types;
 
@@ -36,6 +37,7 @@ import java.util.Map;
 
 public final class Geo
 {
+  public final static Presence Presence = Backendless.isAndroid() ? new Presence() : null;
   public final static String GEO_MANAGER_SERVER_ALIAS = "com.backendless.services.geo.GeoService";
   private final static String DEFAULT_CATEGORY_NAME = "Default";
 

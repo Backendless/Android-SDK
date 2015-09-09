@@ -41,7 +41,7 @@ public class AndroidService extends Service implements IBackendlessService
   private SharedPreferences sharedPreferences;
 
   //Break encapsulation, but provides recovery after GC cleaning
-  static IBackendlessService recoverService()
+  public static IBackendlessService recoverService()
   {
     if( androidService == null )
       androidService = new StubBackendlessService();

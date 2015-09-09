@@ -113,6 +113,14 @@
             <scope>system</scope>
         </dependency>
 
+        <dependency>
+            <groupId>altbeacon-library</groupId>
+            <artifactId>altbeacon-library</artifactId>
+            <version>1.0</version>
+            <systemPath>${pom.basedir}/libs/altbeacon-library.jar</systemPath>
+            <scope>system</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

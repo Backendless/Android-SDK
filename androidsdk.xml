@@ -122,6 +122,10 @@
     <path id="library.android.support.v4.classpath">
         <pathelement location="${basedir}/libs/android.support.v4.jar"/>
     </path>
+
+    <path id="library.altbeacon.classpath">
+        <pathelement location="${basedir}/libs/altbeacon-library.jar"/>
+    </path>
     <!-- Application Server Libraries -->
 
     <!-- Modules -->
@@ -158,6 +162,7 @@
         <path refid="library.mediaLib.classpath"/>
         <path refid="library.backendless.commons.classpath"/>
         <path refid="library.android.support.v4.classpath"/>
+        <path refid="library.altbeacon.classpath"/>
     </path>
 
     <path id="backendless.module.classpath">
@@ -174,6 +179,7 @@
         <path refid="library.mediaLib.classpath"/>
         <path refid="library.backendless.commons.classpath"/>
         <path refid="library.android.support.v4.classpath"/>
+        <path refid="library.altbeacon.classpath"/>
     </path>
 
 
@@ -262,6 +268,7 @@
             <zipfileset file="${basedir}/META-INF/MANIFEST.MF" prefix="META-INF"/>
             <zipfileset src="${basedir}/libs/weborbclient.jar"/>
             <zipfileset src="${basedir}/libs/mediaLib.jar"/>
+            <zipfileset src="${basedir}/libs/altbeacon-library.jar"/>
         </jar>
         <copy file="${temp.jar.path.backendless.jar}" tofile="${artifact.temp.output.backendless:jar}/backendless.jar"/>
     </target>

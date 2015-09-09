@@ -23,30 +23,24 @@ import com.backendless.Invoker;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.utils.ScheduledExecutor;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by baas on 21.04.15.
  */
-public class LogBuffer
+public class LogBuffer extends ScheduledExecutor
 {
   private static final int NUM_OF_MESSAGES = 100;
   private static final int TIME_FREQUENCY = 60 * 5; // 5 minutes
   private static final String LOGGING_SERVER_ALIAS = "com.backendless.services.logging.LogService";
-  private static final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 
   private int numOfMessages;
-  private int timeFrequency;
 
   private Set<LogMessage> logMessages;
-  private ScheduledFuture<?> scheduledFuture;
 
   public static class SingletonHolder
   {
@@ -62,8 +56,7 @@ public class LogBuffer
   {
     logMessages = Collections.synchronizedSet( new HashSet<LogMessage>() );
     numOfMessages = NUM_OF_MESSAGES;
-    timeFrequency = TIME_FREQUENCY;
-    setupTimer();
+    super.setTimeFrequency( TIME_FREQUENCY );
   }
 
   public void setLogReportingPolicy( int numOfMessages, int timeFrequency )
@@ -72,32 +65,21 @@ public class LogBuffer
       throw new IllegalArgumentException( ExceptionMessage.INVALID_LOG_POLICY );
 
     this.numOfMessages = numOfMessages;
-    this.timeFrequency = timeFrequency;
-    setupTimer();
+    super.setTimeFrequency( timeFrequency );
   }
 
   public void flush()
+  {
+    super.doTask();
+  }
+
+  @Override
+  protected void calculate()
   {
     if( !logMessages.isEmpty() )
     {
       reportBatch( new ArrayList<LogMessage>( logMessages ) );
       logMessages.clear();
-    }
-
-    setupTimer();
-  }
-
-  private void setupTimer()
-  {
-    if( scheduledFuture != null )
-    {
-      scheduledFuture.cancel( true );
-      scheduledFuture = null;
-    }
-
-    if( timeFrequency > 0 )
-    {
-      scheduledTask();
     }
   }
 
@@ -113,20 +95,8 @@ public class LogBuffer
 
     if( numOfMessages > 1 && logMessages.size() >= numOfMessages )
     {
-      flush();
+      super.doTask();
     }
-  }
-
-  private void scheduledTask()
-  {
-    scheduledFuture = scheduledExecutorService.schedule( new Runnable()
-    {
-      @Override
-      public void run()
-      {
-        flush();
-      }
-    }, timeFrequency, TimeUnit.SECONDS );
   }
 
   private String getStackTrace( Throwable t )

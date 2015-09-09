@@ -135,6 +135,8 @@ public class ExceptionMessage
   public final static String GEOFENCES_MONITORING = "Cannot start geofence monitoring for all available geofences. There is another monitoring session in progress on the client-side. Make sure to stop all monitoring sessions before starting it for all available geo fences.";
   public final static String NOT_FOUND_GEOFENCE = "Cannot find geofences.";
   public final static String NOT_ADD_SERVICE_TO_MANIFEST = "Android.manifest does not contain %s service.";
+  public final static String PRESENCE_MONITORING = "Presence monitoring has already been started. Make sure to stop the monitoring first before changing parameters.";
+  public final static String BLUETOOTH_UNAVALIBLE = "Bluetooth unavalible. Please, check if your device has turned on bluetooth.";
 
 
   public final static String NOT_FOUND_PROVIDER = "The provider for tracking location cannot be found. Please check if the permission android.permission.ACCESS_FINE_LOCATION has been added to the application manifest.";
