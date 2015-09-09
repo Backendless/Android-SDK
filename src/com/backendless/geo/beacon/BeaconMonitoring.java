@@ -21,7 +21,6 @@ package com.backendless.geo.beacon;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
-import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.utils.ScheduledExecutor;
 
 import java.util.*;
@@ -51,9 +50,6 @@ public class BeaconMonitoring extends ScheduledExecutor
 
   public BeaconMonitoring( boolean runDiscovery, int timeFrequency, Set<BackendlessBeacon> monitoredBeacons )
   {
-    if( timeFrequency < 0 )
-      throw new IllegalArgumentException( ExceptionMessage.INVALID_LOG_POLICY );
-
     if(monitoredBeacons == null)
       receiveBeaconsInfo();
 
@@ -105,12 +101,12 @@ public class BeaconMonitoring extends ScheduledExecutor
 
   public void sendBeacons( List<BackendlessBeacon> discoveredBeacons )
   {
-    Backendless.CustomService.invoke( BeaconConstancts.SERVICE_NAME, BeaconConstancts.SERVICE_VERSION, "beacons", new Object[] { discoveredBeacons }, (AsyncCallback) null );
+    Backendless.CustomService.invoke( BeaconConstants.SERVICE_NAME, BeaconConstants.SERVICE_VERSION, "beacons", new Object[] { discoveredBeacons }, (AsyncCallback) null );
   }
 
   public void receiveBeaconsInfo()
   {
-    Backendless.CustomService.invoke( BeaconConstancts.SERVICE_NAME, BeaconConstancts.SERVICE_VERSION, "getenabled", new Object[] { }, BeaconsInfo.class, new AsyncCallback<BeaconsInfo>()
+    Backendless.CustomService.invoke( BeaconConstants.SERVICE_NAME, BeaconConstants.SERVICE_VERSION, "getenabled", new Object[] { }, BeaconsInfo.class, new AsyncCallback<BeaconsInfo>()
     {
       @Override
       public void handleResponse( BeaconsInfo response )
@@ -132,6 +128,6 @@ public class BeaconMonitoring extends ScheduledExecutor
 
   public void sendEntered( BackendlessBeacon beacon, double distance )
   {
-    Backendless.CustomService.invoke( BeaconConstancts.SERVICE_NAME, BeaconConstancts.SERVICE_VERSION, "proximity", new Object[] { beacon.getObjectId(), distance }, (AsyncCallback) null );
+    Backendless.CustomService.invoke( BeaconConstants.SERVICE_NAME, BeaconConstants.SERVICE_VERSION, "proximity", new Object[] { beacon.getObjectId(), distance }, (AsyncCallback) null );
   }
 }

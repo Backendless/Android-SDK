@@ -21,7 +21,7 @@ package com.backendless.geo.beacon;
 /**
  * Created by baas on 07.09.15.
  */
-public class BeaconConstancts
+public class BeaconConstants
 {
   public final static String SERVICE_NAME = "beacons";
   public final static String SERVICE_VERSION = "1.0";

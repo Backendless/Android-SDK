@@ -29,12 +29,12 @@ public class Presence
 
     public void startMonitoring( AsyncCallback<Void> responder )
     {
-      startMonitoring( BeaconConstancts.DEFUTL_DISCOVERY, responder );
+      startMonitoring( BeaconConstants.DEFUTL_DISCOVERY, responder );
     }
 
     public void startMonitoring( boolean runDiscovery, AsyncCallback<Void> responder )
     {
-      startMonitoring( runDiscovery, BeaconConstancts.DEFAULT_FREQUENCY, responder );
+      startMonitoring( runDiscovery, BeaconConstants.DEFAULT_FREQUENCY, responder );
     }
 
     public void startMonitoring( boolean runDiscovery, int frequency, AsyncCallback<Void> responder )

@@ -47,21 +47,25 @@ public class BeaconTracker implements BeaconConsumer, RangeNotifier
 
   public void startMonitoring( boolean runDiscovery, int frequency, final AsyncCallback<Void> responder )
   {
-    waiteAndroidService();
+    waitAndroidService();
+
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    if( mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled() )
-      responder.handleFault( new BackendlessFault( new BackendlessException( ExceptionMessage.BLUETOOTH_UNAVALIBLE ) ) );
+    if( !checkCondition( mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled(), responder, new BackendlessException( ExceptionMessage.BLUETOOTH_UNAVALIBLE ) ) )
+      return;
 
     mBeaconManager = BeaconManager.getInstanceForApplication( BeaconTracker.this.getApplicationContext() );
-    if( responder != null && isMonitored() )
-      responder.handleFault( new BackendlessFault( new BackendlessException( ExceptionMessage.PRESENCE_MONITORING ) ) );
+    if( !checkCondition( isMonitored(), responder, new BackendlessException( ExceptionMessage.PRESENCE_MONITORING ) ) )
+      return;
+
+    if( !checkCondition( frequency < 0, responder, new IllegalArgumentException( ExceptionMessage.INVALID_LOG_POLICY ) ) )
+      return;
 
     this.discovery = runDiscovery;
     this.frequency = frequency;
 
     saveSettings();
 
-    Backendless.CustomService.invoke( BeaconConstancts.SERVICE_NAME, BeaconConstancts.SERVICE_VERSION, "getenabled", new Object[] { }, new AsyncCallback<BeaconsInfo>()
+    Backendless.CustomService.invoke( BeaconConstants.SERVICE_NAME, BeaconConstants.SERVICE_VERSION, "getenabled", new Object[] { }, new AsyncCallback<BeaconsInfo>()
     {
       @Override
       public void handleResponse( BeaconsInfo response )
@@ -168,21 +172,21 @@ public class BeaconTracker implements BeaconConsumer, RangeNotifier
   {
     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences( getApplicationContext() );
     SharedPreferences.Editor editor = sharedPref.edit();
-    editor.putBoolean( BeaconConstancts.DISCOVERY, discovery );
-    editor.putInt( BeaconConstancts.FREQUENCY, frequency );
+    editor.putBoolean( BeaconConstants.DISCOVERY, discovery );
+    editor.putInt( BeaconConstants.FREQUENCY, frequency );
     editor.apply();
   }
 
   private void initSettings()
   {
     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences( getApplicationContext() );
-    discovery = sharedPref.getBoolean( BeaconConstancts.DISCOVERY, BeaconConstancts.DEFUTL_DISCOVERY );
-    frequency = sharedPref.getInt( BeaconConstancts.FREQUENCY, BeaconConstancts.DEFAULT_FREQUENCY );
+    discovery = sharedPref.getBoolean( BeaconConstants.DISCOVERY, BeaconConstants.DEFUTL_DISCOVERY );
+    frequency = sharedPref.getInt( BeaconConstants.FREQUENCY, BeaconConstants.DEFAULT_FREQUENCY );
   }
 
-  private void waiteAndroidService()
+  private void waitAndroidService()
   {
-    while( ! (AndroidService.recoverService() instanceof AndroidService) )
+    while( !(AndroidService.recoverService() instanceof AndroidService) )
       try
       {
         Thread.sleep( 500 );
@@ -191,5 +195,17 @@ public class BeaconTracker implements BeaconConsumer, RangeNotifier
       {
         throw new RuntimeException( e );
       }
+  }
+
+  private boolean checkCondition( boolean condition, AsyncCallback<?> asyncCallback, Throwable t )
+  {
+    if( condition )
+    {
+      if( asyncCallback != null )
+        asyncCallback.handleFault( new BackendlessFault( t ) );
+      return false;
+    }
+
+    return true;
   }
 }

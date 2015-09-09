@@ -64,9 +64,9 @@ public class BackendlessBeacon
   private Map<String, String> createIbeaconProps( String uuid, String majorVersion, String minorVersion )
   {
     Map<String, String> properties = new HashMap<String, String>( 3 );
-    properties.put( BeaconConstancts.IBEACON_UUID_STR, uuid );
-    properties.put( BeaconConstancts.IBEACON_MAJOR_STR, majorVersion );
-    properties.put( BeaconConstancts.IBEACON_MINOR_STR, minorVersion );
+    properties.put( BeaconConstants.IBEACON_UUID_STR, uuid );
+    properties.put( BeaconConstants.IBEACON_MAJOR_STR, majorVersion );
+    properties.put( BeaconConstants.IBEACON_MINOR_STR, minorVersion );
 
     return properties;
   }
@@ -74,8 +74,8 @@ public class BackendlessBeacon
   private Map<String, String> createEddystoneProps( String namespaceId, String instanceId )
   {
     Map<String, String> properties = new HashMap<String, String>( 2 );
-    properties.put( BeaconConstancts.EDDYSTONE_NAMESPACE_ID_STR, namespaceId );
-    properties.put( BeaconConstancts.EDDYSTONE_INSTANCE_ID_STR, instanceId );
+    properties.put( BeaconConstants.EDDYSTONE_NAMESPACE_ID_STR, namespaceId );
+    properties.put( BeaconConstants.EDDYSTONE_INSTANCE_ID_STR, instanceId );
 
     return properties;
   }
@@ -84,11 +84,11 @@ public class BackendlessBeacon
                                                          String PduCount, String upTime )
   {
     Map<String, String> properties = new HashMap<String, String>( 5 );
-    properties.put( BeaconConstancts.EDDYSTONE_TELEMETRY_VERSION_STR, telemetry ); // telemetry Version
-    properties.put( BeaconConstancts.EDDYSTONE_BATTERY_STR, batteryMil ); // battery MilliVolts
-    properties.put( BeaconConstancts.EDDYSTONE_TEMPERATURE_STR, temperatureCels ); // temperature Celsius
-    properties.put( BeaconConstancts.EDDYSTONE_PDU_COUNT_STR, PduCount); //PDU cont
-    properties.put( BeaconConstancts.EDDYSTONE_UPTIME_STR, upTime ); // up time
+    properties.put( BeaconConstants.EDDYSTONE_TELEMETRY_VERSION_STR, telemetry ); // telemetry Version
+    properties.put( BeaconConstants.EDDYSTONE_BATTERY_STR, batteryMil ); // battery MilliVolts
+    properties.put( BeaconConstants.EDDYSTONE_TEMPERATURE_STR, temperatureCels ); // temperature Celsius
+    properties.put( BeaconConstants.EDDYSTONE_PDU_COUNT_STR, PduCount); //PDU cont
+    properties.put( BeaconConstants.EDDYSTONE_UPTIME_STR, upTime ); // up time
 
     return properties;
   }
