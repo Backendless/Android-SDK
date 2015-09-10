@@ -26,21 +26,21 @@ import com.backendless.exceptions.ExceptionMessage;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.security.AccessControlException;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by baas on 21.04.15.
- */
 public class LogBuffer
 {
   private static final int NUM_OF_MESSAGES = 100;
+  private static final int NUM_OF_MESSAGES_CODERUNNER = 1;
   private static final int TIME_FREQUENCY = 60 * 5; // 5 minutes
+  private static final int TIME_FREQUENCY_CODERUNNER = -1;
   private static final String LOGGING_SERVER_ALIAS = "com.backendless.services.logging.LogService";
-  private static final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+  private static final ScheduledExecutorService scheduledExecutorService = Backendless.isCodeRunner() ? null : Executors.newSingleThreadScheduledExecutor();
 
   private int numOfMessages;
   private int timeFrequency;
@@ -60,9 +60,10 @@ public class LogBuffer
 
   private LogBuffer()
   {
+    numOfMessages = Backendless.isCodeRunner() ? NUM_OF_MESSAGES_CODERUNNER : NUM_OF_MESSAGES;
+    timeFrequency = Backendless.isCodeRunner() ? TIME_FREQUENCY_CODERUNNER : TIME_FREQUENCY;
+
     logMessages = Collections.synchronizedSet( new HashSet<LogMessage>() );
-    numOfMessages = NUM_OF_MESSAGES;
-    timeFrequency = TIME_FREQUENCY;
     setupTimer();
   }
 
@@ -119,6 +120,9 @@ public class LogBuffer
 
   private void scheduledTask()
   {
+    if( Backendless.isCodeRunner() )
+      throw new AccessControlException( "You have no permission to thread manipulation" );
+
     scheduledFuture = scheduledExecutorService.schedule( new Runnable()
     {
       @Override
@@ -143,33 +147,47 @@ public class LogBuffer
 
   public void reportSingleLogMessage( String logger, Level loglevel, String message, String exception )
   {
-    Invoker.invokeAsync( LOGGING_SERVER_ALIAS, "log", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), loglevel.name(), logger, message, exception }, new AsyncCallback<Void>()
+    if( Backendless.isCodeRunner() )
     {
-      @Override
-      public void handleResponse( Void response )
+      Invoker.invokeSync( LOGGING_SERVER_ALIAS, "log", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), loglevel.name(), logger, message, exception } );
+    }
+    else
+    {
+      Invoker.invokeAsync( LOGGING_SERVER_ALIAS, "log", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), loglevel.name(), logger, message, exception }, new AsyncCallback<Void>()
       {
-      }
+        @Override
+        public void handleResponse( Void response )
+        {
+        }
 
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-      }
-    } );
+        @Override
+        public void handleFault( BackendlessFault fault )
+        {
+        }
+      } );
+    }
   }
 
   public void reportBatch( List<LogMessage> logBatches )
   {
-    Invoker.invokeAsync( LOGGING_SERVER_ALIAS, "batchLog", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), logBatches }, new AsyncCallback<Void>()
+    if( Backendless.isCodeRunner() )
     {
-      @Override
-      public void handleResponse( Void response )
+      Invoker.invokeSync( LOGGING_SERVER_ALIAS, "batchLog", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), logBatches } );
+    }
+    else
+    {
+      Invoker.invokeAsync( LOGGING_SERVER_ALIAS, "batchLog", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), logBatches }, new AsyncCallback<Void>()
       {
-      }
+        @Override
+        public void handleResponse( Void response )
+        {
+        }
 
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-      }
-    } );
+        @Override
+        public void handleFault( BackendlessFault fault )
+        {
+        }
+      } );
+    }
   }
 }
