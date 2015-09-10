@@ -38,56 +38,32 @@ public class Logger
 
   public void debug( String message )
   {
-    log( Level.DEBUG, message );
+    logger.debug( message );
   }
 
   public void info( String message )
   {
-    log( Level.INFO, message );
+    logger.info( message );
   }
 
   public void warn( String message )
   {
-    log( Level.WARNING, message );
+    logger.warn( message );
   }
 
   public void warn( String message, Throwable t )
   {
-    log( Level.WARNING, message, t );
+    logger.warn( message, t );
   }
 
   public void error( String message )
   {
-    log( Level.ERROR, message );
+    logger.error( message );
   }
 
   public void error( String message, Throwable t )
   {
-    log( Level.ERROR, message, t );
-  }
-
-  private void log( Level level, String message )
-  {
-    log( level, message, null );
-  }
-
-  private void log( final Level level, final String message, final Throwable t )
-  {
-    switch( level )
-    {
-      case DEBUG:
-        logger.debug( message );
-        break;
-      case INFO:
-        logger.info( message );
-        break;
-      case WARNING:
-        logger.warn( message, t );
-        break;
-      case ERROR:
-        logger.error( message, t );
-        break;
-    }
+    logger.error( message, t );
   }
 
   @Override
