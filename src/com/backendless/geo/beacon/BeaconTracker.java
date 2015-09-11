@@ -25,6 +25,7 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
+import android.util.Base64;
 import com.backendless.AndroidService;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
@@ -32,7 +33,10 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import org.altbeacon.beacon.*;
+import weborb.util.io.ISerializer;
+import weborb.util.io.Serializer;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -217,6 +221,16 @@ public class BeaconTracker implements BeaconConsumer, RangeNotifier
     SharedPreferences.Editor editor = sharedPref.edit();
     editor.putBoolean( BeaconConstants.DISCOVERY, discovery );
     editor.putInt( BeaconConstants.FREQUENCY, frequency );
+    editor.putFloat( BeaconConstants.DISTANCE_CHANGE, (float) distanceChange );
+    try
+    {
+      if( listener != null )
+        editor.putString( BeaconConstants.PRESENCE_LISTENER, Base64.encodeToString( Serializer.toBytes( listener, ISerializer.AMF3 ), Base64.DEFAULT ) );
+    }
+    catch( Exception e )
+    {
+      Backendless.Logging.getLogger( BeaconTracker.class ).error( "Cannot save IPresenceListener : " + e.getMessage() );
+    }
     editor.apply();
   }
 
@@ -225,6 +239,17 @@ public class BeaconTracker implements BeaconConsumer, RangeNotifier
     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences( getApplicationContext() );
     discovery = sharedPref.getBoolean( BeaconConstants.DISCOVERY, BeaconConstants.DEFUTL_DISCOVERY );
     frequency = sharedPref.getInt( BeaconConstants.FREQUENCY, BeaconConstants.DEFAULT_FREQUENCY );
+    distanceChange = sharedPref.getFloat( BeaconConstants.DISTANCE_CHANGE, (float) BeaconConstants.DEFAUTL_DISTANCE_CHANGE );
+    String listenersStr = sharedPref.getString( BeaconConstants.PRESENCE_LISTENER, null );
+    try
+    {
+      if(listenersStr != null)
+      listener = (IPresenceListener) Serializer.fromBytes( Base64.decode( listenersStr, Base64.DEFAULT ), ISerializer.AMF3, false );
+    }
+    catch( IOException e )
+    {
+      Backendless.Logging.getLogger( BeaconTracker.class ).error( "Cannot init IPresenceListener : " + e.getMessage() );
+    }
   }
 
   private void waitAndroidService()
