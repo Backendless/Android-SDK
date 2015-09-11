@@ -339,6 +339,16 @@ public final class Files
             } );
   }
 
+  public boolean exists( String path )
+  {
+    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "exists", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } );
+  }
+
+  public void exists( String path, AsyncCallback<Boolean> responder )
+  {
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "exists", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path }, responder );
+  }
+
   private class EmptyUploadCallback implements UploadCallback
   {
     public void onProgressUpdate( Integer progress )
