@@ -18,6 +18,8 @@
 
 package com.backendless.geo.beacon;
 
+import org.altbeacon.beacon.utils.UrlBeaconUrlCompressor;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,7 +52,14 @@ public class BackendlessBeacon
 
       case EDDYSTONE:
         int intAmount = beacon.getIdentifiers().size();
-        eddystoneProps = createEddystoneProps( beacon.getId1().toString(), intAmount > 1 ? beacon.getId2().toString() : null );
+        if( intAmount > 1 )
+        {
+          eddystoneProps = createEddystoneProps( beacon.getId1().toString(), beacon.getId2().toString() );
+        }
+        else
+        {
+          eddystoneProps = createEddystoneProps( UrlBeaconUrlCompressor.uncompress( beacon.getId1().toByteArray() ), null );
+        }
 
         if( !beacon.getExtraDataFields().isEmpty() )
         {
@@ -87,7 +96,7 @@ public class BackendlessBeacon
     properties.put( BeaconConstants.EDDYSTONE_TELEMETRY_VERSION_STR, telemetry ); // telemetry Version
     properties.put( BeaconConstants.EDDYSTONE_BATTERY_STR, batteryMil ); // battery MilliVolts
     properties.put( BeaconConstants.EDDYSTONE_TEMPERATURE_STR, temperatureCels ); // temperature Celsius
-    properties.put( BeaconConstants.EDDYSTONE_PDU_COUNT_STR, PduCount); //PDU cont
+    properties.put( BeaconConstants.EDDYSTONE_PDU_COUNT_STR, PduCount ); //PDU cont
     properties.put( BeaconConstants.EDDYSTONE_UPTIME_STR, upTime ); // up time
 
     return properties;
@@ -138,5 +147,16 @@ public class BackendlessBeacon
   public int hashCode()
   {
     return bluetoothAddress.hashCode();
+  }
+
+  @Override
+  public String toString()
+  {
+    return "BackendlessBeacon{" +
+            "objectId='" + objectId + '\'' +
+            ", bluetoothAddress='" + bluetoothAddress + '\'' +
+            ", type=" + type +
+            (type == BeaconType.IBEACON ? ", iBeaconProps=" + iBeaconProps : ", eddystoneProps=" + eddystoneProps) +
+            '}';
   }
 }

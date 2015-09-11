@@ -28,8 +28,11 @@ public class BeaconConstants
 
   public final static String DISCOVERY = "beacon-frequency";
   public final static String FREQUENCY = "beacon-discovery";
+  public final static String PRESENCE_LISTENER = "beacon-presence-listener";
+  public final static String DISTANCE_CHANGE = "beacon-distance-change";
   public final static int DEFAULT_FREQUENCY = 5 * 60; // 5 minutes
   public final static boolean DEFUTL_DISCOVERY = true;
+  public final static double DEFAUTL_DISTANCE_CHANGE = Integer.MAX_VALUE;
 
   public final static String IBEACON_UUID_STR = "uuid";
   public final static String IBEACON_MAJOR_STR = "majorVersion";

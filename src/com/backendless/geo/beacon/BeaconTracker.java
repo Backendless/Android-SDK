@@ -34,6 +34,8 @@ import com.backendless.exceptions.ExceptionMessage;
 import org.altbeacon.beacon.*;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by baas on 01.09.15.
@@ -42,10 +44,15 @@ public class BeaconTracker implements BeaconConsumer, RangeNotifier
 {
   private BeaconManager mBeaconManager;
   private BeaconMonitoring beaconMonitor;
+  private IPresenceListener listener;
   private boolean discovery;
   private int frequency;
+  double distanceChange;
 
-  public void startMonitoring( boolean runDiscovery, int frequency, final AsyncCallback<Void> responder )
+  private Map<BackendlessBeacon, Double> stayedBeacons = new HashMap<BackendlessBeacon, Double>();
+
+  public void startMonitoring( boolean runDiscovery, int frequency, IPresenceListener listener, double distanceChange,
+                               final AsyncCallback<Void> responder )
   {
     waitAndroidService();
 
@@ -62,6 +69,8 @@ public class BeaconTracker implements BeaconConsumer, RangeNotifier
 
     this.discovery = runDiscovery;
     this.frequency = frequency;
+    this.listener = listener;
+    this.distanceChange = distanceChange;
 
     saveSettings();
 
@@ -129,7 +138,38 @@ public class BeaconTracker implements BeaconConsumer, RangeNotifier
   @Override
   public void didRangeBeaconsInRegion( Collection<org.altbeacon.beacon.Beacon> collection, Region region )
   {
-    beaconMonitor.onDetectedBeacons( collection );
+
+    Map<BackendlessBeacon, Double> notifiedBeacons = new HashMap<BackendlessBeacon, Double>();
+    Map<BackendlessBeacon, Double> currentBeacons = new HashMap<BackendlessBeacon, Double>();
+    for( org.altbeacon.beacon.Beacon beacon : collection )
+    {
+      BeaconType beaconType = BeaconType.ofServiceUUID( beacon.getServiceUuid() );
+      BackendlessBeacon backendlessBeacon = new BackendlessBeacon( beaconType, beacon );
+      double distance = beacon.getDistance();
+      currentBeacons.put( backendlessBeacon, distance );
+
+      if( !stayedBeacons.containsKey( backendlessBeacon ) )
+      {
+        notifiedBeacons.put( backendlessBeacon, beacon.getDistance() );
+      }
+      else
+      {
+        double prevDistance = stayedBeacons.get( backendlessBeacon );
+        if( Math.abs( prevDistance - distance ) >= distanceChange )
+        {
+          notifiedBeacons.put( backendlessBeacon, distance );
+        }
+      }
+    }
+    stayedBeacons = currentBeacons;
+
+    if( !notifiedBeacons.isEmpty() )
+    {
+      beaconMonitor.onDetectedBeacons( new HashMap<BackendlessBeacon, Double>( notifiedBeacons ) );
+
+      if( listener != null )
+        listener.onDetectedBeacons( new HashMap<BackendlessBeacon, Double>( notifiedBeacons ) );
+    }
   }
 
   private boolean isMonitored()
@@ -139,7 +179,10 @@ public class BeaconTracker implements BeaconConsumer, RangeNotifier
 
   private void addBeaconParsers( BeaconManager beaconManager )
   {
-    beaconManager.getBeaconParsers().clear();
+    if( beaconManager.getBeaconParsers().size() > 1 )
+    {
+      return;
+    }
 
     // iBeacon
     beaconManager.getBeaconParsers().add( new BeaconParser().

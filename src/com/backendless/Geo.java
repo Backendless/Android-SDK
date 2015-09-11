@@ -37,7 +37,7 @@ import java.util.Map;
 
 public final class Geo
 {
-  public final static Presence Presence = Backendless.isAndroid() ? new Presence() : null;
+  public final static Presence Presence = Backendless.isAndroid() ? com.backendless.geo.beacon.Presence.getInstance() : null;
   public final static String GEO_MANAGER_SERVER_ALIAS = "com.backendless.services.geo.GeoService";
   private final static String DEFAULT_CATEGORY_NAME = "Default";
 

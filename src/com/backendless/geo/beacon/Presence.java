@@ -26,8 +26,20 @@ import com.backendless.async.callback.AsyncCallback;
 public class Presence
 {
     BeaconTracker beaconTracker = new BeaconTracker();
+  private static Presence instance = null;
 
-    public void startMonitoring( AsyncCallback<Void> responder )
+  private Presence()
+  {
+  }
+
+  public static Presence getInstance()
+  {
+    if(instance == null)
+      instance = new Presence();
+    return instance;
+  }
+
+  public void startMonitoring( AsyncCallback<Void> responder )
     {
       startMonitoring( BeaconConstants.DEFUTL_DISCOVERY, responder );
     }
@@ -39,6 +51,21 @@ public class Presence
 
     public void startMonitoring( boolean runDiscovery, int frequency, AsyncCallback<Void> responder )
     {
-      beaconTracker.startMonitoring( runDiscovery, frequency, responder );
+      startMonitoring( runDiscovery, frequency, null, responder );
     }
+
+  public void startMonitoring( boolean runDiscovery, int frequency, IPresenceListener listener, AsyncCallback<Void> responder )
+  {
+    startMonitoring( runDiscovery, frequency, listener, BeaconConstants.DEFAUTL_DISTANCE_CHANGE, responder );
+  }
+
+  public void startMonitoring( boolean runDiscovery, int frequency, IPresenceListener listener, double distanceChange, AsyncCallback<Void> responder )
+  {
+    beaconTracker.startMonitoring( runDiscovery, frequency, listener, distanceChange, responder );
+  }
+
+  public void stopMonitoring(  )
+  {
+    beaconTracker.stopMonitoring();
+  }
 }

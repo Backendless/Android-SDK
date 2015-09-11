@@ -31,7 +31,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 /**
  * Created by baas on 02.09.15.
  */
-public class BeaconMonitoring extends ScheduledExecutor
+public class BeaconMonitoring extends ScheduledExecutor implements IPresenceListener
 {
   // locks for monitoredBeacons set
   private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
@@ -39,7 +39,6 @@ public class BeaconMonitoring extends ScheduledExecutor
   private final Lock writeLock = readWriteLock.writeLock();
 
   private Set<BackendlessBeacon> monitoredBeacons = new HashSet<BackendlessBeacon>();
-  private Set<BackendlessBeacon> stayedBeacons = new HashSet<BackendlessBeacon>(); // changed in one thread
   private volatile boolean discovery = false;
   private Set<BackendlessBeacon> discoveryBeacons = Collections.synchronizedSet( new HashSet<BackendlessBeacon>() );
 
@@ -57,33 +56,25 @@ public class BeaconMonitoring extends ScheduledExecutor
     super.setTimeFrequency( timeFrequency );
   }
 
-  public void onDetectedBeacons( Collection<org.altbeacon.beacon.Beacon> beacons )
+  @Override
+  public void onDetectedBeacons( Map<BackendlessBeacon, Double> beaconToDistances )
   {
-    Set<BackendlessBeacon> currentBeacons = new HashSet<BackendlessBeacon>();
-    for( org.altbeacon.beacon.Beacon beacon : beacons )
+    for( BackendlessBeacon beacon : beaconToDistances.keySet() )
     {
-      BeaconType beaconType = BeaconType.ofServiceUUID( beacon.getServiceUuid() );
-      BackendlessBeacon backendlessBeacon = new BackendlessBeacon( beaconType, beacon );
-
       readLock.lock();
-      boolean cointainedBeacon = monitoredBeacons.contains( backendlessBeacon );
+      boolean enubledBeacon = monitoredBeacons.contains( beacon );
       readLock.unlock();
 
-      if( !cointainedBeacon )
+      if( enubledBeacon )
       {
-        currentBeacons.add( backendlessBeacon );
-        if(!stayedBeacons.contains( backendlessBeacon ))
-        {
-          sendEntered( backendlessBeacon, beacon.getDistance() );
-        }
+        sendEntered( beacon, beaconToDistances.get( beacon ) );
       }
 
       if( discovery )
       {
-        discoveryBeacons.add( backendlessBeacon );
+        discoveryBeacons.add( beacon );
       }
     }
-    stayedBeacons = currentBeacons;
   }
 
 
