@@ -36,11 +36,11 @@ import java.util.Map;
  */
 public abstract class PersistenceExtender<T>
 {
-  public void beforeFindById( RunnerContext context, String objectId, String[] relations ) throws Exception
+  public void beforeFindById( RunnerContext context, Object objectId, String[] relations ) throws Exception
   {
   }
 
-  public void afterFindById( RunnerContext context, String objectId, String[] relations, ExecutionResult<T> entity ) throws Exception
+  public void afterFindById( RunnerContext context, Object objectId, String[] relations, ExecutionResult<T> entity ) throws Exception
   {
   }
 
@@ -80,11 +80,11 @@ public abstract class PersistenceExtender<T>
   {
   }
 
-  public void beforeRemove( RunnerContext context, String objectId ) throws Exception
+  public void beforeRemove( RunnerContext context, Object objectId ) throws Exception
   {
   }
 
-  public void afterRemove( RunnerContext context, String objectId, ExecutionResult<Long> removedVal ) throws Exception
+  public void afterRemove( RunnerContext context, Object objectId, ExecutionResult<Long> removedVal ) throws Exception
   {
   }
 

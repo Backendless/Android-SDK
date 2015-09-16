@@ -330,10 +330,19 @@ public final class Messaging
     Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), DEVICE_ID }, responder );
   }
 
+  public DeviceRegistration getDeviceRegistration() throws BackendlessException
+  {
+    return getRegistrations();
+  }
+
   public DeviceRegistration getRegistrations() throws BackendlessException
   {
-
     return (DeviceRegistration) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "getDeviceRegistrationByDeviceId", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), DEVICE_ID } );
+  }
+
+  public void getDeviceRegistration( AsyncCallback<DeviceRegistration> responder )
+  {
+    getRegistrations( responder );
   }
 
   public void getRegistrations( AsyncCallback<DeviceRegistration> responder )
