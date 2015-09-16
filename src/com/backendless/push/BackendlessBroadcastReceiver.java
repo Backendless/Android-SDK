@@ -19,7 +19,11 @@
 package com.backendless.push;
 
 import android.R;
-import android.app.*;
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -84,7 +88,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
 
   protected static void setChannels( List<String> channels )
   {
-    BackendlessBroadcastReceiver.persistedChannels = (String[]) channels.toArray();
+    BackendlessBroadcastReceiver.persistedChannels = channels.toArray( new String[channels.size()] );
   }
 
   private static String getSenderId()
