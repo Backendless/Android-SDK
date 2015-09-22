@@ -33,12 +33,20 @@ class UploadFileAsyncTask
 {
   private UploadCallback uploadCallback;
   private AsyncCallback<BackendlessFile> responder;
+  private boolean overwrite;
 
   void executeThis( File file, String path, UploadCallback uploadCallback,
                            AsyncCallback<BackendlessFile> responder )
   {
+    executeThis( file, path, false, uploadCallback, responder );
+  }
+
+  void executeThis( File file, String path, boolean overwrite, UploadCallback uploadCallback,
+                           AsyncCallback<BackendlessFile> responder )
+  {
     this.uploadCallback = uploadCallback;
     this.responder = responder;
+    this.overwrite = overwrite;
     doInBackground( file, path );
   }
 
@@ -62,7 +70,7 @@ class UploadFileAsyncTask
             }
           } );
 
-          BackendlessFile result = Backendless.Files.uploadFromStream( fileOutputStreamRouter, file.getName(), path );
+          BackendlessFile result = Backendless.Files.uploadFromStream( fileOutputStreamRouter, file.getName(), path, overwrite );
           ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<BackendlessFile>( result, responder ) );
         }
         catch( Exception e )
