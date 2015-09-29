@@ -29,9 +29,14 @@ import com.backendless.persistence.local.UserIdStorageFactory;
 import com.backendless.persistence.local.UserTokenStorageFactory;
 import com.backendless.property.AbstractProperty;
 import com.backendless.property.UserProperty;
+import com.facebook.CallbackManager;
 import weborb.types.Types;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class UserService
 {
@@ -247,108 +252,9 @@ public final class UserService
       }
   }
 
-  public BackendlessUser loginWithFacebookSession( com.facebook.Session facebookSession,
-                                                   com.facebook.model.GraphUser facebookUser )
+  public void loginWithFacebookSdk( android.app.Activity context, CallbackManager callbackManager, final AsyncCallback<BackendlessUser> responder )
   {
-    return loginWithFacebookSession( facebookSession, facebookUser, new HashMap<String, String>() );
-  }
-
-  public BackendlessUser loginWithFacebookSession( com.facebook.Session facebookSession,
-                                                   com.facebook.model.GraphUser facebookUser, boolean stayLoggedIn )
-  {
-    return loginWithFacebookSession( facebookSession, facebookUser, new HashMap<String, String>(), stayLoggedIn );
-  }
-
-  public BackendlessUser loginWithFacebookSession( com.facebook.Session facebookSession,
-                                                   com.facebook.model.GraphUser facebookUser,
-                                                   Map<String, String> facebookFieldsMappings )
-  {
-    return loginWithFacebookSession( facebookSession, facebookUser, facebookFieldsMappings, false );
-  }
-
-  public BackendlessUser loginWithFacebookSession( com.facebook.Session facebookSession,
-                                                   com.facebook.model.GraphUser facebookUser,
-                                                   Map<String, String> facebookFieldsMappings, boolean stayLoggedIn )
-  {
-
-    synchronized( currentUserLock )
-    {
-      if( !currentUser.getProperties().isEmpty() )
-        logout();
-
-      handleUserLogin( getUserServiceAndroidExtra().loginWithFacebookSession( facebookSession, facebookUser, facebookFieldsMappings ), stayLoggedIn );
-
-      return currentUser;
-    }
-  }
-
-  public void loginWithFacebookSession( final com.facebook.Session facebookSession,
-                                        final com.facebook.model.GraphUser facebookUser,
-                                        final AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithFacebookSession( facebookSession, facebookUser, null, responder );
-  }
-
-  public void loginWithFacebookSession( final com.facebook.Session facebookSession,
-                                        final com.facebook.model.GraphUser facebookUser,
-                                        final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
-  {
-    loginWithFacebookSession( facebookSession, facebookUser, null, responder, stayLoggedIn );
-  }
-
-  public void loginWithFacebookSession( final com.facebook.Session facebookSession,
-                                        final com.facebook.model.GraphUser facebookUser,
-                                        final Map<String, String> facebookFieldsMappings,
-                                        final AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithFacebookSession( facebookSession, facebookUser, facebookFieldsMappings, responder, false );
-  }
-
-  public void loginWithFacebookSession( final com.facebook.Session facebookSession,
-                                        final com.facebook.model.GraphUser facebookUser,
-                                        final Map<String, String> facebookFieldsMappings,
-                                        final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
-  {
-    if( !currentUser.getProperties().isEmpty() )
-      logout( new AsyncCallback<Void>()
-      {
-        @Override
-        public void handleResponse( Void response )
-        {
-          loginWithFacebookSession( facebookSession, facebookUser, facebookFieldsMappings, responder );
-        }
-
-        @Override
-        public void handleFault( BackendlessFault fault )
-        {
-          if( responder != null )
-            responder.handleFault( fault );
-        }
-      } );
-    else
-      try
-      {
-        synchronized( currentUserLock )
-        {
-          getUserServiceAndroidExtra().loginWithFacebookSession( facebookSession, facebookUser, facebookFieldsMappings, getUserLoginAsyncHandler( responder, stayLoggedIn ) );
-        }
-      }
-      catch( Throwable e )
-      {
-        if( responder != null )
-          responder.handleFault( new BackendlessFault( e ) );
-      }
-  }
-
-  public void loginWithFacebookSdk( android.app.Activity context, final AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithFacebookSdk( context, null, null, responder );
-  }
-
-  public void loginWithFacebookSdk( android.app.Activity context, final Map<String, String> facebookFieldsMappings,
-                                    List<String> permissions, final AsyncCallback<BackendlessUser> responder )
-  {
-    getUserServiceAndroidExtra().loginWithFacebookSdk( context, facebookFieldsMappings, permissions, responder );
+    getUserServiceAndroidExtra().loginWithFacebookSdk( context, callbackManager, responder );
   }
 
   public void loginWithFacebook( android.app.Activity context, final AsyncCallback<BackendlessUser> responder )

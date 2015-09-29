@@ -34,8 +34,8 @@ import com.backendless.media.DisplayOrientation;
 import com.backendless.media.Session;
 import com.backendless.media.SessionBuilder;
 import com.backendless.media.StreamProtocolType;
-import com.backendless.media.StreamQuality;
 import com.backendless.media.StreamType;
+import com.backendless.media.StreamVideoQuality;
 import com.backendless.media.audio.AudioQuality;
 import com.backendless.media.gl.SurfaceView;
 import com.backendless.media.rtsp.RtspClient;
@@ -58,7 +58,6 @@ public final class Media
   private Session session;
   private MediaPlayer mediaPlayer;
   private StreamProtocolType protocolType;
-  
 
   private static final Media instance = new Media();
 
@@ -73,22 +72,49 @@ public final class Media
     session.toggleFlash();
   }
 
-  public VideoQuality getVideoQuality()
+  public StreamVideoQuality getStreamQuality()
   {
     checkSessionIsNull();
-    return session.getVideoTrack().getVideoQuality();
+    VideoQuality videoQuality = session.getVideoTrack().getVideoQuality();
+    int width = videoQuality.resX;
+    int height = videoQuality.resY;
+    int framerate = videoQuality.framerate;
+    int bitrate = videoQuality.bitrate;
+    StreamVideoQuality streamQuality = StreamVideoQuality.getFromString( width + "x" + height + ", " + framerate + " fps, " + bitrate
+        / 1000 + " Kbps" );
+    return streamQuality;
   }
 
-  public void setVideoQuality( VideoQuality videoQuality )
+  public void setVideoQuality( StreamVideoQuality streamQuality )
   {
     checkSessionIsNull();
+    if( streamQuality == null )
+    {
+      return;
+    }
+    VideoQuality videoQuality = convertVideoQuality( streamQuality );
     session.setVideoQuality( videoQuality );
+  }
+
+  private VideoQuality convertVideoQuality( StreamVideoQuality streamQuality )
+  {
+    Pattern pattern = Pattern.compile( "(\\d+)x(\\d+)\\D+(\\d+)\\D+(\\d+)" );
+    Matcher matcher = pattern.matcher( streamQuality.getValue() );
+
+    matcher.find();
+    int width = Integer.parseInt( matcher.group( 1 ) );
+    int height = Integer.parseInt( matcher.group( 2 ) );
+    int framerate = Integer.parseInt( matcher.group( 3 ) );
+    int bitrate = Integer.parseInt( matcher.group( 4 ) ) * 1000;
+
+    VideoQuality videoQuality = new VideoQuality( width, height, framerate, bitrate );
+    return videoQuality;
   }
 
   public void setAudioQuality( int sampleRate, int bitRate )
   {
     checkSessionIsNull();
-    session.setAudioQuality( new AudioQuality( bitRate, bitRate ) );
+    session.setAudioQuality( new AudioQuality( sampleRate, bitRate ) );
   }
 
   public void switchCamera()
@@ -109,13 +135,7 @@ public final class Media
     session.stopPreview();
   }
 
-  public int getCamera()
-  {
-    checkSessionIsNull();
-    return session.getCamera();
-  }
-
-  public void stopClientStream()
+  private void stopClientStream()
   {
     checkRtspClientIsNull();
     rtspClient.stopStream();
@@ -133,10 +153,46 @@ public final class Media
     rtspClient.release();
   }
 
+  public boolean isPublishing()
+  {
+    checkRtspClientIsNull();
+    return rtspClient.isStreaming();
+  }
+
+  public boolean isMediaPlayerBusy()
+  {
+    checkPlayerIsNull();
+    return mediaPlayer.isPlaying();
+  }
+
+  private void checkPlayerIsNull()
+  {
+    if( mediaPlayer == null )
+    {
+      throw new BackendlessException( "Player client is null. Method configure( .. ) must be invoked" );
+    }
+  }
+
+  private void checkSessionIsNull()
+  {
+    if( session == null )
+    {
+      throw new BackendlessException( "Session client is null. Method configure( .. ) must be invoked" );
+    }
+  }
+
+  private void checkRtspClientIsNull()
+  {
+    if( rtspClient == null )
+    {
+      throw new BackendlessException( "Streaming client is null. Method configure( .. ) must be invoked" );
+    }
+  }
+
   /**
    * <p>
    * default video quality to 176x144 20fps 500Kbps<br/>
-   * default audio quality to 8000 sampleRate 32000 bitRate
+   * default audio quality to 16 000 sampleRate 272000 bitRate
    * </p>
    */
   public void configureForPublish( Context context, SurfaceView mSurfaceView, DisplayOrientation orientation )
@@ -171,72 +227,49 @@ public final class Media
     } );
   }
 
-  public void publishRecordOrStop( String tube, String streamName )
+  public void recordVideo( String tube, String streamName ) throws BackendlessException
   {
-    publishStreamOrStop( tube, streamName, StreamType.LIVE_RECORDING );
+    startRtspStream( tube, streamName, StreamType.LIVE_RECORDING );
   }
 
-  public void publishLiveOrStop( String tube, String streamName )
+  public void broadcastLiveVideo( String tube, String streamName ) throws BackendlessException
   {
-    publishStreamOrStop( tube, streamName, StreamType.LIVE );
+    startRtspStream( tube, streamName, StreamType.LIVE );
   }
 
-  public void playLiveOrStop( Context context, String tube,
-      String streamName ) throws IllegalArgumentException, SecurityException, IllegalStateException, IOException
+  public void playLiveVideo( String tube, String streamName ) throws IllegalArgumentException, SecurityException, IllegalStateException,
+      IOException, BackendlessException
   {
-    playStreamOrStop( tube, streamName, StreamType.RECORDING );
+    playStream( tube, streamName, StreamType.RECORDING );
   }
 
-  public void playRecordOrStop( Context context, String tube,
-      String streamName ) throws IllegalArgumentException, SecurityException, IllegalStateException, IOException
+  public void playOnDemandVideo( String tube, String streamName ) throws IllegalArgumentException, SecurityException,
+      IllegalStateException, IOException, BackendlessException
   {
-    playStreamOrStop( tube, streamName, StreamType.AVAILABLE );
+    playStream( tube, streamName, StreamType.AVAILABLE );
   }
 
-  private void publishStreamOrStop( String tube, String streamName, StreamType streamType )
+  private void startRtspStream( String tube, String streamName, StreamType streamType ) throws BackendlessException
   {
     checkSessionIsNull();
     checkRtspClientIsNull();
-    streamName = streamName.trim();
     if( mediaPlayer != null )
     {
       mediaPlayer.reset();
     }
-    if( streamName == null || streamName.isEmpty() )
-    {
-      streamName = "Default";
-    }
-
-    if( tube == null || tube.isEmpty() )
-    {
-      tube = "Default";
-    }
+    streamName = makeNameValid( streamName );
+    tube = makeTubeValid( tube );
     String operationType = getOperationType( streamType );
     String params = getConnectParams( tube, operationType, streamName );
-    startOrStopStream( rtspClient, streamName, params );
+    startStream( rtspClient, streamName, params );
   }
 
-  private void checkPlayerIsNull()
+  public void stopPublishing()
   {
-    if( mediaPlayer == null )
+    checkRtspClientIsNull();
+    if( rtspClient.isStreaming() )
     {
-      throw new BackendlessException( "Player client is null. Method configure( .. ) must be invoked" );
-    }
-  }
-
-  private void checkSessionIsNull()
-  {
-    if( session == null )
-    {
-      throw new BackendlessException( "Session client is null. Method configure( .. ) must be invoked" );
-    }
-  }
-
-  private void checkRtspClientIsNull()
-  {
-    if( rtspClient == null )
-    {
-      throw new BackendlessException( "Streaming client is null. Method configure( .. ) must be invoked" );
+      stopClientStream();
     }
   }
 
@@ -245,41 +278,75 @@ public final class Media
     return ( streamType == StreamType.LIVE ) ? "publishLive" : "publishRecorded";
   }
 
-  private void playStreamOrStop( String tube, String fileName, StreamType streamType )
-      throws IllegalArgumentException, SecurityException, IllegalStateException, IOException
+  private void playStream( String tube, String streamName, StreamType streamType ) throws IllegalArgumentException, SecurityException,
+      IllegalStateException, IOException, BackendlessException
   {
     checkPlayerIsNull();
-    fileName = fileName.trim();
+    if( mediaPlayer.isPlaying() )
+    {
+      throw new BackendlessException( "Other stream is playing now. You must to stop it before" );
+    }
+    streamName = makeNameValid( streamName );
+    tube = makeTubeValid( tube );
+
+    if( session != null )
+    {
+      session.stopPreview();
+    }
+    mediaPlayer.reset();
+
+    if( protocolType == null )
+    {
+      protocolType = StreamProtocolType.RTSP;
+    }
+    String protocol = getProtocol( protocolType );
+    String operationType = ( streamType == StreamType.RECORDING ) ? "playLive" : "playRecorded";
+    String wowzaAddress = WOWZA_SERVER_IP + ":" + WOWZA_SERVER_PORT + "/"
+        + ( ( streamType == StreamType.RECORDING ) ? WOWZA_SERVER_LIVE_APP_NAME : WOWZA_SERVER_VOD_APP_NAME ) + "/_definst_/";
+    String params = getConnectParams( tube, operationType, streamName );
+
+    String streamPath = getStreamName( streamName, protocolType );
+    String url = protocol + wowzaAddress + streamPath + params;
+    mediaPlayer.setDataSource( url );
+    mediaPlayer.prepareAsync();
+    mediaPlayer.start();
+
+  }
+
+  private String makeTubeValid( String tube )
+  {
+    if( tube == null || tube.isEmpty() )
+    {
+      tube = "default";
+    }
+    else
+    {
+      tube = tube.trim();
+    }
+    return tube;
+  }
+
+  private String makeNameValid( String streamName )
+  {
+    if( streamName == null || streamName.isEmpty() )
+    {
+      streamName = "default";
+    }
+    else
+    {
+      streamName = streamName.trim().replace( '.', '_' );
+    }
+    return streamName;
+  }
+
+  public void stopVideoPlayback()
+  {
+    checkPlayerIsNull();
     if( mediaPlayer.isPlaying() )
     {
       mediaPlayer.stop();
       mediaPlayer.reset();
     }
-    else
-    {
-      if( session != null )
-      {
-        session.stopPreview();
-      }
-      mediaPlayer.reset();
-
-      if( protocolType == null )
-      {
-        protocolType = StreamProtocolType.RTSP;
-      }
-      String protocol = getProtocol( protocolType );
-      String operationType = ( streamType == StreamType.RECORDING ) ? "playLive" : "playRecorded";
-      String wowzaAddress = WOWZA_SERVER_IP + ":" + WOWZA_SERVER_PORT + "/"
-          + ( ( streamType == StreamType.RECORDING ) ? WOWZA_SERVER_LIVE_APP_NAME : WOWZA_SERVER_VOD_APP_NAME ) + "/_definst_/";
-      String params = getConnectParams( tube, operationType, fileName );
-
-      String streamName = getStreamName( fileName, protocolType );
-      String url = protocol + wowzaAddress + streamName + params;
-      mediaPlayer.setDataSource( url );
-      mediaPlayer.prepare();
-      mediaPlayer.start();
-    }
-
   }
 
   private String getStreamName( String fileName, StreamProtocolType protocol )
@@ -305,8 +372,8 @@ public final class Media
   private Session getSession( Context context, SurfaceView mSurfaceView, int orientation )
   {
     Session mSession = SessionBuilder.getInstance().setContext( context ).setAudioEncoder( SessionBuilder.AUDIO_AAC )
-        .setVideoEncoder( SessionBuilder.VIDEO_H264 ).setSurfaceView( mSurfaceView )
-        .setPreviewOrientation( orientation ).setCallback( (Session.Callback) context ).build();
+        .setVideoEncoder( SessionBuilder.VIDEO_H264 ).setSurfaceView( mSurfaceView ).setPreviewOrientation( orientation )
+        .setCallback( (Session.Callback) context ).build();
 
     return mSession;
   }
@@ -325,33 +392,16 @@ public final class Media
     return paramsToSend;
   }
 
-  @SuppressWarnings( "unused" )
-  private void selectQuality( Session session, StreamQuality streamQuality )
-  {
-    Pattern pattern = Pattern.compile( "(\\d+)x(\\d+)\\D+(\\d+)\\D+(\\d+)" );
-    Matcher matcher = pattern.matcher( streamQuality.getValue() );
-    matcher.find();
-    int width = Integer.parseInt( matcher.group( 1 ) );
-    int height = Integer.parseInt( matcher.group( 2 ) );
-    int framerate = Integer.parseInt( matcher.group( 3 ) );
-    int bitrate = Integer.parseInt( matcher.group( 4 ) ) * 1000;
-    session.setVideoQuality( new VideoQuality( width, height, framerate, bitrate ) );
-  }
-
   // Connects/disconnects to the RTSP server and starts/stops the stream
-  private void startOrStopStream( RtspClient rtspClient, String streamName, String params )
+  private void startStream( RtspClient rtspClient, String streamName, String params ) throws BackendlessException
   {
-    if( !rtspClient.isStreaming() )
+    if( rtspClient.isStreaming() )
     {
-      rtspClient.setServerAddress( WOWZA_SERVER_IP, WOWZA_SERVER_PORT );
-      rtspClient.setStreamPath( "/" + WOWZA_SERVER_LIVE_APP_NAME + "/" + streamName + params );
-      rtspClient.startStream();
+      throw new BackendlessException( "Rtsp client is working on other stream" );
     }
-    else
-    {
-      // Stops the stream and disconnects from the RTSP server
-      rtspClient.stopStream();
-    }
+    rtspClient.setServerAddress( WOWZA_SERVER_IP, WOWZA_SERVER_PORT );
+    rtspClient.setStreamPath( "/" + WOWZA_SERVER_LIVE_APP_NAME + "/" + streamName + params );
+    rtspClient.startStream();
   }
 
   private RtspClient getRtspClient( Context context, Session mSession )
@@ -375,5 +425,5 @@ public final class Media
   {
     this.protocolType = protocolType;
   }
-  
+
 }
