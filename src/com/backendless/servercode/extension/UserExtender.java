@@ -49,12 +49,12 @@ public abstract class UserExtender
   {
   }
 
-  public void beforeFindById( RunnerContext context, String objectId, String[] relations ) throws Exception
+  public void beforeFindById( RunnerContext context, Object objectId, String[] relations ) throws Exception
   {
 
   }
 
-  public void afterFindById( RunnerContext context, String objectId, String[] relations, ExecutionResult<HashMap> result ) throws Exception
+  public void afterFindById( RunnerContext context, Object objectId, String[] relations, ExecutionResult<HashMap> result ) throws Exception
   {
   }
 

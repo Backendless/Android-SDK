@@ -119,7 +119,9 @@
         <pathelement location="${basedir}/libs/commons-2.0.2.jar"/>
     </path>
 
-
+    <path id="library.android.support.v4.classpath">
+        <pathelement location="${basedir}/libs/android.support.v4.jar"/>
+    </path>
     <!-- Application Server Libraries -->
 
     <!-- Modules -->
@@ -155,6 +157,7 @@
         <path refid="library.weborbclient.classpath"/>
         <path refid="library.mediaLib.classpath"/>
         <path refid="library.backendless.commons.classpath"/>
+        <path refid="library.android.support.v4.classpath"/>
     </path>
 
     <path id="backendless.module.classpath">
@@ -170,6 +173,7 @@
         <path refid="library.weborbclient.classpath"/>
         <path refid="library.mediaLib.classpath"/>
         <path refid="library.backendless.commons.classpath"/>
+        <path refid="library.android.support.v4.classpath"/>
     </path>
 
 
