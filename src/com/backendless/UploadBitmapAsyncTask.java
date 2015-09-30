@@ -29,11 +29,19 @@ import com.backendless.files.router.BitmapOutputStreamRouter;
 class UploadBitmapAsyncTask
 {
   private AsyncCallback<BackendlessFile> responder;
+  private boolean overwrite;
 
   void executeThis( Bitmap bitmap, Bitmap.CompressFormat compressFormat, int quality, String name, String path,
+      AsyncCallback<BackendlessFile> responder )
+  {
+    executeThis( bitmap, compressFormat, quality, name, path, false, responder );
+  }
+
+  void executeThis( Bitmap bitmap, Bitmap.CompressFormat compressFormat, int quality, String name, String path, boolean overwrite,
                            AsyncCallback<BackendlessFile> responder )
   {
     this.responder = responder;
+    this.overwrite = overwrite;
     doInBackground( bitmap, compressFormat, quality, name, path );
   }
 
@@ -48,7 +56,7 @@ class UploadBitmapAsyncTask
         try
         {
           BitmapOutputStreamRouter bitmapOutputStreamRouter = new BitmapOutputStreamRouter( bitmap, compressFormat, quality );
-          BackendlessFile result = Backendless.Files.uploadFromStream( bitmapOutputStreamRouter, name, path );
+          BackendlessFile result = Backendless.Files.uploadFromStream( bitmapOutputStreamRouter, name, path, overwrite );
           ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<BackendlessFile>( result, responder ) );
         }
         catch( Exception e )

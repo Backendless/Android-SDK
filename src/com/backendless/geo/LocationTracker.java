@@ -41,6 +41,7 @@ import weborb.util.io.Serializer;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -59,6 +60,7 @@ public class LocationTracker extends Service implements LocationListener
 
   private int minTime = 60 * 1000; // 1 minute
   private int minDistance = 10; // meters
+  private Criteria criteria = null;
   public static float ACCEPTABLE_DISTANCE = 30; // meters
 
   private static LocationTracker instance;
@@ -133,22 +135,17 @@ public class LocationTracker extends Service implements LocationListener
   public void onProviderDisabled( String s )
   {
     if( s.equals( provider ) )
-    {
       listenBestProvider();
-    }
   }
 
   public void addListener( String name, IBackendlessLocationListener locationListener )
   {
 
     if( locationListeners.isEmpty() )
-    {
-      listenBestProvider();
-    }
+     listenBestProvider();
+
     this.locationListeners.put( name, locationListener );
-
     firstListen( locationListener );
-
     saveLocationListeners();
   }
 
@@ -165,25 +162,27 @@ public class LocationTracker extends Service implements LocationListener
   public void removeListener( String name )
   {
     locationListeners.remove( name );
+
     if( locationListeners.size() == 0 )
-    {
       locationManager.removeUpdates( this );
-    }
 
     saveLocationListeners();
   }
 
   public void setLocationTrackerParameters( int minTime, int minDistance, int acceptedDistanceAfterReboot )
   {
+    setLocationTrackerParameters( minTime, minDistance, acceptedDistanceAfterReboot, new Criteria() );
+  }
+
+  public void setLocationTrackerParameters( int minTime, int minDistance, int acceptedDistanceAfterReboot, Criteria criteria )
+  {
     this.minTime = minTime;
     this.minDistance = minDistance;
     this.ACCEPTABLE_DISTANCE = acceptedDistanceAfterReboot;
+    this.criteria = criteria;
 
-    if(!locationListeners.isEmpty())
-    {
-      locationManager.removeUpdates( this );
+    if( !locationListeners.isEmpty() )
       listenBestProvider();
-    }
   }
 
   private void init()
@@ -196,15 +195,12 @@ public class LocationTracker extends Service implements LocationListener
 
   private void listenBestProvider()
   {
-    String bestProvider = locationManager.getBestProvider( new Criteria(), true );
+    String bestProvider = locationManager.getBestProvider( criteria != null ? criteria : new Criteria(), true );
 
     if( bestProvider == null )
       throw new BackendlessException( ExceptionMessage.NOT_FOUND_PROVIDER );
 
-    if( !bestProvider.equals( provider ) )
-    {
-      listenProvider( bestProvider );
-    }
+    listenProvider( bestProvider );
   }
 
   private void listenProvider( String provider )
@@ -217,6 +213,7 @@ public class LocationTracker extends Service implements LocationListener
   private void firstListen( IBackendlessLocationListener locationListener )
   {
     Location location = null;
+
     try
     {
       location = locationManager.getLastKnownLocation( provider );
@@ -224,6 +221,7 @@ public class LocationTracker extends Service implements LocationListener
     catch( Exception ex )
     {
     }
+
     if( location != null )
       locationListener.onLocationChanged( location );
   }
@@ -231,9 +229,8 @@ public class LocationTracker extends Service implements LocationListener
   private void locationChanged( Location location )
   {
     for( String name : locationListeners.keySet() )
-    {
       locationListeners.get( name ).onLocationChanged( location );
-    }
+
     saveLocationListeners();
   }
 
@@ -241,6 +238,7 @@ public class LocationTracker extends Service implements LocationListener
   {
     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences( getApplicationContext() );
     String url = sharedPref.getString( URL, null );
+
     if( url != null )
     {
       Backendless.setUrl( url );
@@ -268,13 +266,29 @@ public class LocationTracker extends Service implements LocationListener
     {
       try
       {
-        Map<String, IBackendlessLocationListener> serializedListeners = (Map<String, IBackendlessLocationListener>) Serializer.fromBytes( Base64.decode( locationListenersStr, Base64.DEFAULT ), ISerializer.AMF3, false );
+        Map<String, LocationListenerInfo> serializedListeners = (Map<String, LocationListenerInfo>) Serializer.fromBytes( Base64.decode( locationListenersStr, Base64.DEFAULT ), ISerializer.AMF3, false );
+
         if( serializedListeners != null )
         {
-          locationListeners = serializedListeners;
+          Iterator<String> iterator = serializedListeners.keySet().iterator();
+
+          while( iterator.hasNext() )
+          {
+            String name = iterator.next();
+            LocationListenerInfo listenerInfo = serializedListeners.get( name );
+            IBackendlessLocationListener listener = listenerInfo.getBackendlessListener();
+
+            if( listener != null )
+            {
+              if( locationListeners == null )
+                locationListeners = new HashMap<String, IBackendlessLocationListener>();
+
+              locationListeners.put( name, listener );
+            }
+
+          }
         }
-      }
-      catch( IOException e )
+      } catch( IOException e )
       {
         Log.e( "Cannot get location listeners", e.getMessage() );
       }
@@ -288,9 +302,10 @@ public class LocationTracker extends Service implements LocationListener
 
     try
     {
-      editor.putString( LOCATION_LISTENERS, Base64.encodeToString( Serializer.toBytes( locationListeners, ISerializer.AMF3 ), Base64.DEFAULT ) );
+      HashMap<String, LocationListenerInfo> modifiedListeners = getLabeledLocationListeners();
+      editor.putString( LOCATION_LISTENERS, Base64.encodeToString( Serializer.toBytes( modifiedListeners, ISerializer.AMF3 ), Base64.DEFAULT ) );
     }
-    catch( Exception e )
+    catch( Throwable e )
     {
       Log.e( "Cannot save location listeners", e.getMessage() );
     }
@@ -299,23 +314,33 @@ public class LocationTracker extends Service implements LocationListener
     super.onDestroy();
   }
 
+  private HashMap<String, LocationListenerInfo> getLabeledLocationListeners() throws Exception
+  {
+    Iterator<String> iterator = locationListeners.keySet().iterator();
+    HashMap<String, LocationListenerInfo> labeledListeners = new HashMap<String, LocationListenerInfo>();
+
+    while( iterator.hasNext() )
+    {
+      String name = iterator.next();
+      IBackendlessLocationListener listener = locationListeners.get( name );
+      labeledListeners.put( name, new LocationListenerInfo( listener ) );
+    }
+
+    return labeledListeners;
+  }
+
   private void changeLocation()
   {
     Location oldLocation = getSavedLocation();
 
     if( provider == null )
-    {
       listenBestProvider();
-    }
 
     Location location = locationManager.getLastKnownLocation( provider );
+
     if( oldLocation != null )
-    {
       for( String name : locationListeners.keySet() )
-      {
         locationListeners.get( name ).onLocationChanged( oldLocation, location );
-      }
-    }
   }
 
   private Location getSavedLocation()
@@ -331,10 +356,8 @@ public class LocationTracker extends Service implements LocationListener
 //      return null;
 //    }
 
-    if ( locationLatitudeString == null || locationLongitudeString == null )
-    {
+    if( locationLatitudeString == null || locationLongitudeString == null )
       return null;
-    }
 
     try
     {
@@ -364,6 +387,7 @@ public class LocationTracker extends Service implements LocationListener
     {
       Log.e( "Cannot save location", e.getMessage() );
     }
+
     editor.apply();
   }
 }

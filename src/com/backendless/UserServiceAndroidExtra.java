@@ -18,21 +18,32 @@
 
 package com.backendless;
 
+import android.os.Bundle;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.core.responder.policy.BackendlessUserAdaptingPolicy;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
-import com.backendless.helpers.NonCachingTokenFacebookSession;
 import com.backendless.social.AbstractSocialLoginStrategy;
-import com.facebook.SessionState;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.lang.reflect.Field;
 
 class UserServiceAndroidExtra
 {
@@ -45,53 +56,69 @@ class UserServiceAndroidExtra
   }
 
   private UserServiceAndroidExtra()
-  {}
-
-  BackendlessUser loginWithFacebookSession( com.facebook.Session facebookSession,
-                                                    com.facebook.model.GraphUser facebookUser,
-                                                    Map<String, String> facebookFieldsMappings )
   {
-    FacebookBundle facebookBundle = getFacebookRequestBundle( facebookSession, facebookUser );
-    Object[] requestData = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), facebookBundle.socialUserId, facebookBundle.accessToken, facebookBundle.expirationDate, facebookBundle.permissions, facebookFieldsMappings };
-    BackendlessUser invokeResult = Invoker.invokeSync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithFacebook", requestData, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
-
-    HeadersManager.getInstance().addHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY, (String) invokeResult.getProperty( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() ) );
-
-    return invokeResult;
   }
 
-  void loginWithFacebookSession( com.facebook.Session facebookSession, com.facebook.model.GraphUser facebookUser,
-                                 Map<String, String> facebookFieldsMappings,
-                                 AsyncCallback<BackendlessUser> responder )
+  void loginWithFacebookSdk( final android.app.Activity context, CallbackManager callbackManager, final AsyncCallback<BackendlessUser> responder )
   {
+    List<String> permissions = new ArrayList<String>();
+    permissions.add( "email" );
+    permissions.add( "public_profile" );
 
-    FacebookBundle facebookBundle = getFacebookRequestBundle( facebookSession, facebookUser );
-    Object[] requestData = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), facebookBundle.socialUserId, facebookBundle.accessToken, facebookBundle.expirationDate, facebookBundle.permissions, facebookFieldsMappings };
-    Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithFacebook", requestData, responder, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
+    Map<String, String> facebookFieldsMappings = new HashMap<String, String>(  );
+    facebookFieldsMappings.put( "email", "email" );
+
+    loginWithFacebookSdk( context, facebookFieldsMappings, permissions, callbackManager, responder );
   }
 
-  void loginWithFacebookSdk( android.app.Activity context, final Map<String, String> facebookFieldsMappings,
-                             List<String> permissions, final AsyncCallback<BackendlessUser> responder )
+  void loginWithFacebookSdk( final android.app.Activity context, final Map<String, String> facebookFieldsMappings,
+                             List<String> permissions, CallbackManager callbackManager, final AsyncCallback<BackendlessUser> responder )
   {
-    NonCachingTokenFacebookSession.openActiveSession( context, permissions, new com.facebook.Session.StatusCallback()
+    LoginManager.getInstance().registerCallback( callbackManager, new FacebookCallback<LoginResult>()
     {
       @Override
-      public void call( final com.facebook.Session session, com.facebook.SessionState sessionState, Exception e )
+      public void onSuccess( LoginResult loginResult )
       {
-        if( sessionState == SessionState.OPENED )
-          com.facebook.Request.executeMeRequestAsync( session, new com.facebook.Request.GraphUserCallback()
-          {
-            @Override
-            public void onCompleted( com.facebook.model.GraphUser graphUser, com.facebook.Response response )
-            {
-              if( graphUser != null )
-                Backendless.UserService.loginWithFacebookSession( session, graphUser, facebookFieldsMappings, responder );
-              else
-                responder.handleFault( new BackendlessFault( ExceptionMessage.NULL_GRAPH_USER ) );
-            }
-          } );
+        getBackendlessUser( loginResult.getAccessToken(), facebookFieldsMappings, responder );
       }
-    } );
+
+      @Override
+      public void onCancel()
+      {
+        responder.handleFault( new BackendlessFault( ExceptionMessage.FACEBOOK_LOGINNING_CANCELED ) );
+      }
+
+      @Override
+      public void onError( FacebookException exception )
+      {
+        responder.handleFault( new BackendlessFault( ExceptionMessage.NULL_GRAPH_USER ) );
+         }
+       } );
+
+
+
+    LoginManager.getInstance().logInWithReadPermissions( context, permissions );
+
+  }
+
+  private void getBackendlessUser( final AccessToken accessToken, final Map<String, String> facebookFieldsMappings, final AsyncCallback<BackendlessUser> responder )
+  {
+    GraphRequest request = GraphRequest.newMeRequest( accessToken, new GraphRequest.GraphJSONObjectCallback()
+      {
+        @Override
+        public void onCompleted( JSONObject object,
+                                 GraphResponse response )
+        {
+          FacebookBundle facebookBundle = new FacebookBundle( response, accessToken );
+          Object[] requestData = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), facebookBundle.socialUserId, facebookBundle.accessToken, facebookBundle.expirationDate, facebookBundle.permissions, facebookFieldsMappings };
+          Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithFacebook", requestData, responder, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
+        }
+      } );
+
+    Bundle parameters = new Bundle();
+    parameters.putString("fields", "id,name,link");
+    request.setParameters( parameters );
+    request.executeAsync();
   }
 
   void loginWithFacebook( android.app.Activity context, android.webkit.WebView webView,
@@ -172,69 +199,31 @@ class UserServiceAndroidExtra
     };
   }
 
-  private static com.facebook.AccessToken getAccessTokenFromSession( com.facebook.Session session ) throws Exception
-  {
-    Field f = session.getClass().getDeclaredField( "tokenInfo" );
-    f.setAccessible( true );
-
-    return (com.facebook.AccessToken) f.get( session );
-  }
-
-  private static void checkTokenCachingStrategy( com.facebook.Session facebookSession ) throws Exception
-  {
-    if( !getTokenCachingStrategyFromSession( facebookSession ).getClass().isAssignableFrom( com.facebook.NonCachingTokenCachingStrategy.class ) )
-      throw new IllegalStateException( ExceptionMessage.WRONG_FACEBOOK_CACHING_STRATEGY );
-  }
-
-  private static com.facebook.TokenCachingStrategy getTokenCachingStrategyFromSession(
-          com.facebook.Session session ) throws Exception
-  {
-    Field f = session.getClass().getDeclaredField( "tokenCachingStrategy" );
-    f.setAccessible( true );
-
-    return (com.facebook.TokenCachingStrategy) f.get( session );
-  }
-
-  private static FacebookBundle getFacebookRequestBundle( com.facebook.Session facebookSession,
-                                                          com.facebook.model.GraphUser facebookUser )
-  {
-    return new FacebookBundle( facebookSession, facebookUser );
-  }
-
   private static class FacebookBundle
   {
     String accessToken;
     Date expirationDate;
-    List<String> permissions;
+    Set<String> permissions;
     String socialUserId;
 
-    FacebookBundle( com.facebook.Session facebookSession, com.facebook.model.GraphUser facebookUser )
+    FacebookBundle( GraphResponse response, AccessToken accessToken )
     {
-      if( facebookSession == null || !facebookSession.isOpened() )
-        throw new IllegalArgumentException( ExceptionMessage.NULL_FACEBOOK_SESSION );
 
-      if( facebookUser == null )
-        throw new IllegalArgumentException( ExceptionMessage.NULL_FACEBOOK_GRAPH_USER );
+      JSONObject jsonObj = response.getJSONObject();
+      if ( jsonObj == null )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_FACEBOOK_RESPONSE_OBJECT );
 
-      com.facebook.AccessToken sessionAccessToken;
+      expirationDate = accessToken.getExpires();
+      this.accessToken  = accessToken.getToken();
+      permissions = accessToken.getPermissions();
       try
       {
-        checkTokenCachingStrategy( facebookSession );
-        sessionAccessToken = getAccessTokenFromSession( facebookSession );
+        socialUserId = jsonObj.getString( "id" );
       }
-      catch( IllegalStateException e )
+      catch( JSONException e )
       {
-        throw e;
+        throw new IllegalArgumentException( ExceptionMessage.NULL_FACEBOOK_USER_ID );
       }
-      catch( Exception e )
-      {
-        throw new IllegalStateException( ExceptionMessage.FACEBOOK_SESSION_NO_ACCESS );
-      }
-
-      accessToken = sessionAccessToken.getToken();
-      expirationDate = sessionAccessToken.getExpires();
-      permissions = sessionAccessToken.getPermissions();
-      socialUserId = facebookUser.getId();
     }
   }
 }

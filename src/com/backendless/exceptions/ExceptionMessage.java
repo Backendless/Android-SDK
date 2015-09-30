@@ -31,8 +31,8 @@ public class ExceptionMessage
   public final static String NULL_PASSWORD = "User password cannot be null or empty.";
   public final static String NULL_LOGIN = "User login cannot be null or empty.";
 
-  public final static String NULL_FACEBOOK_SESSION = "Facebook session is null or incomplete.";
-  public static final String NULL_FACEBOOK_GRAPH_USER = "Facebook graph user cannot be null";
+  public final static String NULL_FACEBOOK_RESPONSE_OBJECT = "Facebook response cannot be null.";
+  public static final String NULL_FACEBOOK_USER_ID = "Facebook user id cannot be null";
 
   public final static String NULL_CONTEXT = "Context cannot be null. Use Backendless.initApp( Context context, String applicationId, String secretKey, String version ) for proper initialization.";
 
@@ -54,6 +54,7 @@ public class ExceptionMessage
 
   public final static String NULL_FILE = "File cannot be null.";
   public final static String NULL_PATH = "File path cannot be null or empty.";
+  public final static String NULL_NAME = "File name cannot be null or empty.";
   public final static String NULL_BITMAP = "Bitmap cannot be null";
   public final static String NULL_COMPRESS_FORMAT = "CompressFormat cannot be null";
 
@@ -108,6 +109,7 @@ public class ExceptionMessage
   public static final String FACEBOOK_SESSION_NO_ACCESS = "Could not get access to the Facebook session";
   public static final String WRONG_FACEBOOK_CACHING_STRATEGY = "Facebook session should use NonCachingTokenCachingStrategy";
   public static final String NULL_GRAPH_USER = "Could not get GraphUser from Facebook session";
+  public final static String FACEBOOK_LOGINNING_CANCELED = "Facebook login canceled";
   public static final String NOT_ANDROID = "Operation may be performed only from an Android environment";
   public static final String NULL_GEO_QUERY = "Geo query should not be null";
   public static final String INCONSISTENT_GEO_RELATIVE = "Geo query should contain relative metadata and a threshold for a relative search";
@@ -140,4 +142,6 @@ public class ExceptionMessage
 
   public final static String INVALID_LOG_POLICY = "Either the number of messages or the time frequency must be a positive value";
   public final static String EMPTY_LOG_NAME = "Log name cannot be empty";
+
+
 }

@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
+  ~ *********************************************************************************************************************
+  ~  <p/>
+  ~  BACKENDLESS.COM CONFIDENTIAL
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  ~  <p/>
+  ~  Copyright 2012 BACKENDLESS.COM. All Rights Reserved.
+  ~  <p/>
+  ~  NOTICE: All information contained herein is, and remains the property of Backendless.com and its suppliers,
+  ~  if any. The intellectual and technical concepts contained herein are proprietary to Backendless.com and its
+  ~  suppliers and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret
+  ~  or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden
+  ~  unless prior written permission is obtained from Backendless.com.
+  ~  <p/>
+  ~  ********************************************************************************************************************
+  -->
+
+<!--
        !!! NOT FOR USE !!!
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -84,6 +102,14 @@
             <artifactId>client</artifactId>
             <version>5.1.0.193</version>
             <systemPath>${pom.basedir}/libs/weborbclient.jar</systemPath>
+            <scope>system</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>android.support.v4</groupId>
+            <artifactId>client</artifactId>
+            <version>22</version>
+            <systemPath>${pom.basedir}/libs/android.support.v4.jar</systemPath>
             <scope>system</scope>
         </dependency>
 

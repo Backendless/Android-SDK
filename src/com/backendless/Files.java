@@ -24,10 +24,12 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.files.BackendlessFile;
+import com.backendless.files.FileInfo;
 import com.backendless.files.router.FileOutputStreamRouter;
 import com.backendless.files.router.IOutputStreamRouter;
 import com.backendless.files.security.FileRolePermission;
 import com.backendless.files.security.FileUserPermission;
+
 import weborb.types.Types;
 import weborb.v3types.GUID;
 
@@ -42,6 +44,7 @@ import java.util.regex.Pattern;
 
 public final class Files
 {
+  private static final String OVERWRITE_PARAMETER_NAME = "overwrite";
   protected static final String FILE_MANAGER_SERVER_ALIAS = "com.backendless.services.file.FileService";
   private static final int BUFFER_DEFAULT_LENGTH = 8192;
   private static final String SERVER_ERROR_REGEXP = "(\"message\":\"([^\"}]*)\")(,\"code\":([^\"}]*))?+";
@@ -57,6 +60,7 @@ public final class Files
   {
     Types.addClientClassMapping( "com.backendless.services.file.permissions.FileRolePermission", FileRolePermission.class );
     Types.addClientClassMapping( "com.backendless.services.file.permissions.FileUserPermission", FileUserPermission.class );
+    Types.addClientClassMapping( "com.backendless.management.files.FileInfo", FileInfo.class );
   }
 
   static Files getInstance()
@@ -66,14 +70,24 @@ public final class Files
 
   public BackendlessFile upload( File file, String path ) throws Exception
   {
-    return upload( file, path, new EmptyUploadCallback() );
+    return upload( file, path, false );
+  }
+
+  public BackendlessFile upload( File file, String path, boolean overwrite ) throws Exception
+  {
+    return upload( file, path, overwrite, new EmptyUploadCallback() );
   }
 
   public BackendlessFile upload( File file, String path, UploadCallback uploadCallback ) throws Exception
   {
+    return upload( file, path, false, uploadCallback );
+  }
+
+  public BackendlessFile upload( File file, String path, boolean overwrite, UploadCallback uploadCallback ) throws Exception
+  {
     checkFileAndPath( file, path );
 
-    return uploadFromStream( new FileOutputStreamRouter( file, uploadCallback ), file.getName(), path );
+    return uploadFromStream( new FileOutputStreamRouter( file, uploadCallback ), file.getName(), path, overwrite );
   }
 
   private void checkFileAndPath( File file, String path )
@@ -90,9 +104,15 @@ public final class Files
     if( !file.canRead() )
       throw new IllegalArgumentException( ExceptionMessage.NOT_READABLE_FILE );
   }
-
+  
   public BackendlessFile uploadFromStream( IOutputStreamRouter outputStreamRouter, String name,
                                            String path ) throws Exception
+  {
+    return uploadFromStream( outputStreamRouter, name, path, false );
+  }
+
+  public BackendlessFile uploadFromStream( IOutputStreamRouter outputStreamRouter, String name,
+                                           String path, boolean overwrite ) throws Exception
   {
     HttpURLConnection connection = null;
     int uploadBufferLength = BUFFER_DEFAULT_LENGTH;
@@ -101,7 +121,8 @@ public final class Files
 
     try
     {
-      java.net.URL url = new URL( Backendless.getUrl() + "/" + Backendless.getVersion() + "/files/" + encodeURL( path ) + "/" + encodeURL( name ) );
+      java.net.URL url = new URL( Backendless.getUrl() + "/" + Backendless.getVersion() + "/files/" + encodeURL( path ) + "/"
+          + encodeURL( name ) + "?" + OVERWRITE_PARAMETER_NAME + "=" + overwrite );
       connection = (HttpURLConnection) url.openConnection();
       connection.setDoOutput( true );
       connection.setDoInput( true );
@@ -199,16 +220,27 @@ public final class Files
 
   public void upload( File file, String path, AsyncCallback<BackendlessFile> responder )
   {
-    upload( file, path, new EmptyUploadCallback(), responder );
+    upload( file, path, false, responder );
+  }
+
+  public void upload( File file, String path, boolean overwrite, AsyncCallback<BackendlessFile> responder )
+  {
+    upload( file, path, overwrite, new EmptyUploadCallback(), responder );
   }
 
   public void upload( final File file, final String path, final UploadCallback uploadCallback,
+      final AsyncCallback<BackendlessFile> responder )
+  {
+    upload( file, path, false, uploadCallback, responder );
+  }
+
+  public void upload( final File file, final String path, boolean overwrite, final UploadCallback uploadCallback,
                       final AsyncCallback<BackendlessFile> responder )
   {
     try
     {
       checkFileAndPath( file, path );
-      new UploadFileAsyncTask().executeThis( file, path, uploadCallback, responder );
+      new UploadFileAsyncTask().executeThis( file, path, overwrite, uploadCallback, responder );
     }
     catch( Throwable e )
     {
@@ -295,6 +327,106 @@ public final class Files
   public void saveFile( String filePathName, byte[] fileContent, boolean overwrite, AsyncCallback<String> responder )
   {
     Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), filePathName, fileContent, overwrite }, responder );
+  }
+
+  public void renameFile( String oldPathName, String newName ) throws BackendlessException
+  {
+    if( oldPathName == null || oldPathName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
+    if( newName == null || newName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
+
+    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "renameFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), oldPathName, newName } );
+  }
+
+  public void renameFile( String oldPathName, String newName, AsyncCallback<String> responder ) throws BackendlessException
+  {
+    if( oldPathName == null || oldPathName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
+    if( newName == null || newName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
+
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "renameFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), oldPathName, newName }, responder );
+  }
+
+  public void copyFile( String sourcePathName, String targetPathName ) throws BackendlessException
+  {
+    if( sourcePathName == null || sourcePathName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
+    if( targetPathName == null || targetPathName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
+
+    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "copyFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPathName } );
+  }
+
+  public void copyFile( String sourcePathName, String targetPathName, AsyncCallback<String> responder ) throws BackendlessException
+  {
+    if( sourcePathName == null || sourcePathName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
+    if( targetPathName == null || targetPathName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
+
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "copyFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPathName }, responder );
+  }
+
+  public void moveFile( String sourcePathName, String targetPathName ) throws BackendlessException
+  {
+    if( sourcePathName == null || sourcePathName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
+    if( targetPathName == null || targetPathName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
+
+    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "moveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPathName } );
+  }
+
+  public void moveFile( String sourcePathName, String targetPathName, AsyncCallback<String> responder ) throws BackendlessException
+  {
+    if( sourcePathName == null || sourcePathName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
+    if( targetPathName == null || targetPathName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
+
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "moveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPathName }, responder );
+  }
+
+  public BackendlessCollection<FileInfo> listing( String path, String pattern, boolean recursive)
+  {
+    return listing( path, pattern, recursive, BackendlessSimpleQuery.DEFAULT_PAGE_SIZE, BackendlessSimpleQuery.DEFAULT_OFFSET );
+  }
+
+  public BackendlessCollection<FileInfo> listing( String path, String pattern, boolean recursive, int pagesize, int offset)
+  {
+    BackendlessCollection<FileInfo> collection = Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "listing", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, pattern, recursive, pagesize, offset });
+    collection.setQuery( new BackendlessSimpleQuery(pagesize, offset));
+    return collection;
+  }
+
+  public void listing( String path, String pattern, boolean recursive,
+                       final AsyncCallback<BackendlessCollection<FileInfo>> responder)
+  {
+    listing( path, pattern, recursive, BackendlessSimpleQuery.DEFAULT_PAGE_SIZE, BackendlessSimpleQuery.DEFAULT_OFFSET, responder );
+  }
+
+  public void listing( String path, String pattern, boolean recursive, final int pagesize, final int offset,
+                                                  final AsyncCallback<BackendlessCollection<FileInfo>> responder)
+  {
+            Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "listing", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, pattern, recursive, pagesize, offset }, new AsyncCallback<BackendlessCollection<FileInfo>>()
+            {
+              @Override
+              public void handleResponse( BackendlessCollection<FileInfo> response )
+              {
+                response.setQuery( new BackendlessSimpleQuery(pagesize, offset));
+                if(responder != null)
+                  responder.handleResponse( response );
+              }
+
+              @Override
+              public void handleFault( BackendlessFault fault )
+              {
+                if(responder != null)
+                  responder.handleFault( fault );
+              }
+            } );
   }
 
   private class EmptyUploadCallback implements UploadCallback
