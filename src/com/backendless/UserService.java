@@ -336,6 +336,48 @@ public final class UserService
     getUserServiceAndroidExtra().loginWithTwitter( context, webView, twitterFieldsMappings, getUserLoginAsyncHandler( responder, stayLoggedIn ) );
   }
 
+  public void loginWithGooglePlus( android.app.Activity context, final AsyncCallback<BackendlessUser> responder )
+  {
+    loginWithGooglePlus( context, null, null, null, responder );
+  }
+
+  public void loginWithGooglePlus( android.app.Activity context, android.webkit.WebView webView,
+                                 final AsyncCallback<BackendlessUser> responder )
+  {
+    loginWithGooglePlus( context, webView, null, null, responder );
+  }
+
+  public void loginWithGooglePlus( android.app.Activity context, android.webkit.WebView webView,
+                                 final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  {
+    loginWithGooglePlus( context, webView, null, null, responder, stayLoggedIn );
+  }
+
+  public void loginWithGooglePlus( android.app.Activity context, android.webkit.WebView webView,
+                                 Map<String, String> googlePlusFieldsMappings, List<String> permissions,
+                                 final AsyncCallback<BackendlessUser> responder )
+  {
+    loginWithGooglePlus( context, webView, googlePlusFieldsMappings, permissions, responder, false );
+  }
+
+  public void loginWithGooglePlus( android.app.Activity context, android.webkit.WebView webView,
+                                 Map<String, String> googlePlusFieldsMappings, List<String> permissions,
+                                 final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  {
+    getUserServiceAndroidExtra().loginWithGooglePlus( context, webView, googlePlusFieldsMappings, permissions, getUserLoginAsyncHandler( responder, stayLoggedIn ) );
+  }
+
+  public void loginWithGooglePlusSdk( String accessToken, final AsyncCallback<BackendlessUser> responder )
+  {
+    loginWithGooglePlusSdk( accessToken, null, null, responder );
+  }
+
+  public void loginWithGooglePlusSdk( String accessToken, final Map<String, String> fieldsMappings,
+                                    List<String> permissions, final AsyncCallback<BackendlessUser> responder )
+  {
+    getUserServiceAndroidExtra().loginWithGooglePlusSdk( accessToken, fieldsMappings, permissions, responder );
+  }
+
   public void logout() throws BackendlessException
   {
     synchronized( currentUserLock )
@@ -606,6 +648,19 @@ public final class UserService
       twitterFieldsMapping = new HashMap<String, String>();
 
     Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getTwitterServiceAuthorizationUrlLink", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME ), twitterFieldsMapping }, responder );
+  }
+
+  public void getGooglePlusServiceAuthorizationUrlLink( Map<String, String> googlePlusFieldsMappings,
+                                                      List<String> permissions,
+                                                      AsyncCallback<String> responder ) throws BackendlessException
+  {
+    if( googlePlusFieldsMappings == null )
+      googlePlusFieldsMappings = new HashMap<String, String>();
+
+    if( permissions == null )
+      permissions = new ArrayList<String>();
+
+    Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getGooglePlusServiceAuthorizationUrlLink", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME ), googlePlusFieldsMappings, permissions }, responder );
   }
 
   private static void checkUserToBeProper( BackendlessUser user ) throws BackendlessException
