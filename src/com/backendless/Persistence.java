@@ -816,7 +816,7 @@ public final class Persistence
     }
   }
 
-  public <E> BackendlessCollection<E> callStoredView( Class<E> entity, BackendlessDataQuery dataQuery )
+  public <E> BackendlessCollection<E> getView( Class<E> entity, BackendlessDataQuery dataQuery )
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
