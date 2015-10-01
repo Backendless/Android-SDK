@@ -29,7 +29,7 @@ import com.backendless.files.router.FileOutputStreamRouter;
 import com.backendless.files.router.IOutputStreamRouter;
 import com.backendless.files.security.FileRolePermission;
 import com.backendless.files.security.FileUserPermission;
-
+import org.json.JSONObject;
 import weborb.types.Types;
 import weborb.v3types.GUID;
 
@@ -39,20 +39,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public final class Files
 {
   private static final String OVERWRITE_PARAMETER_NAME = "overwrite";
   protected static final String FILE_MANAGER_SERVER_ALIAS = "com.backendless.services.file.FileService";
   private static final int BUFFER_DEFAULT_LENGTH = 8192;
-  private static final String SERVER_ERROR_REGEXP = "(\"message\":\"([^\"}]*)\")(,\"code\":([^\"}]*))?+";
-  private static final Pattern SERVER_ERROR_PATTERN = Pattern.compile( SERVER_ERROR_REGEXP );
-  private static final String SERVER_RESULT_REGEXP = "(\"fileURL\":\"([^\"[}]]*))";
-  private static final Pattern SERVER_RESULT_PATTERN = Pattern.compile( SERVER_RESULT_REGEXP );
-  private static final int MESSAGE_POSITION = 2;
-  private static final int CODE_POSITION = 4;
   private static final Files instance = new Files();
   public final FilesAndroidExtra Android = FilesAndroidExtra.getInstance();
 
@@ -155,15 +147,9 @@ public final class Files
         String response = scanner.next();
         scanner.close();
 
-        Matcher matcher = SERVER_ERROR_PATTERN.matcher( response );
-        String message = null;
-        String code = null;
-
-        while( matcher.find() )
-        {
-          message = matcher.group( MESSAGE_POSITION );
-          code = matcher.group( CODE_POSITION );
-        }
+        JSONObject errorJson = new JSONObject( response );
+        String message = errorJson.getString( "message" );
+        String code = errorJson.getString( "code" );
 
         throw new BackendlessException( code == null ? String.valueOf( connection.getResponseCode() ) : code, message );
       }
@@ -174,13 +160,10 @@ public final class Files
         String response = scanner.next();
         scanner.close();
 
-        Matcher matcher = SERVER_RESULT_PATTERN.matcher( response );
-        String fileUrl = null;
+        JSONObject responseJson = new JSONObject( response );
+        String fileURL = responseJson.getString( "fileURL" );
 
-        while( matcher.find() )
-          fileUrl = matcher.group( MESSAGE_POSITION );
-
-        return new BackendlessFile( fileUrl );
+        return new BackendlessFile( fileURL );
       }
     }
     catch( MalformedURLException e )
