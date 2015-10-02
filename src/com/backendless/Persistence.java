@@ -45,7 +45,6 @@ import java.util.Map;
 public final class Persistence
 {
   private final static String PERSISTENCE_MANAGER_SERVER_ALIAS = "com.backendless.services.persistence.PersistenceService";
-  private final static String PERSISTANCE_MANAGER_FOR_CLIENT_ALIAS = "com.backendless.services.persistence.PersistenceServiceForClients";
   private final static String DEFAULT_OBJECT_ID_GETTER = "getObjectId";
   public final static String DEFAULT_OBJECT_ID_FIELD = "objectId";
   public final static String DEFAULT_CREATED_FIELD = "created";
@@ -824,7 +823,7 @@ public final class Persistence
     checkPageSizeAndOffset( dataQuery );
 
     Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity ), dataQuery };
-    BackendlessCollection<E> result = Invoker.invokeSync( PERSISTANCE_MANAGER_FOR_CLIENT_ALIAS, "callStoredView", args, ResponderHelper.getCollectionAdaptingResponder( entity ) );
+    BackendlessCollection<E> result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredView", args, ResponderHelper.getCollectionAdaptingResponder( entity ) );
 
     result.setQuery( dataQuery );
     result.setType( entity );
@@ -836,7 +835,7 @@ public final class Persistence
   public BackendlessCollection<Map> callStoredProcedure( String spName, Map<String, Object> arguments )
   {
     Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), spName, arguments };
-    BackendlessCollection<Map> result = Invoker.invokeSync( PERSISTANCE_MANAGER_FOR_CLIENT_ALIAS, "callStoredProcedure", args );
+    BackendlessCollection<Map> result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredProcedure", args );
 
     return result;
   }
