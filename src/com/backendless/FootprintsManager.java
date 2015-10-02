@@ -25,14 +25,7 @@ import weborb.reader.AnonymousObject;
 import weborb.reader.ArrayType;
 import weborb.reader.NamedObject;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.WeakHashMap;
+import java.util.*;
 
 /**
  * If server sends object <code>object</code> with fields <code>a</code>, <code>b</code>, <code>c</code>
@@ -247,19 +240,34 @@ public class FootprintsManager
 
           if( entry.getValue() instanceof Map )
           {
-            //find getter method and call it to get object property
             Object newEntityField;
-            try
+            if( newEntity instanceof BackendlessUser )
             {
-              newEntityField = ReflectionUtil.getFieldValue( newEntity, key );
+              newEntityField = ((BackendlessUser) newEntity).getProperty( key );
+              if( newEntityField == null )
+                newEntityField = ((BackendlessUser) newEntity).getProperty( upperKey );
             }
-            catch( NoSuchFieldException nfe )
+            else
             {
-              //try to find field with first letter in uppercase
-              newEntityField = ReflectionUtil.getFieldValue( newEntity, upperKey );
+              //find getter method and call it to get object property
+              try
+              {
+                newEntityField = ReflectionUtil.getFieldValue( newEntity, key );
+              }
+              catch( NoSuchFieldException nfe )
+              {
+                //try to find field with first letter in uppercase
+                newEntityField = ReflectionUtil.getFieldValue( newEntity, upperKey );
+              }
             }
 
             Object oldEntityField;
+            if( oldEntity instanceof BackendlessUser )
+            {
+              oldEntityField = ((BackendlessUser) oldEntity).getProperty( key );
+              if( oldEntityField == null )
+                oldEntityField = ((BackendlessUser) oldEntity).getProperty( upperKey );
+            }
             try
             {
               oldEntityField = ReflectionUtil.getFieldValue( oldEntity, key );
@@ -283,25 +291,45 @@ public class FootprintsManager
             }
 
             Collection newObjectCollection;
-            try
+            if( newEntity instanceof BackendlessUser )
             {
-              newObjectCollection = (Collection) ReflectionUtil.getFieldValue( newEntity, key );
+              Object newObjectArray = ((BackendlessUser) newEntity).getProperty( key );
+              if( newObjectArray == null )
+                newObjectArray = ((BackendlessUser) newEntity).getProperty( upperKey );
+              newObjectCollection = newObjectArray == null ? new ArrayList() : Arrays.asList( newObjectArray );
             }
-            catch( NoSuchFieldException nfe )
+            else
             {
-              //try to find field with first letter in uppercase
-              newObjectCollection = (Collection) ReflectionUtil.getFieldValue( newEntity, upperKey );
+              try
+              {
+                newObjectCollection = (Collection) ReflectionUtil.getFieldValue( newEntity, key );
+              }
+              catch( NoSuchFieldException nfe )
+              {
+                //try to find field with first letter in uppercase
+                newObjectCollection = (Collection) ReflectionUtil.getFieldValue( newEntity, upperKey );
+              }
             }
 
             Collection oldObjectCollection;
-            try
+            if( oldEntity instanceof BackendlessUser )
             {
-              oldObjectCollection = (Collection) ReflectionUtil.getFieldValue( oldEntity, key );
+              Object oldObjectArray = ((BackendlessUser) oldEntity).getProperty( key );
+              if( oldObjectArray == null )
+                oldObjectArray = ((BackendlessUser) oldEntity).getProperty( upperKey );
+              oldObjectCollection = oldObjectArray == null ? new ArrayList() : Arrays.asList( oldObjectArray );
             }
-            catch( NoSuchFieldException nfe )
+            else
             {
-              //try to find field with first letter in uppercase
-              oldObjectCollection = (Collection) ReflectionUtil.getFieldValue( oldEntity, upperKey );
+              try
+              {
+                oldObjectCollection = (Collection) ReflectionUtil.getFieldValue( oldEntity, key );
+              }
+              catch( NoSuchFieldException nfe )
+              {
+                //try to find field with first letter in uppercase
+                oldObjectCollection = (Collection) ReflectionUtil.getFieldValue( oldEntity, upperKey );
+              }
             }
 
             Collection mapCollection = (Collection) entry.getValue();
