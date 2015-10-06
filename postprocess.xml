@@ -27,5 +27,6 @@
         <copy file="out/backendless.jar" todir="samples/UserService/rolesdemo/libs" overwrite="true"/>
         <copy file="out/backendless.jar" todir="samples/FenceDemo/libs" overwrite="true"/>
         <copy file="out/backendless.jar" todir="../../tests/android/junit/libs" overwrite="true"/>
+        <copy file="out/backendless.jar" todir="samples/UserService/FacebookSDKSamples/login/libs" overwrite="true"/>
     </target>
 </project>

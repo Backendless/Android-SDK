@@ -814,4 +814,29 @@ public final class Persistence
         return clazz.getSimpleName();
     }
   }
+
+  public <E> BackendlessCollection<E> getView( Class<E> entity, BackendlessDataQuery dataQuery )
+  {
+    if( entity == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
+
+    checkPageSizeAndOffset( dataQuery );
+
+    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity ), dataQuery };
+    BackendlessCollection<E> result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredView", args, ResponderHelper.getCollectionAdaptingResponder( entity ) );
+
+    result.setQuery( dataQuery );
+    result.setType( entity );
+
+    return result;
+  }
+
+
+  public BackendlessCollection<Map> callStoredProcedure( String spName, Map<String, Object> arguments )
+  {
+    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), spName, arguments };
+    BackendlessCollection<Map> result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredProcedure", args );
+
+    return result;
+  }
 }
