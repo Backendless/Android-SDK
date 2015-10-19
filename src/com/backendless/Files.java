@@ -415,13 +415,13 @@ public final class Files
 
   public boolean exists( String path )
   {
-    StringUtils.checkNotEmpty( path, ExceptionMessage.NULL_PATH );
+    StringUtils.checkNotNullOrEmpty( path, ExceptionMessage.NULL_PATH );
     return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "exists", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path } );
   }
 
   public void exists( String path, AsyncCallback<Boolean> responder )
   {
-    StringUtils.checkNotEmpty( path, ExceptionMessage.NULL_PATH );
+    StringUtils.checkNotNullOrEmpty( path, ExceptionMessage.NULL_PATH );
     Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "exists", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path }, responder );
   }
 

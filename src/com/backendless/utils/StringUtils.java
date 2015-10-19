@@ -24,14 +24,14 @@ package com.backendless.utils;
 public class StringUtils
 {
 
-  public static boolean isEmpty( String string )
+  public static boolean isNullOrEmpty( String string )
   {
     return string == null || string.isEmpty();
   }
 
-  public static void checkNotEmpty( String string, String errorMessage )
+  public static void checkNotNullOrEmpty( String string, String errorMessage )
   {
-    if( isEmpty( string ) )
+    if( isNullOrEmpty( string ) )
       throw new IllegalArgumentException( errorMessage );
   }
 }
