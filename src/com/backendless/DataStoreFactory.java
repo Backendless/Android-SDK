@@ -24,7 +24,6 @@ import com.backendless.persistence.BackendlessDataQuery;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 class DataStoreFactory
 {
@@ -292,18 +291,6 @@ class DataStoreFactory
       public void getView( BackendlessDataQuery query, AsyncCallback<E> responder )
       {
         Backendless.Persistence.getView( entityClass, query, responder );
-      }
-
-      @Override
-      public BackendlessCollection<Map> callStoredProcedure( String procedureName, Map<String, Object> args )
-      {
-        return Backendless.Persistence.callStoredProcedure( procedureName, args );
-      }
-
-      @Override
-      public void callStoredProcedure( String procedureName, Map<String, Object> args, AsyncCallback<Map> responder )
-      {
-        Backendless.Persistence.callStoredProcedure( procedureName, args, responder );
       }
     };
   }

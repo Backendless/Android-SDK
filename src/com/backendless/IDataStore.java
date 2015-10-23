@@ -23,7 +23,6 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.persistence.BackendlessDataQuery;
 
 import java.util.List;
-import java.util.Map;
 
 public interface IDataStore<E>
 {
@@ -106,8 +105,4 @@ public interface IDataStore<E>
   BackendlessCollection<E> getView( BackendlessDataQuery query );
 
   void getView( BackendlessDataQuery query, AsyncCallback<E> responder );
-
-  BackendlessCollection<Map> callStoredProcedure( String procedureName, Map<String, Object> args );
-
-  void callStoredProcedure( String procedureName, Map<String, Object> args, AsyncCallback<Map> responder );
 }
