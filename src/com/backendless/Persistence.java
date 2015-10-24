@@ -810,26 +810,20 @@ public final class Persistence
     }
   }
 
-  public <E> BackendlessCollection<E> getView( Class<E> entity, BackendlessDataQuery dataQuery )
+  public BackendlessCollection<Map<String, Object>> getView( String viewName, BackendlessDataQuery dataQuery )
   {
-    if( entity == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
-
     checkPageSizeAndOffset( dataQuery );
 
-    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity ), dataQuery };
-    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredView", args, ResponderHelper.getCollectionAdaptingResponder( entity ) );
+    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), viewName, dataQuery };
+    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredView", args );
   }
 
-  public <E> void getView( Class<E> entity, BackendlessDataQuery query, AsyncCallback<E> responder )
+  public void getView( String viewName, BackendlessDataQuery query, AsyncCallback<Map<String, Object>> responder )
   {
-    if( entity == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
-
     checkPageSizeAndOffset( query );
 
-    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity ), query };
-    Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredView", args, responder, ResponderHelper.getCollectionAdaptingResponder( entity ) );
+    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), viewName, query };
+    Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredView", args, responder );
   }
 
 

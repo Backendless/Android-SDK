@@ -280,18 +280,6 @@ class DataStoreFactory
       {
         Backendless.Persistence.loadRelations( entity, relations, responder );
       }
-
-      @Override
-      public BackendlessCollection<E> getView( BackendlessDataQuery query )
-      {
-        return Backendless.Persistence.getView( entityClass, query );
-      }
-
-      @Override
-      public void getView( BackendlessDataQuery query, AsyncCallback<E> responder )
-      {
-        Backendless.Persistence.getView( entityClass, query, responder );
-      }
     };
   }
 }

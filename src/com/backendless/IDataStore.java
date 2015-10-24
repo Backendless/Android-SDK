@@ -101,8 +101,4 @@ public interface IDataStore<E>
   void loadRelations( E entity, List<String> relations ) throws BackendlessException;
 
   void loadRelations( E entity, List<String> relations, AsyncCallback<E> responder );
-
-  BackendlessCollection<E> getView( BackendlessDataQuery query );
-
-  void getView( BackendlessDataQuery query, AsyncCallback<E> responder );
 }
