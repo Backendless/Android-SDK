@@ -739,11 +739,6 @@ public final class Persistence
     return DataStoreFactory.createDataStore( entityClass );
   }
 
-  /*private Map<String,Object> getEntityMapWithFootprint( Object entity )
-  {
-
-  }*/
-
   static String getEntityId( Object entity ) throws BackendlessException
   {
     String id;
@@ -815,28 +810,33 @@ public final class Persistence
     }
   }
 
-  public <E> BackendlessCollection<E> getView( Class<E> entity, BackendlessDataQuery dataQuery )
+  public BackendlessCollection<Map<String, Object>> getView( String viewName, BackendlessDataQuery dataQuery )
   {
-    if( entity == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
-
     checkPageSizeAndOffset( dataQuery );
 
-    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity ), dataQuery };
-    BackendlessCollection<E> result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredView", args, ResponderHelper.getCollectionAdaptingResponder( entity ) );
+    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), viewName, dataQuery };
+    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredView", args );
+  }
 
-    result.setQuery( dataQuery );
-    result.setType( entity );
+  public void getView( String viewName, BackendlessDataQuery query, AsyncCallback<Map<String, Object>> responder )
+  {
+    checkPageSizeAndOffset( query );
 
-    return result;
+    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), viewName, query };
+    Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredView", args, responder );
   }
 
 
   public BackendlessCollection<Map> callStoredProcedure( String spName, Map<String, Object> arguments )
   {
     Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), spName, arguments };
-    BackendlessCollection<Map> result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredProcedure", args );
 
-    return result;
+    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredProcedure", args );
+  }
+
+  public void callStoredProcedure( String procedureName, Map<String, Object> arguments, AsyncCallback<Map> responder )
+  {
+    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), procedureName, arguments };
+    Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredProcedure", args, responder );
   }
 }
