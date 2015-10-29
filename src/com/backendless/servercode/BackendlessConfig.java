@@ -34,4 +34,6 @@ public @interface BackendlessConfig
   boolean required() default false;
 
   String[] options() default {};
+
+  int order() default -1;
 }
