@@ -55,22 +55,37 @@ public class AndroidHandler implements IMessageHandler
       @Override
       public void run()
       {
-        android.os.Message message = new android.os.Message();
-
         try
         {
           List<Message> messages = Backendless.Messaging.pollMessages( subscription.getChannelName(), subscription.getSubscriptionId() );
 
           if( !messages.isEmpty() )
           {
+            android.os.Message message = android.os.Message.obtain();
             message.obj = messages;
-            handler.sendMessage( message );
+            try
+            {
+              handler.sendMessage( message );
+            }
+            finally
+            {
+              message.recycle();
+            }
           }
         }
         catch( BackendlessException e )
         {
+          android.os.Message message = android.os.Message.obtain();
           message.obj = e;
-          handler.sendMessage( message );
+
+          try
+          {
+            handler.sendMessage( message );
+          }
+          finally
+          {
+            message.recycle();
+          }
         }
       }
     };

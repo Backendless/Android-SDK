@@ -25,25 +25,13 @@ import com.backendless.core.responder.policy.BackendlessUserAdaptingPolicy;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.social.AbstractSocialLoginStrategy;
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
+import com.facebook.*;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.lang.reflect.Field;
+import java.util.*;
 
 class UserServiceAndroidExtra
 {
@@ -134,10 +122,10 @@ class UserServiceAndroidExtra
     new AbstractSocialLoginStrategy.Builder( context, webView, AbstractSocialLoginStrategy.SocialType.TWITTER, twitterFieldsMappings, null, getSocialDialogResponder( responder ) ).build().run();
   }
 
-  void loginWithGooglePlusSdk( String accessToken, final Map<String, String> fieldsMappings,
+  void loginWithGooglePlusSdk(  String tokenId, String accessToken, final Map<String, String> fieldsMappings,
                              List<String> permissions, final AsyncCallback<BackendlessUser> responder )
   {
-     Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithGooglePlus", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), accessToken, permissions, fieldsMappings }, new AsyncCallback<BackendlessUser>()
+     Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithGooglePlus", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), tokenId, accessToken, permissions, fieldsMappings }, new AsyncCallback<BackendlessUser>()
     {
       @Override
       public void handleResponse( BackendlessUser response )

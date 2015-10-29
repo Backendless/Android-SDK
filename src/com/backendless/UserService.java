@@ -32,11 +32,7 @@ import com.backendless.property.UserProperty;
 import com.facebook.CallbackManager;
 import weborb.types.Types;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class UserService
 {
@@ -367,15 +363,15 @@ public final class UserService
     getUserServiceAndroidExtra().loginWithGooglePlus( context, webView, googlePlusFieldsMappings, permissions, getUserLoginAsyncHandler( responder, stayLoggedIn ) );
   }
 
-  public void loginWithGooglePlusSdk( String accessToken, final AsyncCallback<BackendlessUser> responder )
+  public void loginWithGooglePlusSdk( String tokenId, String accessToken, final AsyncCallback<BackendlessUser> responder )
   {
-    loginWithGooglePlusSdk( accessToken, null, null, responder );
+    loginWithGooglePlusSdk( tokenId, accessToken, null, null, responder );
   }
 
-  public void loginWithGooglePlusSdk( String accessToken, final Map<String, String> fieldsMappings,
+  public void loginWithGooglePlusSdk( String tokenId, String accessToken, final Map<String, String> fieldsMappings,
                                     List<String> permissions, final AsyncCallback<BackendlessUser> responder )
   {
-    getUserServiceAndroidExtra().loginWithGooglePlusSdk( accessToken, fieldsMappings, permissions, responder );
+    getUserServiceAndroidExtra().loginWithGooglePlusSdk( tokenId, accessToken, fieldsMappings, permissions, responder );
   }
 
   public void logout() throws BackendlessException

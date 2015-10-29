@@ -244,6 +244,7 @@ public class FootprintsManager
             if( newEntity instanceof BackendlessUser )
             {
               newEntityField = ((BackendlessUser) newEntity).getProperty( key );
+
               if( newEntityField == null )
                 newEntityField = ((BackendlessUser) newEntity).getProperty( upperKey );
             }
@@ -294,9 +295,14 @@ public class FootprintsManager
             if( newEntity instanceof BackendlessUser )
             {
               Object newObjectArray = ((BackendlessUser) newEntity).getProperty( key );
+
               if( newObjectArray == null )
                 newObjectArray = ((BackendlessUser) newEntity).getProperty( upperKey );
-              newObjectCollection = newObjectArray == null ? new ArrayList() : Arrays.asList( newObjectArray );
+
+              if( newObjectArray == null )
+                newObjectCollection = new ArrayList();
+              else
+                newObjectCollection = Arrays.asList( (Object[]) newObjectArray );
             }
             else
             {
@@ -315,9 +321,18 @@ public class FootprintsManager
             if( oldEntity instanceof BackendlessUser )
             {
               Object oldObjectArray = ((BackendlessUser) oldEntity).getProperty( key );
+
               if( oldObjectArray == null )
                 oldObjectArray = ((BackendlessUser) oldEntity).getProperty( upperKey );
-              oldObjectCollection = oldObjectArray == null ? new ArrayList() : Arrays.asList( oldObjectArray );
+
+              if( oldObjectArray == null )
+                oldObjectCollection = new ArrayList();
+              else if( oldObjectArray instanceof Collection )
+                oldObjectCollection = (Collection) oldObjectArray;
+              else if( oldObjectArray.getClass().isArray() )
+                oldObjectCollection = Arrays.asList( (Object[]) oldObjectArray );
+              else
+                throw new RuntimeException( "unexpected data type - " + oldObjectArray.getClass() );
             }
             else
             {
