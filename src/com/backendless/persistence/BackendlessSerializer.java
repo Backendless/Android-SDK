@@ -18,6 +18,7 @@
 
 package com.backendless.persistence;
 
+import android.util.Log;
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.backendless.FootprintsManager;
@@ -25,6 +26,7 @@ import com.backendless.Persistence;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.geo.GeoPoint;
+import weborb.util.io.ISerializer;
 
 import java.lang.reflect.Array;
 import java.util.*;
@@ -34,6 +36,9 @@ import java.util.*;
  */
 public class BackendlessSerializer
 {
+
+  private static final String TAG = "BackendlessSerializer";
+
   /**
    * Serializes Object to Map using WebOrb's serializer.
    *
@@ -209,5 +214,45 @@ public class BackendlessSerializer
   public static boolean isBelongsJdk( Class clazz )
   {
     return clazz.getClassLoader() == "".getClass().getClassLoader();
+  }
+
+  public static <T> T deserializeAMF(byte[] arr)
+  {
+    return deserializeAMF( arr, true );
+  }
+
+  public static <T> T deserializeAMF( byte[] arr, boolean adapt )
+  {
+    Object object = null;
+
+    if( arr == null )
+      return null;
+
+    try
+    {
+      object = weborb.util.io.Serializer.fromBytes( arr, ISerializer.AMF3, !adapt );
+    }
+    catch( Exception e )
+    {
+      Log.e( TAG, "Could not deserialize message", e );
+    }
+
+    return (T) object;
+  }
+
+  public static byte[] serializeAMF( Object object )
+  {
+    byte[] arr = null;
+
+    try
+    {
+      arr = weborb.util.io.Serializer.toBytes( object, ISerializer.AMF3 );
+    }
+    catch( Exception e )
+    {
+      Log.e( TAG, "Could not serialize message", e );
+    }
+
+    return arr;
   }
 }

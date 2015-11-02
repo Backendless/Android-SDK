@@ -56,6 +56,7 @@ public final class Backendless
   private static IBackendlessService backendlessService;
   private static IBackendlessService.Init backendlessInitService;
   private static Boolean isAndroid;
+  private static Boolean isFireOS;
 
   private Backendless()
   {
@@ -77,6 +78,24 @@ public final class Backendless
     }
 
     return isAndroid;
+  }
+
+  public static boolean isFireOS()
+  {
+    if( isFireOS == null )
+    {
+      try
+      {
+        Class.forName( "com.amazon.device.messaging.ADM" );
+        isFireOS = true ;
+      }
+      catch( ClassNotFoundException e )
+      {
+        isFireOS = false;
+      }
+    }
+
+    return isFireOS;
   }
 
   static

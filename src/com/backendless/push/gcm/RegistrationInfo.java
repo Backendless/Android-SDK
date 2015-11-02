@@ -16,22 +16,22 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.push;
+package com.backendless.push.gcm;
 
-class RegistrationInfo
+public class RegistrationInfo
 {
-  private String gcmDeviceToken = "";
+  private String deviceToken = "";
   private String registrationId = "";
   private Long registrationExpiration;
 
-  public String getGcmDeviceToken()
+  public String getDeviceToken()
   {
-    return gcmDeviceToken;
+    return deviceToken;
   }
 
-  public void setGcmDeviceToken( String gcmDeviceToken )
+  public void setDeviceToken( String gcmDeviceToken )
   {
-    this.gcmDeviceToken = gcmDeviceToken;
+    this.deviceToken = gcmDeviceToken;
   }
 
   public String getRegistrationId()

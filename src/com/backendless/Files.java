@@ -68,12 +68,12 @@ public final class Files
 
   public BackendlessFile upload( File file, String path, boolean overwrite ) throws Exception
   {
-    return upload(file, path, overwrite, new EmptyUploadCallback());
+    return upload( file, path, overwrite, new EmptyUploadCallback() );
   }
 
   public BackendlessFile upload( File file, String path, UploadCallback uploadCallback ) throws Exception
   {
-    return upload(file, path, false, uploadCallback);
+    return upload( file, path, false, uploadCallback );
   }
 
   public BackendlessFile upload( File file, String path, boolean overwrite, UploadCallback uploadCallback ) throws Exception
@@ -305,12 +305,12 @@ public final class Files
   public void saveFile( String path, String fileName, byte[] fileContent, boolean overwrite,
                         AsyncCallback<String> responder )
   {
-    Invoker.invokeAsync(FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[]{Backendless.getApplicationId(), Backendless.getVersion(), path, fileName, fileContent, overwrite}, responder);
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, fileName, fileContent, overwrite }, responder );
   }
 
   public void saveFile( String filePathName, byte[] fileContent, boolean overwrite, AsyncCallback<String> responder )
   {
-    Invoker.invokeAsync(FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[]{Backendless.getApplicationId(), Backendless.getVersion(), filePathName, fileContent, overwrite}, responder);
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), filePathName, fileContent, overwrite }, responder );
   }
 
   public void renameFile( String oldPathName, String newName ) throws BackendlessException
@@ -320,7 +320,7 @@ public final class Files
     if( newName == null || newName.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
 
-    Invoker.invokeSync(FILE_MANAGER_SERVER_ALIAS, "renameFile", new Object[]{Backendless.getApplicationId(), Backendless.getVersion(), oldPathName, newName});
+    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "renameFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), oldPathName, newName } );
   }
 
   public void renameFile( String oldPathName, String newName, AsyncCallback<String> responder ) throws BackendlessException
@@ -330,7 +330,7 @@ public final class Files
     if( newName == null || newName.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
 
-    Invoker.invokeAsync(FILE_MANAGER_SERVER_ALIAS, "renameFile", new Object[]{Backendless.getApplicationId(), Backendless.getVersion(), oldPathName, newName}, responder);
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "renameFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), oldPathName, newName }, responder );
   }
 
   public void copyFile( String sourcePathName, String targetPathName ) throws BackendlessException
@@ -340,7 +340,7 @@ public final class Files
     if( targetPathName == null || targetPathName.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
 
-    Invoker.invokeSync(FILE_MANAGER_SERVER_ALIAS, "copyFile", new Object[]{Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPathName});
+    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "copyFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPathName } );
   }
 
   public void copyFile( String sourcePathName, String targetPathName, AsyncCallback<String> responder ) throws BackendlessException
@@ -350,7 +350,7 @@ public final class Files
     if( targetPathName == null || targetPathName.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
 
-    Invoker.invokeAsync(FILE_MANAGER_SERVER_ALIAS, "copyFile", new Object[]{Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPathName}, responder);
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "copyFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPathName }, responder );
   }
 
   public void moveFile( String sourcePathName, String targetPathName ) throws BackendlessException
@@ -360,7 +360,7 @@ public final class Files
     if( targetPathName == null || targetPathName.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
 
-    Invoker.invokeSync(FILE_MANAGER_SERVER_ALIAS, "moveFile", new Object[]{Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPathName});
+    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "moveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPathName } );
   }
 
   public void moveFile( String sourcePathName, String targetPathName, AsyncCallback<String> responder ) throws BackendlessException
@@ -381,14 +381,14 @@ public final class Files
   public BackendlessCollection<FileInfo> listing( String path, String pattern, boolean recursive, int pagesize, int offset)
   {
     BackendlessCollection<FileInfo> collection = Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "listing", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, pattern, recursive, pagesize, offset });
-    collection.setQuery(new BackendlessSimpleQuery(pagesize, offset));
+    collection.setQuery( new BackendlessSimpleQuery(pagesize, offset));
     return collection;
   }
 
   public void listing( String path, String pattern, boolean recursive,
                        final AsyncCallback<BackendlessCollection<FileInfo>> responder)
   {
-    listing(path, pattern, recursive, BackendlessSimpleQuery.DEFAULT_PAGE_SIZE, BackendlessSimpleQuery.DEFAULT_OFFSET, responder);
+    listing( path, pattern, recursive, BackendlessSimpleQuery.DEFAULT_PAGE_SIZE, BackendlessSimpleQuery.DEFAULT_OFFSET, responder );
   }
 
   public void listing( String path, String pattern, boolean recursive, final int pagesize, final int offset,

@@ -42,7 +42,9 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.messaging.*;
-import com.backendless.push.GCMRegistrar;
+import com.backendless.push.AbstractRegistrar;
+import com.backendless.push.adm.ADMRegistrar;
+import com.backendless.push.gcm.GCMRegistrar;
 import weborb.types.Types;
 
 import java.util.*;
@@ -57,6 +59,9 @@ public final class Messaging
   private final static String OS;
   private final static String OS_VERSION;
   private static final Messaging instance = new Messaging();
+  private static final Map<String,Subscription> subscriptions = new HashMap();
+  private AsyncCallback<Void> deviceRegistrationCallback;
+  private static final AbstractRegistrar registrar = Backendless.isFireOS() ? new ADMRegistrar() : new GCMRegistrar();
 
   private Messaging()
   {
@@ -71,7 +76,14 @@ public final class Messaging
   static
   {
     String id = null;
-    if( Backendless.isAndroid() )
+
+    if ( Backendless.isFireOS() )
+    {
+      id = Build.SERIAL;
+      OS_VERSION = String.valueOf( Build.VERSION.SDK_INT );
+      OS = "FIRE_OS";
+    }
+    else if( Backendless.isAndroid() )
     {
       id = Build.SERIAL;
       OS_VERSION = String.valueOf( Build.VERSION.SDK_INT );
@@ -130,6 +142,8 @@ public final class Messaging
   public void registerDevice( final String GCMSenderID, final List<String> channels, final Date expiration,
                               final AsyncCallback<Void> callback )
   {
+    deviceRegistrationCallback = callback;
+
     new AsyncTask<Void, Void, RuntimeException>()
     {
       @Override
@@ -147,7 +161,7 @@ public final class Messaging
 
         try
         {
-          registerDeviceGCMSync( ((AndroidService) AndroidService.recoverService()).getApplicationContext(), GCMSenderID, channels, expiration );
+          registerDeviceSync( ((AndroidService) AndroidService.recoverService()).getApplicationContext(), GCMSenderID, channels, expiration );
           return null;
         }
         catch( RuntimeException t )
@@ -156,22 +170,22 @@ public final class Messaging
         }
       }
 
-      @Override
-      protected void onPostExecute( RuntimeException result )
-      {
-        if( result != null )
-        {
-          if( callback == null )
-            throw result;
-
-          callback.handleFault( new BackendlessFault( result ) );
-        }
-        else
-        {
-          if( callback != null )
-            callback.handleResponse( null );
-        }
-      }
+//      @Override
+//      protected void onPostExecute( RuntimeException result )
+//      {
+//        if( result != null )
+//        {
+//          if( callback == null )
+//            throw result;
+//
+//          callback.handleFault( new BackendlessFault( result ) );
+//        }
+//        else
+//        {
+//          if( callback != null )
+//            callback.handleResponse( null );
+//        }
+//      }
     }.execute();
   }
 
@@ -180,8 +194,8 @@ public final class Messaging
     registerDevice( GCMSenderID, "", callback );
   }
 
-  private synchronized void registerDeviceGCMSync( Context context, String GCMSenderID, List<String> channels,
-                                                   Date expiration ) throws BackendlessException
+  private synchronized void registerDeviceSync( Context context, String GCMSenderID, List<String> channels,
+                                                Date expiration ) throws BackendlessException
   {
     if( channels != null )
       for( String channel : channels )
@@ -190,10 +204,32 @@ public final class Messaging
     if( expiration != null && expiration.before( Calendar.getInstance().getTime() ) )
       throw new IllegalArgumentException( ExceptionMessage.WRONG_EXPIRATION_DATE );
 
-    GCMRegistrar.checkDevice( context );
-    GCMRegistrar.checkManifest( context );
-    GCMRegistrar.register( context, GCMSenderID, channels, expiration );
+    registrar.checkPossibility( context );
+    registrar.register( context, GCMSenderID, channels, expiration );
   }
+
+//  private synchronized void registerDeviceADMSync( Context context, String GCMSenderID, List<String> channels,
+//                                                   Date expiration ) throws BackendlessException
+//  {
+//    if( channels != null )
+//      for( String channel : channels )
+//        checkChannelName( channel );
+//
+//    if( expiration != null && expiration.before( Calendar.getInstance().getTime() ) )
+//      throw new IllegalArgumentException( ExceptionMessage.WRONG_EXPIRATION_DATE );
+//
+//
+//    if ( Backendless.isFireOS() )
+//    {
+//      final ADM adm = new ADM( context );
+//      if( adm.getRegistrationId() == null )
+//      {
+//        // startRegister() is asynchronous; your app is notified via the
+//        // onRegistered() callback when the registration ID is available.
+//        adm.startRegister();
+//      }
+//    }
+//  }
 
   private void checkChannelName( String channelName ) throws BackendlessException
   {
@@ -289,10 +325,10 @@ public final class Messaging
         {
           Context context = ((AndroidService) AndroidService.recoverService()).getApplicationContext();
 
-          if( !GCMRegistrar.isRegistered( context ) )
+          if( !registrar.isRegistered( context ) )
             return new IllegalArgumentException( ExceptionMessage.DEVICE_NOT_REGISTERED );
 
-          GCMRegistrar.unregister( context );
+          registrar.unregister( context );
           return null;
         }
         catch( RuntimeException t )
@@ -521,22 +557,26 @@ public final class Messaging
     subscription.setChannelName( channelName );
     subscription.setSubscriptionId( subscriptionId );
 
-    if( pollingInterval != 0 )
-      subscription.setPollingInterval( pollingInterval );
+    if ( subscriptionOptions.getDeliveryMethod() == DeliveryMethodEnum.POLL )
+    {
+      if( pollingInterval != 0 )
+        subscription.setPollingInterval( pollingInterval );
 
-    subscription.onSubscribe( subscriptionResponder );
+      subscription.onSubscribe( subscriptionResponder );
+    }
 
     return subscription;
   }
 
-  private String subscribeForPollingAccess( String channelName,
-                                            SubscriptionOptions subscriptionOptions ) throws BackendlessException
+  private String subscribeForPollingAccess( String channelName, SubscriptionOptions subscriptionOptions ) throws BackendlessException
   {
     if( channelName == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_CHANNEL_NAME );
 
     if( subscriptionOptions == null )
       subscriptionOptions = new SubscriptionOptions();
+
+    subscriptionOptions.setDeviceId( Messaging.DEVICE_ID );
 
     return Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionOptions } );
   }
@@ -577,7 +617,7 @@ public final class Messaging
   }
 
   public void subscribe( final String channelName, final AsyncCallback<List<Message>> subscriptionResponder,
-                         SubscriptionOptions subscriptionOptions, final int pollingInterval,
+                         final SubscriptionOptions subscriptionOptions, final int pollingInterval,
                          final AsyncCallback<Subscription> responder )
   {
     try
@@ -630,6 +670,15 @@ public final class Messaging
 
       if( subscriptionOptions == null )
         subscriptionOptions = new SubscriptionOptions();
+
+      subscriptionOptions.setDeviceId( Messaging.DEVICE_ID );
+
+      if ( subscriptionOptions.getDeliveryMethod() == null )
+
+        if ( Backendless.isAndroid() )
+          subscriptionOptions.setDeliveryMethod( DeliveryMethodEnum.PUSH );
+        else
+          subscriptionOptions.setDeliveryMethod( DeliveryMethodEnum.POLL );
 
       Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionOptions }, responder );
     }
@@ -818,5 +867,25 @@ public final class Messaging
       if( responder != null )
         responder.handleFault( new BackendlessFault( e ) );
     }
+  }
+
+  public Subscription getSubscription( String chanelName )
+  {
+    return subscriptions.get( chanelName );
+  }
+
+  public void setSubscription( String chanelName, Subscription subscription )
+  {
+    subscriptions.put( chanelName, subscription );
+  }
+
+  public AsyncCallback<Void> getDeviceRegistrationCallback()
+  {
+    return deviceRegistrationCallback;
+  }
+
+  public static AbstractRegistrar getRegistrar()
+  {
+    return registrar;
   }
 }

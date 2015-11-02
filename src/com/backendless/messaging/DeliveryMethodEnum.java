@@ -18,9 +18,11 @@
 
 package com.backendless.messaging;
 
-public enum PushPolicyEnum
+/**
+ * Created by mikhail on 6/9/15.
+ */
+public enum DeliveryMethodEnum
 {
-  ONLY,
-  ALSO,
-  NONE
+  POLL,
+  PUSH
 }

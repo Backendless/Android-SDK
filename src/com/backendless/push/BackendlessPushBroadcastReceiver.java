@@ -29,13 +29,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
 import android.os.SystemClock;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.RemoteViews;
 import com.backendless.Backendless;
 import com.backendless.Messaging;
+import com.backendless.Subscription;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.backendless.messaging.Message;
 import com.backendless.messaging.PublishOptions;
+import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.push.gcm.GCMRegistrar;
 import com.backendless.push.gcm.NotificationLookAndFeel;
 
@@ -44,8 +48,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class BackendlessBroadcastReceiver extends BroadcastReceiver
+public class BackendlessPushBroadcastReceiver extends BroadcastReceiver
 {
+  private static final String NOTIFICATION_STRING = "{n}";
+
   private static final String TAG = "BackendlessBroadcastReceiver";
   private static final Random random = new Random();
 
@@ -56,7 +62,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
 
   private static final String WAKELOCK_KEY = "GCM_LIB";
   private static PowerManager.WakeLock wakeLock;
-  private static final Object LOCK = BackendlessBroadcastReceiver.class;
+  private static final Object LOCK = BackendlessPushBroadcastReceiver.class;
 
   //Fields are placed here because this class is most strongly referenced by android
   private static String persistedSenderId;
@@ -70,26 +76,28 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
 
   private static int notificationId = 1;
 
-  public BackendlessBroadcastReceiver()
+  private static boolean internalUnregistered = false;
+
+  public BackendlessPushBroadcastReceiver()
   {
   }
 
-  public BackendlessBroadcastReceiver( String senderId )
+  public BackendlessPushBroadcastReceiver( String senderId )
   {
-    BackendlessBroadcastReceiver.persistedSenderId = senderId;
+    BackendlessPushBroadcastReceiver.persistedSenderId = senderId;
   }
 
-  public static void setSenderId( String senderId )
+  protected static void setSenderId( String senderId )
   {
-    BackendlessBroadcastReceiver.persistedSenderId = senderId;
+    BackendlessPushBroadcastReceiver.persistedSenderId = senderId;
   }
 
-  protected static void setRegistrationExpiration( long registrationExpiration )
+  public static void setRegistrationExpiration( long registrationExpiration )
   {
-    BackendlessBroadcastReceiver.persistedRegistrationExpiration = registrationExpiration;
+    BackendlessPushBroadcastReceiver.persistedRegistrationExpiration = registrationExpiration;
   }
 
-  protected static void setChannels( List<String> channels )
+  public static void setChannels( List<String> channels )
   {
     persistedChannels = channels.toArray( new String[channels.size()] );
   }
@@ -200,10 +208,39 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
 
   private void handleMessage( final Context context, Intent intent )
   {
+    boolean showPushNotification;
 
     try
     {
-      boolean showPushNotification = onMessage( context, intent );
+      String pushMessage = intent.getStringExtra( "message" );
+      String chanelName = intent.getStringExtra( NOTIFICATION_STRING );
+
+      if (chanelName != null )
+      {
+        Subscription subscription = Backendless.Messaging.getSubscription( chanelName );
+
+        if ( pushMessage.isEmpty() )
+        {
+          List<Message> messages = Backendless.Messaging.pollMessages( chanelName, subscription.getSubscriptionId() );
+
+          subscription.handlerMessage( messages );
+        }
+        else
+        {
+          byte[] byteMessage = Base64.decode( pushMessage, Base64.DEFAULT );
+          //byteMessage = CompressUtils.decompress( byteMessage );
+          Message message = BackendlessSerializer.deserializeAMF( byteMessage );
+
+          subscription.handlerMessage( Arrays.asList( message ) );
+        }
+
+        showPushNotification = false;
+      }
+      else
+      {
+        showPushNotification = onMessage( context, intent );
+      }
+
 
       if( showPushNotification )
       {
@@ -252,11 +289,10 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
 
   private void handleRegistration( final Context context, Intent intent )
   {
-
-
     String registrationId = intent.getStringExtra( Constants.EXTRA_REGISTRATION_ID );
     String error = intent.getStringExtra( Constants.EXTRA_ERROR );
-    String unregistered = intent.getStringExtra( Constants.EXTRA_UNREGISTERED );
+    String unregisteredGcm = intent.getStringExtra( Constants.EXTRA_UNREGISTERED );
+    boolean unregisteredAdm = intent.getBooleanExtra( Constants.EXTRA_UNREGISTERED, false );
     boolean isInternal = intent.getBooleanExtra( Constants.EXTRA_IS_INTERNAL, false );
 
     // registration succeeded
@@ -270,20 +306,24 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
       Messaging.getRegistrar().resetBackoff( context );
       Messaging.getRegistrar().setDeviceToken( context, registrationId );
       registerFurther( context, registrationId );
-
-      AsyncCallback<Void> callback = Backendless.Messaging.getDeviceRegistrationCallback();
-      callback.handleResponse( null );
-
       return;
     }
 
     // unregistration succeeded
-    if( unregistered != null )
+    if( unregisteredGcm != null || unregisteredAdm)
     {
-      // Remember we are unregistered
-      Messaging.getRegistrar().resetBackoff( context );
-      Messaging.getRegistrar().setDeviceToken( context, "" );
-      unregisterFurther( context );
+      if ( internalUnregistered )
+      {
+        internalUnregistered = false;
+      }
+      else
+      {
+        // Remember we are unregistered
+        Messaging.getRegistrar().resetBackoff( context );
+        Messaging.getRegistrar().setDeviceToken( context, "" );
+        unregisterFurther( context );
+      }
+
       return;
     }
 
@@ -303,12 +343,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
     }
     else
     {
-      AsyncCallback<Void> callback = Backendless.Messaging.getDeviceRegistrationCallback();
-
-      if (callback == null)
-        onError( context, error );
-      else
-        callback.handleFault( new BackendlessFault( error ) );
+      onError( context, error );
     }
   }
 
@@ -348,5 +383,15 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
         onError( context, "Could not unregister device on Backendless server: " + fault.getMessage() );
       }
     } );
+  }
+
+  public static boolean isInternalUnregistered()
+  {
+    return internalUnregistered;
+  }
+
+  public static void setInternalUnregistered( boolean internalUnregistered )
+  {
+    BackendlessPushBroadcastReceiver.internalUnregistered = internalUnregistered;
   }
 }

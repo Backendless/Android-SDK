@@ -23,5 +23,6 @@ public class PushBroadcastMask
   public static final int IOS = 1;
   public static final int ANDROID = 1 << 1;
   public static final int WP = 1 << 2;
-  public static final int ALL = 1 | 1 << 1 | 1 << 2;
+  public static final int FIRE_OS = 1 << 3;
+  public static final int ALL = 1 | 1 << 1 | 1 << 2 | 1 << 3;
 }
