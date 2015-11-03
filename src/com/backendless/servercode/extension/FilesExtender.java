@@ -50,6 +50,7 @@ public abstract class FilesExtender
                                           ExecutionResult result ) throws Exception
   {
   }
+
   public void beforeSaveFileFromByteArray( RunnerContext context, String fileUrlLocation, Boolean overwrite ) throws Exception
   {
   }
@@ -58,5 +59,26 @@ public abstract class FilesExtender
                                           ExecutionResult result ) throws Exception
   {
   }
+
+  public void beforeMoveFileOrDirectory( RunnerContext context, String sourcePath, String targetPath )
+      throws Exception
+  {
+  }
+
+  public void afterMoveFileOrDirectory( RunnerContext context, String sourcePath, String targetPath,
+                                        ExecutionResult<String> result ) throws Exception
+  {
+  }
+
+  public void beforeCopyFileOrDirectory( RunnerContext context, String sourcePath, String targetPath )
+      throws Exception
+  {
+  }
+
+  public void afterCopyFileOrDirectory( RunnerContext context, String sourcePath, String targetPath,
+                                        ExecutionResult<String> result ) throws Exception
+  {
+  }
+
 }
 
