@@ -43,7 +43,6 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
-import com.backendless.logging.Logger;
 import com.backendless.messaging.*;
 import com.backendless.push.AbstractRegistrar;
 import com.backendless.push.adm.ADMRegistrar;
@@ -175,22 +174,22 @@ public final class Messaging
         }
       }
 
-//      @Override
-//      protected void onPostExecute( RuntimeException result )
-//      {
-//        if( result != null )
-//        {
-//          if( callback == null )
-//            throw result;
-//
-//          callback.handleFault( new BackendlessFault( result ) );
-//        }
-//        else
-//        {
-//          if( callback != null )
-//            callback.handleResponse( null );
-//        }
-//      }
+      @Override
+      protected void onPostExecute( RuntimeException result )
+      {
+        if( result != null )
+        {
+          if( callback == null )
+            throw result;
+
+          callback.handleFault( new BackendlessFault( result ) );
+        }
+        else
+        {
+          if( callback != null )
+            callback.handleResponse( null );
+        }
+      }
     }.execute();
   }
 
