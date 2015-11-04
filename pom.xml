@@ -112,6 +112,14 @@
             <systemPath>${pom.basedir}/libs/android.support.v4.jar</systemPath>
             <scope>system</scope>
         </dependency>
+        
+        <dependency>
+            <groupId>amazon</groupId>
+            <artifactId>device-messaging</artifactId>
+            <version>1.0.1</version>
+            <systemPath>${pom.basedir}/libs/amazon-device-messaging-1.0.1.jar</systemPath>
+            <scope>system</scope>
+        </dependency>
 
     </dependencies>
 

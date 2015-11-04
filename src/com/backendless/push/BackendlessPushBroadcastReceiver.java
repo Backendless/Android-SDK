@@ -32,6 +32,7 @@ import android.os.SystemClock;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.RemoteViews;
+
 import com.backendless.Backendless;
 import com.backendless.Messaging;
 import com.backendless.Subscription;
@@ -206,6 +207,7 @@ public class BackendlessPushBroadcastReceiver extends BroadcastReceiver
     customLayoutImage = context.getResources().getIdentifier( "push_icon", "drawable", context.getPackageName() );
   }
 
+  @SuppressWarnings( "deprecation" )
   private void handleMessage( final Context context, Intent intent )
   {
     boolean showPushNotification;
@@ -292,7 +294,10 @@ public class BackendlessPushBroadcastReceiver extends BroadcastReceiver
     String registrationId = intent.getStringExtra( Constants.EXTRA_REGISTRATION_ID );
     String error = intent.getStringExtra( Constants.EXTRA_ERROR );
     String unregisteredGcm = intent.getStringExtra( Constants.EXTRA_UNREGISTERED );
-    boolean unregisteredAdm = intent.getBooleanExtra( Constants.EXTRA_UNREGISTERED, false );
+    boolean unregisteredAdm = false;
+    if (unregisteredGcm == null) {
+      unregisteredAdm = intent.getBooleanExtra( Constants.EXTRA_UNREGISTERED, false );
+    }
     boolean isInternal = intent.getBooleanExtra( Constants.EXTRA_IS_INTERNAL, false );
 
     // registration succeeded

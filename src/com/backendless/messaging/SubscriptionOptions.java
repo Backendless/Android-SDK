@@ -27,10 +27,17 @@ public class SubscriptionOptions
   private String selector;
   private DeliveryMethodEnum deliveryMethod;
   private String deviceId;
+  private String GCMSenderId;
 
   public SubscriptionOptions()
   {
     this.subscriberId = new GUID().toString();
+  }
+
+  public SubscriptionOptions( DeliveryMethodEnum method )
+  {
+    this();
+    deliveryMethod = method;
   }
 
   public SubscriptionOptions( String subscriberId )
@@ -99,5 +106,15 @@ public class SubscriptionOptions
   public void setDeviceId( String deviceId )
   {
     this.deviceId = deviceId;
+  }
+
+  public String getGCMSenderId()
+  {
+    return GCMSenderId;
+  }
+
+  public void setGCMSenderId( String GCMSenderId )
+  {
+    this.GCMSenderId = GCMSenderId;
   }
 }

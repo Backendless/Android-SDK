@@ -19,7 +19,9 @@
 package com.backendless.push.adm;
 
 import android.content.Context;
+
 import com.amazon.device.messaging.ADM;
+import com.amazon.device.messaging.development.ADMManifest;
 import com.backendless.push.AbstractRegistrar;
 import com.backendless.push.BackendlessPushBroadcastReceiver;
 
@@ -33,7 +35,7 @@ public class ADMRegistrar extends AbstractRegistrar
   @Override
   public void checkPossibility( Context context )
   {
-    //ADMManifest.checkManifestAuthoredProperly( context );
+    ADMManifest.checkManifestAuthoredProperly( context );
   }
 
   @Override

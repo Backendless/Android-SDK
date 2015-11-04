@@ -52,6 +52,8 @@ public class ExceptionMessage
   public final static String NULL_MESSAGE_ID = "Message id cannot be null or empty.";
   public final static String NULL_SUBSCRIPTION_ID = "Subscription id cannot be null or empty.";
 
+  public final static String WRONG_GCM_SENDER_ID = "GCMSednderId can not be null when use PUSH subscription.";
+
   public final static String NULL_FILE = "File cannot be null.";
   public final static String NULL_PATH = "File path cannot be null or empty.";
   public final static String NULL_NAME = "File name cannot be null or empty.";
