@@ -125,8 +125,12 @@ public final class Files
 
     try
     {
-      java.net.URL url = new URL( Backendless.getUrl() + "/" + Backendless.getVersion() + "/files/" + encodeURL( path ) + "/"
-          + encodeURL( name ) + "?" + OVERWRITE_PARAMETER_NAME + "=" + overwrite );
+      String urlStr = Backendless.getUrl() + "/" + Backendless.getVersion() + "/files/" + encodeURL( path ) + "/" + encodeURL( name );
+
+      if( overwrite )
+        urlStr = urlStr + "?" + OVERWRITE_PARAMETER_NAME + "=" + overwrite;
+
+      java.net.URL url = new URL( urlStr );
       connection = (HttpURLConnection) url.openConnection();
       connection.setDoOutput( true );
       connection.setDoInput( true );
