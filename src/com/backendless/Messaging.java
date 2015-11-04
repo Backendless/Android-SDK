@@ -591,7 +591,7 @@ public final class Messaging
     return new SubscriptionOptions( method );
   }
 
-  private String subscribeForPollingAccess( String channelName, SubscriptionOptions subscriptionOptions )
+  private String subscribeForPollingAccess( final String channelName, SubscriptionOptions subscriptionOptions )
                   throws BackendlessException
   {
     if( channelName == null )
@@ -601,9 +601,36 @@ public final class Messaging
       subscriptionOptions = defaultSubscriptionOptions();
 
     subscriptionOptions.setDeviceId( Messaging.DEVICE_ID );
+    if( subscriptionOptions.getDeliveryMethod() == DeliveryMethodEnum.PUSH )
+    {
+      final String GCMSenderId = subscriptionOptions.getGCMSenderId();
+      if( subscriptionOptions.getGCMSenderId() == null )
+        throw new IllegalArgumentException( ExceptionMessage.WRONG_GCM_SENDER_ID );
+
+      getRegistrations( new AsyncCallback<DeviceRegistration>()
+      {
+        @Override
+        public void handleResponse( DeviceRegistration response )
+        {
+          List<String> channels = new ArrayList<String>( response.getChannels() );
+          if( !channels.contains( channelName ) )
+          {
+            channels.add( channelName );
+          }
+          registerDevice( GCMSenderId, channels, null );
+        }
+
+        @Override
+        public void handleFault( BackendlessFault fault )
+        {
+          Log.w( "Messaging", "Can't get registrations" );
+        }
+      } );
+
+    }
 
     return Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[]
-    { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionOptions } );
+                    { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionOptions } );
   }
 
   private void subscribeForPollingAccess( final String channelName, SubscriptionOptions subscriptionOptions,
@@ -618,12 +645,12 @@ public final class Messaging
         subscriptionOptions = defaultSubscriptionOptions();
 
       subscriptionOptions.setDeviceId( Messaging.DEVICE_ID );
-      final String GCMSenderId = subscriptionOptions.getGCMSenderId();
       if( subscriptionOptions.getDeliveryMethod() == DeliveryMethodEnum.PUSH )
       {
         if( subscriptionOptions.getGCMSenderId() == null )
           throw new IllegalArgumentException( ExceptionMessage.WRONG_GCM_SENDER_ID );
 
+        final String GCMSenderId = subscriptionOptions.getGCMSenderId();
         getRegistrations( new AsyncCallback<DeviceRegistration>()
         {
           @Override
@@ -646,7 +673,7 @@ public final class Messaging
 
       }
       Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[]
-      { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionOptions }, responder );
+                      { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionOptions }, responder );
     }
     catch( Throwable e )
     {
