@@ -143,5 +143,6 @@ public class ExceptionMessage
   public final static String INVALID_LOG_POLICY = "Either the number of messages or the time frequency must be a positive value";
   public final static String EMPTY_LOG_NAME = "Log name cannot be empty";
 
+  public final static String INCORRECT_MESSAGE_TYPE = "Incorrect type of message object";
 
 }
