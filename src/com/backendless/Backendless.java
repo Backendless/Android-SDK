@@ -25,6 +25,7 @@ import com.backendless.geo.LocationTracker;
 import com.backendless.io.BackendlessUserFactory;
 import com.backendless.io.BackendlessUserWriter;
 import com.backendless.io.DoubleWriter;
+import com.backendless.persistence.local.UserIdStorageFactory;
 import com.backendless.persistence.local.UserTokenStorageFactory;
 import weborb.config.ORBConfig;
 import weborb.util.ObjectFactories;
@@ -53,8 +54,7 @@ public final class Backendless
   public static final Logging Logging = com.backendless.Logging.getInstance();
   public static Media Media;
   private static String url = "https://api.backendless.com";
-  private static IBackendlessService backendlessService;
-  private static IBackendlessService.Init backendlessInitService;
+  private static final BackendlessPrefs prefs;
   private static Boolean isAndroid;
 
   private Backendless()
@@ -70,7 +70,7 @@ public final class Backendless
         Class.forName( "android.os.Handler" );
         isAndroid = true;
       }
-      catch( ClassNotFoundException e )
+      catch ( ClassNotFoundException e )
       {
         isAndroid = false;
       }
@@ -83,20 +83,14 @@ public final class Backendless
   {
     ORBConfig.getORBConfig();
     Log.removeLogger( ILoggingConstants.DEFAULT_LOGGER );
-
-    if( isAndroid() )
-    {
-      backendlessService = AndroidService.recoverService();
-      backendlessInitService = new AndroidService.Init();
+    prefs = BackendlessPrefsFactory.create( isAndroid() );
+    if( isAndroid )
       Media = com.backendless.Media.getInstance();
-    }
-    else
-      backendlessInitService = new JavaService.Init();
   }
 
   /**
    * Initializes the Backendless API and all Backendless dependencies. This is the first step in using the client API.
-   * <p/>
+   * <p>
    * There is a low probability for internal API data to be cleared by the garbage collector.
    * In this case, an exception or fault, thrown by any of Backendless API methods, will contain 904 error code.
    *
@@ -126,24 +120,20 @@ public final class Backendless
     if( version == null || version.equals( "" ) )
       throw new IllegalArgumentException( ExceptionMessage.NULL_VERSION );
 
+
     HeadersManager.cleanHeaders();
     MessageWriter.addTypeWriter( BackendlessUser.class, new BackendlessUserWriter() );
     MessageWriter.addTypeWriter( Double.class, new DoubleWriter() );
     ObjectFactories.addArgumentObjectFactory( BackendlessUser.class.getName(), new BackendlessUserFactory() );
-    backendlessInitService.initService( context, new IServiceCreatedCallback()
-    {
-      @Override
-      public void onServiceConnected( IBackendlessService result )
-      {
-        backendlessService = result;
-        backendlessService.setAuthKeys( applicationId, secretKey, version );
-      }
-    } );
+    prefs.onCreate( context );
+    prefs.initPreferences( applicationId, secretKey, version );
 
-    /* Set authKeys temporally if backendlessService is not initialized yet */
-    /* Needed for android only */
-    if( backendlessService instanceof StubBackendlessService )
-      backendlessService.setAuthKeys( applicationId, secretKey, version );
+    if( isAndroid )
+    {
+      Context appContext = ( (Context) context ).getApplicationContext();
+      UserTokenStorageFactory.instance().init( appContext );
+      UserIdStorageFactory.instance().init( appContext );
+    }
 
     if( isCodeRunner() )
       return;
@@ -153,60 +143,60 @@ public final class Backendless
     if( userToken != null && !userToken.equals( "" ) )
       HeadersManager.getInstance().addHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY, userToken );
 
-    if( context != null && LocationTracker.getInstance() == null)
+    if( isAndroid && LocationTracker.getInstance() == null )
     {
-      Intent intent = new Intent( ((Context) context).getApplicationContext(), LocationTracker.class );
-      ((Context) context).getApplicationContext().startService( intent );
+      Intent intent = new Intent( ( (Context) context ).getApplicationContext(), LocationTracker.class );
+      ( (Context) context ).getApplicationContext().startService( intent );
     }
   }
 
   public static void setUIState( String state )
   {
-    if( backendlessService == null )
+    if( prefs == null )
       throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
 
     if( state == null || state.equals( "" ) )
-      backendlessService.cleanHeaders();
+      prefs.cleanHeaders();
     else
     {
-      Map<String, String> headers = backendlessService.getHeaders();
+      Map<String, String> headers = prefs.getHeaders();
       if( headers == null )
         headers = new HashMap<String, String>();
       headers.put( HeadersManager.HeadersEnum.UI_STATE.getHeader(), state );
-      backendlessService.setHeaders( headers );
+      prefs.setHeaders( headers );
     }
   }
 
   public static String getApplicationId()
   {
-    if( backendlessService == null )
+    if( prefs == null )
       throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
 
-    return backendlessService.getApplicationId();
+    return prefs.getApplicationId();
   }
 
   public static String getSecretKey()
   {
-    if( backendlessService == null )
+    if( prefs == null )
       throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
 
-    return backendlessService.getSecretKey();
+    return prefs.getSecretKey();
   }
 
   public static String getVersion()
   {
-    if( backendlessService == null )
+    if( prefs == null )
       throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
 
-    return backendlessService.getVersion();
+    return prefs.getVersion();
   }
 
   protected static Map<String, String> getHeaders()
   {
-    if( backendlessService == null )
+    if( prefs == null )
       throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
 
-    return backendlessService.getHeaders();
+    return prefs.getHeaders();
   }
 
   public static String getUrl()

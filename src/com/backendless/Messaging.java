@@ -107,47 +107,43 @@ public final class Messaging
     return instance;
   }
 
-  public void registerDevice( String GCMSenderID )
+  public void registerDevice( Context context, String GCMSenderID )
   {
-    registerDevice( GCMSenderID, "" );
+    registerDevice( context, GCMSenderID, "" );
   }
 
-  public void registerDevice( String GCMSenderID, String channel )
+  public void registerDevice( Context context, String GCMSenderID, String channel )
   {
-    registerDevice( GCMSenderID, channel, null );
+    registerDevice( context, GCMSenderID, channel, null );
   }
 
-  public void registerDevice( String GCMSenderID, String channel, AsyncCallback<Void> callback )
+  public void registerDevice( Context context, String GCMSenderID, AsyncCallback<Void> callback )
   {
-    registerDevice( GCMSenderID, (channel == null || channel.equals( "" )) ? null : Arrays.asList( channel ), null, callback );
+    registerDevice( context, GCMSenderID, "", callback );
   }
 
-  public void registerDevice( String GCMSenderID, List<String> channels, Date expiration )
+  public void registerDevice( Context context, String GCMSenderID, String channel, AsyncCallback<Void> callback )
   {
-    registerDevice( GCMSenderID, channels, expiration, null );
+    registerDevice( context, GCMSenderID, (channel == null || channel.equals( "" )) ? null : Arrays.asList( channel ), null, callback );
   }
 
-  public void registerDevice( final String GCMSenderID, final List<String> channels, final Date expiration,
-                              final AsyncCallback<Void> callback )
+  public void registerDevice( Context context, String GCMSenderID, List<String> channels, Date expiration )
+  {
+    registerDevice( context, GCMSenderID, channels, expiration, null );
+  }
+
+  public void registerDevice( final Context context, final String GCMSenderID, final List<String> channels,
+                              final Date expiration, final AsyncCallback<Void> callback )
   {
     new AsyncTask<Void, Void, RuntimeException>()
     {
       @Override
       protected RuntimeException doInBackground( Void... params )
       {
-        while( AndroidService.recoverService() instanceof StubBackendlessService )
-          try
-          {
-            Thread.sleep( 500 );
-          }
-          catch( InterruptedException e )
-          {
-            return new RuntimeException( e );
-          }
 
         try
         {
-          registerDeviceGCMSync( ((AndroidService) AndroidService.recoverService()).getApplicationContext(), GCMSenderID, channels, expiration );
+          registerDeviceGCMSync( context, GCMSenderID, channels, expiration );
           return null;
         }
         catch( RuntimeException t )
@@ -173,11 +169,6 @@ public final class Messaging
         }
       }
     }.execute();
-  }
-
-  public void registerDevice( String GCMSenderID, AsyncCallback<Void> callback )
-  {
-    registerDevice( GCMSenderID, "", callback );
   }
 
   private synchronized void registerDeviceGCMSync( Context context, String GCMSenderID, List<String> channels,
@@ -263,31 +254,20 @@ public final class Messaging
     }
   }
 
-  public void unregisterDevice()
+  public void unregisterDevice(Context context)
   {
-    unregisterDevice( null );
+    unregisterDevice( context, null );
   }
 
-  public void unregisterDevice( final AsyncCallback<Void> callback )
+  public void unregisterDevice(final Context context,  final AsyncCallback<Void> callback )
   {
     new AsyncTask<Void, Void, RuntimeException>()
     {
       @Override
       protected RuntimeException doInBackground( Void... params )
       {
-        while( AndroidService.recoverService() instanceof StubBackendlessService )
-          try
-          {
-            Thread.sleep( 500 );
-          }
-          catch( InterruptedException e )
-          {
-            return new RuntimeException( e );
-          }
-
         try
         {
-          Context context = ((AndroidService) AndroidService.recoverService()).getApplicationContext();
 
           if( !GCMRegistrar.isRegistered( context ) )
             return new IllegalArgumentException( ExceptionMessage.DEVICE_NOT_REGISTERED );

@@ -102,7 +102,6 @@ public class ExceptionMessage
   public static final String ENTITY_WRONG_META_FIELD_TYPE = "Wrong type of the meta field";
   public final static String WRONG_ENTITY_TYPE = "Wrong entity type";
 
-  public static final String SERVICE_NOT_DECLARED = "com.backendless.AndroidService is not declared at the application manifest";
   public static final String LOCAL_FILE_EXISTS = "Local file exists";
   public static final String WRONG_REMOTE_PATH = "Remote path cannot be empty";
   public static final String NULL_ROLE_NAME = "Role name cannot be null or empty";
