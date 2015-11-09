@@ -33,7 +33,5 @@
             </intent-filter>
         </activity>
         <activity android:name=".ChatActivity"/>
-
-        <service android:name="com.backendless.AndroidService"/>
     </application>
 </manifest> 

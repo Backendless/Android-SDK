@@ -36,7 +36,5 @@
         </activity>
         <activity android:name=".UploadingActivity" android:screenOrientation="portrait"/>
         <activity android:name=".BrowseActivity"/>
-
-        <service android:name="com.backendless.AndroidService"/>
     </application>
 </manifest> 

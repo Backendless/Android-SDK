@@ -19,13 +19,11 @@
 package com.backendless.fencedemo;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
-import com.backendless.AndroidService;
 import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
 import com.backendless.async.callback.AsyncCallback;
@@ -47,7 +45,6 @@ public class FenceDemo extends Activity
     setContentView( R.layout.fence_demo_activity );
 
     Backendless.initApp( getBaseContext(), Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION );
-    startService( new Intent( this, AndroidService.class ) );
 
     initGeoPoint();
     initUI();
