@@ -37,12 +37,14 @@ package com.backendless;/*
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
+
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.messaging.*;
 import com.backendless.push.GCMRegistrar;
+
 import weborb.types.Types;
 
 import java.util.*;
@@ -332,6 +334,9 @@ public final class Messaging
 
   public MessageStatus publish( Object message ) throws BackendlessException
   {
+    if( message instanceof PublishOptions || message instanceof DeliveryOptions )
+      throw new IllegalArgumentException( ExceptionMessage.INCORRECT_MESSAGE_TYPE );
+
     return publish( null, message );
   }
 
