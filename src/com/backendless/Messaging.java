@@ -134,8 +134,8 @@ public final class Messaging
     registerDevice( GCMSenderID, channels, expiration, null );
   }
 
-  public void registerDevice( final String GCMSenderID, final List<String> channels,
-                              final Date expiration, final AsyncCallback<Void> callback )
+  public void registerDevice( final String GCMSenderID, final List<String> channels, final Date expiration,
+                              final AsyncCallback<Void> callback )
   {
     new AsyncTask<Void, Void, RuntimeException>()
     {
@@ -256,12 +256,12 @@ public final class Messaging
     }
   }
 
-  public void unregisterDevice(Context context)
+  public void unregisterDevice()
   {
-    unregisterDevice( context, null );
+    unregisterDevice( null );
   }
 
-  public void unregisterDevice(final Context context,  final AsyncCallback<Void> callback )
+  public void unregisterDevice( final AsyncCallback<Void> callback )
   {
     new AsyncTask<Void, Void, RuntimeException>()
     {
@@ -270,6 +270,7 @@ public final class Messaging
       {
         try
         {
+          Context context = ContextHandler.getAppContext();
 
           if( !GCMRegistrar.isRegistered( context ) )
             return new IllegalArgumentException( ExceptionMessage.DEVICE_NOT_REGISTERED );

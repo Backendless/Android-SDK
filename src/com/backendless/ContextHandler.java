@@ -13,6 +13,11 @@ public class ContextHandler
 {
   static private Context appContext;
 
+  private ContextHandler()
+  {
+    throw new IllegalStateException( "static" );
+  }
+
   public synchronized static Context getAppContext()
   {
     if(appContext == null) {
