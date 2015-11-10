@@ -50,7 +50,7 @@ public class ContextHandler
     {
       return recoverAppContextOldAndroid();
     }
-    catch ( Exception e )
+    catch ( Throwable e )
     {
       e.printStackTrace();
     }
@@ -70,7 +70,7 @@ public class ContextHandler
       Application app = (Application) field.get( activityThread );
       return app.getApplicationContext();
     }
-    catch ( Exception e )
+    catch ( Throwable e )
     {
       e.printStackTrace();
     }

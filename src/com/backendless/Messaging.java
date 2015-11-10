@@ -142,7 +142,6 @@ public final class Messaging
       @Override
       protected RuntimeException doInBackground( Void... params )
       {
-
         try
         {
           registerDeviceGCMSync( ContextHandler.getAppContext(), GCMSenderID, channels, expiration );
