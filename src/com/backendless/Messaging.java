@@ -107,32 +107,32 @@ public final class Messaging
     return instance;
   }
 
-  public void registerDevice( Context context, String GCMSenderID )
+  public void registerDevice( String GCMSenderID )
   {
-    registerDevice( context, GCMSenderID, "" );
+    registerDevice( GCMSenderID, "" );
   }
 
-  public void registerDevice( Context context, String GCMSenderID, String channel )
+  public void registerDevice( String GCMSenderID, String channel )
   {
-    registerDevice( context, GCMSenderID, channel, null );
+    registerDevice( GCMSenderID, channel, null );
   }
 
-  public void registerDevice( Context context, String GCMSenderID, AsyncCallback<Void> callback )
+  public void registerDevice( String GCMSenderID, AsyncCallback<Void> callback )
   {
-    registerDevice( context, GCMSenderID, "", callback );
+    registerDevice( GCMSenderID, "", callback );
   }
 
-  public void registerDevice( Context context, String GCMSenderID, String channel, AsyncCallback<Void> callback )
+  public void registerDevice( String GCMSenderID, String channel, AsyncCallback<Void> callback )
   {
-    registerDevice( context, GCMSenderID, (channel == null || channel.equals( "" )) ? null : Arrays.asList( channel ), null, callback );
+    registerDevice( GCMSenderID, (channel == null || channel.equals( "" )) ? null : Arrays.asList( channel ), null, callback );
   }
 
-  public void registerDevice( Context context, String GCMSenderID, List<String> channels, Date expiration )
+  public void registerDevice( String GCMSenderID, List<String> channels, Date expiration )
   {
-    registerDevice( context, GCMSenderID, channels, expiration, null );
+    registerDevice( GCMSenderID, channels, expiration, null );
   }
 
-  public void registerDevice( final Context context, final String GCMSenderID, final List<String> channels,
+  public void registerDevice( final String GCMSenderID, final List<String> channels,
                               final Date expiration, final AsyncCallback<Void> callback )
   {
     new AsyncTask<Void, Void, RuntimeException>()
@@ -143,7 +143,7 @@ public final class Messaging
 
         try
         {
-          registerDeviceGCMSync( context, GCMSenderID, channels, expiration );
+          registerDeviceGCMSync( ContextHandler.getAppContext(), GCMSenderID, channels, expiration );
           return null;
         }
         catch( RuntimeException t )
