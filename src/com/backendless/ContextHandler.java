@@ -20,9 +20,8 @@ public class ContextHandler
 
   public synchronized static Context getAppContext()
   {
-    if(appContext == null) {
+    if(appContext == null)
       appContext = recoverAppContext();
-    }
     return appContext;
   }
 
@@ -39,8 +38,7 @@ public class ContextHandler
   {
     try
     {
-      final Class<?> activityThreadClass =
-          Class.forName( "android.app.ActivityThread" );
+      final Class<?> activityThreadClass = Class.forName( "android.app.ActivityThread" );
       final Method method = activityThreadClass.getMethod( "currentApplication" );
 
       Application app = (Application) method.invoke( null, (Object[]) null );
@@ -61,8 +59,7 @@ public class ContextHandler
   {
     try
     {
-      final Class<?> activityThreadClass =
-          Class.forName( "android.app.ActivityThread" );
+      final Class<?> activityThreadClass = Class.forName( "android.app.ActivityThread" );
       final Method method = activityThreadClass.getMethod( "currentActivityThread" );
       Object activityThread = method.invoke( null, (Object[]) null );
       final Field field = activityThreadClass.getDeclaredField( "mInitialApplication" );
