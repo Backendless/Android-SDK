@@ -34,19 +34,21 @@
             android:name="com.backendless.examples.messagingservice.pushdemo.permission.C2D_MESSAGE"
             android:protectionLevel="signature"/>
 
-    <application android:label="@string/app_name" android:icon="@drawable/logo">
+    <application android:label="@string/app_name"
+                 android:icon="@drawable/logo">
         <activity android:name=".MainActivity"
-                  android:label="@string/app_name">
+                  android:label="@string/app_name"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".PushActivity"/>
+        <activity android:name=".PushActivity"
+                  android:screenOrientation="portrait"/>
 
-        <receiver
-                android:name=".PushReceiver"
-                android:permission="com.google.android.c2dm.permission.SEND">
+        <receiver android:name=".PushReceiver"
+                  android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
