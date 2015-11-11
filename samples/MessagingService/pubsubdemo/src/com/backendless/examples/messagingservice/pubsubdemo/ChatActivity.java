@@ -49,34 +49,37 @@ public class ChatActivity extends Activity
     final EditText messageField = (EditText) findViewById( R.id.messageField );
 
     Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION );
-    Backendless.Messaging.subscribe( Defaults.CHANNEL_NAME, new AsyncCallback<List<Message>>()
-                                     {
-                                       @Override
-                                       public void handleResponse( List<Message> response )
-                                       {
-                                         for( Message message : response )
-                                           historyField.setText( message.getPublisherId() + ": " + message.getData() + "\n" + historyField.getText() );
-                                       }
+    Backendless.Messaging.subscribe(
+        Defaults.CHANNEL_NAME,
+        new AsyncCallback<List<Message>>()
+        {
+          @Override
+          public void handleResponse( List<Message> response )
+          {
+            for ( Message message : response )
+              historyField.setText( message.getPublisherId() + ": " + message.getData() + "\n" + historyField.getText() );
+          }
 
-                                       @Override
-                                       public void handleFault( BackendlessFault fault )
-                                       {
-                                         Toast.makeText( ChatActivity.this, fault.getMessage(), Toast.LENGTH_SHORT ).show();
-                                       }
-                                     }, new AsyncCallback<Subscription>()
-                                     {
-                                       @Override
-                                       public void handleResponse( Subscription response )
-                                       {
-                                         subscription = response;
-                                       }
+          @Override
+          public void handleFault( BackendlessFault fault )
+          {
+            Toast.makeText( ChatActivity.this, fault.getMessage(), Toast.LENGTH_SHORT ).show();
+          }
+        },
+        new AsyncCallback<Subscription>()
+        {
+          @Override
+          public void handleResponse( Subscription response )
+          {
+            subscription = response;
+          }
 
-                                       @Override
-                                       public void handleFault( BackendlessFault fault )
-                                       {
-                                         Toast.makeText( ChatActivity.this, fault.getMessage(), Toast.LENGTH_SHORT ).show();
-                                       }
-                                     }
+          @Override
+          public void handleFault( BackendlessFault fault )
+          {
+            Toast.makeText( ChatActivity.this, fault.getMessage(), Toast.LENGTH_SHORT ).show();
+          }
+        }
     );
 
     messageField.setOnKeyListener( new View.OnKeyListener()
