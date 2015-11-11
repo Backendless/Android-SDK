@@ -35,7 +35,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <service android:name="com.backendless.AndroidService"/>
 
         <service android:name="com.backendless.geo.LocationTracker" android:exported="false"/>
         <receiver android:name="com.backendless.AutoStart" android:process=":remote">

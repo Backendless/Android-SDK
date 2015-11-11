@@ -119,6 +119,11 @@ public final class Messaging
     registerDevice( GCMSenderID, channel, null );
   }
 
+  public void registerDevice( String GCMSenderID, AsyncCallback<Void> callback )
+  {
+    registerDevice( GCMSenderID, "", callback );
+  }
+
   public void registerDevice( String GCMSenderID, String channel, AsyncCallback<Void> callback )
   {
     registerDevice( GCMSenderID, (channel == null || channel.equals( "" )) ? null : Arrays.asList( channel ), null, callback );
@@ -137,19 +142,9 @@ public final class Messaging
       @Override
       protected RuntimeException doInBackground( Void... params )
       {
-        while( AndroidService.recoverService() instanceof StubBackendlessService )
-          try
-          {
-            Thread.sleep( 500 );
-          }
-          catch( InterruptedException e )
-          {
-            return new RuntimeException( e );
-          }
-
         try
         {
-          registerDeviceGCMSync( ((AndroidService) AndroidService.recoverService()).getApplicationContext(), GCMSenderID, channels, expiration );
+          registerDeviceGCMSync( ContextHandler.getAppContext(), GCMSenderID, channels, expiration );
           return null;
         }
         catch( RuntimeException t )
@@ -175,11 +170,6 @@ public final class Messaging
         }
       }
     }.execute();
-  }
-
-  public void registerDevice( String GCMSenderID, AsyncCallback<Void> callback )
-  {
-    registerDevice( GCMSenderID, "", callback );
   }
 
   private synchronized void registerDeviceGCMSync( Context context, String GCMSenderID, List<String> channels,
@@ -277,19 +267,9 @@ public final class Messaging
       @Override
       protected RuntimeException doInBackground( Void... params )
       {
-        while( AndroidService.recoverService() instanceof StubBackendlessService )
-          try
-          {
-            Thread.sleep( 500 );
-          }
-          catch( InterruptedException e )
-          {
-            return new RuntimeException( e );
-          }
-
         try
         {
-          Context context = ((AndroidService) AndroidService.recoverService()).getApplicationContext();
+          Context context = ContextHandler.getAppContext();
 
           if( !GCMRegistrar.isRegistered( context ) )
             return new IllegalArgumentException( ExceptionMessage.DEVICE_NOT_REGISTERED );

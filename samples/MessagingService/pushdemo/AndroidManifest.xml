@@ -54,7 +54,5 @@
                 <category android:name="com.backendless.examples.messagingservice.pushdemo"/>
             </intent-filter>
         </receiver>
-
-        <service android:name="com.backendless.AndroidService"/>
     </application>
 </manifest> 
