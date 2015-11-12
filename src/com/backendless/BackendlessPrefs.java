@@ -1,5 +1,7 @@
 package com.backendless;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -9,9 +11,11 @@ class BackendlessPrefs
 {
   protected AuthKeys authKeys;
   protected Map<String, String> headers;
+  private Map<String, String> prefsStore;
 
   public BackendlessPrefs()
   {
+    prefsStore = Collections.synchronizedMap( new HashMap<String, String>() );
   }
 
   public void initPreferences( String applicationId, String secretKey, String version )
@@ -63,6 +67,16 @@ class BackendlessPrefs
   private synchronized AuthKeys getAuthKeys()
   {
     return authKeys;
+  }
+
+  public void set( String key, String value )
+  {
+    prefsStore.put( key, value );
+  }
+
+  public String get( String key )
+  {
+    return prefsStore.get( key );
   }
 
 }

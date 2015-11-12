@@ -22,51 +22,75 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
     super();
   }
 
+  @Override
   public void initPreferences( String applicationId, String secretKey, String version )
   {
     super.initPreferences( applicationId, secretKey, version );
     saveAuthKeysToPreferences( authKeys );
   }
 
+  @Override
   public void setHeaders( Map<String, String> headers )
   {
     super.setHeaders( headers );
     saveHeadersToPreferences( headers );
   }
 
+  @Override
   public void cleanHeaders()
   {
     super.cleanHeaders();
     cleanHeadersFromPreferences();
   }
 
+  @Override
   public void onCreate( Object context )
   {
     super.onCreate( context );
     this.sharedPreferences = ( (Context) context ).getSharedPreferences( PREFS_NAME, Context.MODE_PRIVATE );
   }
 
+  @Override
   public String getApplicationId()
   {
     return getAuthKeys().getApplicationId();
   }
 
+  @Override
   public String getSecretKey()
   {
     return getAuthKeys().getSecretKey();
   }
 
+  @Override
   public String getVersion()
   {
     return getAuthKeys().getVersion();
   }
 
+  @Override
   public synchronized Map getHeaders()
   {
     if( headers == null )
       restoreHeadersFromPreferences();
 
     return headers;
+  }
+
+  @Override
+  public void set( String key, String value )
+  {
+    super.set( key, value );
+    saveToPrefs( key, value );
+  }
+
+  @Override
+  public String get( String key )
+  {
+    String value = super.get( key );
+    if( value == null )
+      return getFromPrefs( key );
+    return value;
   }
 
   private boolean restoreHeadersFromPreferences()
@@ -145,6 +169,25 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
       editor.remove( Type.HEADERS.name64() );
       editor.commit();
     }
+  }
+
+  private void saveToPrefs( String key, String value )
+  {
+    String key64 = toBase64(key);
+    SharedPreferences.Editor editor = sharedPreferences.edit();
+    editor.putString(key64, value );
+    editor.commit();
+  }
+
+  private String getFromPrefs(String key)
+  {
+    String key64 = toBase64(key);
+    return sharedPreferences.getString( key64, null );
+  }
+
+  private static String toBase64( String key )
+  {
+    return UUID.nameUUIDFromBytes( key.getBytes() ).toString();
   }
 
   enum Type
