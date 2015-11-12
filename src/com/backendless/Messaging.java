@@ -34,16 +34,6 @@ package com.backendless;/*
  *  ********************************************************************************************************************
  */
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import weborb.types.Types;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -52,31 +42,18 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.os.Build;
-
 import android.os.Bundle;
 import android.util.Log;
-
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.messaging.*;
-import com.backendless.push.GCMRegistrar;
-
-import weborb.types.Types;
-import com.backendless.messaging.BodyParts;
-import com.backendless.messaging.DeliveryMethodEnum;
-import com.backendless.messaging.DeliveryOptions;
-import com.backendless.messaging.Message;
-import com.backendless.messaging.MessageStatus;
-import com.backendless.messaging.PublishOptions;
-import com.backendless.messaging.PublishStatusEnum;
-import com.backendless.messaging.PushBroadcastMask;
-import com.backendless.messaging.SubscriptionOptions;
 import com.backendless.push.AbstractRegistrar;
 import com.backendless.push.BackendlessPushBroadcastReceiver;
 import com.backendless.push.adm.ADMRegistrar;
 import com.backendless.push.gcm.GCMRegistrar;
+import weborb.types.Types;
 
 import java.util.*;
 
@@ -190,7 +167,7 @@ public final class Messaging
       {
         try
         {
-          registerDeviceSync( ContextHandler.getAppContext(), GCMSenderID, channels, expiration );
+          registerDeviceGCMSync( ContextHandler.getAppContext(), GCMSenderID, channels, expiration );
           return null;
         }
         catch( RuntimeException t )
@@ -610,7 +587,7 @@ public final class Messaging
 
   private String retrieveGcmSenderIdFromManifest()
   {
-    Context context = getContext();
+    Context context = ContextHandler.getAppContext();
 
     PackageManager packageManager = context.getPackageManager();
     String packageName = context.getPackageName();
@@ -649,7 +626,7 @@ public final class Messaging
 
   private boolean userChoosedViaPush()
   {
-    Context context = getContext();
+    Context context = ContextHandler.getAppContext();
     PackageManager packageManager = context.getPackageManager();
     String packageName = context.getPackageName();
     ActivityInfo[] receivers = getReceivers( packageManager, packageName );
@@ -693,11 +670,6 @@ public final class Messaging
   {
     if( receivers == null || receivers.length == 0 )
       throw new IllegalStateException( "No receiver for package " + packageName );
-  }
-
-  private Context getContext()
-  {
-    return ( (AndroidService) AndroidService.recoverService() ).getApplicationContext();
   }
 
   private ActivityInfo[] getReceivers( PackageManager packageManager, String packageName )
