@@ -52,8 +52,6 @@ public class ExceptionMessage
   public final static String NULL_MESSAGE_ID = "Message id cannot be null or empty.";
   public final static String NULL_SUBSCRIPTION_ID = "Subscription id cannot be null or empty.";
 
-  public final static String WRONG_GCM_SENDER_ID = "GCMSednderId can not be null when use PUSH subscription.";
-
   public final static String NULL_FILE = "File cannot be null.";
   public final static String NULL_PATH = "File path cannot be null or empty.";
   public final static String NULL_NAME = "File name cannot be null or empty.";
@@ -145,5 +143,7 @@ public class ExceptionMessage
   public final static String INVALID_LOG_POLICY = "Either the number of messages or the time frequency must be a positive value";
   public final static String EMPTY_LOG_NAME = "Log name cannot be empty";
 
+  public final static String GCM_SENDER_ID_NOT_DECLARED = "GcmSenderId meta-data is not declared in android manifet";
+  public final static String NO_RECEIVER_PRESENTS = "There is no receiver in android manifest";
 
 }
