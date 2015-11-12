@@ -118,8 +118,5 @@
                 android:windowSoftInputMode="stateHidden">
 
         </activity>
-
-
-        <service android:name="com.backendless.AndroidService"></service>
     </application>
 </manifest>

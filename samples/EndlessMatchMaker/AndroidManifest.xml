@@ -118,7 +118,6 @@
                 <category android:name="com.backendless.examples.endless.matchmaker"/>
             </intent-filter>
         </receiver>
-        <service android:name="com.backendless.AndroidService"></service>
     </application>
 
 </manifest> 

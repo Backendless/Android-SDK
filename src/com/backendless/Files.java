@@ -30,22 +30,33 @@ import com.backendless.files.router.IOutputStreamRouter;
 import com.backendless.files.security.FileRolePermission;
 import com.backendless.files.security.FileUserPermission;
 import com.backendless.utils.StringUtils;
-import org.json.JSONObject;
 import weborb.types.Types;
 import weborb.v3types.GUID;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class Files
 {
   private static final String OVERWRITE_PARAMETER_NAME = "overwrite";
   protected static final String FILE_MANAGER_SERVER_ALIAS = "com.backendless.services.file.FileService";
   private static final int BUFFER_DEFAULT_LENGTH = 8192;
+  private static final String SERVER_ERROR_REGEXP = "(\"message\":\"([^\"}]*)\")(,\"code\":([^\"}]*))?+";
+  private static final Pattern SERVER_ERROR_PATTERN = Pattern.compile( SERVER_ERROR_REGEXP );
+  private static final String SERVER_RESULT_REGEXP = "(\"fileURL\":\"([^\"[}]]*))";
+  private static final Pattern SERVER_RESULT_PATTERN = Pattern.compile( SERVER_RESULT_REGEXP );
+  private static final int MESSAGE_POSITION = 2;
+  private static final int CODE_POSITION = 4;
   private static final Files instance = new Files();
   public final FilesAndroidExtra Android = FilesAndroidExtra.getInstance();
 
@@ -97,7 +108,7 @@ public final class Files
     if( !file.canRead() )
       throw new IllegalArgumentException( ExceptionMessage.NOT_READABLE_FILE );
   }
-  
+
   public BackendlessFile uploadFromStream( IOutputStreamRouter outputStreamRouter, String name,
                                            String path ) throws Exception
   {
@@ -114,8 +125,12 @@ public final class Files
 
     try
     {
-      java.net.URL url = new URL( Backendless.getUrl() + "/" + Backendless.getVersion() + "/files/" + encodeURL( path ) + "/"
-          + encodeURL( name ) + "?" + OVERWRITE_PARAMETER_NAME + "=" + overwrite );
+      String urlStr = Backendless.getUrl() + "/" + Backendless.getVersion() + "/files/" + encodeURL( path ) + "/" + encodeURL( name );
+
+      if( overwrite )
+        urlStr = urlStr + "?" + OVERWRITE_PARAMETER_NAME + "=" + overwrite;
+
+      java.net.URL url = new URL( urlStr );
       connection = (HttpURLConnection) url.openConnection();
       connection.setDoOutput( true );
       connection.setDoInput( true );
@@ -148,9 +163,15 @@ public final class Files
         String response = scanner.next();
         scanner.close();
 
-        JSONObject errorJson = new JSONObject( response );
-        String message = errorJson.getString( "message" );
-        String code = errorJson.getString( "code" );
+        Matcher matcher = SERVER_ERROR_PATTERN.matcher( response );
+        String message = null;
+        String code = null;
+
+        while( matcher.find() )
+        {
+          message = matcher.group( MESSAGE_POSITION );
+          code = matcher.group( CODE_POSITION );
+        }
 
         throw new BackendlessException( code == null ? String.valueOf( connection.getResponseCode() ) : code, message );
       }
@@ -161,10 +182,13 @@ public final class Files
         String response = scanner.next();
         scanner.close();
 
-        JSONObject responseJson = new JSONObject( response );
-        String fileURL = responseJson.getString( "fileURL" );
+        Matcher matcher = SERVER_RESULT_PATTERN.matcher( response );
+        String fileUrl = null;
 
-        return new BackendlessFile( fileURL );
+        while( matcher.find() )
+          fileUrl = matcher.group( MESSAGE_POSITION );
+
+        return new BackendlessFile( fileUrl );
       }
     }
     catch( MalformedURLException e )

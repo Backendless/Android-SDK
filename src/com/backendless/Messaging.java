@@ -52,6 +52,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.os.Build;
+
 import android.os.Bundle;
 import android.util.Log;
 
@@ -59,6 +60,10 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.messaging.*;
+import com.backendless.push.GCMRegistrar;
+
+import weborb.types.Types;
 import com.backendless.messaging.BodyParts;
 import com.backendless.messaging.DeliveryMethodEnum;
 import com.backendless.messaging.DeliveryOptions;
@@ -72,6 +77,8 @@ import com.backendless.push.AbstractRegistrar;
 import com.backendless.push.BackendlessPushBroadcastReceiver;
 import com.backendless.push.adm.ADMRegistrar;
 import com.backendless.push.gcm.GCMRegistrar;
+
+import java.util.*;
 
 public final class Messaging
 {
@@ -155,6 +162,11 @@ public final class Messaging
     registerDevice( GCMSenderID, channel, null );
   }
 
+  public void registerDevice( String GCMSenderID, AsyncCallback<Void> callback )
+  {
+    registerDevice( GCMSenderID, "", callback );
+  }
+
   public void registerDevice( String GCMSenderID, String channel, AsyncCallback<Void> callback )
   {
     registerDevice( GCMSenderID, ( channel == null || channel.equals( "" ) ) ? null : Arrays.asList( channel ), null,
@@ -176,19 +188,9 @@ public final class Messaging
       @Override
       protected RuntimeException doInBackground( Void... params )
       {
-        while( AndroidService.recoverService() instanceof StubBackendlessService )
-          try
-          {
-            Thread.sleep( 500 );
-          }
-          catch( InterruptedException e )
-          {
-            return new RuntimeException( e );
-          }
-
         try
         {
-          registerDeviceSync( getContext(), GCMSenderID, channels, expiration );
+          registerDeviceSync( ContextHandler.getAppContext(), GCMSenderID, channels, expiration );
           return null;
         }
         catch( RuntimeException t )
@@ -216,13 +218,8 @@ public final class Messaging
     }.execute();
   }
 
-  public void registerDevice( String GCMSenderID, AsyncCallback<Void> callback )
-  {
-    registerDevice( GCMSenderID, "", callback );
-  }
-
-  private synchronized void registerDeviceSync( Context context, String GCMSenderID, List<String> channels,
-                                                Date expiration ) throws BackendlessException
+  private synchronized void registerDeviceGCMSync( Context context, String GCMSenderID, List<String> channels,
+                                                   Date expiration ) throws BackendlessException
   {
     if( channels != null )
       for( String channel : channels )
@@ -234,32 +231,6 @@ public final class Messaging
     registrar.checkPossibility( context );
     registrar.register( context, GCMSenderID, channels, expiration );
   }
-
-  // private synchronized void registerDeviceADMSync( Context context, String
-  // GCMSenderID, List<String> channels,
-  // Date expiration ) throws BackendlessException
-  // {
-  // if( channels != null )
-  // for( String channel : channels )
-  // checkChannelName( channel );
-  //
-  // if( expiration != null && expiration.before(
-  // Calendar.getInstance().getTime() ) )
-  // throw new IllegalArgumentException( ExceptionMessage.WRONG_EXPIRATION_DATE
-  // );
-  //
-  //
-  // if ( Backendless.isFireOS() )
-  // {
-  // final ADM adm = new ADM( context );
-  // if( adm.getRegistrationId() == null )
-  // {
-  // // startRegister() is asynchronous; your app is notified via the
-  // // onRegistered() callback when the registration ID is available.
-  // adm.startRegister();
-  // }
-  // }
-  // }
 
   private void checkChannelName( String channelName ) throws BackendlessException
   {
@@ -340,19 +311,9 @@ public final class Messaging
       @Override
       protected RuntimeException doInBackground( Void... params )
       {
-        while( AndroidService.recoverService() instanceof StubBackendlessService )
-          try
-          {
-            Thread.sleep( 500 );
-          }
-          catch( InterruptedException e )
-          {
-            return new RuntimeException( e );
-          }
-
         try
         {
-          Context context = getContext();
+          Context context = ContextHandler.getAppContext();
 
           if( !registrar.isRegistered( context ) )
             return new IllegalArgumentException( ExceptionMessage.DEVICE_NOT_REGISTERED );
@@ -422,6 +383,9 @@ public final class Messaging
 
   public MessageStatus publish( Object message ) throws BackendlessException
   {
+    if( message instanceof PublishOptions || message instanceof DeliveryOptions )
+      throw new IllegalArgumentException( ExceptionMessage.INCORRECT_MESSAGE_TYPE );
+
     return publish( null, message );
   }
 

@@ -35,7 +35,5 @@
         <activity android:name=".LoggedInActivity"/>
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".RegisteredActivity"/>
-
-        <service android:name="com.backendless.AndroidService"/>
     </application>
 </manifest> 

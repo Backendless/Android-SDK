@@ -102,7 +102,6 @@ public class ExceptionMessage
   public static final String ENTITY_WRONG_META_FIELD_TYPE = "Wrong type of the meta field";
   public final static String WRONG_ENTITY_TYPE = "Wrong entity type";
 
-  public static final String SERVICE_NOT_DECLARED = "com.backendless.AndroidService is not declared at the application manifest";
   public static final String LOCAL_FILE_EXISTS = "Local file exists";
   public static final String WRONG_REMOTE_PATH = "Remote path cannot be empty";
   public static final String NULL_ROLE_NAME = "Role name cannot be null or empty";
@@ -143,6 +142,7 @@ public class ExceptionMessage
   public final static String INVALID_LOG_POLICY = "Either the number of messages or the time frequency must be a positive value";
   public final static String EMPTY_LOG_NAME = "Log name cannot be empty";
 
+  public final static String INCORRECT_MESSAGE_TYPE = "Message object can not be instance of PublishOptions or DeliveryOptions class";
   public final static String GCM_SENDER_ID_NOT_DECLARED = "GcmSenderId meta-data is not declared in android manifet";
   public final static String NO_RECEIVER_PRESENTS = "There is no receiver in android manifest";
 

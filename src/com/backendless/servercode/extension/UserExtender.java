@@ -131,5 +131,13 @@ public abstract class UserExtender
   public void afterLogout( RunnerContext context, ExecutionResult result ) throws Exception
   {
   }
+
+  public void afterEmailConfirmed( RunnerContext context, String confirmationKey, ExecutionResult<String> result ) throws Exception
+  {
+  }
+
+  public void beforeEmailConfirmed( RunnerContext context, String confirmationKey ) throws Exception
+  {
+  }
 }
 

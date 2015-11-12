@@ -21,7 +21,5 @@
         </activity>
 
         <activity android:name=".ui.TasksListActivity" />
-
-        <service android:name="com.backendless.AndroidService" />
     </application>
 </manifest>
