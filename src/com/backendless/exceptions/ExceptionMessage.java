@@ -145,5 +145,6 @@ public class ExceptionMessage
   public final static String INCORRECT_MESSAGE_TYPE = "Message object can not be instance of PublishOptions or DeliveryOptions class";
   public final static String GCM_SENDER_ID_NOT_DECLARED = "GcmSenderId meta-data is not declared in android manifet";
   public final static String NO_RECEIVER_PRESENTS = "There is no receiver in android manifest";
+  public static final String CAN_NOT_RETRIEVE_RECEIVER_INFORMATION_FROM_MANIGEST = "Can't retrieve receiver information from manigest";
 
 }
