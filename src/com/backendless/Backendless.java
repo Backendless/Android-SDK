@@ -232,4 +232,9 @@ public final class Backendless
   {
     return Thread.currentThread().getThreadGroup().getName().equals( "CodeRunner secure group" );
   }
+
+  static BackendlessPrefs getPreferences()
+  {
+    return prefs;
+  }
 }

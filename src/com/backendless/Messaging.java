@@ -34,6 +34,8 @@ package com.backendless;/*
  *  ********************************************************************************************************************
  */
 
+import static com.backendless.Backendless.getPreferences;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -49,7 +51,6 @@ import java.util.concurrent.Future;
 import weborb.types.Types;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -58,7 +59,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
-import com.backendless.AndroidBackendlessPrefs.Type;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
@@ -95,7 +95,6 @@ public final class Messaging
   private static final SubscriptionOptions defaultSubscriptionOptions = new SubscriptionOptions();
   private static final AbstractRegistrar registrar = Backendless.isFireOS() ? new ADMRegistrar() : new GCMRegistrar();
 
-  AndroidBackendlessPrefs prefs = new AndroidBackendlessPrefs();
   private String GCM_SENDER_ID_PREFERENCES_KEY = "gcmSenderId";
 
   private Messaging()
@@ -177,14 +176,14 @@ public final class Messaging
   private String gcmSenderId()
   {
     if (gcmSenderId == null) {
-      if( prefs.get( GCM_SENDER_ID_PREFERENCES_KEY ) == null )
+      if( getPreferences().get( GCM_SENDER_ID_PREFERENCES_KEY ) == null )
       {
         initReceiverVariables();
         saveToSharedPrefs( GCM_SENDER_ID_PREFERENCES_KEY, gcmSenderId );
       }
       else
       {
-        gcmSenderId = prefs.get( GCM_SENDER_ID_PREFERENCES_KEY );
+        gcmSenderId = getPreferences().get( GCM_SENDER_ID_PREFERENCES_KEY );
       }
     }
     return gcmSenderId;
@@ -192,21 +191,21 @@ public final class Messaging
 
   private void saveToSharedPrefs( String key, String value )
   {
-    prefs.set( key, value );
+    getPreferences().set( key, value );
 
   }
 
   private boolean isPushPubSub()
   {
     if (isPushPubSub == null) {
-      if( prefs.get( IS_PUSH_PUB_SUB ) == null )
+      if( getPreferences().get( IS_PUSH_PUB_SUB ) == null )
       {
         initReceiverVariables();
         saveToSharedPrefs( IS_PUSH_PUB_SUB, isPushPubSub.toString() );
       }
       else
       {
-        isPushPubSub = Boolean.valueOf( prefs.get( IS_PUSH_PUB_SUB ) );
+        isPushPubSub = Boolean.valueOf( getPreferences().get( IS_PUSH_PUB_SUB ) );
       }
     }
     return isPushPubSub;
@@ -748,6 +747,7 @@ public final class Messaging
           }
           else
           {
+            channels.add( channelName );
             registerDeviceGCMSync( ContextHandler.getAppContext(), gcmSenderId(), channels, null );
           }
           return Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[]
