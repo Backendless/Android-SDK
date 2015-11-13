@@ -166,7 +166,8 @@ public final class Messaging
     {
       if( receiverExtendsPushBroadcast( receiver ) )
       {
-        retrieveSenderIdMetaPresent( context, receiver.name );
+        if( Backendless.isAndroid() )
+          retrieveSenderIdMetaPresent( context, receiver.name );
         isPushPubSub = true;
       }
     }
