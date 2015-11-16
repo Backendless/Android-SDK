@@ -106,7 +106,7 @@ public class Subscription
 
     this.subscriptionResponder = subscriptionResponder;
 
-    if ( !Backendless.isAndroid() )
+    if( Backendless.isAndroid() )
       executor.scheduleWithFixedDelay( handler.getSubscriptionThread(), 0, pollingInterval, TimeUnit.MILLISECONDS );
 
     Backendless.Messaging.setSubscription( channelName, this );
