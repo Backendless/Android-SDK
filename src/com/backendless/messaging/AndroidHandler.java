@@ -19,6 +19,8 @@
 package com.backendless.messaging;
 
 import android.os.Handler;
+import android.util.Log;
+
 import com.backendless.Backendless;
 import com.backendless.Subscription;
 import com.backendless.async.callback.AsyncCallback;
@@ -55,6 +57,7 @@ public class AndroidHandler implements IMessageHandler
       @Override
       public void run()
       {
+        Log.wtf( "POLLING", "polled message" );
         android.os.Message message = new android.os.Message();
 
         try
