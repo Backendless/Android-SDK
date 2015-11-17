@@ -42,7 +42,7 @@ public class Logging
     LogBuffer.getInstance().setLogReportingPolicy( numOfMessages, timeFrequencyInSeconds );
   }
 
-  public Logger getLogger( Class clazz )
+  public Logger getLogger( Class<?> clazz )
   {
     return Logger.getLogger( clazz );
   }
