@@ -244,7 +244,39 @@ public final class Messaging
   {
     deviceRegistrationCallback = callback;
 
-    .execute();
+    new AsyncTask<Void, Void, RuntimeException>()
+    {
+      @Override
+      protected RuntimeException doInBackground( Void... params )
+      {
+        try
+        {
+          registerDeviceGCMSync( ContextHandler.getAppContext(), GCMSenderID, channels, expiration );
+          return null;
+        }
+        catch( RuntimeException t )
+        {
+          return t;
+        }
+      }
+
+      @Override
+      protected void onPostExecute( RuntimeException result )
+      {
+        if( result != null )
+        {
+          if( callback == null )
+            throw result;
+
+          callback.handleFault( new BackendlessFault( result ) );
+        }
+        else
+        {
+          if( callback != null )
+            callback.handleResponse( null );
+        }
+      }
+    }.execute();
   }
 
   private synchronized void registerDeviceGCMSync( Context context, String GCMSenderID, List<String> channels,
