@@ -44,10 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -87,45 +84,6 @@ import com.backendless.push.gcm.GCMRegistrar;
 
 public final class Messaging
 {
-  private final class PushSubscriptionCallback implements AsyncCallback<String>
-  {
-    private final int pollingInterval;
-    private final String channelName;
-    private final AsyncCallback<Subscription> responder;
-
-    private PushSubscriptionCallback( AsyncCallback<List<Message>> subscriptionResponder, int pollingInterval,
-                                      String channelName, AsyncCallback<Subscription> responder )
-    {
-      Backendless.Messaging.subscriptionResponder = subscriptionResponder;
-      this.pollingInterval = pollingInterval;
-      this.channelName = channelName;
-      this.responder = responder;
-    }
-
-    @Override
-    public void handleResponse( String subscriptionId )
-    {
-      Subscription subscription = new Subscription();
-      subscription.setChannelName( channelName );
-      subscription.setSubscriptionId( subscriptionId );
-
-      if( !isPushPubSub() )
-      {
-        Backendless.Messaging.subscribeForPollingMessageByInterval( subscription );
-      }
-      if( responder != null )
-        responder.handleResponse( subscription );
-    }
-
-
-
-    @Override
-    public void handleFault( BackendlessFault fault )
-    {
-      if( responder != null )
-        responder.handleFault( fault );
-    }
-  }
 
   private static final String IS_PUSH_PUB_SUB_PREFERENCES_KEY = "isPushPubSub";
   public final static String DEVICE_ID;
@@ -147,6 +105,7 @@ public final class Messaging
                   .newSingleThreadScheduledExecutor( ThreadFactoryService.getThreadFactory() );
   private AsyncCallback<List<Message>> subscriptionResponder;
   private ScheduledFuture<?> currentTask;
+  public static SubscriptionOptions options;
 
   private IMessageHandler handler;
 
@@ -207,6 +166,44 @@ public final class Messaging
   static Messaging getInstance()
   {
     return instance;
+  }
+
+  private final class PushSubscriptionCallback implements AsyncCallback<String>
+  {
+    private final int pollingInterval;
+    private final String channelName;
+    private final AsyncCallback<Subscription> responder;
+
+    private PushSubscriptionCallback( AsyncCallback<List<Message>> subscriptionResponder, int pollingInterval,
+                                      String channelName, AsyncCallback<Subscription> responder )
+    {
+      Backendless.Messaging.subscriptionResponder = subscriptionResponder;
+      this.pollingInterval = pollingInterval;
+      this.channelName = channelName;
+      this.responder = responder;
+    }
+
+    @Override
+    public void handleResponse( String subscriptionId )
+    {
+      Subscription subscription = new Subscription();
+      subscription.setChannelName( channelName );
+      subscription.setSubscriptionId( subscriptionId );
+
+      if( !isPushPubSub() )
+      {
+        Backendless.Messaging.subscribeForPollingMessageByInterval( subscription, pollingInterval );
+      }
+      if( responder != null )
+        responder.handleResponse( subscription );
+    }
+
+    @Override
+    public void handleFault( BackendlessFault fault )
+    {
+      if( responder != null )
+        responder.handleFault( fault );
+    }
   }
 
   private static void initReceiverVariables()
@@ -347,11 +344,6 @@ public final class Messaging
     registerDevice( GCMSenderID, DEFAULT_CHANNEL_NAME, callback );
   }
 
-  public void subscribeDeviceForPush( String GCMSenderID, String channel )
-  {
-    registerDevice( GCMSenderID, channel, null );
-  }
-
   public void registerDevice( String GCMSenderID, String channel )
   {
     registerDevice( GCMSenderID, channel, null );
@@ -380,9 +372,9 @@ public final class Messaging
       {
         try
         {
-          BackendlessPushBroadcastReceiver.isRegisterIntent = true;
+          BackendlessPushBroadcastReceiver.isPubSubRegisterIntent = true;
           subscribeDeviceGCMSync( ContextHandler.getAppContext(), gcMSenderID, channelName );
-          if( params.length != 0 )
+          if( params.length != 0 && deviceSubscriptionCallback != null )
             deviceSubscriptionCallback.handleResponse( params[ 0 ] );
           return null;
         }
@@ -412,6 +404,35 @@ public final class Messaging
 
   }
 
+  public String subscribeDeviceSyncForPush( final String gcMSenderID, final String channelName )
+  {
+    BackendlessPushBroadcastReceiver.isPubSubRegisterIntent = true;
+    final String result = "";
+    Backendless.Messaging.deviceSubscriptionCallback = new AsyncCallback<String>()
+    {
+      @Override
+      public void handleResponse( String response )
+      {
+        if( response != null )
+        {
+          result.concat( response );
+        }
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        throw new BackendlessException( fault );
+      }
+
+    };
+
+    BackendlessPushBroadcastReceiver.isPubSubRegisterIntent = true;
+    subscribeDeviceGCMSync( ContextHandler.getAppContext(), gcMSenderID, channelName );
+    return result;
+  }
+
+
   public void registerDevice( final String gcMSenderID, final List<String> channels, final Date expiration,
                               final AsyncCallback<Void> callback )
   {
@@ -424,7 +445,7 @@ public final class Messaging
       {
         try
         {
-          BackendlessPushBroadcastReceiver.isRegisterIntent = false;
+          BackendlessPushBroadcastReceiver.isPubSubRegisterIntent = true;
           registerDeviceGCMSync( ContextHandler.getAppContext(), gcMSenderID, channels, expiration );
           return null;
         }
@@ -511,7 +532,8 @@ public final class Messaging
   {
     checkDeviceToken( deviceToken );
 
-    SubscriptionOptions options = new SubscriptionOptions( DeliveryMethodEnum.PUSH );
+    SubscriptionOptions options = Messaging.options;
+    options.setDeliveryMethod( DeliveryMethodEnum.PUSH );
 
     DeviceRegistration registration = new DeviceRegistration();
     registration.setDeviceId( DEVICE_ID );
@@ -844,15 +866,16 @@ public final class Messaging
     subscription.setChannelName( channelName );
 
     String subscriptionId = null;
-    if( isPushPubSub() )
-    {
-      subscriptionId = subscribeSyncForPush( channelName, subscriptionOptions );
-    }
-    else
-    {
-      subscribeSyncForPolling( channelName, subscriptionOptions );
-      subscribeForPollingMessageByInterval( subscription, pollingInterval );
-    }
+    // if( isPushPubSub() )
+    // {
+    // subscriptionId = subscribeSyncForPush( channelName, subscriptionOptions
+    // );
+    // }
+    // else
+    // {
+    subscriptionId = subscribeSyncForPolling( channelName, subscriptionOptions );
+    subscribeForPollingMessageByInterval( subscription, pollingInterval );
+    // }
 
     subscription.setSubscriptionId( subscriptionId );
     return subscription;
@@ -939,55 +962,12 @@ public final class Messaging
 
     subscriptionOptions.setDeviceId( Messaging.DEVICE_ID );
 
-    if( gcmSenderId() != null )
+    if( gcmSenderId() == null )
     {
       throw new BackendlessException( ExceptionMessage.GCM_SENDER_ID_NOT_DECLARED );
     }
 
-    subscriptionOptions.setDeliveryMethod( DeliveryMethodEnum.PUSH );
-    Callable<String> call = new Callable<String>()
-    {
-
-      @Override
-      public String call()
-      {
-        DeviceRegistration registrations = getRegistrations();
-        List<String> channels = new ArrayList<String>();
-        if( registrations != null )
-        {
-          channels.addAll( registrations.getChannels() );
-          if( !channels.contains( channelName ) )
-          {
-            channels.add( channelName );
-            registerDeviceOnServer( registrations.deviceToken, channels, 0 );
-          }
-        }
-        else
-        {
-          channels.add( channelName );
-          registerDeviceGCMSync( ContextHandler.getAppContext(), gcmSenderId(), channels, null );
-        }
-        return Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[]
-        { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionOptions } );
-      }
-    };
-
-    Future<String> future = executor.submit( call );
-
-    String result;
-    try
-    {
-      result = future.get();
-    }
-    catch( InterruptedException e )
-    {
-      throw new BackendlessException( e );
-    }
-    catch( ExecutionException e )
-    {
-      throw new BackendlessException( e );
-    }
-    return result;
+    return subscribeDeviceSyncForPush( gcmSenderId(), channelName );
 
   }
 
@@ -997,11 +977,31 @@ public final class Messaging
     checkChannelName( channelName );
 
     subscriptionOptions.setDeviceId( Messaging.DEVICE_ID );
-
     subscriptionOptions.setDeliveryMethod( DeliveryMethodEnum.POLL );
-    return Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[]
-    { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionOptions } );
+    final String result = "";
 
+    new AsyncTask<Void, Void, RuntimeException>()
+    {
+      @Override
+      protected RuntimeException doInBackground( Void... params )
+      {
+        try
+        {
+          result.concat( (String) Invoker
+                          .invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess",
+                                          new Object[]
+                          { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionOptions,
+                              new DeviceRegistration() } ) );
+          return null;
+        }
+        catch( RuntimeException t )
+        {
+          return t;
+        }
+      }
+    }.execute();
+
+    return result;
   }
 
   private void subscribeAsyncForPolling( final String channelName, final SubscriptionOptions subscriptionOptions,
@@ -1096,8 +1096,8 @@ public final class Messaging
   {
     try
     {
+      this.options = subscriptionOptions;
       checkChannelName( channelName );
-
       subscribeDevice( gcmSenderId(), channelName, callback );
     }
     catch( Throwable e )
@@ -1348,5 +1348,10 @@ public final class Messaging
   public static AbstractRegistrar getRegistrar()
   {
     return registrar;
+  }
+
+  public AsyncCallback<String> getDeviceSubscriptionCallback()
+  {
+    return deviceSubscriptionCallback;
   }
 }

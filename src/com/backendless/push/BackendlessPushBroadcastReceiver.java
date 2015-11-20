@@ -18,6 +18,11 @@
 
 package com.backendless.push;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
 import android.R;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -40,15 +45,9 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.messaging.Message;
 import com.backendless.messaging.PublishOptions;
-import com.backendless.messaging.SubscriptionOptions;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.push.gcm.GCMRegistrar;
 import com.backendless.push.gcm.NotificationLookAndFeel;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class BackendlessPushBroadcastReceiver extends BroadcastReceiver
 {
@@ -79,7 +78,7 @@ public class BackendlessPushBroadcastReceiver extends BroadcastReceiver
   private static int notificationId = 1;
 
   private static boolean internalUnregistered = false;
-  public static boolean isRegisterIntent = true;
+  public static boolean isPubSubRegisterIntent = true;
 
   public BackendlessPushBroadcastReceiver()
   {
@@ -309,7 +308,7 @@ public class BackendlessPushBroadcastReceiver extends BroadcastReceiver
 
       Messaging.getRegistrar().resetBackoff( context );
       Messaging.getRegistrar().setDeviceToken( context, registrationId );
-      if( isRegisterIntent )
+      if( isPubSubRegisterIntent )
         subscribeOnServer( context, registrationId );
       else
         registerOnServer( context, registrationId );
@@ -383,12 +382,14 @@ public class BackendlessPushBroadcastReceiver extends BroadcastReceiver
         Messaging.getRegistrar().setRegistrationId( context, registrationId,
                         getRegistrationExpiration() );
         onRegistered( context, registrationId );
+        if( Backendless.Messaging.getDeviceSubscriptionCallback() != null )
+          Backendless.Messaging.getDeviceSubscriptionCallback().handleResponse( registrationId );
       }
 
       @Override
       public void handleFault( BackendlessFault fault )
       {
-        onError( context, "Could not register device on Backendless server: " + fault.getMessage() );
+        onError( context, "Could not subscribe device on Backendless server: " + fault.getMessage() );
       }
     };
     // TODO this is test code

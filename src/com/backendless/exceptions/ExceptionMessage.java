@@ -147,4 +147,6 @@ public class ExceptionMessage
   public final static String NO_RECEIVER_PRESENTS = "There is no receiver in android manifest";
   public static final String CAN_NOT_RETRIEVE_RECEIVER_INFORMATION_FROM_MANIGEST = "Can't retrieve receiver information from manigest";
 
+  public static final String SERVER_TIMEOUT_CAN_NOT_GET_SUBSCRIPTION_ID = "Server timeout. Can't get subscriptionId";
+
 }
