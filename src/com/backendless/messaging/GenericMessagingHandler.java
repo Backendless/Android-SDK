@@ -40,7 +40,8 @@ public class GenericMessagingHandler implements IMessageHandler
       {
         try
         {
-          List<Message> messages = Backendless.Messaging.pollMessages( subscription.getChannelName(), subscription.getSubscriptionId() );
+          List<Message> messages = Backendless.Messaging.pollMessages( subscription.getChannelName(),
+                          subscription.getSubscriptionId() );
 
           if( !messages.isEmpty() && subscriptionResponder != null )
             subscriptionResponder.handleResponse( messages );

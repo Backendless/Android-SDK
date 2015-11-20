@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+
 import com.backendless.push.gcm.RegistrationInfo;
 
 import java.util.ArrayList;
@@ -44,6 +45,8 @@ public abstract class AbstractRegistrar
   public abstract void checkPossibility( Context context );
 
   public abstract void register( Context context, String senderId, List<String> channels, Date expiration );
+
+  public abstract void subscribe( Context context, String senderId, String channelName );
 
   public abstract void unregister( Context context );
 

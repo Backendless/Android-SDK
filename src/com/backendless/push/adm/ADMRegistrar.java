@@ -24,6 +24,7 @@ import com.amazon.device.messaging.ADM;
 import com.amazon.device.messaging.development.ADMManifest;
 import com.backendless.push.AbstractRegistrar;
 import com.backendless.push.BackendlessPushBroadcastReceiver;
+import com.backendless.push.Constants;
 
 import java.util.Date;
 import java.util.List;
@@ -31,6 +32,12 @@ import java.util.List;
 public class ADMRegistrar extends AbstractRegistrar
 {
   private static ADM adm;
+
+  @Override
+  public void subscribe( Context context, String senderId, String channelName )
+  {
+    throw new UnsupportedOperationException( Constants.SUBSCRIBE_METHOD_IS_NOT_SUITABLE_FOR_ADM_REGISTRAR );
+  }
 
   @Override
   public void checkPossibility( Context context )

@@ -40,6 +40,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.messaging.Message;
 import com.backendless.messaging.PublishOptions;
+import com.backendless.messaging.SubscriptionOptions;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.push.gcm.GCMRegistrar;
 import com.backendless.push.gcm.NotificationLookAndFeel;
@@ -78,6 +79,7 @@ public class BackendlessPushBroadcastReceiver extends BroadcastReceiver
   private static int notificationId = 1;
 
   private static boolean internalUnregistered = false;
+  public static boolean isRegisterIntent = true;
 
   public BackendlessPushBroadcastReceiver()
   {
@@ -167,16 +169,13 @@ public class BackendlessPushBroadcastReceiver extends BroadcastReceiver
     {
       String action = intent.getAction();
 
-      if( action.equals( Constants.INTENT_FROM_GCM_REGISTRATION_CALLBACK )
-              || action.equals( Constants.INTENT_FROM_ADM_REGISTRATION_CALLBACK ))
-
+      if( IntentUtils.registrationIntent( action ) )
         handleRegistration( context, intent );
-      else if( action.equals( Constants.INTENT_FROM_GCM_MESSAGE )
-              || action.equals( Constants.INTENT_FROM_ADM_MESSAGE ) )
 
+      else if( IntentUtils.messageIntent( action ) )
         handleMessage( context, intent );
-      else if( action.equals( Constants.INTENT_FROM_GCM_LIBRARY_RETRY )
-              || action.equals( Constants.INTENT_FROM_ADM_LIBRARY_RETRY ))
+
+      else if( IntentUtils.libraryRetry( action ) )
       {
         String token = intent.getStringExtra( EXTRA_TOKEN );
         if( !TOKEN.equals( token ) )
@@ -225,7 +224,7 @@ public class BackendlessPushBroadcastReceiver extends BroadcastReceiver
         {
           List<Message> messages = Backendless.Messaging.pollMessages( chanelName, subscription.getSubscriptionId() );
 
-          subscription.handlerMessage( messages );
+          Backendless.Messaging.handlerMessage( messages );
         }
         else
         {
@@ -233,7 +232,7 @@ public class BackendlessPushBroadcastReceiver extends BroadcastReceiver
           //byteMessage = CompressUtils.decompress( byteMessage );
           Message message = BackendlessSerializer.deserializeAMF( byteMessage );
 
-          subscription.handlerMessage( Arrays.asList( message ) );
+          Backendless.Messaging.handlerMessage( Arrays.asList( message ) );
         }
 
         showPushNotification = false;
@@ -310,7 +309,10 @@ public class BackendlessPushBroadcastReceiver extends BroadcastReceiver
 
       Messaging.getRegistrar().resetBackoff( context );
       Messaging.getRegistrar().setDeviceToken( context, registrationId );
-      registerFurther( context, registrationId );
+      if( isRegisterIntent )
+        subscribeOnServer( context, registrationId );
+      else
+        registerOnServer( context, registrationId );
       return;
     }
 
@@ -352,7 +354,7 @@ public class BackendlessPushBroadcastReceiver extends BroadcastReceiver
     }
   }
 
-  private void registerFurther( final Context context, String GCMregistrationId )
+  private void registerOnServer( final Context context, String GCMregistrationId )
   {
     Backendless.Messaging.registerDeviceOnServer( GCMregistrationId, getChannels(), getRegistrationExpiration(), new AsyncCallback<String>()
     {
@@ -369,6 +371,28 @@ public class BackendlessPushBroadcastReceiver extends BroadcastReceiver
         onError( context, "Could not register device on Backendless server: " + fault.getMessage() );
       }
     } );
+  }
+  
+  private void subscribeOnServer( final Context context, String gcMregistrationId )
+  {
+    AsyncCallback<String> serverCallback = new AsyncCallback<String>()
+                    {
+      @Override
+      public void handleResponse( String registrationId )
+      {
+        Messaging.getRegistrar().setRegistrationId( context, registrationId,
+                        getRegistrationExpiration() );
+        onRegistered( context, registrationId );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        onError( context, "Could not register device on Backendless server: " + fault.getMessage() );
+      }
+    };
+    // TODO this is test code
+    Backendless.Messaging.subscribeDeviceForPush( gcMregistrationId, getChannels().get( 0 ), serverCallback );
   }
 
   private void unregisterFurther( final Context context )

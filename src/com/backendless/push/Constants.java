@@ -21,7 +21,6 @@ package com.backendless.push;
 public class Constants
 {
   public static final String INTENT_TO_GCM_REGISTRATION = "com.google.android.c2dm.intent.REGISTER";
-
   public static final String INTENT_TO_GCM_UNREGISTRATION = "com.google.android.c2dm.intent.UNREGISTER";
 
   public static final String INTENT_FROM_GCM_REGISTRATION_CALLBACK = "com.google.android.c2dm.intent.REGISTRATION";
@@ -40,9 +39,11 @@ public class Constants
   public static final String EXTRA_IS_INTERNAL = "internal_registration";
   public static final String EXTRA_REGISTRATION_ID = "registration_id";
   public static final String EXTRA_DEVICE_TOKEN = "device_token";
+  public static final String EXTRA_SUBSCRIPTION_REGISTRATION = "subscription_registration";
   public static final String EXTRA_SPECIAL_MESSAGE = "message_type";
-  public static final String VALUE_DELETED_MESSAGES = "deleted_messages";
   public static final String EXTRA_TOTAL_DELETED = "total_deleted";
+
+  public static final String VALUE_DELETED_MESSAGES = "deleted_messages";
 
   public static final String ERROR_SERVICE_NOT_AVAILABLE = "SERVICE_NOT_AVAILABLE";
   public static final String ERROR_ACCOUNT_MISSING = "ACCOUNT_MISSING";
@@ -55,6 +56,8 @@ public class Constants
   public static final String PERMISSION_ANDROID_ACCOUNTS = "android.permission.GET_ACCOUNTS";
   public static final String PERMISSION_GCM_MESSAGE = "com.google.android.c2dm.permission.RECEIVE";
   public static final String PERMISSION_GCM_INTENTS = "com.google.android.c2dm.permission.SEND";
+
+  public static final String SUBSCRIBE_METHOD_IS_NOT_SUITABLE_FOR_ADM_REGISTRAR = "Subscribe method is not suitable for AdmRegistrar";
 
   private Constants()
   {

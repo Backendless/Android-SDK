@@ -62,7 +62,8 @@ public class AndroidHandler implements IMessageHandler
 
         try
         {
-          List<Message> messages = Backendless.Messaging.pollMessages( subscription.getChannelName(), subscription.getSubscriptionId() );
+          List<Message> messages = Backendless.Messaging.pollMessages( subscription.getChannelName(),
+                          subscription.getSubscriptionId() );
 
           if( !messages.isEmpty() )
           {

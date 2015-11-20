@@ -31,6 +31,7 @@ import android.os.PowerManager;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.RemoteViews;
+
 import com.backendless.Backendless;
 import com.backendless.Messaging;
 import com.backendless.async.callback.AsyncCallback;
@@ -158,16 +159,13 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
     {
       String action = intent.getAction();
 
-      if( action.equals( Constants.INTENT_FROM_GCM_REGISTRATION_CALLBACK )
-              || action.equals( Constants.INTENT_FROM_ADM_REGISTRATION_CALLBACK ))
-
+      if( IntentUtils.registrationIntent( action ) )
         handleRegistration( context, intent );
-      else if( action.equals( Constants.INTENT_FROM_GCM_MESSAGE )
-              || action.equals( Constants.INTENT_FROM_ADM_MESSAGE ) )
 
+      else if( IntentUtils.messageIntent( action ) )
         handleMessage( context, intent );
-      else if( action.equals( Constants.INTENT_FROM_GCM_LIBRARY_RETRY )
-              || action.equals( Constants.INTENT_FROM_ADM_LIBRARY_RETRY ))
+
+      else if( IntentUtils.libraryRetry( action ) )
       {
         String token = intent.getStringExtra( EXTRA_TOKEN );
         if( !TOKEN.equals( token ) )
@@ -252,8 +250,6 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
 
   private void handleRegistration( final Context context, Intent intent )
   {
-
-
     String registrationId = intent.getStringExtra( Constants.EXTRA_REGISTRATION_ID );
     String error = intent.getStringExtra( Constants.EXTRA_ERROR );
     String unregistered = intent.getStringExtra( Constants.EXTRA_UNREGISTERED );
@@ -262,54 +258,67 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
     // registration succeeded
     if( registrationId != null )
     {
-      if( isInternal )
-      {
-        onRegistered( context, registrationId );
-      }
-
-      Messaging.getRegistrar().resetBackoff( context );
-      Messaging.getRegistrar().setDeviceToken( context, registrationId );
-      registerFurther( context, registrationId );
-
-      AsyncCallback<Void> callback = Backendless.Messaging.getDeviceRegistrationCallback();
-      callback.handleResponse( null );
-
+      register( context, registrationId, isInternal );
       return;
     }
 
     // unregistration succeeded
     if( unregistered != null )
     {
-      // Remember we are unregistered
-      Messaging.getRegistrar().resetBackoff( context );
-      Messaging.getRegistrar().setDeviceToken( context, "" );
-      unregisterFurther( context );
+      unregister( context );
       return;
     }
 
     // Registration failed
     if( error.equals( Constants.ERROR_SERVICE_NOT_AVAILABLE ) )
     {
-      int backoffTimeMs = Messaging.getRegistrar().getBackoff( context );
-      int nextAttempt = backoffTimeMs / 2 + random.nextInt( backoffTimeMs );
-      Intent retryIntent = new Intent( Constants.INTENT_FROM_GCM_LIBRARY_RETRY );
-      retryIntent.putExtra( EXTRA_TOKEN, TOKEN );
-      PendingIntent retryPendingIntent = PendingIntent.getBroadcast( context, 0, retryIntent, 0 );
-      AlarmManager am = (AlarmManager) context.getSystemService( Context.ALARM_SERVICE );
-      am.set( AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + nextAttempt, retryPendingIntent );
-      // Next retry should wait longer.
-      if( backoffTimeMs < MAX_BACKOFF_MS )
-        Messaging.getRegistrar().setBackoff( context, backoffTimeMs * 2 );
+      handleServiceOnAvailable( context );
     }
     else
     {
       AsyncCallback<Void> callback = Backendless.Messaging.getDeviceRegistrationCallback();
-
       if (callback == null)
         onError( context, error );
       else
         callback.handleFault( new BackendlessFault( error ) );
     }
+  }
+
+  private void handleServiceOnAvailable( final Context context )
+  {
+    int backoffTimeMs = Messaging.getRegistrar().getBackoff( context );
+    int nextAttempt = backoffTimeMs / 2 + random.nextInt( backoffTimeMs );
+    Intent retryIntent = new Intent( Constants.INTENT_FROM_GCM_LIBRARY_RETRY );
+    retryIntent.putExtra( EXTRA_TOKEN, TOKEN );
+    PendingIntent retryPendingIntent = PendingIntent.getBroadcast( context, 0, retryIntent, 0 );
+    AlarmManager am = (AlarmManager) context.getSystemService( Context.ALARM_SERVICE );
+    am.set( AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + nextAttempt, retryPendingIntent );
+    // Next retry should wait longer.
+    if( backoffTimeMs < MAX_BACKOFF_MS )
+      Messaging.getRegistrar().setBackoff( context, backoffTimeMs * 2 );
+  }
+
+  private void unregister( final Context context )
+  {
+    // Remember we are unregistered
+    Messaging.getRegistrar().resetBackoff( context );
+    Messaging.getRegistrar().setDeviceToken( context, "" );
+    unregisterFurther( context );
+  }
+
+  private void register( final Context context, String registrationId, boolean isInternal )
+  {
+    if( isInternal )
+    {
+      onRegistered( context, registrationId );
+    }
+
+    Messaging.getRegistrar().resetBackoff( context );
+    Messaging.getRegistrar().setDeviceToken( context, registrationId );
+    registerFurther( context, registrationId );
+
+    AsyncCallback<Void> callback = Backendless.Messaging.getDeviceRegistrationCallback();
+    callback.handleResponse( null );
   }
 
   private void registerFurther( final Context context, String GCMregistrationId )

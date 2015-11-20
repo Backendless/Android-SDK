@@ -27,7 +27,7 @@ public class SubscriptionOptions
   private String selector;
   private DeliveryMethodEnum deliveryMethod;
   private String deviceId;
-  private String GCMSenderId;
+  private String gcMSenderId;
 
   public SubscriptionOptions()
   {
@@ -110,11 +110,22 @@ public class SubscriptionOptions
 
   public String getGCMSenderId()
   {
-    return GCMSenderId;
+    return gcMSenderId;
   }
 
-  public void setGCMSenderId( String GCMSenderId )
+  public void setGCMSenderId( String gcMSenderId )
   {
-    this.GCMSenderId = GCMSenderId;
+    this.gcMSenderId = gcMSenderId;
   }
+
+  public String getGcMSenderId()
+  {
+    return gcMSenderId;
+  }
+
+  public void setGcMSenderId( String gcMSenderId )
+  {
+    this.gcMSenderId = gcMSenderId;
+  }
+
 }

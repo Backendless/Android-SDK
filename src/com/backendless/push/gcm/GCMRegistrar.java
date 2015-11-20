@@ -26,6 +26,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Build;
+
 import com.backendless.push.AbstractRegistrar;
 import com.backendless.push.BackendlessPushBroadcastReceiver;
 import com.backendless.push.Constants;
@@ -38,6 +39,16 @@ public final class GCMRegistrar extends AbstractRegistrar
 
   public static final int DEFAULT_ON_SERVER_LIFESPAN_MS = /*2 days*/1000 * 60 * 60 * 24 * 2;
   private static final String GSF_PACKAGE = "com.google.android.gsf";
+
+  @Override
+  public void subscribe( Context context, String senderId, String channelName )
+  {
+    if( channelName != null )
+      BackendlessPushBroadcastReceiver.setChannels( Arrays.asList( channelName ) );
+
+    resetBackoff( context );
+    internalSubscription( context, senderId );
+  }
 
   @Override
   public void checkPossibility( Context context )
@@ -69,8 +80,19 @@ public final class GCMRegistrar extends AbstractRegistrar
   {
     Intent intent = new Intent( Constants.INTENT_TO_GCM_REGISTRATION );
     intent.setPackage( GSF_PACKAGE );
+    intent.putExtra( Constants.EXTRA_APPLICATION_PENDING_INTENT,
+                    PendingIntent.getBroadcast( context, 0, new Intent(), 0 ) );
+    intent.putExtra( Constants.EXTRA_SENDER, senderId );
+    context.startService( intent );
+  }
+
+  private void internalSubscription( Context context, String senderId )
+  {
+    Intent intent = new Intent( Constants.INTENT_TO_GCM_REGISTRATION );
+    intent.setPackage( GSF_PACKAGE );
     intent.putExtra( Constants.EXTRA_APPLICATION_PENDING_INTENT, PendingIntent.getBroadcast( context, 0, new Intent(), 0 ) );
     intent.putExtra( Constants.EXTRA_SENDER, senderId );
+    intent.putExtra( Constants.EXTRA_SUBSCRIPTION_REGISTRATION, true );
     context.startService( intent );
   }
 
