@@ -582,8 +582,6 @@ public final class Messaging
     {
       checkDeviceToken( deviceToken );
       
-      SubscriptionOptions options = new SubscriptionOptions( DeliveryMethodEnum.POLL );
-
       DeviceRegistration deviceRegistration = new DeviceRegistration();
       deviceRegistration.setDeviceId( DEVICE_ID );
       deviceRegistration.setOs( OS );
@@ -594,7 +592,7 @@ public final class Messaging
         deviceRegistration.setExpiration( new Date( expiration ) );
 
       Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "registerDevice", new Object[]
-      { Backendless.getApplicationId(), Backendless.getVersion(), options, deviceRegistration },
+      { Backendless.getApplicationId(), Backendless.getVersion(), deviceRegistration },
                       new AsyncCallback<String>()
       {
         @Override
