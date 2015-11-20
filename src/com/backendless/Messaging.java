@@ -458,7 +458,7 @@ public final class Messaging
       {
         try
         {
-          BackendlessPushBroadcastReceiver.isPubSubRegisterIntent = true;
+          BackendlessPushBroadcastReceiver.isPubSubRegisterIntent = false;
           registerDeviceGCMSync( ContextHandler.getAppContext(), gcMSenderID, channels, expiration );
           return null;
         }
