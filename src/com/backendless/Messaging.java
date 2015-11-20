@@ -283,6 +283,13 @@ public final class Messaging
   {
     Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "unsubscribe", new Object[]
                     { subscriptionId }, callback );
+    for( Subscription subscription : subscriptions.values() )
+    {
+      if( subscription.getSubscriptionId().equals( subscriptionId ) )
+      {
+        subscriptions.values().remove( subscription );
+      }
+    }
   }
 
   public synchronized void resumeSubscription( Subscription subscription )
