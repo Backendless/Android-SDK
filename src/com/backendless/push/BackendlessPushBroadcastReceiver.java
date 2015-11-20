@@ -78,7 +78,7 @@ public class BackendlessPushBroadcastReceiver extends BroadcastReceiver
   private static int notificationId = 1;
 
   private static boolean internalUnregistered = false;
-  public static boolean isPubSubRegisterIntent = true;
+  public static boolean isPubSubRegisterIntent = false;
 
   public BackendlessPushBroadcastReceiver()
   {
