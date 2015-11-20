@@ -279,6 +279,12 @@ public final class Messaging
     executor.shutdown();
   }
 
+  public void unsubscribe( String subscriptionId, AsyncCallback<Void> callback )
+  {
+    Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "unsubscribe", new Object[]
+                    { subscriptionId }, callback );
+  }
+
   public synchronized void resumeSubscription( Subscription subscription )
   {
     Runnable subscriptionThread = handler.getSubscriptionThread();
