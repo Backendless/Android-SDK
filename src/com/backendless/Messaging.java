@@ -581,6 +581,8 @@ public final class Messaging
     try
     {
       checkDeviceToken( deviceToken );
+      
+      SubscriptionOptions options = new SubscriptionOptions( DeliveryMethodEnum.POLL );
 
       DeviceRegistration deviceRegistration = new DeviceRegistration();
       deviceRegistration.setDeviceId( DEVICE_ID );
@@ -592,7 +594,8 @@ public final class Messaging
         deviceRegistration.setExpiration( new Date( expiration ) );
 
       Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "registerDevice", new Object[]
-      { Backendless.getApplicationId(), Backendless.getVersion(), deviceRegistration }, new AsyncCallback<String>()
+      { Backendless.getApplicationId(), Backendless.getVersion(), options, deviceRegistration },
+                      new AsyncCallback<String>()
       {
         @Override
         public void handleResponse( String response )
@@ -1027,7 +1030,8 @@ public final class Messaging
 
       subscriptionOptions.setDeliveryMethod( DeliveryMethodEnum.POLL );
       Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[]
-      { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionOptions }, responder );
+      { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionOptions,
+          new DeviceRegistration() }, responder );
 
     }
     catch( Throwable e )
