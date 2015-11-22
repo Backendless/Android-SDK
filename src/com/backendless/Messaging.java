@@ -194,8 +194,6 @@ public final class Messaging
       {
         Backendless.Messaging.subscribeForPollingMessageByInterval( subscription, pollingInterval );
       }
-      if( responder != null )
-        responder.handleResponse( subscription );
     }
 
     @Override
@@ -282,7 +280,7 @@ public final class Messaging
   public void unsubscribe( String subscriptionId, AsyncCallback<Void> callback )
   {
     Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "unsubscribe", new Object[]
-                    { subscriptionId }, callback );
+    { subscriptionId }, callback );
     for( Subscription subscription : subscriptions.values() )
     {
       if( subscription.getSubscriptionId().equals( subscriptionId ) )
@@ -445,7 +443,6 @@ public final class Messaging
     return result;
   }
 
-
   public void registerDevice( final String gcMSenderID, final List<String> channels, final Date expiration,
                               final AsyncCallback<Void> callback )
   {
@@ -557,21 +554,21 @@ public final class Messaging
     Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[]
     { Backendless.getApplicationId(), Backendless.getVersion(), channelName, options, registration },
                     new AsyncCallback<String>()
-    {
-      @Override
-      public void handleResponse( String response )
-      {
-        if( serverCallback != null )
-          serverCallback.handleResponse( response );
-      }
+                    {
+                      @Override
+                      public void handleResponse( String response )
+                      {
+                        if( serverCallback != null )
+                          serverCallback.handleResponse( response );
+                      }
 
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        if( serverCallback != null )
-          serverCallback.handleFault( fault );
-      }
-    } );
+                      @Override
+                      public void handleFault( BackendlessFault fault )
+                      {
+                        if( serverCallback != null )
+                          serverCallback.handleFault( fault );
+                      }
+                    } );
 
   }
 
@@ -581,7 +578,7 @@ public final class Messaging
     try
     {
       checkDeviceToken( deviceToken );
-      
+
       DeviceRegistration deviceRegistration = new DeviceRegistration();
       deviceRegistration.setDeviceId( DEVICE_ID );
       deviceRegistration.setOs( OS );
@@ -592,8 +589,7 @@ public final class Messaging
         deviceRegistration.setExpiration( new Date( expiration ) );
 
       Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "registerDevice", new Object[]
-      { Backendless.getApplicationId(), Backendless.getVersion(), deviceRegistration },
-                      new AsyncCallback<String>()
+      { Backendless.getApplicationId(), Backendless.getVersion(), deviceRegistration }, new AsyncCallback<String>()
       {
         @Override
         public void handleResponse( String response )
@@ -1001,9 +997,8 @@ public final class Messaging
       {
         try
         {
-          result.concat( (String) Invoker
-                          .invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess",
-                                          new Object[]
+          result.concat( (String) Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess",
+                          new Object[]
                           { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionOptions,
                               new DeviceRegistration() } ) );
           return null;
@@ -1313,42 +1308,36 @@ public final class Messaging
     }
   }
 
-  public List<Subscription> getSubscriptions()
+  public void getSubscriptions( final AsyncCallback<List<Subscription>> callback )
   {
-    final List<Subscription> subscriptionList = new ArrayList<Subscription>();
-    Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "getSubscriptions",
-                    new Object[] {}, new AsyncCallback<List<Subscriber>>()
+    Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "getSubscriptions", new Object[] {},
+                    new AsyncCallback<HashMap[]>()
                     {
                       @Override
-                      public void handleResponse( List<Subscriber> subscribers )
+                      public void handleResponse( HashMap[] subscriptions )
                       {
-                        if( subscribers != null )
-                        {
-                          for( Subscriber subscriber : subscribers )
-                          {
-                            Subscription subscription = new Subscription( subscriber.getDSId(), subscriber
-                                            .getDestination().getName() );
-                            subscriptionList.add( subscription );
-                          }
+                        List<Subscription> subscriptionsList = new ArrayList<Subscription>();
+                        for (int i =0; i < subscriptions.length; i++) {
+                          subscriptionsList.add( new Subscription( (String) subscriptions[ i ].get( "subscriptionId" ),
+                                          (String) subscriptions[ i ].get( "channelName" ) ) );
                         }
+                        callback.handleResponse( subscriptionsList );
 
                       }
 
                       @Override
                       public void handleFault( BackendlessFault fault )
                       {
-                        // TODO Auto-generated method stub
-
+                        callback.handleFault( fault );
                       }
-                    } );
-    return subscriptionList;
+                    }
+                     );
   }
 
   public Subscription getSubscription( String channelName )
   {
     return subscriptions.get( channelName );
   }
-
 
   public void setSubscription( String channelName, Subscription subscription )
   {
