@@ -51,6 +51,7 @@ import java.util.concurrent.TimeUnit;
 
 import weborb.messaging.v3.Subscriber;
 import weborb.types.Types;
+import android.R.integer;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -429,12 +430,45 @@ public final class Messaging
 
   public String subscribeDeviceSyncForPush( final String gcMSenderID, final String channelName )
   {
-    BackendlessPushBroadcastReceiver.isPubSubRegisterIntent = true;
-    final String result = "";
+    final StringBuilder result = new StringBuilder();
+
+    deviceSubscriptionCallback = new AsyncCallback<Subscription>()
+    {
+      @Override
+      public void handleResponse( Subscription response )
+      {
+        result.append( response.getSubscriptionId() );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        throw new BackendlessException( fault );
+      }
+    };
 
     BackendlessPushBroadcastReceiver.isPubSubRegisterIntent = true;
     subscribeDeviceGCMSync( ContextHandler.getAppContext(), gcMSenderID, channelName );
-    return result;
+
+    int i = 0;
+    while( result.toString().equals( "" ) )
+    {
+      try
+      {
+        Thread.sleep( 1000 );
+        i++;
+        if( i > 5 )
+        {
+          throw new BackendlessException( ExceptionMessage.SERVER_TIMEOUT_CAN_NOT_GET_SUBSCRIPTION_ID );
+        }
+      }
+      catch( InterruptedException e )
+      {
+        throw new BackendlessException( e );
+      }
+    }
+
+    return result.toString();
   }
 
   public void registerDevice( final String gcMSenderID, final List<String> channels, final Date expiration,
@@ -871,8 +905,15 @@ public final class Messaging
     subscription.setChannelName( channelName );
 
     String subscriptionId = null;
-    subscriptionId = subscribeSyncForPolling( channelName, subscriptionOptions );
-    subscribeForPollingMessageByInterval( subscription, pollingInterval );
+    if( isPushPubSub() )
+    {
+      subscriptionId = subscribeSyncForPush( channelName, subscriptionOptions );
+    }
+    else
+    {
+      subscriptionId = subscribeSyncForPolling( channelName, subscriptionOptions );
+      subscribeForPollingMessageByInterval( subscription, pollingInterval );
+    }
 
     subscription.setSubscriptionId( subscriptionId );
     return subscription;
@@ -975,7 +1016,7 @@ public final class Messaging
 
     subscriptionOptions.setDeviceId( Messaging.DEVICE_ID );
     subscriptionOptions.setDeliveryMethod( DeliveryMethodEnum.POLL );
-    final String result = "";
+    final StringBuilder result = new StringBuilder();
 
     new AsyncTask<Void, Void, RuntimeException>()
     {
@@ -984,7 +1025,7 @@ public final class Messaging
       {
         try
         {
-          result.concat( (String) Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess",
+          result.append( (String) Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess",
                           new Object[]
                           { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionOptions,
                               new DeviceRegistration() } ) );
@@ -997,7 +1038,25 @@ public final class Messaging
       }
     }.execute();
 
-    return result;
+    int i = 0;
+    while( result.toString().equals( "" ) )
+    {
+      try
+      {
+        Thread.sleep( 1000 );
+        i++;
+        if( i > 100 )
+        {
+          throw new BackendlessException( ExceptionMessage.SERVER_TIMEOUT_CAN_NOT_GET_SUBSCRIPTION_ID );
+        }
+      }
+      catch( InterruptedException e )
+      {
+        throw new BackendlessException( e );
+      }
+    }
+
+    return result.toString();
   }
 
   private void subscribeAsyncForPolling( final String channelName, final SubscriptionOptions subscriptionOptions,
@@ -1298,32 +1357,6 @@ public final class Messaging
   public Map<String, Subscription> getSubscriptions() {
     return subscriptions;
   }
-
-//  private void getSubscriptions( final AsyncCallback<List<Subscription>> callback )
-//  {
-//    Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "getSubscriptions", new Object[] {},
-//                    new AsyncCallback<HashMap[]>()
-//                    {
-//                      @Override
-//                      public void handleResponse( HashMap[] subscriptions )
-//                      {
-//                        List<Subscription> subscriptionsList = new ArrayList<Subscription>();
-//                        for (int i =0; i < subscriptions.length; i++) {
-//                          subscriptionsList.add( new Subscription( (String) subscriptions[ i ].get( "subscriptionId" ),
-//                                          (String) subscriptions[ i ].get( "channelName" ) ) );
-//                        }
-//                        callback.handleResponse( subscriptionsList );
-//
-//                      }
-//
-//                      @Override
-//                      public void handleFault( BackendlessFault fault )
-//                      {
-//                        callback.handleFault( fault );
-//                      }
-//                    }
-//                     );
-//  }
 
   public Subscription getSubscription( String channelName )
   {
