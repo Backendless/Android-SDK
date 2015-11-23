@@ -258,7 +258,10 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
     // registration succeeded
     if( registrationId != null )
     {
-      register( context, registrationId, isInternal );
+      if( !BackendlessPushBroadcastReceiver.isPubSubRegisterIntent )
+      {
+        register( context, registrationId, isInternal );
+      }
       return;
     }
 
