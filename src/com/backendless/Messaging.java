@@ -168,7 +168,7 @@ public final class Messaging
     return instance;
   }
 
-  private final class PushSubscriptionCallback implements AsyncCallback<Subscription>
+  private final class PushSubscriptionCallback implements AsyncCallback<String>
   {
     private final int pollingInterval;
     private final String channelName;
@@ -185,11 +185,20 @@ public final class Messaging
     }
 
     @Override
-    public void handleResponse( Subscription subscription )
+    public void handleResponse( String subscriptionId )
     {
+      Subscription subscription = new Subscription();
+      subscription.setChannelName( channelName );
+      subscription.setSubscriptionId( subscriptionId );
+
       if( !isPushPubSub() )
       {
         Backendless.Messaging.subscribeForPollingMessageByInterval( subscription, pollingInterval );
+      }
+
+      if( responder != null )
+      {
+        responder.handleResponse( subscription );
       }
     }
 
@@ -269,8 +278,11 @@ public final class Messaging
     this.subscriptionResponder = subscriptionResponder;
 
     if( Backendless.isAndroid() )
-      executor.scheduleWithFixedDelay( handler.getSubscriptionThread(), 0, subscription.getPollingInterval(),
+    {
+      currentTask = executor.scheduleWithFixedDelay( handler.getSubscriptionThread(), 0,
+                      subscription.getPollingInterval(),
                       TimeUnit.MILLISECONDS );
+    }
 
     Backendless.Messaging.setSubscription( subscription.getChannelName(), subscription );
   }
@@ -989,7 +1001,7 @@ public final class Messaging
   }
 
   private void subscribeAsyncForPolling( final String channelName, final SubscriptionOptions subscriptionOptions,
-                                         final AsyncCallback<Subscription> responder )
+                                         final AsyncCallback<String> responder )
   {
     try
     {
@@ -1057,7 +1069,7 @@ public final class Messaging
       if( subscriptionOptions == null )
         subscriptionOptions = defaultSubscriptionOptions;
 
-      AsyncCallback<Subscription> serverCallback = new PushSubscriptionCallback( subscriptionResponder,
+      AsyncCallback<String> serverCallback = new PushSubscriptionCallback( subscriptionResponder,
                       pollingInterval, channelName, responder );
       if( isPushPubSub() )
       {
