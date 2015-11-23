@@ -27,7 +27,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Build;
 
+import com.backendless.Backendless;
 import com.backendless.push.AbstractRegistrar;
+import com.backendless.push.BackendlessBroadcastReceiver;
 import com.backendless.push.BackendlessPushBroadcastReceiver;
 import com.backendless.push.Constants;
 
@@ -64,7 +66,10 @@ public final class GCMRegistrar extends AbstractRegistrar
       BackendlessPushBroadcastReceiver.setRegistrationExpiration( expiration.getTime() );
 
     if( channels != null )
+    {
       BackendlessPushBroadcastReceiver.setChannels( channels );
+      BackendlessBroadcastReceiver.setChannels( channels );
+    }
 
     resetBackoff( context );
     internalRegister( context, senderId );

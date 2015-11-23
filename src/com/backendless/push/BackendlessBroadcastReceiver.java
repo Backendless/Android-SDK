@@ -90,7 +90,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
     BackendlessBroadcastReceiver.persistedRegistrationExpiration = registrationExpiration;
   }
 
-  protected static void setChannels( List<String> channels )
+  public static void setChannels( List<String> channels )
   {
     persistedChannels = channels.toArray( new String[channels.size()] );
   }

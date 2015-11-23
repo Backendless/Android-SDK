@@ -357,33 +357,49 @@ public class BackendlessPushBroadcastReceiver extends BroadcastReceiver
   {
     Backendless.Messaging.registerDeviceOnServer( GCMregistrationId, getChannels(), getRegistrationExpiration(), new AsyncCallback<String>()
     {
-      @Override
-      public void handleResponse( String registrationId )
-      {
-        Messaging.getRegistrar().setRegistrationId( context, registrationId, getRegistrationExpiration() );
-        onRegistered( context, registrationId );
-      }
+                      @Override
+                      public void handleResponse( String registrationId )
+                      {
+                        Messaging.getRegistrar().setRegistrationId( context, registrationId,
+                                        getRegistrationExpiration() );
+                        onRegistered( context, registrationId );
+                        AsyncCallback<Void> deviceRegistrationCallback = Backendless.Messaging
+                                        .getDeviceRegistrationCallback();
+                        if( deviceRegistrationCallback != null )
+                        {
+                          deviceRegistrationCallback.handleResponse( null );;
+                        }
+                      }
 
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        onError( context, "Could not register device on Backendless server: " + fault.getMessage() );
-      }
-    } );
+                      @Override
+                      public void handleFault( BackendlessFault fault )
+                      {
+                        onError( context, "Could not register device on Backendless server: " + fault.getMessage() );
+                        AsyncCallback<Void> deviceRegistrationCallback = Backendless.Messaging
+                                        .getDeviceRegistrationCallback();
+                        if( deviceRegistrationCallback != null )
+                        {
+                          deviceRegistrationCallback.handleFault( fault );
+                        }
+                      }
+                    } );
   }
   
   private void subscribeOnServer( final Context context, String gcMregistrationId )
   {
-    AsyncCallback<String> serverCallback = new AsyncCallback<String>()
+    AsyncCallback<Subscription> serverCallback = new AsyncCallback<Subscription>()
                     {
       @Override
-      public void handleResponse( String registrationId )
+      public void handleResponse( Subscription subscription )
       {
-        Messaging.getRegistrar().setRegistrationId( context, registrationId,
+        Messaging.getRegistrar().setRegistrationId( context, subscription.getSubscriptionId(),
                         getRegistrationExpiration() );
-        onRegistered( context, registrationId );
-        if( Backendless.Messaging.getDeviceSubscriptionCallback() != null )
-          Backendless.Messaging.getDeviceSubscriptionCallback().handleResponse( registrationId );
+        onRegistered( context, subscription.getSubscriptionId() );
+        AsyncCallback<Subscription> callback = Backendless.Messaging.getDeviceSubscriptionCallback();
+        if( callback != null )
+        {
+          callback.handleResponse( subscription );
+        }
       }
 
       @Override

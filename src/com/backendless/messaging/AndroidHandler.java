@@ -57,7 +57,7 @@ public class AndroidHandler implements IMessageHandler
       @Override
       public void run()
       {
-        Log.wtf( "POLLING", "polled message" );
+        // Log.wtf( "POLLING", "polled message" );
         android.os.Message message = new android.os.Message();
 
         try
