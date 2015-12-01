@@ -309,7 +309,6 @@ public final class Media
     String url = protocol + wowzaAddress + streamPath + params;
     mediaPlayer.setDataSource( url );
     mediaPlayer.prepareAsync();
-    mediaPlayer.start();
 
   }
 
