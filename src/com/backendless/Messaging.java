@@ -37,14 +37,13 @@ package com.backendless;/*
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
-
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.messaging.*;
+import com.backendless.push.BackendlessBroadcastReceiver;
 import com.backendless.push.GCMRegistrar;
-
 import weborb.types.Types;
 
 import java.util.*;
@@ -59,6 +58,12 @@ public final class Messaging
   private final static String OS;
   private final static String OS_VERSION;
   private static final Messaging instance = new Messaging();
+
+  // TODO: implement valid logic for defining availability
+  protected static final String GCM_SENDER_ID;
+  protected static final boolean IS_PUBSUB_THROUGH_PUSH_AVAILABLE;
+
+  private static Map<String, AsyncCallback<List<Message>>> subscriptionCallbacksMap = new HashMap<String, AsyncCallback<List<Message>>>();
 
   private Messaging()
   {
@@ -102,6 +107,9 @@ public final class Messaging
       }
 
     DEVICE_ID = id;
+
+    GCM_SENDER_ID = "HARD_CODE"; // TODO: implement logic for static retrieving senderId from manifest
+    IS_PUBSUB_THROUGH_PUSH_AVAILABLE = Backendless.isAndroid() && GCM_SENDER_ID != null;
   }
 
   static Messaging getInstance()
@@ -569,6 +577,31 @@ public final class Messaging
     {
       checkChannelName( channelName );
 
+      if( IS_PUBSUB_THROUGH_PUSH_AVAILABLE )
+      {
+        subscribeForPushAccess( channelName, subscriptionOptions, new AsyncCallback<String>()
+        {
+          @Override
+          public void handleResponse( String response )
+          {
+            Subscription subscription = new Subscription();
+            subscription.setChannelName( channelName );
+            subscription.setSubscriptionId( response );
+            subscriptionCallbacksMap.put( response, subscriptionResponder );
+
+            if( responder != null )
+              responder.handleResponse( subscription );
+          }
+
+          @Override
+          public void handleFault( BackendlessFault fault )
+          {
+            if( responder != null )
+              responder.handleFault( fault );
+          }
+        } );
+      }
+
       if( pollingInterval < 0 )
         throw new IllegalArgumentException( ExceptionMessage.WRONG_POLLING_INTERVAL );
 
@@ -603,6 +636,13 @@ public final class Messaging
       if( responder != null )
         responder.handleFault( new BackendlessFault( e ) );
     }
+  }
+
+  private void subscribeForPushAccess( String channelName, SubscriptionOptions options,
+                                       AsyncCallback<String> responder )
+  {
+    BackendlessBroadcastReceiver.prepareForSubscription( channelName, options, responder );
+    registerDevice( GCM_SENDER_ID );
   }
 
   private void subscribeForPollingAccess( String channelName, SubscriptionOptions subscriptionOptions,

@@ -19,11 +19,7 @@
 package com.backendless.push;
 
 import android.R;
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+import android.app.*;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -32,9 +28,11 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.widget.RemoteViews;
 import com.backendless.Backendless;
+import com.backendless.Invoker;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.messaging.PublishOptions;
+import com.backendless.messaging.SubscriptionOptions;
 
 import java.util.Arrays;
 import java.util.List;
@@ -66,6 +64,20 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
   private static int customLayoutImage;
 
   private static int notificationId = 1;
+
+  private static boolean isSubscriptionInProgress = false;
+  private static String subscriptionChannel;
+  private static SubscriptionOptions subscriptionOptions;
+  private static AsyncCallback<String> subscriptionResponder;
+
+  public static synchronized void prepareForSubscription( String channel, SubscriptionOptions options,
+                                                          AsyncCallback<String> responder )
+  {
+    isSubscriptionInProgress = true;
+    subscriptionChannel = channel;
+    subscriptionOptions = options;
+    subscriptionResponder = responder;
+  }
 
   public BackendlessBroadcastReceiver()
   {
@@ -252,11 +264,19 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
     // registration succeeded
     if( registrationId != null )
     {
+      if( isSubscriptionInProgress )
+      {
+        isSubscriptionInProgress = false;
+        subscribeFurther( registrationId );
+        return;
+      }
+
       if( isInternal )
       {
         onRegistered( context, registrationId );
       }
 
+      isSubscriptionInProgress = false; // TODO: add isSubscriptionInProgress flag resetting conditions logic
       GCMRegistrar.resetBackoff( context );
       GCMRegistrar.setGCMdeviceToken( context, registrationId );
       registerFurther( context, registrationId );
@@ -293,6 +313,34 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
     }
   }
 
+  private void subscribeFurther( String registrationId )
+  {
+    // TODO: remove hardcode in route
+    Invoker.invokeAsync( "com.backendless.services.messaging.MessagingService", "subscribeForPushAccess", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), subscriptionChannel, subscriptionOptions, registrationId }, new AsyncCallback<String>()
+    {
+      @Override
+      public void handleResponse( String response )
+      {
+        subscriptionResponder.handleResponse( response );
+        resetSubscriptionValues();
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        subscriptionResponder.handleFault( fault );
+        resetSubscriptionValues();
+      }
+    } );
+  }
+
+  private void resetSubscriptionValues()
+  {
+    subscriptionChannel = null;
+    subscriptionOptions = null;
+    subscriptionResponder = null;
+  }
+
   private void registerFurther( final Context context, String GCMregistrationId )
   {
     Backendless.Messaging.registerDeviceOnServer( GCMregistrationId, getChannels(), getRegistrationExpiration(), new AsyncCallback<String>()
@@ -319,7 +367,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
       @Override
       public void handleResponse( Boolean unregistered )
       {
-        GCMRegistrar.setRegistrationId( context, "", 0 );
+        GCMRegistrar.setRegistrationId(context, "", 0);
         onUnregistered( context, unregistered );
       }
 
