@@ -645,6 +645,14 @@ public final class Messaging
     registerDevice( GCM_SENDER_ID );
   }
 
+  public static AsyncCallback<List<Message>> getCallbackForSubscription( String subscriptionId )
+  {
+    if ( subscriptionCallbacksMap != null )
+      return subscriptionCallbacksMap.get( subscriptionId );
+
+    return null;
+  }
+
   private void subscribeForPollingAccess( String channelName, SubscriptionOptions subscriptionOptions,
                                           AsyncCallback<String> responder )
   {

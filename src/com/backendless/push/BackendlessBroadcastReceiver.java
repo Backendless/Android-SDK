@@ -29,8 +29,10 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import com.backendless.Backendless;
 import com.backendless.Invoker;
+import com.backendless.Messaging;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.backendless.messaging.Message;
 import com.backendless.messaging.PublishOptions;
 import com.backendless.messaging.SubscriptionOptions;
 
@@ -69,15 +71,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
   private static String subscriptionChannel;
   private static SubscriptionOptions subscriptionOptions;
   private static AsyncCallback<String> subscriptionResponder;
-
-  public static synchronized void prepareForSubscription( String channel, SubscriptionOptions options,
-                                                          AsyncCallback<String> responder )
-  {
-    isSubscriptionInProgress = true;
-    subscriptionChannel = channel;
-    subscriptionOptions = options;
-    subscriptionResponder = responder;
-  }
+  private static final String SUBSCRIPTION_ID_TAG = "SUBSCRIPTION_ID";
 
   public BackendlessBroadcastReceiver()
   {
@@ -122,6 +116,15 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
       return null;
 
     return Arrays.asList( persistedChannels );
+  }
+
+  public static synchronized void prepareForSubscription( String channel, SubscriptionOptions options,
+                                                          AsyncCallback<String> responder )
+  {
+    isSubscriptionInProgress = true;
+    subscriptionChannel = channel;
+    subscriptionOptions = options;
+    subscriptionResponder = responder;
   }
 
   @Override
@@ -205,6 +208,16 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
   private void handleMessage( final Context context, Intent intent )
   {
 
+    String subscriptionId = intent.getStringExtra( SUBSCRIPTION_ID_TAG );
+
+    if ( subscriptionId != null && !subscriptionId.equals( "" ) )
+    {
+      Message message = new Message();
+      message.setData( intent.getStringExtra( PublishOptions.MESSAGE_TAG ) );
+      handleAsPubsub( subscriptionId, message );
+      return;
+    }
+
     try
     {
       boolean showPushNotification = onMessage( context, intent );
@@ -251,6 +264,19 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
     catch( Throwable throwable )
     {
       Log.e( TAG, "Error processing push notification", throwable );
+    }
+  }
+
+  private void handleAsPubsub( String subscriptionId, Message message )
+  {
+    try
+    {
+      Messaging.getCallbackForSubscription( subscriptionId ).handleResponse( Arrays.asList( message ) );
+    }
+    catch( NullPointerException e )
+    {
+      Log.e( TAG, "No subscription callback found for message" );
+      e.printStackTrace();
     }
   }
 
