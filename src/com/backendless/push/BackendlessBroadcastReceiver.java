@@ -268,16 +268,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
 
   private void handleAsPubsub( String subscriptionId, Message message )
   {
-    try
-    {
-      Backendless.Messaging.getCallbackForSubscription( subscriptionId ).handleResponse( Arrays.asList( message ) );
-    }
-    catch( NullPointerException e )
-    {
-      // TODO: remove subscription from server
-      Log.e( TAG, "No subscription callback found for message" );
-      e.printStackTrace();
-    }
+      Backendless.Messaging.handlePushAsPubsub( subscriptionId, message );
   }
 
   private void handleRegistration( final Context context, Intent intent )

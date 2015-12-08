@@ -63,7 +63,7 @@ public final class Messaging
   protected static final String GCM_SENDER_ID;
   protected static final boolean IS_PUBSUB_THROUGH_PUSH_AVAILABLE;
 
-  private static Map<String, AsyncCallback<List<Message>>> subscriptionCallbacksMap = new HashMap<String, AsyncCallback<List<Message>>>();
+  private Map<String, AsyncCallback<List<Message>>> subscriptionCallbacksMap = new HashMap<String, AsyncCallback<List<Message>>>();
 
   private Messaging()
   {
@@ -659,17 +659,10 @@ public final class Messaging
     registerDevice( GCM_SENDER_ID );
   }
 
-  public AsyncCallback<List<Message>> getCallbackForSubscription( final String subscriptionId )
-  {
-    if ( subscriptionCallbacksMap != null )
-      return subscriptionCallbacksMap.get( subscriptionId );
-
-    return null;
-  }
-
   protected void removeSubscriptionCallback( final String subscriptionId )
   {
-    subscriptionCallbacksMap.remove( subscriptionId );
+    if ( subscriptionCallbacksMap != null )
+      subscriptionCallbacksMap.remove( subscriptionId );
   }
 
   private void subscribeForPollingAccess( String channelName, SubscriptionOptions subscriptionOptions,
@@ -689,6 +682,20 @@ public final class Messaging
     {
       if( responder != null )
         responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
+  public void handlePushAsPubsub( String subscriptionId, Message message )
+  {
+    // TODO: check if message is presented or should be polled from server; poll and update message object if needed
+    try
+    {
+      subscriptionCallbacksMap.get( subscriptionId ).handleResponse( Arrays.asList( message ) );
+    }
+    catch( NullPointerException e )
+    {
+      e.printStackTrace();
+      // TODO: remove subscription from server
     }
   }
 
