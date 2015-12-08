@@ -207,11 +207,12 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
 
   private void handleMessage( final Context context, Intent intent )
   {
-
+    // TODO: add retrieving selector and subtopic from intent
     String subscriptionId = intent.getStringExtra( SUBSCRIPTION_ID_TAG );
 
     if ( subscriptionId != null && !subscriptionId.equals( "" ) )
     {
+      // TODO: implement full message creation
       Message message = new Message();
       message.setData( intent.getStringExtra( PublishOptions.MESSAGE_TAG ) );
       handleAsPubsub( subscriptionId, message );

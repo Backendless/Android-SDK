@@ -584,7 +584,7 @@ public final class Messaging
           @Override
           public void handleResponse( String response )
           {
-            Subscription subscription = new Subscription();
+            Subscription subscription = new Subscription( true );
             subscription.setChannelName( channelName );
             subscription.setSubscriptionId( response );
             subscriptionCallbacksMap.put( response, subscriptionResponder );
@@ -600,6 +600,7 @@ public final class Messaging
               responder.handleFault( fault );
           }
         } );
+        return;
       }
 
       if( pollingInterval < 0 )
@@ -651,6 +652,11 @@ public final class Messaging
       return subscriptionCallbacksMap.get( subscriptionId );
 
     return null;
+  }
+
+  protected static void removeSubscriptionCallback( final String subscriptionId )
+  {
+    subscriptionCallbacksMap.remove( subscriptionId );
   }
 
   private void subscribeForPollingAccess( String channelName, SubscriptionOptions subscriptionOptions,

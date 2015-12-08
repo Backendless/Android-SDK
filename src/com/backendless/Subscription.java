@@ -43,8 +43,15 @@ public class Subscription
   private ScheduledFuture<?> currentTask;
   private ScheduledExecutorService executor;
 
+  private boolean isSubscribedThroughPush;
+
   public Subscription()
   {
+  }
+
+  protected Subscription( boolean deliveryThroughPush )
+  {
+    this.isSubscribedThroughPush = deliveryThroughPush;
   }
 
   public Subscription( int pollingInterval )
@@ -84,6 +91,13 @@ public class Subscription
 
   public synchronized boolean cancelSubscription()
   {
+    if ( isSubscribedThroughPush )
+    {
+      // TODO: remove subscription from server
+
+      Messaging.removeSubscriptionCallback( subscriptionId );
+    }
+
     if( currentTask != null )
     {
       currentTask.cancel( true );
@@ -105,6 +119,8 @@ public class Subscription
 
   public synchronized void pauseSubscription()
   {
+    // TODO: implement pause logic for pubsub through push
+
     if( executor == null || executor.isShutdown() )
       return;
 
@@ -113,6 +129,8 @@ public class Subscription
 
   public synchronized void resumeSubscription()
   {
+    // TODO: implement resume logic for pubsub through push
+
     Runnable subscriptionThread = handler.getSubscriptionThread();
 
     if( subscriptionId == null || channelName == null || handler == null || subscriptionThread == null )
