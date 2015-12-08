@@ -34,11 +34,13 @@ package com.backendless;/*
  *  ********************************************************************************************************************
  */
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
@@ -61,9 +63,9 @@ public final class Messaging
   private final static String OS_VERSION;
   private static final Messaging instance = new Messaging();
 
-  // TODO: implement valid logic for defining availability
   protected static final String GCM_SENDER_ID;
-  protected static final boolean IS_PUBSUB_THROUGH_PUSH_AVAILABLE;
+  private static final boolean IS_PUBSUB_THROUGH_PUSH_AVAILABLE;
+  private static final String GCM_SENDER_ID_META_TAG = "GcmSenderId";
 
   private Map<String, AsyncCallback<List<Message>>> subscriptionCallbacksMap = new HashMap<String, AsyncCallback<List<Message>>>();
 
@@ -904,7 +906,6 @@ public final class Messaging
     }
   }
 
-  // TODO: re-implement logic for static retrieving senderId from manifest
   private static String getSenderIdFromManifest()
   {
     try
@@ -918,9 +919,9 @@ public final class Messaging
       {
         if ( receiverExtendsBackendlessBroadcast( receiver ) )
         {
-          String retrievedSenderId = receiver.metaData.getString( "GcmSenderId" );
+          String retrievedSenderId = retrieveSenderIdForReceiver( context, packageManager, receiver );
 
-          if ( retrievedSenderId != null && !retrievedSenderId.equals( "" ) )
+          if ( retrievedSenderId != null )
             return retrievedSenderId;
         }
       }
@@ -938,7 +939,8 @@ public final class Messaging
   {
     try
     {
-
+      Object receiverObj = Class.forName( receiver.name ).newInstance();
+      return receiverObj instanceof BackendlessBroadcastReceiver;
     }
     catch( Throwable t )
     {
@@ -946,5 +948,26 @@ public final class Messaging
     }
 
     return false;
+  }
+
+  private static String retrieveSenderIdForReceiver( Context context, PackageManager manager, ActivityInfo receiver )
+  {
+    try
+    {
+      Bundle metadata = manager.getReceiverInfo( new ComponentName( context, receiver.name ), PackageManager.GET_META_DATA ).metaData;
+      String result = null;
+
+      if ( metadata != null )
+        result = metadata.getString( GCM_SENDER_ID_META_TAG );
+
+      if ( result != null && result.length() > 0 )
+        return result;
+    }
+    catch( PackageManager.NameNotFoundException e )
+    {
+      e.printStackTrace();
+    }
+
+    return null;
   }
 }
