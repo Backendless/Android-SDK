@@ -283,44 +283,67 @@ public final class Messaging
 
   public void unregisterDevice( final AsyncCallback<Void> callback )
   {
-    new AsyncTask<Void, Void, RuntimeException>()
+
+    if ( subscriptionCallbacksMap == null || subscriptionCallbacksMap.size() == 0 )
     {
-      @Override
-      protected RuntimeException doInBackground( Void... params )
+      new AsyncTask<Void, Void, RuntimeException>()
       {
-        try
+        @Override
+        protected RuntimeException doInBackground( Void... params )
         {
-          Context context = ContextHandler.getAppContext();
+          try
+          {
+            Context context = ContextHandler.getAppContext();
 
-          if( !GCMRegistrar.isRegistered( context ) )
-            return new IllegalArgumentException( ExceptionMessage.DEVICE_NOT_REGISTERED );
+            if( !GCMRegistrar.isRegistered( context ) )
+              return new IllegalArgumentException( ExceptionMessage.DEVICE_NOT_REGISTERED );
 
-          GCMRegistrar.unregister( context );
-          return null;
+            GCMRegistrar.unregister( context );
+            return null;
+          }
+          catch( RuntimeException t )
+          {
+            return t;
+          }
         }
-        catch( RuntimeException t )
+
+        @Override
+        protected void onPostExecute( RuntimeException result )
         {
-          return t;
-        }
-      }
+          if( result != null )
+          {
+            if( callback == null )
+              throw result;
 
-      @Override
-      protected void onPostExecute( RuntimeException result )
+            callback.handleFault( new BackendlessFault( result ) );
+          }
+          else
+          {
+            if( callback != null )
+              callback.handleResponse( null );
+          }
+        }
+      }.execute();
+    }
+    else
+    {
+      unregisterDeviceOnServer( new AsyncCallback<Boolean>()
       {
-        if( result != null )
+        @Override
+        public void handleResponse( Boolean response )
         {
-          if( callback == null )
-            throw result;
-
-          callback.handleFault( new BackendlessFault( result ) );
-        }
-        else
-        {
-          if( callback != null )
+          if ( callback != null )
             callback.handleResponse( null );
         }
-      }
-    }.execute();
+
+        @Override
+        public void handleFault( BackendlessFault fault )
+        {
+          if ( callback != null )
+            callback.handleFault( fault );
+        }
+      } );
+    }
   }
 
   public boolean unregisterDeviceOnServer() throws BackendlessException
