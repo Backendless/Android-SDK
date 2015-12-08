@@ -275,6 +275,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
     }
     catch( NullPointerException e )
     {
+      // TODO: remove subscription from server
       Log.e( TAG, "No subscription callback found for message" );
       e.printStackTrace();
     }
