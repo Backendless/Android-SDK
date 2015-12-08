@@ -95,7 +95,7 @@ public class Subscription
     {
       // TODO: remove subscription from server
 
-      Messaging.removeSubscriptionCallback( subscriptionId );
+      Backendless.Messaging.removeSubscriptionCallback( subscriptionId );
     }
 
     if( currentTask != null )

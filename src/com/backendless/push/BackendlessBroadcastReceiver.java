@@ -28,8 +28,6 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.widget.RemoteViews;
 import com.backendless.Backendless;
-import com.backendless.Invoker;
-import com.backendless.Messaging;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.messaging.Message;
@@ -272,7 +270,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
   {
     try
     {
-      Messaging.getCallbackForSubscription( subscriptionId ).handleResponse( Arrays.asList( message ) );
+      Backendless.Messaging.getCallbackForSubscription( subscriptionId ).handleResponse( Arrays.asList( message ) );
     }
     catch( NullPointerException e )
     {
@@ -341,10 +339,9 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
     }
   }
 
-  private void subscribeFurther( String registrationId )
+  private void subscribeFurther( final String registrationId )
   {
-    // TODO: remove hardcode in route
-    Invoker.invokeAsync( "com.backendless.services.messaging.MessagingService", "subscribeForPushAccess", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), subscriptionChannel, subscriptionOptions, registrationId }, new AsyncCallback<String>()
+    Backendless.Messaging.subscribeOnServer( subscriptionChannel, subscriptionOptions, registrationId, new AsyncCallback<String>()
     {
       @Override
       public void handleResponse( String response )

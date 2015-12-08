@@ -263,6 +263,19 @@ public final class Messaging
     }
   }
 
+  public void subscribeOnServer( final String channel, final SubscriptionOptions options, final String deviceToken, final AsyncCallback<String> responder )
+  {
+    try
+    {
+      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPushAccess", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channel, options, deviceToken }, responder );
+    }
+    catch( Throwable e )
+    {
+      if ( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
   public void unregisterDevice()
   {
     unregisterDevice( null );
@@ -639,14 +652,14 @@ public final class Messaging
     }
   }
 
-  private void subscribeForPushAccess( String channelName, SubscriptionOptions options,
+  private void subscribeForPushAccess( final String channelName, final SubscriptionOptions options,
                                        AsyncCallback<String> responder )
   {
     BackendlessBroadcastReceiver.prepareForSubscription( channelName, options, responder );
     registerDevice( GCM_SENDER_ID );
   }
 
-  public static AsyncCallback<List<Message>> getCallbackForSubscription( String subscriptionId )
+  public AsyncCallback<List<Message>> getCallbackForSubscription( final String subscriptionId )
   {
     if ( subscriptionCallbacksMap != null )
       return subscriptionCallbacksMap.get( subscriptionId );
@@ -654,7 +667,7 @@ public final class Messaging
     return null;
   }
 
-  protected static void removeSubscriptionCallback( final String subscriptionId )
+  protected void removeSubscriptionCallback( final String subscriptionId )
   {
     subscriptionCallbacksMap.remove( subscriptionId );
   }
