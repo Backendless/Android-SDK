@@ -35,6 +35,8 @@ package com.backendless;/*
  */
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import com.backendless.async.callback.AsyncCallback;
@@ -108,7 +110,7 @@ public final class Messaging
 
     DEVICE_ID = id;
 
-    GCM_SENDER_ID = "HARD_CODE"; // TODO: implement logic for static retrieving senderId from manifest
+    GCM_SENDER_ID = getSenderIdFromManifest();
     IS_PUBSUB_THROUGH_PUSH_AVAILABLE = Backendless.isAndroid() && GCM_SENDER_ID != null;
   }
 
@@ -900,5 +902,49 @@ public final class Messaging
       if( responder != null )
         responder.handleFault( new BackendlessFault( e ) );
     }
+  }
+
+  // TODO: re-implement logic for static retrieving senderId from manifest
+  private static String getSenderIdFromManifest()
+  {
+    try
+    {
+      Context context = ContextHandler.getAppContext();
+      PackageManager packageManager = context.getPackageManager();
+      String packageName = context.getPackageName();
+      ActivityInfo[] receivers = packageManager.getPackageInfo( packageName, PackageManager.GET_RECEIVERS ).receivers;
+
+      for ( ActivityInfo receiver : receivers )
+      {
+        if ( receiverExtendsBackendlessBroadcast( receiver ) )
+        {
+          String retrievedSenderId = receiver.metaData.getString( "GcmSenderId" );
+
+          if ( retrievedSenderId != null && !retrievedSenderId.equals( "" ) )
+            return retrievedSenderId;
+        }
+      }
+
+    }
+    catch( Throwable e )
+    {
+      e.printStackTrace();
+    }
+
+    return null;
+  }
+
+  private static boolean receiverExtendsBackendlessBroadcast( ActivityInfo receiver )
+  {
+    try
+    {
+
+    }
+    catch( Throwable t )
+    {
+      //
+    }
+
+    return false;
   }
 }
