@@ -51,7 +51,7 @@ import java.util.*;
 
 public final class Messaging
 {
-  public final static String DEVICE_ID;
+  public static String DEVICE_ID;
   private final static String MESSAGING_MANAGER_SERVER_ALIAS = "com.backendless.services.messaging.MessagingService";
   private final static String DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS = "com.backendless.services.messaging.DeviceRegistrationService";
   private final static String EMAIL_MANAGER_SERVER_ALIAS = "com.backendless.services.mail.CustomersEmailService";
