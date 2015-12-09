@@ -690,7 +690,7 @@ public final class Messaging
     registerDevice( GCM_SENDER_ID );
   }
 
-  protected void removeSubscriptionCallback( final String bcklsSubscriptionIdentity )
+  protected void removePushSubscription( final String bcklsSubscriptionIdentity )
   {
     if ( pushSubscriptions != null )
       pushSubscriptions.remove( bcklsSubscriptionIdentity );
