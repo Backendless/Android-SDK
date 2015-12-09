@@ -30,7 +30,6 @@ import android.widget.RemoteViews;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
-import com.backendless.messaging.Message;
 import com.backendless.messaging.PublishOptions;
 import com.backendless.messaging.SubscriptionOptions;
 
@@ -210,9 +209,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
     if ( subscriptionId != null && !subscriptionId.equals( "" ) )
     {
       // TODO: implement full message creation
-      Message message = new Message();
-      message.setData( intent.getStringExtra( PublishOptions.MESSAGE_TAG ) );
-      handleAsPubsub( subscriptionId, message );
+      handleAsPubsub( subscriptionId, intent.getStringExtra( PublishOptions.MESSAGE_TAG )  );
       return;
     }
 
@@ -265,9 +262,9 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
     }
   }
 
-  private void handleAsPubsub( String subscriptionId, Message message )
+  private void handleAsPubsub( String subscriptionId, String pushMessage )
   {
-      Backendless.Messaging.handlePushAsPubsub( subscriptionId, message );
+      Backendless.Messaging.handlePushAsPubsub( subscriptionId, pushMessage );
   }
 
   private void handleRegistration( final Context context, Intent intent )
@@ -382,7 +379,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
       @Override
       public void handleResponse( Boolean unregistered )
       {
-        GCMRegistrar.setRegistrationId( context, "", 0);
+        GCMRegistrar.setRegistrationId( context, "", 0 );
         onUnregistered( context, unregistered );
       }
 

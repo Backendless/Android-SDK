@@ -41,6 +41,7 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
@@ -715,18 +716,25 @@ public final class Messaging
     }
   }
 
-  public void handlePushAsPubsub( String subscriptionIdentity, Message message )
+  public void handlePushAsPubsub( String subscriptionIdentity, String pushMessage )
   {
-    // TODO: check if message is presented or should be polled from server; poll and update message object if needed
-    try
-    {
-      pushSubscriptions.get( subscriptionIdentity ).handlePushMessage( Arrays.asList( message ) );
-    }
-    catch( NullPointerException e )
-    {
-      e.printStackTrace();
+    List<Message> messages;
+    Subscription subscription = pushSubscriptions.get( subscriptionIdentity );
+
+    if ( subscription == null )
       // TODO: remove subscription from server
+
+    if ( pushMessage.isEmpty() )
+    {
+      messages = pollMessages( subscription.getChannelName(), subscription.getSubscriptionId() );
     }
+    else
+    {
+      byte[] byteMessage = Base64.decode( pushMessage, Base64.DEFAULT );
+      // TODO: deserialize message
+    }
+
+    subscription.handlePushMessage( messages );
   }
 
   public void subscribe( String channelName, AsyncCallback<List<Message>> subscriptionResponder,
