@@ -36,6 +36,7 @@ public class Subscription
 {
   private String subscriptionId;
   private String channelName;
+  private String bcklsSubscriptionIdentity;
 
   private int pollingInterval = 1000;
 
@@ -43,15 +44,15 @@ public class Subscription
   private ScheduledFuture<?> currentTask;
   private ScheduledExecutorService executor;
 
-  private boolean isSubscribedThroughPush;
+  private AsyncCallback<List<Message>> pushSubscriptionCallback;
 
   public Subscription()
   {
   }
 
-  protected Subscription( boolean deliveryThroughPush )
+  protected Subscription( final AsyncCallback<List<Message>> responder )
   {
-    this.isSubscribedThroughPush = deliveryThroughPush;
+    this.pushSubscriptionCallback = responder;
   }
 
   public Subscription( int pollingInterval )
@@ -79,6 +80,16 @@ public class Subscription
     this.channelName = channelName;
   }
 
+  protected String getBcklsSubscriptionIdentity()
+  {
+    return bcklsSubscriptionIdentity;
+  }
+
+  protected synchronized void setBcklsSubscriptionIdentity( final String identity )
+  {
+    this.bcklsSubscriptionIdentity = identity;
+  }
+
   public int getPollingInterval()
   {
     return pollingInterval;
@@ -89,13 +100,18 @@ public class Subscription
     this.pollingInterval = pollingInterval;
   }
 
+  protected void handlePushMessage( final List<Message> messages )
+  {
+    pushSubscriptionCallback.handleResponse( messages );
+  }
+
   public synchronized boolean cancelSubscription()
   {
-    if ( isSubscribedThroughPush )
+    if ( pushSubscriptionCallback != null )
     {
       // TODO: remove subscription from server
 
-      Backendless.Messaging.removeSubscriptionCallback( subscriptionId );
+      Backendless.Messaging.removeSubscriptionCallback( bcklsSubscriptionIdentity );
     }
 
     if( currentTask != null )

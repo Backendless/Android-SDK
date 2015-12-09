@@ -69,7 +69,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
   private static String subscriptionChannel;
   private static SubscriptionOptions subscriptionOptions;
   private static AsyncCallback<String> subscriptionResponder;
-  private static final String SUBSCRIPTION_ID_TAG = "SUBSCRIPTION_ID";
+  private static final String SUBSCRIPTION_IDENTITY_TAG = "bckls_subscription_identity";
 
   public BackendlessBroadcastReceiver()
   {
@@ -205,8 +205,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
 
   private void handleMessage( final Context context, Intent intent )
   {
-    // TODO: add retrieving selector and subtopic from intent
-    String subscriptionId = intent.getStringExtra( SUBSCRIPTION_ID_TAG );
+    String subscriptionId = intent.getStringExtra( SUBSCRIPTION_IDENTITY_TAG );
 
     if ( subscriptionId != null && !subscriptionId.equals( "" ) )
     {
@@ -383,7 +382,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
       @Override
       public void handleResponse( Boolean unregistered )
       {
-        GCMRegistrar.setRegistrationId(context, "", 0);
+        GCMRegistrar.setRegistrationId( context, "", 0);
         onUnregistered( context, unregistered );
       }
 

@@ -67,7 +67,7 @@ public final class Messaging
   private static final boolean IS_PUBSUB_THROUGH_PUSH_AVAILABLE;
   private static final String GCM_SENDER_ID_META_TAG = "GcmSenderId";
 
-  private Map<String, AsyncCallback<List<Message>>> subscriptionCallbacksMap = new HashMap<String, AsyncCallback<List<Message>>>();
+  private Map<String, Subscription> pushSubscriptions = new HashMap<String, Subscription>();
 
   private Messaging()
   {
@@ -271,6 +271,7 @@ public final class Messaging
   {
     try
     {
+      // TODO: check method signature on server
       Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPushAccess", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channel, options, deviceToken }, responder );
     }
     catch( Throwable e )
@@ -288,7 +289,7 @@ public final class Messaging
   public void unregisterDevice( final AsyncCallback<Void> callback )
   {
 
-    if ( subscriptionCallbacksMap == null || subscriptionCallbacksMap.size() == 0 )
+    if ( pushSubscriptions == null || pushSubscriptions.size() == 0 )
     {
       new AsyncTask<Void, Void, RuntimeException>()
       {
@@ -610,7 +611,7 @@ public final class Messaging
   }
 
   public void subscribe( final String channelName, final AsyncCallback<List<Message>> subscriptionResponder,
-                         SubscriptionOptions subscriptionOptions, final int pollingInterval,
+                         final SubscriptionOptions subscriptionOptions, final int pollingInterval,
                          final AsyncCallback<Subscription> responder )
   {
     try
@@ -624,10 +625,12 @@ public final class Messaging
           @Override
           public void handleResponse( String response )
           {
-            Subscription subscription = new Subscription( true );
+            String identity = createSubscriptionIdentity( channelName, subscriptionOptions );
+            Subscription subscription = new Subscription( subscriptionResponder );
             subscription.setChannelName( channelName );
             subscription.setSubscriptionId( response );
-            subscriptionCallbacksMap.put( response, subscriptionResponder );
+            subscription.setBcklsSubscriptionIdentity( identity );
+            pushSubscriptions.put( identity, subscription );
 
             if( responder != null )
               responder.handleResponse( subscription );
@@ -686,10 +689,10 @@ public final class Messaging
     registerDevice( GCM_SENDER_ID );
   }
 
-  protected void removeSubscriptionCallback( final String subscriptionId )
+  protected void removeSubscriptionCallback( final String bcklsSubscriptionIdentity )
   {
-    if ( subscriptionCallbacksMap != null )
-      subscriptionCallbacksMap.remove( subscriptionId );
+    if ( pushSubscriptions != null )
+      pushSubscriptions.remove( bcklsSubscriptionIdentity );
   }
 
   private void subscribeForPollingAccess( String channelName, SubscriptionOptions subscriptionOptions,
@@ -712,12 +715,12 @@ public final class Messaging
     }
   }
 
-  public void handlePushAsPubsub( String subscriptionId, Message message )
+  public void handlePushAsPubsub( String subscriptionIdentity, Message message )
   {
     // TODO: check if message is presented or should be polled from server; poll and update message object if needed
     try
     {
-      subscriptionCallbacksMap.get( subscriptionId ).handleResponse( Arrays.asList( message ) );
+      pushSubscriptions.get( subscriptionIdentity ).handlePushMessage( Arrays.asList( message ) );
     }
     catch( NullPointerException e )
     {
@@ -935,7 +938,7 @@ public final class Messaging
     return null;
   }
 
-  private static boolean receiverExtendsBackendlessBroadcast( ActivityInfo receiver )
+  private static boolean receiverExtendsBackendlessBroadcast( final ActivityInfo receiver )
   {
     try
     {
@@ -950,7 +953,7 @@ public final class Messaging
     return false;
   }
 
-  private static String retrieveSenderIdForReceiver( Context context, PackageManager manager, ActivityInfo receiver )
+  private static String retrieveSenderIdForReceiver( final Context context, final PackageManager manager, final ActivityInfo receiver )
   {
     try
     {
@@ -969,5 +972,13 @@ public final class Messaging
     }
 
     return null;
+  }
+
+  private String createSubscriptionIdentity( final String channel, final SubscriptionOptions options )
+  {
+    if ( options == null )
+      return channel;
+
+    return channel + ( options.getSubtopic() != null ? options.getSubtopic() : "" ) + ( options.getSelector() != null ? options.getSelector() : "" );
   }
 }
