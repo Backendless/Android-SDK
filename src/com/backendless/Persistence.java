@@ -26,6 +26,7 @@ import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.BackendlessSerializer;
+import com.backendless.persistence.MapDrivenDataStore;
 import com.backendless.persistence.QueryOptions;
 import com.backendless.property.ObjectProperty;
 import com.backendless.utils.ReflectionUtil;
@@ -112,7 +113,7 @@ public final class Persistence
         FootprintsManager.getInstance().Inner.updateFootprintForObject( serializedEntity, newEntity, entity );
       }
 
-      //put or update footprint's properties to user's properties, if exist
+      //put or update footprint's properties to user's properties, if exists
       Footprint footprint = FootprintsManager.getInstance().getEntityFootprint( newEntity );
       if( footprint != null )
         footprint.initObjectId( entity );
@@ -731,6 +732,14 @@ public final class Persistence
     }
   }
 
+  public IDataStore<Map> of( String tableName )
+  {
+    if( tableName.equalsIgnoreCase( "users" ) )
+      throw new IllegalArgumentException( "Table 'Users' is not accessible through this signature. Use Backendless.Data.of( BackendlessUser.class ) instead" );
+
+    return new MapDrivenDataStore( tableName  );
+  }
+
   public <E> IDataStore<E> of( final Class<E> entityClass )
   {
     if( entityClass == null )
@@ -781,7 +790,7 @@ public final class Persistence
     }
   }
 
-  private void checkPageSizeAndOffset( BackendlessDataQuery dataQuery ) throws BackendlessException
+  public static void checkPageSizeAndOffset( BackendlessDataQuery dataQuery ) throws BackendlessException
   {
     if( dataQuery != null )
     {
