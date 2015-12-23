@@ -82,6 +82,13 @@ public class BackendlessSerializer
     {
       Map.Entry<String, Object> entityEntry = entityIterator.next();
 
+      // ignoring properties which contain $. This occurs in InstantRun in AndroidStudio - it injects $change property.
+      if( entityEntry.getKey().contains( "$" ) )
+      {
+        entityIterator.remove();
+        continue;
+      }
+
       // ignore Parcelable CREATOR field on Android
       // http://developer.android.com/reference/android/os/Parcelable.html
       if( Backendless.isAndroid() && entityEntry.getKey().equals( Persistence.PARCELABLE_CREATOR_FIELD_NAME ) )
