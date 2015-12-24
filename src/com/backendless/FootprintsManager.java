@@ -266,17 +266,21 @@ public class FootprintsManager
             if( oldEntity instanceof BackendlessUser )
             {
               oldEntityField = ((BackendlessUser) oldEntity).getProperty( key );
+
               if( oldEntityField == null )
                 oldEntityField = ((BackendlessUser) oldEntity).getProperty( upperKey );
             }
-            try
+            else
             {
-              oldEntityField = ReflectionUtil.getFieldValue( oldEntity, key );
-            }
-            catch( NoSuchFieldException nfe )
-            {
-              //try to find field with first letter in uppercase
-              oldEntityField = ReflectionUtil.getFieldValue( oldEntity, upperKey );
+              try
+              {
+                oldEntityField = ReflectionUtil.getFieldValue( oldEntity, key );
+              }
+              catch( NoSuchFieldException nfe )
+              {
+                //try to find field with first letter in uppercase
+                oldEntityField = ReflectionUtil.getFieldValue( oldEntity, upperKey );
+              }
             }
 
             updateFootprintForObject( (Map) entry.getValue(), newEntityField, oldEntityField );
