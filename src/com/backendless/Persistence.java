@@ -265,11 +265,14 @@ public final class Persistence
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-    Object entityArg = ReflectionUtil.hasField( entity.getClass(), Persistence.DEFAULT_OBJECT_ID_FIELD ) ? entity : FootprintsManager.getInstance().getObjectId( entity );
+    Map<String, Object> entityMap = BackendlessSerializer.serializeToMap( entity );
+    String objectId = FootprintsManager.getInstance().getObjectId( entity );
+    if( objectId != null )
+      entityMap.put( "objectId", objectId );
 
-    Object result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entityArg } );
+    Object result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entityMap } );
 
-    FootprintsManager.getInstance().Inner.removeFootprintForObject( BackendlessSerializer.serializeToMap( entity ), entity );
+    FootprintsManager.getInstance().Inner.removeFootprintForObject( entityMap, entity );
 
     return ((Number) result).longValue();
   }
@@ -302,9 +305,12 @@ public final class Persistence
         }
       };
 
-      Object entityArg = ReflectionUtil.hasField( entity.getClass(), Persistence.DEFAULT_OBJECT_ID_FIELD ) ? entity : FootprintsManager.getInstance().getObjectId( entity );
+      Map<String, Object> entityMap = BackendlessSerializer.serializeToMap( entity );
+      String objectId = FootprintsManager.getInstance().getObjectId( entity );
+      if( objectId != null )
+        entityMap.put( "objectId", objectId );
 
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entityArg }, removalCallback );
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entityMap }, removalCallback );
     }
     catch( Throwable e )
     {
