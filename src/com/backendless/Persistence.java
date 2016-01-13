@@ -60,8 +60,6 @@ public final class Persistence
   public final static DataPermission Permissions = new DataPermission();
 
   private static final Persistence instance = new Persistence();
-  public static final String SOCIAL_USER_TOKEN = "user-token";
-  public static final String SOCIAL_USER_REGISTERED = "user-registered";
 
   static Persistence getInstance()
   {
@@ -873,7 +871,7 @@ public final class Persistence
 
   private static void removeUserSystemProperties(BackendlessUser user)
   {
-      user.removeProperty( SOCIAL_USER_TOKEN );
-      user.removeProperty( SOCIAL_USER_REGISTERED );
+      user.removeProperty( UserService.SOCIAL_USER_TOKEN );
+      user.removeProperty( UserService.SOCIAL_USER_REGISTERED );
   }
 }
