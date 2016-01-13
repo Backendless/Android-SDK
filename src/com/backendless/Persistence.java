@@ -266,9 +266,7 @@ public final class Persistence
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
     Map<String, Object> entityMap = BackendlessSerializer.serializeToMap( entity );
-    String objectId = FootprintsManager.getInstance().getObjectId( entity );
-    if( objectId != null )
-      entityMap.put( "objectId", objectId );
+    FootprintsManager.getInstance().Inner.putMissingPropsToEntityMap( entity, entityMap );
 
     Object result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entityMap } );
 
@@ -306,9 +304,7 @@ public final class Persistence
       };
 
       Map<String, Object> entityMap = BackendlessSerializer.serializeToMap( entity );
-      String objectId = FootprintsManager.getInstance().getObjectId( entity );
-      if( objectId != null )
-        entityMap.put( "objectId", objectId );
+      FootprintsManager.getInstance().Inner.putMissingPropsToEntityMap( entity, entityMap );
 
       Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entityMap }, removalCallback );
     }
