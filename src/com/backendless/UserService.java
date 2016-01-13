@@ -38,6 +38,8 @@ public final class UserService
 {
   final static String USER_MANAGER_SERVER_ALIAS = "com.backendless.services.users.UserService";
   private final static String PREFS_NAME = "backendless_pref";
+  public static final String SOCIAL_USER_TOKEN = "user-token";
+  public static final String SOCIAL_USER_REGISTERED = "user-registered";
 
   private static BackendlessUser currentUser = new BackendlessUser();
   private final static Object currentUserLock = new Object();
@@ -784,9 +786,7 @@ public final class UserService
 
     private static void removeUserSystemProperties(BackendlessUser user)
   {
-      if( user.getProperties().containsKey( "user-token" ) )
-        user.removeProperty( "user-token" );
-      if( user.getProperties().containsKey( "user-registered" ) )
-        user.removeProperty( "user-registered" );
+    user.removeProperty( SOCIAL_USER_TOKEN );
+    user.removeProperty( SOCIAL_USER_REGISTERED );
   }
 }
