@@ -671,6 +671,8 @@ public final class UserService
   {
     if( user == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_USER );
+
+    removeUserSystemProperties(user);
   }
 
   /**
@@ -778,5 +780,13 @@ public final class UserService
   private boolean isLogoutFaultAllowed( String errorCode )
   {
     return errorCode.equals( "3064" ) || errorCode.equals( "3091" ) || errorCode.equals( "3090" ) || errorCode.equals( "3023" );
+  }
+
+    private static void removeUserSystemProperties(BackendlessUser user)
+  {
+      if( user.getProperties().containsKey( "user-token" ) )
+        user.removeProperty( "user-token" );
+      if( user.getProperties().containsKey( "user-registered" ) )
+        user.removeProperty( "user-registered" );
   }
 }

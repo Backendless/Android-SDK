@@ -85,6 +85,10 @@ public final class Persistence
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
     checkDeclaredType( entity.getClass() );
+
+    if( entity instanceof BackendlessUser )
+      removeUserSystemProperties( (BackendlessUser) entity );
+
     final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
     MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
     {
@@ -134,6 +138,10 @@ public final class Persistence
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
       checkDeclaredType( entity.getClass() );
+
+      if( entity instanceof BackendlessUser )
+        removeUserSystemProperties( (BackendlessUser) entity );
+
       final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
 
       MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
@@ -241,6 +249,9 @@ public final class Persistence
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
+    if( entity instanceof BackendlessUser )
+      removeUserSystemProperties( (BackendlessUser) entity );
+
     return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "update", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( aClass ), entity }, ResponderHelper.getPOJOAdaptingResponder( aClass ) );
   }
 
@@ -250,6 +261,9 @@ public final class Persistence
     {
       if( entity == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
+
+      if( entity instanceof BackendlessUser )
+        removeUserSystemProperties( (BackendlessUser) entity );
 
       Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "update", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( aClass ), entity }, responder, ResponderHelper.getPOJOAdaptingResponder( aClass ) );
     }
@@ -853,5 +867,13 @@ public final class Persistence
   {
     Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), procedureName, arguments };
     Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredProcedure", args, responder );
+  }
+
+  private static void removeUserSystemProperties(BackendlessUser user)
+  {
+      if( user.getProperties().containsKey( "user-token" ) )
+        user.removeProperty( "user-token" );
+      if( user.getProperties().containsKey( "user-registered" ) )
+        user.removeProperty( "user-registered" );
   }
 }
