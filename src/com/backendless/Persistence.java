@@ -869,9 +869,14 @@ public final class Persistence
     Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredProcedure", args, responder );
   }
 
+  /**
+   * When BackendlessUser is logged with Social network the returned BackendlessUser entity may contain some system properties
+   * like "user-token" or "user-registered". If such entity is used for operations like save, register or update  an error will occur.
+   * To avoid this, such system properties should be removed from the entity before these methods are invoked.
+   */
   private static void removeUserSystemProperties(BackendlessUser user)
   {
-      user.removeProperty( UserService.SOCIAL_USER_TOKEN );
-      user.removeProperty( UserService.SOCIAL_USER_REGISTERED );
+      user.removeProperty( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() );
+      user.removeProperty( UserService.USER_REGISTERED_KEY );
   }
 }
