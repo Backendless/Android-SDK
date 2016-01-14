@@ -871,7 +871,7 @@ public final class Persistence
 
   /**
    * When BackendlessUser is logged with Social network the returned BackendlessUser entity may contain some system properties
-   * like "user-token" or "user-registered". If such entity is used for operations like save, register or update  an error will occur.
+   * like "user-token" or "user-registered". If such entity is used for operations like save, register or update an error will occur.
    * To avoid this, such system properties should be removed from the entity before these methods are invoked.
    */
   private static void removeUserSystemProperties(BackendlessUser user)
