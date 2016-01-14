@@ -101,15 +101,11 @@ public class BackendlessSerializer
 
       // ignore null entries and GeoPoints
       if( entityEntryValue == null || entityEntryValue instanceof GeoPoint )
-      {
         continue;
-      }
 
       // check for anonymous class entry
       if( entityEntryValue.getClass().isAnonymousClass() )
-      {
         throw new BackendlessException( String.format( ExceptionMessage.ANONYMOUS_CLASSES_PROHIBITED, entityEntry.getKey() ) );
-      }
 
       //check if entity entry is collection
       if( entityEntryValue instanceof List )
@@ -118,34 +114,26 @@ public class BackendlessSerializer
 
         //do nothing with empty lists and lists of GeoPoints
         if( listEntry.isEmpty() || listEntry.iterator().next() instanceof GeoPoint )
-        {
           continue;
-        }
 
         // check for anonymous class entry
         if( listEntry.iterator().next().getClass().isAnonymousClass() )
-        {
           throw new BackendlessException( String.format( ExceptionMessage.ANONYMOUS_CLASSES_PROHIBITED, entityEntry.getKey() ) );
-        }
 
         List<Object> newCollection = new ArrayList<Object>();
 
         for( Object listEntryItem : listEntry )
-        {
           if( !isBelongsJdk( listEntryItem.getClass() ) )
-          {
             newCollection.add( getOrMakeSerializedObject( listEntryItem, serializedCache ) );
-          }
-        }
+          else
+            newCollection.add( listEntryItem );
 
         entityEntry.setValue( newCollection );
       }
       else //not collection
       {
         if( !isBelongsJdk( entityEntryValue.getClass() ) )
-        {
           entityEntry.setValue( getOrMakeSerializedObject( entityEntryValue, serializedCache ) );
-        }
       }
     }
 
