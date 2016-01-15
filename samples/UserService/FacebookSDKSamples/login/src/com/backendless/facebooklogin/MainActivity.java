@@ -31,8 +31,11 @@ import com.backendless.exceptions.BackendlessFault;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
 
 public class MainActivity extends FragmentActivity
 {
@@ -56,10 +59,17 @@ public class MainActivity extends FragmentActivity
     {
       public void onClick( View view )
       {
-        Map<String, String> facebookFieldMappings = new HashMap<String, String>();
-        facebookFieldMappings.put( "email", "fb_email" );
+        Map<String, String> facebookFieldsMappings = new HashMap<>();
+        facebookFieldsMappings.put( "first_name", "fb_first_name" );
+        facebookFieldsMappings.put( "last_name", "fb_last_name" );
+        facebookFieldsMappings.put( "gender", "fb_gender" );
 
-        Backendless.UserService.loginWithFacebookSdk( MainActivity.this, callbackManager, new AsyncCallback<BackendlessUser>()
+        List<String> permissions = new ArrayList<>();
+        permissions.add( "contact_email" );
+        permissions.add( "email" );
+        permissions.add("public_profile");
+
+        Backendless.UserService.loginWithFacebookSdk( MainActivity.this, facebookFieldsMappings, permissions, callbackManager, new AsyncCallback<BackendlessUser>()
         {
           @Override
           public void handleResponse( BackendlessUser backendlessUser )
