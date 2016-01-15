@@ -794,7 +794,7 @@ public final class UserService
    * like "user-token" or "user-registered". If such entity is used for operations like save, register or update an error will occur.
    * To avoid this, such system properties should be removed from the entity before these methods are invoked.
    */
-    private static void removeUserSystemProperties(BackendlessUser user)
+    static void removeUserSystemProperties(BackendlessUser user)
   {
     user.removeProperty( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() );
     user.removeProperty( USER_REGISTERED_KEY );
