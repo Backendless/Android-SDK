@@ -56,11 +56,11 @@ public class MainActivity extends FragmentActivity
     {
       public void onClick( View view )
       {
-        Map<String, String> facebookFieldsMappings = new HashMap<String, String>();
+        Map<String, String> facebookFieldsMappings = new HashMap<>();
         facebookFieldsMappings.put( "email", "email" );
-        facebookFieldsMappings.put( "first_name", "new_new_fb_first_name" );
-        facebookFieldsMappings.put( "last_name", "new_new_fb_last_name" );
-        facebookFieldsMappings.put( "gender", "new_new_fb_gender" );
+        facebookFieldsMappings.put( "first_name", "fb_first_name" );
+        facebookFieldsMappings.put( "last_name", "fb_last_name" );
+        facebookFieldsMappings.put( "gender", "fb_gender" );
 
         List<String> permissions = new ArrayList<>();
         permissions.add( "contact_email" );
