@@ -65,6 +65,7 @@ public final class Files
     Types.addClientClassMapping( "com.backendless.services.file.permissions.FileRolePermission", FileRolePermission.class );
     Types.addClientClassMapping( "com.backendless.services.file.permissions.FileUserPermission", FileUserPermission.class );
     Types.addClientClassMapping( "com.backendless.management.files.FileInfo", FileInfo.class );
+    Types.addClientClassMapping( "com.backendless.management.files.FileDetailedInfo", FileInfo.class );
   }
 
   static Files getInstance()
@@ -337,14 +338,14 @@ public final class Files
     Invoker.invokeAsync(FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[]{Backendless.getApplicationId(), Backendless.getVersion(), filePathName, fileContent, overwrite}, responder);
   }
 
-  public void renameFile( String oldPathName, String newName ) throws BackendlessException
+  public String renameFile( String oldPathName, String newName ) throws BackendlessException
   {
     if( oldPathName == null || oldPathName.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
     if( newName == null || newName.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
 
-    Invoker.invokeSync(FILE_MANAGER_SERVER_ALIAS, "renameFile", new Object[]{Backendless.getApplicationId(), Backendless.getVersion(), oldPathName, newName});
+    return Invoker.invokeSync(FILE_MANAGER_SERVER_ALIAS, "renameFile", new Object[]{Backendless.getApplicationId(), Backendless.getVersion(), oldPathName, newName});
   }
 
   public void renameFile( String oldPathName, String newName, AsyncCallback<String> responder ) throws BackendlessException
@@ -357,44 +358,49 @@ public final class Files
     Invoker.invokeAsync(FILE_MANAGER_SERVER_ALIAS, "renameFile", new Object[]{Backendless.getApplicationId(), Backendless.getVersion(), oldPathName, newName}, responder);
   }
 
-  public void copyFile( String sourcePathName, String targetPathName ) throws BackendlessException
+  public String copyFile( String sourcePathName, String targetPath ) throws BackendlessException
   {
     if( sourcePathName == null || sourcePathName.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
-    if( targetPathName == null || targetPathName.isEmpty() )
+    if( targetPath == null || targetPath.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
 
-    Invoker.invokeSync(FILE_MANAGER_SERVER_ALIAS, "copyFile", new Object[]{Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPathName});
+    return Invoker.invokeSync(FILE_MANAGER_SERVER_ALIAS, "copyFile", new Object[]{Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPath});
   }
 
-  public void copyFile( String sourcePathName, String targetPathName, AsyncCallback<String> responder ) throws BackendlessException
+  public void copyFile( String sourcePathName, String targetPath, AsyncCallback<String> responder ) throws BackendlessException
   {
     if( sourcePathName == null || sourcePathName.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
-    if( targetPathName == null || targetPathName.isEmpty() )
+    if( targetPath == null || targetPath.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
 
-    Invoker.invokeAsync(FILE_MANAGER_SERVER_ALIAS, "copyFile", new Object[]{Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPathName}, responder);
+    Invoker.invokeAsync(FILE_MANAGER_SERVER_ALIAS, "copyFile", new Object[]{Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPath}, responder);
   }
 
-  public void moveFile( String sourcePathName, String targetPathName ) throws BackendlessException
+  public String moveFile( String sourcePathName, String targetPath ) throws BackendlessException
   {
     if( sourcePathName == null || sourcePathName.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
-    if( targetPathName == null || targetPathName.isEmpty() )
+    if( targetPath == null || targetPath.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
 
-    Invoker.invokeSync(FILE_MANAGER_SERVER_ALIAS, "moveFile", new Object[]{Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPathName});
+    return Invoker.invokeSync(FILE_MANAGER_SERVER_ALIAS, "moveFile", new Object[]{Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPath});
   }
 
-  public void moveFile( String sourcePathName, String targetPathName, AsyncCallback<String> responder ) throws BackendlessException
+  public void moveFile( String sourcePathName, String targetPath, AsyncCallback<String> responder ) throws BackendlessException
   {
     if( sourcePathName == null || sourcePathName.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
-    if( targetPathName == null || targetPathName.isEmpty() )
+    if( targetPath == null || targetPath.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
 
-    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "moveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPathName }, responder );
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "moveFile", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), sourcePathName, targetPath }, responder );
+  }
+
+  public BackendlessCollection<FileInfo> listing( String path )
+  {
+    return listing( path, "*", false );
   }
 
   public BackendlessCollection<FileInfo> listing( String path, String pattern, boolean recursive)
@@ -409,8 +415,12 @@ public final class Files
     return collection;
   }
 
-  public void listing( String path, String pattern, boolean recursive,
-                       final AsyncCallback<BackendlessCollection<FileInfo>> responder)
+  public void listing( String path, AsyncCallback<BackendlessCollection<FileInfo>> responder)
+  {
+    listing(path, "*", false, responder);
+  }
+
+  public void listing( String path, String pattern, boolean recursive, AsyncCallback<BackendlessCollection<FileInfo>> responder)
   {
     listing(path, pattern, recursive, BackendlessSimpleQuery.DEFAULT_PAGE_SIZE, BackendlessSimpleQuery.DEFAULT_OFFSET, responder);
   }
