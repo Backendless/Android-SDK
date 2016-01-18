@@ -38,7 +38,6 @@ public final class UserService
 {
   final static String USER_MANAGER_SERVER_ALIAS = "com.backendless.services.users.UserService";
   private final static String PREFS_NAME = "backendless_pref";
-  public static final String USER_REGISTERED_KEY = "user-registered";
 
   private static BackendlessUser currentUser = new BackendlessUser();
   private final static Object currentUserLock = new Object();
@@ -678,8 +677,6 @@ public final class UserService
   {
     if( user == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_USER );
-
-    removeUserSystemProperties(user);
   }
 
   /**
@@ -787,16 +784,5 @@ public final class UserService
   private boolean isLogoutFaultAllowed( String errorCode )
   {
     return errorCode.equals( "3064" ) || errorCode.equals( "3091" ) || errorCode.equals( "3090" ) || errorCode.equals( "3023" );
-  }
-
-  /**
-   * When BackendlessUser is logged with Social network the returned BackendlessUser entity may contain some system properties
-   * like "user-token" or "user-registered". If such entity is used for operations like save, register or update an error will occur.
-   * To avoid this, such system properties should be removed from the entity before these methods are invoked.
-   */
-    static void removeUserSystemProperties(BackendlessUser user)
-  {
-    user.removeProperty( HeadersManager.HeadersEnum.USER_TOKEN_KEY.getHeader() );
-    user.removeProperty( USER_REGISTERED_KEY );
   }
 }

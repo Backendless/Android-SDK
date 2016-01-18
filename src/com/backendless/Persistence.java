@@ -85,10 +85,6 @@ public final class Persistence
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
     checkDeclaredType( entity.getClass() );
-
-    if( entity instanceof BackendlessUser )
-      UserService.removeUserSystemProperties( (BackendlessUser) entity );
-
     final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
     MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
     {
@@ -138,10 +134,6 @@ public final class Persistence
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
       checkDeclaredType( entity.getClass() );
-
-      if( entity instanceof BackendlessUser )
-        UserService.removeUserSystemProperties( (BackendlessUser) entity );
-
       final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
 
       MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
@@ -249,9 +241,6 @@ public final class Persistence
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-    if( entity instanceof BackendlessUser )
-      UserService.removeUserSystemProperties( (BackendlessUser) entity );
-
     return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "update", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( aClass ), entity }, ResponderHelper.getPOJOAdaptingResponder( aClass ) );
   }
 
@@ -261,9 +250,6 @@ public final class Persistence
     {
       if( entity == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
-
-      if( entity instanceof BackendlessUser )
-        UserService.removeUserSystemProperties( (BackendlessUser) entity );
 
       Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "update", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( aClass ), entity }, responder, ResponderHelper.getPOJOAdaptingResponder( aClass ) );
     }
