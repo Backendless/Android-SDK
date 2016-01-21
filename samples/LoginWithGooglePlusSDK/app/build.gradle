@@ -1,0 +1,63 @@
+/*
+ * ********************************************************************************************************************
+ *  <p/>
+ *  BACKENDLESS.COM CONFIDENTIAL
+ *  <p/>
+ *  ********************************************************************************************************************
+ *  <p/>
+ *  Copyright 2012 BACKENDLESS.COM. All Rights Reserved.
+ *  <p/>
+ *  NOTICE: All information contained herein is, and remains the property of Backendless.com and its suppliers,
+ *  if any. The intellectual and technical concepts contained herein are proprietary to Backendless.com and its
+ *  suppliers and may be covered by U.S. and Foreign Patents, patents in process, and are protected by trade secret
+ *  or copyright law. Dissemination of this information or reproduction of this material is strictly forbidden
+ *  unless prior written permission is obtained from Backendless.com.
+ *  <p/>
+ *  ********************************************************************************************************************
+ */
+
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:1.1.1'
+  }
+}
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
+repositories {
+  jcenter()
+}
+
+android {
+  compileSdkVersion 22
+  buildToolsVersion "23.0.1"
+
+  defaultConfig {
+    applicationId "com.backendless.example.loginwithgoogleplussdk.app"
+    minSdkVersion 22
+    targetSdkVersion 22
+    versionCode 1
+    versionName "1.0"
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_6
+    targetCompatibility JavaVersion.VERSION_1_6
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile( 'proguard-android.txt' ), 'proguard-rules.pro'
+    }
+  }
+}
+
+dependencies {
+  compile fileTree( dir: 'libs', include: ['*.jar'] )
+  compile 'com.google.android.gms:play-services:8.3.0'
+//  compile 'com.android.support:support-v4:23.1.1'
+//  compile 'com.android.support:appcompat-v7:23.1.1'
+}
