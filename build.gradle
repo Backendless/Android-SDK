@@ -88,7 +88,7 @@ jar {
     }
 }
 
-task copyJars() {
+task copySampleJars() {
     copyT(jar.archivePath, projectDir.path+'/samples/DataService/tododemo/libs', jar.getArchiveName(  ))
     copyT(jar.archivePath, projectDir.path+'/samples/EndlessMatchMaker/libs', jar.getArchiveName(  ))
     copyT(jar.archivePath, projectDir.path+'/samples/EndlessTagging/libs', jar.getArchiveName(  ))
@@ -100,6 +100,10 @@ task copyJars() {
     copyT(jar.archivePath, projectDir.path+'/samples/UserService/FacebookSDKSamples/login/libs', jar.getArchiveName(  ))
     copyT(jar.archivePath, projectDir.path+'/samples/UserService/rolesdemo/libs/', jar.getArchiveName(  ))
     copyT(jar.archivePath, projectDir.path+'/samples/UserService/userservicedemo/libs', jar.getArchiveName(  ))
+}
+
+task copyJarToOut{
+    copyT(jar.archivePath, projectDir.path+'/out', jar.getArchiveName(  ))
 }
 
 def copyT(fromPath, toPath, archName)
