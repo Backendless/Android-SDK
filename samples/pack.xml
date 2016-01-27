@@ -21,8 +21,6 @@
 
     <property name="absoluteOut" value="${basedir}/out"/>
     <property name="backendlessJarPath" value="../out/backendless.jar"/>
-    <property name="backendlessJavadocPath" value="../out/backendless-javadoc.jar"/>
-    <property name="backendlessSourcesPath" value="../out/backendless-sources.jar"/>
 
     <target name="clean">
         <delete file="backendless.zip" failonerror="false"/>
@@ -34,8 +32,6 @@
         <mkdir dir="${absoluteOut}/examples"/>
         <mkdir dir="${absoluteOut}/libs"/>
         <copy file="${backendlessJarPath}" todir="${absoluteOut}/libs"/>
-        <copy file="${backendlessJavadocPath}" todir="${absoluteOut}/libs"/>
-        <copy file="${backendlessSourcesPath}" todir="${absoluteOut}/libs"/>
         <copy file="BackendlessSamples.ipr" todir="${absoluteOut}/examples"/>
         <copy file="BackendlessSamples.iws" todir="${absoluteOut}/examples"/>
         <copy file="getting-started.pdf" todir="${absoluteOut}"/>
