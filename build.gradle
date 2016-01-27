@@ -1,0 +1,122 @@
+group 'com.backendless'
+version '3.0.8'
+
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+
+sourceCompatibility = 1.7
+
+def getMavenSettingsCredentials = {
+    String userHome = System.getProperty( "user.home" );
+    File mavenSettings = new File(userHome, ".m2/settings.xml")
+    def xmlSlurper = new XmlSlurper()
+    def output = xmlSlurper.parse(mavenSettings)
+    return output.servers."server"
+}
+
+task logInfo {
+    doFirst {
+        println getMavenSettingsCredentials()
+    }
+}
+
+def getCredentials = {
+    def entries = getMavenSettingsCredentials()
+    for( entry in entries )
+    {
+        if( entry."id".text() == "backendless_public" )
+        {
+            return [username: entry.username.text(), password: entry.password.text()]
+        }
+    }
+}
+
+def creds = getCredentials()
+
+sourceSets {
+    main {
+        java {
+            srcDir './src'
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        credentials {
+            username creds.username
+            password creds.password
+        }
+
+        url "http://maven.backendless.com/repository/backendless_public"
+    }
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            credentials {
+                username creds.username
+                password creds.password
+            }
+
+            url "http://maven.backendless.com/repository/backendless_public"
+        }
+    }
+}
+
+configurations {
+    provided
+    compile.extendsFrom provided
+}
+
+jar {
+    from {
+        (configurations.runtime - configurations.provided).collect {
+            it.isDirectory() ? it : zipTree( it )
+        }
+    }
+}
+
+task copyJars() {
+    copyT(jar.archivePath, projectDir.path+'/samples/DataService/tododemo/libs', jar.getArchiveName(  ))
+    copyT(jar.archivePath, projectDir.path+'/samples/EndlessMatchMaker/libs', jar.getArchiveName(  ))
+    copyT(jar.archivePath, projectDir.path+'/samples/EndlessTagging/libs', jar.getArchiveName(  ))
+    copyT(jar.archivePath, projectDir.path+'/samples/FenceDemo/libs', jar.getArchiveName(  ))
+    copyT(jar.archivePath, projectDir.path+'/samples/FileService/filedemo/libs', jar.getArchiveName(  ))
+    copyT(jar.archivePath, projectDir.path+'/samples/GeoService/geodemo/libs', jar.getArchiveName(  ))
+    copyT(jar.archivePath, projectDir.path+'/samples/MessagingService/pubsubdemo/libs', jar.getArchiveName(  ))
+    copyT(jar.archivePath, projectDir.path+'/samples/MessagingService/pushdemo/libs', jar.getArchiveName(  ))
+    copyT(jar.archivePath, projectDir.path+'/samples/UserService/FacebookSDKSamples/login/libs', jar.getArchiveName(  ))
+    copyT(jar.archivePath, projectDir.path+'/samples/UserService/rolesdemo/libs/', jar.getArchiveName(  ))
+    copyT(jar.archivePath, projectDir.path+'/samples/UserService/userservicedemo/libs', jar.getArchiveName(  ))
+}
+
+def copyT(fromPath, toPath, archName)
+{
+   copy{
+      from fromPath into toPath
+      rename(archName, 'backendless.jar')
+   }
+}
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: 'weborbclient.jar')
+    compile fileTree(dir: 'libs', include: 'mediaLib.jar')
+    provided fileTree(dir: 'libs', include: 'android.jar')
+    provided fileTree(dir: 'libs', include: 'android.support.v4.jar')
+    provided fileTree(dir: 'libs', include: 'FacebookSDK.jar')
+    provided fileTree(dir: 'libs', include: 'maps.jar')
+    compile 'com.backendless:commons:2.1.0'
+}
