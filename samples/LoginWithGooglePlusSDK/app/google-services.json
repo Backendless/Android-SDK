@@ -1,0 +1,51 @@
+{
+  "project_info": {
+    "project_id": "test-project-10001",
+    "project_number": "395504112005",
+    "name": "My Project"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395504112005:android:dad9c557f58c5ae9",
+        "client_id": "android:com.backendless.example.loginwithgoogleplussdk.app",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.backendless.example.loginwithgoogleplussdk.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "395504112005-8pip5vpcb037ff23ng6vimnfbk4o9tje.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.backendless.example.loginwithgoogleplussdk.app",
+            "certificate_hash": "46960A953F3D32D4232C268D4F143248A6C07607"
+          }
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}

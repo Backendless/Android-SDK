@@ -84,8 +84,8 @@ public class Cache
     if( bytes == null )
       return null;
 
-    Class argType = type.getClass();
-    return (T) deserialize( bytes, argType );
+    //Class argType = type.getClass();
+    return (T) deserialize( bytes, type );
   }
 
   public <T> void get( final String key, final AsyncCallback<T> callback )
@@ -170,7 +170,7 @@ public class Cache
     Object object = null;
     try
     {
-      object = weborb.util.io.Serializer.fromBytes( bytes, ISerializer.AMF3, false );
+      object = weborb.util.io.Serializer.fromBytes( bytes, ISerializer.AMF3, true );
 
       if( object instanceof IAdaptingType )
         return type == null ? ((IAdaptingType) object).defaultAdapt() : ((IAdaptingType) object).adapt( type );

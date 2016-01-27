@@ -253,6 +253,12 @@ public final class UserService
     getUserServiceAndroidExtra().loginWithFacebookSdk( context, callbackManager, responder );
   }
 
+  public void loginWithFacebookSdk( android.app.Activity context, final Map<String, String> facebookFieldsMappings,
+                             final List<String> permissions, CallbackManager callbackManager, final AsyncCallback<BackendlessUser> responder )
+  {
+    getUserServiceAndroidExtra().loginWithFacebookSdk( context, facebookFieldsMappings, permissions, callbackManager, responder );
+  }
+
   public void loginWithFacebook( android.app.Activity context, final AsyncCallback<BackendlessUser> responder )
   {
     loginWithFacebook( context, null, null, null, responder );

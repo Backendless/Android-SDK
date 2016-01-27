@@ -26,6 +26,7 @@ import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.BackendlessSerializer;
+import com.backendless.persistence.MapDrivenDataStore;
 import com.backendless.persistence.QueryOptions;
 import com.backendless.property.ObjectProperty;
 import com.backendless.utils.ReflectionUtil;
@@ -112,7 +113,7 @@ public final class Persistence
         FootprintsManager.getInstance().Inner.updateFootprintForObject( serializedEntity, newEntity, entity );
       }
 
-      //put or update footprint's properties to user's properties, if exist
+      //put or update footprint's properties to user's properties, if exists
       Footprint footprint = FootprintsManager.getInstance().getEntityFootprint( newEntity );
       if( footprint != null )
         footprint.initObjectId( entity );
@@ -264,11 +265,12 @@ public final class Persistence
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-    Object entityArg = ReflectionUtil.hasField( entity.getClass(), Persistence.DEFAULT_OBJECT_ID_FIELD ) ? entity : FootprintsManager.getInstance().getObjectId( entity );
+    Map<String, Object> entityMap = BackendlessSerializer.serializeToMap( entity );
+    FootprintsManager.getInstance().Inner.putMissingPropsToEntityMap( entity, entityMap );
 
-    Object result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entityArg } );
+    Object result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entityMap } );
 
-    FootprintsManager.getInstance().Inner.removeFootprintForObject( BackendlessSerializer.serializeToMap( entity ), entity );
+    FootprintsManager.getInstance().Inner.removeFootprintForObject( entityMap, entity );
 
     return ((Number) result).longValue();
   }
@@ -301,9 +303,10 @@ public final class Persistence
         }
       };
 
-      Object entityArg = ReflectionUtil.hasField( entity.getClass(), Persistence.DEFAULT_OBJECT_ID_FIELD ) ? entity : FootprintsManager.getInstance().getObjectId( entity );
+      Map<String, Object> entityMap = BackendlessSerializer.serializeToMap( entity );
+      FootprintsManager.getInstance().Inner.putMissingPropsToEntityMap( entity, entityMap );
 
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entityArg }, removalCallback );
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), getSimpleName( entity.getClass() ), entityMap }, removalCallback );
     }
     catch( Throwable e )
     {
@@ -731,6 +734,14 @@ public final class Persistence
     }
   }
 
+  public IDataStore<Map> of( String tableName )
+  {
+    if( tableName.equalsIgnoreCase( "users" ) )
+      throw new IllegalArgumentException( "Table 'Users' is not accessible through this signature. Use Backendless.Data.of( BackendlessUser.class ) instead" );
+
+    return new MapDrivenDataStore( tableName  );
+  }
+
   public <E> IDataStore<E> of( final Class<E> entityClass )
   {
     if( entityClass == null )
@@ -781,7 +792,7 @@ public final class Persistence
     }
   }
 
-  private void checkPageSizeAndOffset( BackendlessDataQuery dataQuery ) throws BackendlessException
+  public static void checkPageSizeAndOffset( BackendlessDataQuery dataQuery ) throws BackendlessException
   {
     if( dataQuery != null )
     {

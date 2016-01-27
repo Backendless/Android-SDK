@@ -39,12 +39,12 @@ public class FileInfo
     this.name = name;
   }
 
-  public long getCreateOn()
+  public long getCreatedOn()
   {
     return createOn;
   }
 
-  public void setCreateOn( long createOn )
+  public void setCreatedOn( long createOn )
   {
     this.createOn = createOn;
   }
@@ -59,12 +59,12 @@ public class FileInfo
     this.publicUrl = publicUrl;
   }
 
-  public String getUrl()
+  public String getURL()
   {
     return url;
   }
 
-  public void setUrl( String url )
+  public void setURL( String url )
   {
     this.url = url;
   }

@@ -32,6 +32,7 @@ public class BackendlessCollection<E> extends AbstractBackendlessCollection<E>
   private final Object dataLock = new Object();
   private Class<E> type;
   private volatile IBackendlessQuery query;
+  private String tableName;
 
   public BackendlessCollection()
   {
@@ -46,6 +47,11 @@ public class BackendlessCollection<E> extends AbstractBackendlessCollection<E>
   public void setType( Class<E> type )
   {
     this.type = type;
+  }
+
+  public void setTableName( String tableName )
+  {
+    this.tableName = tableName;
   }
 
   public void setPageSize( int pageSize )
@@ -87,7 +93,10 @@ public class BackendlessCollection<E> extends AbstractBackendlessCollection<E>
     }
     else
     {
-      return Backendless.Persistence.find( type, (BackendlessDataQuery) tempQuery );
+      if( tableName != null )
+        return (BackendlessCollection<E>) Backendless.Persistence.of( tableName ).find( (BackendlessDataQuery) tempQuery );
+      else
+        return Backendless.Persistence.find( type, (BackendlessDataQuery) tempQuery );
     }
   }
 
@@ -113,6 +122,7 @@ public class BackendlessCollection<E> extends AbstractBackendlessCollection<E>
     result.setData( data );
     result.setQuery( query );
     result.setType( type );
+    result.setTableName( tableName );
     result.setTotalObjects( totalObjects );
 
     return result;
