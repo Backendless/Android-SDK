@@ -1,8 +1,14 @@
-group 'com.backendless'
-version '3.0.8'
-
 apply plugin: 'java'
 apply plugin: 'maven-publish'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+
+group 'com.backendless'
+version '3.0.7'
+archivesBaseName='android'
+
+
 
 sourceCompatibility = 1.7
 
@@ -17,6 +23,74 @@ def getMavenSettingsCredentials = {
 task logInfo {
     doFirst {
         println getMavenSettingsCredentials()
+    }
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+
+
+            def ossrhUsername='extralifes'
+            def ossrhPassword='s3cret'
+
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'Backendless android sdk'
+                packaging 'jar'
+                // optionally artifactId can be defined here
+                description 'A application used as an example on how to set uppushing  its components to the Central Repository.'
+                url 'http://www.example.com/example-application'
+
+                scm {
+                    connection 'scm:svn:http://foo.googlecode.com/svn/trunk/'
+                    developerConnection 'scm:svn:https://foo.googlecode.com/svn/trunk/'
+                    url 'http://foo.googlecode.com/svn/trunk/'
+                }
+
+                licenses {
+                    license {
+                        name 'The MIT License (MIT)'
+                        url 'https://opensource.org/licenses/MIT'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'backendless'
+                        name 'backendless'
+                        email 'info@backednless.com'
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -127,3 +201,4 @@ dependencies {
     }
 
 }
+apply plugin: 'java'
