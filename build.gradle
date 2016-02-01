@@ -49,8 +49,8 @@ uploadArchives {
         mavenDeployer {
 
 
-            def ossrhUsername='extralifes'
-            def ossrhPassword='s3cret'
+            def ossrhUsername=''
+            def ossrhPassword=''
 
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
