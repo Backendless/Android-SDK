@@ -20,6 +20,12 @@ def getMavenSettingsCredentials = {
     return output.servers."server"
 }
 
+allprojects {
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+    }
+}
+
 task logInfo {
     doFirst {
         println getMavenSettingsCredentials()
