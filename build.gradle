@@ -20,9 +20,12 @@ def getMavenSettingsCredentials = {
     return output.servers."server"
 }
 
-allprojects {
-    tasks.withType(Javadoc) {
-        options.addStringOption('Xdoclint:none', '-quiet')
+if (JavaVersion.current().isJava8Compatible())
+{
+    allprojects {
+        tasks.withType( Javadoc ) {
+            options.addStringOption( 'Xdoclint:none', '-quiet' )
+        }
     }
 }
 
