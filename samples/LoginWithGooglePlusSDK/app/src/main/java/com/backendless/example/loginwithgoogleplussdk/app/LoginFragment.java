@@ -41,7 +41,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -93,7 +97,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         public void onResult( Status status )
         {
           handleSignOutResult( status );
-          //status.startResolutionForResult(  );
         }
       } );
     }
@@ -145,7 +148,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
     final MainActivity mainActivity = (MainActivity)this.getActivity();
     final String accountName = acct.getEmail();
-    final String scopes = "oauth2:" + Scopes.PLUS_LOGIN + " " + Scopes.PLUS_ME + " " + Scopes.PROFILE;
+    final String scopes = "oauth2:" + Scopes.PLUS_LOGIN + " " + Scopes.PLUS_ME + " " + Scopes.PROFILE + " " + Scopes.EMAIL;
 
     AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>(){
       @Override
@@ -154,7 +157,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         String token = null;
         try
         {
-          //String accountName2 = Plus.AccountApi.getAccountName( gApiClient );
           token = GoogleAuthUtil.getToken( mainActivity, accountName, scopes );
           GoogleAuthUtil.invalidateToken( mainActivity, token );
           handleAccessTokenInBackendless( acct.getIdToken(), token );
@@ -172,9 +174,17 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
   private void handleAccessTokenInBackendless( String idToken, String accessToken )
   {
-    Log.d( TAG, "idToktn: "+idToken+ ", accessToken: "+accessToken );
+    Log.d( TAG, "idToken: "+idToken+ ", accessToken: "+accessToken );
+
+Map<String, String> googlePlusFieldsMapping = new HashMap<String, String>();
+    googlePlusFieldsMapping.put( "given_name", "gp_given_name" );
+    googlePlusFieldsMapping.put( "family_name", "gp_family_name" );
+    googlePlusFieldsMapping.put( "gender", "gender" );
+    googlePlusFieldsMapping.put("email", "email");
+    List<String> permissions = new ArrayList<String>();
+
     if (idToken != null && accessToken != null)
-    Backendless.UserService.loginWithGooglePlusSdk( idToken, accessToken, new AsyncCallback<BackendlessUser>()
+    Backendless.UserService.loginWithGooglePlusSdk( idToken, accessToken, googlePlusFieldsMapping, permissions, new AsyncCallback<BackendlessUser>()
     {
       @Override
       public void handleResponse( BackendlessUser backendlessUser )
