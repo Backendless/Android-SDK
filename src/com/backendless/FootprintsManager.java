@@ -169,10 +169,10 @@ public class FootprintsManager
           else if( entry.getValue() instanceof Collection )
           {
             // TODO: discuss and decide what to do with GeoPoints here
-            if( ((Collection) entry.getValue()).iterator().next() instanceof GeoPoint )
-            {
+            Collection collection = (Collection) entry.getValue();
+
+            if( collection.size() > 0 && collection.iterator().next() instanceof GeoPoint )
               continue;
-            }
 
             // retrieve persisted entity's field value (which is collection)
             Collection persistedEntityFieldValue = (Collection) ReflectionUtil.getFieldValue( persistedEntity, entry.getKey() );
