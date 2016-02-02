@@ -6,7 +6,7 @@ apply plugin: 'signing'
 
 group 'com.backendless'
 version '3.0.8'
-archivesBaseName='android'
+archivesBaseName='backendless'
 
 
 
