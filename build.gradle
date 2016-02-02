@@ -75,13 +75,13 @@ uploadArchives {
                 name 'Backendless android sdk'
                 packaging 'jar'
                 // optionally artifactId can be defined here
-                description 'A application used as an example on how to set uppushing  its components to the Central Repository.'
-                url 'http://www.example.com/example-application'
+                description 'Android SDK used by developers to provide Backendless API in apps.'
+                url 'http://backendless.com'
 
                 scm {
-                    connection 'scm:svn:http://foo.googlecode.com/svn/trunk/'
-                    developerConnection 'scm:svn:https://foo.googlecode.com/svn/trunk/'
-                    url 'http://foo.googlecode.com/svn/trunk/'
+                    connection 'scm:git:https://github.com/Backendless/Android-SDK.git'
+                    developerConnection 'scm:git:https://github.com/Backendless/Android-SDK.git'
+                    url 'https://github.com/Backendless/Android-SDK.git'
                 }
 
                 licenses {
