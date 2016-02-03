@@ -23,5 +23,5 @@ public class Defaults
   public static final String APPLICATION_ID = "CBF6B737-B6AB-1078-FF7D-63865C2D5100";
   public static final String SECRET_KEY = "7CC1B40E-744D-53BE-FF38-B07CB50F5F00";
   public static final String VERSION = "v1";
-  public static final String SERVER_URL = "http://77-109-56-35.dynamic.peoplenet.ua:19093";
+  public static final String SERVER_URL = "http://api.backendless.com";
 }
