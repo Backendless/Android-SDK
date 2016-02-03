@@ -211,9 +211,7 @@ public class FootprintsManager
     }
 
     /**
-     * Updates footprint for entity. Specifically:
-     * 1. Sets Footprint object from OLD to NEW
-     * 2. Removed Footprint object for OLD
+     * Recursively sets Footprint objects from OLD entities to NEW ones.
      *
      * @param serialized entity's map used to iterate through fields and update footprints recursively
      * @param newEntity  entity from server
@@ -267,13 +265,8 @@ public class FootprintsManager
           }
         }
 
-        //Footprint footprint = persistenceCache.get( newEntity );
-        //persistenceCache.put( oldEntity, footprint );
-        //removeFootprintForObject( serialized, newEntity );
-
         Footprint footprint = persistenceCache.get( oldEntity );
         persistenceCache.put( newEntity, footprint );
-        removeFootprintForObject( serialized, oldEntity );
       }
       finally
       {
