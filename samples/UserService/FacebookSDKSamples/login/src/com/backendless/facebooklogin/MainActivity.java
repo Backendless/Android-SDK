@@ -66,7 +66,6 @@ public class MainActivity extends FragmentActivity
         facebookFieldsMappings.put( "gender", "fb_gender" );
 
         List<String> permissions = new ArrayList<>();
-        permissions.add( "contact_email" );
         permissions.add( "email" );
         permissions.add("public_profile");
 
