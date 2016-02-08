@@ -5,8 +5,8 @@ apply plugin: 'signing'
 
 
 group 'com.backendless'
-version '3.0.8'
-archivesBaseName='android'
+version '3.0.8.3'
+archivesBaseName='backendless'
 
 
 
@@ -18,6 +18,15 @@ def getMavenSettingsCredentials = {
     def xmlSlurper = new XmlSlurper()
     def output = xmlSlurper.parse(mavenSettings)
     return output.servers."server"
+}
+
+if (JavaVersion.current().isJava8Compatible())
+{
+    allprojects {
+        tasks.withType( Javadoc ) {
+            options.addStringOption( 'Xdoclint:none', '-quiet' )
+        }
+    }
 }
 
 task logInfo {
@@ -40,9 +49,9 @@ artifacts {
     archives javadocJar, sourcesJar
 }
 
-signing {
-    sign configurations.archives
-}
+//signing {
+//    sign configurations.archives
+//}
 
 uploadArchives {
     repositories {
@@ -51,6 +60,12 @@ uploadArchives {
 
             def ossrhUsername=''
             def ossrhPassword=''
+
+            pom.whenConfigured {
+                p -> p.dependencies = p.dependencies.findAll {
+                    dep -> dep.artifactId != "commons"
+                }
+            }
 
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
@@ -66,13 +81,13 @@ uploadArchives {
                 name 'Backendless android sdk'
                 packaging 'jar'
                 // optionally artifactId can be defined here
-                description 'A application used as an example on how to set uppushing  its components to the Central Repository.'
-                url 'http://www.example.com/example-application'
+                description 'Android SDK used by developers to provide Backendless API in apps.'
+                url 'http://backendless.com'
 
                 scm {
-                    connection 'scm:svn:http://foo.googlecode.com/svn/trunk/'
-                    developerConnection 'scm:svn:https://foo.googlecode.com/svn/trunk/'
-                    url 'http://foo.googlecode.com/svn/trunk/'
+                    connection 'scm:git:https://github.com/Backendless/Android-SDK.git'
+                    developerConnection 'scm:git:https://github.com/Backendless/Android-SDK.git'
+                    url 'https://github.com/Backendless/Android-SDK.git'
                 }
 
                 licenses {
