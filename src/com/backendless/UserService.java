@@ -209,7 +209,7 @@ public final class UserService
   }
 
   public void login( final String login, final String password, final AsyncCallback<BackendlessUser> responder,
-                     boolean stayLoggedIn )
+                     final boolean stayLoggedIn )
   {
     if( !currentUser.getProperties().isEmpty() )
       logout( new AsyncCallback<Void>()
@@ -217,7 +217,7 @@ public final class UserService
         @Override
         public void handleResponse( Void response )
         {
-          login( login, password, responder );
+          login( login, password, responder, stayLoggedIn );
         }
 
         @Override
