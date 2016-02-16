@@ -250,13 +250,29 @@ public final class UserService
 
   public void loginWithFacebookSdk( android.app.Activity context, CallbackManager callbackManager, final AsyncCallback<BackendlessUser> responder )
   {
-    getUserServiceAndroidExtra().loginWithFacebookSdk( context, callbackManager, responder );
+    loginWithFacebookSdk(context, callbackManager, responder, false );
+  }
+
+  public void loginWithFacebookSdk( android.app.Activity context, CallbackManager callbackManager, final
+                                    AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn  )
+  {
+    AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler( responder, stayLoggedIn );
+    getUserServiceAndroidExtra().loginWithFacebookSdk( context, callbackManager, internalResponder );
   }
 
   public void loginWithFacebookSdk( android.app.Activity context, final Map<String, String> facebookFieldsMappings,
-                             final List<String> permissions, CallbackManager callbackManager, final AsyncCallback<BackendlessUser> responder )
+                                    final List<String> permissions, CallbackManager callbackManager, final AsyncCallback<BackendlessUser> responder )
   {
-    getUserServiceAndroidExtra().loginWithFacebookSdk( context, facebookFieldsMappings, permissions, callbackManager, responder );
+    loginWithFacebookSdk( context, facebookFieldsMappings, permissions, callbackManager, responder, false );
+  }
+
+  public void loginWithFacebookSdk( android.app.Activity context, final Map<String, String> facebookFieldsMappings,
+                             final List<String> permissions, CallbackManager callbackManager, final
+                                    AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  {
+    AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler( responder, stayLoggedIn );
+    getUserServiceAndroidExtra().loginWithFacebookSdk( context, facebookFieldsMappings, permissions, callbackManager,
+                                                       internalResponder );
   }
 
   public void loginWithFacebook( android.app.Activity context, final AsyncCallback<BackendlessUser> responder )
@@ -374,10 +390,22 @@ public final class UserService
     loginWithGooglePlusSdk( tokenId, accessToken, null, null, responder );
   }
 
+  public void loginWithGooglePlusSdk( String tokenId, String accessToken, final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  {
+    loginWithGooglePlusSdk( tokenId, accessToken, null, null, responder, stayLoggedIn );
+  }
+
   public void loginWithGooglePlusSdk( String tokenId, String accessToken, final Map<String, String> fieldsMappings,
                                     List<String> permissions, final AsyncCallback<BackendlessUser> responder )
   {
-    getUserServiceAndroidExtra().loginWithGooglePlusSdk( tokenId, accessToken, fieldsMappings, permissions, responder );
+      loginWithGooglePlusSdk( tokenId, accessToken, fieldsMappings, permissions, responder, false );
+  }
+
+  public void loginWithGooglePlusSdk( String tokenId, String accessToken, final Map<String, String> fieldsMappings,
+                                      List<String> permissions, final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  {
+    AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler( responder, stayLoggedIn );
+    getUserServiceAndroidExtra().loginWithGooglePlusSdk( tokenId, accessToken, fieldsMappings, permissions, internalResponder );
   }
 
   public void logout() throws BackendlessException
