@@ -18,6 +18,9 @@
 
 package com.backendless.messaging;
 
+/**
+ * A data structure which contains ID of the published message and the status of the publish operation.
+ */
 public class MessageStatus implements Comparable<MessageStatus>
 {
   private String messageId;
