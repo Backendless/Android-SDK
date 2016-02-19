@@ -158,10 +158,10 @@ public class FootprintsManager
           if( entry.getValue() instanceof Map )
           {
             // retrieve persisted entity's field value
-            Object persistedEntityFieldValue = ReflectionUtil.getFieldValue( persistedEntity, entry.getKey() );
+            Object persistedEntityFieldValue = getFieldValue( persistedEntity, entry.getKey() );
 
             // retrieve initial entity's field value
-            Object initialEntityFieldValue = ReflectionUtil.getFieldValue( initialEntity, entry.getKey() );
+            Object initialEntityFieldValue = getFieldValue( initialEntity, entry.getKey() );
 
             // duplicate footprint recursively
             duplicateFootprintForObject( (Map<String, Object>) entry.getValue(), persistedEntityFieldValue, initialEntityFieldValue );
@@ -175,10 +175,10 @@ public class FootprintsManager
               continue;
 
             // retrieve persisted entity's field value (which is collection)
-            Collection persistedEntityFieldValue = (Collection) ReflectionUtil.getFieldValue( persistedEntity, entry.getKey() );
+            Collection persistedEntityFieldValue = (Collection) getFieldValue( persistedEntity, entry.getKey() );
 
             // retrieve initial entity's field value (which is collection)
-            Collection initialEntityFieldValue = (Collection) ReflectionUtil.getFieldValue( initialEntity, entry.getKey() );
+            Collection initialEntityFieldValue = (Collection) getFieldValue( initialEntity, entry.getKey() );
 
             Collection mapCollection = (Collection) entry.getValue();
 
@@ -199,10 +199,6 @@ public class FootprintsManager
         {
           persistenceCache.put( persistedEntity, footprint );
         }
-      }
-      catch( NoSuchFieldException e )
-      {
-        throw new BackendlessException( e );
       }
       finally
       {
@@ -236,12 +232,11 @@ public class FootprintsManager
         for( Map.Entry<String, Object> entry : entries )
         {
           String key = entry.getKey();
-          String upperKey = entry.getKey().substring( 0, 1 ).toUpperCase().concat( entry.getKey().substring( 1 ) );
 
           if( entry.getValue() instanceof Map )
           {
-            Object newEntityField = getFieldValue( newEntity, key, upperKey );
-            Object oldEntityField = getFieldValue( oldEntity, key, upperKey );
+            Object newEntityField = getFieldValue( newEntity, key );
+            Object oldEntityField = getFieldValue( oldEntity, key );
             updateFootprintForObject( (Map) entry.getValue(), newEntityField, oldEntityField );
           }
           else if( entry.getValue() instanceof Collection )
@@ -252,8 +247,8 @@ public class FootprintsManager
             if( valueIterator.hasNext() && valueIterator.next() instanceof GeoPoint )
               continue;
 
-            Collection newObjectCollection= getFieldCollection( newEntity, key, upperKey );
-            Collection oldObjectCollection = getFieldCollection( oldEntity, key, upperKey );
+            Collection newObjectCollection= getFieldCollection( newEntity, key );
+            Collection oldObjectCollection = getFieldCollection( oldEntity, key );
             Collection mapCollection = (Collection) entry.getValue();
 
             Iterator mapCollectionIterator = mapCollection.iterator();
@@ -300,18 +295,17 @@ public class FootprintsManager
         for( Map.Entry<String, Object> entry : entries )
         {
           String key = entry.getKey();
-          String upperKey = entry.getKey().substring( 0, 1 ).toUpperCase().concat( entry.getKey().substring( 1 ) );
 
           if( entry.getValue() instanceof Map )
           {
-            Object entityFieldValue = getFieldValue( entity, key, upperKey );
+            Object entityFieldValue = getFieldValue( entity, key );
 
             // remove footprints recursively
             removeFootprintForObject( (Map<String, Object>) entry.getValue(), entityFieldValue );
           }
           else if( entry.getValue() instanceof Collection )
           {
-            Collection objectCollection = getFieldCollection( entity, key, upperKey );
+            Collection objectCollection = getFieldCollection( entity, key );
             Collection mapCollection = (Collection) entry.getValue();
 
             // remove footprints recursively for each object in collection
@@ -388,7 +382,7 @@ public class FootprintsManager
 
             if( entityEntryValue instanceof NamedObject || entityEntryValue instanceof ArrayType )
             {
-              Object innerInstance = ReflectionUtil.getFieldValue( instance, entityEntry.getKey() );
+              Object innerInstance = getFieldValue( instance, entityEntry.getKey() );
               putEntityFootprintToCache( innerInstance, entityEntry.getValue() );
             }
           }
@@ -404,9 +398,13 @@ public class FootprintsManager
       marked.remove( entity );
     }
 
-    private Collection getFieldCollection( Object entity, String lowerKey, String upperKey )
+    private Collection getFieldCollection( Object entity, String fieldName )
     {
       Collection collection;
+      String firstLetter = fieldName.substring( 0, 1 );
+      String remainder = fieldName.substring( 1 );
+      String lowerKey = firstLetter.toLowerCase().concat( remainder );
+      String upperKey = firstLetter.toUpperCase().concat( remainder );
 
       if( entity instanceof BackendlessUser )
       {
@@ -426,30 +424,19 @@ public class FootprintsManager
       }
       else
       {
-        try
-        {
-          collection = (Collection) ReflectionUtil.getFieldValue( entity, lowerKey );
-        }
-        catch( NoSuchFieldException nfe )
-        {
-          try
-          {
-            //try to find field with first letter in uppercase
-            collection = (Collection) ReflectionUtil.getFieldValue( entity, upperKey );
-          }
-          catch( NoSuchFieldException e )
-          {
-             throw new RuntimeException( "unable to find field in object. Fields (" + lowerKey + "," + upperKey + "). Class - " + entity.getClass() );
-          }
-        }
+          collection = (Collection) ReflectionUtil.getFieldValue( entity, lowerKey, upperKey );
       }
 
       return collection;
     }
 
-    private Object getFieldValue( Object entity, String lowerKey, String upperKey )
+    private Object getFieldValue( Object entity, String key )
     {
       Object entityFieldValue;
+      String firstLetter = key.substring( 0, 1 );
+      String remainder = key.substring( 1 );
+      String lowerKey = firstLetter.toLowerCase().concat( remainder );
+      String upperKey = firstLetter.toUpperCase().concat( remainder );
 
       if( entity instanceof BackendlessUser )
       {
@@ -460,22 +447,8 @@ public class FootprintsManager
       }
       else
       {
-        try
-        {
           // retrieve entity field value
-          entityFieldValue = ReflectionUtil.getFieldValue( entity, lowerKey );
-        } catch( NoSuchFieldException nfe )
-        {
-          try
-          {
-            //try to find field with first letter in uppercase
-            entityFieldValue = ReflectionUtil.getFieldValue( entity, upperKey );
-          }
-          catch( NoSuchFieldException e )
-          {
-            throw new RuntimeException( "unable to find field in object. Fields (" + lowerKey + "," + upperKey + "). Class - " + entity.getClass() );
-          }
-        }
+          entityFieldValue = ReflectionUtil.getFieldValue( entity, lowerKey, upperKey );
       }
 
       return entityFieldValue;

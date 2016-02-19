@@ -19,8 +19,10 @@
 package com.backendless.utils;
 
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessException;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
@@ -30,22 +32,73 @@ public class ReflectionUtil
    * Retrieves the value of the field with given name from the given object.
    *
    * @param object    object containing the field
-   * @param fieldName name of the field
+   * @param lowerKey name of the field starting with lower case letter
+   * @param upperKey name of the field starting with the upper case letter
    * @return Object, which is the value of the given field in the given object; null, if for some reason setAccessible(true) didn't work
    * @throws NoSuchFieldException if object doesn't have a field with such name
    */
-  public static Object getFieldValue( Object object, String fieldName ) throws NoSuchFieldException
+  public static Object getFieldValue( Object object, String lowerKey, String upperKey ) //throws NoSuchFieldException
   {
-    Field field = getField( object.getClass(), fieldName );
-    field.setAccessible( true );
+    if( object == null )
+      throw new BackendlessException( "Unable to retrieve field/property - " + lowerKey );
 
     try
     {
+      Field field = getField( object.getClass(), lowerKey );
+      field.setAccessible( true );
       return field.get( object );
     }
     catch( IllegalAccessException e )
     {
       // shouldn't ever be thrown, because setAccessible(true) was called before
+      return null;
+    }
+    catch( NoSuchFieldException e1 )
+    {
+      try
+      {
+        Field field = getField( object.getClass(), upperKey );
+        field.setAccessible( true );
+        return field.get( object );
+      }
+      catch( Throwable t )
+      {
+         // ignore, the rest of the method will do other checks
+      }
+
+      Method getMethod = getMethod( object, "get" + lowerKey );
+
+      if( getMethod == null  )
+        getMethod = getMethod( object, "get" + upperKey );
+
+      if( getMethod == null )
+        getMethod = getMethod( object, "is" + lowerKey );
+
+      if( getMethod == null )
+        getMethod = getMethod( object, "is" + upperKey );
+
+      if( getMethod == null )
+        throw new BackendlessException( "Unable to find field or method for property " + lowerKey );
+
+      try
+      {
+        return getMethod.invoke( object, new Object[ 0 ] );
+      }
+      catch( Throwable t )
+      {
+        throw new BackendlessException( "Unable to retrieve value for field/property '" + lowerKey + "'. Underlying exception - " + t.getMessage() );
+      }
+    }
+  }
+
+  private static Method getMethod( Object object, String methodName )
+  {
+    try
+    {
+      return object.getClass().getMethod( methodName );
+    }
+    catch( Throwable t )
+    {
       return null;
     }
   }
