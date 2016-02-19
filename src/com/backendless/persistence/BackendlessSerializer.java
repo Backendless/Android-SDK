@@ -42,13 +42,12 @@ public class BackendlessSerializer
    */
   public static Map<String, Object> serializeToMap( Object entity )
   {
-    return (Map<String, Object>) serializeToMap( entity, new HashMap<Object, Map<String, Object>>(  ) );
+    return (Map<String, Object>) serializeToMap( entity, new HashMap<Object, Map<String, Object>>() );
   }
 
-
-  private static Object serializeToMap( Object entity,  Map<Object, Map<String, Object>> serializedCache )
+  private static Object serializeToMap( Object entity, Map<Object, Map<String, Object>> serializedCache )
   {
-    if(entity.getClass().isArray())
+    if( entity.getClass().isArray() )
     {
       return serializeArray( entity, serializedCache );
     }
@@ -130,6 +129,27 @@ public class BackendlessSerializer
 
         entityEntry.setValue( newCollection );
       }
+      else if( entityEntryValue instanceof Object[] )
+      {
+        Object[] arrayEntry = (Object[]) entityEntryValue;
+
+        //do nothing with empty arrays and arrays of GeoPoints
+        if( arrayEntry.length == 0 || arrayEntry[ 0 ] instanceof GeoPoint )
+          continue;
+
+        // check for anonymous class entry
+        if( arrayEntry[ 0 ].getClass().isAnonymousClass() )
+          throw new BackendlessException( String.format( ExceptionMessage.ANONYMOUS_CLASSES_PROHIBITED, entityEntry.getKey() ) );
+
+        List<Object> newCollection = new ArrayList<Object>();
+        for( Object arrayEntryItem : arrayEntry )
+          if( !isBelongsJdk( arrayEntryItem.getClass() ) )
+            newCollection.add( getOrMakeSerializedObject( arrayEntryItem, serializedCache ) );
+          else
+            newCollection.add( arrayEntryItem );
+
+        entityEntry.setValue( newCollection );
+      }
       else //not collection
       {
         if( !isBelongsJdk( entityEntryValue.getClass() ) )
@@ -143,10 +163,10 @@ public class BackendlessSerializer
   private static Object serializeArray( Object entity, Map<Object, Map<String, Object>> serializedCache )
   {
     int length = Array.getLength( entity );
-    Object[] objects = new Object[length];
+    Object[] objects = new Object[ length ];
     for( int i = 0; i < length; i++ )
     {
-      objects[i] = getOrMakeSerializedObject( Array.get( entity, i ), serializedCache );
+      objects[ i ] = getOrMakeSerializedObject( Array.get( entity, i ), serializedCache );
     }
 
     return objects;
@@ -158,7 +178,8 @@ public class BackendlessSerializer
    * @param entityEntryValue object to be serialized
    * @return Map formed from given object
    */
-  private static Object getOrMakeSerializedObject( Object entityEntryValue,  Map<Object, Map<String, Object>> serializedCache )
+  private static Object getOrMakeSerializedObject( Object entityEntryValue,
+                                                   Map<Object, Map<String, Object>> serializedCache )
   {
     if( serializedCache.containsKey( entityEntryValue ) ) //cyclic relation
     {
