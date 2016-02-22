@@ -332,6 +332,15 @@ public final class Messaging
     Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "getDeviceRegistrationByDeviceId", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), DEVICE_ID }, responder );
   }
 
+  /**
+   * Publishes message to "default" channel. The message is not a push notification, it does not have any headers and
+   * does not go into any subtopics.
+   *
+   * @param   message   object to publish. The object can be of any data type - a primitive value, String, Date, a
+   *                    user-defined complex type, a collection or an array of these types.
+   * @return a data structure which contains ID of the published message and the status of the publish operation.
+   * @throws  BackendlessException
+   */
   public MessageStatus publish( Object message ) throws BackendlessException
   {
     if( message instanceof PublishOptions || message instanceof DeliveryOptions )
@@ -340,17 +349,64 @@ public final class Messaging
     return publish( null, message );
   }
 
+  /**
+   * Publishes message to specified channel. The message is not a push notification, it does not have any headers and
+   * does not go into any subtopics.
+   *
+   * @param   channelName name of a channel to publish the message to. If the channel does not exist, Backendless
+   *                      automatically creates it.
+   * @param   message     object to publish. The object can be of any data type - a primitive value, String, Date, a
+   *                      user-defined complex type, a collection or an array of these types.
+   * @return ${@link com.backendless.messaging.MessageStatus} - a data structure which contains ID of the published
+   *         message and the status of the publish operation.
+   * @throws  BackendlessException
+   */
   public MessageStatus publish( String channelName, Object message ) throws BackendlessException
   {
     return publish( channelName, message, new PublishOptions() );
   }
 
+  /**
+   * Publishes message to specified channel. The message is not a push notification, it may have headers and/or subtopic
+   * defined in the publishOptions argument.
+   *
+   * @param   channelName name of a channel to publish the message to. If the channel does not exist, Backendless
+   *                      automatically creates it.
+   * @param   message     object to publish. The object can be of any data type - a primitive value, String, Date, a
+   *                      user-defined complex type, a collection or an array of these types.
+   * @param   publishOptions
+   *                      an instance of ${@link com.backendless.messaging.PublishOptions}. When provided may contain
+   *                      publisher ID (an arbitrary, application-specific string value identifying the publisher),
+   *                      subtopic value and/or a collection of headers.
+   * @return a data structure which contains ID of the published message and the status of the publish operation.
+   * @throws BackendlessException
+   */
   public MessageStatus publish( String channelName, Object message,
                                 PublishOptions publishOptions ) throws BackendlessException
   {
     return publish( channelName, message, publishOptions, new DeliveryOptions() );
   }
 
+  /**
+   * Publishes message to specified channel.The message may be configured as a push notification. It may have headers
+   * and/or subtopic defined in the publishOptions argument.
+   *
+   * @param   channelName name of a channel to publish the message to. If the channel does not exist, Backendless
+   *                      automatically creates it.
+   * @param   message     object to publish. The object can be of any data type - a primitive value, String, Date, a
+   *                      user-defined complex type, a collection or an array of these types.
+   * @param   publishOptions
+   *                      an instance of ${@link com.backendless.messaging.PublishOptions}. When provided may contain
+   *                      publisher ID (an arbitrary, application-specific string value identifying the publisher),
+   *                      subtopic value and/or a collection of headers.
+   * @param   deliveryOptions
+   *                      an instance of ${@link com.backendless.messaging.DeliveryOptions}. When provided may specify
+   *                      options for message delivery such as: deliver as a push notification, deliver to specific
+   *                      devices (or a group of devices grouped by the operating system), delayed delivery or repeated
+   *                      delivery.
+   * @return a data structure which contains ID of the published message and the status of the publish operation.
+   * @throws BackendlessException
+   */
   public MessageStatus publish( String channelName, Object message, PublishOptions publishOptions,
                                 DeliveryOptions deliveryOptions ) throws BackendlessException
   {
@@ -378,11 +434,42 @@ public final class Messaging
     return channelName;
   }
 
+  /**
+   * Publishes message to "default" channel. The message is not a push notification, it does not have any headers and
+   * does not go into any subtopics.
+   *
+   * @param   message   object to publish. The object can be of any data type - a primitive value, String, Date, a
+   *                    user-defined complex type, a collection or an array of these types.
+   * @param   publishOptions
+   *                      an instance of ${@link com.backendless.messaging.PublishOptions}. When provided may contain
+   *                      publisher ID (an arbitrary, application-specific string value identifying the publisher),
+   *                      subtopic value and/or a collection of headers.
+   * @return a data structure which contains ID of the published message and the status of the publish operation.
+   * @throws  BackendlessException
+   */
   public MessageStatus publish( Object message, PublishOptions publishOptions ) throws BackendlessException
   {
     return publish( null, message, publishOptions );
   }
 
+  /**
+   * Publishes message to "default" channel.The message may be configured as a push notification. It may have headers
+   * and/or subtopic defined in the publishOptions argument.
+   *
+   * @param   message     object to publish. The object can be of any data type - a primitive value, String, Date, a
+   *                      user-defined complex type, a collection or an array of these types.
+   * @param   publishOptions
+   *                      an instance of ${@link com.backendless.messaging.PublishOptions}. When provided may contain
+   *                      publisher ID (an arbitrary, application-specific string value identifying the publisher),
+   *                      subtopic value and/or a collection of headers.
+   * @param   deliveryOptions
+   *                      an instance of ${@link com.backendless.messaging.DeliveryOptions}. When provided may specify
+   *                      options for message delivery such as: deliver as a push notification, deliver to specific
+   *                      devices (or a group of devices grouped by the operating system), delayed delivery or repeated
+   *                      delivery.
+   * @return a data structure which contains ID of the published message and the status of the publish operation.
+   * @throws BackendlessException
+   */
   public MessageStatus publish( Object message, PublishOptions publishOptions,
                                 DeliveryOptions deliveryOptions ) throws BackendlessException
   {

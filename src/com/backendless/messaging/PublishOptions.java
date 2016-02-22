@@ -22,6 +22,16 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
+/**
+ * Instance of PublishOptions class may contain publisher ID (an arbitrary, application-specific string value
+ * identifying the publisher), subtopic value and/or a collection of headers.
+ *
+ * Headers are used for sending push notification for various devices, i.e. message to send as push to Android device
+ * must include ANDROID_TICKER_TEXT_TAG, ANDROID_CONTENT_TITLE_TAG, ANDROID_CONTENT_TEXT_TAG headers.
+ *
+ * @see com.backendless.Messaging
+ * @see <a href="https://backendless.com/documentation/messaging/android/messaging_publish_push_notifications.htm">Publish Push Notifications</a>
+ */
 public class PublishOptions
 {
   private String publisherId;
