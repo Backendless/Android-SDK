@@ -25,7 +25,7 @@ import com.backendless.core.responder.policy.BackendlessUserAdaptingPolicy;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.social.AbstractSocialLoginStrategy;
-import com.backendless.utils.JsonHelper;
+import com.backendless.utils.JSONObjectConverter;
 import com.facebook.*;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -166,7 +166,7 @@ class UserServiceAndroidExtra
           while( keys.hasNext() )
           {
             String key = String.valueOf( keys.next() );
-            result.setProperty( key, JsonHelper.fromJson(response.get( key ) ) );
+            result.setProperty( key, JSONObjectConverter.fromJson(response.get(key)) );
           }
 
           if( responder != null )

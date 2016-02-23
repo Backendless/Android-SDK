@@ -10,7 +10,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class JsonHelper {
+/**
+ * When using easyLogin (for Facebook, Google+ or Twitter) the returned BackendlessUser can contain not correct fields:
+ * JSONObject.NULL instead of null
+ * JSONArray instead of List
+ * JSONObject instead of Map
+ *
+ * This class is used to convert JSONObject.. fields into simple java.lang types
+ */
+
+public class JSONObjectConverter {
     public static Map<String, Object> toMap(JSONObject object) throws JSONException {
         Map<String, Object> map = new HashMap();
         Iterator keys = object.keys();
