@@ -29,7 +29,12 @@ public class RealmSerializer extends BackendlessSerializer implements IObjectSer
 
   public Class getSerializationFriendlyClass( Class clazz )
   {
-    return clazz.getSuperclass();
+    String simpleName = clazz.getSimpleName();
+
+    if( simpleName.endsWith( "RealmProxy" ) )
+      return clazz.getSuperclass();
+    else
+      return clazz;
   }
 
   @Override
