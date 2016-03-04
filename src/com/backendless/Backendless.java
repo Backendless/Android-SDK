@@ -25,6 +25,8 @@ import com.backendless.geo.LocationTracker;
 import com.backendless.io.BackendlessUserFactory;
 import com.backendless.io.BackendlessUserWriter;
 import com.backendless.io.DoubleWriter;
+import com.backendless.persistence.BackendlessSerializer;
+import com.backendless.persistence.RealmSerializer;
 import com.backendless.persistence.local.UserIdStorageFactory;
 import com.backendless.persistence.local.UserTokenStorageFactory;
 import weborb.config.ORBConfig;
@@ -147,6 +149,17 @@ public final class Backendless
     {
       Intent intent = new Intent( ( (Context) context ).getApplicationContext(), LocationTracker.class );
       ( (Context) context ).getApplicationContext().startService( intent );
+    }
+
+    // check if Realm is present in classpath
+    try
+    {
+      Class realmObjectClass = Class.forName( "io.realm.RealmObject" );
+      BackendlessSerializer.addSerializer( realmObjectClass, new RealmSerializer() );
+    }
+    catch( Throwable t )
+    {
+
     }
   }
 
