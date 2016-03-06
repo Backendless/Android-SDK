@@ -133,8 +133,19 @@ public abstract class BackendlessSerializer
       {
         List listEntry = (List) entityEntryValue;
 
-        //do nothing with empty lists and lists of GeoPoints
-        if( listEntry.isEmpty() || listEntry.iterator().next() instanceof GeoPoint )
+        // empty lists should not be sent to the server
+        if( listEntry.isEmpty() )
+        {
+          // if there is no object id, remove empty list
+          if( !serializedEntity.containsKey( Persistence.DEFAULT_OBJECT_ID_FIELD  ) ||
+               serializedEntity.get( Persistence.DEFAULT_CREATED_FIELD ) == null )
+            entityIterator.remove();
+
+          continue;
+        }
+
+        //do nothing with lists of GeoPoints
+        if( listEntry.iterator().next() instanceof GeoPoint )
           continue;
 
         // check for anonymous class entry
