@@ -22,6 +22,8 @@ public class BackendlessException extends RuntimeException
 {
   private static final long serialVersionUID = -7537447408166433783L;
   private BackendlessFault backendlessFault;
+  private short httpErrorCode;
+  private String httpErrorMessage;
 
   public BackendlessException()
   {
@@ -33,8 +35,9 @@ public class BackendlessException extends RuntimeException
     backendlessFault = new BackendlessFault( message );
   }
 
-  private BackendlessException( String message, Throwable throwable )
+  public BackendlessException( String message, Throwable throwable )
   {
+    super(message, throwable);
   }
 
   public BackendlessException( Throwable throwable )
@@ -53,6 +56,26 @@ public class BackendlessException extends RuntimeException
   {
     super( fault.getMessage() == null ? fault.getDetail() : fault.getMessage() );
     backendlessFault = fault;
+  }
+
+  public short getHttpErrorCode()
+  {
+    return httpErrorCode;
+  }
+
+  public void setHttpErrorCode( short httpErrorCode )
+  {
+    this.httpErrorCode = httpErrorCode;
+  }
+
+  public String getHttpErrorMessage()
+  {
+    return httpErrorMessage;
+  }
+
+  public void setHttpErrorMessage( String httpErrorMessage )
+  {
+    this.httpErrorMessage = httpErrorMessage;
   }
 
   public String getCode()
