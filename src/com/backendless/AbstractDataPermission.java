@@ -21,6 +21,7 @@ package com.backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
+import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.persistence.PersistenceOperations;
 import com.backendless.utils.PermissionTypes;
 
@@ -130,7 +131,7 @@ public abstract class AbstractDataPermission
   {
     String appId = Backendless.getApplicationId();
     String version = Backendless.getVersion();
-    String tableName = Persistence.getSimpleName( dataObject.getClass() );
+    String tableName = BackendlessSerializer.getSimpleName( dataObject.getClass() );
     String objectId = Persistence.getEntityId( dataObject );
     PersistenceOperations operation = getOperation();
 

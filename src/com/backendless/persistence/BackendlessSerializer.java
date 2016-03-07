@@ -32,8 +32,18 @@ import java.util.*;
 /**
  * Handles object to Map serialization for Backendless services.
  */
-public class BackendlessSerializer
+public abstract class BackendlessSerializer
 {
+  private static HashMap<Class, IObjectSerializer> serializers = new HashMap<Class, IObjectSerializer>();
+  private static IObjectSerializer DEFAULT_SERIALIZER = new DefaultSerializer();
+
+  public abstract boolean shouldTraverse();
+
+  public static void addSerializer( Class clazz, IObjectSerializer serializer )
+  {
+    serializers.put( clazz, serializer );
+  }
+
   /**
    * Serializes Object to Map using WebOrb's serializer.
    *
@@ -42,38 +52,50 @@ public class BackendlessSerializer
    */
   public static Map<String, Object> serializeToMap( Object entity )
   {
-    return (Map<String, Object>) serializeToMap( entity, new HashMap<Object, Map<String, Object>>() );
+    IObjectSerializer serializer = getSerializer( entity.getClass() );
+    return (Map<String, Object>) serializer.serializeToMap( entity, new HashMap<Object, Map<String, Object>>() );
   }
 
-  private static Object serializeToMap( Object entity, Map<Object, Map<String, Object>> serializedCache )
+  /**
+   * Uses pluggable serializers to locate one for the class and get the name which should be used for serialization.
+   * The name must match the table name where instance of clazz are persisted
+   *
+   * @param clazz
+   * @return Backendless-friendly class/table name
+   */
+  public static String getSimpleName( Class clazz )
+  {
+    IObjectSerializer serializer = getSerializer( clazz );
+    return serializer.getClassName( clazz );
+  }
+
+  public static Class getClassForDeserialization( Class clazz )
+  {
+    IObjectSerializer serializer = getSerializer( clazz );
+    return serializer.getSerializationFriendlyClass( clazz );
+  }
+
+  public Object serializeToMap( Object entity, Map<Object, Map<String, Object>> serializedCache )
   {
     if( entity.getClass().isArray() )
-    {
       return serializeArray( entity, serializedCache );
-    }
 
     if( entity.getClass().isEnum() )
-    {
       return ((Enum) entity).name();
-    }
 
     Map<String, Object> serializedEntity = new HashMap<String, Object>();
 
     if( entity.getClass() == BackendlessUser.class )
-    {
       serializedEntity = ((BackendlessUser) entity).getProperties();
-    }
     else
-    {
-      weborb.util.ObjectInspector.getObjectProperties( entity.getClass(), entity, (HashMap) serializedEntity, new ArrayList(), true, true );
-    }
+      weborb.util.ObjectInspector.getObjectProperties( entity.getClass(), entity, (HashMap) serializedEntity, new ArrayList(), true, shouldTraverse() );
 
     serializedCache.put( entity, serializedEntity );
 
     FootprintsManager.getInstance().Inner.putMissingPropsToEntityMap( entity, serializedEntity );
 
     //put ___class field, otherwise server will not be able to detect class
-    serializedEntity.put( Persistence.REST_CLASS_FIELD, Persistence.getSimpleName( entity.getClass() ) );
+    serializedEntity.put( Persistence.REST_CLASS_FIELD, getSimpleName( entity.getClass() ) );
 
     //recursively serialize object properties
     Iterator<Map.Entry<String, Object>> entityIterator = serializedEntity.entrySet().iterator();
@@ -111,8 +133,19 @@ public class BackendlessSerializer
       {
         List listEntry = (List) entityEntryValue;
 
-        //do nothing with empty lists and lists of GeoPoints
-        if( listEntry.isEmpty() || listEntry.iterator().next() instanceof GeoPoint )
+        // empty lists should not be sent to the server
+        if( listEntry.isEmpty() )
+        {
+          // if there is no object id, remove empty list
+          if( !serializedEntity.containsKey( Persistence.DEFAULT_OBJECT_ID_FIELD  ) ||
+               serializedEntity.get( Persistence.DEFAULT_CREATED_FIELD ) == null )
+            entityIterator.remove();
+
+          continue;
+        }
+
+        //do nothing with lists of GeoPoints
+        if( listEntry.iterator().next() instanceof GeoPoint )
           continue;
 
         // check for anonymous class entry
@@ -160,7 +193,7 @@ public class BackendlessSerializer
     return serializedEntity;
   }
 
-  private static Object serializeArray( Object entity, Map<Object, Map<String, Object>> serializedCache )
+  private Object serializeArray( Object entity, Map<Object, Map<String, Object>> serializedCache )
   {
     int length = Array.getLength( entity );
     Object[] objects = new Object[ length ];
@@ -178,7 +211,7 @@ public class BackendlessSerializer
    * @param entityEntryValue object to be serialized
    * @return Map formed from given object
    */
-  private static Object getOrMakeSerializedObject( Object entityEntryValue,
+  private Object getOrMakeSerializedObject( Object entityEntryValue,
                                                    Map<Object, Map<String, Object>> serializedCache )
   {
     if( serializedCache.containsKey( entityEntryValue ) ) //cyclic relation
@@ -208,7 +241,7 @@ public class BackendlessSerializer
       Object propertyValue = property.getValue();
       if( propertyValue != null && !isBelongsJdk( propertyValue.getClass() ) )
       {
-        property.setValue( serializeToMap( propertyValue, new HashMap<Object, Map<String, Object>>() ) );
+        property.setValue( serializeToMap( propertyValue ) );
       }
     }
 
@@ -225,5 +258,29 @@ public class BackendlessSerializer
   public static boolean isBelongsJdk( Class clazz )
   {
     return clazz.getClassLoader() == "".getClass().getClassLoader();
+  }
+
+  /**
+   * Returns a serializer for the class
+   * @param clazz
+   * @return
+   */
+  private static IObjectSerializer getSerializer( Class clazz )
+  {
+    Iterator<Map.Entry<Class, IObjectSerializer>> iterator = serializers.entrySet().iterator();
+    IObjectSerializer serializer = DEFAULT_SERIALIZER;
+
+    while( iterator.hasNext() )
+    {
+      Map.Entry<Class, IObjectSerializer> entry = iterator.next();
+
+      if( entry.getKey().isAssignableFrom( clazz ) )
+      {
+        serializer = entry.getValue();
+        break;
+      }
+    }
+
+    return serializer;
   }
 }

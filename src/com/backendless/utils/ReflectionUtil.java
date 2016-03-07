@@ -42,53 +42,53 @@ public class ReflectionUtil
     if( object == null )
       throw new BackendlessException( "Unable to retrieve field/property - " + lowerKey );
 
-    try
-    {
-      Field field = getField( object.getClass(), lowerKey );
-      field.setAccessible( true );
-      return field.get( object );
-    }
-    catch( IllegalAccessException e )
-    {
-      // shouldn't ever be thrown, because setAccessible(true) was called before
-      return null;
-    }
-    catch( NoSuchFieldException e1 )
-    {
-      try
-      {
-        Field field = getField( object.getClass(), upperKey );
-        field.setAccessible( true );
-        return field.get( object );
-      }
-      catch( Throwable t )
-      {
-         // ignore, the rest of the method will do other checks
-      }
+    Method getMethod = getMethod( object, "get" + lowerKey );
 
-      Method getMethod = getMethod( object, "get" + lowerKey );
+    if( getMethod == null )
+      getMethod = getMethod( object, "get" + upperKey );
 
-      if( getMethod == null  )
-        getMethod = getMethod( object, "get" + upperKey );
+    if( getMethod == null )
+      getMethod = getMethod( object, "is" + lowerKey );
 
-      if( getMethod == null )
-        getMethod = getMethod( object, "is" + lowerKey );
+    if( getMethod == null )
+      getMethod = getMethod( object, "is" + upperKey );
 
-      if( getMethod == null )
-        getMethod = getMethod( object, "is" + upperKey );
-
-      if( getMethod == null )
-        throw new BackendlessException( "Unable to find field or method for property " + lowerKey );
-
+    if( getMethod != null )
       try
       {
         return getMethod.invoke( object, new Object[ 0 ] );
       }
       catch( Throwable t )
       {
-        throw new BackendlessException( "Unable to retrieve value for field/property '" + lowerKey + "'. Underlying exception - " + t.getMessage() );
+          // ignore, see if can get it from the field
       }
-    }
+
+    try
+     {
+       Field field = getField( object.getClass(), lowerKey );
+       field.setAccessible( true );
+       return field.get( object );
+     }
+     catch( IllegalAccessException e )
+     {
+       // shouldn't ever be thrown, because setAccessible(true) was called before
+       return null;
+     }
+     catch( NoSuchFieldException e1 )
+     {
+       try
+       {
+         Field field = getField( object.getClass(), upperKey );
+         field.setAccessible( true );
+         return field.get( object );
+       }
+       catch( Throwable throwable )
+       {
+         // ignore, the rest of the method will do other checks
+       }
+
+       throw new BackendlessException( "Unable to retrieve value for field/property '" + lowerKey );
+     }
   }
 
   private static Method getMethod( Object object, String methodName )

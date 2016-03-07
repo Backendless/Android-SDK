@@ -26,6 +26,7 @@ import com.backendless.core.responder.policy.IAdaptingPolicy;
 import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.persistence.BackendlessSerializer;
 
 import java.util.Date;
 
@@ -33,11 +34,13 @@ public class ResponderHelper
 {
   public static <E> AdaptingResponder getCollectionAdaptingResponder( Class<E> entity )
   {
+    entity = BackendlessSerializer.getClassForDeserialization( entity );
     return getAdaptingResponder( entity, new CollectionAdaptingPolicy<E>() );
   }
 
   public static  <E> AdaptingResponder getPOJOAdaptingResponder( Class<E> entity )
   {
+    entity = BackendlessSerializer.getClassForDeserialization( entity );
     return getAdaptingResponder( entity, new PoJoAdaptingPolicy<E>() );
   }
 
