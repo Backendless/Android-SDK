@@ -21,46 +21,49 @@ package com.backendless.servercode;
 import com.backendless.commons.DeviceType;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by oleg on 22.07.15.
  */
-public class InvocationContext
+public class InvocationContext extends AbstractContext
 {
-  static private String appId;
-  static private String userId;
-  static private List<String> userRoles;
-  static private DeviceType deviceType;
-
-  private InvocationContext()
+  private static ThreadLocal<InvocationContext> threadLocal = new InheritableThreadLocal<>();
+  public static InvocationContext getInvocationContext()
   {
+    return threadLocal.get();
   }
 
-  private static void setContext( String appId, String userId, List<String> userRoles, String deviceType )
+  public Map<String, String> httpHeaders;
+
+  private InvocationContext( String appId, String userId, String userToken, List<String> userRoles,
+                            String deviceType, Map<String, String> httpHeaders )
   {
-    InvocationContext.appId = appId;
-    InvocationContext.userId = userId;
-    InvocationContext.userRoles = userRoles;
-    InvocationContext.deviceType = DeviceType.valueOf( deviceType );
+    this.appId = appId;
+    this.userId = userId;
+    this.userToken = userToken;
+    this.userRoles = userRoles;
+    this.deviceType = DeviceType.valueOf( deviceType );;
+    this.httpHeaders = httpHeaders;
   }
 
-  public static String getAppId()
+  public Map<String, String> getHttpHeaders()
   {
-    return appId;
+    return httpHeaders;
   }
 
-  public static String getUserId()
+  public void setHttpHeaders( Map<String, String> httpHeaders )
   {
-    return userId;
+    this.httpHeaders = httpHeaders;
   }
 
-  public static List<String> getUserRoles()
+  @Override
+  public String toString()
   {
-    return userRoles;
-  }
-
-  public static DeviceType getDeviceType()
-  {
-    return deviceType;
+    final StringBuilder sb = new StringBuilder( "InvocationContext{" );
+    sb.append( "httpHeaders=" ).append( httpHeaders );
+    sb.append( ", " ).append( super.toString() );
+    sb.append( "}" );
+    return sb.toString();
   }
 }

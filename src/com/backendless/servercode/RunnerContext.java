@@ -1,75 +1,23 @@
 package com.backendless.servercode;
 
-import com.backendless.commons.DeviceType;
-
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created with IntelliJ IDEA.
- * User: ivanlappo
- * Date: 8/19/13
- * Time: 12:55 PM
- * To change this template use File | Settings | File Templates.
- */
-public class RunnerContext
+public class RunnerContext extends AbstractContext
 {
-  private String appId;
-  private String userId;
-  private String userToken;
-  private List<String> userRole;
-  private DeviceType deviceType;
   private Map missingProperties;
   private Object prematureResult;
 
-  public String getAppId()
-  {
-    return appId;
-  }
-
-  public void setAppId( String appId )
-  {
-    this.appId = appId;
-  }
-
-  public String getUserId()
-  {
-    return userId;
-  }
-
-  public void setUserId( String userId )
-  {
-    this.userId = userId;
-  }
-
-  public String getUserToken()
-  {
-    return userToken;
-  }
-
+  @Deprecated
   public List<String> getUserRole()
   {
-    return userRole;
+    return this.userRoles;
   }
 
+  @Deprecated
   public void setUserRole( List<String> userRole )
   {
-    this.userRole = userRole;
-  }
-
-  public void setUserToken( String userToken )
-  {
-    this.userToken = userToken;
-  }
-
-  public DeviceType getDeviceType()
-  {
-    return deviceType;
-  }
-
-  public void setDeviceType( DeviceType deviceType )
-  {
-    this.deviceType = deviceType;
+    this.userRoles = userRole;
   }
 
   public Map getMissingProperties()
@@ -95,14 +43,12 @@ public class RunnerContext
   @Override
   public String toString()
   {
-    return "RunnerContext{" +
-            "appId='" + appId + '\'' +
-            ", userId='" + userId + '\'' +
-            ", userToken='" + userToken + '\'' +
-            ", userRole=" + userRole +
-            ", deviceType=" + deviceType +
-            ", missingProperties=" + missingProperties +
-            ", prematureResult=" + prematureResult +
-            '}';
+    final StringBuilder sb = new StringBuilder( "RunnerContext{" );
+    sb.append( "missingProperties=" ).append( missingProperties );
+    sb.append( ", prematureResult=" ).append( prematureResult );
+    sb.append( ", " ).append(super.toString());
+    sb.append( "}" );
+
+    return sb.toString();
   }
 }
