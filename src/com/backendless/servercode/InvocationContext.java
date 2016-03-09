@@ -29,7 +29,7 @@ import java.util.Map;
 public class InvocationContext extends AbstractContext
 {
   private static ThreadLocal<InvocationContext> threadLocal = new InheritableThreadLocal<>();
-  public static InvocationContext getCurrenContext()
+  public static InvocationContext getCurrentContext()
   {
     return threadLocal.get();
   }
