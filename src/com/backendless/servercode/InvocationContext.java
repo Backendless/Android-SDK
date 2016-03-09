@@ -29,12 +29,12 @@ import java.util.Map;
 public class InvocationContext extends AbstractContext
 {
   private static ThreadLocal<InvocationContext> threadLocal = new InheritableThreadLocal<>();
-  public static InvocationContext getInvocationContext()
+  public static InvocationContext getCurrenContext()
   {
     return threadLocal.get();
   }
 
-  public Map<String, String> httpHeaders;
+  private Map<String, String> httpHeaders;
 
   private InvocationContext( String appId, String userId, String userToken, List<String> userRoles,
                             String deviceType, Map<String, String> httpHeaders )
