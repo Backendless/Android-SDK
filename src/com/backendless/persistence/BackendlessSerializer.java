@@ -138,7 +138,7 @@ public abstract class BackendlessSerializer
         {
           // if there is no object id, remove empty list
           if( !serializedEntity.containsKey( Persistence.DEFAULT_OBJECT_ID_FIELD  ) ||
-               serializedEntity.get( Persistence.DEFAULT_CREATED_FIELD ) == null )
+               serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) == null )
             entityIterator.remove();
 
           continue;
