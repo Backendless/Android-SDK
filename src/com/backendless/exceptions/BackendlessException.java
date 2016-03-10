@@ -22,7 +22,7 @@ public class BackendlessException extends RuntimeException
 {
   private static final long serialVersionUID = -7537447408166433783L;
   private BackendlessFault backendlessFault;
-  private short httpStatusCode;
+  private int httpStatusCode = -1;
 
   public BackendlessException()
   {
@@ -34,9 +34,21 @@ public class BackendlessException extends RuntimeException
     backendlessFault = new BackendlessFault( message );
   }
 
+  public BackendlessException( String message, int httpStatusCode )
+  {
+   this(message);
+    this.httpStatusCode = httpStatusCode;
+  }
+
   public BackendlessException( String message, Throwable throwable )
   {
     super(message, throwable);
+  }
+
+  public BackendlessException( String message, Throwable throwable, int httpStatusCode )
+  {
+    this(message, throwable);
+    this.httpStatusCode = httpStatusCode;
   }
 
   public BackendlessException( Throwable throwable )
@@ -51,18 +63,24 @@ public class BackendlessException extends RuntimeException
     backendlessFault = new BackendlessFault( code, message );
   }
 
+  public BackendlessException( String code, String message, int httpStatusCode )
+  {
+    this(code, message);
+    this.httpStatusCode = httpStatusCode;
+  }
+
   public BackendlessException( BackendlessFault fault )
   {
     super( fault.getMessage() == null ? fault.getDetail() : fault.getMessage() );
     backendlessFault = fault;
   }
 
-  public short getHttpStatusCode()
+  public int getHttpStatusCode()
   {
     return httpStatusCode;
   }
 
-  public void setHttpStatusCode( short httpStatusCode )
+  public void setHttpStatusCode( int httpStatusCode )
   {
     this.httpStatusCode = httpStatusCode;
   }
