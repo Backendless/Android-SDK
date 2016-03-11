@@ -214,7 +214,7 @@ dependencies {
     provided fileTree(dir: 'libs', include: 'android.support.v4.jar')
     provided fileTree(dir: 'libs', include: 'FacebookSDK.jar')
     provided fileTree(dir: 'libs', include: 'maps.jar')
-    compile ('com.backendless:commons:3.0.10'){
+    compile ('com.backendless:commons:3.0.11'){
         exclude group: 'com.fasterxml.jackson.core'
     }
 
