@@ -5,7 +5,7 @@ apply plugin: 'signing'
 
 
 group 'com.backendless'
-version '3.0.11-blChanges'
+version '3.0.11-snapshot'
 archivesBaseName='backendless'
 
 
@@ -201,10 +201,6 @@ def copyT(fromPath, toPath, archName)
       from fromPath into toPath
       rename(archName, 'backendless.jar')
    }
-}
-
-repositories {
-    mavenLocal();
 }
 
 dependencies {
