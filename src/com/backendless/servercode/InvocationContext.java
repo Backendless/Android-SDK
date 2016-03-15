@@ -47,16 +47,6 @@ public class InvocationContext extends AbstractContext
     this.httpHeaders = httpHeaders;
   }
 
-  public Map<String, String> getHttpHeaders()
-  {
-    return httpHeaders;
-  }
-
-  public void setHttpHeaders( Map<String, String> httpHeaders )
-  {
-    this.httpHeaders = httpHeaders;
-  }
-
   @Override
   public String toString()
   {
@@ -65,5 +55,65 @@ public class InvocationContext extends AbstractContext
     sb.append( ", " ).append( super.toString() );
     sb.append( "}" );
     return sb.toString();
+  }
+
+  public static String getAppId()
+  {
+    return getCurrentContext().appId;
+  }
+
+  public static void setAppId( String appId )
+  {
+    getCurrentContext().appId = appId;
+  }
+
+  public static String getUserId()
+  {
+    return getCurrentContext().userId;
+  }
+
+  public static void setUserId( String userId )
+  {
+    getCurrentContext().userId = userId;
+  }
+
+  public static String getUserToken()
+  {
+    return getCurrentContext().userToken;
+  }
+
+  public static void setUserToken( String userToken )
+  {
+    getCurrentContext().userToken = userToken;
+  }
+
+  public static List<String> getUserRoles()
+  {
+    return getCurrentContext().userRoles;
+  }
+
+  public static void setUserRoles( List<String> userRoles )
+  {
+    getCurrentContext().userRoles = userRoles;
+  }
+
+  public static DeviceType getDeviceType()
+  {
+    return getCurrentContext().deviceType;
+  }
+
+  public static void setDeviceType( DeviceType deviceType )
+  {
+    getCurrentContext().deviceType = deviceType;
+  }
+
+  public static Map<String, String> getHttpHeaders()
+  {
+    return getCurrentContext().httpHeaders;
+  }
+
+  public static void setHttpHeaders( Map<String, String> httpHeaders )
+  {
+    getCurrentContext().httpHeaders = httpHeaders;
   }
 }
