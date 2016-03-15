@@ -102,7 +102,13 @@ public final class Persistence
 
     try
     {
-      E newEntity = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "save",
+      String method = "create";
+
+      if( serializedEntity.containsKey( Persistence.DEFAULT_OBJECT_ID_FIELD ) &&
+              serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) != null )
+        method = "save";
+
+      E newEntity = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, method,
               new Object[] {
                 Backendless.getApplicationId(),
                 Backendless.getVersion(),
@@ -111,7 +117,7 @@ public final class Persistence
               ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
 
       if( serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) == null )
-        FootprintsManager.getInstance().Inner.duplicateFootprintForObject( serializedEntity, entity, newEntity );
+        FootprintsManager.getInstance().Inner.duplicateFootprintForObject( serializedEntity, newEntity, entity );
       else
         FootprintsManager.getInstance().Inner.updateFootprintForObject( serializedEntity, newEntity, entity );
 
@@ -161,7 +167,7 @@ public final class Persistence
           public void handleResponse( E newEntity )
           {
             MessageWriter.setObjectSubstitutor( null );
-            FootprintsManager.getInstance().Inner.duplicateFootprintForObject( serializedEntity, entity, newEntity );
+            FootprintsManager.getInstance().Inner.duplicateFootprintForObject( serializedEntity, newEntity, entity );
             Footprint footprint = FootprintsManager.getInstance().getEntityFootprint( newEntity );
             if( footprint != null )
               footprint.initObjectId( entity );
@@ -205,7 +211,13 @@ public final class Persistence
         };
       }
 
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "save", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), BackendlessSerializer.getSimpleName( entity.getClass() ), entity }, callbackOverrider, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
+      String method = "create";
+
+      if( serializedEntity.containsKey( Persistence.DEFAULT_OBJECT_ID_FIELD ) &&
+              serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) != null )
+        method = "save";
+
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, method, new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), BackendlessSerializer.getSimpleName( entity.getClass() ), entity }, callbackOverrider, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
     }
     catch( Throwable e )
     {
@@ -214,7 +226,7 @@ public final class Persistence
     }
   }
 
-  private <E> E create( Class<E> aClass, Map entity ) throws BackendlessException
+  public <E> E create( Class<E> aClass, Map entity ) throws BackendlessException
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
@@ -222,7 +234,7 @@ public final class Persistence
     return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "create", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), BackendlessSerializer.getSimpleName( aClass ), entity }, ResponderHelper.getPOJOAdaptingResponder( aClass ) );
   }
 
-  private <E> void create( final Class<E> aClass, final Map entity, final AsyncCallback<E> responder )
+  public <E> void create( final Class<E> aClass, final Map entity, final AsyncCallback<E> responder )
   {
     try
     {
