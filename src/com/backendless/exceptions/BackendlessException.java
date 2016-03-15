@@ -22,7 +22,7 @@ public class BackendlessException extends RuntimeException
 {
   private static final long serialVersionUID = -7537447408166433783L;
   private BackendlessFault backendlessFault;
-  private int httpStatusCode = -1;
+  private int httpStatusCode = 400;
 
   public BackendlessException()
   {

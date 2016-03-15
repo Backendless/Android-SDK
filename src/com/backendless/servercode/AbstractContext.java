@@ -4,7 +4,7 @@ import com.backendless.commons.DeviceType;
 
 import java.util.List;
 
-public class AbstractContext
+public abstract class AbstractContext
 {
   protected String appId;
   protected String userId;
