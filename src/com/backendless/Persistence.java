@@ -117,7 +117,7 @@ public final class Persistence
               ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
 
       if( serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) == null )
-        FootprintsManager.getInstance().Inner.duplicateFootprintForObject( serializedEntity, entity, newEntity );
+        FootprintsManager.getInstance().Inner.duplicateFootprintForObject( serializedEntity, newEntity, entity );
       else
         FootprintsManager.getInstance().Inner.updateFootprintForObject( serializedEntity, newEntity, entity );
 
@@ -167,7 +167,7 @@ public final class Persistence
           public void handleResponse( E newEntity )
           {
             MessageWriter.setObjectSubstitutor( null );
-            FootprintsManager.getInstance().Inner.duplicateFootprintForObject( serializedEntity, entity, newEntity );
+            FootprintsManager.getInstance().Inner.duplicateFootprintForObject( serializedEntity, newEntity, entity );
             Footprint footprint = FootprintsManager.getInstance().getEntityFootprint( newEntity );
             if( footprint != null )
               footprint.initObjectId( entity );

@@ -18,7 +18,6 @@
 
 package com.backendless;
 
-import com.backendless.exceptions.BackendlessException;
 import com.backendless.geo.GeoPoint;
 import com.backendless.utils.ReflectionUtil;
 import weborb.reader.AnonymousObject;
@@ -193,11 +192,11 @@ public class FootprintsManager
           }
         }
 
-        Footprint footprint = persistenceCache.get( initialEntity );
+        Footprint footprint = persistenceCache.get( persistedEntity );
 
         if( footprint != null )
         {
-          persistenceCache.put( persistedEntity, footprint );
+          persistenceCache.put( initialEntity, footprint );
         }
       }
       finally
@@ -260,8 +259,8 @@ public class FootprintsManager
           }
         }
 
-        Footprint footprint = persistenceCache.get( oldEntity );
-        persistenceCache.put( newEntity, footprint );
+        Footprint footprint = persistenceCache.get( newEntity );
+        persistenceCache.put( oldEntity, footprint );
       }
       finally
       {
