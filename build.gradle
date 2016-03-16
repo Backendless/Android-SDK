@@ -133,11 +133,6 @@ sourceSets {
 repositories {
     mavenCentral()
     maven {
-        credentials {
-            username creds.username
-            password creds.password
-        }
-
         url "http://maven.backendless.com/repository/backendless_public"
     }
     flatDir {
