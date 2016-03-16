@@ -13,14 +13,14 @@ Setting up your app
 Maven Integration
 ------------------------------------
 The backendless client library for Android and Java is available through the central Maven repository. Since the version of Backendless deployed to maven changes frequently, make sure to lookup the latest version number from Maven Central. To add a dependency for the  library, add the following to pom.xml (make sure to replace "VERSION FROM MAVEN" with a specific version number):
-    &lt;dependency>
-      &lt;groupId>com.backendless&lt;/groupId>
-      &lt;artifactId>backendless&lt;/artifactId>
-      &lt;version>VERSION FROM MAVEN&lt;/version> 
-    &lt;/dependency>
+>     &lt;dependency>
+>       &lt;groupId>com.backendless&lt;/groupId>
+>       &lt;artifactId>backendless&lt;/artifactId>
+>       &lt;version>VERSION FROM MAVEN&lt;/version> 
+>     &lt;/dependency>
 Gradle Configuration
 ------------------------------------
 To configure Backendless library in Gradle, add the following line into the "dependencies" element in gradle.build ((make sure to replace "VERSION FROM MAVEN" with a specific version number):
-    dependencies {
-      compile 'com.backendless:backendless:VERSION FROM MAVEN'
-    }
+ >    dependencies {
+ >      compile 'com.backendless:backendless:VERSION FROM MAVEN'
+ >    }
