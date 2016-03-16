@@ -106,7 +106,7 @@ public final class Persistence
 
       if( serializedEntity.containsKey( Persistence.DEFAULT_OBJECT_ID_FIELD ) &&
               serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) != null )
-        method = "save";
+        method = "update";
 
       E newEntity = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, method,
               new Object[] {
