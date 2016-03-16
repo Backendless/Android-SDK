@@ -118,6 +118,8 @@ def getCredentials = {
             return [username: entry.username.text(), password: entry.password.text()]
         }
     }
+
+    return [username: "dummy", password: "dummy"]
 }
 
 def creds = getCredentials()
