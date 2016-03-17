@@ -137,6 +137,9 @@ repositories {
     maven {
         url "http://maven.backendless.com/repository/backendless_public"
     }
+    maven {
+        url "http://maven.backendless.com/repository/backendless_public/snapshots"
+    }
     flatDir {
         dirs 'libs'
     }
@@ -200,6 +203,11 @@ def copyT(fromPath, toPath, archName)
    }
 }
 
+configurations.all {
+    // check for updates every build
+    resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: 'weborbclient.jar')
     compile fileTree(dir: 'libs', include: 'mediaLib.jar')
@@ -207,7 +215,7 @@ dependencies {
     provided fileTree(dir: 'libs', include: 'android.support.v4.jar')
     provided fileTree(dir: 'libs', include: 'FacebookSDK.jar')
     provided fileTree(dir: 'libs', include: 'maps.jar')
-    compile ('com.backendless:commons:3.0.11'){
+    compile( group: "com.backendless", name: "commons", version: "3.0.11", changing: true) {
         exclude group: 'com.fasterxml.jackson.core'
     }
 
