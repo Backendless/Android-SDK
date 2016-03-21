@@ -5,7 +5,7 @@ apply plugin: 'signing'
 
 
 group 'com.backendless'
-version '3.0.11-snapshot'
+version '3.0.12-snapshot'
 archivesBaseName='backendless'
 
 
@@ -215,7 +215,7 @@ dependencies {
     provided fileTree(dir: 'libs', include: 'android.support.v4.jar')
     provided fileTree(dir: 'libs', include: 'FacebookSDK.jar')
     provided fileTree(dir: 'libs', include: 'maps.jar')
-    compile( group: "com.backendless", name: "commons", version: "3.0.11", changing: true) {
+    compile( group: "com.backendless", name: "commons", version: "3.0.12", changing: true) {
         exclude group: 'com.fasterxml.jackson.core'
     }
 
