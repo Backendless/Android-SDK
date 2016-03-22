@@ -33,6 +33,7 @@ public class MainActivity extends Activity
   private TextView welcomeTextField;
   private TextView urlField;
   private Button takePhotoButton;
+  private Button browseGalleryButton;
 
   @Override
   public void onCreate( Bundle savedInstanceState )
@@ -45,6 +46,7 @@ public class MainActivity extends Activity
       showAlert( this, "Missing application ID and secret key arguments. Login to Backendless Console, select your app and get the ID and key from the Manage > App Settings screen. Copy/paste the values into the Backendless.initApp call" );
       return;
     }
+    Backendless.setUrl( Defaults.SERVER_URL );
     Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION );
 
     welcomeTextField = (TextView) findViewById( R.id.welcomeTextField );
@@ -57,6 +59,17 @@ public class MainActivity extends Activity
       {
         Intent cameraIntent = new Intent( android.provider.MediaStore.ACTION_IMAGE_CAPTURE );
         startActivityForResult( cameraIntent, Defaults.CAMERA_REQUEST );
+      }
+    } );
+    browseGalleryButton = (Button) findViewById( R.id.galleryButton );
+    browseGalleryButton.setOnClickListener( new View.OnClickListener()
+    {
+      @Override
+      public void onClick( View v )
+      {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, Defaults.SELECT_PHOTO);
       }
     } );
     findViewById( R.id.browseUploadedButton ).setOnClickListener( new View.OnClickListener()
@@ -78,6 +91,7 @@ public class MainActivity extends Activity
 
     switch( requestCode )
     {
+      case Defaults.SELECT_PHOTO:
       case Defaults.CAMERA_REQUEST:
         data.setClass( getBaseContext(), UploadingActivity.class );
         startActivityForResult( data, Defaults.URL_REQUEST );

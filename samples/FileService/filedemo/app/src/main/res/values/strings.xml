@@ -24,4 +24,5 @@
     <string name="uploaded_text">The image has been uploaded. The file is available at the following URL:</string>
     <string name="takeNewPhoto">Take a photo</string>
     <string name="takeAnotherPhoto">Take another photo</string>
+    <string name="browseGallery">Browse Gallery</string>
 </resources>

@@ -55,6 +55,13 @@
         <Button
                 android:layout_width="@dimen/button_width"
                 android:layout_height="@dimen/button_height"
+                android:text="@string/browseGallery"
+                android:id="@+id/galleryButton" android:layout_marginTop="@dimen/small_padding"
+                android:textSize="@dimen/normal_text" android:singleLine="false"
+                android:layout_gravity="center_horizontal"/>
+        <Button
+                android:layout_width="@dimen/button_width"
+                android:layout_height="@dimen/button_height"
                 android:text="Browse Uploaded"
                 android:id="@+id/browseUploadedButton" android:layout_marginTop="@dimen/micro_padding"
                 android:textSize="@dimen/normal_text" android:singleLine="false"
