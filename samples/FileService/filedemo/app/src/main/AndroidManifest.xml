@@ -37,4 +37,4 @@
         <activity android:name=".UploadingActivity" android:screenOrientation="portrait"/>
         <activity android:name=".BrowseActivity"/>
     </application>
-</manifest> 
+</manifest>
