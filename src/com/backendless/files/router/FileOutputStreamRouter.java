@@ -38,50 +38,27 @@ public class FileOutputStreamRouter extends IOutputStreamRouter
   @Override
   public void writeStream( int bufferSize ) throws IOException
   {
-    long length = file.length();
-    int uploadBufferLength = length < bufferSize ? (int) length : bufferSize;
-    byte[] buffer = new byte[ uploadBufferLength ];
-    int bytesRead = 0;
-    int progress = 0;
-    FileInputStream fileInputStream = new FileInputStream( file );
+    long fileSize = file.length();
+    byte[] buffer = new byte[ bufferSize ];
+    int readBytesTotal = 0;
 
-    try
+    try (FileInputStream fileInputStream = new FileInputStream( file ))
     {
-      while( true )
+      int readBytes;
+      while( ( readBytes = fileInputStream.read( buffer ) ) != -1 )
       {
-        int currentBytes = fileInputStream.read( buffer );
-
-        if( currentBytes == 0 )
-          break;
-
-        bytesRead += currentBytes;
-
-        getOutputStream().write( buffer );
-
-        if( uploadCallback != null )
-        {
-          int curProgress = (int) (((double) bytesRead / length) * 100);
-
-          if( progress != curProgress )
-          {
-            progress = curProgress;
-            uploadCallback.onProgressUpdate( progress );
-          }
-        }
-
-        if( length - bytesRead < uploadBufferLength )
-        {
-          uploadBufferLength = (int) (length - bytesRead);
-          buffer = new byte[ uploadBufferLength ];
-        }
+        getOutputStream().write( buffer, 0, readBytes );
+        updateProgress( fileSize, readBytesTotal += readBytes );
       }
-
-      if( uploadCallback != null && progress != 100 )
-        uploadCallback.onProgressUpdate( 100 );
     }
-    finally
+  }
+
+  private void updateProgress( long fileSize, double readBytesTotal )
+  {
+    if( uploadCallback != null )
     {
-      fileInputStream.close();
+      int progress = (int) (( readBytesTotal / fileSize) * 100);
+      uploadCallback.onProgressUpdate( progress );
     }
   }
 }

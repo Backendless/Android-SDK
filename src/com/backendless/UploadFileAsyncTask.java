@@ -28,12 +28,18 @@ import com.backendless.files.BackendlessFile;
 import com.backendless.files.router.FileOutputStreamRouter;
 
 import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 
 class UploadFileAsyncTask
 {
+  private static final int PROGRESS_UPDATE_FREQUENCY = 25;
   private UploadCallback uploadCallback;
   private AsyncCallback<BackendlessFile> responder;
   private boolean overwrite;
+  private int lastProgress;
+  private int currentProgress;
+  private Timer ticker;
 
   void executeThis( File file, String path, UploadCallback uploadCallback,
                            AsyncCallback<BackendlessFile> responder )
@@ -47,13 +53,12 @@ class UploadFileAsyncTask
     this.uploadCallback = uploadCallback;
     this.responder = responder;
     this.overwrite = overwrite;
+    ticker = new Timer();
     doInBackground( file, path );
   }
 
   private void doInBackground( final File file, final String path )
   {
-    final AsyncUploadMessage asyncUploadMessage = new AsyncUploadMessage( uploadCallback );
-
     ThreadPoolService.getPoolExecutor().execute( new Runnable()
     {
       @Override
@@ -65,8 +70,7 @@ class UploadFileAsyncTask
           {
             public void onProgressUpdate( Integer progress )
             {
-              asyncUploadMessage.setCurrentProgress( progress );
-              ResponseCarrier.getInstance().deliverMessage( asyncUploadMessage );
+              currentProgress = progress;
             }
           } );
 
@@ -77,7 +81,38 @@ class UploadFileAsyncTask
         {
           ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<BackendlessFile>( new BackendlessFault( e ), responder ) );
         }
+        finally
+        {
+          UploadFileAsyncTask.this.onTaskFinished();
+        }
       }
     } );
+
+    //tick every PROGRESS_UPDATE_FREQUENCY ms to update file upload progress more correctly
+    if(uploadCallback != null)
+      ticker.schedule( new TimerTask()
+      {
+        @Override
+        public void run()
+        {
+          checkAndDeliverProgress();
+        }
+      }, 0, PROGRESS_UPDATE_FREQUENCY );
+  }
+
+  public void onTaskFinished() {
+    ticker.cancel();
+  }
+
+  private void checkAndDeliverProgress()
+  {
+    // progress value is identical -- no need to update
+    if ( lastProgress == currentProgress )
+      return;
+
+    lastProgress = currentProgress;
+    AsyncUploadMessage asyncUploadMessage = new AsyncUploadMessage( uploadCallback );
+    asyncUploadMessage.setCurrentProgress( currentProgress );
+    ResponseCarrier.getInstance().deliverMessage( asyncUploadMessage );
   }
 }
