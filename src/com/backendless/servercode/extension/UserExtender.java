@@ -25,6 +25,7 @@ import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -66,19 +67,67 @@ public abstract class UserExtender
   {
   }
 
-  public void beforeRegister( RunnerContext context, HashMap userValue ) throws Exception
+  public void beforeLoginWithGooglePlus( RunnerContext context, Map<String, String> userValues ) throws Exception
   {
   }
 
-  public void afterRegister( RunnerContext context, HashMap userValue, ExecutionResult<HashMap> result ) throws Exception
+  public void afterLoginWithGooglePlus( RunnerContext context, Map<String, String> userValues, ExecutionResult<HashMap> result ) throws Exception
   {
   }
 
-  public void beforeUpdate( RunnerContext context, HashMap userValue ) throws Exception
+  public void beforeLoginWithTwitter( RunnerContext context, Map<String, String> userValues ) throws Exception
   {
   }
 
-  public void afterUpdate( RunnerContext context, HashMap userValue, ExecutionResult<HashMap> result ) throws Exception
+  public void afterLoginWithTwitter( RunnerContext context, Map<String, String> userValues, ExecutionResult<HashMap> result ) throws Exception
+  {
+  }
+
+  public void beforeLoginWithFacebook( RunnerContext context, Map<String, String> userValues ) throws Exception
+  {
+  }
+
+  public void afterLoginWithFacebook( RunnerContext context, Map<String, String> userValues, ExecutionResult<HashMap> result ) throws Exception
+  {
+  }
+
+  public void beforeRegister( RunnerContext context, HashMap userValues ) throws Exception
+  {
+  }
+
+  public void afterRegister( RunnerContext context, HashMap userValues, ExecutionResult<HashMap> result ) throws Exception
+  {
+  }
+
+  public void beforeRegisterWithFacebook( RunnerContext context, Map<String, String> userValues ) throws Exception
+  {
+  }
+
+  public void afterRegisterWithFacebook( RunnerContext context, Map<String, String> userValues, ExecutionResult<HashMap> result ) throws Exception
+  {
+  }
+
+  public void beforeRegisterWithGooglePlus( RunnerContext context, Map<String, String> userValues ) throws Exception
+  {
+  }
+
+  public void afterRegisterWithGooglePlus( RunnerContext context, Map<String, String> userValues, ExecutionResult<HashMap> result ) throws Exception
+  {
+  }
+
+  public void beforeRegisterWithTwitter( RunnerContext context, Map<String, String> userValues ) throws Exception
+  {
+  }
+
+  public void afterRegisterWithTwitter( RunnerContext context, Map<String, String> userValues, ExecutionResult<HashMap> result ) throws Exception
+  {
+  }
+
+  public void beforeUpdate( RunnerContext context, HashMap userValues ) throws Exception
+  {
+  }
+
+  public void afterUpdate( RunnerContext context, HashMap userValues, ExecutionResult<HashMap> result ) throws Exception
   {
   }
 
