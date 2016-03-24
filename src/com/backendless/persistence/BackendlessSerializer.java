@@ -227,28 +227,6 @@ public abstract class BackendlessSerializer
   }
 
   /**
-   * Serializes entities inside BackendlessUser properties.
-   *
-   * @param user BackendlessUser whose properties need to be serialized
-   */
-  public static void serializeUserProperties( BackendlessUser user )
-  {
-    Map<String, Object> serializedProperties = user.getProperties();
-
-    Set<Map.Entry<String, Object>> properties = serializedProperties.entrySet();
-    for( Map.Entry<String, Object> property : properties )
-    {
-      Object propertyValue = property.getValue();
-      if( propertyValue != null && !isBelongsJdk( propertyValue.getClass() ) )
-      {
-        property.setValue( serializeToMap( propertyValue ) );
-      }
-    }
-
-    user.setProperties( serializedProperties );
-  }
-
-  /**
    * Checks whether class is defined in JDK or it is user-defined class.
    * http://stackoverflow.com/questions/8703678/how-can-i-check-if-a-class-belongs-to-java-jdk
    *

@@ -78,14 +78,13 @@ public final class UserService
   {
     checkUserToBeProper( user );
 
-    BackendlessSerializer.serializeUserProperties( user );
-    String password = user.getPassword();
-    BackendlessUser userToReturn = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "register", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), user.getProperties() }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
-    user.clearProperties();
-    userToReturn.setPassword( password );
-    user.putProperties( userToReturn.getProperties() );
+    Map<String, Object> serializedUser = BackendlessSerializer.serializeToMap( user );
+    BackendlessUser registeredUser = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "register", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serializedUser }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
 
-    return userToReturn;
+    registeredUser.setPassword( user.getPassword() ); // password property is not returned from server
+    user.setProperties( registeredUser.getProperties() ); // set new properties to old user
+
+    return registeredUser;
   }
 
   public void register( final BackendlessUser user, final AsyncCallback<BackendlessUser> responder )
@@ -94,16 +93,14 @@ public final class UserService
     {
       checkUserToBeProper( user );
 
-      BackendlessSerializer.serializeUserProperties( user );
-
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "register", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), user.getProperties() }, new AsyncCallback<BackendlessUser>()
+      Map<String, Object> serializedUser = BackendlessSerializer.serializeToMap( user );
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "register", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serializedUser }, new AsyncCallback<BackendlessUser>()
       {
         @Override
         public void handleResponse( BackendlessUser response )
         {
-          response.setPassword( user.getPassword() );
-          user.clearProperties();
-          user.putProperties( response.getProperties() );
+          response.setPassword( user.getPassword() ); // password property is not returned from server
+          user.setProperties( response.getProperties() ); // set new properties to old user
 
           if( responder != null )
             responder.handleResponse( response );
@@ -128,14 +125,13 @@ public final class UserService
   {
     checkUserToBeProperForUpdate( user );
 
-    BackendlessSerializer.serializeUserProperties( user );
-
     if( user.getUserId() != null && user.getUserId().equals( "" ) )
       throw new IllegalArgumentException( ExceptionMessage.WRONG_USER_ID );
 
-    BackendlessUser userToReturn = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "update", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), user.getProperties() }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
-    user.clearProperties();
-    user.putProperties( userToReturn.getProperties() );
+    Map<String, Object> serializedUser = BackendlessSerializer.serializeToMap( user );
+    BackendlessUser userToReturn = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "update", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serializedUser }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
+
+    user.setProperties( userToReturn.getProperties() ); // set new properties to old user
 
     return userToReturn;
   }
@@ -146,18 +142,16 @@ public final class UserService
     {
       checkUserToBeProperForUpdate( user );
 
-      BackendlessSerializer.serializeUserProperties( user );
-
       if( user.getUserId() != null && user.getUserId().equals( "" ) )
         throw new IllegalArgumentException( ExceptionMessage.WRONG_USER_ID );
 
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "update", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), user.getProperties() }, new AsyncCallback<BackendlessUser>()
+      Map<String, Object> serializedUser = BackendlessSerializer.serializeToMap( user );
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "update", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serializedUser }, new AsyncCallback<BackendlessUser>()
       {
         @Override
         public void handleResponse( BackendlessUser response )
         {
-          user.clearProperties();
-          user.putProperties( response.getProperties() );
+          user.setProperties( response.getProperties() );
 
           if( responder != null )
             responder.handleResponse( response );
