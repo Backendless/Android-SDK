@@ -40,7 +40,7 @@ public class SocialAsyncCallback implements AsyncCallback<String>
     if( Build.VERSION.SDK_INT >= 11 )
       webView.setLayerType( View.LAYER_TYPE_SOFTWARE, null );
 
-    String jsMethodName = new StringBuilder( "Backendless_Android_" ).append( Backendless.getApplicationId().replace( "-", "_" ) ).append( "_" ).append( Backendless.getVersion() ).toString();
+    String jsMethodName = "Backendless_Android_" + Backendless.getApplicationId().replace( "-", "_" ) + "_" + Backendless.getVersion();
     webView.addJavascriptInterface( loginStrategy.getJSInterface( responder ), jsMethodName );
 
     webView.getSettings().setJavaScriptEnabled( true );
@@ -48,7 +48,6 @@ public class SocialAsyncCallback implements AsyncCallback<String>
     webView.getSettings().setDefaultTextEncodingName( "utf-8" );
     webView.setHorizontalScrollBarEnabled( true );
     webView.setVerticalScrollBarEnabled( true );
-    webView.getSettings().setSavePassword( false );
     webView.setLayoutParams( new RelativeLayout.LayoutParams( ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT ) );
     webView.setWebViewClient( new android.webkit.WebViewClient()
     {
@@ -67,20 +66,9 @@ public class SocialAsyncCallback implements AsyncCallback<String>
       }
 
       @Override
-      public void onReceivedSslError( android.webkit.WebView view, android.webkit.SslErrorHandler handler,
-                                      android.net.http.SslError error )
-      {
-        //TODO add ssl
-        handler.proceed();
-      }
-
-      @Override
       public boolean shouldOverrideUrlLoading( android.webkit.WebView view, String url )
       {
-        if( url.startsWith( "market://" ) )
-          return true;
-
-        return false;
+        return url.startsWith( "market://" );
       }
     } );
 
