@@ -19,6 +19,7 @@
 package com.backendless.servercode.extension;
 
 import com.backendless.BackendlessCollection;
+import com.backendless.commons.util.SocialType;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.property.UserProperty;
 import com.backendless.servercode.ExecutionResult;
@@ -67,27 +68,11 @@ public abstract class UserExtender
   {
   }
 
-  public void beforeLoginWithGooglePlus( RunnerContext context, Map<String, String> userValues ) throws Exception
+  public void beforeSocialLogin( RunnerContext context, Map<String, String> userValues, SocialType socialType) throws Exception
   {
   }
 
-  public void afterLoginWithGooglePlus( RunnerContext context, Map<String, String> userValues, ExecutionResult<HashMap> result ) throws Exception
-  {
-  }
-
-  public void beforeLoginWithTwitter( RunnerContext context, Map<String, String> userValues ) throws Exception
-  {
-  }
-
-  public void afterLoginWithTwitter( RunnerContext context, Map<String, String> userValues, ExecutionResult<HashMap> result ) throws Exception
-  {
-  }
-
-  public void beforeLoginWithFacebook( RunnerContext context, Map<String, String> userValues ) throws Exception
-  {
-  }
-
-  public void afterLoginWithFacebook( RunnerContext context, Map<String, String> userValues, ExecutionResult<HashMap> result ) throws Exception
+  public void afterSocialLogin( RunnerContext context, Map<String, String> userValues, SocialType socialType, ExecutionResult<HashMap> result ) throws Exception
   {
   }
 
@@ -99,27 +84,11 @@ public abstract class UserExtender
   {
   }
 
-  public void beforeRegisterWithFacebook( RunnerContext context, Map<String, String> userValues ) throws Exception
+  public void beforeSocialRegister( RunnerContext context, Map<String, String> userValues, SocialType socialType ) throws Exception
   {
   }
 
-  public void afterRegisterWithFacebook( RunnerContext context, Map<String, String> userValues, ExecutionResult<HashMap> result ) throws Exception
-  {
-  }
-
-  public void beforeRegisterWithGooglePlus( RunnerContext context, Map<String, String> userValues ) throws Exception
-  {
-  }
-
-  public void afterRegisterWithGooglePlus( RunnerContext context, Map<String, String> userValues, ExecutionResult<HashMap> result ) throws Exception
-  {
-  }
-
-  public void beforeRegisterWithTwitter( RunnerContext context, Map<String, String> userValues ) throws Exception
-  {
-  }
-
-  public void afterRegisterWithTwitter( RunnerContext context, Map<String, String> userValues, ExecutionResult<HashMap> result ) throws Exception
+  public void afterSocialRegister( RunnerContext context, Map<String, String> userValues, SocialType socialType, ExecutionResult<HashMap> result ) throws Exception
   {
   }
 
