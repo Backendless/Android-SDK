@@ -61,16 +61,6 @@ public class RunnerContext extends AbstractContext
     this.deviceType = deviceType;
   }
 
-  public Map<String, String> getHttpHeaders()
-  {
-    return httpHeaders;
-  }
-
-  public void setHttpHeaders( Map<String, String> httpHeaders )
-  {
-    this.httpHeaders = httpHeaders;
-  }
-
   @Deprecated
   public List<String> getUserRole()
   {
