@@ -174,10 +174,9 @@ public class FootprintsManager
               continue;
 
             // retrieve persisted entity's field value (which is collection)
-            Collection persistedEntityFieldValue = (Collection) getFieldValue( persistedEntity, entry.getKey() );
-
+            Collection persistedEntityFieldValue = getCollectionFieldValue( persistedEntity, entry.getKey() );
             // retrieve initial entity's field value (which is collection)
-            Collection initialEntityFieldValue = (Collection) getFieldValue( initialEntity, entry.getKey() );
+            Collection initialEntityFieldValue = getCollectionFieldValue( initialEntity, entry.getKey() );
 
             Collection mapCollection = (Collection) entry.getValue();
 
@@ -236,7 +235,7 @@ public class FootprintsManager
           {
             Object newEntityField = getFieldValue( newEntity, key );
             Object oldEntityField = getFieldValue( oldEntity, key );
-            updateFootprintForObject( (Map) entry.getValue(), newEntityField, oldEntityField );
+            updateFootprintForObject((Map) entry.getValue(), newEntityField, oldEntityField);
           }
           else if( entry.getValue() instanceof Collection )
           {
@@ -246,7 +245,7 @@ public class FootprintsManager
             if( valueIterator.hasNext() && valueIterator.next() instanceof GeoPoint )
               continue;
 
-            Collection newObjectCollection= getFieldCollection( newEntity, key );
+            Collection newObjectCollection= getFieldCollection(newEntity, key);
             Collection oldObjectCollection = getFieldCollection( oldEntity, key );
             Collection mapCollection = (Collection) entry.getValue();
 
@@ -316,7 +315,7 @@ public class FootprintsManager
           }
         }
 
-        persistenceCache.remove( entity );
+        persistenceCache.remove(entity);
       }
       finally
       {
@@ -451,6 +450,20 @@ public class FootprintsManager
       }
 
       return entityFieldValue;
+    }
+
+    private Collection getCollectionFieldValue ( Object entity, String key )
+    {
+      Object rawFieldValue = getFieldValue( entity, key);
+      if (rawFieldValue instanceof Collection)
+      {
+        return (Collection) rawFieldValue;
+      }
+      else if (rawFieldValue instanceof Object[])
+      {
+        return Arrays.asList( (Object[]) rawFieldValue );
+      }
+      throw new IllegalArgumentException( "The entity is not a Collection nor an Array" );
     }
   }
 }
