@@ -463,7 +463,7 @@ public class FootprintsManager
       {
         return Arrays.asList( (Object[]) rawFieldValue );
       }
-      throw new IllegalArgumentException( "The entity is not a Collection nor an Array" );
+      throw new IllegalArgumentException( "The entity is neither a Collection nor an Array" );
     }
   }
 }
