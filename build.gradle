@@ -209,7 +209,6 @@ configurations.all {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: 'weborbclient.jar')
     compile fileTree(dir: 'libs', include: 'mediaLib.jar')
     provided fileTree(dir: 'libs', include: 'android.jar')
     provided fileTree(dir: 'libs', include: 'android.support.v4.jar')
@@ -218,6 +217,7 @@ dependencies {
     compile( group: "com.backendless", name: "commons", version: "3.0.14", changing: true) {
         exclude group: 'com.fasterxml.jackson.core'
     }
+    compile( group: "weborb", name: "weborbclient", version: "5.1.0.205", changing: true)
 
 }
 apply plugin: 'java'
