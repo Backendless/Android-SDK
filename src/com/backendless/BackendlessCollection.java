@@ -23,10 +23,12 @@ import com.backendless.commons.AbstractBackendlessCollection;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.geo.BackendlessGeoQuery;
 import com.backendless.persistence.BackendlessDataQuery;
+import weborb.service.ExcludeProperties;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+@ExcludeProperties( propertyNames = {"type"} )
 public class BackendlessCollection<E> extends AbstractBackendlessCollection<E>
 {
   private final Object dataLock = new Object();
