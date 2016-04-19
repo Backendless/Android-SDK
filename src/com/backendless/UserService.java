@@ -724,7 +724,10 @@ public final class UserService
    */
   public void setCurrentUser( BackendlessUser user )
   {
-    currentUser.setProperties( user.getProperties() );
+    if( currentUser == null )
+      currentUser = user;
+    else
+      currentUser.setProperties( user.getProperties() );
   }
 
   private void handleUserLogin( BackendlessUser invokeResult, boolean stayLoggedIn )

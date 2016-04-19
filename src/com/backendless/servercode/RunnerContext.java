@@ -9,6 +9,7 @@ public class RunnerContext extends AbstractContext
 {
   private Map missingProperties;
   private Object prematureResult;
+  private String eventContext;
 
   public String getAppId()
   {
@@ -92,12 +93,23 @@ public class RunnerContext extends AbstractContext
     this.prematureResult = prematureResult;
   }
 
+  public String getEventContext()
+  {
+    return eventContext;
+  }
+
+  public void setEventContext( String eventContext )
+  {
+    this.eventContext = eventContext;
+  }
+
   @Override
   public String toString()
   {
     final StringBuilder sb = new StringBuilder( "RunnerContext{" );
     sb.append( "missingProperties=" ).append( missingProperties );
     sb.append( ", prematureResult=" ).append( prematureResult );
+    sb.append( ", eventContext=" ).append( eventContext );
     sb.append( ", " ).append(super.toString());
     sb.append( "}" );
     return sb.toString();
