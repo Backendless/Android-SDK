@@ -182,7 +182,6 @@ task copySampleJars << {
     copyT(jar.archivePath, projectDir.path+'/samples/EndlessMatchMaker/libs', jar.getArchiveName(  ))
     copyT(jar.archivePath, projectDir.path+'/samples/EndlessTagging/libs', jar.getArchiveName(  ))
     copyT(jar.archivePath, projectDir.path+'/samples/FenceDemo/libs', jar.getArchiveName(  ))
-    copyT(jar.archivePath, projectDir.path+'/samples/FileService/filedemo/libs', jar.getArchiveName(  ))
     copyT(jar.archivePath, projectDir.path+'/samples/GeoService/geodemo/libs', jar.getArchiveName(  ))
     copyT(jar.archivePath, projectDir.path+'/samples/MessagingService/pubsubdemo/libs', jar.getArchiveName(  ))
     copyT(jar.archivePath, projectDir.path+'/samples/MessagingService/pushdemo/libs', jar.getArchiveName(  ))
