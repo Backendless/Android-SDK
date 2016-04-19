@@ -35,8 +35,6 @@ public class InvocationContext extends AbstractContext
     return threadLocal.get();
   }
 
-  private Map<String, String> httpHeaders;
-
   private InvocationContext( String appId, String userId, String userToken, List<String> userRoles,
                             String deviceType, Map<String, String> httpHeaders )
   {
@@ -57,8 +55,7 @@ public class InvocationContext extends AbstractContext
   public String toString()
   {
     final StringBuilder sb = new StringBuilder( "InvocationContext{" );
-    sb.append( "httpHeaders=" ).append( httpHeaders );
-    sb.append( ", " ).append( super.toString() );
+    sb.append( super.toString() );
     sb.append( "}" );
     return sb.toString();
   }

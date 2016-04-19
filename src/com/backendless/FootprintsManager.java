@@ -163,7 +163,7 @@ public class FootprintsManager
             Object initialEntityFieldValue = getFieldValue( initialEntity, entry.getKey() );
 
             // duplicate footprint recursively
-            duplicateFootprintForObject( (Map<String, Object>) entry.getValue(), persistedEntityFieldValue, initialEntityFieldValue );
+            duplicateFootprintForObject((Map<String, Object>) entry.getValue(), persistedEntityFieldValue, initialEntityFieldValue);
           }
           else if( entry.getValue() instanceof Collection )
           {
@@ -174,10 +174,9 @@ public class FootprintsManager
               continue;
 
             // retrieve persisted entity's field value (which is collection)
-            Collection persistedEntityFieldValue = (Collection) getFieldValue( persistedEntity, entry.getKey() );
-
+            Collection persistedEntityFieldValue = getFieldValueAsCollection(persistedEntity, entry.getKey());
             // retrieve initial entity's field value (which is collection)
-            Collection initialEntityFieldValue = (Collection) getFieldValue( initialEntity, entry.getKey() );
+            Collection initialEntityFieldValue = getFieldValueAsCollection(initialEntity, entry.getKey());
 
             Collection mapCollection = (Collection) entry.getValue();
 
@@ -236,7 +235,7 @@ public class FootprintsManager
           {
             Object newEntityField = getFieldValue( newEntity, key );
             Object oldEntityField = getFieldValue( oldEntity, key );
-            updateFootprintForObject( (Map) entry.getValue(), newEntityField, oldEntityField );
+            updateFootprintForObject((Map) entry.getValue(), newEntityField, oldEntityField);
           }
           else if( entry.getValue() instanceof Collection )
           {
@@ -246,8 +245,8 @@ public class FootprintsManager
             if( valueIterator.hasNext() && valueIterator.next() instanceof GeoPoint )
               continue;
 
-            Collection newObjectCollection= getFieldCollection( newEntity, key );
-            Collection oldObjectCollection = getFieldCollection( oldEntity, key );
+            Collection newObjectCollection= getFieldValueAsCollection( newEntity, key );
+            Collection oldObjectCollection = getFieldValueAsCollection( oldEntity, key );
             Collection mapCollection = (Collection) entry.getValue();
 
             Iterator mapCollectionIterator = mapCollection.iterator();
@@ -255,12 +254,12 @@ public class FootprintsManager
             Iterator newObjectCollectionIterator = newObjectCollection.iterator();
 
             while( oldObjectCollectionIterator.hasNext() )
-              updateFootprintForObject( (Map) mapCollectionIterator.next(), newObjectCollectionIterator.next(), oldObjectCollectionIterator.next() );
+              updateFootprintForObject((Map) mapCollectionIterator.next(), newObjectCollectionIterator.next(), oldObjectCollectionIterator.next());
           }
         }
 
         Footprint footprint = persistenceCache.get( newEntity );
-        persistenceCache.put( oldEntity, footprint );
+        persistenceCache.put(oldEntity, footprint);
       }
       finally
       {
@@ -304,7 +303,7 @@ public class FootprintsManager
           }
           else if( entry.getValue() instanceof Collection )
           {
-            Collection objectCollection = getFieldCollection( entity, key );
+            Collection objectCollection = getFieldValueAsCollection( entity, key );
             Collection mapCollection = (Collection) entry.getValue();
 
             // remove footprints recursively for each object in collection
@@ -397,43 +396,38 @@ public class FootprintsManager
       marked.remove( entity );
     }
 
-    private Collection getFieldCollection( Object entity, String fieldName )
+    /**
+     * Retrieves value for 'fieldName' field from the 'entity' object in a form of Collection.
+     *
+     * @param entity    object to retrieve 'key' field from
+     * @param fieldName field name to retrieve from 'entity' object
+     */
+    private Collection getFieldValueAsCollection( Object entity, String fieldName )
     {
-      Collection collection;
-      String firstLetter = fieldName.substring( 0, 1 );
-      String remainder = fieldName.substring( 1 );
-      String lowerKey = firstLetter.toLowerCase().concat( remainder );
-      String upperKey = firstLetter.toUpperCase().concat( remainder );
+      Object rawEntity = getFieldValue( entity, fieldName );
 
-      if( entity instanceof BackendlessUser )
-      {
-        Object newObjectArray = ((BackendlessUser) entity).getProperty( lowerKey );
-
-        if( newObjectArray == null )
-          newObjectArray = ((BackendlessUser) entity).getProperty( upperKey );
-
-        if( newObjectArray == null )
-          collection = new ArrayList();
-        else if( newObjectArray instanceof Collection )
-          collection = (Collection) newObjectArray;
-        else if( newObjectArray.getClass().isArray() )
-          collection = Arrays.asList( (Object[]) newObjectArray );
-        else
-          throw new RuntimeException( "unknown data type - " + newObjectArray.getClass() );
-      }
+      if( rawEntity == null )
+        return new ArrayList();
+      else if( rawEntity instanceof Collection )
+        return (Collection) rawEntity;
+      else if( rawEntity.getClass().isArray() )
+        return Arrays.asList( (Object[]) rawEntity );
       else
-      {
-          collection = (Collection) ReflectionUtil.getFieldValue( entity, lowerKey, upperKey );
-      }
-
-      return collection;
+        throw new RuntimeException( "unknown data type - " + rawEntity.getClass() );
     }
 
-    private Object getFieldValue( Object entity, String key )
+    /**
+     * Retrieves value for 'fieldName' field from the 'entity' object without casting it to any type.
+     * Use #getFieldValueAsCollection to get result in a form of Collection.
+     *
+     * @param entity    object to retrieve 'fieldName' field from
+     * @param fieldName field name to retrieve from 'entity' object
+     */
+    private Object getFieldValue( Object entity, String fieldName )
     {
       Object entityFieldValue;
-      String firstLetter = key.substring( 0, 1 );
-      String remainder = key.substring( 1 );
+      String firstLetter = fieldName.substring( 0, 1 );
+      String remainder = fieldName.substring( 1 );
       String lowerKey = firstLetter.toLowerCase().concat( remainder );
       String upperKey = firstLetter.toUpperCase().concat( remainder );
 
@@ -449,7 +443,6 @@ public class FootprintsManager
           // retrieve entity field value
           entityFieldValue = ReflectionUtil.getFieldValue( entity, lowerKey, upperKey );
       }
-
       return entityFieldValue;
     }
   }

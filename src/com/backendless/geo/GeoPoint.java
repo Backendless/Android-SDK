@@ -189,8 +189,9 @@ public class GeoPoint extends BaseGeoPoint implements Serializable
     temp = Double.doubleToLongBits( longitude );
     result = 31 * result + (int) (temp ^ (temp >>> 32));
     result = 31 * result + (categories != null ? categories.hashCode() : 0);
-    result = 31 * result + (metadata != null ? metadata.hashCode() : 0);
     result = 31 * result + (distance != null ? distance.hashCode() : 0);
+    // excluded because of circular dependencies
+//    result = 31 * result + (metadata != null ? metadata.hashCode() : 0);
     return result;
   }
 
