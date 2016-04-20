@@ -5,7 +5,7 @@ apply plugin: 'signing'
 
 
 group 'com.backendless'
-version '3.0.14-snapshot'
+version '3.0.16-snapshot'
 archivesBaseName='backendless'
 
 
