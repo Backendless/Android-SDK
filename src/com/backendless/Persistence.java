@@ -39,6 +39,7 @@ import weborb.writer.MessageWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -760,6 +761,21 @@ public final class Persistence
   {
     if( entityClass == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
+
+    if( entityClass.getName().contains( "$" ) )
+      throw new IllegalArgumentException( ExceptionMessage.INVALID_CLASS );
+
+    try
+    {
+      Constructor defaultConstructor = entityClass.getConstructor();
+
+      if( defaultConstructor == null || !Modifier.isPublic( defaultConstructor.getModifiers() ) )
+        throw new IllegalArgumentException(  ExceptionMessage.ENTITY_MISSING_DEFAULT_CONSTRUCTOR );
+    }
+    catch( NoSuchMethodException e )
+    {
+      throw new IllegalArgumentException(  ExceptionMessage.ENTITY_MISSING_DEFAULT_CONSTRUCTOR );
+    }
 
     return DataStoreFactory.createDataStore( entityClass );
   }

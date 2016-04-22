@@ -95,7 +95,7 @@ public class ExceptionMessage
   public final static String NOT_READABLE_FILE = "File is not readable.";
   public final static String FILE_UPLOAD_ERROR = "Could not upload a file";
 
-  public final static String ENTITY_MISSING_DEFAULT_CONSTRUCTOR = "No default noargument constructor";
+  public final static String ENTITY_MISSING_DEFAULT_CONSTRUCTOR = "Missing public, default no-argument constructor";
   public final static String ENTITY_WRONG_OBJECT_ID_FIELD_TYPE = "Wrong type of the objectId field";
   public final static String ENTITY_WRONG_CREATED_FIELD_TYPE = "Wrong type of the created field";
   public final static String ENTITY_WRONG_UPDATED_FIELD_TYPE = "Wrong type of the updated field";
@@ -143,5 +143,6 @@ public class ExceptionMessage
   public final static String EMPTY_LOG_NAME = "Log name cannot be empty";
 
   public final static String INCORRECT_MESSAGE_TYPE = "Message object can not be instance of PublishOptions or DeliveryOptions class";
+  public final static String INVALID_CLASS = "Cannot use inner or anonymous classes. Make sure the class is public. It cannot be inner or anonymous";
 
 }
