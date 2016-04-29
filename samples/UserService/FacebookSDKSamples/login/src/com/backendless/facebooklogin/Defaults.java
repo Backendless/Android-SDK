@@ -23,7 +23,7 @@ public class Defaults
   public static final String APPLICATION_ID = "A9E9F925-6BF6-42DB-FFA0-EBDBFD3C0500";
   public static final String SECRET_KEY = "FE203A8F-517E-34E1-FF89-FF98D7DF0100";
   public static final String VERSION = "v1";
-  public static final String SERVER_URL = "http://tc.themidnightcoders.com:8888";
+  public static final String SERVER_URL = "http://api.backendless.com";
 
   //SET YOUR GOOGLE PROJECT ID BEFORE LAUNCH
   //ALSO YOU SHOULD SET GOOGLE API KEY IN BACKENDLESS CONSOLE
