@@ -239,7 +239,7 @@ public abstract class BackendlessSerializer
     for( Map.Entry<String, Object> property : properties )
     {
       Object propertyValue = property.getValue();
-      if( propertyValue != null && !propertyValue.getClass().isArray() && !isBelongsJdk( propertyValue.getClass() ) )
+      if( propertyValue != null && !propertyValue.getClass().isArray() && !propertyValue.getClass().isEnum() && !isBelongsJdk( propertyValue.getClass() ) )
       {
         property.setValue( serializeToMap( propertyValue ) );
       }
