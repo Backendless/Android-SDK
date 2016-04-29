@@ -24,11 +24,5 @@ public class Defaults
   public static final String SECRET_KEY = "FE203A8F-517E-34E1-FF89-FF98D7DF0100";
   public static final String VERSION = "v1";
   public static final String SERVER_URL = "http://api.backendless.com";
-
-  //SET YOUR GOOGLE PROJECT ID BEFORE LAUNCH
-  //ALSO YOU SHOULD SET GOOGLE API KEY IN BACKENDLESS CONSOLE
-  public static final String GOOGLE_PROJECT_ID = "615371842711";
-
-  public static final String DEFAULT_CHANNEL = "default";
 }
                                             
