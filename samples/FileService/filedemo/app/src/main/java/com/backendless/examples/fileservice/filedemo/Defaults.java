@@ -23,7 +23,7 @@ public class Defaults
 	public static final String APPLICATION_ID = "";
 	  public static final String SECRET_KEY = "";
 	public static final String VERSION = "v1";
-  public static final String SERVER_URL = "https://api.backenbdless.com";
+  public static final String SERVER_URL = "https://api.backendless.com";
 
   public static final int SELECT_PHOTO = 100;
   public static final int CAMERA_REQUEST = 101;
