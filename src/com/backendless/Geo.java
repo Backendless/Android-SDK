@@ -56,6 +56,7 @@ public final class Geo
     Types.addClientClassMapping( "com.backendless.geo.Units", Units.class );
     Types.addClientClassMapping( "com.backendless.geofence.model.GeoFenceAMF", GeoFence.class );
     Types.addClientClassMapping( "com.backendless.geofence.model.FenceType", FenceType.class );
+    Types.addClientClassMapping( "GeoPoint", GeoPoint.class );
   }
 
   public GeoCategory addCategory( String categoryName ) throws BackendlessException
