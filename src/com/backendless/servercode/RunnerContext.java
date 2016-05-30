@@ -103,6 +103,16 @@ public class RunnerContext extends AbstractContext
     this.eventContext = eventContext;
   }
 
+  public Map<String, String> getHttpHeaders()
+  {
+    return httpHeaders;
+  }
+
+  public void setHttpHeaders( Map<String, String> httpHeaders )
+  {
+    this.httpHeaders = httpHeaders;
+  }
+
   @Override
   public String toString()
   {
@@ -110,6 +120,7 @@ public class RunnerContext extends AbstractContext
     sb.append( "missingProperties=" ).append( missingProperties );
     sb.append( ", prematureResult=" ).append( prematureResult );
     sb.append( ", eventContext=" ).append( eventContext );
+    sb.append( ", httpHeaders=" ).append( httpHeaders );
     sb.append( ", " ).append(super.toString());
     sb.append( "}" );
     return sb.toString();
