@@ -63,7 +63,7 @@ uploadArchives {
 
             pom.whenConfigured {
                 p -> p.dependencies = p.dependencies.findAll {
-                    dep -> dep.artifactId != "commons"
+                    dep -> ( dep.artifactId != "commons" && dep.artifactId != "weborbclient" )
                 }
             }
 
