@@ -498,6 +498,29 @@ public final class UserService
     }
   }
 
+  public void resendEmailConfirmation( String email ) throws BackendlessException
+  {
+    if( email == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
+
+    Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "resendEmailConfirmation", new Object[]{ Backendless.getApplicationId(), Backendless.getVersion(), email } );
+  }
+
+  public void resendEmailConfirmation( String email, AsyncCallback<Void> responder )
+  {
+    try
+    {
+      if( email == null )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
+
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "resendEmailConfirmation", new Object[]{ Backendless.getApplicationId(), Backendless.getVersion(), email }, responder );    }
+    catch ( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
   public BackendlessUser findById( String id ) throws BackendlessException
   {
     if( id == null )
