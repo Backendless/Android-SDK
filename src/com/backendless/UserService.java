@@ -500,8 +500,8 @@ public final class UserService
 
   public void resendEmailConfirmation( String email ) throws BackendlessException
   {
-    if( email == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
+    if( email == null || email.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMAIL );
 
     Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "resendEmailConfirmation", new Object[]{ Backendless.getApplicationId(), Backendless.getVersion(), email } );
   }
@@ -510,8 +510,8 @@ public final class UserService
   {
     try
     {
-      if( email == null )
-        throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
+      if( email == null || email.isEmpty() )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_EMAIL );
 
       Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "resendEmailConfirmation", new Object[]{ Backendless.getApplicationId(), Backendless.getVersion(), email }, responder );    }
     catch ( Throwable e )
