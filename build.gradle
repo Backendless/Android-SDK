@@ -5,7 +5,7 @@ apply plugin: 'signing'
 
 
 group 'com.backendless'
-version '3.0.17-snapshot'
+version '3.0.19-snapshot'
 archivesBaseName='backendless'
 
 
@@ -137,9 +137,6 @@ repositories {
     maven {
         url "http://maven.backendless.com/repository/backendless_public"
     }
-    maven {
-        url "http://maven.backendless.com/repository/backendless_public/snapshots"
-    }
     flatDir {
         dirs 'libs'
     }
@@ -213,7 +210,7 @@ dependencies {
     provided fileTree(dir: 'libs', include: 'android.support.v4.jar')
     provided fileTree(dir: 'libs', include: 'FacebookSDK.jar')
     provided fileTree(dir: 'libs', include: 'maps.jar')
-    compile( group: "com.backendless", name: "commons", version: "3.0.14", changing: true) {
+    compile( group: "com.backendless", name: "commons", version: "3.0.19", changing: true) {
         exclude group: 'com.fasterxml.jackson.core'
     }
     compile( group: "weborb", name: "weborbclient", version: "5.1.0.206", changing: true)

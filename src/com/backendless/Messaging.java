@@ -45,6 +45,8 @@ import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.messaging.*;
 import com.backendless.push.GCMRegistrar;
 
+import com.backendless.services.messaging.MessageStatus;
+import com.backendless.services.messaging.PublishStatusEnum;
 import weborb.types.Types;
 
 import java.util.*;
@@ -63,8 +65,6 @@ public final class Messaging
   private Messaging()
   {
     Types.addClientClassMapping( "com.backendless.management.DeviceRegistrationDto", DeviceRegistration.class );
-    Types.addClientClassMapping( "com.backendless.services.messaging.MessageStatus", MessageStatus.class );
-    Types.addClientClassMapping( "com.backendless.services.messaging.PublishStatusEnum", PublishStatusEnum.class );
     Types.addClientClassMapping( "com.backendless.services.messaging.PublishOptions", PublishOptions.class );
     Types.addClientClassMapping( "com.backendless.services.messaging.DeliveryOptions", DeliveryOptions.class );
     Types.addClientClassMapping( "com.backendless.services.messaging.Message", Message.class );
