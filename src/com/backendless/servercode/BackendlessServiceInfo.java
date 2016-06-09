@@ -10,6 +10,6 @@ import java.lang.annotation.Target;
 public @interface BackendlessServiceInfo
 {
   String name();
-  String version();
+  String version() default "1.0.0";
   String description() default "";
 }
