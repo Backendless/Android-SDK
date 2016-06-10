@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Target( ElementType.TYPE )
 @Retention( RetentionPolicy.RUNTIME )
-public @interface BackendlessServiceInfo
+public @interface BackendlessService
 {
   String name();
   String version() default "1.0.0";
