@@ -35,6 +35,7 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -55,6 +56,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
   static final String TAG = "LoginFragment";
   private static final int RC_SIGN_IN = 10001;
   private static final int RC_SIGN_OUT = 10002;
+  private static final int REQUEST_AUTHORIZATION = 10003;
   private boolean logined = false;
   private static final String SERVER_CLIENT_ID = "395504112005-c6djad11b87f5jjm9gsb22s4ht6vdg0i.apps.googleusercontent.com";
 
@@ -160,6 +162,10 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
           token = GoogleAuthUtil.getToken( mainActivity, accountName, scopes );
           GoogleAuthUtil.invalidateToken( mainActivity, token );
           handleAccessTokenInBackendless( acct.getIdToken(), token );
+        }
+        catch ( UserRecoverableAuthException e )
+        {
+          startActivityForResult( e.getIntent(), REQUEST_AUTHORIZATION );
         }
         catch( Exception e )
         {
