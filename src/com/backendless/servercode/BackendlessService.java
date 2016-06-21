@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Retention( RetentionPolicy.RUNTIME )
 public @interface BackendlessService
 {
-  String name();
+  String name() default "";
   String version() default "1.0.0";
   String description() default "";
 }
