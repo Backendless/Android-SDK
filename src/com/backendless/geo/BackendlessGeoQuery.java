@@ -18,6 +18,8 @@
 
 package com.backendless.geo;
 
+import com.backendless.Backendless;
+import com.backendless.BackendlessCollection;
 import com.backendless.IBackendlessQuery;
 import com.backendless.commons.geo.AbstractBackendlessGeoQuery;
 
@@ -284,6 +286,15 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     result.setClusterGridSize( clusterGridSize );
 
     return result;
+  }
+
+  @Override
+  public BackendlessCollection getPage( BackendlessCollection sourceCollection, int pageSize, int offset )
+  {
+    IBackendlessQuery tempQuery = newInstance();
+    tempQuery.setOffset( offset );
+    tempQuery.setPageSize( pageSize );
+    return Backendless.Geo.getPoints( (BackendlessGeoQuery) tempQuery );
   }
 
   @Override

@@ -592,7 +592,7 @@ public final class Persistence
     }
   }
 
-  protected <E> BackendlessCollection<E> find( Class<E> entity,
+  public <E> BackendlessCollection<E> find( Class<E> entity,
                                                BackendlessDataQuery dataQuery ) throws BackendlessException
   {
     if( entity == null )
@@ -608,7 +608,7 @@ public final class Persistence
     return result;
   }
 
-  protected <E> void find( final Class<E> entity, final BackendlessDataQuery dataQuery,
+  public <E> void find( final Class<E> entity, final BackendlessDataQuery dataQuery,
                            final AsyncCallback<BackendlessCollection<E>> responder )
   {
     try

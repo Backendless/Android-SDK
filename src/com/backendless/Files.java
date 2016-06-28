@@ -24,6 +24,7 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.files.BackendlessFile;
+import com.backendless.files.BackendlessFilesQuery;
 import com.backendless.files.FileInfo;
 import com.backendless.files.router.FileOutputStreamRouter;
 import com.backendless.files.router.IOutputStreamRouter;
@@ -405,13 +406,13 @@ public final class Files
 
   public BackendlessCollection<FileInfo> listing( String path, String pattern, boolean recursive)
   {
-    return listing( path, pattern, recursive, BackendlessSimpleQuery.DEFAULT_PAGE_SIZE, BackendlessSimpleQuery.DEFAULT_OFFSET );
+    return listing( path, pattern, recursive, BackendlessFilesQuery.DEFAULT_PAGE_SIZE, BackendlessFilesQuery.DEFAULT_OFFSET );
   }
 
   public BackendlessCollection<FileInfo> listing( String path, String pattern, boolean recursive, int pagesize, int offset)
   {
     BackendlessCollection<FileInfo> collection = Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "listing", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, pattern, recursive, pagesize, offset });
-    collection.setQuery(new BackendlessSimpleQuery(pagesize, offset));
+    collection.setQuery(new BackendlessFilesQuery( path, pattern, recursive, pagesize, offset ));
     return collection;
   }
 
@@ -422,29 +423,29 @@ public final class Files
 
   public void listing( String path, String pattern, boolean recursive, AsyncCallback<BackendlessCollection<FileInfo>> responder)
   {
-    listing(path, pattern, recursive, BackendlessSimpleQuery.DEFAULT_PAGE_SIZE, BackendlessSimpleQuery.DEFAULT_OFFSET, responder);
+    listing(path, pattern, recursive, BackendlessFilesQuery.DEFAULT_PAGE_SIZE, BackendlessFilesQuery.DEFAULT_OFFSET, responder);
   }
 
-  public void listing( String path, String pattern, boolean recursive, final int pagesize, final int offset,
+  public void listing( final String path, final String pattern, final boolean recursive, final int pagesize, final int offset,
                                                   final AsyncCallback<BackendlessCollection<FileInfo>> responder)
   {
-            Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "listing", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, pattern, recursive, pagesize, offset }, new AsyncCallback<BackendlessCollection<FileInfo>>()
-            {
-              @Override
-              public void handleResponse( BackendlessCollection<FileInfo> response )
-              {
-                response.setQuery( new BackendlessSimpleQuery(pagesize, offset));
-                if(responder != null)
-                  responder.handleResponse( response );
-              }
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "listing", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), path, pattern, recursive, pagesize, offset }, new AsyncCallback<BackendlessCollection<FileInfo>>()
+    {
+      @Override
+      public void handleResponse( BackendlessCollection<FileInfo> response )
+      {
+        response.setQuery( new BackendlessFilesQuery( path, pattern, recursive, pagesize, offset));
+        if(responder != null)
+          responder.handleResponse( response );
+      }
 
-              @Override
-              public void handleFault( BackendlessFault fault )
-              {
-                if(responder != null)
-                  responder.handleFault( fault );
-              }
-            } );
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        if(responder != null)
+          responder.handleFault( fault );
+      }
+    } );
   }
 
   public boolean exists( String path )

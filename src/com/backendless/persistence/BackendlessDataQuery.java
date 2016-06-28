@@ -18,6 +18,8 @@
 
 package com.backendless.persistence;
 
+import com.backendless.Backendless;
+import com.backendless.BackendlessCollection;
 import com.backendless.IBackendlessQuery;
 
 import java.util.ArrayList;
@@ -138,5 +140,19 @@ public class BackendlessDataQuery implements IBackendlessQuery
     result.setQueryOptions( getQueryOptions() );
 
     return result;
+  }
+
+  @Override
+  public BackendlessCollection getPage( BackendlessCollection sourceCollection, int pageSize, int offset )
+  {
+    BackendlessDataQuery tempQuery = newInstance();
+    tempQuery.setOffset( offset );
+    tempQuery.setPageSize( pageSize );
+    String tableName = sourceCollection.getTableName();
+
+    if( tableName != null )
+      return Backendless.Persistence.of( tableName ).find( tempQuery );
+    else
+      return Backendless.Persistence.find( sourceCollection.getType(), tempQuery );
   }
 }
