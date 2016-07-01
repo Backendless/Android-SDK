@@ -5,7 +5,7 @@ apply plugin: 'signing'
 
 
 group 'com.backendless'
-version '3.0.14-snapshot'
+version '3.0.19-snapshot'
 archivesBaseName='backendless'
 
 
@@ -63,7 +63,7 @@ uploadArchives {
 
             pom.whenConfigured {
                 p -> p.dependencies = p.dependencies.findAll {
-                    dep -> dep.artifactId != "commons"
+                    dep -> ( dep.artifactId != "commons" && dep.artifactId != "weborbclient" )
                 }
             }
 
@@ -136,9 +136,6 @@ repositories {
     mavenCentral()
     maven {
         url "http://maven.backendless.com/repository/backendless_public"
-    }
-    maven {
-        url "http://maven.backendless.com/repository/backendless_public/snapshots"
     }
     flatDir {
         dirs 'libs'
@@ -213,10 +210,10 @@ dependencies {
     provided fileTree(dir: 'libs', include: 'android.support.v4.jar')
     provided fileTree(dir: 'libs', include: 'FacebookSDK.jar')
     provided fileTree(dir: 'libs', include: 'maps.jar')
-    compile( group: "com.backendless", name: "commons", version: "3.0.14", changing: true) {
+    compile( group: "com.backendless", name: "commons", version: "3.0.19", changing: true) {
         exclude group: 'com.fasterxml.jackson.core'
     }
-    compile( group: "weborb", name: "weborbclient", version: "5.1.0.205", changing: true)
+    compile( group: "weborb", name: "weborbclient", version: "5.1.0.206", changing: true)
 
 }
 apply plugin: 'java'

@@ -24,7 +24,7 @@ package com.backendless.files;
 public class FileInfo
 {
   private String name;
-  private long createOn;
+  private long createdOn;
   private String publicUrl;
   private String url;
   private Integer size;
@@ -41,12 +41,12 @@ public class FileInfo
 
   public long getCreatedOn()
   {
-    return createOn;
+    return createdOn;
   }
 
   public void setCreatedOn( long createOn )
   {
-    this.createOn = createOn;
+    this.createdOn = createOn;
   }
 
   public String getPublicUrl()

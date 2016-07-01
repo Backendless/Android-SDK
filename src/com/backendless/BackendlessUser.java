@@ -149,7 +149,7 @@ public class BackendlessUser implements Serializable
     return true;
   }
 
-  private Object marker = new Object();
+  private Object marker;// = new Object();
 
   @Override
   public int hashCode()
@@ -160,6 +160,11 @@ public class BackendlessUser implements Serializable
 
   private int hashCode(Set<Object> refCache)
   {
+    if( marker != null )
+      return 0;
+    else
+      marker = new Object();
+
     if(refCache.contains( marker ))
       return 0;
 

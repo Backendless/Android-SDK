@@ -18,7 +18,7 @@
 
 package com.backendless;
 
-public interface IBackendlessQuery
+public interface IBackendlessQuery<E>
 {
   int getOffset();
 
@@ -29,4 +29,6 @@ public interface IBackendlessQuery
   void setOffset( int offset );
 
   IBackendlessQuery newInstance();
+
+  BackendlessCollection<E> getPage( BackendlessCollection sourceCollection, int pageSize, int offset );
 }

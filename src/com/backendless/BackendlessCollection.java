@@ -56,6 +56,8 @@ public class BackendlessCollection<E> extends AbstractBackendlessCollection<E>
     this.tableName = tableName;
   }
 
+  public String getTableName() { return this.tableName; }
+
   public void setPageSize( int pageSize )
   {
     query.setPageSize( pageSize );
@@ -69,7 +71,6 @@ public class BackendlessCollection<E> extends AbstractBackendlessCollection<E>
   //Sync methods
   public BackendlessCollection<E> nextPage() throws BackendlessException
   {
-    checkQuery();
     int offset = query.getOffset();
     int pageSize = query.getPageSize();
 
@@ -85,21 +86,7 @@ public class BackendlessCollection<E> extends AbstractBackendlessCollection<E>
   private BackendlessCollection<E> downloadPage( int pageSize, int offset )  throws BackendlessException
   {
     checkQuery();
-    IBackendlessQuery tempQuery = query.newInstance();
-    tempQuery.setOffset( offset );
-    tempQuery.setPageSize( pageSize );
-
-    if( tempQuery instanceof BackendlessGeoQuery )
-    {
-      return (BackendlessCollection<E>) Backendless.Geo.getPoints( (BackendlessGeoQuery) tempQuery );
-    }
-    else
-    {
-      if( tableName != null )
-        return (BackendlessCollection<E>) Backendless.Persistence.of( tableName ).find( (BackendlessDataQuery) tempQuery );
-      else
-        return Backendless.Persistence.find( type, (BackendlessDataQuery) tempQuery );
-    }
+    return (BackendlessCollection<E>) query.getPage( this, pageSize, offset );
   }
 
   public BackendlessCollection<E> previousPage() throws BackendlessException

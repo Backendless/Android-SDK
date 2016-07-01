@@ -20,6 +20,8 @@ package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.core.responder.AdaptingResponder;
+import com.backendless.core.responder.policy.CollectionAdaptingPolicy;
+import com.backendless.core.responder.policy.IAdaptingPolicy;
 import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 
 public class CustomService
@@ -41,21 +43,39 @@ public class CustomService
 
   public <T> T invoke( String serviceName, String serviceVersion, String method, Object[] arguments )
   {
-    return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments } );
+    Object[] args =  new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments };
+    return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args );
   }
 
    public <T> T invoke( String serviceName, String serviceVersion, String method, Object[] arguments, Class<?> clazz )
   {
-    return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments }, new AdaptingResponder( clazz, new PoJoAdaptingPolicy() ) );
+    IAdaptingPolicy adaptingPolicy;
+
+    if( BackendlessCollection.class.isAssignableFrom( clazz ) )
+      adaptingPolicy = new CollectionAdaptingPolicy();
+    else
+      adaptingPolicy = new PoJoAdaptingPolicy();
+
+    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments };
+    return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, new AdaptingResponder( clazz, adaptingPolicy ) );
   }
 
   public <E> void invoke( String serviceName, String serviceVersion, String method, Object[] arguments, AsyncCallback<E> callback )
   {
-    Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments }, callback );
+    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments };
+    Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, callback );
   }
 
   public <E> void invoke( String serviceName, String serviceVersion, String method, Object[] arguments, Class<?> clazz, AsyncCallback<E> callback )
   {
-    Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments }, callback, new AdaptingResponder( clazz, new PoJoAdaptingPolicy() ) );
+    IAdaptingPolicy adaptingPolicy;
+
+    if( BackendlessCollection.class.isAssignableFrom( clazz ) )
+      adaptingPolicy = new CollectionAdaptingPolicy();
+    else
+      adaptingPolicy = new PoJoAdaptingPolicy();
+
+    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments };
+    Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, callback, new AdaptingResponder( clazz, adaptingPolicy ) );
   }
 }
