@@ -20,34 +20,36 @@ package com.backendless.files.router;
 
 import com.backendless.async.callback.UploadCallback;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 
-public class FileOutputStreamRouter extends IOutputStreamRouter
+public class FileOutputStreamRouter implements OutputStreamRouter
 {
-  private File file;
-  private UploadCallback uploadCallback;
+
+  private final File file;
+  private final UploadCallback uploadCallback;
+
+  private int lastProgress;
 
   public FileOutputStreamRouter( File file, UploadCallback uploadCallback )
   {
     this.file = file;
-    this.uploadCallback = uploadCallback;
+    this.uploadCallback = uploadCallback == null ? new DummyUploadCallback() : uploadCallback;
   }
 
   @Override
-  public void writeStream( int bufferSize ) throws IOException
+  public void writeStream( OutputStream out ) throws IOException
   {
     long fileSize = file.length();
-    byte[] buffer = new byte[ bufferSize ];
+    byte[] buffer = new byte[ BUFFER_DEFAULT_LENGTH ];
     int readBytesTotal = 0;
 
-    try (FileInputStream fileInputStream = new FileInputStream( file ))
+    try (BufferedInputStream inputStream = new BufferedInputStream( new FileInputStream( file ) ) )
     {
       int readBytes;
-      while( ( readBytes = fileInputStream.read( buffer ) ) != -1 )
+      while( ( readBytes = inputStream.read( buffer ) ) != -1 )
       {
-        getOutputStream().write( buffer, 0, readBytes );
+        out.write( buffer, 0, readBytes );
+        out.flush();
         updateProgress( fileSize, readBytesTotal += readBytes );
       }
     }
@@ -55,10 +57,20 @@ public class FileOutputStreamRouter extends IOutputStreamRouter
 
   private void updateProgress( long fileSize, double readBytesTotal )
   {
-    if( uploadCallback != null )
+    int progress = (int) ( ( readBytesTotal / fileSize ) * 100 );
+    if( progress != lastProgress )
     {
-      int progress = (int) (( readBytesTotal / fileSize) * 100);
+      lastProgress = progress;
       uploadCallback.onProgressUpdate( progress );
+    }
+  }
+
+  private static class DummyUploadCallback implements UploadCallback
+  {
+    @Override
+    public void onProgressUpdate( Integer progress )
+    {
+      //noop
     }
   }
 }
