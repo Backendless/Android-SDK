@@ -181,7 +181,6 @@ task copySampleJars << {
     copyT(jar.archivePath, projectDir.path+'/samples/FenceDemo/libs', jar.getArchiveName(  ))
     copyT(jar.archivePath, projectDir.path+'/samples/GeoService/geodemo/libs', jar.getArchiveName(  ))
     copyT(jar.archivePath, projectDir.path+'/samples/MessagingService/pubsubdemo/libs', jar.getArchiveName(  ))
-    copyT(jar.archivePath, projectDir.path+'/samples/MessagingService/pushdemo/libs', jar.getArchiveName(  ))
     copyT(jar.archivePath, projectDir.path+'/samples/UserService/FacebookSDKSamples/login/libs', jar.getArchiveName(  ))
     copyT(jar.archivePath, projectDir.path+'/samples/UserService/rolesdemo/libs/', jar.getArchiveName(  ))
     copyT(jar.archivePath, projectDir.path+'/samples/UserService/userservicedemo/libs', jar.getArchiveName(  ))
