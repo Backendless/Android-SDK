@@ -33,7 +33,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
   private static final String TAG = "BackendlessBroadcastReceiver";
   private static final String EXTRA_WAKE_LOCK_ID = "android.support.content.wakelockid";
   private static final Map<Integer, PowerManager.WakeLock> activeWakeLocks = new HashMap<>();
-  public static final String INTERNAL_ID_KEY = "internal-id";
+  static final String MESSAGE_ID_KEY = "internal-id";
 
   private static int mNextId = 1;
 
@@ -85,7 +85,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
   {
     Intent service = new Intent( context, getServiceClass() );
     service.putExtras( intent );
-    service.putExtra( INTERNAL_ID_KEY, mNextId );
+    service.putExtra( MESSAGE_ID_KEY, mNextId );
     service.setAction( intent.getAction() );
     startWakefulService( context, service );
   }

@@ -11,9 +11,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.messaging.PublishOptions;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class BackendlessPushService extends IntentService
@@ -25,20 +23,14 @@ public class BackendlessPushService extends IntentService
   private static final String TOKEN = Long.toBinaryString( random.nextLong() );
   private static final String EXTRA_TOKEN = "token";
 
-  //todo move to shared prefs
-  private static String persistedSenderId;
-  private static long persistedRegistrationExpiration;
-  private static String[] persistedChannels;
-
   public BackendlessPushService()
   {
     super( "BackendlessPushService" );
   }
 
-  public BackendlessPushService( String senderId )
+  public BackendlessPushService( String name )
   {
-    this();
-    persistedSenderId = senderId;
+    super( name );
   }
 
   /**
@@ -61,42 +53,6 @@ public class BackendlessPushService extends IntentService
   {
     handleIntent( this, intent );
     BackendlessBroadcastReceiver.completeWakefulIntent( intent );
-  }
-
-  protected static void setSenderId( String senderId )
-  {
-    persistedSenderId = senderId;
-  }
-
-  protected static void setRegistrationExpiration( long registrationExpiration )
-  {
-    persistedRegistrationExpiration = registrationExpiration;
-  }
-
-  protected static void setChannels( List<String> channels )
-  {
-    persistedChannels = channels.toArray( new String[ channels.size() ] );
-  }
-
-  private static String getSenderId()
-  {
-    return persistedSenderId;
-  }
-
-  private static long getRegistrationExpiration()
-  {
-    if( persistedRegistrationExpiration == 0 )
-      return System.currentTimeMillis() + GCMRegistrar.DEFAULT_ON_SERVER_LIFESPAN_MS;
-
-    return persistedRegistrationExpiration;
-  }
-
-  private static List<String> getChannels()
-  {
-    if( persistedChannels == null )
-      return null;
-
-    return Arrays.asList( persistedChannels );
   }
 
   protected void onRegistered( Context context, String registrationId )
@@ -144,7 +100,7 @@ public class BackendlessPushService extends IntentService
     if( GCMRegistrar.isRegistered( context ) )
       GCMRegistrar.internalUnregister( context );
     else
-      GCMRegistrar.internalRegister( context, getSenderId() );
+      GCMRegistrar.internalRegister( context, GCMRegistrar.getSenderId( context ) );
   }
 
   private void handleMessage( final Context context, Intent intent )
@@ -200,7 +156,7 @@ public class BackendlessPushService extends IntentService
           }
 
           NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
-          notificationManager.notify( intent.getIntExtra( BackendlessBroadcastReceiver.INTERNAL_ID_KEY, 0 ), notification );
+          notificationManager.notify( intent.getIntExtra( BackendlessBroadcastReceiver.MESSAGE_ID_KEY, 0 ), notification );
         }
       }
     }
@@ -237,6 +193,7 @@ public class BackendlessPushService extends IntentService
       // Remember we are unregistered
       GCMRegistrar.resetBackoff( context );
       GCMRegistrar.setGCMdeviceToken( context, "" );
+      GCMRegistrar.setChannels( context, Collections.<String>emptyList() );
       unregisterFurther( context );
       return;
     }
@@ -263,12 +220,13 @@ public class BackendlessPushService extends IntentService
 
   private void registerFurther( final Context context, String GCMregistrationId )
   {
-    Backendless.Messaging.registerDeviceOnServer( GCMregistrationId, getChannels(), getRegistrationExpiration(), new AsyncCallback<String>()
+    final long registrationExpiration = GCMRegistrar.getRegistrationExpiration( context );
+    Backendless.Messaging.registerDeviceOnServer( GCMregistrationId, new ArrayList<>( GCMRegistrar.getChannels( context ) ), registrationExpiration, new AsyncCallback<String>()
     {
       @Override
       public void handleResponse( String registrationId )
       {
-        GCMRegistrar.setRegistrationId( context, registrationId, getRegistrationExpiration() );
+        GCMRegistrar.setRegistrationId( context, registrationId, registrationExpiration );
         onRegistered( context, registrationId );
       }
 
