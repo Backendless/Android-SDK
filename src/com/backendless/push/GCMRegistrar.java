@@ -155,7 +155,7 @@ public final class GCMRegistrar
     else
     {
       GCMRegistrar.resetBackoff( context );
-      BackendlessBroadcastReceiver.setSenderId( "" );
+      BackendlessPushService.setSenderId( "" );
       requesRegistration( context, senderId, channels, expiration );
     }
   }
@@ -173,13 +173,13 @@ public final class GCMRegistrar
   private static void requesRegistration( Context context, String senderId, List<String> channels, Date expiration )
   {
     GCMRegistrar.resetBackoff( context );
-    BackendlessBroadcastReceiver.setSenderId( senderId );
+    BackendlessPushService.setSenderId( senderId );
 
     if( expiration != null )
-      BackendlessBroadcastReceiver.setRegistrationExpiration( expiration.getTime() );
+      BackendlessPushService.setRegistrationExpiration( expiration.getTime() );
 
     if( channels != null )
-      BackendlessBroadcastReceiver.setChannels( channels );
+      BackendlessPushService.setChannels( channels );
 
     internalRegister( context, senderId );
   }
@@ -196,7 +196,7 @@ public final class GCMRegistrar
   public static void unregister( Context context )
   {
     GCMRegistrar.resetBackoff( context );
-    BackendlessBroadcastReceiver.setSenderId( "" );
+    BackendlessPushService.setSenderId( "" );
     internalUnregister( context );
   }
 
