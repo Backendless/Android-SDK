@@ -18,6 +18,7 @@
 
 package com.backendless.push;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -83,11 +84,10 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
   @Override
   public final void onReceive( Context context, Intent intent )
   {
-    Intent service = new Intent( context, getServiceClass() );
-    service.putExtras( intent );
-    service.putExtra( MESSAGE_ID_KEY, mNextId );
-    service.setAction( intent.getAction() );
-    startWakefulService( context, service );
+    intent.putExtra( MESSAGE_ID_KEY, mNextId );
+    ComponentName comp = new ComponentName( context, getServiceClass() );
+    startWakefulService( context, ( intent.setComponent( comp ) ) );
+    setResultCode( Activity.RESULT_OK );
   }
 
   protected static ComponentName startWakefulService( Context context, Intent intent )
