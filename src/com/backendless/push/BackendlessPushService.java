@@ -60,8 +60,14 @@ public class BackendlessPushService extends IntentService implements PushReceive
   @Override
   protected void onHandleIntent( Intent intent )
   {
-    handleIntent( this, intent );
-    BackendlessBroadcastReceiver.completeWakefulIntent( intent );
+    try
+    {
+      handleIntent( this, intent );
+    }
+    finally
+    {
+      BackendlessBroadcastReceiver.completeWakefulIntent( intent );
+    }
   }
 
   public void onRegistered( Context context, String registrationId )
