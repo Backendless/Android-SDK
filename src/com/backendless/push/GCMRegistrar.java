@@ -32,8 +32,6 @@ import java.util.*;
 
 public final class GCMRegistrar
 {
-  //TODO add persisting Backendless registration id
-
   public static final int DEFAULT_ON_SERVER_LIFESPAN_MS = /*2 days*/1000 * 60 * 60 * 24 * 2;
 
   private static final String BACKOFF_MS = "backoff_ms";
@@ -56,9 +54,7 @@ public final class GCMRegistrar
   {
     DEFAULT_PERMISSIONS = new ArrayList<>();
     DEFAULT_PERMISSIONS.add( GCMConstants.PERMISSION_GCM_MESSAGE );
-    DEFAULT_PERMISSIONS.add( GCMConstants.PERMISSION_ANDROID_ACCOUNTS );
     DEFAULT_PERMISSIONS.add( GCMConstants.PERMISSION_ANDROID_INTERNET );
-    //DEFAULT_PERMISSIONS.add( GCMConstants.PERMISSION_GCM_INTENTS );
   }
 
   public static void checkDevice( Context context )
@@ -325,7 +321,7 @@ public final class GCMRegistrar
     SharedPreferences prefs = getMessagingPreferences( context );
     long prefsLong = prefs.getLong( PROPERTY_REGISTRATION_EXP, 0 );
 
-    if( prefsLong == 0 )
+    if( prefsLong <= 0 )
       return System.currentTimeMillis() + GCMRegistrar.DEFAULT_ON_SERVER_LIFESPAN_MS;
 
     return prefsLong;

@@ -23,18 +23,20 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.PowerManager;
 import android.util.Log;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class BackendlessBroadcastReceiver extends BroadcastReceiver
+public class BackendlessBroadcastReceiver extends BroadcastReceiver implements PushReceiverCallback
 {
   private static final String TAG = "BackendlessBroadcastReceiver";
-  private static final String EXTRA_WAKE_LOCK_ID = "android.support.content.wakelockid";
+  private static final String EXTRA_WAKE_LOCK_ID = "com.backendless.wakelockid";
+  static final String EXTRA_MESSAGE_ID = "com.backendless.messageid";
   private static final Map<Integer, PowerManager.WakeLock> activeWakeLocks = new HashMap<>();
-  static final String MESSAGE_ID_KEY = "internal-id";
 
   private static int mNextId = 1;
 
@@ -84,10 +86,47 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
   @Override
   public final void onReceive( Context context, Intent intent )
   {
-    intent.putExtra( MESSAGE_ID_KEY, mNextId );
-    ComponentName comp = new ComponentName( context, getServiceClass() );
-    startWakefulService( context, ( intent.setComponent( comp ) ) );
+    intent.putExtra( EXTRA_MESSAGE_ID, mNextId );
+    //backward compatibility
+    if( isPushServiceAvailable( context ) )
+    {
+      ComponentName comp = new ComponentName( context, getServiceClass() );
+      startWakefulService( context, ( intent.setComponent( comp ) ) );
+    }
+    else
+    {
+      try
+      {
+        aquireLock( context, intent );
+        BackendlessPushService service = new BackendlessPushService( this );
+        service.handleIntent( context, intent );
+      }
+      finally
+      {
+        completeWakefulIntent( intent );
+      }
+    }
     setResultCode( Activity.RESULT_OK );
+  }
+
+  private static void aquireLock( Context context, Intent intent )
+  {
+    synchronized ( activeWakeLocks )
+    {
+      int id = mNextId++;
+      if( mNextId <= 0 )
+      {
+        mNextId = 1;
+      }
+
+      intent.putExtra( EXTRA_WAKE_LOCK_ID, id );
+
+      PowerManager pm = (PowerManager) context.getSystemService( "power" );
+      PowerManager.WakeLock wl = pm.newWakeLock( PowerManager.PARTIAL_WAKE_LOCK, "wake:com:backendless:push:" + mNextId );
+      wl.setReferenceCounted( false );
+      wl.acquire( 60000L );
+      activeWakeLocks.put( id, wl );
+    }
   }
 
   protected static ComponentName startWakefulService( Context context, Intent intent )
@@ -143,6 +182,15 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver
         }
       }
     }
+  }
+
+  private boolean isPushServiceAvailable( Context context )
+  {
+    final PackageManager packageManager = context.getPackageManager();
+    final Intent intent = new Intent( context, getServiceClass() );
+    List resolveInfo = packageManager.queryIntentServices( intent,
+        PackageManager.MATCH_DEFAULT_ONLY );
+    return resolveInfo.size() > 0;
   }
 
 }

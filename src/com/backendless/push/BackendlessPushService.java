@@ -14,7 +14,7 @@ import com.backendless.messaging.PublishOptions;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-public class BackendlessPushService extends IntentService
+public class BackendlessPushService extends IntentService implements PushReceiverCallback
 {
   private static final String TAG = "BackendlessPushService";
   private static final Random random = new Random();
@@ -23,14 +23,23 @@ public class BackendlessPushService extends IntentService
   private static final String TOKEN = Long.toBinaryString( random.nextLong() );
   private static final String EXTRA_TOKEN = "token";
 
+  private PushReceiverCallback callback;
+
   public BackendlessPushService()
   {
-    super( "BackendlessPushService" );
+    this( "BackendlessPushService" );
   }
 
   public BackendlessPushService( String name )
   {
     super( name );
+    this.callback = this;
+  }
+
+  public BackendlessPushService( PushReceiverCallback callback )
+  {
+    super(null);
+    this.callback = callback;
   }
 
   /**
@@ -55,25 +64,25 @@ public class BackendlessPushService extends IntentService
     BackendlessBroadcastReceiver.completeWakefulIntent( intent );
   }
 
-  protected void onRegistered( Context context, String registrationId )
+  public void onRegistered( Context context, String registrationId )
   {
   }
 
-  protected void onUnregistered( Context context, Boolean unregistered )
+  public void onUnregistered( Context context, Boolean unregistered )
   {
   }
 
-  protected boolean onMessage( Context context, Intent intent )
+  public boolean onMessage( Context context, Intent intent )
   {
     return true;
   }
 
-  protected void onError( Context context, String message )
+  public void onError( Context context, String message )
   {
     throw new RuntimeException( message );
   }
 
-  private void handleIntent( Context context, Intent intent )
+  void handleIntent( Context context, Intent intent )
   {
     String action = intent.getAction();
 
@@ -108,7 +117,7 @@ public class BackendlessPushService extends IntentService
 
     try
     {
-      boolean showPushNotification = onMessage( context, intent );
+      boolean showPushNotification = callback.onMessage( context, intent );
 
       if( showPushNotification )
       {
@@ -156,7 +165,7 @@ public class BackendlessPushService extends IntentService
           }
 
           NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
-          notificationManager.notify( intent.getIntExtra( BackendlessBroadcastReceiver.MESSAGE_ID_KEY, 0 ), notification );
+          notificationManager.notify( intent.getIntExtra( BackendlessBroadcastReceiver.EXTRA_MESSAGE_ID, 0 ), notification );
         }
       }
     }
@@ -178,7 +187,7 @@ public class BackendlessPushService extends IntentService
     {
       if( isInternal )
       {
-        onRegistered( context, registrationId );
+        callback.onRegistered( context, registrationId );
       }
 
       GCMRegistrar.resetBackoff( context );
@@ -194,6 +203,7 @@ public class BackendlessPushService extends IntentService
       GCMRegistrar.resetBackoff( context );
       GCMRegistrar.setGCMdeviceToken( context, "" );
       GCMRegistrar.setChannels( context, Collections.<String>emptyList() );
+      GCMRegistrar.setRegistrationExpiration( context, -1 );
       unregisterFurther( context );
       return;
     }
@@ -214,7 +224,7 @@ public class BackendlessPushService extends IntentService
     }
     else
     {
-      onError( context, error );
+      callback.onError( context, error );
     }
   }
 
@@ -227,13 +237,13 @@ public class BackendlessPushService extends IntentService
       public void handleResponse( String registrationId )
       {
         GCMRegistrar.setRegistrationId( context, registrationId, registrationExpiration );
-        onRegistered( context, registrationId );
+        callback.onRegistered( context, registrationId );
       }
 
       @Override
       public void handleFault( BackendlessFault fault )
       {
-        onError( context, "Could not register device on Backendless server: " + fault.getMessage() );
+        callback.onError( context, "Could not register device on Backendless server: " + fault.getMessage() );
       }
     } );
   }
@@ -246,13 +256,13 @@ public class BackendlessPushService extends IntentService
       public void handleResponse( Boolean unregistered )
       {
         GCMRegistrar.setRegistrationId( context, "", 0 );
-        onUnregistered( context, unregistered );
+        callback.onUnregistered( context, unregistered );
       }
 
       @Override
       public void handleFault( BackendlessFault fault )
       {
-        onError( context, "Could not unregister device on Backendless server: " + fault.getMessage() );
+        callback.onError( context, "Could not unregister device on Backendless server: " + fault.getMessage() );
       }
     } );
   }
