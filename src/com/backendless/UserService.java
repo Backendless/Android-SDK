@@ -80,7 +80,7 @@ public final class UserService
 
     BackendlessSerializer.serializeUserProperties( user );
     String password = user.getPassword();
-    BackendlessUser userToReturn = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "register", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), user.getProperties() }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
+    BackendlessUser userToReturn = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "register", new Object[] { Backendless.getApplicationId(), user.getProperties() }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
     user.clearProperties();
     userToReturn.setPassword( password );
     user.putProperties( userToReturn.getProperties() );
@@ -96,7 +96,7 @@ public final class UserService
 
       BackendlessSerializer.serializeUserProperties( user );
 
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "register", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), user.getProperties() }, new AsyncCallback<BackendlessUser>()
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "register", new Object[] { Backendless.getApplicationId(), user.getProperties() }, new AsyncCallback<BackendlessUser>()
       {
         @Override
         public void handleResponse( BackendlessUser response )
@@ -133,7 +133,7 @@ public final class UserService
     if( user.getUserId() != null && user.getUserId().equals( "" ) )
       throw new IllegalArgumentException( ExceptionMessage.WRONG_USER_ID );
 
-    BackendlessUser userToReturn = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "update", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), user.getProperties() }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
+    BackendlessUser userToReturn = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "update", new Object[] { Backendless.getApplicationId(), user.getProperties() }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
     user.clearProperties();
     user.putProperties( userToReturn.getProperties() );
 
@@ -151,7 +151,7 @@ public final class UserService
       if( user.getUserId() != null && user.getUserId().equals( "" ) )
         throw new IllegalArgumentException( ExceptionMessage.WRONG_USER_ID );
 
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "update", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), user.getProperties() }, new AsyncCallback<BackendlessUser>()
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "update", new Object[] { Backendless.getApplicationId(), user.getProperties() }, new AsyncCallback<BackendlessUser>()
       {
         @Override
         public void handleResponse( BackendlessUser response )
@@ -197,7 +197,7 @@ public final class UserService
       if( password == null || password.equals( "" ) )
         throw new IllegalArgumentException( ExceptionMessage.NULL_PASSWORD );
 
-      handleUserLogin( Invoker.<BackendlessUser>invokeSync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), login, password }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) ), stayLoggedIn );
+      handleUserLogin( Invoker.<BackendlessUser>invokeSync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { Backendless.getApplicationId(), login, password }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) ), stayLoggedIn );
 
       return currentUser;
     }
@@ -238,7 +238,7 @@ public final class UserService
           if( password == null || password.equals( "" ) )
             throw new IllegalArgumentException( ExceptionMessage.NULL_PASSWORD );
           else
-            Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), login, password }, getUserLoginAsyncHandler( responder, stayLoggedIn ) , new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
+            Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { Backendless.getApplicationId(), login, password }, getUserLoginAsyncHandler( responder, stayLoggedIn ) , new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
         }
       }
       catch( Throwable e )
@@ -414,7 +414,7 @@ public final class UserService
     {
       try
       {
-        Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "logout", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } );
+        Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "logout", new Object[] { Backendless.getApplicationId() } );
       }
       catch( BackendlessException fault )
       {
@@ -439,7 +439,7 @@ public final class UserService
   {
     synchronized( currentUserLock )
     {
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "logout", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() }, new AsyncCallback<Void>()
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "logout", new Object[] { Backendless.getApplicationId() }, new AsyncCallback<Void>()
       {
         @Override
         public void handleResponse( Void response )
@@ -479,7 +479,7 @@ public final class UserService
     if( identity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
 
-    Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "restorePassword", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), identity } );
+    Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "restorePassword", new Object[] { Backendless.getApplicationId(), identity } );
   }
 
   public void restorePassword( final String identity, final AsyncCallback<Void> responder )
@@ -489,7 +489,7 @@ public final class UserService
       if( identity == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
 
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "restorePassword", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), identity }, responder );
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "restorePassword", new Object[] { Backendless.getApplicationId(), identity }, responder );
     }
     catch( Throwable e )
     {
@@ -503,7 +503,7 @@ public final class UserService
     if( email == null || email.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMAIL );
 
-    Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "resendEmailConfirmation", new Object[]{ Backendless.getApplicationId(), Backendless.getVersion(), email } );
+    Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "resendEmailConfirmation", new Object[]{ Backendless.getApplicationId(), email } );
   }
 
   public void resendEmailConfirmation( String email, AsyncCallback<Void> responder )
@@ -513,7 +513,7 @@ public final class UserService
       if( email == null || email.isEmpty() )
         throw new IllegalArgumentException( ExceptionMessage.NULL_EMAIL );
 
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "resendEmailConfirmation", new Object[]{ Backendless.getApplicationId(), Backendless.getVersion(), email }, responder );    }
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "resendEmailConfirmation", new Object[]{ Backendless.getApplicationId(), email }, responder );    }
     catch ( Throwable e )
     {
       if( responder != null )
@@ -526,7 +526,7 @@ public final class UserService
     if( id == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
 
-    return Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), id, new ArrayList() } );
+    return Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), id, new ArrayList() } );
   }
 
   public void findById( final String id, final AsyncCallback<BackendlessUser> responder )
@@ -536,7 +536,7 @@ public final class UserService
       if( id == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
 
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), id, new ArrayList() }, new AsyncCallback<BackendlessUser>()
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "findById", new Object[] { Backendless.getApplicationId(), id, new ArrayList() }, new AsyncCallback<BackendlessUser>()
       {
         @Override
         public void handleResponse( BackendlessUser response )
@@ -568,7 +568,7 @@ public final class UserService
     if( roleName == null || roleName.equals( "" ) )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ROLE_NAME );
 
-    Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "assignRole", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), identity, roleName } );
+    Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "assignRole", new Object[] { Backendless.getApplicationId(), identity, roleName } );
   }
 
   public void assignRole( final String identity, final String roleName, final AsyncCallback<Void> responder )
@@ -581,7 +581,7 @@ public final class UserService
       if( roleName == null || roleName.equals( "" ) )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ROLE_NAME );
 
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "assignRole", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), identity, roleName }, responder );
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "assignRole", new Object[] { Backendless.getApplicationId(), identity, roleName }, responder );
     }
     catch( Throwable e )
     {
@@ -598,7 +598,7 @@ public final class UserService
     if( roleName == null || roleName.equals( "" ) )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ROLE_NAME );
 
-    Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "unassignRole", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), identity, roleName } );
+    Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "unassignRole", new Object[] { Backendless.getApplicationId(), identity, roleName } );
   }
 
   public void unassignRole( final String identity, final String roleName, final AsyncCallback<Void> responder )
@@ -611,7 +611,7 @@ public final class UserService
       if( roleName == null || roleName.equals( "" ) )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ROLE_NAME );
 
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "unassignRole", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), identity, roleName }, responder );
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "unassignRole", new Object[] { Backendless.getApplicationId(), identity, roleName }, responder );
     }
     catch( Throwable e )
     {
@@ -622,7 +622,7 @@ public final class UserService
 
   public List<String> getUserRoles() throws BackendlessException
   {
-    return Arrays.asList( (String[]) Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "getUserRoles", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } ) );
+    return Arrays.asList( (String[]) Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "getUserRoles", new Object[] { Backendless.getApplicationId() } ) );
   }
 
   public void getUserRoles( final AsyncCallback<List<String>> responder )
@@ -645,7 +645,7 @@ public final class UserService
             responder.handleFault( fault );
         }
       };
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getUserRoles", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() }, callback );
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getUserRoles", new Object[] { Backendless.getApplicationId() }, callback );
     }
     catch( Throwable e )
     {
@@ -656,14 +656,14 @@ public final class UserService
 
   public List<UserProperty> describeUserClass() throws BackendlessException
   {
-    UserProperty[] response = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "describeUserClass", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } );
+    UserProperty[] response = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "describeUserClass", new Object[] { Backendless.getApplicationId() } );
 
     return Arrays.asList( response );
   }
 
   public void describeUserClass( final AsyncCallback<List<UserProperty>> responder )
   {
-    Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "describeUserClass", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() }, new AsyncCallback<UserProperty[]>()
+    Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "describeUserClass", new Object[] { Backendless.getApplicationId() }, new AsyncCallback<UserProperty[]>()
     {
       @Override
       public void handleResponse( UserProperty[] response )
@@ -691,7 +691,7 @@ public final class UserService
     if( permissions == null )
       permissions = new ArrayList<String>();
 
-    Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getFacebookServiceAuthorizationUrlLink", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME ), facebookFieldsMappings, permissions }, responder );
+    Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getFacebookServiceAuthorizationUrlLink", new Object[] { Backendless.getApplicationId(), HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME ), facebookFieldsMappings, permissions }, responder );
   }
 
   public void getTwitterServiceAuthorizationUrlLink( Map<String, String> twitterFieldsMapping,
@@ -700,7 +700,7 @@ public final class UserService
     if( twitterFieldsMapping == null )
       twitterFieldsMapping = new HashMap<String, String>();
 
-    Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getTwitterServiceAuthorizationUrlLink", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME ), twitterFieldsMapping }, responder );
+    Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getTwitterServiceAuthorizationUrlLink", new Object[] { Backendless.getApplicationId(), HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME ), twitterFieldsMapping }, responder );
   }
 
   public void getGooglePlusServiceAuthorizationUrlLink( Map<String, String> googlePlusFieldsMappings,
@@ -713,7 +713,7 @@ public final class UserService
     if( permissions == null )
       permissions = new ArrayList<String>();
 
-    Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getGooglePlusServiceAuthorizationUrlLink", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME ), googlePlusFieldsMappings, permissions }, responder );
+    Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getGooglePlusServiceAuthorizationUrlLink", new Object[] { Backendless.getApplicationId(), HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME ), googlePlusFieldsMappings, permissions }, responder );
   }
 
   private static void checkUserToBeProper( BackendlessUser user ) throws BackendlessException
@@ -810,7 +810,7 @@ public final class UserService
     String userToken = UserTokenStorageFactory.instance().getStorage().get();
     if( userToken != null && !userToken.equals( "" ) )
     {
-      return Invoker.<Boolean>invokeSync( USER_MANAGER_SERVER_ALIAS, "isValidUserToken", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), userToken } );
+      return Invoker.<Boolean>invokeSync( USER_MANAGER_SERVER_ALIAS, "isValidUserToken", new Object[] { Backendless.getApplicationId(), userToken } );
     }
     else
     {
@@ -827,7 +827,7 @@ public final class UserService
     String userToken = UserTokenStorageFactory.instance().getStorage().get();
     if( userToken != null && !userToken.equals( "" ) )
     {
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "isValidUserToken", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), userToken }, responder );
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "isValidUserToken", new Object[] { Backendless.getApplicationId(), userToken }, responder );
     }
     else
     {

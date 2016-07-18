@@ -98,17 +98,16 @@ public final class Backendless
    *
    * @param applicationId a Backendless application ID, which could be retrieved at the Backendless console
    * @param secretKey     a Backendless application secret key, which could be retrieved at the Backendless console
-   * @param version       identifies the version of the application. A version represents a snapshot of the configuration settings, set of schemas, user properties, etc.
    */
-  public static void initApp( String applicationId, String secretKey, String version )
+  public static void initApp( String applicationId, String secretKey )
   {
     if( isAndroid() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_CONTEXT );
 
-    initApp( null, applicationId, secretKey, version );
+    initApp( null, applicationId, secretKey );
   }
 
-  public static void initApp( Object context, final String applicationId, final String secretKey, final String version )
+  public static void initApp( Object context, final String applicationId, final String secretKey )
   {
     if( isAndroid() && context == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_CONTEXT );
@@ -119,16 +118,13 @@ public final class Backendless
     if( secretKey == null || secretKey.equals( "" ) )
       throw new IllegalArgumentException( ExceptionMessage.NULL_SECRET_KEY );
 
-    if( version == null || version.equals( "" ) )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_VERSION );
-
     HeadersManager.cleanHeaders();
     MessageWriter.addTypeWriter( BackendlessUser.class, new BackendlessUserWriter() );
     MessageWriter.addTypeWriter( Double.class, new DoubleWriter() );
     ObjectFactories.addArgumentObjectFactory( BackendlessUser.class.getName(), new BackendlessUserFactory() );
     ContextHandler.setContext( context );
     prefs.onCreate( context );
-    prefs.initPreferences( applicationId, secretKey, version );
+    prefs.initPreferences( applicationId, secretKey );
 
     if( isAndroid )
     {
@@ -194,14 +190,6 @@ public final class Backendless
       throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
 
     return prefs.getSecretKey();
-  }
-
-  public static String getVersion()
-  {
-    if( prefs == null )
-      throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
-
-    return prefs.getVersion();
   }
 
   protected static Map<String, String> getHeaders()

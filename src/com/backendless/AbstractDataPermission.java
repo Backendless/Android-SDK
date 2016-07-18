@@ -130,15 +130,14 @@ public abstract class AbstractDataPermission
   private <T> Object[] buildArgs( T dataObject, String principal, PermissionTypes permissionType )
   {
     String appId = Backendless.getApplicationId();
-    String version = Backendless.getVersion();
     String tableName = BackendlessSerializer.getSimpleName( dataObject.getClass() );
     String objectId = Persistence.getEntityId( dataObject );
     PersistenceOperations operation = getOperation();
 
     if( principal != null )
-      return new Object[] { appId, version, tableName, principal, objectId, operation, permissionType };
+      return new Object[] { appId, tableName, principal, objectId, operation, permissionType };
     else
-      return new Object[] { appId, version, tableName, objectId, operation, permissionType };
+      return new Object[] { appId, tableName, objectId, operation, permissionType };
   }
 
   private <T> void serverCall( AsyncCallback<T> responder, String method, Object[] args, Class type )

@@ -211,7 +211,7 @@ public final class Messaging
     if( expiration != 0 )
       deviceRegistration.setExpiration( new Date( expiration ) );
 
-    return Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "registerDevice", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), deviceRegistration } );
+    return Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "registerDevice", new Object[] { Backendless.getApplicationId(), deviceRegistration } );
   }
 
   public void registerDeviceOnServer( String deviceToken, final List<String> channels, final long expiration,
@@ -231,7 +231,7 @@ public final class Messaging
       if( expiration != 0 )
         deviceRegistration.setExpiration( new Date( expiration ) );
 
-      Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "registerDevice", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), deviceRegistration }, new AsyncCallback<String>()
+      Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "registerDevice", new Object[] { Backendless.getApplicationId(), deviceRegistration }, new AsyncCallback<String>()
       {
         @Override
         public void handleResponse( String response )
@@ -304,12 +304,12 @@ public final class Messaging
 
   public boolean unregisterDeviceOnServer() throws BackendlessException
   {
-    return (Boolean) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), DEVICE_ID } );
+    return (Boolean) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { Backendless.getApplicationId(), DEVICE_ID } );
   }
 
   public void unregisterDeviceOnServer( final AsyncCallback<Boolean> responder )
   {
-    Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), DEVICE_ID }, responder );
+    Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { Backendless.getApplicationId(), DEVICE_ID }, responder );
   }
 
   public DeviceRegistration getDeviceRegistration() throws BackendlessException
@@ -319,7 +319,7 @@ public final class Messaging
 
   public DeviceRegistration getRegistrations() throws BackendlessException
   {
-    return (DeviceRegistration) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "getDeviceRegistrationByDeviceId", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), DEVICE_ID } );
+    return (DeviceRegistration) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "getDeviceRegistrationByDeviceId", new Object[] { Backendless.getApplicationId(), DEVICE_ID } );
   }
 
   public void getDeviceRegistration( AsyncCallback<DeviceRegistration> responder )
@@ -329,7 +329,7 @@ public final class Messaging
 
   public void getRegistrations( AsyncCallback<DeviceRegistration> responder )
   {
-    Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "getDeviceRegistrationByDeviceId", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), DEVICE_ID }, responder );
+    Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "getDeviceRegistrationByDeviceId", new Object[] { Backendless.getApplicationId(), DEVICE_ID }, responder );
   }
 
   /**
@@ -420,7 +420,7 @@ public final class Messaging
       deliveryOptions.setPushBroadcast( PushBroadcastMask.ALL );
     }
 
-    return (MessageStatus) Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "publish", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channelName, message, publishOptions, deliveryOptions } );
+    return (MessageStatus) Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "publish", new Object[] { Backendless.getApplicationId(), channelName, message, publishOptions, deliveryOptions } );
   }
 
   private String getCheckedChannelName( String channelName )
@@ -502,7 +502,7 @@ public final class Messaging
       if( message == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_MESSAGE );
 
-      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "publish", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channelName, message, publishOptions, deliveryOptions }, responder );
+      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "publish", new Object[] { Backendless.getApplicationId(), channelName, message, publishOptions, deliveryOptions }, responder );
     }
     catch( Throwable e )
     {
@@ -527,7 +527,7 @@ public final class Messaging
     if( messageId == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_MESSAGE_ID );
     MessageStatus messageStatus = Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "getMessageStatus", new Object[]
-            { Backendless.getApplicationId(), Backendless.getVersion(), messageId } );
+            { Backendless.getApplicationId(), messageId } );
 
     return messageStatus;
   }
@@ -539,7 +539,7 @@ public final class Messaging
       if( messageId == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_MESSAGE_ID );
 
-      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "getMessageStatus", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), messageId }, responder );
+      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "getMessageStatus", new Object[] { Backendless.getApplicationId(), messageId }, responder );
     }
     catch( Throwable e )
     {
@@ -553,7 +553,7 @@ public final class Messaging
     if( messageId == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_MESSAGE_ID );
 
-    MessageStatus cancel = Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "cancel", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), messageId } );
+    MessageStatus cancel = Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "cancel", new Object[] { Backendless.getApplicationId(), messageId } );
     return cancel.getStatus() == PublishStatusEnum.CANCELLED;
   }
 
@@ -564,7 +564,7 @@ public final class Messaging
       if( messageId == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_MESSAGE_ID );
 
-      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "cancel", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), messageId }, responder );
+      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "cancel", new Object[] { Backendless.getApplicationId(), messageId }, responder );
     }
     catch( Throwable e )
     {
@@ -610,7 +610,7 @@ public final class Messaging
     if( subscriptionOptions == null )
       subscriptionOptions = new SubscriptionOptions();
 
-    return Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionOptions } );
+    return Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[] { Backendless.getApplicationId(), channelName, subscriptionOptions } );
   }
 
   public Subscription subscribe( String channelName,
@@ -703,7 +703,7 @@ public final class Messaging
       if( subscriptionOptions == null )
         subscriptionOptions = new SubscriptionOptions();
 
-      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionOptions }, responder );
+      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[] { Backendless.getApplicationId(), channelName, subscriptionOptions }, responder );
     }
     catch( Throwable e )
     {
@@ -749,7 +749,7 @@ public final class Messaging
     if( subscriptionId == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_SUBSCRIPTION_ID );
 
-    Object[] result = (Object[]) Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "pollMessages", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionId } );
+    Object[] result = (Object[]) Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "pollMessages", new Object[] { Backendless.getApplicationId(), channelName, subscriptionId } );
 
     return result.length == 0 ? new ArrayList<Message>() : Arrays.asList( (Message[]) result );
   }
@@ -763,7 +763,7 @@ public final class Messaging
       if( subscriptionId == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_SUBSCRIPTION_ID );
 
-      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "pollMessages", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionId }, new AsyncCallback<Object[]>()
+      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "pollMessages", new Object[] { Backendless.getApplicationId(), channelName, subscriptionId }, new AsyncCallback<Object[]>()
       {
         @Override
         public void handleResponse( Object[] response )
@@ -831,7 +831,7 @@ public final class Messaging
     if( attachments == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ATTACHMENTS );
 
-    Invoker.invokeSync( EMAIL_MANAGER_SERVER_ALIAS, "send", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), subject, bodyParts, recipients, attachments } );
+    Invoker.invokeSync( EMAIL_MANAGER_SERVER_ALIAS, "send", new Object[] { Backendless.getApplicationId(), subject, bodyParts, recipients, attachments } );
   }
 
   public void sendTextEmail( String subject, String messageBody, List<String> recipients, final AsyncCallback<Void> responder )
@@ -883,7 +883,7 @@ public final class Messaging
       if( attachments == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ATTACHMENTS );
 
-      Invoker.invokeAsync( EMAIL_MANAGER_SERVER_ALIAS, "send", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), subject, bodyParts, recipients, attachments }, responder );
+      Invoker.invokeAsync( EMAIL_MANAGER_SERVER_ALIAS, "send", new Object[] { Backendless.getApplicationId(), subject, bodyParts, recipients, attachments }, responder );
     }
     catch( Throwable e )
     {

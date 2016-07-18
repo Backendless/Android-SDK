@@ -24,7 +24,7 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
 
   public void initPreferences( String applicationId, String secretKey, String version )
   {
-    super.initPreferences( applicationId, secretKey, version );
+    super.initPreferences( applicationId, secretKey );
     saveAuthKeysToPreferences( authKeys );
   }
 
@@ -54,11 +54,6 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
   public String getSecretKey()
   {
     return getAuthKeys().getSecretKey();
-  }
-
-  public String getVersion()
-  {
-    return getAuthKeys().getVersion();
   }
 
   public synchronized Map getHeaders()
@@ -106,7 +101,7 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
 
     if( applicationId != null && secretKey != null && version != null )
     {
-      authKeys = new AuthKeys( applicationId, secretKey, version );
+      authKeys = new AuthKeys( applicationId, secretKey );
       return true;
     }
 
@@ -133,7 +128,6 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
     SharedPreferences.Editor editor = sharedPreferences.edit();
     editor.putString( Type.APPLICATION_ID.name64(), authKeys.getApplicationId() );
     editor.putString( Type.SECRET_KEY.name64(), authKeys.getSecretKey() );
-    editor.putString( Type.VERSION.name64(), authKeys.getVersion() );
     editor.commit();
   }
 

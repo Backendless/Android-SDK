@@ -386,7 +386,7 @@ public final class Media
     HashMap<String, String> map = new HashMap<String, String>();
     map.putAll( HeadersManager.getInstance().getHeaders() );
     map.put( "identity", identity != null ? identity.toString() : map.get( "user-token" ) );
-    paramsToSend = "?application-id=" + map.get( "application-id" ) + "&version=" + Backendless.getVersion() + "&identity="
+    paramsToSend = "?application-id=" + map.get( "application-id" ) + "&identity="
         + map.get( "identity" ) + "&tube=" + tube + "&operationType=" + operationType + "&streamName=" + streamName;
     return paramsToSend;
   }

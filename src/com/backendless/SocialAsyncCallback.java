@@ -40,7 +40,7 @@ public class SocialAsyncCallback implements AsyncCallback<String>
     if( Build.VERSION.SDK_INT >= 11 )
       webView.setLayerType( View.LAYER_TYPE_SOFTWARE, null );
 
-    String jsMethodName = "Backendless_Android_" + Backendless.getApplicationId().replace( "-", "_" ) + "_" + Backendless.getVersion();
+    String jsMethodName = "Backendless_Android_" + Backendless.getApplicationId().replace( "-", "_" );
     webView.addJavascriptInterface( loginStrategy.getJSInterface( responder ), jsMethodName );
 
     webView.getSettings().setJavaScriptEnabled( true );

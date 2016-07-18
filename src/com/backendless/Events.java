@@ -24,12 +24,12 @@ public class Events
 
   public Map dispatch( String eventName, Map eventArgs )
   {
-    return (Map) Invoker.invokeSync( EVENTS_MANAGER_SERVER_ALIAS, "dispatchEvent", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), eventName, eventArgs }  );
+    return (Map) Invoker.invokeSync( EVENTS_MANAGER_SERVER_ALIAS, "dispatchEvent", new Object[] { Backendless.getApplicationId(), eventName, eventArgs }  );
   }
 
 
   public void dispatch( String eventName, Map eventArgs, AsyncCallback<Map> callback )
   {
-    Invoker.invokeAsync( EVENTS_MANAGER_SERVER_ALIAS, "dispatchEvent", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), eventName, eventArgs }, callback );
+    Invoker.invokeAsync( EVENTS_MANAGER_SERVER_ALIAS, "dispatchEvent", new Object[] { Backendless.getApplicationId(), eventName, eventArgs }, callback );
   }
 }

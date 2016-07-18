@@ -43,7 +43,7 @@ public class CustomService
 
   public <T> T invoke( String serviceName, String serviceVersion, String method, Object[] arguments )
   {
-    Object[] args =  new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments };
+    Object[] args =  new Object[] { Backendless.getApplicationId(), serviceName, serviceVersion, method, arguments };
     return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args );
   }
 
@@ -56,13 +56,13 @@ public class CustomService
     else
       adaptingPolicy = new PoJoAdaptingPolicy();
 
-    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments };
+    Object[] args = new Object[] { Backendless.getApplicationId(), serviceName, serviceVersion, method, arguments };
     return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, new AdaptingResponder( clazz, adaptingPolicy ) );
   }
 
   public <E> void invoke( String serviceName, String serviceVersion, String method, Object[] arguments, AsyncCallback<E> callback )
   {
-    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments };
+    Object[] args = new Object[] { Backendless.getApplicationId(), serviceName, serviceVersion, method, arguments };
     Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, callback );
   }
 
@@ -75,7 +75,7 @@ public class CustomService
     else
       adaptingPolicy = new PoJoAdaptingPolicy();
 
-    Object[] args = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), serviceName, serviceVersion, method, arguments };
+    Object[] args = new Object[] { Backendless.getApplicationId(), serviceName, serviceVersion, method, arguments };
     Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, callback, new AdaptingResponder( clazz, adaptingPolicy ) );
   }
 }

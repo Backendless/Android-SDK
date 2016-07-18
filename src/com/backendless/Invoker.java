@@ -30,10 +30,10 @@ import weborb.client.IChainedResponder;
 import weborb.client.IResponder;
 import weborb.client.WeborbClient;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings( "unchecked" )
 public class Invoker
 {
-  private static final String URL_ENDING = "/" + Backendless.getVersion() + "/binary";
+  private static final String URL_ENDING = '/' + Backendless.getApplicationId() + '/' + Backendless.getSecretKey() + "/binary";
   private static final String DESTINATION = "GenericDestination";
   private static final int DEFAULT_TIMEOUT = 100500;
   private static final Object webOrbClientLock = new Object();
@@ -64,8 +64,8 @@ public class Invoker
     invokeAsync( className, methodName, args, callback, null );
   }
 
-    public static <T> void invokeAsync( final String className, final String methodName, final Object[] args,
-                                         final AsyncCallback<T> callback, final IChainedResponder responder )
+  public static <T> void invokeAsync( final String className, final String methodName, final Object[] args,
+                                      final AsyncCallback<T> callback, final IChainedResponder responder )
   {
     ThreadPoolService.getPoolExecutor().execute( new Runnable()
     {
@@ -85,8 +85,8 @@ public class Invoker
     } );
   }
 
-    public static <T> T invokeSync( String className, String methodName, Object[] args,
-                                     IChainedResponder chainedResponder ) throws BackendlessException
+  public static <T> T invokeSync( String className, String methodName, Object[] args,
+                                  IChainedResponder chainedResponder ) throws BackendlessException
   {
     SyncResponder invokeResponder = new SyncResponder();
 
@@ -107,7 +107,7 @@ public class Invoker
     return (T) invokeResponder.getResult();
   }
 
-    public static <T> T invokeSync( String className, String methodName, Object[] args ) throws BackendlessException
+  public static <T> T invokeSync( String className, String methodName, Object[] args ) throws BackendlessException
   {
     return (T) invokeSync( className, methodName, args, null );
   }

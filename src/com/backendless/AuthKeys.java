@@ -22,13 +22,11 @@ final class AuthKeys
 {
   private final String applicationId;
   private final String secretKey;
-  private final String version;
 
-  AuthKeys( String applicationId, String secretKey, String version )
+  AuthKeys( String applicationId, String secretKey )
   {
     this.applicationId = applicationId;
     this.secretKey = secretKey;
-    this.version = version;
   }
 
   String getApplicationId()
@@ -39,10 +37,5 @@ final class AuthKeys
   String getSecretKey()
   {
     return secretKey;
-  }
-
-  String getVersion()
-  {
-    return version;
   }
 }
