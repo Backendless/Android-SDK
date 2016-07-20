@@ -261,7 +261,7 @@ public final class Files
     if( fileUrl == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
 
-    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectory", new Object[] { Backendless.getApplicationId(), fileUrl } );
+    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectory", new Object[] { fileUrl } );
   }
 
   public void removeDirectory( String directoryPath ) throws BackendlessException
@@ -269,7 +269,7 @@ public final class Files
     if( directoryPath == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
 
-    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectory", new Object[] { Backendless.getApplicationId(), directoryPath } );
+    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectory", new Object[] { directoryPath } );
   }
 
   public void remove( String fileUrl, AsyncCallback<Void> responder )
@@ -279,7 +279,7 @@ public final class Files
       if( fileUrl == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
 
-      Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectory", new Object[] { Backendless.getApplicationId(), fileUrl }, responder );
+      Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectory", new Object[] { fileUrl }, responder );
     }
     catch( Throwable e )
     {
@@ -295,7 +295,7 @@ public final class Files
       if( directoryPath == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
 
-      Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectory", new Object[] { Backendless.getApplicationId(), directoryPath }, responder );
+      Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectory", new Object[] { directoryPath }, responder );
     }
     catch( Throwable e )
     {
@@ -306,34 +306,34 @@ public final class Files
 
   public String saveFile( String path, String fileName, byte[] fileContent )
   {
-    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), path, fileName, fileContent } );
+    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { path, fileName, fileContent } );
   }
 
   public String saveFile( String path, String fileName, byte[] fileContent, boolean overwrite )
   {
-    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), path, fileName, fileContent, overwrite } );
+    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { path, fileName, fileContent, overwrite } );
   }
 
   public String saveFile( String filePathName, byte[] fileContent, boolean overwrite )
   {
-    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), filePathName, fileContent, overwrite } );
+    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { filePathName, fileContent, overwrite } );
   }
 
   //Async methods
   public void saveFile( String path, String fileName, byte[] fileContent, AsyncCallback<String> responder )
   {
-    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), path, fileName, fileContent }, responder );
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { path, fileName, fileContent }, responder );
   }
 
   public void saveFile( String path, String fileName, byte[] fileContent, boolean overwrite,
                         AsyncCallback<String> responder )
   {
-    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), path, fileName, fileContent, overwrite }, responder );
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { path, fileName, fileContent, overwrite }, responder );
   }
 
   public void saveFile( String filePathName, byte[] fileContent, boolean overwrite, AsyncCallback<String> responder )
   {
-    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { Backendless.getApplicationId(), filePathName, fileContent, overwrite }, responder );
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { filePathName, fileContent, overwrite }, responder );
   }
 
   public String renameFile( String oldPathName, String newName ) throws BackendlessException
@@ -343,7 +343,7 @@ public final class Files
     if( newName == null || newName.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
 
-    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "renameFile", new Object[] { Backendless.getApplicationId(), oldPathName, newName } );
+    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "renameFile", new Object[] { oldPathName, newName } );
   }
 
   public void renameFile( String oldPathName, String newName,
@@ -354,7 +354,7 @@ public final class Files
     if( newName == null || newName.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
 
-    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "renameFile", new Object[] { Backendless.getApplicationId(), oldPathName, newName }, responder );
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "renameFile", new Object[] { oldPathName, newName }, responder );
   }
 
   public String copyFile( String sourcePathName, String targetPath ) throws BackendlessException
@@ -364,7 +364,7 @@ public final class Files
     if( targetPath == null || targetPath.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
 
-    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "copyFile", new Object[] { Backendless.getApplicationId(), sourcePathName, targetPath } );
+    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "copyFile", new Object[] { sourcePathName, targetPath } );
   }
 
   public void copyFile( String sourcePathName, String targetPath,
@@ -375,7 +375,7 @@ public final class Files
     if( targetPath == null || targetPath.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
 
-    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "copyFile", new Object[] { Backendless.getApplicationId(), sourcePathName, targetPath }, responder );
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "copyFile", new Object[] { sourcePathName, targetPath }, responder );
   }
 
   public String moveFile( String sourcePathName, String targetPath ) throws BackendlessException
@@ -385,7 +385,7 @@ public final class Files
     if( targetPath == null || targetPath.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
 
-    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "moveFile", new Object[] { Backendless.getApplicationId(), sourcePathName, targetPath } );
+    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "moveFile", new Object[] { sourcePathName, targetPath } );
   }
 
   public void moveFile( String sourcePathName, String targetPath,
@@ -396,7 +396,7 @@ public final class Files
     if( targetPath == null || targetPath.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_NAME );
 
-    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "moveFile", new Object[] { Backendless.getApplicationId(), sourcePathName, targetPath }, responder );
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "moveFile", new Object[] { sourcePathName, targetPath }, responder );
   }
 
   public BackendlessCollection<FileInfo> listing( String path )
@@ -412,7 +412,7 @@ public final class Files
   public BackendlessCollection<FileInfo> listing( String path, String pattern, boolean recursive, int pagesize,
                                                   int offset )
   {
-    BackendlessCollection<FileInfo> collection = Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "listing", new Object[] { Backendless.getApplicationId(), path, pattern, recursive, pagesize, offset } );
+    BackendlessCollection<FileInfo> collection = Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "listing", new Object[] { path, pattern, recursive, pagesize, offset } );
     collection.setQuery( new BackendlessFilesQuery( path, pattern, recursive, pagesize, offset ) );
     return collection;
   }
@@ -431,7 +431,7 @@ public final class Files
   public void listing( final String path, final String pattern, final boolean recursive, final int pagesize,
                        final int offset, final AsyncCallback<BackendlessCollection<FileInfo>> responder )
   {
-    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "listing", new Object[] { Backendless.getApplicationId(), path, pattern, recursive, pagesize, offset }, new AsyncCallback<BackendlessCollection<FileInfo>>()
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "listing", new Object[] { path, pattern, recursive, pagesize, offset }, new AsyncCallback<BackendlessCollection<FileInfo>>()
     {
       @Override
       public void handleResponse( BackendlessCollection<FileInfo> response )
@@ -453,13 +453,13 @@ public final class Files
   public boolean exists( String path )
   {
     StringUtils.checkNotNullOrEmpty( path, ExceptionMessage.NULL_PATH );
-    return Invoker.<Boolean>invokeSync( FILE_MANAGER_SERVER_ALIAS, "exists", new Object[] { Backendless.getApplicationId(), path } );
+    return Invoker.<Boolean>invokeSync( FILE_MANAGER_SERVER_ALIAS, "exists", new Object[] { path } );
   }
 
   public void exists( String path, AsyncCallback<Boolean> responder )
   {
     StringUtils.checkNotNullOrEmpty( path, ExceptionMessage.NULL_PATH );
-    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "exists", new Object[] { Backendless.getApplicationId(), path }, responder );
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "exists", new Object[] { path }, responder );
   }
 
   private class EmptyUploadCallback implements UploadCallback

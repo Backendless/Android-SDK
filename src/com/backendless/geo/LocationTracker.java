@@ -51,7 +51,6 @@ public class LocationTracker extends Service implements LocationListener
 {
   private static final String APPLICATION_ID = "applicationId";
   private static final String SECRET_KEY = "secretKey";
-  private static final String VERSION = "version";
   private static final String URL = "url";
   private static final String LOCATION = "location";
   private static final String LOCATION_LISTENERS = "locationListeners";

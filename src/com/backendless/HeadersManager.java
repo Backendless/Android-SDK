@@ -43,13 +43,9 @@ public class HeadersManager
         if( instance == null )
         {
           if( Backendless.getApplicationId() == null || Backendless.getSecretKey() == null )
-          {
             throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
-          }
 
           instance = new HeadersManager();
-          instance.addHeader( HeadersEnum.APP_ID_NAME, Backendless.getApplicationId() );
-          instance.addHeader( HeadersEnum.SECRET_KEY_NAME, Backendless.getSecretKey() );
 
           if( Backendless.isCodeRunner() )
             instance.addHeader( HeadersEnum.APP_TYPE_NAME, DeviceType.BL.name() );

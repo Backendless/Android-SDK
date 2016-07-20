@@ -149,11 +149,11 @@ public class LogBuffer
   {
     if( Backendless.isCodeRunner() )
     {
-      Invoker.invokeSync( LOGGING_SERVER_ALIAS, "log", new Object[] { Backendless.getApplicationId(), loglevel.name(), logger, message, exception } );
+      Invoker.invokeSync( LOGGING_SERVER_ALIAS, "log", new Object[] { loglevel.name(), logger, message, exception } );
     }
     else
     {
-      Invoker.invokeAsync( LOGGING_SERVER_ALIAS, "log", new Object[] { Backendless.getApplicationId(), loglevel.name(), logger, message, exception }, new AsyncCallback<Void>()
+      Invoker.invokeAsync( LOGGING_SERVER_ALIAS, "log", new Object[] { loglevel.name(), logger, message, exception }, new AsyncCallback<Void>()
       {
         @Override
         public void handleResponse( Void response )
@@ -172,11 +172,11 @@ public class LogBuffer
   {
     if( Backendless.isCodeRunner() )
     {
-      Invoker.invokeSync( LOGGING_SERVER_ALIAS, "batchLog", new Object[] { Backendless.getApplicationId(), logBatches } );
+      Invoker.invokeSync( LOGGING_SERVER_ALIAS, "batchLog", new Object[] { logBatches } );
     }
     else
     {
-      Invoker.invokeAsync( LOGGING_SERVER_ALIAS, "batchLog", new Object[] { Backendless.getApplicationId(), logBatches }, new AsyncCallback<Void>()
+      Invoker.invokeAsync( LOGGING_SERVER_ALIAS, "batchLog", new Object[] { logBatches }, new AsyncCallback<Void>()
       {
         @Override
         public void handleResponse( Void response )

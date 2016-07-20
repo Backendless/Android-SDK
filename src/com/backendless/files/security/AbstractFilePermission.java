@@ -129,7 +129,6 @@ public abstract class AbstractFilePermission
 
   private Object[] buildArgs( String fileOrDirURL, String principal, boolean isRole, PermissionTypes permissionType )
   {
-    String appId = Backendless.getApplicationId();
     FileOperation operation = getOperation();
 
       Permission permission;
@@ -140,9 +139,9 @@ public abstract class AbstractFilePermission
           permission = new FileUserPermission( fileOrDirURL, permissionType, operation );
 
     if( principal != null )
-      return new Object[]{appId, principal, permission};
+      return new Object[]{principal, permission};
     else
-      return new Object[]{appId, permission};
+      return new Object[]{permission};
   }
 
   private void serverCall( AsyncCallback responder, String method, Object[] args )

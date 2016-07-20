@@ -45,34 +45,34 @@ public final class Commerce
 
   public GooglePlayPurchaseStatus validatePlayPurchase( String packageName, String productId, String token )
   {
-    return (GooglePlayPurchaseStatus) Invoker.invokeSync( COMMERCE_MANAGER_SERVER_ALIAS, "validatePlayPurchase", new Object[] { Backendless.getApplicationId(), packageName, productId, token } );
+    return (GooglePlayPurchaseStatus) Invoker.invokeSync( COMMERCE_MANAGER_SERVER_ALIAS, "validatePlayPurchase", new Object[] { packageName, productId, token } );
   }
 
   public void validatePlayPurchase( String packageName, String productId, String token,
                                     AsyncCallback<GooglePlayPurchaseStatus> callback )
   {
-    Invoker.invokeAsync( COMMERCE_MANAGER_SERVER_ALIAS, "validatePlayPurchase", new Object[] { Backendless.getApplicationId(), packageName, productId, token }, callback );
+    Invoker.invokeAsync( COMMERCE_MANAGER_SERVER_ALIAS, "validatePlayPurchase", new Object[] { packageName, productId, token }, callback );
   }
 
   public GooglePlaySubscriptionStatus getPlaySubscriptionsStatus( String packageName, String subscriptionId, String token )
   {
-    return (GooglePlaySubscriptionStatus) Invoker.invokeSync( COMMERCE_MANAGER_SERVER_ALIAS, "getPlaySubscriptionsStatus", new Object[] { Backendless.getApplicationId(), packageName, subscriptionId, token } );
+    return (GooglePlaySubscriptionStatus) Invoker.invokeSync( COMMERCE_MANAGER_SERVER_ALIAS, "getPlaySubscriptionsStatus", new Object[] { packageName, subscriptionId, token } );
   }
 
   public void getPlaySubscriptionsStatus( String packageName, String subscriptionId, String token,
                                     AsyncCallback<GooglePlaySubscriptionStatus> callback )
   {
-    Invoker.invokeAsync( COMMERCE_MANAGER_SERVER_ALIAS, "getPlaySubscriptionsStatus", new Object[] { Backendless.getApplicationId(), packageName, subscriptionId, token }, callback );
+    Invoker.invokeAsync( COMMERCE_MANAGER_SERVER_ALIAS, "getPlaySubscriptionsStatus", new Object[] { packageName, subscriptionId, token }, callback );
   }
 
   public void cancelPlaySubscription( String packageName, String subscriptionId, String token )
   {
-    Invoker.invokeSync( COMMERCE_MANAGER_SERVER_ALIAS, "cancelPlaySubscription", new Object[] { Backendless.getApplicationId(), packageName, subscriptionId, token } );
+    Invoker.invokeSync( COMMERCE_MANAGER_SERVER_ALIAS, "cancelPlaySubscription", new Object[] { packageName, subscriptionId, token } );
   }
 
   public void cancelPlaySubscription( String packageName, String subscriptionId, String token,
                                     AsyncCallback<Void> callback )
   {
-    Invoker.invokeAsync( COMMERCE_MANAGER_SERVER_ALIAS, "cancelPlaySubscription", new Object[] { Backendless.getApplicationId(), packageName, subscriptionId, token }, callback );
+    Invoker.invokeAsync( COMMERCE_MANAGER_SERVER_ALIAS, "cancelPlaySubscription", new Object[] { packageName, subscriptionId, token }, callback );
   }
 }
