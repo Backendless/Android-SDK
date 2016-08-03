@@ -122,7 +122,7 @@ public final class Backendless
     if( version == null || version.equals( "" ) )
       throw new IllegalArgumentException( ExceptionMessage.NULL_VERSION );
 
-    HeadersManager.cleanHeaders();
+    HeadersManager.getInstance().cleanHeaders();
     MessageWriter.addTypeWriter( BackendlessUser.class, new BackendlessUserWriter() );
     MessageWriter.addTypeWriter( Double.class, new DoubleWriter() );
     ObjectFactories.addArgumentObjectFactory( BackendlessUser.class.getName(), new BackendlessUserFactory() );
