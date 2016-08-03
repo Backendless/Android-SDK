@@ -27,7 +27,7 @@ public class AndroidHeadersManager implements IHeadersManager
     addHeaders( Backendless.getHeaders() );
   }
 
-  public static AndroidHeadersManager getInstance() throws BackendlessException
+  static AndroidHeadersManager getInstance() throws BackendlessException
   {
     if( instance == null )
       synchronized( HeadersManager.class )

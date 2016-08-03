@@ -22,7 +22,7 @@ public class BLHeadersManager implements IHeadersManager
     }
   };
 
-  public static BLHeadersManager getInstance()
+  static BLHeadersManager getInstance()
   {
     return BLHeadersManager.threadLocal.get();
   }
