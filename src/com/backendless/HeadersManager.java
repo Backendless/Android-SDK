@@ -27,49 +27,67 @@ import java.util.Map;
 
 public class HeadersManager
 {
-  private static final Object headersLock = new Object();
-  private static volatile HeadersManager instance;
+  private static volatile HeadersManager androidInstance;
+
+  private final Object headersLock = new Object();
   private Hashtable<String, String> headers = new Hashtable<String, String>();
 
-  private HeadersManager()
+  private static ThreadLocal<HeadersManager> threadLocal = new InheritableThreadLocal<HeadersManager>(){
+    @Override
+    protected HeadersManager initialValue()
+    {
+      return new HeadersManager( true );
+    }
+  };
+
+  public static HeadersManager getInstance()
   {
+    if( Backendless.isAndroid() )
+      return HeadersManager.getAndroidInstance();
+    return HeadersManager.threadLocal.get();
   }
 
-  public static HeadersManager getInstance() throws BackendlessException
+  private HeadersManager( boolean isCodeRunner)
   {
-    if( instance == null )
-      synchronized( headersLock )
+    if( Backendless.getApplicationId() == null || Backendless.getSecretKey() == null )
+    {
+      throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
+    }
+
+    addHeader( HeadersEnum.APP_ID_NAME, Backendless.getApplicationId() );
+    addHeader( HeadersEnum.SECRET_KEY_NAME, Backendless.getSecretKey() );
+
+    if( isCodeRunner )
+      addHeader( HeadersEnum.APP_TYPE_NAME, DeviceType.BL.name() );
+    else
+      addHeader( HeadersEnum.APP_TYPE_NAME, DeviceType.ANDROID.name() );
+
+    addHeader( HeadersEnum.API_VERSION, "1.0" );
+    addHeaders( Backendless.getHeaders() );
+  }
+
+  private static HeadersManager getAndroidInstance() throws BackendlessException
+  {
+    if( androidInstance == null )
+      synchronized( HeadersManager.class )
       {
-        if( instance == null )
+        if( androidInstance == null )
         {
-          if( Backendless.getApplicationId() == null || Backendless.getSecretKey() == null )
-          {
-            throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
-          }
-
-          instance = new HeadersManager();
-          instance.addHeader( HeadersEnum.APP_ID_NAME, Backendless.getApplicationId() );
-          instance.addHeader( HeadersEnum.SECRET_KEY_NAME, Backendless.getSecretKey() );
-
-          if( Backendless.isCodeRunner() )
-            instance.addHeader( HeadersEnum.APP_TYPE_NAME, DeviceType.BL.name() );
-          else
-            instance.addHeader( HeadersEnum.APP_TYPE_NAME, DeviceType.ANDROID.name() );
-
-          instance.addHeader( HeadersEnum.API_VERSION, "1.0" );
-          instance.addHeaders( Backendless.getHeaders() );
+          androidInstance = new HeadersManager( false );
         }
       }
-
-    return instance;
+    return androidInstance;
   }
 
-  static void cleanHeaders()
+  void cleanHeaders()
   {
-    synchronized( headersLock )
-    {
-      instance = null;
-    }
+    if( Backendless.isAndroid() )
+      synchronized( headersLock )
+      {
+        androidInstance = null;
+      }
+    else
+      threadLocal.remove();
   }
 
   public void addHeader( HeadersEnum headersEnum, String value )
