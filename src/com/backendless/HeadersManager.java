@@ -39,7 +39,7 @@ public class HeadersManager
     return instance;
   }
 
-  void cleanHeaders()
+  public void cleanHeaders()
   {
     headersManager.cleanHeaders();
   }
