@@ -414,7 +414,7 @@ public final class UserService
     {
       try
       {
-        Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "logout", new Object[] { Backendless.getApplicationId() } );
+        Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "logout", new Object[] { } );
       }
       catch( BackendlessException fault )
       {
@@ -439,7 +439,7 @@ public final class UserService
   {
     synchronized( currentUserLock )
     {
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "logout", new Object[] { Backendless.getApplicationId() }, new AsyncCallback<Void>()
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "logout", new Object[] { }, new AsyncCallback<Void>()
       {
         @Override
         public void handleResponse( Void response )
@@ -622,7 +622,7 @@ public final class UserService
 
   public List<String> getUserRoles() throws BackendlessException
   {
-    return Arrays.asList( (String[]) Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "getUserRoles", new Object[] { Backendless.getApplicationId() } ) );
+    return Arrays.asList( (String[]) Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "getUserRoles", new Object[] { } ) );
   }
 
   public void getUserRoles( final AsyncCallback<List<String>> responder )
@@ -645,7 +645,7 @@ public final class UserService
             responder.handleFault( fault );
         }
       };
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getUserRoles", new Object[] { Backendless.getApplicationId() }, callback );
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getUserRoles", new Object[] { }, callback );
     }
     catch( Throwable e )
     {
@@ -656,14 +656,14 @@ public final class UserService
 
   public List<UserProperty> describeUserClass() throws BackendlessException
   {
-    UserProperty[] response = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "describeUserClass", new Object[] { Backendless.getApplicationId() } );
+    UserProperty[] response = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "describeUserClass", new Object[] { } );
 
     return Arrays.asList( response );
   }
 
   public void describeUserClass( final AsyncCallback<List<UserProperty>> responder )
   {
-    Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "describeUserClass", new Object[] { Backendless.getApplicationId() }, new AsyncCallback<UserProperty[]>()
+    Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "describeUserClass", new Object[] { }, new AsyncCallback<UserProperty[]>()
     {
       @Override
       public void handleResponse( UserProperty[] response )
