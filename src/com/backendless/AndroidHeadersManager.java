@@ -30,7 +30,7 @@ public class AndroidHeadersManager implements IHeadersManager
   static AndroidHeadersManager getInstance() throws BackendlessException
   {
     if( instance == null )
-      synchronized( HeadersManager.class )
+      synchronized( AndroidHeadersManager.class )
       {
         if( instance == null )
         {
