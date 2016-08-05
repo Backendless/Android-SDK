@@ -503,7 +503,6 @@ public class MapDrivenDataStore implements IDataStore<Map>
   @Override
   public int count()
   {
-
     Object[] args = new Object[] { tableName };
     return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args );
   }

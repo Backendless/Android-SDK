@@ -805,25 +805,45 @@ public final class Persistence
   // count all object in the table sync
   <E> int count( final Class<E> entity )
   {
-
+    Object[] args = new Object[] {  BackendlessSerializer.getSimpleName( entity ) };
+    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args );
   }
 
   // count all object in the table sync for query
   <E> int count( final Class<E> entity, String whereClause )
   {
-
+    Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), whereClause };
+    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args );
   }
 
   // count all object in the table async
   <E> void count( final Class<E> entity, AsyncCallback<Integer> responder )
   {
-
+    try
+    {
+      Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ) };
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args, responder );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
   }
 
   // count all object in the table async for query
   <E> void count( final Class<E> entity, String whereClause, AsyncCallback<Integer> responder )
   {
-
+    try
+    {
+      Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), whereClause };
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args, responder );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
   }
 
   private <T> void checkDeclaredType( Class<T> entityClass )
