@@ -11,21 +11,6 @@ import java.util.Map;
 public class AndroidHeadersManager implements IHeadersManager
 {
   private static volatile AndroidHeadersManager instance;
-  private final Object headersLock = new Object();
-  private Hashtable<String, String> headers = new Hashtable<String, String>();
-
-  private AndroidHeadersManager()
-  {
-    if( Backendless.getApplicationId() == null || Backendless.getSecretKey() == null )
-    {
-      throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
-    }
-    addHeader( HeadersManager.HeadersEnum.APP_ID_NAME, Backendless.getApplicationId() );
-    addHeader( HeadersManager.HeadersEnum.SECRET_KEY_NAME, Backendless.getSecretKey() );
-    addHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME, DeviceType.ANDROID.name() );
-    addHeader( HeadersManager.HeadersEnum.API_VERSION, "1.0" );
-    addHeaders( Backendless.getHeaders() );
-  }
 
   static AndroidHeadersManager getInstance() throws BackendlessException
   {
@@ -38,6 +23,23 @@ public class AndroidHeadersManager implements IHeadersManager
         }
       }
     return instance;
+  }
+
+
+  protected final Object headersLock = new Object();
+  protected final Hashtable<String, String> headers = new Hashtable<>();
+
+  AndroidHeadersManager()
+  {
+    if( Backendless.getApplicationId() == null || Backendless.getSecretKey() == null )
+    {
+      throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
+    }
+    addHeader( HeadersManager.HeadersEnum.APP_ID_NAME, Backendless.getApplicationId() );
+    addHeader( HeadersManager.HeadersEnum.SECRET_KEY_NAME, Backendless.getSecretKey() );
+    addHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME, DeviceType.ANDROID.name() );
+    addHeader( HeadersManager.HeadersEnum.API_VERSION, "1.0" );
+    addHeaders( Backendless.getHeaders() );
   }
 
   public void cleanHeaders()
