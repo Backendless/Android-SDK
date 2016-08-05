@@ -802,6 +802,30 @@ public final class Persistence
     return id;
   }
 
+  // count all object in the table sync
+  <E> int count( final Class<E> entity )
+  {
+
+  }
+
+  // count all object in the table sync for query
+  <E> int count( final Class<E> entity, String whereClause )
+  {
+
+  }
+
+  // count all object in the table async
+  <E> void count( final Class<E> entity, AsyncCallback<Integer> responder )
+  {
+
+  }
+
+  // count all object in the table async for query
+  <E> void count( final Class<E> entity, String whereClause, AsyncCallback<Integer> responder )
+  {
+
+  }
+
   private <T> void checkDeclaredType( Class<T> entityClass )
   {
     if( entityClass.isArray() || entityClass.isAssignableFrom( Iterable.class ) || entityClass.isAssignableFrom( Map.class ) )

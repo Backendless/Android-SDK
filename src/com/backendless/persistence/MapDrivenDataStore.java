@@ -500,6 +500,51 @@ public class MapDrivenDataStore implements IDataStore<Map>
     }
   }
 
+  @Override
+  public int count()
+  {
+
+    Object[] args = new Object[] { tableName };
+    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args );
+  }
+
+  @Override
+  public int count( String whereClause )
+  {
+    Object[] args = new Object[] { tableName, whereClause };
+    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args );
+  }
+
+  @Override
+  public void count( AsyncCallback<Integer> responder )
+  {
+    try
+    {
+      Object[] args = new Object[] { tableName };
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args, responder );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
+  @Override
+  public void count( String whereClause, AsyncCallback<Integer> responder )
+  {
+    try
+    {
+      Object[] args = new Object[] { tableName, whereClause };
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args, responder );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
   private class MapDrivenResponder implements IRawResponder
   {
     private IResponder nextResponder;

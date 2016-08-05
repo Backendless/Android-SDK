@@ -81,6 +81,18 @@ class DataStoreFactory
         return Backendless.Persistence.first( entityClass, relations, relationsDepth );
       }
 
+      @Override
+      public int count()
+      {
+        return Backendless.Persistence.count( entityClass );
+      }
+
+      @Override
+      public int count( String whereClause )
+      {
+        return Backendless.Persistence.count( entityClass, whereClause );
+      }
+
       public void findFirst( final AsyncCallback<E> responder )
       {
         Backendless.Persistence.first( entityClass, responder );
@@ -279,6 +291,18 @@ class DataStoreFactory
       public void loadRelations( E entity, List<String> relations, AsyncCallback<E> responder )
       {
         Backendless.Persistence.loadRelations( entity, relations, responder );
+      }
+
+      @Override
+      public void count( AsyncCallback<Integer> responder )
+      {
+        Backendless.Persistence.count( entityClass, responder );
+      }
+
+      @Override
+      public void count( String whereClause, AsyncCallback<Integer> responder )
+      {
+        Backendless.Persistence.count( entityClass, whereClause, responder );
       }
     };
   }
