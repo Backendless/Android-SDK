@@ -112,7 +112,6 @@ public class BackendlessCollection<E> extends AbstractBackendlessCollection<E>
     result.setQuery( query );
     result.setType( type );
     result.setTableName( tableName );
-    result.setTotalObjects( totalObjects );
 
     return result;
   }
