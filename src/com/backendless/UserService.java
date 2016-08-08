@@ -24,7 +24,6 @@ import com.backendless.core.responder.policy.BackendlessUserAdaptingPolicy;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
-import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.persistence.local.UserIdStorageFactory;
 import com.backendless.persistence.local.UserTokenStorageFactory;
