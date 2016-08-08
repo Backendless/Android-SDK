@@ -82,15 +82,15 @@ class DataStoreFactory
       }
 
       @Override
-      public int count()
+      public int getObjectCount()
       {
-        return Backendless.Persistence.count( entityClass );
+        return Backendless.Persistence.getObjectCount( entityClass );
       }
 
       @Override
-      public int count( String whereClause )
+      public int getObjectCount( BackendlessDataQuery query )
       {
-        return Backendless.Persistence.count( entityClass, whereClause );
+        return Backendless.Persistence.getObjectCount( entityClass, query );
       }
 
       public void findFirst( final AsyncCallback<E> responder )
@@ -294,15 +294,15 @@ class DataStoreFactory
       }
 
       @Override
-      public void count( AsyncCallback<Integer> responder )
+      public void getObjectCount( AsyncCallback<Integer> responder )
       {
-        Backendless.Persistence.count( entityClass, responder );
+        Backendless.Persistence.getObjectCount( entityClass, responder );
       }
 
       @Override
-      public void count( String whereClause, AsyncCallback<Integer> responder )
+      public void getObjectCount( BackendlessDataQuery query, AsyncCallback<Integer> responder )
       {
-        Backendless.Persistence.count( entityClass, whereClause, responder );
+        Backendless.Persistence.getObjectCount( entityClass, query, responder );
       }
     };
   }

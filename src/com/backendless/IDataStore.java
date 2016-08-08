@@ -82,11 +82,9 @@ public interface IDataStore<E>
 
   E findById( E entity, List<String> relations, int relationsDepth ) throws BackendlessException;
 
-  // count all object in the table sync
-  int count();
+  int getObjectCount();
 
-  // count all object in the table sync for query
-  int count( String whereClause );
+  int getObjectCount( BackendlessDataQuery query );
 
   void findById( String id, AsyncCallback<E> responder );
 
@@ -108,9 +106,7 @@ public interface IDataStore<E>
 
   void loadRelations( E entity, List<String> relations, AsyncCallback<E> responder );
 
-  // count all object in the table async
-  void count( AsyncCallback<Integer> responder );
+  void getObjectCount( AsyncCallback<Integer> responder );
 
-  // count all object in the table async for query
-  void count( String whereClause, AsyncCallback<Integer> responder );
+  void getObjectCount( BackendlessDataQuery query, AsyncCallback<Integer> responder );
 }
