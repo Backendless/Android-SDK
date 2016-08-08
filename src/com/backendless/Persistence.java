@@ -802,19 +802,19 @@ public final class Persistence
     return id;
   }
 
-  <E> int count( final Class<E> entity )
+  <E> int getObjectCount( final Class<E> entity )
   {
     Object[] args = new Object[] {  BackendlessSerializer.getSimpleName( entity ) };
     return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args );
   }
 
-  <E> int count( final Class<E> entity, BackendlessDataQuery query )
+  <E> int getObjectCount( final Class<E> entity, BackendlessDataQuery query )
   {
     Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), query };
     return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args );
   }
 
-  <E> void count( final Class<E> entity, AsyncCallback<Integer> responder )
+  <E> void getObjectCount( final Class<E> entity, AsyncCallback<Integer> responder )
   {
     try
     {
@@ -828,7 +828,7 @@ public final class Persistence
     }
   }
 
-  <E> void count( final Class<E> entity, BackendlessDataQuery query, AsyncCallback<Integer> responder )
+  <E> void getObjectCount( final Class<E> entity, BackendlessDataQuery query, AsyncCallback<Integer> responder )
   {
     try
     {
