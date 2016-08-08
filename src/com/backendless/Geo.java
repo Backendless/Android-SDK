@@ -676,7 +676,7 @@ public final class Geo
 
   private void startGeofenceMonitoring( final ICallback callback, final AsyncCallback<Void> responder )
   {
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] {  }, new AsyncCallback<Object[]>()
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] {}, new AsyncCallback<Object[]>()
     {
       @Override
       public void handleResponse( Object[] geoFences )
@@ -888,19 +888,19 @@ public final class Geo
     }
   }
 
-  public int getObjectCount( BackendlessGeoQuery query )
+  public int getGeopointCount( BackendlessGeoQuery query )
   {
     Object[] args = new Object[] { query };
     return Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "count", args );
   }
 
-  public int getObjectCount( String geoFenceName, BackendlessGeoQuery query )
+  public int getGeopointCount( String geoFenceName, BackendlessGeoQuery query )
   {
     Object[] args = new Object[] { geoFenceName, query };
     return Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "count", args );
   }
 
-  public void getObjectCount( BackendlessGeoQuery query, AsyncCallback<Integer> responder )
+  public void getGeopointCount( BackendlessGeoQuery query, AsyncCallback<Integer> responder )
   {
     try
     {
@@ -914,7 +914,7 @@ public final class Geo
     }
   }
 
-  public void getObjectCount( String geoFenceName, BackendlessGeoQuery query, AsyncCallback<Integer> responder )
+  public void getGeopointCount( String geoFenceName, BackendlessGeoQuery query, AsyncCallback<Integer> responder )
   {
     try
     {
