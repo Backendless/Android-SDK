@@ -888,19 +888,19 @@ public final class Geo
     }
   }
 
-  public int count( BackendlessGeoQuery query )
+  public int getObjectCount( BackendlessGeoQuery query )
   {
     Object[] args = new Object[] { query };
     return Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "count", args );
   }
 
-  public int count( String geoFenceName, BackendlessGeoQuery query )
+  public int getObjectCount( String geoFenceName, BackendlessGeoQuery query )
   {
     Object[] args = new Object[] { geoFenceName, query };
     return Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "count", args );
   }
 
-  public void count( BackendlessGeoQuery query, AsyncCallback<Integer> responder )
+  public void getObjectCount( BackendlessGeoQuery query, AsyncCallback<Integer> responder )
   {
     try
     {
@@ -914,7 +914,7 @@ public final class Geo
     }
   }
 
-  public void count( String geoFenceName, BackendlessGeoQuery query, AsyncCallback<Integer> responder )
+  public void getObjectCount( String geoFenceName, BackendlessGeoQuery query, AsyncCallback<Integer> responder )
   {
     try
     {
