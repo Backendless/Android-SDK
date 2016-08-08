@@ -840,24 +840,4 @@ public final class UserService
   {
     return errorCode.equals( "3064" ) || errorCode.equals( "3091" ) || errorCode.equals( "3090" ) || errorCode.equals( "3023" );
   }
-
-  public int getObjectCount( BackendlessDataQuery query )
-  {
-    Object[] args = new Object[] { query };
-    return Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "count", args );
-  }
-
-  public void getObjectCount( BackendlessDataQuery query, AsyncCallback<Integer> responder )
-  {
-    try
-    {
-      Object[] args = new Object[] { query };
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "count", args, responder );
-    }
-    catch( Throwable e )
-    {
-      if( responder != null )
-        responder.handleFault( new BackendlessFault( e ) );
-    }
-  }
 }
