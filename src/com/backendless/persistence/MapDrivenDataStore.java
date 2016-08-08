@@ -508,9 +508,9 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public int count( String whereClause )
+  public int count( BackendlessDataQuery query )
   {
-    Object[] args = new Object[] { tableName, whereClause };
+    Object[] args = new Object[] { tableName, query };
     return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args );
   }
 
@@ -530,11 +530,11 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public void count( String whereClause, AsyncCallback<Integer> responder )
+  public void count( BackendlessDataQuery query, AsyncCallback<Integer> responder )
   {
     try
     {
-      Object[] args = new Object[] { tableName, whereClause };
+      Object[] args = new Object[] { tableName, query };
       Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args, responder );
     }
     catch( Throwable e )

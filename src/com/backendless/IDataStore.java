@@ -86,7 +86,7 @@ public interface IDataStore<E>
   int count();
 
   // count all object in the table sync for query
-  int count( String whereClause );
+  int count( BackendlessDataQuery query );
 
   void findById( String id, AsyncCallback<E> responder );
 
@@ -112,5 +112,5 @@ public interface IDataStore<E>
   void count( AsyncCallback<Integer> responder );
 
   // count all object in the table async for query
-  void count( String whereClause, AsyncCallback<Integer> responder );
+  void count( BackendlessDataQuery query, AsyncCallback<Integer> responder );
 }

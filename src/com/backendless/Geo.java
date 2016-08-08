@@ -887,4 +887,44 @@ public final class Geo
       }
     }
   }
+
+  public int count( BackendlessGeoQuery query )
+  {
+    Object[] args = new Object[] { query };
+    return Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "count", args );
+  }
+
+  public int count( String geoFenceName, BackendlessGeoQuery query )
+  {
+    Object[] args = new Object[] { geoFenceName, query };
+    return Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "count", args );
+  }
+
+  public void count( BackendlessGeoQuery query, AsyncCallback<Integer> responder )
+  {
+    try
+    {
+      Object[] args = new Object[] { query };
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "count", args, responder );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
+  public void count( String geoFenceName, BackendlessGeoQuery query, AsyncCallback<Integer> responder )
+  {
+    try
+    {
+      Object[] args = new Object[] { geoFenceName, query };
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "count", args, responder );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
 }

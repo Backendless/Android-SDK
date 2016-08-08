@@ -24,6 +24,7 @@ import com.backendless.core.responder.policy.BackendlessUserAdaptingPolicy;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.persistence.local.UserIdStorageFactory;
 import com.backendless.persistence.local.UserTokenStorageFactory;
@@ -838,5 +839,25 @@ public final class UserService
   private boolean isLogoutFaultAllowed( String errorCode )
   {
     return errorCode.equals( "3064" ) || errorCode.equals( "3091" ) || errorCode.equals( "3090" ) || errorCode.equals( "3023" );
+  }
+
+  public int count( BackendlessDataQuery query )
+  {
+    Object[] args = new Object[] { query };
+    return Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "count", args );
+  }
+
+  public void count( BackendlessDataQuery query, AsyncCallback<Integer> responder )
+  {
+    try
+    {
+      Object[] args = new Object[] { query };
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "count", args, responder );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
   }
 }

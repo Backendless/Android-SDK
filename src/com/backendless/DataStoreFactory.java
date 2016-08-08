@@ -88,9 +88,9 @@ class DataStoreFactory
       }
 
       @Override
-      public int count( String whereClause )
+      public int count( BackendlessDataQuery query )
       {
-        return Backendless.Persistence.count( entityClass, whereClause );
+        return Backendless.Persistence.count( entityClass, query );
       }
 
       public void findFirst( final AsyncCallback<E> responder )
@@ -300,9 +300,9 @@ class DataStoreFactory
       }
 
       @Override
-      public void count( String whereClause, AsyncCallback<Integer> responder )
+      public void count( BackendlessDataQuery query, AsyncCallback<Integer> responder )
       {
-        Backendless.Persistence.count( entityClass, whereClause, responder );
+        Backendless.Persistence.count( entityClass, query, responder );
       }
     };
   }
