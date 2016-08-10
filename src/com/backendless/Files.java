@@ -450,6 +450,55 @@ public final class Files
     } );
   }
 
+  public int getFileCount( String path, String pattern, boolean recursive, boolean countDirectories )
+  {
+    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "count", new Object[] { path, pattern, recursive, countDirectories } );
+  }
+
+  public int getFileCount( String path, String pattern, boolean recursive )
+  {
+    return getFileCount( path, pattern, recursive, false );
+  }
+
+  public int getFileCount( String path, String pattern )
+  {
+    return getFileCount( path, pattern, false );
+  }
+
+  public int getFileCount( String path )
+  {
+    return getFileCount( path, "*" );
+  }
+
+  public void getFileCount( String path, String pattern, boolean recursive, boolean countDirectories,
+                            AsyncCallback<Integer> responder )
+  {
+    try
+    {
+      Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "count", new Object[] { path, pattern, recursive, countDirectories }, responder );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
+  public void getFileCount( String path, String pattern, boolean recursive, AsyncCallback<Integer> responder )
+  {
+    getFileCount( path, pattern, recursive, false, responder );
+  }
+
+  public void getFileCount( String path, String pattern, AsyncCallback<Integer> responder )
+  {
+    getFileCount( path, pattern, false, responder );
+  }
+
+  public void getFileCount( String path, AsyncCallback<Integer> responder )
+  {
+    getFileCount( path, "*", responder );
+  }
+
   public boolean exists( String path )
   {
     StringUtils.checkNotNullOrEmpty( path, ExceptionMessage.NULL_PATH );
