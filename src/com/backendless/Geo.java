@@ -36,7 +36,7 @@ import java.util.Map;
 
 public final class Geo
 {
-  public final static String GEO_MANAGER_SERVER_ALIAS = "com.backendless.services.geo.GeoService";
+  public final static String GEO_MANAGER_SERVER_ALIAS = "com.backendless.geo.IGeoService";
   private final static String DEFAULT_CATEGORY_NAME = "Default";
 
   private static final Geo instance = new Geo();
