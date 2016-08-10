@@ -450,9 +450,9 @@ public final class Files
     } );
   }
 
-  public int getFileCount( String path, String pattern, boolean recursive, boolean isCountDirectories )
+  public int getFileCount( String path, String pattern, boolean recursive, boolean countDirectories )
   {
-    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "count", new Object[] { path, pattern, recursive, isCountDirectories } );
+    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "count", new Object[] { path, pattern, recursive, countDirectories } );
   }
 
   public int getFileCount( String path, String pattern, boolean recursive )
@@ -470,12 +470,12 @@ public final class Files
     return getFileCount( path, "*" );
   }
 
-  public void getFileCount( String path, String pattern, boolean recursive, boolean isCountDirectories,
+  public void getFileCount( String path, String pattern, boolean recursive, boolean countDirectories,
                             AsyncCallback<Integer> responder )
   {
     try
     {
-      Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "count", new Object[] { path, pattern, recursive, isCountDirectories }, responder );
+      Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "count", new Object[] { path, pattern, recursive, countDirectories }, responder );
     }
     catch( Throwable e )
     {
