@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class HeadersManager
 {
-  private static IHeadersManager headersManager = (BLHeadersManager.isCodeRunner()) ? BLHeadersManager.getInstance() : AndroidHeadersManager.getInstance();
+  private static IHeadersManager headersManager = (Backendless.isCodeRunner()) ? BLHeadersManager.getInstance() : AndroidHeadersManager.getInstance();
 
   private static volatile HeadersManager instance = new HeadersManager();
 

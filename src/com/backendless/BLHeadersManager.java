@@ -7,7 +7,6 @@ import java.util.Map;
 
 class BLHeadersManager implements IHeadersManager
 {
-  private static boolean isCodeRunner = false;
   private static BLHeadersManager instance = new BLHeadersManager();
 
   static BLHeadersManager getInstance()
@@ -27,11 +26,6 @@ class BLHeadersManager implements IHeadersManager
   BLHeadersManager()
   {
 
-  }
-
-  public static boolean isCodeRunner()
-  {
-    return isCodeRunner;
   }
 
   public void cleanHeaders()
