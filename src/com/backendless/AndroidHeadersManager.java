@@ -8,7 +8,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 
-public class AndroidHeadersManager implements IHeadersManager
+class AndroidHeadersManager implements IHeadersManager
 {
   private static volatile AndroidHeadersManager instance;
 
