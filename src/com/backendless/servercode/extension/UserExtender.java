@@ -19,12 +19,14 @@
 package com.backendless.servercode.extension;
 
 import com.backendless.BackendlessCollection;
+import com.backendless.commons.util.SocialType;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.property.UserProperty;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -66,19 +68,35 @@ public abstract class UserExtender
   {
   }
 
-  public void beforeRegister( RunnerContext context, HashMap userValue ) throws Exception
+  public void beforeSocialLogin( RunnerContext context, Map<String, String> userValues, SocialType socialType) throws Exception
   {
   }
 
-  public void afterRegister( RunnerContext context, HashMap userValue, ExecutionResult<HashMap> result ) throws Exception
+  public void afterSocialLogin( RunnerContext context, Map<String, String> userValues, SocialType socialType, ExecutionResult<HashMap> result ) throws Exception
   {
   }
 
-  public void beforeUpdate( RunnerContext context, HashMap userValue ) throws Exception
+  public void beforeRegister( RunnerContext context, HashMap userValues ) throws Exception
   {
   }
 
-  public void afterUpdate( RunnerContext context, HashMap userValue, ExecutionResult<HashMap> result ) throws Exception
+  public void afterRegister( RunnerContext context, HashMap userValues, ExecutionResult<HashMap> result ) throws Exception
+  {
+  }
+
+  public void beforeSocialRegister( RunnerContext context, Map<String, String> userValues, SocialType socialType ) throws Exception
+  {
+  }
+
+  public void afterSocialRegister( RunnerContext context, Map<String, String> userValues, SocialType socialType, ExecutionResult<HashMap> result ) throws Exception
+  {
+  }
+
+  public void beforeUpdate( RunnerContext context, HashMap userValues ) throws Exception
+  {
+  }
+
+  public void afterUpdate( RunnerContext context, HashMap userValues, ExecutionResult<HashMap> result ) throws Exception
   {
   }
 
