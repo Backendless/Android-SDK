@@ -18,22 +18,19 @@
 
 package com.backendless;
 
-import com.backendless.commons.DeviceType;
 import com.backendless.exceptions.BackendlessException;
-import com.backendless.exceptions.ExceptionMessage;
 
 import java.util.Hashtable;
 import java.util.Map;
 
 public class HeadersManager
 {
-  private static final Object headersLock = new Object();
-  private static volatile HeadersManager instance;
-  private Hashtable<String, String> headers = new Hashtable<String, String>();
+  private static IHeadersManager headersManager = (Backendless.isAndroid()) ? AndroidHeadersManager.getInstance() : BLHeadersManager.getInstance();
+
+  private static volatile HeadersManager instance = new HeadersManager();
 
   private HeadersManager()
   {
-  }
 
   public static HeadersManager getInstance() throws BackendlessException
   {
@@ -62,72 +59,37 @@ public class HeadersManager
 
   static void cleanHeaders()
   {
-    synchronized( headersLock )
-    {
-      instance = null;
-    }
+    headersManager.cleanHeaders();
   }
 
   public void addHeader( HeadersEnum headersEnum, String value )
   {
-    synchronized( headersLock )
-    {
-      headers.put( headersEnum.getHeader(), value );
-    }
+    headersManager.addHeader( headersEnum, value );
   }
 
   public void addHeaders( Map<String, String> headers )
   {
-    if( headers == null || headers.isEmpty() )
-      return;
-
-    synchronized( headersLock )
-    {
-      this.headers.putAll( headers );
-    }
+    headersManager.addHeaders( headers );
   }
 
   public void removeHeader( HeadersEnum headersEnum )
   {
-    synchronized( headersLock )
-    {
-      headers.remove( headersEnum.getHeader() );
-    }
+    headersManager.removeHeader( headersEnum );
   }
 
   public Hashtable<String, String> getHeaders() throws BackendlessException
   {
-    synchronized( headersLock )
-    {
-      if( headers == null || headers.isEmpty() )
-        throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
-
-      return headers;
-    }
+    return headersManager.getHeaders();
   }
 
   public void setHeaders( Map<String, String> headers )
   {
-    synchronized( headersLock )
-    {
-      this.headers.putAll( headers );
-    }
+    headersManager.setHeaders( headers );
   }
 
   public String getHeader( HeadersEnum headersEnum ) throws BackendlessException
   {
-    synchronized( headersLock )
-    {
-      if( headers == null || headers.isEmpty() )
-        throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
-
-      String header = headers.get( headersEnum );
-
-      if( header == null )
-        header = headers.get( headersEnum.getHeader() );
-
-      return header;
-    }
+    return headersManager.getHeader( headersEnum );
   }
 
   public enum HeadersEnum

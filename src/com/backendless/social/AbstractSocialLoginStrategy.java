@@ -24,6 +24,8 @@ import android.webkit.WebView;
 import com.backendless.Backendless;
 import com.backendless.SocialAsyncCallback;
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.commons.util.SocialType;
+
 import org.json.JSONObject;
 
 import java.util.List;
@@ -34,13 +36,13 @@ public abstract class AbstractSocialLoginStrategy
   private android.app.ProgressDialog spinner;
   private Activity context;
   private WebView webView;
-  private AbstractSocialLoginStrategy.SocialType socialType;
+  private SocialType socialType;
   private Map<String, String> fieldsMappings;
   private java.util.List<String> permissions;
   private com.backendless.async.callback.AsyncCallback<org.json.JSONObject> responder;
 
   protected AbstractSocialLoginStrategy( Activity context, WebView webView,
-                                         AbstractSocialLoginStrategy.SocialType socialType,
+                                         SocialType socialType,
                                          Map<String, String> fieldsMappings, java.util.List<String> permissions,
                                          com.backendless.async.callback.AsyncCallback<org.json.JSONObject> responder )
   {
@@ -112,11 +114,6 @@ public abstract class AbstractSocialLoginStrategy
   public abstract BackendlessSocialJSInterface getJSInterface( AsyncCallback<JSONObject> responder );
 
   public abstract void createLayout();
-
-  public static enum SocialType
-  {
-    TWITTER, FACEBOOK, GOOGLE_PLUS
-  }
 
   public static class Builder
   {

@@ -126,6 +126,11 @@ public final class Backendless
     prefs.onCreate( context );
     prefs.initPreferences( applicationId, secretKey );
 
+    MessageWriter.addTypeWriter( BackendlessUser.class, new BackendlessUserWriter() );
+    MessageWriter.addTypeWriter( Double.class, new DoubleWriter() );
+    ObjectFactories.addArgumentObjectFactory( BackendlessUser.class.getName(), new BackendlessUserFactory() );
+    HeadersManager.cleanHeaders();
+
     if( isAndroid )
     {
       Context appContext = ( (Context) context ).getApplicationContext();

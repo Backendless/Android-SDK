@@ -6,6 +6,8 @@ import android.app.Dialog;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.commons.util.SocialType;
+
 import org.json.JSONObject;
 
 import java.util.List;

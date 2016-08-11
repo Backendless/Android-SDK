@@ -20,6 +20,7 @@ package com.backendless;
 
 import android.os.Bundle;
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.commons.util.SocialType;
 import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.core.responder.policy.BackendlessUserAdaptingPolicy;
 import com.backendless.exceptions.BackendlessFault;
@@ -114,13 +115,13 @@ class UserServiceAndroidExtra
                           Map<String, String> facebookFieldsMappings, List<String> permissions,
                           final AsyncCallback<BackendlessUser> responder )
   {
-    new AbstractSocialLoginStrategy.Builder( context, webView, AbstractSocialLoginStrategy.SocialType.FACEBOOK, facebookFieldsMappings, permissions, getSocialDialogResponder( responder ) ).build().run();
+    new AbstractSocialLoginStrategy.Builder( context, webView, SocialType.FACEBOOK, facebookFieldsMappings, permissions, getSocialDialogResponder( responder ) ).build().run();
   }
 
   void loginWithTwitter( android.app.Activity context, android.webkit.WebView webView,
                          Map<String, String> twitterFieldsMappings, AsyncCallback<BackendlessUser> responder )
   {
-    new AbstractSocialLoginStrategy.Builder( context, webView, AbstractSocialLoginStrategy.SocialType.TWITTER, twitterFieldsMappings, null, getSocialDialogResponder( responder ) ).build().run();
+    new AbstractSocialLoginStrategy.Builder( context, webView, SocialType.TWITTER, twitterFieldsMappings, null, getSocialDialogResponder( responder ) ).build().run();
   }
 
   void loginWithGooglePlusSdk(  String tokenId, String accessToken, final Map<String, String> fieldsMappings,
@@ -148,7 +149,7 @@ class UserServiceAndroidExtra
                           Map<String, String> googlePlusFieldsMappings, List<String> permissions,
                           final AsyncCallback<BackendlessUser> responder )
   {
-    new AbstractSocialLoginStrategy.Builder( context, webView, AbstractSocialLoginStrategy.SocialType.GOOGLE_PLUS, googlePlusFieldsMappings, permissions, getSocialDialogResponder( responder ) ).build().run();
+    new AbstractSocialLoginStrategy.Builder( context, webView, SocialType.GOOGLE_PLUS, googlePlusFieldsMappings, permissions, getSocialDialogResponder( responder ) ).build().run();
   }
 
   private AsyncCallback<JSONObject> getSocialDialogResponder( final AsyncCallback<BackendlessUser> responder )
