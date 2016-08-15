@@ -31,29 +31,10 @@ public class HeadersManager
 
   private HeadersManager()
   {
+  }
 
-  public static HeadersManager getInstance() throws BackendlessException
+  public static HeadersManager getInstance()
   {
-    if( instance == null )
-      synchronized( headersLock )
-      {
-        if( instance == null )
-        {
-          if( Backendless.getApplicationId() == null || Backendless.getSecretKey() == null )
-            throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
-
-          instance = new HeadersManager();
-
-          if( Backendless.isCodeRunner() )
-            instance.addHeader( HeadersEnum.APP_TYPE_NAME, DeviceType.BL.name() );
-          else
-            instance.addHeader( HeadersEnum.APP_TYPE_NAME, DeviceType.ANDROID.name() );
-
-          instance.addHeader( HeadersEnum.API_VERSION, "1.0" );
-          instance.addHeaders( Backendless.getHeaders() );
-        }
-      }
-
     return instance;
   }
 
