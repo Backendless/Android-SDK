@@ -60,4 +60,8 @@ class BackendlessPrefs
     return authKeys;
   }
 
+  boolean isAuthKeysExist()
+  {
+    return authKeys != null;
+  }
 }

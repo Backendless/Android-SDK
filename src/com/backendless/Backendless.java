@@ -211,6 +211,8 @@ public final class Backendless
   public static void setUrl( String url )
   {
     Backendless.url = url;
+    if( prefs != null && prefs.isAuthKeysExist() )
+      Invoker.reinitialize();
   }
 
   public static boolean isCodeRunner()
