@@ -35,7 +35,6 @@ public class Invoker
 {
   private static final String DESTINATION = "GenericDestination";
   private static final int DEFAULT_TIMEOUT = 100500;
-  private static final Object webOrbClientLock = new Object();
   private static WeborbClient weborbClient;
 
   static void reinitialize()
