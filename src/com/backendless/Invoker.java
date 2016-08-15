@@ -33,7 +33,7 @@ import weborb.client.WeborbClient;
 @SuppressWarnings( "unchecked" )
 public class Invoker
 {
-  private static String URL_ENDING = '/' + Backendless.getApplicationId() + '/' + Backendless.getSecretKey() + "/binary";
+  private static String URL_ENDING;
   private static final String DESTINATION = "GenericDestination";
   private static final int DEFAULT_TIMEOUT = 100500;
   private static final Object webOrbClientLock = new Object();
