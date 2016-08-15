@@ -126,6 +126,8 @@ public final class Backendless
     prefs.onCreate( context );
     prefs.initPreferences( applicationId, secretKey );
 
+    Invoker.recreateUrlEnding();
+
     if( isAndroid )
     {
       Context appContext = ( (Context) context ).getApplicationContext();
