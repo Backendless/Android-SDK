@@ -33,18 +33,12 @@ import weborb.client.WeborbClient;
 @SuppressWarnings( "unchecked" )
 public class Invoker
 {
-  private static String URL_ENDING = '/' + Backendless.getApplicationId() + '/' + Backendless.getSecretKey() + "/binary";
   private static final String DESTINATION = "GenericDestination";
   private static final int DEFAULT_TIMEOUT = 100500;
   private static final Object webOrbClientLock = new Object();
   private static WeborbClient weborbClient;
 
-  static void recreateUrlEnding()
-  {
-    URL_ENDING = '/' + Backendless.getApplicationId() + '/' + Backendless.getSecretKey() + "/binary";
-  }
-
-  public static WeborbClient getWebOrbClient()
+  static void reinitialize()
   {
     if( weborbClient == null )
     {
@@ -52,15 +46,19 @@ public class Invoker
       {
         if( weborbClient == null )
         {
-          weborbClient = new WeborbClient( Backendless.getUrl() + URL_ENDING, DEFAULT_TIMEOUT, DESTINATION );
+          String urlEnding = Backendless.getUrl() + '/' + Backendless.getApplicationId() + '/' + Backendless.getSecretKey() + "/binary";
+          weborbClient = new WeborbClient( urlEnding, DEFAULT_TIMEOUT, DESTINATION );
           weborbClient.setCookiesDateFormat( "EEE, dd-MMM-yy HH:mm:ss z" );
 
           if( Backendless.isAndroid() )
-            InvokerAndroidAdds.updateClient( weborbClient );
+            weborbClient.setHostnameVerifier( new org.apache.http.conn.ssl.StrictHostnameVerifier() );
         }
       }
     }
+  }
 
+  public static WeborbClient getWebOrbClient()
+  {
     return weborbClient;
   }
 
