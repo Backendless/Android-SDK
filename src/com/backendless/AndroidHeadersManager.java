@@ -35,6 +35,11 @@ class AndroidHeadersManager implements IHeadersManager
     {
       throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
     }
+    initialFill();
+  }
+
+  private void initialFill()
+  {
     addHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME, DeviceType.ANDROID.name() );
     addHeader( HeadersManager.HeadersEnum.API_VERSION, "1.0" );
     addHeaders( Backendless.getHeaders() );
@@ -44,7 +49,8 @@ class AndroidHeadersManager implements IHeadersManager
   {
     synchronized( headersLock )
     {
-      instance = null;
+      headers.clear();
+      initialFill();
     }
   }
 
