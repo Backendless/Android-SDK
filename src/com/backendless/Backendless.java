@@ -119,14 +119,15 @@ public final class Backendless
     if( secretKey == null || secretKey.equals( "" ) )
       throw new IllegalArgumentException( ExceptionMessage.NULL_SECRET_KEY );
 
-    HeadersManager.cleanHeaders();
+    prefs.onCreate( context );
+    prefs.initPreferences( applicationId, secretKey );
+
     MessageWriter.addTypeWriter( BackendlessUser.class, new BackendlessUserWriter() );
     MessageWriter.addTypeWriter( Double.class, new DoubleWriter() );
     ObjectFactories.addArgumentObjectFactory( BackendlessUser.class.getName(), new BackendlessUserFactory() );
     ContextHandler.setContext( context );
-    prefs.onCreate( context );
-    prefs.initPreferences( applicationId, secretKey );
 
+    HeadersManager.cleanHeaders();
     Invoker.reinitialize();
 
     if( isAndroid )
