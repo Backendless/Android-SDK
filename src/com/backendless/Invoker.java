@@ -40,21 +40,12 @@ public class Invoker
 
   static void reinitialize()
   {
-    if( weborbClient == null )
-    {
-      synchronized( webOrbClientLock )
-      {
-        if( weborbClient == null )
-        {
-          String urlEnding = Backendless.getUrl() + '/' + Backendless.getApplicationId() + '/' + Backendless.getSecretKey() + "/binary";
-          weborbClient = new WeborbClient( urlEnding, DEFAULT_TIMEOUT, DESTINATION );
-          weborbClient.setCookiesDateFormat( "EEE, dd-MMM-yy HH:mm:ss z" );
+    String urlEnding = Backendless.getUrl() + '/' + Backendless.getApplicationId() + '/' + Backendless.getSecretKey() + "/binary";
+    weborbClient = new WeborbClient( urlEnding, DEFAULT_TIMEOUT, DESTINATION );
+    weborbClient.setCookiesDateFormat( "EEE, dd-MMM-yy HH:mm:ss z" );
 
-          if( Backendless.isAndroid() )
-            weborbClient.setHostnameVerifier( new org.apache.http.conn.ssl.StrictHostnameVerifier() );
-        }
-      }
-    }
+    if( Backendless.isAndroid() )
+      weborbClient.setHostnameVerifier( new org.apache.http.conn.ssl.StrictHostnameVerifier() );
   }
 
   public static WeborbClient getWebOrbClient()
