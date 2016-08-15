@@ -58,6 +58,7 @@ public final class Backendless
   private static String url = "https://api.backendless.com";
   private static final BackendlessPrefs prefs;
   private static Boolean isAndroid;
+  private static boolean isCodeRunner = false;
 
   private Backendless()
   {
@@ -219,6 +220,6 @@ public final class Backendless
 
   public static boolean isCodeRunner()
   {
-    return Thread.currentThread().getThreadGroup().getName().equals( "CodeRunner secure group" );
+    return isCodeRunner;
   }
 }
