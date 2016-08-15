@@ -131,6 +131,8 @@ public final class Backendless
     ObjectFactories.addArgumentObjectFactory( BackendlessUser.class.getName(), new BackendlessUserFactory() );
     HeadersManager.cleanHeaders();
 
+    Invoker.recreateUrlEnding();
+
     if( isAndroid )
     {
       Context appContext = ( (Context) context ).getApplicationContext();
