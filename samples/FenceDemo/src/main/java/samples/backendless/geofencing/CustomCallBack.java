@@ -16,10 +16,26 @@
  *  ********************************************************************************************************************
  */
 
-/*___Generated_by_IDEA___*/
+package samples.backendless.geofencing;
 
-package com.backendless.fencedemo;
+import android.util.Log;
+import com.backendless.geo.geofence.IGeofenceCallback;
 
-/* This stub is only used by the IDE. It is NOT the R class actually packed into the APK */
-public final class R {
+public class CustomCallBack implements IGeofenceCallback
+{
+
+  @Override
+  public void geoPointEntered( String geofenceName, String geofenceId, double latitude, double longitude) {
+      Log.i( "GeoFence", "Point enters in fence: " + geofenceName);
+  }
+
+  @Override
+  public void geoPointStayed( String geofenceName, String geofenceId, double latitude, double longitude) {
+      Log.i( "GeoFence", "Point stay in fence: " + geofenceName);
+  }
+
+  @Override
+  public void geoPointExited( String geofenceName, String geofenceId, double latitude, double longitude) {
+      Log.i( "GeoFence", "Point exit from fence: " + geofenceName);
+  }
 }

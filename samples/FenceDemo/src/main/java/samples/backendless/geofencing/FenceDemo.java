@@ -16,7 +16,7 @@
  *  ********************************************************************************************************************
  */
 
-package com.backendless.fencedemo;
+package samples.backendless.geofencing;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -44,6 +44,7 @@ public class FenceDemo extends Activity
     super.onCreate( savedInstanceState );
     setContentView( R.layout.fence_demo_activity );
 
+//    Backendless.setUrl( "http://localhost:9000" );
     Backendless.initApp( getBaseContext(), Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION );
 
     initGeoPoint();
