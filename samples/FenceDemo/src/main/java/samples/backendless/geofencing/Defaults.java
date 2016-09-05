@@ -20,7 +20,7 @@ package samples.backendless.geofencing;
 
 public class Defaults
 {
-  public static final String APPLICATION_ID = "69C0C565-1F6E-2A00-FF3A-CAA79FD16500";
-  public static final String SECRET_KEY = "5784F971-3FD9-911C-FF21-434894BB5200";
+  public static final String APPLICATION_ID = "";
+  public static final String SECRET_KEY = "";
   public static final String VERSION = "v1";
 }
