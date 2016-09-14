@@ -22,6 +22,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.persistence.BackendlessDataQuery;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface IDataStore<E>
@@ -58,13 +59,13 @@ public interface IDataStore<E>
 
   void findLast( List<String> relations, AsyncCallback<E> responder );
 
-  BackendlessCollection<E> find() throws BackendlessException;
+  Collection<E> find() throws BackendlessException;
 
-  BackendlessCollection<E> find( BackendlessDataQuery dataQueryOptions ) throws BackendlessException;
+  Collection<E> find( BackendlessDataQuery dataQueryOptions ) throws BackendlessException;
 
-  void find( AsyncCallback<BackendlessCollection<E>> responder );
+  void find( AsyncCallback<Collection<E>> responder );
 
-  void find( BackendlessDataQuery dataQueryOptions, AsyncCallback<BackendlessCollection<E>> responder );
+  void find( BackendlessDataQuery dataQueryOptions, AsyncCallback<Collection<E>> responder );
 
   E findById( String id ) throws BackendlessException;
 

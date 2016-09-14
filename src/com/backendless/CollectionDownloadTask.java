@@ -23,11 +23,13 @@ import com.backendless.async.message.AsyncMessage;
 import com.backendless.core.ResponseCarrier;
 import com.backendless.exceptions.BackendlessFault;
 
+import java.util.Collection;
+
 abstract class CollectionDownloadTask<E>
 {
-  AsyncCallback<BackendlessCollection<E>> responder;
+  AsyncCallback<Collection<E>> responder;
 
-  public CollectionDownloadTask( AsyncCallback<BackendlessCollection<E>> responder )
+  public CollectionDownloadTask( AsyncCallback<Collection<E>> responder )
   {
     this.responder = responder;
   }
@@ -46,16 +48,16 @@ abstract class CollectionDownloadTask<E>
       {
         try
         {
-          BackendlessCollection<E> result = doInBackground( pageSize, offset );
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<BackendlessCollection<E>>( result, responder ) );
+          Collection<E> result = doInBackground( pageSize, offset );
+          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<Collection<E>>( result, responder ) );
         }
         catch( Exception e )
         {
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<BackendlessCollection<E>>( new BackendlessFault( e ), responder ) );
+          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<Collection<E>>( new BackendlessFault( e ), responder ) );
         }
       }
     } );
   }
 
-  abstract BackendlessCollection<E> doInBackground( int pageSize, int offset ) throws Exception;
+  abstract Collection<E> doInBackground( int pageSize, int offset ) throws Exception;
 }

@@ -41,9 +41,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class Persistence
 {
@@ -71,7 +69,7 @@ public final class Persistence
   private Persistence()
   {
     Types.addClientClassMapping( "com.backendless.services.persistence.BackendlessDataQuery", BackendlessDataQuery.class );
-    Types.addClientClassMapping( "com.backendless.services.persistence.BackendlessCollection", BackendlessCollection.class );
+    Types.addClientClassMapping( "com.backendless.services.persistence.BackendlessCollection", ArrayList.class );
     Types.addClientClassMapping( "com.backendless.services.persistence.ObjectProperty", ObjectProperty.class );
     Types.addClientClassMapping( "com.backendless.services.persistence.QueryOptions", QueryOptions.class );
   }
@@ -536,7 +534,7 @@ public final class Persistence
     }
   }
 
-  public <E> BackendlessCollection<E> find( Class<E> entity,
+  public <E> Collection<E> find( Class<E> entity,
                                                BackendlessDataQuery dataQuery ) throws BackendlessException
   {
     if( entity == null )
@@ -545,15 +543,13 @@ public final class Persistence
     checkPageSizeAndOffset( dataQuery );
 
     Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), dataQuery };
-    BackendlessCollection<E> result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, ResponderHelper.getCollectionAdaptingResponder( entity ) );
-    result.setQuery( dataQuery );
-    result.setType( entity );
+    Collection<E> result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, ResponderHelper.getCollectionAdaptingResponder( entity ) );
 
     return result;
   }
 
   public <E> void find( final Class<E> entity, final BackendlessDataQuery dataQuery,
-                           final AsyncCallback<BackendlessCollection<E>> responder )
+                           final AsyncCallback<Collection<E>> responder )
   {
     try
     {
@@ -562,17 +558,13 @@ public final class Persistence
 
       checkPageSizeAndOffset( dataQuery );
 
-      AsyncCallback<BackendlessCollection<E>> callback = new AsyncCallback<BackendlessCollection<E>>()
+      AsyncCallback<Collection<E>> callback = new AsyncCallback<Collection<E>>()
       {
         @Override
-        public void handleResponse( BackendlessCollection<E> response )
+        public void handleResponse( Collection<E> response )
         {
           if( responder != null )
-          {
-            response.setQuery( dataQuery );
-            response.setType( entity );
             responder.handleResponse( response );
-          }
         }
 
         @Override
@@ -853,7 +845,7 @@ public final class Persistence
   }
   */
 
-  public BackendlessCollection<Map<String, Object>> getView( String viewName, BackendlessDataQuery dataQuery )
+  public Collection<Map<String, Object>> getView( String viewName, BackendlessDataQuery dataQuery )
   {
     checkPageSizeAndOffset( dataQuery );
 
@@ -870,7 +862,7 @@ public final class Persistence
   }
 
 
-  public BackendlessCollection<Map> callStoredProcedure( String spName, Map<String, Object> arguments )
+  public Collection<Map> callStoredProcedure( String spName, Map<String, Object> arguments )
   {
     Object[] args = new Object[] { spName, arguments };
 

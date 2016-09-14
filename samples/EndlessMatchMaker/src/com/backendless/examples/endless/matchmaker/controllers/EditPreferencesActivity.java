@@ -77,10 +77,10 @@ public class EditPreferencesActivity extends Activity
     queryOptions.setPageSize( 50 );
     queryOptions.addSortByOption( "name" );
     backendlessDataQuery.setQueryOptions( queryOptions );
-    Backendless.Persistence.of( PreferencesDefaults.class ).find( backendlessDataQuery, new AsyncCallback<BackendlessCollection<PreferencesDefaults>>()
+    Backendless.Persistence.of( PreferencesDefaults.class ).find( backendlessDataQuery, new AsyncCallback<Collection<PreferencesDefaults>>()
     {
       @Override
-      public void handleResponse( BackendlessCollection<PreferencesDefaults> preferencesDefaultsBackendlessCollection )
+      public void handleResponse( Collection<PreferencesDefaults> preferencesDefaultsBackendlessCollection )
       {
         //Creating a map with predefined checkboxes
         List<PreferencesDefaults> preferencesDefaults = preferencesDefaultsBackendlessCollection.getCurrentPage();
@@ -99,10 +99,10 @@ public class EditPreferencesActivity extends Activity
         BackendlessDataQuery backendlessDataQuery = new BackendlessDataQuery();
         backendlessDataQuery.setWhereClause( whereClause );
         backendlessDataQuery.setQueryOptions( new QueryOptions( 50, 0 ) );
-        Backendless.Persistence.of( UserPreferences.class ).find( backendlessDataQuery, new AsyncCallback<BackendlessCollection<UserPreferences>>()
+        Backendless.Persistence.of( UserPreferences.class ).find( backendlessDataQuery, new AsyncCallback<Collection<UserPreferences>>()
         {
           @Override
-          public void handleResponse( BackendlessCollection<UserPreferences> userPreferencesBackendlessCollection )
+          public void handleResponse( Collection<UserPreferences> userPreferencesBackendlessCollection )
           {
             List<UserPreferences> userPreferences = userPreferencesBackendlessCollection.getCurrentPage();
 

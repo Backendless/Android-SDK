@@ -1,9 +1,6 @@
 package com.backendless.files;
 
-import com.backendless.Backendless;
-import com.backendless.BackendlessCollection;
-import com.backendless.IBackendlessQuery;
-import com.backendless.persistence.BackendlessDataQuery;
+import com.backendless.persistence.AbstractBackendlessQuery;
 
 /**********************************************************************************************************************
  * BACKENDLESS.COM CONFIDENTIAL
@@ -21,59 +18,30 @@ import com.backendless.persistence.BackendlessDataQuery;
  * CREATED ON: 6/28/16
  * AT: 11:36 AM
  **********************************************************************************************************************/
-public class BackendlessFilesQuery implements IBackendlessQuery
+public class BackendlessFilesQuery extends AbstractBackendlessQuery
 {
-  public static final int DEFAULT_PAGE_SIZE = 10;
+  public static final int DEFAULT_PAGE_SIZE = 20;
   public static final int DEFAULT_OFFSET = 0;
 
   private String path;
   private String pattern;
   private boolean recursive;
-  private int pagesize;
-  private int offset;
 
-  public BackendlessFilesQuery( String path, String pattern, boolean recursive, int pagesize, int offset )
+  {
+    setPageSize( DEFAULT_PAGE_SIZE );
+    setOffset( DEFAULT_OFFSET );
+  }
+
+  public BackendlessFilesQuery( String path, String pattern, boolean recursive )
   {
     this.path = path;
-    this.pagesize = pagesize;
-    this.offset = offset;
     this.recursive = recursive;
     this.pattern = pattern;
-  }
-
-  @Override
-  public int getOffset()
-  {
-    return offset;
-  }
-
-  @Override
-  public int getPageSize()
-  {
-    return pagesize;
-  }
-
-  @Override
-  public void setPageSize( int pageSize )
-  {
-    this.pagesize = pageSize;
-  }
-
-  @Override
-  public void setOffset( int offset )
-  {
-    this.offset = offset;
   }
 
   @Override
   public BackendlessFilesQuery newInstance()
   {
     return this;
-  }
-
-  @Override
-  public BackendlessCollection getPage( BackendlessCollection sourceCollection, int pageSize, int offset )
-  {
-    return Backendless.Files.listing( path, pattern, recursive, pageSize, offset );
   }
 }

@@ -24,6 +24,8 @@ import com.backendless.core.responder.policy.CollectionAdaptingPolicy;
 import com.backendless.core.responder.policy.IAdaptingPolicy;
 import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 
+import java.util.Collection;
+
 public class CustomService
 {
   private static final String CUSTOM_SERVICE_ALIAS = "com.backendless.services.servercode.CustomServiceHandler";
@@ -51,7 +53,7 @@ public class CustomService
   {
     IAdaptingPolicy adaptingPolicy;
 
-    if( BackendlessCollection.class.isAssignableFrom( clazz ) )
+    if( Collection.class.isAssignableFrom( clazz ) )
       adaptingPolicy = new CollectionAdaptingPolicy();
     else
       adaptingPolicy = new PoJoAdaptingPolicy();
@@ -70,7 +72,7 @@ public class CustomService
   {
     IAdaptingPolicy adaptingPolicy;
 
-    if( BackendlessCollection.class.isAssignableFrom( clazz ) )
+    if( Collection.class.isAssignableFrom( clazz ) )
       adaptingPolicy = new CollectionAdaptingPolicy();
     else
       adaptingPolicy = new PoJoAdaptingPolicy();

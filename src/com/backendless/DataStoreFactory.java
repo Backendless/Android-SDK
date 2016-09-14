@@ -24,6 +24,7 @@ import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.BackendlessSerializer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 class DataStoreFactory
@@ -163,25 +164,25 @@ class DataStoreFactory
       }
 
       @Override
-      public BackendlessCollection<E> find() throws BackendlessException
+      public Collection<E> find() throws BackendlessException
       {
         return Backendless.Persistence.find( entityClass, new BackendlessDataQuery() );
       }
 
       @Override
-      public BackendlessCollection<E> find( BackendlessDataQuery dataQueryOptions ) throws BackendlessException
+      public Collection<E> find( BackendlessDataQuery dataQueryOptions ) throws BackendlessException
       {
         return Backendless.Persistence.find( entityClass, dataQueryOptions );
       }
 
       @Override
-      public void find( AsyncCallback<BackendlessCollection<E>> responder )
+      public void find( AsyncCallback<Collection<E>> responder )
       {
         Backendless.Persistence.find( entityClass, new BackendlessDataQuery(), responder );
       }
 
       @Override
-      public void find( BackendlessDataQuery dataQueryOptions, AsyncCallback<BackendlessCollection<E>> responder )
+      public void find( BackendlessDataQuery dataQueryOptions, AsyncCallback<Collection<E>> responder )
       {
         Backendless.Persistence.find( entityClass, dataQueryOptions, responder );
       }

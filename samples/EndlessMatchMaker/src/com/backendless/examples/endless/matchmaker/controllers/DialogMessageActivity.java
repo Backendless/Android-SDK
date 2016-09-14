@@ -74,10 +74,10 @@ public class DialogMessageActivity extends Activity
 
     progressDialog  = UIFactory.getDefaultProgressDialog( this );
     BackendlessGeoQuery backendlessGeoQuery = new BackendlessGeoQuery( BackendlessUser.EMAIL_KEY, Backendless.UserService.CurrentUser().getEmail() );
-    Backendless.Geo.getPoints( backendlessGeoQuery, new AsyncCallback<BackendlessCollection<GeoPoint>>()
+    Backendless.Geo.getPoints( backendlessGeoQuery, new AsyncCallback<Collection<GeoPoint>>()
     {
       @Override
-      public void handleResponse( BackendlessCollection<GeoPoint> response )
+      public void handleResponse( Collection<GeoPoint> response )
       {
         List<GeoPoint> points = response.getCurrentPage();
 

@@ -79,10 +79,10 @@ public class TasksListActivity extends Activity
       }
     } );
 
-    BackendlessUtils.initTasks( new BackendlessCallback<BackendlessCollection<Task>>()
+    BackendlessUtils.initTasks( new BackendlessCallback<Collection<Task>>()
     {
       @Override
-      public void handleResponse( BackendlessCollection<Task> taskBackendlessCollection )
+      public void handleResponse( Collection<Task> taskBackendlessCollection )
       {
         for( Task task : taskBackendlessCollection.getCurrentPage() )
           adapter.add( task.getMessage() );

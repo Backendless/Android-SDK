@@ -147,10 +147,10 @@ public class ProfileActivity extends Activity
       progressDialog = UIFactory.getDefaultProgressDialog( ProfileActivity.this );
       BackendlessDataQuery backendlessDataQuery = new BackendlessDataQuery( "email = '" + Backendless.UserService.CurrentUser().getEmail() + "'" );
       backendlessDataQuery.setQueryOptions( new QueryOptions( 50, 0 ) );
-      Backendless.Persistence.of( UserPreferences.class ).find( backendlessDataQuery, new ResponseAsyncCallback<BackendlessCollection<UserPreferences>>( ProfileActivity.this )
+      Backendless.Persistence.of( UserPreferences.class ).find( backendlessDataQuery, new ResponseAsyncCallback<Collection<UserPreferences>>( ProfileActivity.this )
       {
         @Override
-        public void handleResponse( BackendlessCollection<UserPreferences> response )
+        public void handleResponse( Collection<UserPreferences> response )
         {
           List<UserPreferences> userPreferenceses = response.getCurrentPage();
 
