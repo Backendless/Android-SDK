@@ -31,6 +31,7 @@ import com.backendless.persistence.QueryOptions;
 import com.backendless.property.ObjectProperty;
 import com.backendless.utils.ReflectionUtil;
 import com.backendless.utils.ResponderHelper;
+import com.backendless.utils.StringUtils;
 import weborb.client.IChainedResponder;
 import weborb.types.Types;
 import weborb.writer.IObjectSubstitutor;
@@ -422,90 +423,35 @@ public final class Persistence
     }
   }
 
-  protected <E> void loadRelations( final E entity, final List<String> relations ) throws BackendlessException
+  public <T> List<T> loadRelations( String parentType, String objectId, String relationName, int pageSize, int offset, Class<T> relatedType  ) throws BackendlessException
   {
-    if( entity == null )
-    {
-      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
-    }
+    StringUtils.checkEmpty( objectId, ExceptionMessage.NULL_ENTITY );
+    StringUtils.checkEmpty( relationName, ExceptionMessage.NULL_FIELD( "relationName" ) );
 
-    checkDeclaredType( entity.getClass() );
-    final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
-    MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
-    {
-      @Override
-      public Object substitute( Object o )
-      {
-        if( o == entity )
-        {
-          return serializedEntity;
-        }
-        else
-        {
-          return o;
-        }
-      }
-    } );
+    if( pageSize < 0 )
+      throw new IllegalArgumentException( ExceptionMessage.WRONG_OFFSET );
+    if( offset < 0 )
+      throw new IllegalArgumentException( ExceptionMessage.WRONG_PAGE_SIZE );
 
-    Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity.getClass() ), serializedEntity, relations };
-    IChainedResponder chainedResponder = new AdaptingResponder<E>( (Class<E>) entity.getClass(), new PoJoAdaptingPolicy<E>() );
-    E loadedRelations = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, chainedResponder );
-    loadRelationsToEntity( entity, loadedRelations, relations );
+    Object[] args = new Object[] { parentType, objectId, relationName, pageSize, offset };
+    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, ResponderHelper.getArrayAdaptingResponder( relatedType )  );
   }
 
-  protected <E> void loadRelations( final E entity, final List<String> relations, final AsyncCallback<E> responder )
+  public <T> void loadRelations( String parentType, String objectId, String relationName, int pageSize, int offset, Class<T> relatedType,
+                          final AsyncCallback<List<T>> responder )
   {
+    StringUtils.checkEmpty( objectId, ExceptionMessage.NULL_ENTITY );
+    StringUtils.checkEmpty( relationName, ExceptionMessage.NULL_FIELD( "relationName" ) );
+
+    if( pageSize < 0 )
+      throw new IllegalArgumentException( ExceptionMessage.WRONG_OFFSET );
+    if( offset < 0 )
+      throw new IllegalArgumentException( ExceptionMessage.WRONG_PAGE_SIZE );
+
     try
     {
-      if( entity == null )
-        throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
-
-      checkDeclaredType( entity.getClass() );
-      final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
-
-      MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
-      {
-        @Override
-        public Object substitute( Object o )
-        {
-          if( o == entity )
-          {
-            return serializedEntity;
-          }
-          else
-          {
-            return o;
-          }
-        }
-      } );
-
-      Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity.getClass() ), serializedEntity, relations };
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, new AsyncCallback<E>()
-      {
-        @Override
-        public void handleResponse( E loadedRelations )
-        {
-          try
-          {
-            loadRelationsToEntity( entity, loadedRelations, relations );
-
-            if( responder != null )
-              responder.handleResponse( entity );
-          }
-          catch( Exception e )
-          {
-            if( responder != null )
-              responder.handleFault( new BackendlessFault( e ) );
-          }
-        }
-
-        @Override
-        public void handleFault( BackendlessFault fault )
-        {
-          if( responder != null )
-            responder.handleFault( fault );
-        }
-      }, new AdaptingResponder<E>( (Class<E>) entity.getClass(), new PoJoAdaptingPolicy<E>() ) );
+      Object[] args = new Object[] { parentType, objectId, relationName, pageSize, offset };
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, responder, ResponderHelper.getArrayAdaptingResponder( relatedType ) );
     }
     catch( Throwable e )
     {
@@ -780,21 +726,37 @@ public final class Persistence
 
   static String getEntityId( Object entity ) throws BackendlessException
   {
-    String id;
+    String id = null;
 
-    try
+    if( ReflectionUtil.hasField( entity.getClass(), Persistence.DEFAULT_OBJECT_ID_FIELD ) )
     {
-      Method declaredMethod = entity.getClass().getMethod( DEFAULT_OBJECT_ID_GETTER );
-
-      if( !declaredMethod.isAccessible() )
-        declaredMethod.setAccessible( true );
-
-      id = (String) declaredMethod.invoke( entity );
+      try
+      {
+        Field field = ReflectionUtil.getField( entity.getClass(), Persistence.DEFAULT_OBJECT_ID_FIELD );
+        field.setAccessible( true );
+        id = (String) field.get( entity );
+      }
+      catch ( NoSuchFieldException | IllegalAccessException e )
+      {
+      }
     }
-    catch( Exception e )
+    else
     {
-      id = null;
+      try
+      {
+        Method declaredMethod = entity.getClass().getMethod( DEFAULT_OBJECT_ID_GETTER );
+
+        if( !declaredMethod.isAccessible() )
+          declaredMethod.setAccessible( true );
+
+        id = (String) declaredMethod.invoke( entity );
+      }
+      catch ( Exception e )
+      {
+        id = null;
+      }
     }
+
 
     if( id == null )
       id = FootprintsManager.getInstance().getObjectId( entity );

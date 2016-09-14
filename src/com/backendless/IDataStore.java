@@ -102,9 +102,9 @@ public interface IDataStore<E>
 
   void findById( E entity, List<String> relations, int relationsDepth, AsyncCallback<E> responder );
 
-  void loadRelations( E entity, List<String> relations ) throws BackendlessException;
+  <T> List<T> loadRelations( String objectId, String relationName, int pageSize, int offset, Class<T> relatedType );
 
-  void loadRelations( E entity, List<String> relations, AsyncCallback<E> responder );
+  <T> void loadRelations( String objectId, String relationName, int pageSize, int offset, Class<T> relatedType, AsyncCallback<List<T>> responder );
 
   void getObjectCount( AsyncCallback<Integer> responder );
 

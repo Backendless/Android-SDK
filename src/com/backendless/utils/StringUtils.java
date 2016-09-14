@@ -18,20 +18,17 @@
 
 package com.backendless.utils;
 
-/**
- * Created by Artur Dzidzoiev on 10/9/15.
- */
 public class StringUtils
 {
 
-  public static boolean isNullOrEmpty( String string )
+  public static boolean isEmpty( String string )
   {
     return string == null || string.isEmpty();
   }
 
-  public static void checkNotNullOrEmpty( String string, String errorMessage )
+  public static void checkEmpty( String string, String errorMessage )
   {
-    if( isNullOrEmpty( string ) )
+    if( isEmpty( string ) )
       throw new IllegalArgumentException( errorMessage );
   }
 }

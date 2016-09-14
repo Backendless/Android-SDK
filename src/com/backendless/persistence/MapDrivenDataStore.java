@@ -447,57 +447,15 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public void loadRelations( Map entity, List<String> relations ) throws BackendlessException
+  public <T> List<T> loadRelations( String objectId, String relationName, int pageSize, int offset, Class<T> relatedType )
   {
-    if( entity == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
-
-    Object[] args = new Object[] { tableName, entity, relations };
-    Map loadedRelations = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args );
-    entity.putAll( loadedRelations );
+    return Backendless.Data.loadRelations( tableName, objectId, relationName, pageSize, offset, relatedType );
   }
 
   @Override
-  public void loadRelations( final Map entity, List<String> relations, final AsyncCallback<Map> responder )
+  public <T> void loadRelations( String objectId, String relationName, int pageSize, int offset, Class<T> relatedType, AsyncCallback<List<T>> responder )
   {
-    try
-    {
-      if( entity == null )
-        throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
-
-      Object[] args = new Object[] { tableName, entity, relations };
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, new AsyncCallback<Map>()
-      {
-        @Override
-        public void handleResponse( Map loadedRelations )
-        {
-          try
-          {
-            entity.putAll( loadedRelations );
-
-            if( responder != null )
-              responder.handleResponse( entity );
-          }
-          catch( Exception e )
-          {
-            if( responder != null )
-              responder.handleFault( new BackendlessFault( e ) );
-          }
-        }
-
-        @Override
-        public void handleFault( BackendlessFault fault )
-        {
-          if( responder != null )
-            responder.handleFault( fault );
-        }
-      } );
-    }
-    catch( Throwable e )
-    {
-      if( responder != null )
-        responder.handleFault( new BackendlessFault( e ) );
-    }
+    Backendless.Data.loadRelations( tableName, objectId, relationName, pageSize, offset, relatedType, responder );
   }
 
   @Override

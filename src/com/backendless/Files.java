@@ -501,13 +501,13 @@ public final class Files
 
   public boolean exists( String path )
   {
-    StringUtils.checkNotNullOrEmpty( path, ExceptionMessage.NULL_PATH );
+    StringUtils.checkEmpty( path, ExceptionMessage.NULL_PATH );
     return Invoker.<Boolean>invokeSync( FILE_MANAGER_SERVER_ALIAS, "exists", new Object[] { path } );
   }
 
   public void exists( String path, AsyncCallback<Boolean> responder )
   {
-    StringUtils.checkNotNullOrEmpty( path, ExceptionMessage.NULL_PATH );
+    StringUtils.checkEmpty( path, ExceptionMessage.NULL_PATH );
     Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "exists", new Object[] { path }, responder );
   }
 

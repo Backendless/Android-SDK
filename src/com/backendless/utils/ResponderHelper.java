@@ -20,10 +20,7 @@ package com.backendless.utils;
 
 import com.backendless.Persistence;
 import com.backendless.core.responder.AdaptingResponder;
-import com.backendless.core.responder.policy.CollectionAdaptingPolicy;
-import com.backendless.core.responder.policy.DecoratorCachingAdaptingPolicy;
-import com.backendless.core.responder.policy.IAdaptingPolicy;
-import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
+import com.backendless.core.responder.policy.*;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.persistence.BackendlessSerializer;
@@ -36,6 +33,12 @@ public class ResponderHelper
   {
     entity = BackendlessSerializer.getClassForDeserialization( entity );
     return getAdaptingResponder( entity, new CollectionAdaptingPolicy<E>() );
+  }
+
+  public static <E> AdaptingResponder getArrayAdaptingResponder( Class<E> entity )
+  {
+    entity = BackendlessSerializer.getClassForDeserialization( entity );
+    return getAdaptingResponder( entity, new ArrayAdaptingPolicy<E>() );
   }
 
   public static  <E> AdaptingResponder getPOJOAdaptingResponder( Class<E> entity )
