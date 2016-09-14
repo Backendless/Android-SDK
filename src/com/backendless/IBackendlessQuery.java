@@ -20,8 +20,6 @@ package com.backendless;
 
 public interface IBackendlessQuery
 {
-  int offset = 0;
-
   int getOffset();
 
   int getPageSize();
