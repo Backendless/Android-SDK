@@ -21,29 +21,9 @@ package com.backendless.files.router;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public abstract class IOutputStreamRouter
+public interface OutputStreamRouter
 {
-  private OutputStream outputStream;
+  int BUFFER_DEFAULT_LENGTH = 8192;
 
-  public OutputStream getOutputStream()
-  {
-    return outputStream;
-  }
-
-  public void setOutputStream( OutputStream outputStream )
-  {
-    this.outputStream = outputStream;
-  }
-
-  public abstract void writeStream( int bufferSize ) throws IOException;
-
-  public void flush() throws IOException
-  {
-    outputStream.flush();
-  }
-
-  public void close() throws IOException
-  {
-    outputStream.close();
-  }
+  void writeStream( OutputStream outputStream ) throws IOException;
 }

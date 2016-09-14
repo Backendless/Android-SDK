@@ -42,22 +42,8 @@
 
     <target name="packSample">
         <mkdir dir="${absoluteOut}/examples/${examplesRootPath}"/>
-        <mkdir dir="${absoluteOut}/examples/${examplesRootPath}/gen"/>
-        <copydir dest="${absoluteOut}/examples/${examplesRootPath}/.settings"
-                 src="${sampleSrcPath}/.settings"/>
-        <copydir dest="${absoluteOut}/examples/${examplesRootPath}/libs"
-                 src="${sampleSrcPath}/libs"/>
-        <copydir dest="${absoluteOut}/examples/${examplesRootPath}/res"
-                 src="${sampleSrcPath}/res"/>
-        <copydir dest="${absoluteOut}/examples/${examplesRootPath}/src"
-                 src="${sampleSrcPath}/src"/>
-        <copy todir="${absoluteOut}/examples/${examplesRootPath}">
-            <fileset file="${sampleSrcPath}/.classpath"/>
-            <fileset file="${sampleSrcPath}/.project"/>
-            <fileset file="${sampleSrcPath}/AndroidManifest.xml"/>
-            <fileset file="${sampleSrcPath}/${sampleName}.iml"/>
-            <fileset file="${sampleSrcPath}/project.properties"/>
-        </copy>
+        <copydir dest="${absoluteOut}/examples/${examplesRootPath}"
+            src="${sampleSrcPath}"/>
         <copy file="${backendlessJarPath}" todir="${sampleSrcPath}/libs" overwrite="true"/>
     </target>
 

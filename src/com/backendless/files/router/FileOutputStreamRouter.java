@@ -20,68 +20,57 @@ package com.backendless.files.router;
 
 import com.backendless.async.callback.UploadCallback;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 
-public class FileOutputStreamRouter extends IOutputStreamRouter
+public class FileOutputStreamRouter implements OutputStreamRouter
 {
-  private File file;
-  private UploadCallback uploadCallback;
+
+  private final File file;
+  private final UploadCallback uploadCallback;
+
+  private int lastProgress;
 
   public FileOutputStreamRouter( File file, UploadCallback uploadCallback )
   {
     this.file = file;
-    this.uploadCallback = uploadCallback;
+    this.uploadCallback = uploadCallback == null ? new DummyUploadCallback() : uploadCallback;
   }
 
   @Override
-  public void writeStream( int bufferSize ) throws IOException
+  public void writeStream( OutputStream out ) throws IOException
   {
-    long length = file.length();
-    int uploadBufferLength = length < bufferSize ? (int) length : bufferSize;
-    byte[] buffer = new byte[ uploadBufferLength ];
-    int bytesRead = 0;
-    int progress = 0;
-    FileInputStream fileInputStream = new FileInputStream( file );
+    long fileSize = file.length();
+    byte[] buffer = new byte[ BUFFER_DEFAULT_LENGTH ];
+    int readBytesTotal = 0;
 
-    try
+    try (BufferedInputStream inputStream = new BufferedInputStream( new FileInputStream( file ) ) )
     {
-      while( true )
+      int readBytes;
+      while( ( readBytes = inputStream.read( buffer ) ) != -1 )
       {
-        int currentBytes = fileInputStream.read( buffer );
-
-        if( currentBytes == 0 )
-          break;
-
-        bytesRead += currentBytes;
-
-        getOutputStream().write( buffer );
-
-        if( uploadCallback != null )
-        {
-          int curProgress = (int) (((double) bytesRead / length) * 100);
-
-          if( progress != curProgress )
-          {
-            progress = curProgress;
-            uploadCallback.onProgressUpdate( progress );
-          }
-        }
-
-        if( length - bytesRead < uploadBufferLength )
-        {
-          uploadBufferLength = (int) (length - bytesRead);
-          buffer = new byte[ uploadBufferLength ];
-        }
+        out.write( buffer, 0, readBytes );
+        out.flush();
+        updateProgress( fileSize, readBytesTotal += readBytes );
       }
-
-      if( uploadCallback != null && progress != 100 )
-        uploadCallback.onProgressUpdate( 100 );
     }
-    finally
+  }
+
+  private void updateProgress( long fileSize, double readBytesTotal )
+  {
+    int progress = (int) ( ( readBytesTotal / fileSize ) * 100 );
+    if( progress != lastProgress )
     {
-      fileInputStream.close();
+      lastProgress = progress;
+      uploadCallback.onProgressUpdate( progress );
+    }
+  }
+
+  private static class DummyUploadCallback implements UploadCallback
+  {
+    @Override
+    public void onProgressUpdate( Integer progress )
+    {
+      //noop
     }
   }
 }

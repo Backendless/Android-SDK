@@ -609,7 +609,7 @@ public final class Geo
 
   public void setLocationTrackerParameters( int minTime, int minDistance, int acceptedDistanceAfterReboot )
   {
-    LocationTracker.getInstance().setLocationTrackerParameters( minTime, minDistance, acceptedDistanceAfterReboot );
+    LocationTracker.setLocationTrackerParameters( minTime, minDistance, acceptedDistanceAfterReboot );
   }
 
   public void startGeofenceMonitoring( GeoPoint geoPoint,

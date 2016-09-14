@@ -22,12 +22,13 @@ import android.graphics.Bitmap;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
-public class BitmapOutputStreamRouter extends IOutputStreamRouter
+public class BitmapOutputStreamRouter implements OutputStreamRouter
 {
-  private Bitmap bitmap;
-  private Bitmap.CompressFormat compressFormat;
-  private int quality;
+  private final Bitmap bitmap;
+  private final Bitmap.CompressFormat compressFormat;
+  private final int quality;
 
   public BitmapOutputStreamRouter( Bitmap bitmap, Bitmap.CompressFormat compressFormat, int quality )
   {
@@ -37,9 +38,9 @@ public class BitmapOutputStreamRouter extends IOutputStreamRouter
   }
 
   @Override
-  public void writeStream( int bufferSize ) throws IOException
+  public void writeStream( OutputStream outputStream ) throws IOException
   {
-    BufferedOutputStream bufferedOutputStream = new BufferedOutputStream( getOutputStream(), bufferSize );
+    BufferedOutputStream bufferedOutputStream = new BufferedOutputStream( outputStream, BUFFER_DEFAULT_LENGTH );
     bitmap.compress( compressFormat, quality, bufferedOutputStream );
     bufferedOutputStream.flush();
   }
