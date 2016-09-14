@@ -169,10 +169,10 @@ public class PointsActivity extends Activity
   private void searchPoints()
   {
     progressDialog = ProgressDialog.show( PointsActivity.this, "", "Loading", true );
-    Backendless.Geo.getPoints( backendlessGeoQuery, new AsyncCallback<BackendlessCollection<GeoPoint>>()
+    Backendless.Geo.getPoints( backendlessGeoQuery, new AsyncCallback<Collection<GeoPoint>>()
     {
       @Override
-      public void handleResponse( BackendlessCollection<GeoPoint> geoPointBackendlessCollection )
+      public void handleResponse( Collection<GeoPoint> geoPointBackendlessCollection )
       {
         List<GeoPoint> points = geoPointBackendlessCollection.getCurrentPage();
         adapter.clear();

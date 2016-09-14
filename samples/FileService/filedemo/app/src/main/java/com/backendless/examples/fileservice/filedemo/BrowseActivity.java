@@ -71,10 +71,10 @@ public class BrowseActivity extends Activity
 
     BackendlessDataQuery backendlessDataQuery = new BackendlessDataQuery();
     backendlessDataQuery.setQueryOptions( new QueryOptions( 100, 0, "uploaded" ) );
-    Backendless.Persistence.of( ImageEntity.class ).find( backendlessDataQuery, new AsyncCallback<BackendlessCollection<ImageEntity>>()
+    Backendless.Persistence.of( ImageEntity.class ).find( backendlessDataQuery, new AsyncCallback<Collection<ImageEntity>>()
     {
       @Override
-      public void handleResponse( final BackendlessCollection<ImageEntity> response )
+      public void handleResponse( final Collection<ImageEntity> response )
       {
         Toast.makeText( BrowseActivity.this, "Will add " + response.getCurrentPage().size() + " images", Toast.LENGTH_SHORT ).show();
 

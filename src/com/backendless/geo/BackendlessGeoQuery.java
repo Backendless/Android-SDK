@@ -18,8 +18,6 @@
 
 package com.backendless.geo;
 
-import com.backendless.Backendless;
-import com.backendless.BackendlessCollection;
 import com.backendless.IBackendlessQuery;
 import com.backendless.commons.geo.AbstractBackendlessGeoQuery;
 
@@ -28,11 +26,20 @@ import java.util.*;
 
 public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements IBackendlessQuery, Serializable
 {
+  public static final int DEFAULT_PAGE_SIZE = 100;
+  public static final int DEFAULT_OFFSET = 0;
+
   private Units units;
   private boolean includeMeta;
   private double[] searchRectangle;
-  private int pageSize = 100;
+
+  private int pageSize;
   private int offset;
+
+  {
+    setPageSize( DEFAULT_PAGE_SIZE );
+    setOffset( DEFAULT_OFFSET );
+  }
 
   public BackendlessGeoQuery()
   {
@@ -43,10 +50,8 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
    *
    * @param latitude  latitude to search for
    * @param longitude longitude to search for
-   * @param pageSize  page size of the resulting collection
-   * @param offset    offset of the resulting collection
    */
-  public BackendlessGeoQuery( double latitude, double longitude, int pageSize, int offset )
+  public BackendlessGeoQuery( double latitude, double longitude )
   {
     this.latitude = latitude;
     this.longitude = longitude;
@@ -157,6 +162,42 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     includeMeta = true;
   }
 
+  @Override
+  public int getPageSize()
+  {
+    return pageSize;
+  }
+
+  @Override
+  public void setPageSize( int pageSize )
+  {
+    this.pageSize = pageSize;
+  }
+
+  @Override
+  public int getOffset()
+  {
+    return offset;
+  }
+
+  @Override
+  public void setOffset( int offset )
+  {
+    this.offset = offset;
+  }
+
+  @Override
+  public void prepareForNextPage()
+  {
+    offset+=pageSize;
+  }
+
+  @Override
+  public void prepareForPreviousPage()
+  {
+    offset-=pageSize;
+  }
+
   public Units getUnits()
   {
     return units;
@@ -222,26 +263,6 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     setSearchRectangle( new double[] { topLeft.getLatitude(), topLeft.getLongitude(), bottomRight.getLatitude(), bottomRight.getLongitude() } );
   }
 
-  public int getOffset()
-  {
-    return offset;
-  }
-
-  public int getPageSize()
-  {
-    return pageSize;
-  }
-
-  public void setPageSize( int pageSize )
-  {
-    this.pageSize = pageSize;
-  }
-
-  public void setOffset( int offset )
-  {
-    this.offset = offset;
-  }
-
   public void putRelativeFindMetadata( String key, String value )
   {
     relativeFindMetadata.put( key, value );
@@ -286,15 +307,6 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
     result.setClusterGridSize( clusterGridSize );
 
     return result;
-  }
-
-  @Override
-  public BackendlessCollection getPage( BackendlessCollection sourceCollection, int pageSize, int offset )
-  {
-    IBackendlessQuery tempQuery = newInstance();
-    tempQuery.setOffset( offset );
-    tempQuery.setPageSize( pageSize );
-    return Backendless.Geo.getPoints( (BackendlessGeoQuery) tempQuery );
   }
 
   @Override

@@ -23,8 +23,6 @@ import java.util.List;
 
 public class QueryOptions
 {
-  private int pageSize = 10;
-  private int offset;
   private List<String> sortBy = new ArrayList<String>();
   private List<String> related  = new ArrayList<String>();
   private int relationsDepth;
@@ -33,32 +31,9 @@ public class QueryOptions
   {
   }
 
-  public QueryOptions( int pageSize, int offset )
-  {
-    this.pageSize = pageSize;
-    this.offset = offset;
-  }
-
-  public QueryOptions( int pageSize, int offset, String sortBy )
-  {
-    this.pageSize = pageSize;
-    this.offset = offset;
-    addSortByOption( sortBy );
-  }
-
   public QueryOptions( String sortBy )
   {
     addSortByOption( sortBy );
-  }
-
-  public void setPageSize( Integer pageSize )
-  {
-    this.pageSize = pageSize;
-  }
-
-  public void setOffset( Integer offset )
-  {
-    this.offset = offset;
   }
 
   public void setSortBy( List<String> sortBy )
@@ -93,16 +68,6 @@ public class QueryOptions
     this.related.add( related );
   }
 
-  public int getPageSize()
-  {
-    return pageSize;
-  }
-
-  public int getOffset()
-  {
-    return offset;
-  }
-
   public List<String> getSortBy()
   {
     if( sortBy == null )
@@ -122,8 +87,6 @@ public class QueryOptions
   public QueryOptions newInstance()
   {
     QueryOptions result = new QueryOptions();
-    result.setPageSize( pageSize );
-    result.setOffset( offset );
     result.setSortBy( sortBy );
     result.setRelated( related );
     result.setRelationsDepth( relationsDepth );

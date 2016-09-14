@@ -18,7 +18,6 @@
 
 package com.backendless.core.responder.policy;
 
-import com.backendless.BackendlessCollection;
 import weborb.client.Fault;
 import weborb.client.IResponder;
 import weborb.exceptions.AdaptingException;
@@ -27,17 +26,18 @@ import weborb.reader.ArrayType;
 import weborb.reader.NamedObject;
 import weborb.types.IAdaptingType;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class CollectionAdaptingPolicy<E> implements IAdaptingPolicy<E>
 {
   @Override
   public Object adapt( Class<E> clazz, IAdaptingType entity, IResponder nextResponder )
   {
-    BackendlessCollection<?> result = null;
+    Collection<?> result = null;
 
     try
     {
-      BackendlessCollection<E> list = createListOfType( clazz );
-
       AnonymousObject bodyValue = (AnonymousObject) ((NamedObject) entity).getTypedObject();
       ArrayType data = (ArrayType) bodyValue.getProperties().get( "data" );
 
@@ -52,7 +52,7 @@ public class CollectionAdaptingPolicy<E> implements IAdaptingPolicy<E>
         }
       }
 
-      result = (BackendlessCollection<?>) entity.adapt( list.getClass() );
+      result = (Collection<?>) entity.adapt( ArrayList.class );
 
       if( nextResponder != null )
         nextResponder.responseHandler( result );
@@ -66,10 +66,5 @@ public class CollectionAdaptingPolicy<E> implements IAdaptingPolicy<E>
     }
 
     return result;
-  }
-
-  private static <E> BackendlessCollection<E> createListOfType( Class<E> type )
-  {
-    return new BackendlessCollection<E>();
   }
 }

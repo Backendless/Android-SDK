@@ -133,10 +133,10 @@ public class PingsActivity extends Activity
   }
 
   //Callbacks section
-  private AsyncCallback<BackendlessCollection<SearchMatchesResult>> gotPingsCallback = new ResponseAsyncCallback<BackendlessCollection<SearchMatchesResult>>( PingsActivity.this )
+  private AsyncCallback<Collection<SearchMatchesResult>> gotPingsCallback = new ResponseAsyncCallback<Collection<SearchMatchesResult>>( PingsActivity.this )
   {
     @Override
-    public void handleResponse( BackendlessCollection<SearchMatchesResult> response )
+    public void handleResponse( Collection<SearchMatchesResult> response )
     {
       for( SearchMatchesResult matchPoint : response.getCurrentPage() )
       {

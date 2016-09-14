@@ -128,19 +128,19 @@ public class BackendlessUtils
     } );
   }
 
-  public static void getAllTasks( final AsyncCallback<BackendlessCollection<Task>> responder )
+  public static void getAllTasks( final AsyncCallback<Collection<Task>> responder )
   {
-    Backendless.Persistence.of( Task.class ).find( new BackendlessCallback<BackendlessCollection<Task>>()
+    Backendless.Persistence.of( Task.class ).find( new BackendlessCallback<Collection<Task>>()
     {
       @Override
-      public void handleResponse( BackendlessCollection<Task> tasksBackendlessCollection )
+      public void handleResponse( Collection<Task> tasksBackendlessCollection )
       {
         responder.handleResponse( tasksBackendlessCollection );
       }
     } );
   }
 
-  public static void initTasks( final AsyncCallback<BackendlessCollection<Task>> responder )
+  public static void initTasks( final AsyncCallback<Collection<Task>> responder )
   {
     Backendless.Persistence.save( new Task( "HelloWorld task", "user" ), new BackendlessCallback<Task>()
     {
