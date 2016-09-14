@@ -18,7 +18,9 @@
 
 package com.backendless.persistence;
 
-import com.backendless.*;
+import com.backendless.IDataStore;
+import com.backendless.Invoker;
+import com.backendless.Persistence;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
@@ -34,10 +36,7 @@ import weborb.reader.StringType;
 import weborb.types.IAdaptingType;
 import weborb.v3types.ErrMessage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MapDrivenDataStore implements IDataStore<Map>
 {
@@ -47,7 +46,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
 
   public MapDrivenDataStore( String tableName )
   {
-   this.tableName = tableName;
+    this.tableName = tableName;
   }
 
   @Override
@@ -56,7 +55,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-    Object[] args = new Object[]{tableName, entity};
+    Object[] args = new Object[] { tableName, entity };
     Map newEntity = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "save", args, new MapDrivenResponder() );
     return newEntity;
   }
@@ -129,7 +128,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   {
     Object[] args = new Object[] { tableName };
     return (Map) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args );
- }
+  }
 
   @Override
   public Map findFirst( int relationsDepth ) throws BackendlessException
@@ -257,46 +256,41 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public BackendlessCollection<Map> find() throws BackendlessException
+  public Collection<Map> find() throws BackendlessException
   {
     return find( new BackendlessDataQuery() );
   }
 
   @Override
-  public BackendlessCollection<Map> find( BackendlessDataQuery dataQuery ) throws BackendlessException
+  public Collection<Map> find( BackendlessDataQuery dataQuery ) throws BackendlessException
   {
     Persistence.checkPageSizeAndOffset( dataQuery );
     Object[] args = new Object[] { tableName, dataQuery };
-    BackendlessCollection<Map> result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
-    result.setQuery( dataQuery );
-    result.setTableName( tableName );
+    Collection<Map> result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
+
     return result;
   }
 
   @Override
-  public void find( AsyncCallback<BackendlessCollection<Map>> responder )
+  public void find( AsyncCallback<Collection<Map>> responder )
   {
-     find( new BackendlessDataQuery(), responder );
+    find( new BackendlessDataQuery(), responder );
   }
 
   @Override
-  public void find( final BackendlessDataQuery dataQuery, final AsyncCallback<BackendlessCollection<Map>> responder )
+  public void find( final BackendlessDataQuery dataQuery, final AsyncCallback<Collection<Map>> responder )
   {
     try
     {
       Persistence.checkPageSizeAndOffset( dataQuery );
 
-      AsyncCallback<BackendlessCollection<Map>> callback = new AsyncCallback<BackendlessCollection<Map>>()
+      AsyncCallback<Collection<Map>> callback = new AsyncCallback<Collection<Map>>()
       {
         @Override
-        public void handleResponse( BackendlessCollection<Map> response )
+        public void handleResponse( Collection<Map> response )
         {
           if( responder != null )
-          {
-            response.setQuery( dataQuery );
-            response.setTableName( tableName );
             responder.handleResponse( response );
-          }
         }
 
         @Override
@@ -560,25 +554,25 @@ public class MapDrivenDataStore implements IDataStore<Map>
       IAdaptingType type = (IAdaptingType) adaptingType;
       IAdaptingType bodyHolder = ((NamedObject) type).getTypedObject();
 
-     if( ((IAdaptingType) adaptingType).getDefaultType().equals( ErrMessage.class ) )
-     {
-       handledAsFault( (AnonymousObject) bodyHolder, nextResponder );
-     }
-     else
-     {
-       IAdaptingType entity = (IAdaptingType) ((AnonymousObject) bodyHolder).getProperties().get( "body" );
-       try
-       {
-         Object adaptedEntity = entity.adapt( HashMap.class );
+      if( ((IAdaptingType) adaptingType).getDefaultType().equals( ErrMessage.class ) )
+      {
+        handledAsFault( (AnonymousObject) bodyHolder, nextResponder );
+      }
+      else
+      {
+        IAdaptingType entity = (IAdaptingType) ((AnonymousObject) bodyHolder).getProperties().get( "body" );
+        try
+        {
+          Object adaptedEntity = entity.adapt( HashMap.class );
 
-         if( nextResponder != null )
-           nextResponder.responseHandler( adaptedEntity );
-       }
-       catch( AdaptingException e )
-       {
-         errorHandler( new BackendlessFault( e ) );
-       }
-     }
+          if( nextResponder != null )
+            nextResponder.responseHandler( adaptedEntity );
+        }
+        catch( AdaptingException e )
+        {
+          errorHandler( new BackendlessFault( e ) );
+        }
+      }
     }
 
     @Override

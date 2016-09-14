@@ -590,10 +590,10 @@ public class EndlessTaggingActivity extends Activity
     backendlessGeoQuery.setSearchRectangle( new double[] { NELat, SWLon, SWLat, NELon } );
     backendlessGeoQuery.setCategories( categoriesNames );
 
-    Backendless.Geo.getPoints( backendlessGeoQuery, new AsyncCallback<BackendlessCollection<GeoPoint>>()
+    Backendless.Geo.getPoints( backendlessGeoQuery, new AsyncCallback<Collection<GeoPoint>>()
     {
       @Override
-      public void handleResponse( BackendlessCollection<GeoPoint> geoPointBackendlessCollection )
+      public void handleResponse( Collection<GeoPoint> geoPointBackendlessCollection )
       {
         List<GeoPoint> points = geoPointBackendlessCollection.getCurrentPage();
         double newLatitude, newLongitude;

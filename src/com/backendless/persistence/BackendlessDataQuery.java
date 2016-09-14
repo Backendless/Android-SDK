@@ -18,18 +18,22 @@
 
 package com.backendless.persistence;
 
-import com.backendless.Backendless;
-import com.backendless.BackendlessCollection;
-import com.backendless.IBackendlessQuery;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class BackendlessDataQuery implements IBackendlessQuery
+public class BackendlessDataQuery extends AbstractBackendlessQuery
 {
+  public static final int DEFAULT_PAGE_SIZE = 10;
+  public static final int DEFAULT_OFFSET = 0;
+
   private List<String> properties;
   private String whereClause;
   private QueryOptions queryOptions;
+
+  {
+    setPageSize( DEFAULT_PAGE_SIZE );
+    setOffset( DEFAULT_OFFSET );
+  }
 
   public BackendlessDataQuery()
   {
@@ -60,9 +64,9 @@ public class BackendlessDataQuery implements IBackendlessQuery
   public List<String> getProperties()
   {
     if( properties == null )
-      return properties = new ArrayList<String>();
+      return properties = new ArrayList<>();
 
-    return new ArrayList<String>( properties );
+    return new ArrayList<>( properties );
   }
 
   public void setProperties( List<String> properties )
@@ -76,7 +80,7 @@ public class BackendlessDataQuery implements IBackendlessQuery
       return;
 
     if( properties == null )
-      properties = new ArrayList<String>();
+      properties = new ArrayList<>();
 
     properties.add( property );
   }
@@ -93,7 +97,7 @@ public class BackendlessDataQuery implements IBackendlessQuery
 
   public QueryOptions getQueryOptions()
   {
-    if(queryOptions == null)
+    if( queryOptions == null )
       return null;
 
     return queryOptions.newInstance();
@@ -104,33 +108,6 @@ public class BackendlessDataQuery implements IBackendlessQuery
     this.queryOptions = queryOptions;
   }
 
-  //PageSize properties added, because DataQuery and GeoQuery has different architecture
-  public int getPageSize()
-  {
-    return queryOptions == null ? 10 : queryOptions.getPageSize();
-  }
-
-  public void setPageSize( int pageSize )
-  {
-    if( queryOptions == null )
-      queryOptions = new QueryOptions();
-
-    queryOptions.setPageSize( pageSize );
-  }
-
-  public int getOffset()
-  {
-    return queryOptions == null ? 0 : queryOptions.getOffset();
-  }
-
-  public void setOffset( int offset )
-  {
-    if( queryOptions == null )
-      queryOptions = new QueryOptions();
-
-    queryOptions.setOffset( offset );
-  }
-
   @Override
   public BackendlessDataQuery newInstance()
   {
@@ -138,21 +115,6 @@ public class BackendlessDataQuery implements IBackendlessQuery
     result.setProperties( getProperties() );
     result.setWhereClause( whereClause );
     result.setQueryOptions( getQueryOptions() );
-
     return result;
-  }
-
-  @Override
-  public BackendlessCollection getPage( BackendlessCollection sourceCollection, int pageSize, int offset )
-  {
-    BackendlessDataQuery tempQuery = newInstance();
-    tempQuery.setOffset( offset );
-    tempQuery.setPageSize( pageSize );
-    String tableName = sourceCollection.getTableName();
-
-    if( tableName != null )
-      return Backendless.Persistence.of( tableName ).find( tempQuery );
-    else
-      return Backendless.Persistence.find( sourceCollection.getType(), tempQuery );
   }
 }

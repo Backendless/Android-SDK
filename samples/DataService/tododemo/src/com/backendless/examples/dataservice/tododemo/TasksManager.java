@@ -56,10 +56,10 @@ public class TasksManager
 
   public static void findEntities( final AsyncCallback<List<Task>> callback )
   {
-    TasksManager.DATA_STORE.find( backendlessDataQuery, new AsyncCallback<BackendlessCollection<Task>>()
+    TasksManager.DATA_STORE.find( backendlessDataQuery, new AsyncCallback<Collection<Task>>()
     {
       @Override
-      public void handleResponse( BackendlessCollection<Task> response )
+      public void handleResponse( Collection<Task> response )
       {
         callback.handleResponse( response.getCurrentPage() );
       }

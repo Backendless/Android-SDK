@@ -18,12 +18,12 @@
 
 package com.backendless.servercode.extension;
 
-import com.backendless.BackendlessCollection;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.property.ObjectProperty;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +40,8 @@ public abstract class PersistenceExtender<T>
   {
   }
 
-  public void afterFindById( RunnerContext context, Object objectId, String[] relations, ExecutionResult<T> entity ) throws Exception
+  public void afterFindById( RunnerContext context, Object objectId, String[] relations,
+                             ExecutionResult<T> entity ) throws Exception
   {
   }
 
@@ -101,7 +102,8 @@ public abstract class PersistenceExtender<T>
   {
   }
 
-  public void afterDescribe( RunnerContext context, String entityName, ExecutionResult<ObjectProperty[]> propertiesFound ) throws Exception
+  public void afterDescribe( RunnerContext context, String entityName,
+                             ExecutionResult<ObjectProperty[]> propertiesFound ) throws Exception
   {
   }
 
@@ -110,7 +112,7 @@ public abstract class PersistenceExtender<T>
   }
 
   public void afterFind( RunnerContext context, BackendlessDataQuery query,
-                         ExecutionResult<BackendlessCollection<T>> collection ) throws Exception
+                         ExecutionResult<Collection<T>> collection ) throws Exception
   {
   }
 

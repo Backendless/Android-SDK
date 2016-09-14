@@ -346,11 +346,11 @@ public class FootprintsManager
 
       try
       {
-        if( instance instanceof BackendlessCollection )
+        if( instance instanceof Collection )
         {
           AnonymousObject typedObject = (AnonymousObject) ((NamedObject) entity).getTypedObject();
           ArrayType dataArray = (ArrayType) typedObject.getProperties().get( "data" );
-          Object[] instances = ((BackendlessCollection) instance).getCurrentPage().toArray();
+          Object[] instances = ((Collection) instance).toArray();
           putEntityFootprintToCache( instances, dataArray );
         }
         else if( entity instanceof NamedObject )
