@@ -21,6 +21,7 @@ package com.backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.persistence.BackendlessDataQuery;
+import com.backendless.persistence.LoadRelationsQueryBuilder;
 
 import java.util.Collection;
 import java.util.List;
@@ -103,9 +104,22 @@ public interface IDataStore<E>
 
   void findById( E entity, List<String> relations, int relationsDepth, AsyncCallback<E> responder );
 
-  void loadRelations( E entity, List<String> relations ) throws BackendlessException;
+  /**
+   * @see com.backendless.persistence.LoadRelationsQueryBuilder
+   *
+   * @param objectId parentObjectId
+   * @param <R>       child relation type
+   */
+  <R> List<R> loadRelations( String objectId, LoadRelationsQueryBuilder<R> queryBuilder );
 
-  void loadRelations( E entity, List<String> relations, AsyncCallback<E> responder );
+   /**
+   * @see com.backendless.persistence.LoadRelationsQueryBuilder
+   *
+   * @param objectId  parentObjectId
+   * @param <R>       child relation type
+   * @param responder asynchronous callback
+   */
+  <R> void loadRelations( String objectId, LoadRelationsQueryBuilder<R> queryBuilder, AsyncCallback<List<R>> responder );
 
   void getObjectCount( AsyncCallback<Integer> responder );
 

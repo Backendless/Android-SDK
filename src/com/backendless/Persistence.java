@@ -24,13 +24,11 @@ import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
-import com.backendless.persistence.BackendlessDataQuery;
-import com.backendless.persistence.BackendlessSerializer;
-import com.backendless.persistence.MapDrivenDataStore;
-import com.backendless.persistence.QueryOptions;
+import com.backendless.persistence.*;
 import com.backendless.property.ObjectProperty;
 import com.backendless.utils.ReflectionUtil;
 import com.backendless.utils.ResponderHelper;
+import com.backendless.utils.StringUtils;
 import weborb.client.IChainedResponder;
 import weborb.types.Types;
 import weborb.writer.IObjectSubstitutor;
@@ -55,9 +53,6 @@ public final class Persistence
 
   public final static String PARCELABLE_CREATOR_FIELD_NAME = "CREATOR";
 
-  public final static String LOAD_ALL_RELATIONS = "*";
-  public final static DataPermission Permissions = new DataPermission();
-
   private static final Persistence instance = new Persistence();
 
   static Persistence getInstance()
@@ -68,7 +63,6 @@ public final class Persistence
   private Persistence()
   {
     Types.addClientClassMapping( "com.backendless.services.persistence.BackendlessDataQuery", BackendlessDataQuery.class );
-    Types.addClientClassMapping( "com.backendless.services.persistence.BackendlessCollection", ArrayList.class );
     Types.addClientClassMapping( "com.backendless.services.persistence.ObjectProperty", ObjectProperty.class );
     Types.addClientClassMapping( "com.backendless.services.persistence.QueryOptions", QueryOptions.class );
   }
@@ -420,90 +414,35 @@ public final class Persistence
     }
   }
 
-  protected <E> void loadRelations( final E entity, final List<String> relations ) throws BackendlessException
+  public <T> List<T> loadRelations( String parentType, String objectId, LoadRelationsQueryBuilder queryBuilder, Class<T> relatedType  ) throws BackendlessException
   {
-    if( entity == null )
-    {
-      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
-    }
+    StringUtils.checkEmpty( objectId, ExceptionMessage.NULL_ENTITY );
+    Objects.requireNonNull( queryBuilder, ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
 
-    checkDeclaredType( entity.getClass() );
-    final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
-    MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
-    {
-      @Override
-      public Object substitute( Object o )
-      {
-        if( o == entity )
-        {
-          return serializedEntity;
-        }
-        else
-        {
-          return o;
-        }
-      }
-    } );
+    BackendlessDataQuery dataQuery = queryBuilder.build();
+    String relationName = dataQuery.getQueryOptions().getRelated().iterator().next();
+    int pageSize = dataQuery.getPageSize();
+    int offset = dataQuery.getOffset();
 
-    Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity.getClass() ), serializedEntity, relations };
-    IChainedResponder chainedResponder = new AdaptingResponder<E>( (Class<E>) entity.getClass(), new PoJoAdaptingPolicy<E>() );
-    E loadedRelations = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, chainedResponder );
-    loadRelationsToEntity( entity, loadedRelations, relations );
+    Object[] args = new Object[] { parentType, objectId, relationName, pageSize, offset };
+    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, ResponderHelper.getCollectionAdaptingResponder( relatedType )  );
   }
 
-  protected <E> void loadRelations( final E entity, final List<String> relations, final AsyncCallback<E> responder )
+  public <T> void loadRelations( String parentType, String objectId, LoadRelationsQueryBuilder queryBuilder, Class<T> relatedType,
+                          final AsyncCallback<List<T>> responder )
   {
+    StringUtils.checkEmpty( objectId, ExceptionMessage.NULL_ENTITY );
+    Objects.requireNonNull( queryBuilder, ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
+
+    BackendlessDataQuery dataQuery = queryBuilder.build();
+    String relationName = dataQuery.getQueryOptions().getRelated().iterator().next();
+    int pageSize = dataQuery.getPageSize();
+    int offset = dataQuery.getOffset();
+
     try
     {
-      if( entity == null )
-        throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
-
-      checkDeclaredType( entity.getClass() );
-      final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
-
-      MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
-      {
-        @Override
-        public Object substitute( Object o )
-        {
-          if( o == entity )
-          {
-            return serializedEntity;
-          }
-          else
-          {
-            return o;
-          }
-        }
-      } );
-
-      Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity.getClass() ), serializedEntity, relations };
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, new AsyncCallback<E>()
-      {
-        @Override
-        public void handleResponse( E loadedRelations )
-        {
-          try
-          {
-            loadRelationsToEntity( entity, loadedRelations, relations );
-
-            if( responder != null )
-              responder.handleResponse( entity );
-          }
-          catch( Exception e )
-          {
-            if( responder != null )
-              responder.handleFault( new BackendlessFault( e ) );
-          }
-        }
-
-        @Override
-        public void handleFault( BackendlessFault fault )
-        {
-          if( responder != null )
-            responder.handleFault( fault );
-        }
-      }, new AdaptingResponder<E>( (Class<E>) entity.getClass(), new PoJoAdaptingPolicy<E>() ) );
+      Object[] args = new Object[] { parentType, objectId, relationName, pageSize, offset };
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, responder, ResponderHelper.getCollectionAdaptingResponder( relatedType ) );
     }
     catch( Throwable e )
     {
@@ -588,8 +527,7 @@ public final class Persistence
     }
   }
 
-  public <E> Collection<E> find( Class<E> entity,
-                                               BackendlessDataQuery dataQuery ) throws BackendlessException
+  public <E> Collection<E> find( Class<E> entity, BackendlessDataQuery dataQuery ) throws BackendlessException
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
@@ -772,21 +710,37 @@ public final class Persistence
 
   static String getEntityId( Object entity ) throws BackendlessException
   {
-    String id;
+    String id = null;
 
-    try
+    if( ReflectionUtil.hasField( entity.getClass(), Persistence.DEFAULT_OBJECT_ID_FIELD ) )
     {
-      Method declaredMethod = entity.getClass().getMethod( DEFAULT_OBJECT_ID_GETTER );
-
-      if( !declaredMethod.isAccessible() )
-        declaredMethod.setAccessible( true );
-
-      id = (String) declaredMethod.invoke( entity );
+      try
+      {
+        Field field = ReflectionUtil.getField( entity.getClass(), Persistence.DEFAULT_OBJECT_ID_FIELD );
+        field.setAccessible( true );
+        id = (String) field.get( entity );
+      }
+      catch ( NoSuchFieldException | IllegalAccessException e )
+      {
+      }
     }
-    catch( Exception e )
+    else
     {
-      id = null;
+      try
+      {
+        Method declaredMethod = entity.getClass().getMethod( DEFAULT_OBJECT_ID_GETTER );
+
+        if( !declaredMethod.isAccessible() )
+          declaredMethod.setAccessible( true );
+
+        id = (String) declaredMethod.invoke( entity );
+      }
+      catch ( Exception e )
+      {
+        id = null;
+      }
     }
+
 
     if( id == null )
       id = FootprintsManager.getInstance().getObjectId( entity );

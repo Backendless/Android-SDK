@@ -21,6 +21,8 @@ package com.backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.persistence.BackendlessDataQuery;
+import com.backendless.persistence.BackendlessSerializer;
+import com.backendless.persistence.LoadRelationsQueryBuilder;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -283,15 +285,17 @@ class DataStoreFactory
       }
 
       @Override
-      public void loadRelations( E entity, List<String> relations ) throws BackendlessException
+      public <R> List<R> loadRelations( String objectId, LoadRelationsQueryBuilder<R> queryBuilder )
       {
-        Backendless.Persistence.loadRelations( entity, relations );
+        String typeName = BackendlessSerializer.getSimpleName( entityClass );
+        return Backendless.Persistence.loadRelations( typeName, objectId, queryBuilder, queryBuilder.getRelationType() );
       }
 
       @Override
-      public void loadRelations( E entity, List<String> relations, AsyncCallback<E> responder )
+      public <R> void loadRelations( String objectId, LoadRelationsQueryBuilder<R> queryBuilder, AsyncCallback<List<R>> responder )
       {
-        Backendless.Persistence.loadRelations( entity, relations, responder );
+        String typeName = BackendlessSerializer.getSimpleName( entityClass );
+        Backendless.Persistence.loadRelations( typeName, objectId, queryBuilder, queryBuilder.getRelationType(), responder );
       }
 
       @Override

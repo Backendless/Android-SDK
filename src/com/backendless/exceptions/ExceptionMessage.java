@@ -146,4 +146,8 @@ public class ExceptionMessage
   public final static String INCORRECT_MESSAGE_TYPE = "Message object can not be instance of PublishOptions or DeliveryOptions class";
   public final static String INVALID_CLASS = "Cannot use inner or anonymous classes. Make sure the class is public. It cannot be inner or anonymous";
 
+  public static String NULL_FIELD( String field )
+  {
+    return field + " cannot be null or empty.";
+  }
 }
