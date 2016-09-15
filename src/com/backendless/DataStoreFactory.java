@@ -22,6 +22,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.BackendlessSerializer;
+import com.backendless.persistence.LoadRelationsQueryBuilder;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -284,17 +285,17 @@ class DataStoreFactory
       }
 
       @Override
-      public <T> List<T> loadRelations( String objectId, String relationName, int pageSize, int offset, Class<T> relatedType )
+      public <R> List<R> loadRelations( String objectId, LoadRelationsQueryBuilder<R> queryBuilder )
       {
         String typeName = BackendlessSerializer.getSimpleName( entityClass );
-        return Backendless.Persistence.loadRelations( typeName, objectId, relationName, pageSize, offset, relatedType );
+        return Backendless.Persistence.loadRelations( typeName, objectId, queryBuilder, queryBuilder.getRelationType() );
       }
 
       @Override
-      public <T> void loadRelations( String objectId, String relationName, int pageSize, int offset, Class<T> relatedType, AsyncCallback<List<T>> responder )
+      public <R> void loadRelations( String objectId, LoadRelationsQueryBuilder<R> queryBuilder, AsyncCallback<List<R>> responder )
       {
         String typeName = BackendlessSerializer.getSimpleName( entityClass );
-        Backendless.Persistence.loadRelations( typeName, objectId, relationName, pageSize, offset, relatedType, responder );
+        Backendless.Persistence.loadRelations( typeName, objectId, queryBuilder, queryBuilder.getRelationType(), responder );
       }
 
       @Override

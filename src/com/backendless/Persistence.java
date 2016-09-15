@@ -24,10 +24,7 @@ import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
-import com.backendless.persistence.BackendlessDataQuery;
-import com.backendless.persistence.BackendlessSerializer;
-import com.backendless.persistence.MapDrivenDataStore;
-import com.backendless.persistence.QueryOptions;
+import com.backendless.persistence.*;
 import com.backendless.property.ObjectProperty;
 import com.backendless.utils.ReflectionUtil;
 import com.backendless.utils.ResponderHelper;
@@ -56,9 +53,6 @@ public final class Persistence
 
   public final static String PARCELABLE_CREATOR_FIELD_NAME = "CREATOR";
 
-  public final static String LOAD_ALL_RELATIONS = "*";
-  public final static DataPermission Permissions = new DataPermission();
-
   private static final Persistence instance = new Persistence();
 
   static Persistence getInstance()
@@ -69,7 +63,6 @@ public final class Persistence
   private Persistence()
   {
     Types.addClientClassMapping( "com.backendless.services.persistence.BackendlessDataQuery", BackendlessDataQuery.class );
-    Types.addClientClassMapping( "com.backendless.services.persistence.BackendlessCollection", ArrayList.class );
     Types.addClientClassMapping( "com.backendless.services.persistence.ObjectProperty", ObjectProperty.class );
     Types.addClientClassMapping( "com.backendless.services.persistence.QueryOptions", QueryOptions.class );
   }
@@ -421,35 +414,33 @@ public final class Persistence
     }
   }
 
-  public <T> List<T> loadRelations( String parentType, String objectId, String relationName, int pageSize, int offset, Class<T> relatedType  ) throws BackendlessException
+  public <T> List<T> loadRelations( String parentType, String objectId, LoadRelationsQueryBuilder queryBuilder, Class<T> relatedType  ) throws BackendlessException
   {
     StringUtils.checkEmpty( objectId, ExceptionMessage.NULL_ENTITY );
-    StringUtils.checkEmpty( relationName, ExceptionMessage.NULL_FIELD( "relationName" ) );
 
-    if( pageSize < 0 )
-      throw new IllegalArgumentException( ExceptionMessage.WRONG_OFFSET );
-    if( offset < 0 )
-      throw new IllegalArgumentException( ExceptionMessage.WRONG_PAGE_SIZE );
+    BackendlessDataQuery dataQuery = queryBuilder.build();
+    String relationName = dataQuery.getQueryOptions().getRelated().iterator().next();
+    int pageSize = dataQuery.getPageSize();
+    int offset = dataQuery.getOffset();
 
     Object[] args = new Object[] { parentType, objectId, relationName, pageSize, offset };
-    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, ResponderHelper.getArrayAdaptingResponder( relatedType )  );
+    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, ResponderHelper.getCollectionAdaptingResponder( relatedType )  );
   }
 
-  public <T> void loadRelations( String parentType, String objectId, String relationName, int pageSize, int offset, Class<T> relatedType,
+  public <T> void loadRelations( String parentType, String objectId, LoadRelationsQueryBuilder queryBuilder, Class<T> relatedType,
                           final AsyncCallback<List<T>> responder )
   {
     StringUtils.checkEmpty( objectId, ExceptionMessage.NULL_ENTITY );
-    StringUtils.checkEmpty( relationName, ExceptionMessage.NULL_FIELD( "relationName" ) );
 
-    if( pageSize < 0 )
-      throw new IllegalArgumentException( ExceptionMessage.WRONG_OFFSET );
-    if( offset < 0 )
-      throw new IllegalArgumentException( ExceptionMessage.WRONG_PAGE_SIZE );
+    BackendlessDataQuery dataQuery = queryBuilder.build();
+    String relationName = dataQuery.getQueryOptions().getRelated().iterator().next();
+    int pageSize = dataQuery.getPageSize();
+    int offset = dataQuery.getOffset();
 
     try
     {
       Object[] args = new Object[] { parentType, objectId, relationName, pageSize, offset };
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, responder, ResponderHelper.getArrayAdaptingResponder( relatedType ) );
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, responder, ResponderHelper.getCollectionAdaptingResponder( relatedType ) );
     }
     catch( Throwable e )
     {
@@ -534,8 +525,7 @@ public final class Persistence
     }
   }
 
-  public <E> Collection<E> find( Class<E> entity,
-                                               BackendlessDataQuery dataQuery ) throws BackendlessException
+  public <E> Collection<E> find( Class<E> entity, BackendlessDataQuery dataQuery ) throws BackendlessException
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );

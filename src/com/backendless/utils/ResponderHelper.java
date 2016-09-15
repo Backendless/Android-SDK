@@ -35,12 +35,6 @@ public class ResponderHelper
     return getAdaptingResponder( entity, new CollectionAdaptingPolicy<E>() );
   }
 
-  public static <E> AdaptingResponder getArrayAdaptingResponder( Class<E> entity )
-  {
-    entity = BackendlessSerializer.getClassForDeserialization( entity );
-    return getAdaptingResponder( entity, new ArrayAdaptingPolicy<E>() );
-  }
-
   public static  <E> AdaptingResponder getPOJOAdaptingResponder( Class<E> entity )
   {
     entity = BackendlessSerializer.getClassForDeserialization( entity );

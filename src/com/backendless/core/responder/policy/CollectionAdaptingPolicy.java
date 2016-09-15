@@ -28,38 +28,39 @@ import weborb.types.IAdaptingType;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class CollectionAdaptingPolicy<E> implements IAdaptingPolicy<E>
 {
   @Override
   public Object adapt( Class<E> clazz, IAdaptingType entity, IResponder nextResponder )
   {
-    Collection<?> result = null;
+    List<E> result = null;
 
     try
     {
-      AnonymousObject bodyValue = (AnonymousObject) ((NamedObject) entity).getTypedObject();
-      ArrayType data = (ArrayType) bodyValue.getProperties().get( "data" );
+      List<E> list = new ArrayList<>();
+      if( entity == null )
+        return list;
 
-      if( data != null )
+      ArrayType data = (ArrayType) entity;
+
+      Object[] dataArray = (Object[]) data.getArray();
+
+      if( weborb.types.Types.getMappedClientClass( clazz.getName() ) == null )
       {
-        Object[] dataArray = (Object[]) data.getArray();
-
-        if( weborb.types.Types.getMappedClientClass( clazz.getName() ) == null )
-        {
-          for( int i = 0; i < dataArray.length; i++ )
-            ((NamedObject) dataArray[ i ]).setDefaultType( clazz );
-        }
+        for ( Object aDataArray : dataArray )
+          ( (NamedObject) aDataArray ).setDefaultType( clazz );
       }
 
-      result = (Collection<?>) entity.adapt( ArrayList.class );
+      result = (List<E>) entity.adapt( list.getClass() );
 
       if( nextResponder != null )
         nextResponder.responseHandler( result );
     }
     catch( AdaptingException e )
     {
-      Fault fault = new Fault( "Unable to adapt response to BackendlessCollection", e.getMessage() );
+      Fault fault = new Fault( "Unable to adapt response to List<E>", e.getMessage() );
 
       if( nextResponder != null )
         nextResponder.errorHandler( fault );

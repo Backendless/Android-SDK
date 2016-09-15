@@ -18,6 +18,7 @@
 
 package com.backendless.persistence;
 
+import com.backendless.Backendless;
 import com.backendless.IDataStore;
 import com.backendless.Invoker;
 import com.backendless.Persistence;
@@ -441,15 +442,15 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public <T> List<T> loadRelations( String objectId, String relationName, int pageSize, int offset, Class<T> relatedType )
+  public <R> List<R> loadRelations( String objectId, LoadRelationsQueryBuilder<R> queryBuilder )
   {
-    return Backendless.Data.loadRelations( tableName, objectId, relationName, pageSize, offset, relatedType );
+    return Backendless.Data.loadRelations( tableName, objectId, queryBuilder, queryBuilder.getRelationType() );
   }
 
   @Override
-  public <T> void loadRelations( String objectId, String relationName, int pageSize, int offset, Class<T> relatedType, AsyncCallback<List<T>> responder )
+  public <R> void loadRelations( String objectId, LoadRelationsQueryBuilder<R> queryBuilder, AsyncCallback<List<R>> responder )
   {
-    Backendless.Data.loadRelations( tableName, objectId, relationName, pageSize, offset, relatedType, responder );
+    Backendless.Data.loadRelations( tableName, objectId, queryBuilder, queryBuilder.getRelationType(), responder );
   }
 
   @Override
