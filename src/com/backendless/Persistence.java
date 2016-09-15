@@ -523,26 +523,22 @@ public final class Persistence
     }
   }
 
-  public <E> List<E> find( Class<E> entity, BackendlessDataQuery dataQuery ) throws BackendlessException
+  public <E> List<E> find( Class<E> entity, DataQueryBuilder queryBuilder ) throws BackendlessException
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-    checkPageSizeAndOffset( dataQuery );
-
-    Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), dataQuery };
+    Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), queryBuilder.build() };
 
     return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, ResponderHelper.getCollectionAdaptingResponder( entity ) );
   }
 
-  public <E> void find( final Class<E> entity, final BackendlessDataQuery dataQuery,
-                           final AsyncCallback<List<E>> responder )
+  public <E> void find( Class<E> entity, DataQueryBuilder queryBuilder, AsyncCallback<List<E>> responder )
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-    checkPageSizeAndOffset( dataQuery );
-
+    BackendlessDataQuery dataQuery = queryBuilder.build();
     try
     {
       Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), dataQuery };
@@ -732,9 +728,10 @@ public final class Persistence
     return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args );
   }
 
-  <E> int getObjectCount( final Class<E> entity, BackendlessDataQuery query )
+  <E> int getObjectCount( final Class<E> entity, DataQueryBuilder queryBuilder )
   {
-    Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), query };
+    BackendlessDataQuery dataQuery = queryBuilder.build();
+    Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), dataQuery };
     return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args );
   }
 
@@ -752,11 +749,12 @@ public final class Persistence
     }
   }
 
-  <E> void getObjectCount( final Class<E> entity, BackendlessDataQuery query, AsyncCallback<Integer> responder )
+  <E> void getObjectCount( final Class<E> entity, DataQueryBuilder queryBuilder, AsyncCallback<Integer> responder )
   {
+    BackendlessDataQuery dataQuery = queryBuilder.build();
     try
     {
-      Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), query };
+      Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), dataQuery };
       Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args, responder );
     }
     catch( Throwable e )
@@ -796,19 +794,18 @@ public final class Persistence
     }
   }
 
-  public List<Map<String, Object>> getView( String viewName, BackendlessDataQuery dataQuery )
+  public List<Map<String, Object>> getView( String viewName, DataQueryBuilder queryBuilder )
   {
-    checkPageSizeAndOffset( dataQuery );
-
+    BackendlessDataQuery dataQuery = queryBuilder.build();
     Object[] args = new Object[] { viewName, dataQuery };
     return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredView", args );
   }
 
-  public void getView( String viewName, BackendlessDataQuery query, AsyncCallback<Map<String, Object>> responder )
+  public void getView( String viewName, DataQueryBuilder queryBuilder, AsyncCallback<Map<String, Object>> responder )
   {
-    checkPageSizeAndOffset( query );
+    BackendlessDataQuery dataQuery = queryBuilder.build();
 
-    Object[] args = new Object[] { viewName, query };
+    Object[] args = new Object[] { viewName, dataQuery };
     Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredView", args, responder );
   }
 

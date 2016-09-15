@@ -22,6 +22,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.BackendlessSerializer;
+import com.backendless.persistence.DataQueryBuilder;
 import com.backendless.persistence.LoadRelationsQueryBuilder;
 
 import java.util.ArrayList;
@@ -90,9 +91,9 @@ class DataStoreFactory
       }
 
       @Override
-      public int getObjectCount( BackendlessDataQuery query )
+      public int getObjectCount( DataQueryBuilder dataQueryBuilder )
       {
-        return Backendless.Persistence.getObjectCount( entityClass, query );
+        return Backendless.Persistence.getObjectCount( entityClass, dataQueryBuilder );
       }
 
       public void findFirst( final AsyncCallback<E> responder )
@@ -166,25 +167,25 @@ class DataStoreFactory
       @Override
       public List<E> find() throws BackendlessException
       {
-        return Backendless.Persistence.find( entityClass, new BackendlessDataQuery() );
+        return Backendless.Persistence.find( entityClass, DataQueryBuilder.create() );
       }
 
       @Override
-      public List<E> find( BackendlessDataQuery dataQueryOptions ) throws BackendlessException
+      public List<E> find( DataQueryBuilder dataQueryBuilder ) throws BackendlessException
       {
-        return Backendless.Persistence.find( entityClass, dataQueryOptions );
+        return Backendless.Persistence.find( entityClass, dataQueryBuilder );
       }
 
       @Override
       public void find( AsyncCallback<List<E>> responder )
       {
-        Backendless.Persistence.find( entityClass, new BackendlessDataQuery(), responder );
+        Backendless.Persistence.find( entityClass, DataQueryBuilder.create(), responder );
       }
 
       @Override
-      public void find( BackendlessDataQuery dataQueryOptions, AsyncCallback<List<E>> responder )
+      public void find( DataQueryBuilder dataQueryBuilder, AsyncCallback<List<E>> responder )
       {
-        Backendless.Persistence.find( entityClass, dataQueryOptions, responder );
+        Backendless.Persistence.find( entityClass, dataQueryBuilder, responder );
       }
 
       @Override
@@ -304,9 +305,9 @@ class DataStoreFactory
       }
 
       @Override
-      public void getObjectCount( BackendlessDataQuery query, AsyncCallback<Integer> responder )
+      public void getObjectCount( DataQueryBuilder dataQueryBuilder, AsyncCallback<Integer> responder )
       {
-        Backendless.Persistence.getObjectCount( entityClass, query, responder );
+        Backendless.Persistence.getObjectCount( entityClass, dataQueryBuilder, responder );
       }
     };
   }

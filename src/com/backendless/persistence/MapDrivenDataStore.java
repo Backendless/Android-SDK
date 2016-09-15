@@ -259,51 +259,30 @@ public class MapDrivenDataStore implements IDataStore<Map>
   @Override
   public List<Map> find() throws BackendlessException
   {
-    return find( new BackendlessDataQuery() );
+    return find( DataQueryBuilder.create() );
   }
 
   @Override
-  public List<Map> find( BackendlessDataQuery dataQuery ) throws BackendlessException
+  public List<Map> find( DataQueryBuilder dataQuery ) throws BackendlessException
   {
-    Persistence.checkPageSizeAndOffset( dataQuery );
     Object[] args = new Object[] { tableName, dataQuery };
-    Collection<Map> result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
 
-    return result;
+    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
   }
 
   @Override
   public void find( AsyncCallback<List<Map>> responder )
   {
-    find( new BackendlessDataQuery(), responder );
+    find( DataQueryBuilder.create(), responder );
   }
 
   @Override
-  public void find( final BackendlessDataQuery dataQuery, final AsyncCallback<List<Map>> responder )
+  public void find( final DataQueryBuilder dataQuery, final AsyncCallback<List<Map>> responder )
   {
     try
     {
-      Persistence.checkPageSizeAndOffset( dataQuery );
-
-      AsyncCallback<Collection<Map>> callback = new AsyncCallback<Collection<Map>>()
-      {
-        @Override
-        public void handleResponse( Collection<Map> response )
-        {
-          if( responder != null )
-            responder.handleResponse( response );
-        }
-
-        @Override
-        public void handleFault( BackendlessFault fault )
-        {
-          if( responder != null )
-            responder.handleFault( fault );
-        }
-      };
-
       Object[] args = new Object[] { tableName, dataQuery };
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, callback );
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, responder );
     }
     catch( Throwable e )
     {
@@ -461,9 +440,9 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public int getObjectCount( BackendlessDataQuery query )
+  public int getObjectCount( DataQueryBuilder dataQueryBuilder )
   {
-    Object[] args = new Object[] { tableName, query };
+    Object[] args = new Object[] { tableName, dataQueryBuilder };
     return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args );
   }
 
@@ -483,11 +462,11 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public void getObjectCount( BackendlessDataQuery query, AsyncCallback<Integer> responder )
+  public void getObjectCount( DataQueryBuilder dataQueryBuilder, AsyncCallback<Integer> responder )
   {
     try
     {
-      Object[] args = new Object[] { tableName, query };
+      Object[] args = new Object[] { tableName, dataQueryBuilder };
       Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args, responder );
     }
     catch( Throwable e )

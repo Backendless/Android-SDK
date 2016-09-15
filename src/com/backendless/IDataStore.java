@@ -20,7 +20,7 @@ package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
-import com.backendless.persistence.BackendlessDataQuery;
+import com.backendless.persistence.DataQueryBuilder;
 import com.backendless.persistence.LoadRelationsQueryBuilder;
 
 import java.util.List;
@@ -61,11 +61,11 @@ public interface IDataStore<E>
 
   List<E> find() throws BackendlessException;
 
-  List<E> find( BackendlessDataQuery dataQueryOptions ) throws BackendlessException;
+  List<E> find( DataQueryBuilder dataQueryBuilder ) throws BackendlessException;
 
   void find( AsyncCallback<List<E>> responder );
 
-  void find( BackendlessDataQuery dataQueryOptions, AsyncCallback<List<E>> responder );
+  void find( DataQueryBuilder dataQueryBuilder, AsyncCallback<List<E>> responder );
 
   E findById( String id ) throws BackendlessException;
 
@@ -85,7 +85,7 @@ public interface IDataStore<E>
 
   int getObjectCount();
 
-  int getObjectCount( BackendlessDataQuery query );
+  int getObjectCount( DataQueryBuilder dataQueryBuilder );
 
   void findById( String id, AsyncCallback<E> responder );
 
@@ -122,5 +122,5 @@ public interface IDataStore<E>
 
   void getObjectCount( AsyncCallback<Integer> responder );
 
-  void getObjectCount( BackendlessDataQuery query, AsyncCallback<Integer> responder );
+  void getObjectCount( DataQueryBuilder dataQueryBuilder, AsyncCallback<Integer> responder );
 }

@@ -30,11 +30,6 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
   private String whereClause;
   private QueryOptions queryOptions;
 
-  {
-    setPageSize( DEFAULT_PAGE_SIZE );
-    setOffset( DEFAULT_OFFSET );
-  }
-
   public BackendlessDataQuery()
   {
   }
