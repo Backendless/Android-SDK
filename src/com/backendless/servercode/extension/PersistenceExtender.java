@@ -25,6 +25,7 @@ import com.backendless.servercode.RunnerContext;
 
 import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -72,12 +73,13 @@ public abstract class PersistenceExtender<T>
   }
 
   public void beforeLoadRelations( RunnerContext context, Object objectId, String entityName,
-                                   String[] relations ) throws Exception
+                                   String relationName, int pageSize, int offset ) throws Exception
   {
   }
 
-  public void afterLoadRelations( RunnerContext context, Object objectId, String entityName, String[] relations,
-                                  ExecutionResult<Map> entity ) throws Exception
+  public void afterLoadRelations( RunnerContext context, Object objectId, String entityName,
+                                  String relationName, int pageSize, int offset,
+                                  ExecutionResult<List> collection ) throws Exception
   {
   }
 
