@@ -39,7 +39,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Collection;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -399,41 +399,41 @@ public final class Files
     Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "moveFile", new Object[] { sourcePathName, targetPath }, responder );
   }
 
-  public Collection<FileInfo> listing( String path )
+  public List<FileInfo> listing( String path )
   {
     return listing( path, "*", false );
   }
 
-  public Collection<FileInfo> listing( String path, String pattern, boolean recursive )
+  public List<FileInfo> listing( String path, String pattern, boolean recursive )
   {
     return listing( path, pattern, recursive, BackendlessFilesQuery.DEFAULT_PAGE_SIZE, BackendlessFilesQuery.DEFAULT_OFFSET );
   }
 
-  public Collection<FileInfo> listing( String path, String pattern, boolean recursive, int pagesize,
+  public List<FileInfo> listing( String path, String pattern, boolean recursive, int pagesize,
                                                   int offset )
   {
-    Collection<FileInfo> collection = Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "listing", new Object[] { path, pattern, recursive, pagesize, offset } );
-    return collection;
+    List<FileInfo> List = Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "listing", new Object[] { path, pattern, recursive, pagesize, offset } );
+    return List;
   }
 
-  public void listing( String path, AsyncCallback<Collection<FileInfo>> responder )
+  public void listing( String path, AsyncCallback<List<FileInfo>> responder )
   {
     listing( path, "*", false, responder );
   }
 
   public void listing( String path, String pattern, boolean recursive,
-                       AsyncCallback<Collection<FileInfo>> responder )
+                       AsyncCallback<List<FileInfo>> responder )
   {
     listing( path, pattern, recursive, BackendlessFilesQuery.DEFAULT_PAGE_SIZE, BackendlessFilesQuery.DEFAULT_OFFSET, responder );
   }
 
   public void listing( final String path, final String pattern, final boolean recursive, final int pagesize,
-                       final int offset, final AsyncCallback<Collection<FileInfo>> responder )
+                       final int offset, final AsyncCallback<List<FileInfo>> responder )
   {
-    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "listing", new Object[] { path, pattern, recursive, pagesize, offset }, new AsyncCallback<Collection<FileInfo>>()
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "listing", new Object[] { path, pattern, recursive, pagesize, offset }, new AsyncCallback<List<FileInfo>>()
     {
       @Override
-      public void handleResponse( Collection<FileInfo> response )
+      public void handleResponse( List<FileInfo> response )
       {
         if( responder != null )
           responder.handleResponse( response );
