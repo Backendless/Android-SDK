@@ -257,13 +257,13 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public Collection<Map> find() throws BackendlessException
+  public List<Map> find() throws BackendlessException
   {
     return find( new BackendlessDataQuery() );
   }
 
   @Override
-  public Collection<Map> find( BackendlessDataQuery dataQuery ) throws BackendlessException
+  public List<Map> find( BackendlessDataQuery dataQuery ) throws BackendlessException
   {
     Persistence.checkPageSizeAndOffset( dataQuery );
     Object[] args = new Object[] { tableName, dataQuery };
@@ -273,13 +273,13 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public void find( AsyncCallback<Collection<Map>> responder )
+  public void find( AsyncCallback<List<Map>> responder )
   {
     find( new BackendlessDataQuery(), responder );
   }
 
   @Override
-  public void find( final BackendlessDataQuery dataQuery, final AsyncCallback<Collection<Map>> responder )
+  public void find( final BackendlessDataQuery dataQuery, final AsyncCallback<List<Map>> responder )
   {
     try
     {

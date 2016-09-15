@@ -38,7 +38,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public final class Persistence
 {
@@ -90,8 +92,6 @@ public final class Persistence
           return o;
       }
     } );
-
-   // FootprintsManager.getInstance().Inner.putMissingPropsToEntityMap( entity, serializedEntity );
 
     try
     {
@@ -146,8 +146,6 @@ public final class Persistence
             return o;
         }
       } );
-
-     // FootprintsManager.getInstance().Inner.putMissingPropsToEntityMap( entity, serializedEntity );
 
       AsyncCallback<E> callbackOverrider;
       if( serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) == null )
@@ -525,7 +523,7 @@ public final class Persistence
     }
   }
 
-  public <E> Collection<E> find( Class<E> entity, BackendlessDataQuery dataQuery ) throws BackendlessException
+  public <E> List<E> find( Class<E> entity, BackendlessDataQuery dataQuery ) throws BackendlessException
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
@@ -533,40 +531,22 @@ public final class Persistence
     checkPageSizeAndOffset( dataQuery );
 
     Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), dataQuery };
-    Collection<E> result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, ResponderHelper.getCollectionAdaptingResponder( entity ) );
 
-    return result;
+    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, ResponderHelper.getCollectionAdaptingResponder( entity ) );
   }
 
   public <E> void find( final Class<E> entity, final BackendlessDataQuery dataQuery,
-                           final AsyncCallback<Collection<E>> responder )
+                           final AsyncCallback<List<E>> responder )
   {
+    if( entity == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
+
+    checkPageSizeAndOffset( dataQuery );
+
     try
     {
-      if( entity == null )
-        throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
-
-      checkPageSizeAndOffset( dataQuery );
-
-      AsyncCallback<Collection<E>> callback = new AsyncCallback<Collection<E>>()
-      {
-        @Override
-        public void handleResponse( Collection<E> response )
-        {
-          if( responder != null )
-            responder.handleResponse( response );
-        }
-
-        @Override
-        public void handleFault( BackendlessFault fault )
-        {
-          if( responder != null )
-            responder.handleFault( fault );
-        }
-      };
-
       Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), dataQuery };
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, callback, ResponderHelper.getCollectionAdaptingResponder( entity ) );
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, responder, ResponderHelper.getCollectionAdaptingResponder( entity ) );
     }
     catch( Throwable e )
     {
@@ -816,26 +796,7 @@ public final class Persistence
     }
   }
 
-  /*
-  public static String getSimpleName( Class clazz )
-  {
-    if( clazz == BackendlessUser.class )
-    {
-      return UserService.USERS_TABLE_NAME;
-    }
-    else
-    {
-      String mappedName = weborb.types.Types.getMappedClientClass( clazz.getName() );
-
-      if( mappedName != null )
-        return mappedName;
-      else
-        return clazz.getSimpleName();
-    }
-  }
-  */
-
-  public Collection<Map<String, Object>> getView( String viewName, BackendlessDataQuery dataQuery )
+  public List<Map<String, Object>> getView( String viewName, BackendlessDataQuery dataQuery )
   {
     checkPageSizeAndOffset( dataQuery );
 
@@ -852,7 +813,7 @@ public final class Persistence
   }
 
 
-  public Collection<Map> callStoredProcedure( String spName, Map<String, Object> arguments )
+  public List<Map> callStoredProcedure( String spName, Map<String, Object> arguments )
   {
     Object[] args = new Object[] { spName, arguments };
 

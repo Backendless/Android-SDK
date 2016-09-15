@@ -21,13 +21,11 @@ package com.backendless.core.responder.policy;
 import weborb.client.Fault;
 import weborb.client.IResponder;
 import weborb.exceptions.AdaptingException;
-import weborb.reader.AnonymousObject;
 import weborb.reader.ArrayType;
 import weborb.reader.NamedObject;
 import weborb.types.IAdaptingType;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class CollectionAdaptingPolicy<E> implements IAdaptingPolicy<E>
