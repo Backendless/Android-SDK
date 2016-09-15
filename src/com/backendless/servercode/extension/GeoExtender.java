@@ -6,6 +6,7 @@ import com.backendless.geo.GeoPoint;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -60,7 +61,7 @@ public abstract class GeoExtender
   }
 
   public void afterGetPoints( RunnerContext context, BackendlessGeoQuery query,
-                              ExecutionResult<List<GeoPoint>> points ) throws Exception
+                              ExecutionResult<Collection<GeoPoint>> points ) throws Exception
   {
   }
 
@@ -88,7 +89,7 @@ public abstract class GeoExtender
   }
 
   public void afterRelativeFind( RunnerContext context, BackendlessGeoQuery backendlessGeoQuery,
-                                 ExecutionResult<List<GeoPoint>> findPoints ) throws Exception
+                                 ExecutionResult<Collection<GeoPoint>> findPoints ) throws Exception
   {
   }
 }

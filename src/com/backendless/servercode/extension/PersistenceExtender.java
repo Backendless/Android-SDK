@@ -23,10 +23,8 @@ import com.backendless.property.ObjectProperty;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
+import java.util.*;
 import java.util.List;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -114,7 +112,7 @@ public abstract class PersistenceExtender<T>
   }
 
   public void afterFind( RunnerContext context, BackendlessDataQuery query,
-                         ExecutionResult<List<T>> List ) throws Exception
+                         ExecutionResult<Collection<T>> List ) throws Exception
   {
   }
 
