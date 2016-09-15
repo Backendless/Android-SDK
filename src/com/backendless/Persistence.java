@@ -417,6 +417,7 @@ public final class Persistence
   public <T> List<T> loadRelations( String parentType, String objectId, LoadRelationsQueryBuilder queryBuilder, Class<T> relatedType  ) throws BackendlessException
   {
     StringUtils.checkEmpty( objectId, ExceptionMessage.NULL_ENTITY );
+    Objects.requireNonNull( queryBuilder, ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
 
     BackendlessDataQuery dataQuery = queryBuilder.build();
     String relationName = dataQuery.getQueryOptions().getRelated().iterator().next();
@@ -431,6 +432,7 @@ public final class Persistence
                           final AsyncCallback<List<T>> responder )
   {
     StringUtils.checkEmpty( objectId, ExceptionMessage.NULL_ENTITY );
+    Objects.requireNonNull( queryBuilder, ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
 
     BackendlessDataQuery dataQuery = queryBuilder.build();
     String relationName = dataQuery.getQueryOptions().getRelated().iterator().next();

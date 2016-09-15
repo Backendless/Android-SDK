@@ -60,7 +60,7 @@ public class CollectionAdaptingPolicy<E> implements IAdaptingPolicy<E>
     }
     catch( AdaptingException e )
     {
-      Fault fault = new Fault( "Unable to adapt response to List<E>", e.getMessage() );
+      Fault fault = new Fault( "Unable to adapt response to List<" + clazz.getName() + ">", e.getMessage() );
 
       if( nextResponder != null )
         nextResponder.errorHandler( fault );
