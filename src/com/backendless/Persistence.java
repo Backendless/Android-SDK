@@ -782,18 +782,6 @@ public final class Persistence
     }
   }
 
-  public static void checkPageSizeAndOffset( BackendlessDataQuery dataQuery ) throws BackendlessException
-  {
-    if( dataQuery != null )
-    {
-      if( dataQuery.getOffset() < 0 )
-        throw new IllegalArgumentException( ExceptionMessage.WRONG_OFFSET );
-
-      if( dataQuery.getPageSize() < 0 )
-        throw new IllegalArgumentException( ExceptionMessage.WRONG_PAGE_SIZE );
-    }
-  }
-
   public List<Map<String, Object>> getView( String viewName, DataQueryBuilder queryBuilder )
   {
     BackendlessDataQuery dataQuery = queryBuilder.build();
