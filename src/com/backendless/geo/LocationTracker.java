@@ -57,9 +57,9 @@ public class LocationTracker extends Service implements LocationListener
   private static final String LOCATION_LATITUDE_TAG = "locationLatitude";
   private static final String LOCATION_LONGITUDE_TAG = "locationLongitude";
 
-  private int minTime = 60 * 1000; // 1 minute
-  private int minDistance = 10; // meters
-  private Criteria criteria = null;
+  private static int minTime = 60 * 1000; // 1 minute
+  private static int minDistance = 10; // meters
+  private static Criteria criteria = null;
   public static float ACCEPTABLE_DISTANCE = 30; // meters
 
   private static LocationTracker instance;
@@ -103,6 +103,10 @@ public class LocationTracker extends Service implements LocationListener
     return null;
   }
 
+  /**
+   * @deprecated May be removed in the next versions, since service shouldn't be directly accessible.
+   */
+  @Deprecated
   public static LocationTracker getInstance()
   {
     return instance;
@@ -168,20 +172,21 @@ public class LocationTracker extends Service implements LocationListener
     saveLocationListeners();
   }
 
-  public void setLocationTrackerParameters( int minTime, int minDistance, int acceptedDistanceAfterReboot )
+  public static void setLocationTrackerParameters( int minTime, int minDistance, int acceptedDistanceAfterReboot )
   {
     setLocationTrackerParameters( minTime, minDistance, acceptedDistanceAfterReboot, new Criteria() );
   }
 
-  public void setLocationTrackerParameters( int minTime, int minDistance, int acceptedDistanceAfterReboot, Criteria criteria )
+  public static void setLocationTrackerParameters( int minTime, int minDistance, int acceptedDistanceAfterReboot,
+                                                   Criteria criteria )
   {
-    this.minTime = minTime;
-    this.minDistance = minDistance;
-    this.ACCEPTABLE_DISTANCE = acceptedDistanceAfterReboot;
-    this.criteria = criteria;
+    LocationTracker.minTime = minTime;
+    LocationTracker.minDistance = minDistance;
+    LocationTracker.ACCEPTABLE_DISTANCE = acceptedDistanceAfterReboot;
+    LocationTracker.criteria = criteria;
 
-    if( !locationListeners.isEmpty() )
-      listenBestProvider();
+    if( getInstance() != null && !LocationTracker.getInstance().locationListeners.isEmpty() )
+      LocationTracker.getInstance().listenBestProvider();
   }
 
   private void init()

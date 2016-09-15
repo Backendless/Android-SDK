@@ -27,7 +27,7 @@ import com.backendless.files.BackendlessFile;
 import com.backendless.files.BackendlessFilesQuery;
 import com.backendless.files.FileInfo;
 import com.backendless.files.router.FileOutputStreamRouter;
-import com.backendless.files.router.IOutputStreamRouter;
+import com.backendless.files.router.OutputStreamRouter;
 import com.backendless.files.security.FileRolePermission;
 import com.backendless.files.security.FileUserPermission;
 import com.backendless.utils.StringUtils;
@@ -46,9 +46,9 @@ import java.util.regex.Pattern;
 
 public final class Files
 {
+  private static final int DEFAULT_CHUNK_SIZE = 64 * 1024;
   private static final String OVERWRITE_PARAMETER_NAME = "overwrite";
   protected static final String FILE_MANAGER_SERVER_ALIAS = "com.backendless.services.file.FileService";
-  private static final int BUFFER_DEFAULT_LENGTH = 8192;
   private static final String SERVER_ERROR_REGEXP = "(\"message\":\"([^\"}]*)\")(,\"code\":([^\"}]*))?+";
   private static final Pattern SERVER_ERROR_PATTERN = Pattern.compile( SERVER_ERROR_REGEXP );
   private static final String SERVER_RESULT_REGEXP = "(\"fileURL\":\"([^\"[}]]*))";
@@ -109,17 +109,16 @@ public final class Files
       throw new IllegalArgumentException( ExceptionMessage.NOT_READABLE_FILE );
   }
 
-  public BackendlessFile uploadFromStream( IOutputStreamRouter outputStreamRouter, String name,
+  public BackendlessFile uploadFromStream( OutputStreamRouter outputStreamRouter, String name,
                                            String path ) throws Exception
   {
     return uploadFromStream( outputStreamRouter, name, path, false );
   }
 
-  public BackendlessFile uploadFromStream( IOutputStreamRouter outputStreamRouter, String name, String path,
-                                           boolean overwrite ) throws Exception
+  public BackendlessFile uploadFromStream( OutputStreamRouter outputStreamRouter, String name,
+                                           String path, boolean overwrite ) throws Exception
   {
     HttpURLConnection connection = null;
-    int uploadBufferLength = BUFFER_DEFAULT_LENGTH;
     String CRLF = "\r\n";
     String boundary = (new GUID()).toString();
 
@@ -132,6 +131,7 @@ public final class Files
 
       java.net.URL url = new URL( urlStr );
       connection = (HttpURLConnection) url.openConnection();
+      connection.setChunkedStreamingMode( DEFAULT_CHUNK_SIZE );
       connection.setDoOutput( true );
       connection.setDoInput( true );
       connection.addRequestProperty( "Content-Type", "multipart/form-data; boundary=" + boundary );
@@ -139,22 +139,21 @@ public final class Files
       for( String key : HeadersManager.getInstance().getHeaders().keySet() )
         connection.addRequestProperty( key, HeadersManager.getInstance().getHeaders().get( key ) );
 
-      outputStreamRouter.setOutputStream( connection.getOutputStream() );
-      PrintWriter writer = new PrintWriter( new OutputStreamWriter( outputStreamRouter.getOutputStream(), "UTF-8" ), true );
-      writer.append( "--" ).append( boundary ).append( CRLF );
-      writer.append( "Content-Disposition: form-data; name=\"file\"; filename=\"" ).append( name ).append( "\"" ).append( CRLF );
-      writer.append( "Content-Type: application/octet-stream" ).append( CRLF );
-      writer.append( "Content-Transfer-Encoding: binary" ).append( CRLF );
-      writer.append( CRLF ).flush();
+      try ( OutputStream outputStream = connection.getOutputStream();
+            PrintWriter writer = new PrintWriter( new OutputStreamWriter( outputStream, "UTF-8" ), true ) )
+      {
+        writer.append( "--" ).append( boundary ).append( CRLF );
+        writer.append( "Content-Disposition: form-data; name=\"file\"; filename=\"" ).append( name ).append( "\"" ).append( CRLF );
+        writer.append( "Content-Type: application/octet-stream" ).append( CRLF );
+        writer.append( "Content-Transfer-Encoding: binary" ).append( CRLF );
+        writer.append( CRLF ).flush();
 
-      outputStreamRouter.writeStream( uploadBufferLength );
-      outputStreamRouter.flush();
+        outputStreamRouter.writeStream( outputStream );
+        outputStream.flush();
 
-      writer.append( CRLF ).flush();
-      writer.append( "--" ).append( boundary ).append( "--" ).append( CRLF );
-      writer.close();
-
-      outputStreamRouter.close();
+        writer.append( CRLF ).flush();
+        writer.append( "--" ).append( boundary ).append( "--" ).append( CRLF );
+      }
 
       if( connection.getResponseCode() != 200 )
       {

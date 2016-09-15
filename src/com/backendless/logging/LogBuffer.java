@@ -24,14 +24,12 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.security.AccessControlException;
 import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class LogBuffer
 {
@@ -40,12 +38,12 @@ public class LogBuffer
   private static final int TIME_FREQUENCY = 60 * 5; // 5 minutes
   private static final int TIME_FREQUENCY_CODERUNNER = -1;
   private static final String LOGGING_SERVER_ALIAS = "com.backendless.services.logging.LogService";
-  private static final ScheduledExecutorService scheduledExecutorService = Backendless.isCodeRunner() ? null : Executors.newSingleThreadScheduledExecutor();
 
+  private ScheduledExecutorService scheduledExecutorService;
   private int numOfMessages;
   private int timeFrequency;
 
-  private Set<LogMessage> logMessages;
+  private Queue<LogMessage> logMessages;
   private ScheduledFuture<?> scheduledFuture;
 
   public static class SingletonHolder
@@ -63,7 +61,11 @@ public class LogBuffer
     numOfMessages = Backendless.isCodeRunner() ? NUM_OF_MESSAGES_CODERUNNER : NUM_OF_MESSAGES;
     timeFrequency = Backendless.isCodeRunner() ? TIME_FREQUENCY_CODERUNNER : TIME_FREQUENCY;
 
-    logMessages = Collections.synchronizedSet( new HashSet<LogMessage>() );
+    logMessages = new ConcurrentLinkedQueue<>();
+
+    if( !Backendless.isCodeRunner() )
+      scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+
     setupTimer();
   }
 
@@ -81,21 +83,13 @@ public class LogBuffer
   {
     if( !logMessages.isEmpty() )
     {
-      reportBatch( new ArrayList<LogMessage>( logMessages ) );
+      reportBatch( new ArrayList<>( logMessages ) );
       logMessages.clear();
     }
-
-    setupTimer();
   }
 
   private void setupTimer()
   {
-    if( scheduledFuture != null )
-    {
-      scheduledFuture.cancel( true );
-      scheduledFuture = null;
-    }
-
     if( timeFrequency > 0 )
     {
       scheduledTask();
@@ -123,14 +117,20 @@ public class LogBuffer
     if( Backendless.isCodeRunner() )
       throw new AccessControlException( "You have no permission to thread manipulation" );
 
-    scheduledFuture = scheduledExecutorService.schedule( new Runnable()
+    if( !scheduledExecutorService.isShutdown() )
     {
-      @Override
-      public void run()
+      if( scheduledFuture != null )
+        scheduledFuture.cancel(false);
+
+      scheduledFuture = scheduledExecutorService.scheduleAtFixedRate( new Runnable()
       {
-        flush();
-      }
-    }, timeFrequency, TimeUnit.SECONDS );
+        @Override
+        public void run()
+        {
+          flush();
+        }
+      }, 0, timeFrequency, TimeUnit.SECONDS );
+    }
   }
 
   private String getStackTrace( Throwable t )
@@ -138,22 +138,27 @@ public class LogBuffer
     if( t == null )
       return null;
 
-    StringWriter errors = new StringWriter();
-
-    t.printStackTrace( new PrintWriter( errors ) );
-
-    return errors.toString();
+    try ( StringWriter errors = new StringWriter();
+          PrintWriter s1 = new PrintWriter( errors ); )
+    {
+      t.printStackTrace( s1 );
+      return errors.toString();
+    }
+    catch ( IOException e )
+    {
+      return null;
+    }
   }
 
   public void reportSingleLogMessage( String logger, Level loglevel, String message, String exception )
   {
     if( Backendless.isCodeRunner() )
     {
-      Invoker.invokeSync( LOGGING_SERVER_ALIAS, "log", new Object[] { loglevel.name(), logger, message, exception } );
+      Invoker.invokeSync( LOGGING_SERVER_ALIAS, "log", new Object[]{ loglevel.name(), logger, message, exception } );
     }
     else
     {
-      Invoker.invokeAsync( LOGGING_SERVER_ALIAS, "log", new Object[] { loglevel.name(), logger, message, exception }, new AsyncCallback<Void>()
+      Invoker.invokeAsync( LOGGING_SERVER_ALIAS, "log", new Object[]{ loglevel.name(), logger, message, exception }, new AsyncCallback<Void>()
       {
         @Override
         public void handleResponse( Void response )
@@ -172,11 +177,11 @@ public class LogBuffer
   {
     if( Backendless.isCodeRunner() )
     {
-      Invoker.invokeSync( LOGGING_SERVER_ALIAS, "batchLog", new Object[] { logBatches } );
+      Invoker.invokeSync( LOGGING_SERVER_ALIAS, "batchLog", new Object[]{ logBatches } );
     }
     else
     {
-      Invoker.invokeAsync( LOGGING_SERVER_ALIAS, "batchLog", new Object[] { logBatches }, new AsyncCallback<Void>()
+      Invoker.invokeAsync( LOGGING_SERVER_ALIAS, "batchLog", new Object[]{ logBatches }, new AsyncCallback<Void>()
       {
         @Override
         public void handleResponse( Void response )
@@ -189,5 +194,11 @@ public class LogBuffer
         }
       } );
     }
+  }
+
+  public void close()
+  {
+    scheduledFuture.cancel( true );
+    scheduledExecutorService.shutdownNow();
   }
 }
