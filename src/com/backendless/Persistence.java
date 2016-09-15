@@ -41,6 +41,7 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public final class Persistence
 {
@@ -529,6 +530,7 @@ public final class Persistence
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
+    Objects.requireNonNull( queryBuilder, ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
 
     Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), queryBuilder.build() };
 
@@ -539,6 +541,7 @@ public final class Persistence
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
+    Objects.requireNonNull( queryBuilder, ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
 
     BackendlessDataQuery dataQuery = queryBuilder.build();
     try
@@ -732,6 +735,7 @@ public final class Persistence
 
   <E> int getObjectCount( final Class<E> entity, DataQueryBuilder queryBuilder )
   {
+    Objects.requireNonNull( queryBuilder, ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
     BackendlessDataQuery dataQuery = queryBuilder.build();
     Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), dataQuery };
     return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args );
@@ -753,6 +757,7 @@ public final class Persistence
 
   <E> void getObjectCount( final Class<E> entity, DataQueryBuilder queryBuilder, AsyncCallback<Integer> responder )
   {
+    Objects.requireNonNull( queryBuilder, ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
     BackendlessDataQuery dataQuery = queryBuilder.build();
     try
     {
@@ -786,6 +791,7 @@ public final class Persistence
 
   public List<Map<String, Object>> getView( String viewName, DataQueryBuilder queryBuilder )
   {
+    Objects.requireNonNull( queryBuilder, ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
     BackendlessDataQuery dataQuery = queryBuilder.build();
     Object[] args = new Object[] { viewName, dataQuery };
     return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredView", args );
@@ -793,6 +799,7 @@ public final class Persistence
 
   public void getView( String viewName, DataQueryBuilder queryBuilder, AsyncCallback<Map<String, Object>> responder )
   {
+    Objects.requireNonNull( queryBuilder, ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
     BackendlessDataQuery dataQuery = queryBuilder.build();
 
     Object[] args = new Object[] { viewName, dataQuery };

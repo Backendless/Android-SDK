@@ -18,12 +18,14 @@ class PagedQueryBuilder<Builder>
 
   Builder setPageSize( int pageSize )
   {
+    validatePageSize( pageSize );
     this.pageSize = pageSize;
     return builder;
   }
 
   Builder setOffset( int offset )
   {
+    validateOffset( offset );
     this.offset = offset;
     return builder;
   }
@@ -33,7 +35,10 @@ class PagedQueryBuilder<Builder>
    */
   Builder prepareNextPage()
   {
-    offset = +pageSize;
+    int offset = this.offset + pageSize;
+    validateOffset( offset );
+    this.offset = offset;
+
     return builder;
   }
 
@@ -42,24 +47,36 @@ class PagedQueryBuilder<Builder>
    */
   Builder preparePreviousPage()
   {
-    offset = -pageSize;
-    if( offset < 0 )
-      offset = 0;
+    int offset = this.offset - pageSize;
+    validateOffset( offset );
+    this.offset = offset;
+
     return builder;
   }
 
   BackendlessDataQuery build()
   {
-    if( pageSize < 0 )
-      throw new IllegalArgumentException( ExceptionMessage.WRONG_OFFSET );
-    if( offset < 0 )
-      throw new IllegalArgumentException( ExceptionMessage.WRONG_PAGE_SIZE );
+    validateOffset( offset );
+    validatePageSize( pageSize );
 
     BackendlessDataQuery dataQuery = new BackendlessDataQuery();
     dataQuery.setPageSize( pageSize );
     dataQuery.setOffset( offset );
 
     return dataQuery;
+  }
+
+
+  private void validateOffset( int offset )
+  {
+    if( offset < 0 )
+      throw new IllegalArgumentException( ExceptionMessage.WRONG_OFFSET );
+  }
+
+  private void validatePageSize( int pageSize )
+  {
+    if( pageSize <= 0 )
+      throw new IllegalArgumentException( ExceptionMessage.WRONG_PAGE_SIZE );
   }
 
 }
