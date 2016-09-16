@@ -56,6 +56,9 @@ public final class Persistence
 
   public final static String PARCELABLE_CREATOR_FIELD_NAME = "CREATOR";
 
+  public final static String LOAD_ALL_RELATIONS = "*";
+  public final static DataPermission Permissions = new DataPermission();
+
   private static final Persistence instance = new Persistence();
 
   static Persistence getInstance()

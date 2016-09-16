@@ -165,11 +165,11 @@ public final class Geo
     Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "removePoint", new Object[] { geoPoint.getObjectId() }, responder );
   }
 
-  public Collection<GeoPoint> getPoints( BackendlessGeoQuery geoQuery ) throws BackendlessException
+  public List<GeoPoint> getPoints( BackendlessGeoQuery geoQuery ) throws BackendlessException
   {
     checkGeoQuery( geoQuery );
     CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<>();
-    Collection<GeoPoint> result = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getPoints", new Object[] { geoQuery }, new AdaptingResponder<>( GeoPoint.class, adaptingPolicy ) );
+    List<GeoPoint> result = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getPoints", new Object[] { geoQuery }, new AdaptingResponder<>( GeoPoint.class, adaptingPolicy ) );
 
     if( geoQuery.getDpp() != null && geoQuery.getDpp() > 0 )
       setReferenceToCluster( result, geoQuery );
@@ -177,17 +177,17 @@ public final class Geo
     return result;
   }
 
-  public void getPoints( final BackendlessGeoQuery geoQuery, final AsyncCallback<Collection<GeoPoint>> responder )
+  public void getPoints( final BackendlessGeoQuery geoQuery, final AsyncCallback<List<GeoPoint>> responder )
   {
     try
     {
       checkGeoQuery( geoQuery );
       CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
 
-      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getPoints", new Object[] { geoQuery }, new AsyncCallback<Collection<GeoPoint>>()
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getPoints", new Object[] { geoQuery }, new AsyncCallback<List<GeoPoint>>()
       {
         @Override
-        public void handleResponse( Collection<GeoPoint> response )
+        public void handleResponse( List<GeoPoint> response )
         {
           if( geoQuery.getDpp() != null && geoQuery.getDpp() > 0 )
             setReferenceToCluster( response, geoQuery );
@@ -210,24 +210,24 @@ public final class Geo
     }
   }
 
-  public Collection<GeoPoint> getPoints( final GeoCluster geoCluster )
+  public List<GeoPoint> getPoints( final GeoCluster geoCluster )
   {
     CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
-    Collection<GeoPoint> result = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "loadGeoPoints", new Object[] { geoCluster.getObjectId(), geoCluster.getGeoQuery() }, new AdaptingResponder<GeoPoint>( GeoPoint.class, adaptingPolicy ) );
+    List<GeoPoint> result = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "loadGeoPoints", new Object[] { geoCluster.getObjectId(), geoCluster.getGeoQuery() }, new AdaptingResponder<GeoPoint>( GeoPoint.class, adaptingPolicy ) );
 
     return result;
   }
 
-  public void getPoints( final GeoCluster geoCluster, final AsyncCallback<Collection<GeoPoint>> responder )
+  public void getPoints( final GeoCluster geoCluster, final AsyncCallback<List<GeoPoint>> responder )
   {
     try
     {
       CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
 
-      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadGeoPoints", new Object[] { geoCluster.getObjectId(), geoCluster.getGeoQuery() }, new AsyncCallback<Collection<GeoPoint>>()
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadGeoPoints", new Object[] { geoCluster.getObjectId(), geoCluster.getGeoQuery() }, new AsyncCallback<List<GeoPoint>>()
       {
         @Override
-        public void handleResponse( Collection<GeoPoint> response )
+        public void handleResponse( List<GeoPoint> response )
         {
           if( responder != null )
             responder.handleResponse( response );
@@ -248,7 +248,7 @@ public final class Geo
     }
   }
 
-  public Collection<SearchMatchesResult> relativeFind( BackendlessGeoQuery geoQuery ) throws BackendlessException
+  public List<SearchMatchesResult> relativeFind( BackendlessGeoQuery geoQuery ) throws BackendlessException
   {
     if( geoQuery == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_GEO_QUERY );
@@ -257,32 +257,32 @@ public final class Geo
       throw new IllegalArgumentException( ExceptionMessage.INCONSISTENT_GEO_RELATIVE );
 
     CollectionAdaptingPolicy<SearchMatchesResult> adaptingPolicy = new CollectionAdaptingPolicy<>();
-    Collection<SearchMatchesResult> result = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "relativeFind", new Object[] { geoQuery }, new AdaptingResponder<>( SearchMatchesResult.class, adaptingPolicy ) );
+    List<SearchMatchesResult> result = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "relativeFind", new Object[] { geoQuery }, new AdaptingResponder<>( SearchMatchesResult.class, adaptingPolicy ) );
 
     return result;
   }
 
-  public Collection<GeoPoint> getPoints( String geofenceName, BackendlessGeoQuery query ) throws BackendlessException
+  public List<GeoPoint> getPoints( String geofenceName, BackendlessGeoQuery query ) throws BackendlessException
   {
     checkGeoQuery( query );
     CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<>();
-    Collection<GeoPoint> result = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getPoints", new Object[] { geofenceName, query }, new AdaptingResponder<>( GeoPoint.class, adaptingPolicy ) );
+    List<GeoPoint> result = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getPoints", new Object[] { geofenceName, query }, new AdaptingResponder<>( GeoPoint.class, adaptingPolicy ) );
 
     return result;
   }
 
   public void getPoints( final String geofenceName, final BackendlessGeoQuery query,
-                         final AsyncCallback<Collection<GeoPoint>> responder )
+                         final AsyncCallback<List<GeoPoint>> responder )
   {
     try
     {
       checkGeoQuery( query );
       CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<>();
 
-      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getPoints", new Object[] { geofenceName, query }, new AsyncCallback<Collection<GeoPoint>>()
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getPoints", new Object[] { geofenceName, query }, new AsyncCallback<List<GeoPoint>>()
       {
         @Override
-        public void handleResponse( Collection<GeoPoint> response )
+        public void handleResponse( List<GeoPoint> response )
         {
           if( responder != null )
             responder.handleResponse( response );
@@ -302,18 +302,18 @@ public final class Geo
     }
   }
 
-  public Collection<GeoPoint> getPoints( String geofenceName ) throws BackendlessException
+  public List<GeoPoint> getPoints( String geofenceName ) throws BackendlessException
   {
     return getPoints( geofenceName, new BackendlessGeoQuery() );
   }
 
-  public void getPoints( final String geofenceName, final AsyncCallback<Collection<GeoPoint>> responder )
+  public void getPoints( final String geofenceName, final AsyncCallback<List<GeoPoint>> responder )
   {
     getPoints( geofenceName, new BackendlessGeoQuery(), responder );
   }
 
   public void relativeFind( final BackendlessGeoQuery geoQuery,
-                            final AsyncCallback<Collection<SearchMatchesResult>> responder )
+                            final AsyncCallback<List<SearchMatchesResult>> responder )
   {
     try
     {
@@ -325,10 +325,10 @@ public final class Geo
 
       CollectionAdaptingPolicy<SearchMatchesResult> adaptingPolicy = new CollectionAdaptingPolicy<>();
 
-      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "relativeFind", new Object[] { geoQuery }, new AsyncCallback<Collection<SearchMatchesResult>>()
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "relativeFind", new Object[] { geoQuery }, new AsyncCallback<List<SearchMatchesResult>>()
       {
         @Override
-        public void handleResponse( Collection<SearchMatchesResult> response )
+        public void handleResponse( List<SearchMatchesResult> response )
         {
           if( responder != null )
             responder.handleResponse( response );
@@ -759,9 +759,9 @@ public final class Geo
     return geoFenceMonitoring;
   }
 
-  private void setReferenceToCluster( Collection<GeoPoint> collection, BackendlessGeoQuery geoQuery )
+  private void setReferenceToCluster( List<GeoPoint> List, BackendlessGeoQuery geoQuery )
   {
-    Iterator<GeoPoint> iterator = collection.iterator();
+    Iterator<GeoPoint> iterator = List.iterator();
     while (iterator.hasNext())
     {
       GeoPoint geoPoint = iterator.next();
