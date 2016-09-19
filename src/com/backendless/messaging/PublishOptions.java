@@ -47,6 +47,7 @@ public class PublishOptions
   public final static String ANDROID_TICKER_TEXT_TAG = "android-ticker-text";
   public final static String ANDROID_CONTENT_TITLE_TAG = "android-content-title";
   public final static String ANDROID_CONTENT_TEXT_TAG = "android-content-text";
+  public final static String ANDROID_CONTENT_SOUND_TAG = "android-content-sound";
   public final static String ANDROID_ACTION_TAG = "android-action";
 
   public final static String WP_TYPE_TAG = "wp-type";
