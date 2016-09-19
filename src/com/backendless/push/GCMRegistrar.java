@@ -32,28 +32,29 @@ import java.util.*;
 
 public final class GCMRegistrar
 {
-  //TODO add persisting Backendless registration id
-
   public static final int DEFAULT_ON_SERVER_LIFESPAN_MS = /*2 days*/1000 * 60 * 60 * 24 * 2;
 
   private static final String BACKOFF_MS = "backoff_ms";
   private static final String GSF_PACKAGE = "com.google.android.gsf";
   private static final String PREFERENCES = "com.google.android.gcm";
+  private static final String MESSAGING_PREFERENCES = "com.backendless.push";
   private static final int DEFAULT_BACKOFF_MS = 3000;
   private static final String PROPERTY_GCM_DEVICE_TOKEN = "gcmDeviceToken";
   private static final String PROPERTY_REGISTRATION_ID = "registrationId";
   private static final String PROPERTY_EXPIRATION = "registrationDate";
   private static final String PROPERTY_APP_VERSION = "appVersion";
+  private static final String PROPERTY_SENDER_ID = "SenderId";
+  private static final String PROPERTY_REGISTRATION_EXP = "RegistrationExpiration";
+  private static final String PROPERTY_CHANNELS = "Channels";
 
   private static final List<String> DEFAULT_PERMISSIONS;
 
+
   static
   {
-    DEFAULT_PERMISSIONS = new ArrayList<String>();
+    DEFAULT_PERMISSIONS = new ArrayList<>();
     DEFAULT_PERMISSIONS.add( GCMConstants.PERMISSION_GCM_MESSAGE );
-    DEFAULT_PERMISSIONS.add( GCMConstants.PERMISSION_ANDROID_ACCOUNTS );
     DEFAULT_PERMISSIONS.add( GCMConstants.PERMISSION_ANDROID_INTERNET );
-    //DEFAULT_PERMISSIONS.add( GCMConstants.PERMISSION_GCM_INTENTS );
   }
 
   public static void checkDevice( Context context )
@@ -100,7 +101,7 @@ public final class GCMRegistrar
     if( receivers == null || receivers.length == 0 )
       throw new IllegalStateException( "No receiver for package " + packageName );
 
-    Set<String> allowedReceivers = new HashSet<String>();
+    Set<String> allowedReceivers = new HashSet<>();
     for( ActivityInfo receiver : receivers )
       if( GCMConstants.PERMISSION_GCM_INTENTS.equals( receiver.permission ) )
         allowedReceivers.add( receiver.name );
@@ -151,12 +152,12 @@ public final class GCMRegistrar
     RegistrationInfo registrationInfo = getRegistrationInfo( context );
 
     if( registrationInfo == null )
-      requesRegistration( context, senderId, channels, expiration );
+      requestRegistration( context, senderId, channels, expiration );
     else
     {
       GCMRegistrar.resetBackoff( context );
-      BackendlessBroadcastReceiver.setSenderId( "" );
-      requesRegistration( context, senderId, channels, expiration );
+      setSenderId( context, "" );
+      requestRegistration( context, senderId, channels, expiration );
     }
   }
 
@@ -170,16 +171,16 @@ public final class GCMRegistrar
     context.sendOrderedBroadcast( intent, null );
   }
 
-  private static void requesRegistration( Context context, String senderId, List<String> channels, Date expiration )
+  private static void requestRegistration( Context context, String senderId, List<String> channels, Date expiration )
   {
     GCMRegistrar.resetBackoff( context );
-    BackendlessBroadcastReceiver.setSenderId( senderId );
+    setSenderId( context, senderId );
 
     if( expiration != null )
-      BackendlessBroadcastReceiver.setRegistrationExpiration( expiration.getTime() );
+      setRegistrationExpiration( context, expiration.getTime() );
 
     if( channels != null )
-      BackendlessBroadcastReceiver.setChannels( channels );
+      setChannels( context, channels );
 
     internalRegister( context, senderId );
   }
@@ -196,7 +197,7 @@ public final class GCMRegistrar
   public static void unregister( Context context )
   {
     GCMRegistrar.resetBackoff( context );
-    BackendlessBroadcastReceiver.setSenderId( "" );
+    setSenderId( context, "" );
     internalUnregister( context );
   }
 
@@ -293,9 +294,61 @@ public final class GCMRegistrar
     editor.commit();
   }
 
+  static void setSenderId( Context context, String senderId )
+  {
+    SharedPreferences prefs = getMessagingPreferences( context );
+    SharedPreferences.Editor editor = prefs.edit();
+    editor.putString( PROPERTY_SENDER_ID, senderId );
+    editor.commit();
+  }
+
+  static String getSenderId( Context context )
+  {
+    SharedPreferences prefs = getMessagingPreferences( context );
+    return prefs.getString( PROPERTY_SENDER_ID, "" );
+  }
+
+  static void setRegistrationExpiration( Context context, long registrationExpiration )
+  {
+    SharedPreferences prefs = getMessagingPreferences( context );
+    SharedPreferences.Editor editor = prefs.edit();
+    editor.putLong( PROPERTY_REGISTRATION_EXP, registrationExpiration );
+    editor.commit();
+  }
+
+  static long getRegistrationExpiration( Context context )
+  {
+    SharedPreferences prefs = getMessagingPreferences( context );
+    long prefsLong = prefs.getLong( PROPERTY_REGISTRATION_EXP, 0 );
+
+    if( prefsLong <= 0 )
+      return System.currentTimeMillis() + GCMRegistrar.DEFAULT_ON_SERVER_LIFESPAN_MS;
+
+    return prefsLong;
+  }
+
+  static void setChannels( Context context, Collection<String> channels )
+  {
+    SharedPreferences prefs = getMessagingPreferences( context );
+    SharedPreferences.Editor editor = prefs.edit();
+    editor.putStringSet( PROPERTY_CHANNELS, new HashSet<>( channels ) );
+    editor.commit();
+  }
+
+  static Set<String> getChannels( Context context )
+  {
+    final SharedPreferences prefs = getMessagingPreferences( context );
+    return prefs.getStringSet( PROPERTY_CHANNELS, new HashSet<String>() );
+  }
+
   private static SharedPreferences getGCMPreferences( Context context )
   {
     return context.getSharedPreferences( PREFERENCES, Context.MODE_PRIVATE );
+  }
+
+  private static SharedPreferences getMessagingPreferences( Context context )
+  {
+    return context.getSharedPreferences( MESSAGING_PREFERENCES, Context.MODE_PRIVATE );
   }
 
   private GCMRegistrar()

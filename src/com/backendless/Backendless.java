@@ -58,6 +58,7 @@ public final class Backendless
   private static String url = "https://api.backendless.com";
   private static final BackendlessPrefs prefs;
   private static Boolean isAndroid;
+  private static boolean isCodeRunner = false;
 
   private Backendless()
   {
@@ -122,13 +123,14 @@ public final class Backendless
     if( version == null || version.equals( "" ) )
       throw new IllegalArgumentException( ExceptionMessage.NULL_VERSION );
 
-    HeadersManager.cleanHeaders();
-    MessageWriter.addTypeWriter( BackendlessUser.class, new BackendlessUserWriter() );
-    MessageWriter.addTypeWriter( Double.class, new DoubleWriter() );
-    ObjectFactories.addArgumentObjectFactory( BackendlessUser.class.getName(), new BackendlessUserFactory() );
     ContextHandler.setContext( context );
     prefs.onCreate( context );
     prefs.initPreferences( applicationId, secretKey, version );
+
+    MessageWriter.addTypeWriter( BackendlessUser.class, new BackendlessUserWriter() );
+    MessageWriter.addTypeWriter( Double.class, new DoubleWriter() );
+    ObjectFactories.addArgumentObjectFactory( BackendlessUser.class.getName(), new BackendlessUserFactory() );
+    HeadersManager.cleanHeaders();
 
     if( isAndroid )
     {
@@ -224,6 +226,6 @@ public final class Backendless
 
   public static boolean isCodeRunner()
   {
-    return Thread.currentThread().getThreadGroup().getName().equals( "CodeRunner secure group" );
+    return isCodeRunner;
   }
 }

@@ -3,6 +3,8 @@ package com.backendless.social;
 import android.app.Activity;
 import android.webkit.WebView;
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.commons.util.SocialType;
+
 import org.json.JSONObject;
 
 import java.util.List;
