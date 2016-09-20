@@ -24,7 +24,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 import com.backendless.Backendless;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
 
 public class MainActivity extends Activity
 {
@@ -62,9 +65,22 @@ public class MainActivity extends Activity
       @Override
       public void onClick( View view )
       {
-        Backendless.Messaging.registerDevice( Defaults.SENDER_ID, Defaults.CHANNEL_NAME );
-        Intent intent = new Intent( getBaseContext(), PushActivity.class );
-        startActivity( intent );
+        Backendless.Messaging.registerDevice( Defaults.SENDER_ID, Defaults.CHANNEL_NAME, new AsyncCallback<Void>()
+        {
+          @Override
+          public void handleResponse( Void response )
+          {
+            Intent intent = new Intent( getBaseContext(), PushActivity.class );
+            startActivity( intent );
+          }
+
+          @Override
+          public void handleFault( BackendlessFault fault )
+          {
+            showAlert( MainActivity.this, fault.getMessage() );
+          }
+        } );
+
       }
     } );
   }
