@@ -18,9 +18,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 dependencies {
-    compile 'com.backendless:backendless:3.0.17.1'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.backendless:backendless:3.0.20.1'
 }
