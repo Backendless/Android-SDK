@@ -4,7 +4,6 @@ import com.backendless.DeviceRegistration;
 import com.backendless.messaging.*;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
-import com.backendless.services.messaging.MessageStatus;
 
 /**
  * Created with IntelliJ IDEA.
