@@ -48,7 +48,7 @@
                   android:screenOrientation="portrait"/>
 
         <receiver
-                android:name="com.backendless.push.BackendlessBroadcastReceiver"
+                android:name=".MyPushBroadcastReceiver"
                 android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
@@ -57,6 +57,6 @@
                 <category android:name="com.backendless.examples.messagingservice.pushdemo"/>
             </intent-filter>
         </receiver>
-        <service android:name=".PushService" />
+        <service android:name=".MyPushService" />
     </application>
 </manifest> 
