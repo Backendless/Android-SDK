@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
 import com.backendless.messaging.PublishOptions;
-import com.backendless.push.BackendlessBroadcastReceiver;
+import com.backendless.push.BackendlessPushService;
 
-public class PushReceiver extends BackendlessBroadcastReceiver
+public class MyPushService extends BackendlessPushService
 {
   @Override
   public boolean onMessage( Context context, Intent intent )
@@ -18,7 +18,7 @@ public class PushReceiver extends BackendlessBroadcastReceiver
       PushActivity.handler.sendMessage( message );
     }
 
-    return super.onMessage( context, intent );
+    return true;
   }
 
   @Override
