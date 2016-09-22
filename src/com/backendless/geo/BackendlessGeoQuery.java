@@ -33,13 +33,8 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
   private boolean includeMeta;
   private double[] searchRectangle;
 
-  private int pageSize;
-  private int offset;
-
-  {
-    setPageSize( DEFAULT_PAGE_SIZE );
-    setOffset( DEFAULT_OFFSET );
-  }
+  private int pageSize = BackendlessGeoQuery.DEFAULT_PAGE_SIZE;
+  private int offset = BackendlessGeoQuery.DEFAULT_OFFSET;
 
   public BackendlessGeoQuery()
   {
@@ -55,8 +50,6 @@ public class BackendlessGeoQuery extends AbstractBackendlessGeoQuery implements 
   {
     this.latitude = latitude;
     this.longitude = longitude;
-    this.pageSize = pageSize;
-    this.offset = offset;
   }
 
   /**
