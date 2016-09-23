@@ -29,6 +29,7 @@ import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.persistence.MapDrivenDataStore;
 import com.backendless.persistence.QueryOptions;
 import com.backendless.property.ObjectProperty;
+import com.backendless.utils.JSONObjectConverter;
 import com.backendless.utils.ReflectionUtil;
 import com.backendless.utils.ResponderHelper;
 import weborb.client.IChainedResponder;
@@ -40,9 +41,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class Persistence
 {
@@ -530,6 +529,12 @@ public final class Persistence
 
       for( Field declaredField : declaredFields )
       {
+        if( declaredField.getName().equals( DEFAULT_META_FIELD ) )
+        {
+          mergeRelatedObjectsFromMeta( loadedRelations, entity );
+          continue;
+        }
+
         if( !relations.contains( declaredField.getName() ) )
           continue;
 
@@ -548,6 +553,70 @@ public final class Persistence
           throw new BackendlessException( message );
         }
       }
+    }
+  }
+
+  private <E> void mergeRelatedObjectsFromMeta( E loadedRelations, E entity )
+  {
+    try
+    {
+      Field metaField = loadedRelations.getClass().getDeclaredField(  DEFAULT_META_FIELD );
+      metaField.setAccessible( true );
+      String updatedMeta = (String) metaField.get( loadedRelations );
+      String sourceMeta = (String) metaField.get( entity );
+
+      HashMap sourceJSONObject = JSONObjectConverter.getJSONObject( sourceMeta );
+      HashMap updatedJSONObject = JSONObjectConverter.getJSONObject( updatedMeta );
+
+      HashMap sourceRelatedObjects = (HashMap) sourceJSONObject.get( "relatedObjects" );
+      HashMap updatedRelatedObjects = (HashMap) updatedJSONObject.get( "relatedObjects" );
+
+      if( sourceRelatedObjects == null || sourceRelatedObjects.size() == 0 )
+      {
+        sourceJSONObject.put( "relatedObjects", updatedRelatedObjects );
+      }
+      else
+      {
+        String[] updatedMenuItems = (String[]) updatedRelatedObjects.get( "menuItems" );
+        sourceRelatedObjects.put( "menuItems", updatedMenuItems );
+        sourceJSONObject.put( "relatedObjects", sourceRelatedObjects );
+      }
+
+      sourceMeta = JSONObjectConverter.toJSONString( sourceJSONObject );
+      metaField.set( entity, sourceMeta );
+      /*
+      JSONObject updatedMetaObject = new JSONObject( updatedMeta );
+      JSONObject sourceMetaObject = new JSONObject( sourceMeta );
+      JSONObject updatedRelatedObjects = updatedMetaObject.optJSONObject( "relatedObjects" );
+      JSONObject sourceRelatedObjects = sourceMetaObject.optJSONObject( "relatedObjects" );
+
+      if( sourceRelatedObjects == null || sourceRelatedObjects.length() == 0 )
+      {
+        sourceMetaObject.put( "relatedObjects", updatedRelatedObjects );
+      }
+      else
+      {
+        Iterator<String> updatedRelatedObjectsIterator = updatedRelatedObjects.keys();
+
+        while( updatedRelatedObjectsIterator.hasNext() )
+        {
+          String relatedProperty = updatedRelatedObjectsIterator.next();
+          sourceRelatedObjects.put( relatedProperty, updatedRelatedObjects.get( relatedProperty ) );
+        }
+
+        sourceMetaObject.put( "relatedObjects", sourceRelatedObjects );
+      }
+
+      metaField.set( entity, sourceMetaObject.toString() );
+      */
+    }
+    catch( NoSuchFieldException e )
+    {
+      // should not happen
+    }
+    catch( IllegalAccessException e )
+    {
+      // should not happen
     }
   }
 
