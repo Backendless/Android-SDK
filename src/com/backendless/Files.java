@@ -20,6 +20,8 @@ package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.async.callback.UploadCallback;
+import com.backendless.core.responder.AdaptingResponder;
+import com.backendless.core.responder.policy.CollectionAdaptingPolicy;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
@@ -412,8 +414,8 @@ public final class Files
   public List<FileInfo> listing( String path, String pattern, boolean recursive, int pagesize,
                                                   int offset )
   {
-    List<FileInfo> List = Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "listing", new Object[] { path, pattern, recursive, pagesize, offset } );
-    return List;
+    List<FileInfo> fileInfoList = Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "listing", new Object[] { path, pattern, recursive, pagesize, offset }, new AdaptingResponder<FileInfo>( FileInfo.class, new CollectionAdaptingPolicy<FileInfo>() ) );
+    return fileInfoList;
   }
 
   public void listing( String path, AsyncCallback<List<FileInfo>> responder )
@@ -445,7 +447,7 @@ public final class Files
         if( responder != null )
           responder.handleFault( fault );
       }
-    } );
+    }, new AdaptingResponder<FileInfo>( FileInfo.class, new CollectionAdaptingPolicy<FileInfo>() ) );
   }
 
   public int getFileCount( String path, String pattern, boolean recursive, boolean countDirectories )
