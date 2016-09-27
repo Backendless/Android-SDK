@@ -45,8 +45,8 @@ import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.messaging.*;
 import com.backendless.push.GCMRegistrar;
 
-import com.backendless.services.messaging.MessageStatus;
-import com.backendless.services.messaging.PublishStatusEnum;
+import com.backendless.messaging.MessageStatus;
+import com.backendless.messaging.PublishStatusEnum;
 import weborb.types.Types;
 
 import java.util.*;
