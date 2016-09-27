@@ -34,7 +34,7 @@ import java.util.Map;
 
 public class BackendlessBroadcastReceiver extends BroadcastReceiver implements PushReceiverCallback
 {
-    private static final String EXTRA_WAKE_LOCK_ID = "com.backendless.wakelockid";
+  private static final String EXTRA_WAKE_LOCK_ID = "com.backendless.wakelockid";
   static final String EXTRA_MESSAGE_ID = "com.backendless.messageid";
   private static final Map<Integer, PowerManager.WakeLock> activeWakeLocks = new HashMap<>();
 
@@ -80,7 +80,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver implements P
   @Deprecated
   public void onError( Context context, BackendlessFault message )
   {
-    Log.e( BackendlessPushService.TAG, "Error processing push message: " + message + ", with details: " + message.getDetail() );
+    Log.e( BackendlessPushService.TAG, "Error processing push message: " + message );
   }
 
   @Override
