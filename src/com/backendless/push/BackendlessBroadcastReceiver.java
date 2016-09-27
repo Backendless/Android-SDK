@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.PowerManager;
 import android.util.Log;
+import com.backendless.exceptions.BackendlessFault;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,8 +34,7 @@ import java.util.Map;
 
 public class BackendlessBroadcastReceiver extends BroadcastReceiver implements PushReceiverCallback
 {
-  private static final String TAG = "BackendlessBroadcastReceiver";
-  private static final String EXTRA_WAKE_LOCK_ID = "com.backendless.wakelockid";
+    private static final String EXTRA_WAKE_LOCK_ID = "com.backendless.wakelockid";
   static final String EXTRA_MESSAGE_ID = "com.backendless.messageid";
   private static final Map<Integer, PowerManager.WakeLock> activeWakeLocks = new HashMap<>();
 
@@ -78,9 +78,9 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver implements P
    * @deprecated Extend {@link BackendlessPushService} instead.
    */
   @Deprecated
-  public void onError( Context context, String message )
+  public void onError( Context context, BackendlessFault message )
   {
-    throw new RuntimeException( message );
+    Log.e( BackendlessPushService.TAG, "Error processing push message: " + message + ", with details: " + message.getDetail() );
   }
 
   @Override
@@ -177,7 +177,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver implements P
         }
         else
         {
-          Log.w( TAG, "No active wake lock id #" + id );
+          Log.w( BackendlessPushService.TAG, "No active wake lock id #" + id );
           return true;
         }
       }

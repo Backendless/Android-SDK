@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
@@ -16,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 public class BackendlessPushService extends IntentService implements PushReceiverCallback
 {
-  private static final String TAG = "BackendlessPushService";
+  static final String TAG = "com.backendless.push.BackendlessPushService";
   private static final Random random = new Random();
 
   private static final int MAX_BACKOFF_MS = (int) TimeUnit.SECONDS.toMillis( 3600 );
@@ -83,9 +84,10 @@ public class BackendlessPushService extends IntentService implements PushReceive
     return true;
   }
 
-  public void onError( Context context, String message )
+  public void onError( Context context, BackendlessFault message )
   {
-    throw new RuntimeException( message );
+    Log.e( TAG, "Error processing push message: " + message );
+    Toast.makeText( context, "Error processing push message: " + message.getMessage(), Toast.LENGTH_LONG ).show();
   }
 
   void handleIntent( Context context, Intent intent )
@@ -230,7 +232,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
     }
     else
     {
-      callback.onError( context, error );
+      callback.onError( context, new BackendlessFault( error ) );
     }
   }
 
@@ -249,7 +251,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
       @Override
       public void handleFault( BackendlessFault fault )
       {
-        callback.onError( context, "Could not register device on Backendless server: " + fault.getMessage() );
+        callback.onError( context, fault );
       }
     } );
   }
@@ -268,7 +270,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
       @Override
       public void handleFault( BackendlessFault fault )
       {
-        callback.onError( context, "Could not unregister device on Backendless server: " + fault.getMessage() );
+        callback.onError( context, fault );
       }
     } );
   }
