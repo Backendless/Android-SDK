@@ -29,7 +29,10 @@ import com.backendless.geo.*;
 import com.backendless.geo.geofence.*;
 import weborb.types.Types;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 
 public final class Geo
 {
@@ -759,15 +762,13 @@ public final class Geo
     return geoFenceMonitoring;
   }
 
-  private void setReferenceToCluster( List<GeoPoint> List, BackendlessGeoQuery geoQuery )
+  private void setReferenceToCluster( List<GeoPoint> collection, BackendlessGeoQuery geoQuery )
   {
-    Iterator<GeoPoint> iterator = List.iterator();
-    while (iterator.hasNext())
+    BackendlessGeoQuery protectedQuery = new ProtectedBackendlessGeoQuery( geoQuery );
+    for( GeoPoint geoPoint : collection )
     {
-      GeoPoint geoPoint = iterator.next();
       if( geoPoint instanceof GeoCluster )
-        ((GeoCluster) geoPoint).setGeoQuery( geoQuery );
-
+        ((GeoCluster) geoPoint).setGeoQuery( protectedQuery );
     }
   }
 
