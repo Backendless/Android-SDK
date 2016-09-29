@@ -84,10 +84,10 @@ public class BackendlessPushService extends IntentService implements PushReceive
     return true;
   }
 
-  public void onError( Context context, BackendlessFault message )
+  public void onError( Context context, String message )
   {
     Log.e( TAG, "Error processing push message: " + message );
-    Toast.makeText( context, "Error processing push message: " + message.getMessage(), Toast.LENGTH_LONG ).show();
+    Toast.makeText( context, "Error processing push message: " + message, Toast.LENGTH_LONG ).show();
   }
 
   void handleIntent( Context context, Intent intent )
@@ -232,7 +232,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
     }
     else
     {
-      callback.onError( context, new BackendlessFault( error ) );
+      callback.onError( context, error );
     }
   }
 
@@ -251,7 +251,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
       @Override
       public void handleFault( BackendlessFault fault )
       {
-        callback.onError( context, fault );
+        callback.onError( context, "Could not register device on Backendless server: " + fault.getMessage() );
       }
     } );
   }
@@ -270,7 +270,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
       @Override
       public void handleFault( BackendlessFault fault )
       {
-        callback.onError( context, fault );
+        callback.onError( context, "Could not unregister device on Backendless server: " + fault.getMessage() );
       }
     } );
   }

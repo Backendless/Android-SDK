@@ -2,7 +2,6 @@ package com.backendless.push;
 
 import android.content.Context;
 import android.content.Intent;
-import com.backendless.exceptions.BackendlessFault;
 
 /**
  * Added for backward compatibility.
@@ -16,5 +15,5 @@ public interface PushReceiverCallback
 
   boolean onMessage( Context context, Intent intent );
 
-  void onError( Context context, BackendlessFault message );
+  void onError( Context context, String message );
 }

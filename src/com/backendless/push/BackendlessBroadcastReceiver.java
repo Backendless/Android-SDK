@@ -78,7 +78,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver implements P
    * @deprecated Extend {@link BackendlessPushService} instead.
    */
   @Deprecated
-  public void onError( Context context, BackendlessFault message )
+  public void onError( Context context, String message )
   {
     Log.e( BackendlessPushService.TAG, "Error processing push message: " + message );
   }
