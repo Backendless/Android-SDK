@@ -21,6 +21,8 @@ package com.backendless;
 import android.content.Context;
 import android.content.Intent;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.files.BackendlessFile;
+import com.backendless.files.BackendlessFileFactory;
 import com.backendless.geo.LocationTracker;
 import com.backendless.io.BackendlessUserFactory;
 import com.backendless.io.BackendlessUserWriter;
@@ -125,6 +127,7 @@ public final class Backendless
     MessageWriter.addTypeWriter( BackendlessUser.class, new BackendlessUserWriter() );
     MessageWriter.addTypeWriter( Double.class, new DoubleWriter() );
     ObjectFactories.addArgumentObjectFactory( BackendlessUser.class.getName(), new BackendlessUserFactory() );
+    ObjectFactories.addArgumentObjectFactory( BackendlessFile.class.getName(), new BackendlessFileFactory() );
     ContextHandler.setContext( context );
 
     HeadersManager.cleanHeaders();

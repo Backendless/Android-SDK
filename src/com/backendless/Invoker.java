@@ -29,6 +29,7 @@ import weborb.client.Fault;
 import weborb.client.IChainedResponder;
 import weborb.client.IResponder;
 import weborb.client.WeborbClient;
+import weborb.util.ThreadContext;
 
 @SuppressWarnings( "unchecked" )
 public class Invoker
@@ -90,6 +91,7 @@ public class Invoker
 
     try
     {
+      ThreadContext.cleanup();
       getWebOrbClient().invoke( className, methodName, args, null, null, HeadersManager.getInstance().getHeaders(), chainedResponder );
     }
     catch( Exception e )

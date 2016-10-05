@@ -50,4 +50,13 @@ public class BackendlessFile
   {
     Backendless.Files.remove( fileURL, responder );
   }
+  /*
+  public void download()
+  {
+    URL file = new URL( fileURL );
+    ReadableByteChannel rbc = Channels.newChannel(file.openStream());
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    baos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+  }
+  */
 }
