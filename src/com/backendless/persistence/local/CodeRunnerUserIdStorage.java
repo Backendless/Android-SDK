@@ -18,6 +18,8 @@
 
 package com.backendless.persistence.local;
 
+import com.backendless.servercode.InvocationContext;
+
 class CodeRunnerUserIdStorage implements IStorage<String>
 {
   private static final CodeRunnerUserIdStorage instance = new CodeRunnerUserIdStorage();
@@ -37,12 +39,12 @@ class CodeRunnerUserIdStorage implements IStorage<String>
   @Override
   public String get()
   {
-    return userToken;
+    return InvocationContext.getUserId();
   }
 
   @Override
   public void set( String value )
   {
-    userToken = value;
+    InvocationContext.setUserId( value );
   }
 }
