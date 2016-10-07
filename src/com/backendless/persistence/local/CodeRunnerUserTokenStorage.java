@@ -18,11 +18,11 @@
 
 package com.backendless.persistence.local;
 
-import com.backendless.servercode.InvocationContext;
-
 class CodeRunnerUserTokenStorage implements IStorage<String>
 {
   private static final CodeRunnerUserTokenStorage instance = new CodeRunnerUserTokenStorage();
+  private String userToken;
+
 
   public static CodeRunnerUserTokenStorage instance()
   {
@@ -37,12 +37,12 @@ class CodeRunnerUserTokenStorage implements IStorage<String>
   @Override
   public String get()
   {
-    return InvocationContext.getUserToken();
+    return userToken;
   }
 
   @Override
   public void set( String value )
   {
-    InvocationContext.setUserToken( value );
+    userToken = value;
   }
 }
