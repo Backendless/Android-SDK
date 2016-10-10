@@ -43,6 +43,7 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.messaging.*;
+import com.backendless.services.messaging.*;
 import com.backendless.push.GCMRegistrar;
 
 import weborb.types.Types;
@@ -66,8 +67,6 @@ public final class Messaging
     Types.addClientClassMapping( "com.backendless.services.messaging.PublishOptions", PublishOptions.class );
     Types.addClientClassMapping( "com.backendless.services.messaging.DeliveryOptions", DeliveryOptions.class );
     Types.addClientClassMapping( "com.backendless.services.messaging.Message", Message.class );
-    Types.addClientClassMapping( "com.backendless.services.messaging.MessageStatus", MessageStatus.class );
-    Types.addClientClassMapping( "com.backendless.services.messaging.PublishStatusEnum", PublishStatusEnum.class );
   }
 
   static

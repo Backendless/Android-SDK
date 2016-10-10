@@ -36,7 +36,7 @@ import com.backendless.exceptions.BackendlessFault;
 import com.backendless.messaging.DeliveryOptions;
 import com.backendless.messaging.PublishOptions;
 import com.backendless.messaging.PushBroadcastMask;
-import com.backendless.messaging.MessageStatus;
+import com.backendless.services.messaging.MessageStatus;
 
 public class PushActivity extends Activity
 {
