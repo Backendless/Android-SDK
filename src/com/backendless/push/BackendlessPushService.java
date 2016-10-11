@@ -163,8 +163,6 @@ public class BackendlessPushService extends IntentService implements PushReceive
 
           Notification notification = notificationBuilder.build();
           notification.flags |= Notification.FLAG_AUTO_CANCEL;
-          notification.defaults |= Notification.DEFAULT_VIBRATE;
-          notification.defaults |= Notification.DEFAULT_LIGHTS;
 
           int customLayout = context.getResources().getIdentifier( "notification", "layout", context.getPackageName() );
           int customLayoutTitle = context.getResources().getIdentifier( "title", "id", context.getPackageName() );
