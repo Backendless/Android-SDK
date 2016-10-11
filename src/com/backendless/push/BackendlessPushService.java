@@ -20,6 +20,8 @@ import static com.backendless.utils.StringUtils.notEmpty;
 
 public class BackendlessPushService extends IntentService implements PushReceiverCallback
 {
+  public static final String DEFAULT_SOUND_FLAG = "DEFAULT";
+
   private static final String TAG = "BackendlessPushService";
   private static final Random random = new Random();
 
@@ -144,18 +146,22 @@ public class BackendlessPushService extends IntentService implements PushReceive
 
           Intent notificationIntent = context.getPackageManager().getLaunchIntentForPackage( context.getApplicationInfo().packageName );
           PendingIntent contentIntent = PendingIntent.getActivity( context, 0, notificationIntent, 0 );
-          Notification notification = new Notification.Builder( context )
+          Notification.Builder notificationBuilder = new Notification.Builder( context )
               .setSmallIcon( appIcon )
               .setTicker( tickerText )
               .setContentTitle( contentTitle )
               .setContentText( contentText )
               .setContentIntent( contentIntent )
-              .setSound(
-                  notEmpty( soundLocation )
-                      ? Uri.parse( soundLocation.toString() )
-                      : RingtoneManager.getDefaultUri( RingtoneManager.TYPE_NOTIFICATION ) )
-              .setWhen( System.currentTimeMillis() ).build();
+              .setWhen( System.currentTimeMillis() );
 
+          if( notEmpty( soundLocation ) )
+          {
+            notificationBuilder.setSound( soundLocation.equals( DEFAULT_SOUND_FLAG )
+                ? Uri.parse( soundLocation.toString() )
+                : RingtoneManager.getDefaultUri( RingtoneManager.TYPE_NOTIFICATION ) );
+          }
+
+          Notification notification = notificationBuilder.build();
           notification.flags |= Notification.FLAG_AUTO_CANCEL;
           notification.defaults |= Notification.DEFAULT_VIBRATE;
           notification.defaults |= Notification.DEFAULT_LIGHTS;
