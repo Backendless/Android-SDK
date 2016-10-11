@@ -157,8 +157,8 @@ public class BackendlessPushService extends IntentService implements PushReceive
           if( notEmpty( soundLocation ) )
           {
             notificationBuilder.setSound( soundLocation.equals( DEFAULT_SOUND_FLAG )
-                ? Uri.parse( soundLocation.toString() )
-                : RingtoneManager.getDefaultUri( RingtoneManager.TYPE_NOTIFICATION ) );
+                ? RingtoneManager.getDefaultUri( RingtoneManager.TYPE_NOTIFICATION )
+                : Uri.parse( soundLocation.toString() ) );
           }
 
           Notification notification = notificationBuilder.build();
