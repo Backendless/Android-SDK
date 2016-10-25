@@ -7,6 +7,7 @@ import android.media.RingtoneManager;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
@@ -22,7 +23,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
 {
   public static final String DEFAULT_SOUND_FLAG = "DEFAULT";
 
-  private static final String TAG = "BackendlessPushService";
+  static final String TAG = "com.backendless.push.BackendlessPushService";
   private static final Random random = new Random();
 
   private static final int MAX_BACKOFF_MS = (int) TimeUnit.SECONDS.toMillis( 3600 );
@@ -91,7 +92,8 @@ public class BackendlessPushService extends IntentService implements PushReceive
 
   public void onError( Context context, String message )
   {
-    throw new RuntimeException( message );
+    Log.e( TAG, "Error processing push message: " + message );
+    Toast.makeText( context, "Error processing push message: " + message, Toast.LENGTH_LONG ).show();
   }
 
   void handleIntent( Context context, Intent intent )

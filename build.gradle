@@ -5,7 +5,7 @@ apply plugin: 'signing'
 
 
 group 'com.backendless'
-version '3.0.21-snapshot'
+version '3.0.23-snapshot'
 archivesBaseName='backendless'
 
 
@@ -212,7 +212,7 @@ dependencies {
     compile( group: "com.backendless", name: "commons", version: "3.0.21", changing: true) {
         exclude group: 'com.fasterxml.jackson.core'
     }
-    compile( group: "weborb", name: "weborbclient", version: "5.1.0.206", changing: true)
+    compile( group: "weborb", name: "weborbclient", version: "5.1.0.208", changing: true)
 
 }
 apply plugin: 'java'

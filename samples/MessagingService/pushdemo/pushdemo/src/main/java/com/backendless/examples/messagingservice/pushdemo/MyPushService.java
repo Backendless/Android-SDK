@@ -6,7 +6,7 @@ import android.os.Message;
 import com.backendless.messaging.PublishOptions;
 import com.backendless.push.BackendlessPushService;
 
-public class PushService extends BackendlessPushService
+public class MyPushService extends BackendlessPushService
 {
   @Override
   public boolean onMessage( Context context, Intent intent )

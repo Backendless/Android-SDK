@@ -24,7 +24,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class BackendlessUser implements Serializable
+public final class BackendlessUser implements Serializable
 {
   private final Map<String, Object> properties = new HashMap<String, Object>();
 
