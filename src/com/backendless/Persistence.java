@@ -101,10 +101,15 @@ public final class Persistence
     {
       String method = "create";
 
-      if( serializedEntity.containsKey( Persistence.DEFAULT_OBJECT_ID_FIELD ) && serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) != null )
+      if( serializedEntity.containsKey( Persistence.DEFAULT_OBJECT_ID_FIELD ) &&
+              serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) != null )
         method = "update";
 
-      E newEntity = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, method, new Object[] { BackendlessSerializer.getSimpleName( entity.getClass() ), serializedEntity }, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
+      E newEntity = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, method,
+                                        new Object[] {
+                                                BackendlessSerializer.getSimpleName( entity.getClass() ),
+                                                serializedEntity },
+                                        ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
 
       if( serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) == null )
         FootprintsManager.getInstance().Inner.duplicateFootprintForObject( serializedEntity, newEntity, entity );
@@ -201,7 +206,8 @@ public final class Persistence
 
       String method = "create";
 
-      if( serializedEntity.containsKey( Persistence.DEFAULT_OBJECT_ID_FIELD ) && serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) != null )
+      if( serializedEntity.containsKey( Persistence.DEFAULT_OBJECT_ID_FIELD ) &&
+              serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) != null )
         method = "save";
 
       Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, method, new Object[] { BackendlessSerializer.getSimpleName( entity.getClass() ), entity }, callbackOverrider, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
@@ -345,9 +351,15 @@ public final class Persistence
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-    Object entityArg = ReflectionUtil.hasField( entity.getClass(), Persistence.DEFAULT_OBJECT_ID_FIELD ) ? entity : FootprintsManager.getInstance().getObjectId( entity );
+    Object entityArg = ReflectionUtil.hasField( entity.getClass(), Persistence.DEFAULT_OBJECT_ID_FIELD ) ?
+            entity :
+            FootprintsManager.getInstance().getObjectId( entity );
 
-    return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", new Object[] { BackendlessSerializer.getSimpleName( entity.getClass() ), entityArg, relations, relationsDepth }, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
+    return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById",
+                                   new Object[] {
+                                           BackendlessSerializer.getSimpleName( entity.getClass() ), entityArg,
+                                           relations, relationsDepth },
+                                   ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
   }
 
   protected <E> void findById( final Class<E> entity, final String id, final List<String> relations,
@@ -422,7 +434,8 @@ public final class Persistence
     int offset = dataQuery.getOffset();
 
     Object[] args = new Object[] { parentType, objectId, relationName, pageSize, offset };
-    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args, ResponderHelper.getCollectionAdaptingResponder( relatedType ) );
+    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args,
+                               ResponderHelper.getCollectionAdaptingResponder( relatedType ) );
   }
 
   public <T> void loadRelations( String parentType, String objectId, LoadRelationsQueryBuilder queryBuilder,
