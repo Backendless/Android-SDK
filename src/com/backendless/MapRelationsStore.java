@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-public final class MapRelationsStore
+public final class MapRelationsStore implements RelationsStore<Map<String, Object>, Map<String, Object>>
 {
   private String parentTableName;
   private String childTableName;
