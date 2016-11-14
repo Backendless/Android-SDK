@@ -37,11 +37,13 @@ import weborb.reader.StringType;
 import weborb.types.IAdaptingType;
 import weborb.v3types.ErrMessage;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MapDrivenDataStore implements IDataStore<Map>
 {
-  private final static String PERSISTENCE_MANAGER_SERVER_ALIAS = "com.backendless.services.persistence.PersistenceService";
   private static final List<String> emptyRelations = new ArrayList<String>();
   private String tableName;
 
@@ -57,7 +59,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
     Object[] args = new Object[] { tableName, entity };
-    Map newEntity = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "save", args, new MapDrivenResponder() );
+    Map newEntity = Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "save", args, new MapDrivenResponder() );
     return newEntity;
   }
 
@@ -70,7 +72,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
       Object[] args = new Object[] { tableName, entity };
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "save", args, responder, new MapDrivenResponder() );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "save", args, responder, new MapDrivenResponder() );
     }
     catch( Throwable e )
     {
@@ -86,7 +88,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
     Object[] args = new Object[] { tableName, entity };
-    Object result = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", args );
+    Object result = Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", args );
     return ((Number) result).longValue();
   }
 
@@ -115,7 +117,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
       };
 
       Object[] args = new Object[] { tableName, entity };
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", args, removalCallback );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "remove", args, removalCallback );
     }
     catch( Throwable e )
     {
@@ -128,7 +130,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   public Map findFirst() throws BackendlessException
   {
     Object[] args = new Object[] { tableName };
-    return (Map) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args );
+    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args );
   }
 
   @Override
@@ -146,7 +148,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   private Map findFirst( List<String> relations, int relationsDepth ) throws BackendlessException
   {
     Object[] args = new Object[] { tableName, relations, relationsDepth };
-    return (Map) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args );
+    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args );
   }
 
   @Override
@@ -155,7 +157,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
     try
     {
       Object[] args = new Object[] { tableName };
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args, responder );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args, responder );
     }
     catch( Throwable e )
     {
@@ -181,7 +183,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
     try
     {
       Object[] args = new Object[] { tableName, relations, relationsDepth };
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args, responder );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args, responder );
     }
     catch( Throwable e )
     {
@@ -194,7 +196,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   public Map findLast() throws BackendlessException
   {
     Object[] args = new Object[] { tableName };
-    return (Map) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args );
+    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args );
   }
 
   @Override
@@ -212,7 +214,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   private Map findLast( List<String> relations, int relationsDepth ) throws BackendlessException
   {
     Object[] args = new Object[] { tableName, relations, relationsDepth };
-    return (Map) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args );
+    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args );
   }
 
   @Override
@@ -221,7 +223,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
     try
     {
       Object[] args = new Object[] { tableName };
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args, responder );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args, responder );
     }
     catch( Throwable e )
     {
@@ -247,7 +249,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
     try
     {
       Object[] args = new Object[] { tableName, relations, relationsDepth };
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args, responder );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args, responder );
     }
     catch( Throwable e )
     {
@@ -267,7 +269,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   {
     Object[] args = new Object[] { tableName, dataQuery };
 
-    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
   }
 
   @Override
@@ -282,7 +284,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
     try
     {
       Object[] args = new Object[] { tableName, dataQuery };
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, responder );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, responder );
     }
     catch( Throwable e )
     {
@@ -304,7 +306,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
       throw new IllegalArgumentException( ExceptionMessage.NULL_ID );
 
     Object[] args = new Object[] { tableName, id, relations };
-    return (Map) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args );
+    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args );
   }
 
   @Override
@@ -320,7 +322,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
       throw new IllegalArgumentException( ExceptionMessage.NULL_ID );
 
     Object[] args = new Object[] { tableName, id, relations, relationsDepth };
-    return (Map) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args );
+    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args );
   }
 
   @Override
@@ -345,7 +347,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   public Map findById( Map entity, List<String> relations, int relationsDepth ) throws BackendlessException
   {
     Object[] args = new Object[] { tableName, entity, relations, relationsDepth };
-    return (Map) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args );
+    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args );
   }
 
   @Override
@@ -375,7 +377,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
         throw new IllegalArgumentException( ExceptionMessage.NULL_ID );
 
       Object[] args = new Object[] { tableName, id, relations, relationsDepth };
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args, responder );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args, responder );
     }
     catch( Throwable e )
     {
@@ -411,7 +413,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
       Object[] args = new Object[] { tableName, entity, relations, relationsDepth };
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args, responder );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args, responder );
     }
     catch( Throwable e )
     {
@@ -436,14 +438,14 @@ public class MapDrivenDataStore implements IDataStore<Map>
   public int getObjectCount()
   {
     Object[] args = new Object[] { tableName };
-    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args );
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args );
   }
 
   @Override
   public int getObjectCount( DataQueryBuilder dataQueryBuilder )
   {
     Object[] args = new Object[] { tableName, dataQueryBuilder };
-    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args );
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args );
   }
 
   @Override
@@ -452,7 +454,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
     try
     {
       Object[] args = new Object[] { tableName };
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args, responder );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args, responder );
     }
     catch( Throwable e )
     {
@@ -467,7 +469,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
     try
     {
       Object[] args = new Object[] { tableName, dataQueryBuilder };
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args, responder );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args, responder );
     }
     catch( Throwable e )
     {

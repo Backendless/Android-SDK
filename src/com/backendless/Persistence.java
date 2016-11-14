@@ -45,7 +45,7 @@ import java.util.Objects;
 
 public final class Persistence
 {
-  private final static String PERSISTENCE_MANAGER_SERVER_ALIAS = "com.backendless.services.persistence.PersistenceService";
+  public final static String PERSISTENCE_MANAGER_SERVER_ALIAS = "com.backendless.services.persistence.PersistenceService";
   private final static String DEFAULT_OBJECT_ID_GETTER = "getObjectId";
   public final static String DEFAULT_OBJECT_ID_FIELD = "objectId";
   public final static String DEFAULT_CREATED_FIELD = "created";
@@ -58,6 +58,7 @@ public final class Persistence
 
   public final static String LOAD_ALL_RELATIONS = "*";
   public final static DataPermission Permissions = new DataPermission();
+  public final static Relations Relations = new Relations();
 
   private static final Persistence instance = new Persistence();
 
