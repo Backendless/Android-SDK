@@ -53,6 +53,38 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
+  public void declareRelation( String columnName, String childTableName, RelationType relationType )
+  {
+    Object[] args = new Object[] { tableName, columnName, childTableName, relationType };
+    Invoker.invokeSync( Persistence.DATA_MANAGEMENT_SERVER_ALIAS, "declareRelation", args );
+  }
+
+  @Override
+  public <N> void declareRelation( String columnName, Class<N> childClass, RelationType relationType )
+  {
+    String childTableName = BackendlessSerializer.getSimpleName( childClass );
+    Object[] args = new Object[] { tableName, columnName, childTableName, relationType };
+    Invoker.invokeSync( Persistence.DATA_MANAGEMENT_SERVER_ALIAS, "declareRelation", args );
+  }
+
+  @Override
+  public void declareRelation( String columnName, String childTableName, RelationType relationType,
+                               AsyncCallback<Void> callback )
+  {
+    Object[] args = new Object[] { tableName, columnName, childTableName, relationType };
+    Invoker.invokeAsync( Persistence.DATA_MANAGEMENT_SERVER_ALIAS, "declareRelation", args, callback );
+  }
+
+  @Override
+  public <N> void declareRelation( String columnName, Class<N> childClass, RelationType relationType,
+                                   AsyncCallback<Void> callback )
+  {
+    String childTableName = BackendlessSerializer.getSimpleName( childClass );
+    Object[] args = new Object[] { tableName, columnName, childTableName, relationType };
+    Invoker.invokeAsync( Persistence.DATA_MANAGEMENT_SERVER_ALIAS, "declareRelation", args, callback );
+  }
+
+  @Override
   public Map save( Map entity ) throws BackendlessException
   {
     if( entity == null )

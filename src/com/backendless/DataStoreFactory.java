@@ -20,10 +20,10 @@ package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
-import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.persistence.DataQueryBuilder;
 import com.backendless.persistence.LoadRelationsQueryBuilder;
+import com.backendless.persistence.RelationType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +36,42 @@ class DataStoreFactory
   {
     return new IDataStore<E>()
     {
+
+      @Override
+      public void declareRelation( String columnName, String childTableName, RelationType relationType )
+      {
+        String tableName = BackendlessSerializer.getSimpleName( entityClass );
+        Object[] args = new Object[] { tableName, columnName, childTableName, relationType };
+        Invoker.invokeSync( Persistence.DATA_MANAGEMENT_SERVER_ALIAS, "declareRelation", args );
+      }
+
+      @Override
+      public <N> void declareRelation( String columnName, Class<N> childClass, RelationType relationType )
+      {
+        String tableName = BackendlessSerializer.getSimpleName( entityClass );
+        String childTableName = BackendlessSerializer.getSimpleName( childClass );
+        Object[] args = new Object[] { tableName, columnName, childTableName, relationType };
+        Invoker.invokeSync( Persistence.DATA_MANAGEMENT_SERVER_ALIAS, "declareRelation", args );
+      }
+
+      @Override
+      public void declareRelation( String columnName, String childTableName, RelationType relationType,
+                                   AsyncCallback<Void> callback )
+      {
+        String tableName = BackendlessSerializer.getSimpleName( entityClass );
+        Object[] args = new Object[] { tableName, columnName, childTableName, relationType };
+        Invoker.invokeAsync( Persistence.DATA_MANAGEMENT_SERVER_ALIAS, "declareRelation", args, callback );
+      }
+
+      @Override
+      public <N> void declareRelation( String columnName, Class<N> childClass, RelationType relationType,
+                                       AsyncCallback<Void> callback )
+      {
+        String tableName = BackendlessSerializer.getSimpleName( entityClass );
+        String childTableName = BackendlessSerializer.getSimpleName( childClass );
+        Object[] args = new Object[] { tableName, columnName, childTableName, relationType };
+        Invoker.invokeAsync( Persistence.DATA_MANAGEMENT_SERVER_ALIAS, "declareRelation", args, callback );
+      }
 
       @Override
       public E save( final E entity ) throws BackendlessException

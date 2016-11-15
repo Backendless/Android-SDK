@@ -22,11 +22,22 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.persistence.DataQueryBuilder;
 import com.backendless.persistence.LoadRelationsQueryBuilder;
+import com.backendless.persistence.RelationType;
 
 import java.util.List;
 
 public interface IDataStore<E>
 {
+  void declareRelation( String columnName, String childTableName, RelationType relationType );
+
+  <N> void declareRelation( String columnName, Class<N> childClass, RelationType relationType );
+
+  void declareRelation( String columnName, String childTableName, RelationType relationType,
+                        AsyncCallback<Void> callback );
+
+  <N> void declareRelation( String columnName, Class<N> childClass, RelationType relationType,
+                            AsyncCallback<Void> callback );
+
   E save( E entity ) throws BackendlessException;
 
   void save( E entity, AsyncCallback<E> responder );

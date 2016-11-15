@@ -46,6 +46,7 @@ import java.util.Objects;
 public final class Persistence
 {
   public final static String PERSISTENCE_MANAGER_SERVER_ALIAS = "com.backendless.services.persistence.PersistenceService";
+  public final static String DATA_MANAGEMENT_SERVER_ALIAS = "com.backendless.management.persistence.DataManagementApi";
   private final static String DEFAULT_OBJECT_ID_GETTER = "getObjectId";
   public final static String DEFAULT_OBJECT_ID_FIELD = "objectId";
   public final static String DEFAULT_CREATED_FIELD = "created";
