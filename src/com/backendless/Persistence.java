@@ -58,7 +58,6 @@ public final class Persistence
 
   public final static String LOAD_ALL_RELATIONS = "*";
   public final static DataPermission Permissions = new DataPermission();
-  public final static Relations Relations = new Relations();
 
   private static final Persistence instance = new Persistence();
 
@@ -697,6 +696,16 @@ public final class Persistence
     }
 
     return DataStoreFactory.createDataStore( entityClass );
+  }
+
+  public RelationsStore<Map<String, Object>> of( final Map<String, Object> parentMap )
+  {
+    return new MapRelationsStore( parentMap );
+  }
+
+  public RelationsStore<Object> of( final Object parentObject )
+  {
+    return new ObjectRelationsStore<>( parentObject );
   }
 
   static String getEntityId( Object entity ) throws BackendlessException

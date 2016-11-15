@@ -6,18 +6,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-public final class MapRelationsStore implements RelationsStore<Map<String, Object>, Map<String, Object>>
+final class MapRelationsStore implements RelationsStore<Map<String, Object>>
 {
-  private String parentTableName;
-  private String childTableName;
+  private final Map<String, Object> parent;
+  private final String parentTableName;
 
-  public MapRelationsStore( String parentTableName, String childTableName )
+  MapRelationsStore( final Map<String, Object> parentMap )
   {
-    this.parentTableName = parentTableName;
-    this.childTableName = childTableName;
+    this.parent = parentMap;
+    this.parentTableName = (String) parentMap.get( Persistence.REST_CLASS_FIELD );
   }
 
-  public void addRelation( Map<String, Object> parent, String columnName, Collection<Map<String, Object>> childs )
+  public void addRelation( String columnName, Collection<Map<String, Object>> childs )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
@@ -32,8 +32,7 @@ public final class MapRelationsStore implements RelationsStore<Map<String, Objec
     Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args );
   }
 
-  public void addRelation( Map<String, Object> parent, String columnName, Collection<Map<String, Object>> childs,
-                           AsyncCallback<Void> callback )
+  public void addRelation( String columnName, Collection<Map<String, Object>> childs, AsyncCallback<Void> callback )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
@@ -48,7 +47,7 @@ public final class MapRelationsStore implements RelationsStore<Map<String, Objec
     Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args, callback );
   }
 
-  public int addRelation( Map<String, Object> parent, String columnName, String whereClause )
+  public int addRelation( String columnName, String whereClause )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
@@ -56,8 +55,7 @@ public final class MapRelationsStore implements RelationsStore<Map<String, Objec
     return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args );
   }
 
-  public void addRelation( Map<String, Object> parent, String columnName, String whereClause,
-                           AsyncCallback<Integer> callback )
+  public void addRelation( String columnName, String whereClause, AsyncCallback<Integer> callback )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
@@ -65,7 +63,7 @@ public final class MapRelationsStore implements RelationsStore<Map<String, Objec
     Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args, callback );
   }
 
-  public void setRelation( Map<String, Object> parent, String columnName, Collection<Map<String, Object>> childs )
+  public void setRelation( String columnName, Collection<Map<String, Object>> childs )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
@@ -80,8 +78,7 @@ public final class MapRelationsStore implements RelationsStore<Map<String, Objec
     Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args );
   }
 
-  public void setRelation( Map<String, Object> parent, String columnName, Collection<Map<String, Object>> childs,
-                           AsyncCallback<Void> callback )
+  public void setRelation( String columnName, Collection<Map<String, Object>> childs, AsyncCallback<Void> callback )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
@@ -96,7 +93,7 @@ public final class MapRelationsStore implements RelationsStore<Map<String, Objec
     Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args, callback );
   }
 
-  public int setRelation( Map<String, Object> parent, String columnName, String whereClause )
+  public int setRelation( String columnName, String whereClause )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
@@ -104,8 +101,7 @@ public final class MapRelationsStore implements RelationsStore<Map<String, Objec
     return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args );
   }
 
-  public void setRelation( Map<String, Object> parent, String columnName, String whereClause,
-                           AsyncCallback<Integer> callback )
+  public void setRelation( String columnName, String whereClause, AsyncCallback<Integer> callback )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
@@ -113,7 +109,7 @@ public final class MapRelationsStore implements RelationsStore<Map<String, Objec
     Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args, callback );
   }
 
-  public void deleteRelation( Map<String, Object> parent, String columnName, Collection<Map<String, Object>> childs )
+  public void deleteRelation( String columnName, Collection<Map<String, Object>> childs )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
@@ -128,8 +124,7 @@ public final class MapRelationsStore implements RelationsStore<Map<String, Objec
     Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args );
   }
 
-  public void deleteRelation( Map<String, Object> parent, String columnName, Collection<Map<String, Object>> childs,
-                              AsyncCallback<Void> callback )
+  public void deleteRelation( String columnName, Collection<Map<String, Object>> childs, AsyncCallback<Void> callback )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
@@ -144,7 +139,7 @@ public final class MapRelationsStore implements RelationsStore<Map<String, Objec
     Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args, callback );
   }
 
-  public int deleteRelation( Map<String, Object> parent, String columnName, String whereClause )
+  public int deleteRelation( String columnName, String whereClause )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
@@ -152,8 +147,7 @@ public final class MapRelationsStore implements RelationsStore<Map<String, Objec
     return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args );
   }
 
-  public void deleteRelation( Map<String, Object> parent, String columnName, String whereClause,
-                              AsyncCallback<Integer> callback )
+  public void deleteRelation( String columnName, String whereClause, AsyncCallback<Integer> callback )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
