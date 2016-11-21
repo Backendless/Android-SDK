@@ -18,10 +18,7 @@
 
 package com.backendless.persistence;
 
-import com.backendless.Backendless;
-import com.backendless.IDataStore;
-import com.backendless.Invoker;
-import com.backendless.Persistence;
+import com.backendless.*;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
@@ -37,10 +34,7 @@ import weborb.reader.StringType;
 import weborb.types.IAdaptingType;
 import weborb.v3types.ErrMessage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MapDrivenDataStore implements IDataStore<Map>
 {
@@ -50,38 +44,6 @@ public class MapDrivenDataStore implements IDataStore<Map>
   public MapDrivenDataStore( String tableName )
   {
     this.tableName = tableName;
-  }
-
-  @Override
-  public void declareRelation( String columnName, String childTableName, RelationType relationType )
-  {
-    Object[] args = new Object[] { tableName, columnName, childTableName, relationType };
-    Invoker.invokeSync( Persistence.DATA_MANAGEMENT_SERVER_ALIAS, "declareRelation", args );
-  }
-
-  @Override
-  public <N> void declareRelation( String columnName, Class<N> childClass, RelationType relationType )
-  {
-    String childTableName = BackendlessSerializer.getSimpleName( childClass );
-    Object[] args = new Object[] { tableName, columnName, childTableName, relationType };
-    Invoker.invokeSync( Persistence.DATA_MANAGEMENT_SERVER_ALIAS, "declareRelation", args );
-  }
-
-  @Override
-  public void declareRelation( String columnName, String childTableName, RelationType relationType,
-                               AsyncCallback<Void> callback )
-  {
-    Object[] args = new Object[] { tableName, columnName, childTableName, relationType };
-    Invoker.invokeAsync( Persistence.DATA_MANAGEMENT_SERVER_ALIAS, "declareRelation", args, callback );
-  }
-
-  @Override
-  public <N> void declareRelation( String columnName, Class<N> childClass, RelationType relationType,
-                                   AsyncCallback<Void> callback )
-  {
-    String childTableName = BackendlessSerializer.getSimpleName( childClass );
-    Object[] args = new Object[] { tableName, columnName, childTableName, relationType };
-    Invoker.invokeAsync( Persistence.DATA_MANAGEMENT_SERVER_ALIAS, "declareRelation", args, callback );
   }
 
   @Override
@@ -508,6 +470,156 @@ public class MapDrivenDataStore implements IDataStore<Map>
       if( responder != null )
         responder.handleFault( new BackendlessFault( e ) );
     }
+  }
+
+  @Override
+  public <R> void addRelation( Map parent, String columnName, Collection<R> childs )
+  {
+    String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+
+    Collection<String> childObjectIds = new ArrayList<>();
+    for( R child : childs )
+    {
+      String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : FootprintsManager.getInstance().getObjectId( child );
+      childObjectIds.add( childObjectId );
+    }
+
+    Object[] args = new Object[] { tableName, columnName, parentObjectId, childObjectIds };
+    Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args );
+  }
+
+  @Override
+  public <R> void addRelation( Map parent, String columnName, Collection<R> childs, AsyncCallback<Void> callback )
+  {
+    String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+
+    Collection<String> childObjectIds = new ArrayList<>();
+    for( R child : childs )
+    {
+      String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : FootprintsManager.getInstance().getObjectId( child );
+      childObjectIds.add( childObjectId );
+    }
+
+    Object[] args = new Object[] { tableName, columnName, parentObjectId, childObjectIds };
+    Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args, callback );
+  }
+
+  @Override
+  public int addRelation( Map parent, String columnName, String whereClause )
+  {
+    String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+
+    Object[] args = new Object[] { tableName, columnName, parentObjectId, whereClause };
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args );
+  }
+
+  @Override
+  public void addRelation( Map parent, String columnName, String whereClause, AsyncCallback<Integer> callback )
+  {
+    String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+
+    Object[] args = new Object[] { tableName, columnName, parentObjectId, whereClause };
+    Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args, callback );
+  }
+
+  @Override
+  public <R> void setRelation( Map parent, String columnName, Collection<R> childs )
+  {
+    String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+
+    Collection<String> childObjectIds = new ArrayList<>();
+    for( R child : childs )
+    {
+      String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : FootprintsManager.getInstance().getObjectId( child );
+      childObjectIds.add( childObjectId );
+    }
+
+    Object[] args = new Object[] { tableName, columnName, parentObjectId, childObjectIds };
+    Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args );
+  }
+
+  @Override
+  public <R> void setRelation( Map parent, String columnName, Collection<R> childs, AsyncCallback<Void> callback )
+  {
+    String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+
+    Collection<String> childObjectIds = new ArrayList<>();
+    for( R child : childs )
+    {
+      String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : FootprintsManager.getInstance().getObjectId( child );
+      childObjectIds.add( childObjectId );
+    }
+
+    Object[] args = new Object[] { tableName, columnName, parentObjectId, childObjectIds };
+    Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args, callback );
+  }
+
+  @Override
+  public int setRelation( Map parent, String columnName, String whereClause )
+  {
+    String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+
+    Object[] args = new Object[] { tableName, columnName, parentObjectId, whereClause };
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args );
+  }
+
+  @Override
+  public void setRelation( Map parent, String columnName, String whereClause, AsyncCallback<Integer> callback )
+  {
+    String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+
+    Object[] args = new Object[] { tableName, columnName, parentObjectId, whereClause };
+    Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args, callback );
+  }
+
+  @Override
+  public <R> void deleteRelation( Map parent, String columnName, Collection<R> childs )
+  {
+    String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+
+    Collection<String> childObjectIds = new ArrayList<>();
+    for( R child : childs )
+    {
+      String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : FootprintsManager.getInstance().getObjectId( child );
+      childObjectIds.add( childObjectId );
+    }
+
+    Object[] args = new Object[] { tableName, columnName, parentObjectId, childObjectIds };
+    Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args );
+  }
+
+  @Override
+  public <R> void deleteRelation( Map parent, String columnName, Collection<R> childs, AsyncCallback<Void> callback )
+  {
+    String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+
+    Collection<String> childObjectIds = new ArrayList<>();
+    for( R child : childs )
+    {
+      String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : FootprintsManager.getInstance().getObjectId( child );
+      childObjectIds.add( childObjectId );
+    }
+
+    Object[] args = new Object[] { tableName, columnName, parentObjectId, childObjectIds };
+    Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args, callback );
+  }
+
+  @Override
+  public int deleteRelation( Map parent, String columnName, String whereClause )
+  {
+    String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+
+    Object[] args = new Object[] { tableName, columnName, parentObjectId, whereClause };
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args );
+  }
+
+  @Override
+  public void deleteRelation( Map parent, String columnName, String whereClause, AsyncCallback<Integer> callback )
+  {
+    String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+
+    Object[] args = new Object[] { tableName, columnName, parentObjectId, whereClause };
+    Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args, callback );
   }
 
   private class MapDrivenResponder implements IRawResponder
