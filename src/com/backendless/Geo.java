@@ -29,10 +29,7 @@ import com.backendless.geo.*;
 import com.backendless.geo.geofence.*;
 import weborb.types.Types;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class Geo
 {
@@ -354,13 +351,13 @@ public final class Geo
 
   public List<GeoCategory> getCategories() throws BackendlessException
   {
-    GeoCategory[] response = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getCategories", new Object[] {} );
-
-    return Arrays.asList( response );
+    CollectionAdaptingPolicy<GeoCategory> adaptingPolicy = new CollectionAdaptingPolicy<>();
+    return Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getCategories", new Object[] {}, new AdaptingResponder<>( GeoCategory.class, adaptingPolicy )  );
   }
 
   public void getCategories( final AsyncCallback<List<GeoCategory>> responder )
   {
+    CollectionAdaptingPolicy<GeoCategory> adaptingPolicy = new CollectionAdaptingPolicy<>();
     Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getCategories", new Object[] {}, new AsyncCallback<GeoCategory[]>()
     {
       @Override
@@ -376,7 +373,7 @@ public final class Geo
         if( responder != null )
           responder.handleFault( fault );
       }
-    } );
+    }, new AdaptingResponder<>( GeoCategory.class, adaptingPolicy ) );
   }
 
   public GeoPoint loadMetadata( final GeoPoint geoPoint )

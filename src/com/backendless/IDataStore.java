@@ -23,6 +23,7 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.persistence.DataQueryBuilder;
 import com.backendless.persistence.LoadRelationsQueryBuilder;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface IDataStore<E>
@@ -123,4 +124,28 @@ public interface IDataStore<E>
   void getObjectCount( AsyncCallback<Integer> responder );
 
   void getObjectCount( DataQueryBuilder dataQueryBuilder, AsyncCallback<Integer> responder );
+
+  <R> void addRelation( E parent, String columnName, Collection<R> childs );
+
+  <R> void addRelation( E parent, String columnName, Collection<R> childs, AsyncCallback<Void> callback );
+
+  int addRelation( E parent, String columnName, String whereClause );
+
+  void addRelation( E parent, String columnName, String whereClause, AsyncCallback<Integer> callback );
+
+  <R> void setRelation( E parent, String columnName, Collection<R> childs );
+
+  <R> void setRelation( E parent, String columnName, Collection<R> childs, AsyncCallback<Void> callback );
+
+  int setRelation( E parent, String columnName, String whereClause );
+
+  void setRelation( E parent, String columnName, String whereClause, AsyncCallback<Integer> callback );
+
+  <R> void deleteRelation( E parent, String columnName, Collection<R> childs );
+
+  <R> void deleteRelation( E parent, String columnName, Collection<R> childs, AsyncCallback<Void> callback );
+
+  int deleteRelation( E parent, String columnName, String whereClause );
+
+  void deleteRelation( E parent, String columnName, String whereClause, AsyncCallback<Integer> callback );
 }

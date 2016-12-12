@@ -438,10 +438,17 @@ public class FootprintsManager
         if( entityFieldValue == null )
           entityFieldValue = ((BackendlessUser) entity).getProperty( upperKey );
       }
+      else if( entity instanceof HashMap )
+      {
+        entityFieldValue = ((HashMap) entity).get( lowerKey );
+
+        if( entityFieldValue == null )
+          entityFieldValue = ((HashMap) entity).get( upperKey );
+      }
       else
       {
-          // retrieve entity field value
-          entityFieldValue = ReflectionUtil.getFieldValue( entity, lowerKey, upperKey );
+        // retrieve entity field value
+        entityFieldValue = ReflectionUtil.getFieldValue( entity, lowerKey, upperKey );
       }
       return entityFieldValue;
     }
