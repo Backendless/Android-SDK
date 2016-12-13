@@ -438,7 +438,9 @@ public class MapDrivenDataStore implements IDataStore<Map>
   @Override
   public int getObjectCount( DataQueryBuilder dataQueryBuilder )
   {
-    Object[] args = new Object[] { tableName, dataQueryBuilder };
+    Objects.requireNonNull( dataQueryBuilder, ExceptionMessage.NULL_FIELD( "dataQueryBuilder" ) );
+    BackendlessDataQuery dataQuery = dataQueryBuilder.build();
+    Object[] args = new Object[] { tableName, dataQuery };
     return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args );
   }
 
@@ -462,7 +464,9 @@ public class MapDrivenDataStore implements IDataStore<Map>
   {
     try
     {
-      Object[] args = new Object[] { tableName, dataQueryBuilder };
+      Objects.requireNonNull( dataQueryBuilder, ExceptionMessage.NULL_FIELD( "dataQueryBuilder" ) );
+      BackendlessDataQuery dataQuery = dataQueryBuilder.build();
+      Object[] args = new Object[] { tableName, dataQuery };
       Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args, responder );
     }
     catch( Throwable e )
@@ -473,7 +477,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public <R> void addRelation( Map parent, String columnName, Collection<R> childs )
+  public <R> void addRelation( Map parent, String relationColumnName, Collection<R> childs )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
@@ -484,12 +488,12 @@ public class MapDrivenDataStore implements IDataStore<Map>
       childObjectIds.add( childObjectId );
     }
 
-    Object[] args = new Object[] { tableName, columnName, parentObjectId, childObjectIds };
+    Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, childObjectIds };
     Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args );
   }
 
   @Override
-  public <R> void addRelation( Map parent, String columnName, Collection<R> childs, AsyncCallback<Void> callback )
+  public <R> void addRelation( Map parent, String relationColumnName, Collection<R> childs, AsyncCallback<Void> callback )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
@@ -500,125 +504,125 @@ public class MapDrivenDataStore implements IDataStore<Map>
       childObjectIds.add( childObjectId );
     }
 
-    Object[] args = new Object[] { tableName, columnName, parentObjectId, childObjectIds };
+    Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, childObjectIds };
     Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args, callback );
   }
 
   @Override
-  public int addRelation( Map parent, String columnName, String whereClause )
+  public int addRelation( Map parent, String relationColumnName, String whereClause )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
-    Object[] args = new Object[] { tableName, columnName, parentObjectId, whereClause };
+    Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, whereClause };
     return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args );
   }
 
   @Override
-  public void addRelation( Map parent, String columnName, String whereClause, AsyncCallback<Integer> callback )
+  public void addRelation( Map parent, String relationColumnName, String whereClause, AsyncCallback<Integer> callback )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
-    Object[] args = new Object[] { tableName, columnName, parentObjectId, whereClause };
+    Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, whereClause };
     Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args, callback );
   }
 
   @Override
-  public <R> void setRelation( Map parent, String columnName, Collection<R> childs )
+  public <R> void setRelation( Map parent, String relationColumnName, Collection<R> children )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
     Collection<String> childObjectIds = new ArrayList<>();
-    for( R child : childs )
+    for( R child : children )
     {
       String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : FootprintsManager.getInstance().getObjectId( child );
       childObjectIds.add( childObjectId );
     }
 
-    Object[] args = new Object[] { tableName, columnName, parentObjectId, childObjectIds };
+    Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, childObjectIds };
     Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args );
   }
 
   @Override
-  public <R> void setRelation( Map parent, String columnName, Collection<R> childs, AsyncCallback<Void> callback )
+  public <R> void setRelation( Map parent, String relationColumnName, Collection<R> children, AsyncCallback<Void> callback )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
     Collection<String> childObjectIds = new ArrayList<>();
-    for( R child : childs )
+    for( R child : children )
     {
       String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : FootprintsManager.getInstance().getObjectId( child );
       childObjectIds.add( childObjectId );
     }
 
-    Object[] args = new Object[] { tableName, columnName, parentObjectId, childObjectIds };
+    Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, childObjectIds };
     Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args, callback );
   }
 
   @Override
-  public int setRelation( Map parent, String columnName, String whereClause )
+  public int setRelation( Map parent, String relationColumnName, String whereClause )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
-    Object[] args = new Object[] { tableName, columnName, parentObjectId, whereClause };
+    Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, whereClause };
     return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args );
   }
 
   @Override
-  public void setRelation( Map parent, String columnName, String whereClause, AsyncCallback<Integer> callback )
+  public void setRelation( Map parent, String relationColumnName, String whereClause, AsyncCallback<Integer> callback )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
-    Object[] args = new Object[] { tableName, columnName, parentObjectId, whereClause };
+    Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, whereClause };
     Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args, callback );
   }
 
   @Override
-  public <R> void deleteRelation( Map parent, String columnName, Collection<R> childs )
+  public <R> void deleteRelation( Map parent, String relationColumnName, Collection<R> children )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
     Collection<String> childObjectIds = new ArrayList<>();
-    for( R child : childs )
+    for( R child : children )
     {
       String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : FootprintsManager.getInstance().getObjectId( child );
       childObjectIds.add( childObjectId );
     }
 
-    Object[] args = new Object[] { tableName, columnName, parentObjectId, childObjectIds };
+    Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, childObjectIds };
     Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args );
   }
 
   @Override
-  public <R> void deleteRelation( Map parent, String columnName, Collection<R> childs, AsyncCallback<Void> callback )
+  public <R> void deleteRelation( Map parent, String relationColumnName, Collection<R> children, AsyncCallback<Void> callback )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
     Collection<String> childObjectIds = new ArrayList<>();
-    for( R child : childs )
+    for( R child : children )
     {
       String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : FootprintsManager.getInstance().getObjectId( child );
       childObjectIds.add( childObjectId );
     }
 
-    Object[] args = new Object[] { tableName, columnName, parentObjectId, childObjectIds };
+    Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, childObjectIds };
     Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args, callback );
   }
 
   @Override
-  public int deleteRelation( Map parent, String columnName, String whereClause )
+  public int deleteRelation( Map parent, String relationColumnName, String whereClause )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
-    Object[] args = new Object[] { tableName, columnName, parentObjectId, whereClause };
+    Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, whereClause };
     return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args );
   }
 
   @Override
-  public void deleteRelation( Map parent, String columnName, String whereClause, AsyncCallback<Integer> callback )
+  public void deleteRelation( Map parent, String relationColumnName, String whereClause, AsyncCallback<Integer> callback )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
-    Object[] args = new Object[] { tableName, columnName, parentObjectId, whereClause };
+    Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, whereClause };
     Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args, callback );
   }
 

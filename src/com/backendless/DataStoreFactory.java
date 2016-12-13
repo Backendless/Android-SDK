@@ -311,170 +311,170 @@ class DataStoreFactory
       }
 
       @Override
-      public <R> void addRelation( E parent, String columnName, Collection<R> childs )
+      public <R> void addRelation( E parent, String relationColumnName, Collection<R> children )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
         String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
         Collection<String> childObjectIds = new ArrayList<>();
-        for( R child : childs )
+        for( R child : children )
         {
           String childObjectId = FootprintsManager.getInstance().getObjectId( child );
           childObjectIds.add( childObjectId );
         }
 
-        Object[] args = new Object[] { parentTableName, columnName, parentObjectId, childObjectIds };
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, childObjectIds };
         Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args );
       }
 
       @Override
-      public <R> void addRelation( E parent, String columnName, Collection<R> childs, AsyncCallback<Void> callback )
+      public <R> void addRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Void> callback )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
         String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
         Collection<String> childObjectIds = new ArrayList<>();
-        for( R child : childs )
+        for( R child : children )
         {
           String childObjectId = FootprintsManager.getInstance().getObjectId( child );
           childObjectIds.add( childObjectId );
         }
 
-        Object[] args = new Object[] { parentTableName, columnName, parentObjectId, childObjectIds };
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, childObjectIds };
         Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args, callback );
       }
 
       @Override
-      public int addRelation( E parent, String columnName, String whereClause )
+      public int addRelation( E parent, String relationColumnName, String whereClause )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
         String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
 
-        Object[] args = new Object[] { parentTableName, columnName, parentObjectId, whereClause };
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
         return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args );
       }
 
       @Override
-      public void addRelation( E parent, String columnName, String whereClause, AsyncCallback<Integer> callback )
+      public void addRelation( E parent, String relationColumnName, String whereClause, AsyncCallback<Integer> callback )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
         String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
 
-        Object[] args = new Object[] { parentTableName, columnName, parentObjectId, whereClause };
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
         Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args, callback );
       }
 
       @Override
-      public <R> void setRelation( E parent, String columnName, Collection<R> childs )
+      public <R> void setRelation( E parent, String relationColumnName, Collection<R> children )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
         String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
         Collection<String> childObjectIds = new ArrayList<>();
-        for( R child : childs )
+        for( R child : children )
         {
           String childObjectId = FootprintsManager.getInstance().getObjectId( child );
           childObjectIds.add( childObjectId );
         }
 
-        Object[] args = new Object[] { parentTableName, columnName, parentObjectId, childObjectIds };
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, childObjectIds };
         Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args );
       }
 
       @Override
-      public <R> void setRelation( E parent, String columnName, Collection<R> childs, AsyncCallback<Void> callback )
+      public <R> void setRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Void> callback )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
         String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
         Collection<String> childObjectIds = new ArrayList<>();
-        for( R child : childs )
+        for( R child : children )
         {
           String childObjectId = FootprintsManager.getInstance().getObjectId( child );
           childObjectIds.add( childObjectId );
         }
 
-        Object[] args = new Object[] { parentTableName, columnName, parentObjectId, childObjectIds };
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, childObjectIds };
         Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args, callback );
       }
 
       @Override
-      public int setRelation( E parent, String columnName, String whereClause )
+      public int setRelation( E parent, String relationColumnName, String whereClause )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
         String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
 
-        Object[] args = new Object[] { parentTableName, columnName, parentObjectId, whereClause };
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
         return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args );
       }
 
       @Override
-      public void setRelation( E parent, String columnName, String whereClause, AsyncCallback<Integer> callback )
+      public void setRelation( E parent, String relationColumnName, String whereClause, AsyncCallback<Integer> callback )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
         String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
 
-        Object[] args = new Object[] { parentTableName, columnName, parentObjectId, whereClause };
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
         Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args, callback );
       }
 
       @Override
-      public <R> void deleteRelation( E parent, String columnName, Collection<R> childs )
+      public <R> void deleteRelation( E parent, String relationColumnName, Collection<R> children )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
         String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
         Collection<String> childObjectIds = new ArrayList<>();
-        for( R child : childs )
+        for( R child : children )
         {
           String childObjectId = FootprintsManager.getInstance().getObjectId( child );
           childObjectIds.add( childObjectId );
         }
 
-        Object[] args = new Object[] { parentTableName, columnName, parentObjectId, childObjectIds };
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, childObjectIds };
         Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args );
       }
 
       @Override
-      public <R> void deleteRelation( E parent, String columnName, Collection<R> childs, AsyncCallback<Void> callback )
+      public <R> void deleteRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Void> callback )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
         String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
         Collection<String> childObjectIds = new ArrayList<>();
-        for( R child : childs )
+        for( R child : children )
         {
           String childObjectId = FootprintsManager.getInstance().getObjectId( child );
           childObjectIds.add( childObjectId );
         }
 
-        Object[] args = new Object[] { parentTableName, columnName, parentObjectId, childObjectIds };
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, childObjectIds };
         Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args, callback );
       }
 
       @Override
-      public int deleteRelation( E parent, String columnName, String whereClause )
+      public int deleteRelation( E parent, String relationColumnName, String whereClause )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
         String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
 
-        Object[] args = new Object[] { parentTableName, columnName, parentObjectId, whereClause };
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
         return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args );
       }
 
       @Override
-      public void deleteRelation( E parent, String columnName, String whereClause, AsyncCallback<Integer> callback )
+      public void deleteRelation( E parent, String relationColumnName, String whereClause, AsyncCallback<Integer> callback )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
         String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
 
-        Object[] args = new Object[] { parentTableName, columnName, parentObjectId, whereClause };
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
         Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args, callback );
       }
     };
