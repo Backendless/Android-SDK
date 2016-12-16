@@ -133,5 +133,44 @@ public abstract class PersistenceExtender<T>
   public void afterLast( RunnerContext context, ExecutionResult<T> entity ) throws Exception
   {
   }
+
+  public void beforeCount( RunnerContext context, BackendlessDataQuery query ) throws Exception
+  {
+  }
+
+  public void afterCount( RunnerContext context, BackendlessDataQuery query,
+                         ExecutionResult<Integer> result ) throws Exception
+  {
+  }
+
+  public void beforeAddRelation( RunnerContext context, String columnName, String parentObjectId, Object childrenArrayORWhereClause )
+  {
+
+  }
+
+  public void afterAddRelation( RunnerContext context, String columnName, String parentObjectId, Object childrenArrayORWhereClause )
+  {
+
+  }
+
+  public void beforeSetRelation( RunnerContext context, String columnName, String parentObjectId, Object childrenArrayORWhereClause )
+  {
+
+  }
+
+  public void afterSetRelation( RunnerContext context, String columnName, String parentObjectId, Object childrenArrayORWhereClause )
+  {
+
+  }
+
+  public void beforeDeleteRelation( RunnerContext context, String columnName, String parentObjectId, Object childrenArrayORWhereClause )
+  {
+
+  }
+
+  public void afterDeleteRelation( RunnerContext context, String columnName, String parentObjectId, Object childrenArrayORWhereClause )
+  {
+
+  }
 }
 
