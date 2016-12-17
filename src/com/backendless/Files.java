@@ -65,7 +65,6 @@ public final class Files
     Types.addClientClassMapping( "com.backendless.services.file.permissions.FileRolePermission", FileRolePermission.class );
     Types.addClientClassMapping( "com.backendless.services.file.permissions.FileUserPermission", FileUserPermission.class );
     Types.addClientClassMapping( "com.backendless.management.files.FileInfo", FileInfo.class );
-    Types.addClientClassMapping( "com.backendless.management.files.FileDetailedInfo", FileInfo.class );
   }
 
   static Files getInstance()

@@ -131,14 +131,14 @@ public abstract class FilesExtender
   {
   }
 
-  public void beforeListing( RunnerContext context, String pattern,
+  public void beforeListing( RunnerContext context, String path, String pattern,
                              boolean recursive, int pageSize,
                              int offset )
           throws Exception
   {
   }
 
-  public void afterListing( RunnerContext context, String pattern,
+  public void afterListing( RunnerContext context, String path, String pattern,
                             boolean recursive, int pageSize,
                             int offset, ExecutionResult<Collection<FileInfo>> result ) throws Exception
   {
