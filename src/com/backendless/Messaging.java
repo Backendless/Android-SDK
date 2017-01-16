@@ -37,19 +37,27 @@ package com.backendless;/*
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
-
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
-import com.backendless.messaging.*;
-import com.backendless.push.GCMRegistrar;
-
+import com.backendless.messaging.BodyParts;
+import com.backendless.messaging.DeliveryOptions;
+import com.backendless.messaging.Message;
 import com.backendless.messaging.MessageStatus;
+import com.backendless.messaging.PublishOptions;
 import com.backendless.messaging.PublishStatusEnum;
+import com.backendless.messaging.PushBroadcastMask;
+import com.backendless.messaging.SubscriptionOptions;
+import com.backendless.push.GCMRegistrar;
 import weborb.types.Types;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 public final class Messaging
 {
@@ -787,37 +795,37 @@ public final class Messaging
     }
   }
 
-  public void sendTextEmail( String subject, String messageBody, List<String> recipients )
+  public MessageStatus sendTextEmail( String subject, String messageBody, List<String> recipients )
   {
-    sendEmail( subject, new BodyParts( messageBody, null ), recipients, new ArrayList<String>() );
+    return sendEmail( subject, new BodyParts( messageBody, null ), recipients, new ArrayList<String>() );
   }
 
-  public void sendTextEmail( String subject, String messageBody, String recipient )
+  public MessageStatus sendTextEmail( String subject, String messageBody, String recipient )
   {
-    sendEmail( subject, new BodyParts( messageBody, null ), Arrays.asList( recipient ), new ArrayList<String>() );
+    return sendEmail( subject, new BodyParts( messageBody, null ), Arrays.asList( recipient ), new ArrayList<String>() );
   }
 
-  public void sendHTMLEmail( String subject, String messageBody, List<String> recipients )
+  public MessageStatus sendHTMLEmail( String subject, String messageBody, List<String> recipients )
   {
-    sendEmail( subject, new BodyParts( null, messageBody ), recipients, new ArrayList<String>() );
+    return sendEmail( subject, new BodyParts( null, messageBody ), recipients, new ArrayList<String>() );
   }
 
-  public void sendHTMLEmail( String subject, String messageBody, String recipient )
+  public MessageStatus sendHTMLEmail( String subject, String messageBody, String recipient )
   {
-    sendEmail( subject, new BodyParts( null, messageBody ), Arrays.asList( recipient ), new ArrayList<String>() );
+    return sendEmail( subject, new BodyParts( null, messageBody ), Arrays.asList( recipient ), new ArrayList<String>() );
   }
 
-  public void sendEmail( String subject, BodyParts bodyParts, String recipient, List<String> attachments )
+  public MessageStatus sendEmail( String subject, BodyParts bodyParts, String recipient, List<String> attachments )
   {
-    sendEmail( subject, bodyParts, Arrays.asList( recipient ), attachments );
+    return sendEmail( subject, bodyParts, Arrays.asList( recipient ), attachments );
   }
 
-  public void sendEmail( String subject, BodyParts bodyParts, String recipient )
+  public MessageStatus sendEmail( String subject, BodyParts bodyParts, String recipient )
   {
-    sendEmail( subject, bodyParts, Arrays.asList( recipient ), new ArrayList<String>() );
+    return sendEmail( subject, bodyParts, Arrays.asList( recipient ), new ArrayList<String>() );
   }
 
-  public void sendEmail( String subject, BodyParts bodyParts, List<String> recipients, List<String> attachments )
+  public MessageStatus sendEmail( String subject, BodyParts bodyParts, List<String> recipients, List<String> attachments )
   {
     if( subject == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_SUBJECT );
@@ -831,43 +839,43 @@ public final class Messaging
     if( attachments == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ATTACHMENTS );
 
-    Invoker.invokeSync( EMAIL_MANAGER_SERVER_ALIAS, "send", new Object[] { subject, bodyParts, recipients, attachments } );
+    return Invoker.invokeSync( EMAIL_MANAGER_SERVER_ALIAS, "send", new Object[] { subject, bodyParts, recipients, attachments } );
   }
 
-  public void sendTextEmail( String subject, String messageBody, List<String> recipients, final AsyncCallback<Void> responder )
+  public void sendTextEmail( String subject, String messageBody, List<String> recipients, final AsyncCallback<MessageStatus> responder )
   {
     sendEmail( subject, new BodyParts( messageBody, null ), recipients, new ArrayList<String>(), responder );
   }
 
-  public void sendTextEmail( String subject, String messageBody, String recipient, final AsyncCallback<Void> responder )
+  public void sendTextEmail( String subject, String messageBody, String recipient, final AsyncCallback<MessageStatus> responder )
   {
     sendEmail( subject, new BodyParts( messageBody, null ), Arrays.asList( recipient ), new ArrayList<String>(), responder );
   }
 
   public void sendHTMLEmail( String subject, String messageBody, List<String> recipients,
-                             final AsyncCallback<Void> responder )
+                             final AsyncCallback<MessageStatus> responder )
   {
     sendEmail( subject, new BodyParts( null, messageBody ), recipients, new ArrayList<String>(), responder );
   }
 
-  public void sendHTMLEmail( String subject, String messageBody, String recipient, final AsyncCallback<Void> responder )
+  public void sendHTMLEmail( String subject, String messageBody, String recipient, final AsyncCallback<MessageStatus> responder )
   {
     sendEmail( subject, new BodyParts( null, messageBody ), Arrays.asList( recipient ), new ArrayList<String>(), responder );
   }
 
   public void sendEmail( String subject, BodyParts bodyParts, String recipient, List<String> attachments,
-                         final AsyncCallback<Void> responder )
+                         final AsyncCallback<MessageStatus> responder )
   {
     sendEmail( subject, bodyParts, Arrays.asList( recipient ), attachments, responder );
   }
 
-  public void sendEmail( String subject, BodyParts bodyParts, String recipient, final AsyncCallback<Void> responder )
+  public void sendEmail( String subject, BodyParts bodyParts, String recipient, final AsyncCallback<MessageStatus> responder )
   {
     sendEmail( subject, bodyParts, Arrays.asList( recipient ), new ArrayList<String>(), responder );
   }
 
   public void sendEmail( String subject, BodyParts bodyParts, List<String> recipients, List<String> attachments,
-                         final AsyncCallback<Void> responder )
+                         final AsyncCallback<MessageStatus> responder )
   {
     try
     {
