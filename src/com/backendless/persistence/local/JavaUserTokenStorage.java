@@ -23,7 +23,7 @@ import java.util.prefs.Preferences;
 
 class JavaUserTokenStorage implements IStorage<String>
 {
-  private Preferences prefs = Preferences.userRoot().node( this.getClass().getName().replace( '.', '/' ) );
+  private Preferences prefs = Preferences.userRoot().node( "backendless/JavaUserTokenStorage" );
   private static JavaUserTokenStorage instance = new JavaUserTokenStorage();
 
   private JavaUserTokenStorage()
