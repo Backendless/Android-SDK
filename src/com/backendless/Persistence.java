@@ -813,15 +813,13 @@ public final class Persistence
 
   private void removeNullsAndRelations( Map<String, Object> entityMap )
   {
-    List<String> keys = new ArrayList<>();
-    for( Map.Entry<String, Object> entry : entityMap.entrySet() )
+    Iterator<Map.Entry<String, Object>> entryIterator = entityMap.entrySet().iterator();
+    while( entryIterator.hasNext() )
     {
+      Map.Entry<String, Object> entry = entryIterator.next();
       if( (entry.getValue() == null || entry.getValue() instanceof Map || entry.getValue() instanceof Collection || entry.getValue().getClass().isArray()) && !entry.getKey().equals( DEFAULT_OBJECT_ID_FIELD ) && !entry.getKey().equals( DEFAULT_CREATED_FIELD ) && !entry.getKey().equals( DEFAULT_UPDATED_FIELD ) && !entry.getKey().equals( DEFAULT_META_FIELD ) )
-        keys.add( entry.getKey() );
+        entryIterator.remove();
     }
-
-    for( String key : keys )
-      entityMap.remove( key );
   }
 
   public List<Map<String, Object>> getView( String viewName, DataQueryBuilder queryBuilder )
