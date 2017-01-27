@@ -24,7 +24,12 @@ import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
-import com.backendless.persistence.*;
+import com.backendless.persistence.BackendlessDataQuery;
+import com.backendless.persistence.BackendlessSerializer;
+import com.backendless.persistence.DataQueryBuilder;
+import com.backendless.persistence.LoadRelationsQueryBuilder;
+import com.backendless.persistence.MapDrivenDataStore;
+import com.backendless.persistence.QueryOptions;
 import com.backendless.property.ObjectProperty;
 import com.backendless.utils.ReflectionUtil;
 import com.backendless.utils.ResponderHelper;
@@ -38,7 +43,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -86,6 +94,8 @@ public final class Persistence
 
     checkDeclaredType( entity.getClass() );
     final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
+    removeNullsAndRelations(serializedEntity);
+
     MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
     {
       @Override
@@ -139,6 +149,7 @@ public final class Persistence
 
       checkDeclaredType( entity.getClass() );
       final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
+      removeNullsAndRelations( serializedEntity );
 
       MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
       {
@@ -798,6 +809,19 @@ public final class Persistence
     {
       throw new IllegalArgumentException( ExceptionMessage.ENTITY_MISSING_DEFAULT_CONSTRUCTOR );
     }
+  }
+
+  private void removeNullsAndRelations( Map<String, Object> entityMap )
+  {
+    List<String> keys = new ArrayList<>();
+    for( Map.Entry<String, Object> entry : entityMap.entrySet() )
+    {
+      if( (entry.getValue() == null || entry.getValue() instanceof Map || entry.getValue() instanceof Collection || entry.getValue().getClass().isArray()) && !entry.getKey().equals( DEFAULT_OBJECT_ID_FIELD ) && !entry.getKey().equals( DEFAULT_CREATED_FIELD ) && !entry.getKey().equals( DEFAULT_UPDATED_FIELD ) && !entry.getKey().equals( DEFAULT_META_FIELD ) )
+        keys.add( entry.getKey() );
+    }
+
+    for( String key : keys )
+      entityMap.remove( key );
   }
 
   public List<Map<String, Object>> getView( String viewName, DataQueryBuilder queryBuilder )
