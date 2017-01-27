@@ -175,9 +175,11 @@ public class FootprintsManager
 
             // retrieve persisted entity's field value (which is collection)
             Collection persistedEntityFieldValue = getFieldValueAsCollection(persistedEntity, entry.getKey());
+            if (persistedEntityFieldValue.isEmpty())
+              continue;
+
             // retrieve initial entity's field value (which is collection)
             Collection initialEntityFieldValue = getFieldValueAsCollection(initialEntity, entry.getKey());
-
             Collection mapCollection = (Collection) entry.getValue();
 
             // recursively duplicate footprint for each object in collection
