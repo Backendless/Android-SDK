@@ -358,17 +358,17 @@ public final class Geo
   public void getCategories( final AsyncCallback<List<GeoCategory>> responder )
   {
     CollectionAdaptingPolicy<GeoCategory> adaptingPolicy = new CollectionAdaptingPolicy<>();
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getCategories", new Object[] {}, new AsyncCallback<GeoCategory[]>()
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getCategories", new Object[] {}, new AsyncCallback<List<GeoCategory>>()
     {
       @Override
-      public void handleResponse( GeoCategory[] response )
+      public void handleResponse( final List<GeoCategory> response )
       {
         if( responder != null )
-          responder.handleResponse( Arrays.asList( response ) );
+          responder.handleResponse( response );
       }
 
       @Override
-      public void handleFault( BackendlessFault fault )
+      public void handleFault( final BackendlessFault fault )
       {
         if( responder != null )
           responder.handleFault( fault );
