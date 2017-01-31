@@ -20,6 +20,8 @@ def getMavenSettingsCredentials = {
     return output.servers."server"
 }
 
+[compileJava, compileTestJava]*.options*.compilerArgs = ['-g', '-parameters']
+
 if (JavaVersion.current().isJava8Compatible())
 {
     allprojects {
