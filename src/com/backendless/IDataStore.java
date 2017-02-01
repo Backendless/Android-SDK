@@ -125,9 +125,9 @@ public interface IDataStore<E>
 
   void getObjectCount( DataQueryBuilder dataQueryBuilder, AsyncCallback<Integer> responder );
 
-  <R> void addRelation( E parent, String relationColumnName, Collection<R> children );
+  <R> int addRelation( E parent, String relationColumnName, Collection<R> children );
 
-  <R> void addRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Void> callback );
+  <R> void addRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Integer> callback );
 
   int addRelation( E parent, String relationColumnName, String whereClause );
 
