@@ -59,9 +59,14 @@ uploadArchives {
     repositories {
         mavenDeployer {
 
+//            def ossrhUsername=''
+//            def ossrhPassword=''
 
-            def ossrhUsername=''
-            def ossrhPassword=''
+            Properties props = new Properties()
+            props.load(new FileInputStream("/Users/ksv/dev/Android-SDK/ossrh.properties"))
+
+            def ossrhUsername=props.getProperty( "user.name" )
+            def ossrhPassword=props.getProperty( "user.password" )
 
             pom.whenConfigured {
                 p -> p.dependencies = p.dependencies.findAll {
