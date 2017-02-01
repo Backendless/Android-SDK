@@ -133,9 +133,9 @@ public interface IDataStore<E>
 
   void addRelation( E parent, String relationColumnName, String whereClause, AsyncCallback<Integer> callback );
 
-  <R> void setRelation( E parent, String relationColumnName, Collection<R> children );
+  <R> int setRelation( E parent, String relationColumnName, Collection<R> children );
 
-  <R> void setRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Void> callback );
+  <R> void setRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Integer> callback );
 
   int setRelation( E parent, String relationColumnName, String whereClause );
 

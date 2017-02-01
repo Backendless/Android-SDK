@@ -367,7 +367,7 @@ class DataStoreFactory
       }
 
       @Override
-      public <R> void setRelation( E parent, String relationColumnName, Collection<R> children )
+      public <R> int setRelation( E parent, String relationColumnName, Collection<R> children )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
@@ -380,11 +380,11 @@ class DataStoreFactory
         }
 
         Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, childObjectIds };
-        Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args );
+        return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args );
       }
 
       @Override
-      public <R> void setRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Void> callback )
+      public <R> void setRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Integer> callback )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
