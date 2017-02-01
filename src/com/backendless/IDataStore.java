@@ -141,9 +141,9 @@ public interface IDataStore<E>
 
   void setRelation( E parent, String relationColumnName, String whereClause, AsyncCallback<Integer> callback );
 
-  <R> void deleteRelation( E parent, String relationColumnName, Collection<R> children );
+  <R> int deleteRelation( E parent, String relationColumnName, Collection<R> children );
 
-  <R> void deleteRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Void> callback );
+  <R> void deleteRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Integer> callback );
 
   int deleteRelation( E parent, String relationColumnName, String whereClause );
 

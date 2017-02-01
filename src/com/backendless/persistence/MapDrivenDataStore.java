@@ -577,7 +577,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public <R> void deleteRelation( Map parent, String relationColumnName, Collection<R> children )
+  public <R> int deleteRelation( Map parent, String relationColumnName, Collection<R> children )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
@@ -589,11 +589,11 @@ public class MapDrivenDataStore implements IDataStore<Map>
     }
 
     Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, childObjectIds };
-    Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args );
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args );
   }
 
   @Override
-  public <R> void deleteRelation( Map parent, String relationColumnName, Collection<R> children, AsyncCallback<Void> callback )
+  public <R> void deleteRelation( Map parent, String relationColumnName, Collection<R> children, AsyncCallback<Integer> callback )
   {
     String parentObjectId = (String) parent.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
