@@ -125,25 +125,25 @@ public interface IDataStore<E>
 
   void getObjectCount( DataQueryBuilder dataQueryBuilder, AsyncCallback<Integer> responder );
 
-  <R> void addRelation( E parent, String relationColumnName, Collection<R> chidlren );
+  <R> int addRelation( E parent, String relationColumnName, Collection<R> children );
 
-  <R> void addRelation( E parent, String relationColumnName, Collection<R> chidlren, AsyncCallback<Void> callback );
+  <R> void addRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Integer> callback );
 
   int addRelation( E parent, String relationColumnName, String whereClause );
 
   void addRelation( E parent, String relationColumnName, String whereClause, AsyncCallback<Integer> callback );
 
-  <R> void setRelation( E parent, String relationColumnName, Collection<R> chidlren );
+  <R> int setRelation( E parent, String relationColumnName, Collection<R> children );
 
-  <R> void setRelation( E parent, String relationColumnName, Collection<R> chidlren, AsyncCallback<Void> callback );
+  <R> void setRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Integer> callback );
 
   int setRelation( E parent, String relationColumnName, String whereClause );
 
   void setRelation( E parent, String relationColumnName, String whereClause, AsyncCallback<Integer> callback );
 
-  <R> void deleteRelation( E parent, String relationColumnName, Collection<R> chidlren );
+  <R> int deleteRelation( E parent, String relationColumnName, Collection<R> children );
 
-  <R> void deleteRelation( E parent, String relationColumnName, Collection<R> chidlren, AsyncCallback<Void> callback );
+  <R> void deleteRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Integer> callback );
 
   int deleteRelation( E parent, String relationColumnName, String whereClause );
 
