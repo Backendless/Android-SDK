@@ -261,7 +261,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   @Override
   public List<Map> find( DataQueryBuilder dataQuery ) throws BackendlessException
   {
-    Object[] args = new Object[] { tableName, dataQuery };
+    Object[] args = new Object[] { tableName, dataQuery.build() };
 
     return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
   }
@@ -277,7 +277,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   {
     try
     {
-      Object[] args = new Object[] { tableName, dataQuery };
+      Object[] args = new Object[] { tableName, dataQuery.build() };
       Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, responder );
     }
     catch( Throwable e )
