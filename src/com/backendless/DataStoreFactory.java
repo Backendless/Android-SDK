@@ -285,6 +285,30 @@ class DataStoreFactory
       }
 
       @Override
+      public E findById( String id, DataQueryBuilder queryBuilder ) throws BackendlessException
+      {
+        return Backendless.Persistence.findById( entityClass, id, queryBuilder );
+      }
+
+      @Override
+      public E findById( E entity, DataQueryBuilder queryBuilder ) throws BackendlessException
+      {
+        return Backendless.Persistence.findById( entity, queryBuilder );
+      }
+
+      @Override
+      public void findById( String id, DataQueryBuilder queryBuilder, AsyncCallback<E> responder )
+      {
+        Backendless.Persistence.findById( entityClass, id, queryBuilder, responder );
+      }
+
+      @Override
+      public void findById( E entity, DataQueryBuilder queryBuilder, AsyncCallback<E> responder )
+      {
+        Backendless.Persistence.findById( entity, queryBuilder, responder );
+      }
+
+      @Override
       public <R> List<R> loadRelations( String objectId, LoadRelationsQueryBuilder<R> queryBuilder )
       {
         String typeName = BackendlessSerializer.getSimpleName( entityClass );

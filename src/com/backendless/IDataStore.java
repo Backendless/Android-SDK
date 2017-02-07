@@ -76,6 +76,8 @@ public interface IDataStore<E>
 
   E findById( String id, List<String> relations, int relationsDepth ) throws BackendlessException;
 
+  E findById( String id, DataQueryBuilder queryBuilder ) throws BackendlessException;
+
   E findById( E entity ) throws BackendlessException;
 
   E findById( E entity, List<String> relations ) throws BackendlessException;
@@ -83,6 +85,8 @@ public interface IDataStore<E>
   E findById( E entity, int relationsDepth ) throws BackendlessException;
 
   E findById( E entity, List<String> relations, int relationsDepth ) throws BackendlessException;
+
+  E findById( E entity, DataQueryBuilder queryBuilder ) throws BackendlessException;
 
   int getObjectCount();
 
@@ -96,6 +100,8 @@ public interface IDataStore<E>
 
   void findById( String id, List<String> relations, int relationsDepth, AsyncCallback<E> responder );
 
+  void findById( String id, DataQueryBuilder queryBuilder, AsyncCallback<E> responder );
+
   void findById( E entity, AsyncCallback<E> responder );
 
   void findById( E entity, List<String> relations, AsyncCallback<E> responder );
@@ -103,6 +109,8 @@ public interface IDataStore<E>
   void findById( E entity, int relationsDepth, AsyncCallback<E> responder );
 
   void findById( E entity, List<String> relations, int relationsDepth, AsyncCallback<E> responder );
+
+  void findById( E entity, DataQueryBuilder queryBuilder, AsyncCallback<E> responder );
 
   /**
    * @see com.backendless.persistence.LoadRelationsQueryBuilder

@@ -417,6 +417,50 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
+  public Map findById( String id, DataQueryBuilder queryBuilder ) throws BackendlessException
+  {
+    Object[] args = new Object[] { tableName, id, queryBuilder.build() };
+    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args );
+  }
+
+  @Override
+  public Map findById( Map entity, DataQueryBuilder queryBuilder ) throws BackendlessException
+  {
+    Object[] args = new Object[] { tableName, entity, queryBuilder.build() };
+    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args );
+  }
+
+  @Override
+  public void findById( String id, DataQueryBuilder queryBuilder, AsyncCallback<Map> responder )
+  {
+    try
+    {
+      Object[] args = new Object[] { tableName, id, queryBuilder.build() };
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args, responder );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
+  @Override
+  public void findById( Map entity, DataQueryBuilder queryBuilder, AsyncCallback<Map> responder )
+  {
+    try
+    {
+      Object[] args = new Object[] { tableName, entity, queryBuilder.build() };
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args, responder );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
+  @Override
   public <R> List<R> loadRelations( String objectId, LoadRelationsQueryBuilder<R> queryBuilder )
   {
     return Backendless.Data.loadRelations( tableName, objectId, queryBuilder, queryBuilder.getRelationType() );
