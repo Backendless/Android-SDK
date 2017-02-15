@@ -18,7 +18,11 @@
 
 package com.backendless.persistence;
 
-import com.backendless.*;
+import com.backendless.Backendless;
+import com.backendless.FootprintsManager;
+import com.backendless.IDataStore;
+import com.backendless.Invoker;
+import com.backendless.Persistence;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
@@ -34,7 +38,12 @@ import weborb.reader.StringType;
 import weborb.types.IAdaptingType;
 import weborb.v3types.ErrMessage;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class MapDrivenDataStore implements IDataStore<Map>
 {
