@@ -285,6 +285,30 @@ class DataStoreFactory
       }
 
       @Override
+      public E findById( String id, DataQueryBuilder queryBuilder ) throws BackendlessException
+      {
+        return Backendless.Persistence.findById( entityClass, id, queryBuilder );
+      }
+
+      @Override
+      public E findById( E entity, DataQueryBuilder queryBuilder ) throws BackendlessException
+      {
+        return Backendless.Persistence.findById( entity, queryBuilder );
+      }
+
+      @Override
+      public void findById( String id, DataQueryBuilder queryBuilder, AsyncCallback<E> responder )
+      {
+        Backendless.Persistence.findById( entityClass, id, queryBuilder, responder );
+      }
+
+      @Override
+      public void findById( E entity, DataQueryBuilder queryBuilder, AsyncCallback<E> responder )
+      {
+        Backendless.Persistence.findById( entity, queryBuilder, responder );
+      }
+
+      @Override
       public <R> List<R> loadRelations( String objectId, LoadRelationsQueryBuilder<R> queryBuilder )
       {
         String typeName = BackendlessSerializer.getSimpleName( entityClass );
@@ -423,7 +447,7 @@ class DataStoreFactory
       }
 
       @Override
-      public <R> void deleteRelation( E parent, String relationColumnName, Collection<R> children )
+      public <R> int deleteRelation( E parent, String relationColumnName, Collection<R> children )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
@@ -436,11 +460,11 @@ class DataStoreFactory
         }
 
         Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, childObjectIds };
-        Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args );
+        return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args );
       }
 
       @Override
-      public <R> void deleteRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Void> callback )
+      public <R> void deleteRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Integer> callback )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
