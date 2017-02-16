@@ -76,6 +76,8 @@ public interface IDataStore<E>
 
   E findById( String id, List<String> relations, int relationsDepth ) throws BackendlessException;
 
+  E findById( String id, DataQueryBuilder queryBuilder ) throws BackendlessException;
+
   E findById( E entity ) throws BackendlessException;
 
   E findById( E entity, List<String> relations ) throws BackendlessException;
@@ -83,6 +85,8 @@ public interface IDataStore<E>
   E findById( E entity, int relationsDepth ) throws BackendlessException;
 
   E findById( E entity, List<String> relations, int relationsDepth ) throws BackendlessException;
+
+  E findById( E entity, DataQueryBuilder queryBuilder ) throws BackendlessException;
 
   int getObjectCount();
 
@@ -96,6 +100,8 @@ public interface IDataStore<E>
 
   void findById( String id, List<String> relations, int relationsDepth, AsyncCallback<E> responder );
 
+  void findById( String id, DataQueryBuilder queryBuilder, AsyncCallback<E> responder );
+
   void findById( E entity, AsyncCallback<E> responder );
 
   void findById( E entity, List<String> relations, AsyncCallback<E> responder );
@@ -103,6 +109,8 @@ public interface IDataStore<E>
   void findById( E entity, int relationsDepth, AsyncCallback<E> responder );
 
   void findById( E entity, List<String> relations, int relationsDepth, AsyncCallback<E> responder );
+
+  void findById( E entity, DataQueryBuilder queryBuilder, AsyncCallback<E> responder );
 
   /**
    * @see com.backendless.persistence.LoadRelationsQueryBuilder
@@ -125,25 +133,25 @@ public interface IDataStore<E>
 
   void getObjectCount( DataQueryBuilder dataQueryBuilder, AsyncCallback<Integer> responder );
 
-  <R> void addRelation( E parent, String relationColumnName, Collection<R> chidlren );
+  <R> int addRelation( E parent, String relationColumnName, Collection<R> children );
 
-  <R> void addRelation( E parent, String relationColumnName, Collection<R> chidlren, AsyncCallback<Void> callback );
+  <R> void addRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Integer> callback );
 
   int addRelation( E parent, String relationColumnName, String whereClause );
 
   void addRelation( E parent, String relationColumnName, String whereClause, AsyncCallback<Integer> callback );
 
-  <R> void setRelation( E parent, String relationColumnName, Collection<R> chidlren );
+  <R> int setRelation( E parent, String relationColumnName, Collection<R> children );
 
-  <R> void setRelation( E parent, String relationColumnName, Collection<R> chidlren, AsyncCallback<Void> callback );
+  <R> void setRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Integer> callback );
 
   int setRelation( E parent, String relationColumnName, String whereClause );
 
   void setRelation( E parent, String relationColumnName, String whereClause, AsyncCallback<Integer> callback );
 
-  <R> void deleteRelation( E parent, String relationColumnName, Collection<R> chidlren );
+  <R> int deleteRelation( E parent, String relationColumnName, Collection<R> children );
 
-  <R> void deleteRelation( E parent, String relationColumnName, Collection<R> chidlren, AsyncCallback<Void> callback );
+  <R> void deleteRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Integer> callback );
 
   int deleteRelation( E parent, String relationColumnName, String whereClause );
 
