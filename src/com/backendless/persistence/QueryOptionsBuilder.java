@@ -8,7 +8,7 @@ class QueryOptionsBuilder<Builder>
 {
   private List<String> sortBy;
   private List<String> related;
-  private int relationsDepth;
+  private Integer relationsDepth;
   private Builder builder;
 
   QueryOptionsBuilder( Builder builder )
@@ -69,12 +69,12 @@ class QueryOptionsBuilder<Builder>
     return builder;
   }
 
-  public int getRelationsDepth()
+  public Integer getRelationsDepth()
   {
     return relationsDepth;
   }
 
-  public Builder setRelationsDepth( int relationsDepth )
+  public Builder setRelationsDepth( Integer relationsDepth )
   {
     this.relationsDepth = relationsDepth;
     return builder;

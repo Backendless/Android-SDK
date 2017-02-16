@@ -25,7 +25,7 @@ public class QueryOptions
 {
   private List<String> sortBy = new ArrayList<String>();
   private List<String> related  = new ArrayList<String>();
-  private int relationsDepth;
+  private Integer relationsDepth;
 
   public QueryOptions()
   {
@@ -94,7 +94,7 @@ public class QueryOptions
     return result;
   }
 
-  public void setRelationsDepth ( int relationsDepth )
+  public void setRelationsDepth ( Integer relationsDepth )
   {
     this.relationsDepth = relationsDepth;
   }

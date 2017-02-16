@@ -125,12 +125,12 @@ public class DataQueryBuilder
     return queryOptionsBuilder.setRelated( related );
   }
 
-  public int getRelationsDepth()
+  public Integer getRelationsDepth()
   {
     return queryOptionsBuilder.getRelationsDepth();
   }
 
-  public DataQueryBuilder setRelationsDepth( int relationsDepth )
+  public DataQueryBuilder setRelationsDepth( Integer relationsDepth )
   {
     return queryOptionsBuilder.setRelationsDepth( relationsDepth );
   }
