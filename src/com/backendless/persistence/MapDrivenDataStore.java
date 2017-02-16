@@ -18,7 +18,11 @@
 
 package com.backendless.persistence;
 
-import com.backendless.*;
+import com.backendless.Backendless;
+import com.backendless.FootprintsManager;
+import com.backendless.IDataStore;
+import com.backendless.Invoker;
+import com.backendless.Persistence;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
@@ -34,7 +38,12 @@ import weborb.reader.StringType;
 import weborb.types.IAdaptingType;
 import weborb.v3types.ErrMessage;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class MapDrivenDataStore implements IDataStore<Map>
 {
@@ -128,7 +137,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public Map findFirst( int relationsDepth ) throws BackendlessException
+  public Map findFirst( Integer relationsDepth ) throws BackendlessException
   {
     return findFirst( emptyRelations, relationsDepth );
   }
@@ -136,7 +145,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   @Override
   public Map findFirst( List<String> relations ) throws BackendlessException
   {
-    return findFirst( relations, 0 );
+    return findFirst( relations, (Integer) null );
   }
 
   private Map findFirst( List<String> relations, int relationsDepth ) throws BackendlessException
@@ -161,7 +170,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public void findFirst( int relationsDepth, AsyncCallback<Map> responder )
+  public void findFirst( Integer relationsDepth, AsyncCallback<Map> responder )
   {
     findFirst( emptyRelations, relationsDepth, responder );
   }
@@ -169,10 +178,10 @@ public class MapDrivenDataStore implements IDataStore<Map>
   @Override
   public void findFirst( List<String> relations, AsyncCallback<Map> responder )
   {
-    findFirst( relations, 0, responder );
+    findFirst( relations, null, responder );
   }
 
-  private void findFirst( List<String> relations, int relationsDepth, AsyncCallback<Map> responder )
+  private void findFirst( List<String> relations, Integer relationsDepth, AsyncCallback<Map> responder )
   {
     try
     {
@@ -194,7 +203,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public Map findLast( int relationsDepth ) throws BackendlessException
+  public Map findLast( Integer relationsDepth ) throws BackendlessException
   {
     return findLast( emptyRelations, relationsDepth );
   }
@@ -202,10 +211,10 @@ public class MapDrivenDataStore implements IDataStore<Map>
   @Override
   public Map findLast( List<String> relations ) throws BackendlessException
   {
-    return findLast( relations, 0 );
+    return findLast( relations, (Integer) null );
   }
 
-  private Map findLast( List<String> relations, int relationsDepth ) throws BackendlessException
+  private Map findLast( List<String> relations, Integer relationsDepth ) throws BackendlessException
   {
     Object[] args = new Object[] { tableName, relations, relationsDepth };
     return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args );
@@ -227,7 +236,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public void findLast( int relationsDepth, AsyncCallback<Map> responder )
+  public void findLast( Integer relationsDepth, AsyncCallback<Map> responder )
   {
     findLast( emptyRelations, relationsDepth, responder );
   }
@@ -235,10 +244,10 @@ public class MapDrivenDataStore implements IDataStore<Map>
   @Override
   public void findLast( List<String> relations, AsyncCallback<Map> responder )
   {
-    findLast( relations, 0, responder );
+    findLast( relations, null, responder );
   }
 
-  private void findLast( List<String> relations, int relationsDepth, AsyncCallback<Map> responder )
+  private void findLast( List<String> relations, Integer relationsDepth, AsyncCallback<Map> responder )
   {
     try
     {
@@ -304,13 +313,13 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public Map findById( String id, int relationsDepth ) throws BackendlessException
+  public Map findById( String id, Integer relationsDepth ) throws BackendlessException
   {
     return findById( id, emptyRelations, relationsDepth );
   }
 
   @Override
-  public Map findById( String id, List<String> relations, int relationsDepth ) throws BackendlessException
+  public Map findById( String id, List<String> relations, Integer relationsDepth ) throws BackendlessException
   {
     if( id == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ID );
@@ -322,23 +331,23 @@ public class MapDrivenDataStore implements IDataStore<Map>
   @Override
   public Map findById( Map entity ) throws BackendlessException
   {
-    return findById( entity, emptyRelations, 0 );
+    return findById( entity, emptyRelations, (Integer) null );
   }
 
   @Override
   public Map findById( Map entity, List<String> relations ) throws BackendlessException
   {
-    return findById( entity, relations, 0 );
+    return findById( entity, relations, (Integer) null );
   }
 
   @Override
-  public Map findById( Map entity, int relationsDepth ) throws BackendlessException
+  public Map findById( Map entity, Integer relationsDepth ) throws BackendlessException
   {
     return findById( entity, emptyRelations, relationsDepth );
   }
 
   @Override
-  public Map findById( Map entity, List<String> relations, int relationsDepth ) throws BackendlessException
+  public Map findById( Map entity, List<String> relations, Integer relationsDepth ) throws BackendlessException
   {
     Object[] args = new Object[] { tableName, entity, relations, relationsDepth };
     return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args );
@@ -353,17 +362,17 @@ public class MapDrivenDataStore implements IDataStore<Map>
   @Override
   public void findById( String id, List<String> relations, AsyncCallback<Map> responder )
   {
-    findById( id, relations, 0, responder );
+    findById( id, relations, null, responder );
   }
 
   @Override
-  public void findById( String id, int relationsDepth, AsyncCallback<Map> responder )
+  public void findById( String id, Integer relationsDepth, AsyncCallback<Map> responder )
   {
     findById( id, emptyRelations, relationsDepth, responder );
   }
 
   @Override
-  public void findById( String id, List<String> relations, int relationsDepth, AsyncCallback<Map> responder )
+  public void findById( String id, List<String> relations, Integer relationsDepth, AsyncCallback<Map> responder )
   {
     try
     {
@@ -389,17 +398,17 @@ public class MapDrivenDataStore implements IDataStore<Map>
   @Override
   public void findById( Map entity, List<String> relations, AsyncCallback<Map> responder )
   {
-    findById( entity, relations, 0, responder );
+    findById( entity, relations, null, responder );
   }
 
   @Override
-  public void findById( Map entity, int relationsDepth, AsyncCallback<Map> responder )
+  public void findById( Map entity, Integer relationsDepth, AsyncCallback<Map> responder )
   {
     findById( entity, emptyRelations, relationsDepth, responder );
   }
 
   @Override
-  public void findById( Map entity, List<String> relations, int relationsDepth, AsyncCallback<Map> responder )
+  public void findById( Map entity, List<String> relations, Integer relationsDepth, AsyncCallback<Map> responder )
   {
     try
     {

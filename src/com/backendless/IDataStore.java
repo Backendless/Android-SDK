@@ -38,25 +38,25 @@ public interface IDataStore<E>
 
   E findFirst() throws BackendlessException;
 
-  E findFirst( int relationsDepth ) throws BackendlessException;
+  E findFirst( Integer relationsDepth ) throws BackendlessException;
 
   E findFirst( List<String> relations ) throws BackendlessException;
 
   void findFirst( AsyncCallback<E> responder );
 
-  void findFirst( int relationsDepth, AsyncCallback<E> responder );
+  void findFirst( Integer relationsDepth, AsyncCallback<E> responder );
 
   void findFirst( List<String> relations, AsyncCallback<E> responder );
 
   E findLast() throws BackendlessException;
 
-  E findLast( int relationsDepth ) throws BackendlessException;
+  E findLast( Integer relationsDepth ) throws BackendlessException;
 
   E findLast( List<String> relations ) throws BackendlessException;
 
   void findLast( AsyncCallback<E> responder );
 
-  void findLast( int relationsDepth, AsyncCallback<E> responder );
+  void findLast( Integer relationsDepth, AsyncCallback<E> responder );
 
   void findLast( List<String> relations, AsyncCallback<E> responder );
 
@@ -72,9 +72,9 @@ public interface IDataStore<E>
 
   E findById( String id, List<String> relations ) throws BackendlessException;
 
-  E findById( String id, int relationsDepth ) throws BackendlessException;
+  E findById( String id, Integer relationsDepth ) throws BackendlessException;
 
-  E findById( String id, List<String> relations, int relationsDepth ) throws BackendlessException;
+  E findById( String id, List<String> relations, Integer relationsDepth ) throws BackendlessException;
 
   E findById( String id, DataQueryBuilder queryBuilder ) throws BackendlessException;
 
@@ -82,9 +82,9 @@ public interface IDataStore<E>
 
   E findById( E entity, List<String> relations ) throws BackendlessException;
 
-  E findById( E entity, int relationsDepth ) throws BackendlessException;
+  E findById( E entity, Integer relationsDepth ) throws BackendlessException;
 
-  E findById( E entity, List<String> relations, int relationsDepth ) throws BackendlessException;
+  E findById( E entity, List<String> relations, Integer relationsDepth ) throws BackendlessException;
 
   E findById( E entity, DataQueryBuilder queryBuilder ) throws BackendlessException;
 
@@ -96,9 +96,9 @@ public interface IDataStore<E>
 
   void findById( String id, List<String> relations, AsyncCallback<E> responder );
 
-  void findById( String id, int relationsDepth, AsyncCallback<E> responder );
+  void findById( String id, Integer relationsDepth, AsyncCallback<E> responder );
 
-  void findById( String id, List<String> relations, int relationsDepth, AsyncCallback<E> responder );
+  void findById( String id, List<String> relations, Integer relationsDepth, AsyncCallback<E> responder );
 
   void findById( String id, DataQueryBuilder queryBuilder, AsyncCallback<E> responder );
 
@@ -106,9 +106,9 @@ public interface IDataStore<E>
 
   void findById( E entity, List<String> relations, AsyncCallback<E> responder );
 
-  void findById( E entity, int relationsDepth, AsyncCallback<E> responder );
+  void findById( E entity, Integer relationsDepth, AsyncCallback<E> responder );
 
-  void findById( E entity, List<String> relations, int relationsDepth, AsyncCallback<E> responder );
+  void findById( E entity, List<String> relations, Integer relationsDepth, AsyncCallback<E> responder );
 
   void findById( E entity, DataQueryBuilder queryBuilder, AsyncCallback<E> responder );
 

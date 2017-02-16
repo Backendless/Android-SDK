@@ -347,7 +347,7 @@ public final class Persistence
   }
 
   protected <E> E findById( final Class<E> entity, final String id, final List<String> relations,
-                            final int relationsDepth ) throws BackendlessException
+                            final Integer relationsDepth ) throws BackendlessException
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY_NAME );
@@ -358,7 +358,7 @@ public final class Persistence
     return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", new Object[] { BackendlessSerializer.getSimpleName( entity ), id, relations, relationsDepth }, ResponderHelper.getPOJOAdaptingResponder( entity ) );
   }
 
-  protected <E> E findById( final E entity, List<String> relations, int relationsDepth )
+  protected <E> E findById( final E entity, List<String> relations, Integer relationsDepth )
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
@@ -422,7 +422,7 @@ public final class Persistence
   }
 
   protected <E> void findById( final Class<E> entity, final String id, final List<String> relations,
-                               final int relationsDepth, AsyncCallback<E> responder )
+                               final Integer relationsDepth, AsyncCallback<E> responder )
   {
     try
     {
@@ -441,7 +441,7 @@ public final class Persistence
     }
   }
 
-  protected <E> void findById( E entity, List<String> relations, int relationsDepth, AsyncCallback<E> responder )
+  protected <E> void findById( E entity, List<String> relations, Integer relationsDepth, AsyncCallback<E> responder )
   {
     try
     {
@@ -659,7 +659,7 @@ public final class Persistence
   }
 
   protected <E> E first( final Class<E> entity, final List<String> relations,
-                         final int relationsDepth ) throws BackendlessException
+                         final Integer relationsDepth ) throws BackendlessException
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
@@ -683,7 +683,7 @@ public final class Persistence
     }
   }
 
-  protected <E> void first( final Class<E> entity, final List<String> relations, final int relationsDepth,
+  protected <E> void first( final Class<E> entity, final List<String> relations, final Integer relationsDepth,
                             final AsyncCallback<E> responder )
   {
     try
@@ -709,7 +709,7 @@ public final class Persistence
   }
 
   protected <E> E last( final Class<E> entity, final List<String> relations,
-                        final int relationsDepth ) throws BackendlessException
+                        final Integer relationsDepth ) throws BackendlessException
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
@@ -733,7 +733,7 @@ public final class Persistence
     }
   }
 
-  protected <E> void last( final Class<E> entity, final List<String> relations, final int relationsDepth,
+  protected <E> void last( final Class<E> entity, final List<String> relations, final Integer relationsDepth,
                            final AsyncCallback<E> responder )
   {
     try
