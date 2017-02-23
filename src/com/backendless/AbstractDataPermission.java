@@ -24,6 +24,7 @@ import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.persistence.PersistenceOperations;
 import com.backendless.utils.PermissionTypes;
+import java.util.Map;
 
 public abstract class AbstractDataPermission
 {
@@ -131,7 +132,13 @@ public abstract class AbstractDataPermission
   {
     String appId = Backendless.getApplicationId();
     String version = Backendless.getVersion();
-    String tableName = BackendlessSerializer.getSimpleName( dataObject.getClass() );
+    String tableName;
+
+    if( dataObject instanceof Map )
+      tableName = ( String ) ( ( Map ) dataObject ).get( "___class" );
+    else
+      tableName = BackendlessSerializer.getSimpleName( dataObject.getClass() );
+
     String objectId = Persistence.getEntityId( dataObject );
     PersistenceOperations operation = getOperation();
 
