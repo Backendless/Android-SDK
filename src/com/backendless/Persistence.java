@@ -849,11 +849,6 @@ public final class Persistence
     return DataStoreFactory.createDataStore( entityClass );
   }
 
-  static String getEntityId( Map<String, Object> map ) throws BackendlessException
-  {
-    return (String) map.get( DEFAULT_OBJECT_ID_FIELD );
-  }
-
   static String getEntityId( Object entity ) throws BackendlessException
   {
     String id;
