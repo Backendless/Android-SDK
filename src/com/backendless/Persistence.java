@@ -853,22 +853,26 @@ public final class Persistence
   {
     String id;
 
-    try
-    {
-      Method declaredMethod = entity.getClass().getMethod( DEFAULT_OBJECT_ID_GETTER );
-
-      if( !declaredMethod.isAccessible() )
-        declaredMethod.setAccessible( true );
-
-      id = (String) declaredMethod.invoke( entity );
-    }
-    catch( Exception e )
-    {
-      id = null;
-    }
-
     if( entity instanceof Map )
-      id = ( String ) (( Map ) entity ).get( DEFAULT_OBJECT_ID_FIELD  );
+    {
+      id = (String) ((Map) entity).get( DEFAULT_OBJECT_ID_FIELD );
+    }
+    else
+    {
+      try
+      {
+        Method declaredMethod = entity.getClass().getMethod( DEFAULT_OBJECT_ID_GETTER );
+
+        if( !declaredMethod.isAccessible() )
+          declaredMethod.setAccessible( true );
+
+        id = (String) declaredMethod.invoke( entity );
+      }
+      catch( Exception e )
+      {
+        id = null;
+      }
+    }
 
     if( id == null )
       id = FootprintsManager.getInstance().getObjectId( entity );
