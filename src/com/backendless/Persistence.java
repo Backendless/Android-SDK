@@ -867,6 +867,9 @@ public final class Persistence
       id = null;
     }
 
+    if( entity instanceof Map )
+      id = ( String ) (( Map ) entity ).get( DEFAULT_OBJECT_ID_FIELD  );
+
     if( id == null )
       id = FootprintsManager.getInstance().getObjectId( entity );
 
