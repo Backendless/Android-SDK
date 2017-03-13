@@ -145,6 +145,19 @@ public class ExceptionMessage
 
   public final static String INCORRECT_MESSAGE_TYPE = "Message object can not be instance of PublishOptions or DeliveryOptions class";
   public final static String INVALID_CLASS = "Cannot use inner or anonymous classes. Make sure the class is public. It cannot be inner or anonymous";
+  public static final String NULL_STREAM = "Stream cannot be null";
+
+  public static final String INTERNET_CONNECTION_IS_NOT_AVAILABLE = "Unable to download file. Internet connection is not available";
+  public static final String UNABLE_DOWNLOAD_TO_DIRECTORY = "Unable to download file. Directory doesn't exist or has no write permission";
+  public static final String NOT_ENOUGH_MEMORY = "Unable to auto download file. Not enough memory";
+  public static final String FILE_DOWNLOAD_ERROR_MESSAGE = "Error during file download. Message: ";
+  public static final String FILE_IS_TOO_BIG = "File is too big to get it in byte array";
+  public static final String SERVER_RETURNED_HTTP = "Server returned HTTP ";
+  public static final String ASYNC_DOWNLOAD_ERROR = "Error while asynchronous downloading. Message: ";
+  public static final String AUTODOWNLOAD_ABORTED = "Autodownload aborted";
+  public static final String USER_CANCELS_DOWNLOAD = "User cancels download";
+  public static final String INTERRUPTED_WHILE_AUTO_DOWNLOAD = "Interrupted while auto download. Message:";
+  
 
   public static String NULL_FIELD( String field )
   {
