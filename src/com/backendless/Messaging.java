@@ -64,7 +64,6 @@ public final class Messaging
   public static String DEVICE_ID;
   private final static String MESSAGING_MANAGER_SERVER_ALIAS = "com.backendless.services.messaging.MessagingService";
   private final static String DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS = "com.backendless.services.messaging.DeviceRegistrationService";
-  private final static String EMAIL_MANAGER_SERVER_ALIAS = "com.backendless.services.mail.CustomersEmailService";
   private final static String DEFAULT_CHANNEL_NAME = "default";
   private final static String OS;
   private final static String OS_VERSION;
@@ -839,7 +838,7 @@ public final class Messaging
     if( attachments == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ATTACHMENTS );
 
-    return Invoker.invokeSync( EMAIL_MANAGER_SERVER_ALIAS, "send", new Object[] { subject, bodyParts, recipients, attachments } );
+    return Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "sendEmail", new Object[] { subject, bodyParts, recipients, attachments } );
   }
 
   public void sendTextEmail( String subject, String messageBody, List<String> recipients, final AsyncCallback<MessageStatus> responder )
@@ -891,7 +890,7 @@ public final class Messaging
       if( attachments == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ATTACHMENTS );
 
-      Invoker.invokeAsync( EMAIL_MANAGER_SERVER_ALIAS, "send", new Object[] { subject, bodyParts, recipients, attachments }, responder );
+      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "sendEmail", new Object[] { subject, bodyParts, recipients, attachments }, responder );
     }
     catch( Throwable e )
     {

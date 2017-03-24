@@ -1,18 +1,18 @@
 package com.backendless.servercode.extension;
 
 import com.backendless.DeviceRegistration;
-import com.backendless.messaging.*;
+import com.backendless.messaging.BodyParts;
+import com.backendless.messaging.DeliveryOptions;
+import com.backendless.messaging.Message;
+import com.backendless.messaging.MessageStatus;
+import com.backendless.messaging.PublishOptions;
+import com.backendless.messaging.SubscriptionOptions;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
-import com.backendless.messaging.MessageStatus;
 
-/**
- * Created with IntelliJ IDEA.
- * User: ivanlappo
- * Date: 5/20/13
- * Time: 12:40 PM
- * To change this template use File | Settings | File Templates.
- */
+import java.util.List;
+
+
 public abstract class MessagingExtender
 {
   public MessagingExtender()
@@ -67,6 +67,14 @@ public abstract class MessagingExtender
 
   public void afterDeviceRegistration( RunnerContext context, DeviceRegistration registrationDto,
                                        ExecutionResult<String> registrationId ) throws Exception
+  {
+  }
+
+  public void beforeSendEmail( RunnerContext context, String subject, BodyParts bodyParts, List<String> recipients, List<String> attachments ) throws Exception
+  {
+  }
+
+  public void afterSendEmail( RunnerContext context, String subject, BodyParts bodyParts, List<String> recipients, List<String> attachments ) throws Exception
   {
   }
 }
