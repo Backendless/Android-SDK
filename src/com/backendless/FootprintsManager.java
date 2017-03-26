@@ -350,8 +350,18 @@ public class FootprintsManager
       {
         if( instance instanceof Collection )
         {
-          AnonymousObject typedObject = (AnonymousObject) ((NamedObject) entity).getTypedObject();
-          ArrayType dataArray = (ArrayType) typedObject.getProperties().get( "data" );
+          ArrayType dataArray = null;
+
+          if( entity instanceof ArrayType )
+          {
+            dataArray = (ArrayType) entity;
+          }
+          else if( entity instanceof NamedObject )
+          {
+            AnonymousObject typedObject = (AnonymousObject) ((NamedObject) entity).getTypedObject();
+            dataArray = (ArrayType) typedObject.getProperties().get( "data" );
+          }
+
           Object[] instances = ((Collection) instance).toArray();
           putEntityFootprintToCache( instances, dataArray );
         }
@@ -383,7 +393,9 @@ public class FootprintsManager
             if( entityEntryValue instanceof NamedObject || entityEntryValue instanceof ArrayType )
             {
               Object innerInstance = getFieldValue( instance, entityEntry.getKey() );
-              putEntityFootprintToCache( innerInstance, entityEntry.getValue() );
+
+              if( innerInstance != null )
+                putEntityFootprintToCache( innerInstance, entityEntry.getValue() );
             }
           }
 
@@ -393,6 +405,7 @@ public class FootprintsManager
       }
       catch( Exception e )
       {/*Error in caching process should not fail application*/
+        //e.printStackTrace();
       }
 
       marked.remove( entity );

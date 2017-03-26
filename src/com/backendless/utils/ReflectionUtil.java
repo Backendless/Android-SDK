@@ -87,7 +87,8 @@ public class ReflectionUtil
          // ignore, the rest of the method will do other checks
        }
 
-       throw new BackendlessException( "Unable to retrieve value for field/property '" + lowerKey );
+       //throw new BackendlessException( "Unable to retrieve value for field/property '" + lowerKey );
+       return null;
      }
   }
 
