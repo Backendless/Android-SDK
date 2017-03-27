@@ -140,6 +140,7 @@ sourceSets {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven {
         url "http://maven.backendless.com/repository/backendless_public"
