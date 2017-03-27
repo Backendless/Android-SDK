@@ -70,11 +70,11 @@ public abstract class MessagingExtender
   {
   }
 
-  public void beforeSendEmail( RunnerContext context, String subject, BodyParts bodyParts, List<String> recipients, List<String> attachments ) throws Exception
+  public void beforeSendEmail(RunnerContext context, String subject, BodyParts bodyParts, List<String> recipients, List<String> attachments ) throws Exception
   {
   }
 
-  public void afterSendEmail( RunnerContext context, String subject, BodyParts bodyParts, List<String> recipients, List<String> attachments ) throws Exception
+  public void afterSendEmail( RunnerContext context, String subject, BodyParts bodyParts, List<String> recipients, List<String> attachments, ExecutionResult<MessageStatus> msgStatus ) throws Exception
   {
   }
 }
