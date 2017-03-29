@@ -39,7 +39,7 @@ public class BackendlessFault extends Fault
 
   public BackendlessFault( BackendlessException e )
   {
-    this( e.getCode(), e.getMessage() );
+    super( e.getMessage(), e.getDetail(), e.getCode() );
   }
 
   public BackendlessFault( Throwable e )
@@ -50,11 +50,10 @@ public class BackendlessFault extends Fault
   @Override
   public String toString()
   {
-    final StringBuffer sb = new StringBuffer();
-    sb.append( getClass().getSimpleName() );
-    sb.append( "{ code: '" ).append( getCode() ).append( '\'' );
-    sb.append( ", message: '" ).append( getMessage() ).append( '\'' );
-    sb.append( " }" );
-    return sb.toString();
+    return getClass().getSimpleName() +
+            "{ code: '" + getCode() + '\'' +
+            ", message: '" + getMessage() + '\'' +
+            ", detail: '" + getDetail() + '\'' +
+            " }";
   }
 }
