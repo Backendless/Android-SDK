@@ -221,7 +221,7 @@ dependencies {
     compile( group: "com.backendless", name: "commons", version: "4.0.0", changing: true) {
         exclude group: 'com.fasterxml.jackson.core'
     }
-    compile( group: "weborb", name: "weborbclient", version: "5.1.0.206", changing: true)
+    compile( group: "weborb", name: "weborbclient", version: "5.1.0.209", changing: true)
 
 }
 apply plugin: 'java'
