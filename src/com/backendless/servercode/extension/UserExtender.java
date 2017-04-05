@@ -125,7 +125,7 @@ public abstract class UserExtender
   {
   }
 
-  public void afterDescribe( RunnerContext context, ExecutionResult<UserProperty[]> result ) throws Exception
+  public void afterDescribe( RunnerContext context, ExecutionResult<List<UserProperty>> result ) throws Exception
   {
   }
 

@@ -51,7 +51,7 @@ public abstract class GeoExtender
   {
   }
 
-  public void afterGetCategories( RunnerContext context, ExecutionResult<GeoCategory[]> categories ) throws Exception
+  public void afterGetCategories( RunnerContext context, ExecutionResult<List<GeoCategory>> categories ) throws Exception
   {
   }
 
