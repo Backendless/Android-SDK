@@ -49,7 +49,7 @@ public abstract class MessagingExtender
   }
 
   public void afterPoll( RunnerContext context, String subscriptionId,
-                         ExecutionResult<Message[]> messages ) throws Exception
+                         ExecutionResult<List<Message>> messages ) throws Exception
   {
   }
 

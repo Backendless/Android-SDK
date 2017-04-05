@@ -105,7 +105,7 @@ public abstract class PersistenceExtender<T>
   }
 
   public void afterDescribe( RunnerContext context, String entityName,
-                             ExecutionResult<ObjectProperty[]> propertiesFound ) throws Exception
+                             ExecutionResult<List<ObjectProperty>> propertiesFound ) throws Exception
   {
   }
 

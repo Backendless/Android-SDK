@@ -22,7 +22,7 @@ import com.backendless.files.FileInfo;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -140,7 +140,7 @@ public abstract class FilesExtender
 
   public void afterListing( RunnerContext context, String path, String pattern,
                             boolean recursive, int pageSize,
-                            int offset, ExecutionResult<Collection<FileInfo>> result ) throws Exception
+                            int offset, ExecutionResult<List<FileInfo>> result ) throws Exception
   {
   }
 }
