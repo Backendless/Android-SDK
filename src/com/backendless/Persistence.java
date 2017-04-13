@@ -781,7 +781,7 @@ public final class Persistence
     return DataStoreFactory.createDataStore( entityClass );
   }
 
-  static String getEntityId( Object entity ) throws BackendlessException
+  public static String getEntityId( Object entity ) throws BackendlessException
   {
     String id = null;
 

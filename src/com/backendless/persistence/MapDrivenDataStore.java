@@ -19,7 +19,6 @@
 package com.backendless.persistence;
 
 import com.backendless.Backendless;
-import com.backendless.FootprintsManager;
 import com.backendless.IDataStore;
 import com.backendless.Invoker;
 import com.backendless.Persistence;
@@ -287,7 +286,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
     try
     {
       Object[] args = new Object[] { tableName, dataQuery.build() };
-      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, responder );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, responder, ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
     }
     catch( Throwable e )
     {
@@ -537,7 +536,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
     Collection<String> childObjectIds = new ArrayList<>();
     for( R child : childs )
     {
-      String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : FootprintsManager.getInstance().getObjectId( child );
+      String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : Persistence.getEntityId( child );
       childObjectIds.add( childObjectId );
     }
 
@@ -553,7 +552,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
     Collection<String> childObjectIds = new ArrayList<>();
     for( R child : childs )
     {
-      String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : FootprintsManager.getInstance().getObjectId( child );
+      String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : Persistence.getEntityId( child );
       childObjectIds.add( childObjectId );
     }
 
@@ -587,7 +586,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
     Collection<String> childObjectIds = new ArrayList<>();
     for( R child : children )
     {
-      String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : FootprintsManager.getInstance().getObjectId( child );
+      String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : Persistence.getEntityId( child );
       childObjectIds.add( childObjectId );
     }
 
@@ -603,7 +602,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
     Collection<String> childObjectIds = new ArrayList<>();
     for( R child : children )
     {
-      String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : FootprintsManager.getInstance().getObjectId( child );
+      String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : Persistence.getEntityId( child );
       childObjectIds.add( childObjectId );
     }
 
@@ -637,7 +636,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
     Collection<String> childObjectIds = new ArrayList<>();
     for( R child : children )
     {
-      String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : FootprintsManager.getInstance().getObjectId( child );
+      String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : Persistence.getEntityId( child );
       childObjectIds.add( childObjectId );
     }
 
@@ -653,7 +652,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
     Collection<String> childObjectIds = new ArrayList<>();
     for( R child : children )
     {
-      String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : FootprintsManager.getInstance().getObjectId( child );
+      String childObjectId = child instanceof Map ? (String) ((Map) child).get( Persistence.DEFAULT_OBJECT_ID_FIELD ) : Persistence.getEntityId( child );
       childObjectIds.add( childObjectId );
     }
 

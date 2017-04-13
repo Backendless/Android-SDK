@@ -339,11 +339,11 @@ class DataStoreFactory
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
-        String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
+        String parentObjectId = Persistence.getEntityId( parent );
         Collection<String> childObjectIds = new ArrayList<>();
         for( R child : children )
         {
-          String childObjectId = FootprintsManager.getInstance().getObjectId( child );
+          String childObjectId = Persistence.getEntityId( child );
           childObjectIds.add( childObjectId );
         }
 
@@ -356,11 +356,11 @@ class DataStoreFactory
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
-        String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
+        String parentObjectId = Persistence.getEntityId( parent );
         Collection<String> childObjectIds = new ArrayList<>();
         for( R child : children )
         {
-          String childObjectId = FootprintsManager.getInstance().getObjectId( child );
+          String childObjectId = Persistence.getEntityId( child );
           childObjectIds.add( childObjectId );
         }
 
@@ -373,7 +373,7 @@ class DataStoreFactory
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
-        String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
+        String parentObjectId = Persistence.getEntityId( parent );
 
         Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
         return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args );
@@ -384,7 +384,7 @@ class DataStoreFactory
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
-        String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
+        String parentObjectId = Persistence.getEntityId( parent );
 
         Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
         Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args, callback );
@@ -395,11 +395,11 @@ class DataStoreFactory
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
-        String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
+        String parentObjectId = Persistence.getEntityId( parent );
         Collection<String> childObjectIds = new ArrayList<>();
         for( R child : children )
         {
-          String childObjectId = FootprintsManager.getInstance().getObjectId( child );
+          String childObjectId = Persistence.getEntityId( child );
           childObjectIds.add( childObjectId );
         }
 
@@ -412,11 +412,11 @@ class DataStoreFactory
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
-        String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
+        String parentObjectId = Persistence.getEntityId( parent );
         Collection<String> childObjectIds = new ArrayList<>();
         for( R child : children )
         {
-          String childObjectId = FootprintsManager.getInstance().getObjectId( child );
+          String childObjectId = Persistence.getEntityId( child );
           childObjectIds.add( childObjectId );
         }
 
@@ -429,7 +429,7 @@ class DataStoreFactory
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
-        String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
+        String parentObjectId = Persistence.getEntityId( parent );
 
         Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
         return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args );
@@ -440,7 +440,7 @@ class DataStoreFactory
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
-        String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
+        String parentObjectId = Persistence.getEntityId( parent );
 
         Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
         Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args, callback );
@@ -451,11 +451,11 @@ class DataStoreFactory
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
-        String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
+        String parentObjectId = Persistence.getEntityId( parent );
         Collection<String> childObjectIds = new ArrayList<>();
         for( R child : children )
         {
-          String childObjectId = FootprintsManager.getInstance().getObjectId( child );
+          String childObjectId = Persistence.getEntityId( child );
           childObjectIds.add( childObjectId );
         }
 
@@ -468,11 +468,11 @@ class DataStoreFactory
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
-        String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
+        String parentObjectId = Persistence.getEntityId( parent );
         Collection<String> childObjectIds = new ArrayList<>();
         for( R child : children )
         {
-          String childObjectId = FootprintsManager.getInstance().getObjectId( child );
+          String childObjectId = Persistence.getEntityId( child );
           childObjectIds.add( childObjectId );
         }
 
@@ -485,7 +485,7 @@ class DataStoreFactory
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
-        String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
+        String parentObjectId = Persistence.getEntityId( parent );
 
         Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
         return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args );
@@ -496,7 +496,7 @@ class DataStoreFactory
       {
         String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
 
-        String parentObjectId = FootprintsManager.getInstance().getObjectId( parent );
+        String parentObjectId = Persistence.getEntityId( parent );
 
         Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
         Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args, callback );
