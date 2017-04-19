@@ -20,11 +20,7 @@ package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.core.responder.AdaptingResponder;
-import com.backendless.core.responder.policy.CollectionAdaptingPolicy;
-import com.backendless.core.responder.policy.IAdaptingPolicy;
 import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
-
-import java.util.Collection;
 
 public class CustomService
 {
@@ -51,15 +47,8 @@ public class CustomService
 
    public <T> T invoke( String serviceName, String serviceVersion, String method, Object[] arguments, Class<?> clazz )
   {
-    IAdaptingPolicy adaptingPolicy;
-
-    if( Collection.class.isAssignableFrom( clazz ) )
-      adaptingPolicy = new CollectionAdaptingPolicy();
-    else
-      adaptingPolicy = new PoJoAdaptingPolicy();
-
     Object[] args = new Object[] { serviceName, serviceVersion, method, arguments };
-    return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, new AdaptingResponder( clazz, adaptingPolicy ) );
+    return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, new AdaptingResponder( clazz, new PoJoAdaptingPolicy() ) );
   }
 
   public <E> void invoke( String serviceName, String serviceVersion, String method, Object[] arguments, AsyncCallback<E> callback )
@@ -70,14 +59,7 @@ public class CustomService
 
   public <E> void invoke( String serviceName, String serviceVersion, String method, Object[] arguments, Class<?> clazz, AsyncCallback<E> callback )
   {
-    IAdaptingPolicy adaptingPolicy;
-
-    if( Collection.class.isAssignableFrom( clazz ) )
-      adaptingPolicy = new CollectionAdaptingPolicy();
-    else
-      adaptingPolicy = new PoJoAdaptingPolicy();
-
     Object[] args = new Object[] { serviceName, serviceVersion, method, arguments };
-    Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, callback, new AdaptingResponder( clazz, adaptingPolicy ) );
+    Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, callback, new AdaptingResponder( clazz, new PoJoAdaptingPolicy() ) );
   }
 }
