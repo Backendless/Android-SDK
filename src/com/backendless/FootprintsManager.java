@@ -54,26 +54,29 @@ public class FootprintsManager
 
   public String getObjectId( Object entity )
   {
+    if( entity instanceof BackendlessUser )
+      return ((BackendlessUser) entity).getObjectId();
+
     Footprint footprint = getEntityFootprint( entity );
 
     if( footprint != null )
       return footprint.getObjectId();
-    else if( entity instanceof BackendlessUser )
-      return ((BackendlessUser) entity).getObjectId();
 
     return null;
   }
 
   public String getMeta( Object entity )
   {
-    if( persistenceCache.containsKey( entity ) )
-    {
-      return getEntityFootprint( entity ).get__meta();
-    }
+    Object obj = persistenceCache.get( entity );
+
+    if( obj != null && obj instanceof Footprint )
+      return ((Footprint) obj).get__meta();
+
+    if( obj != null && obj instanceof BackendlessUser )
+      ((BackendlessUser) obj).getProperty( "__meta" );
 
     return null;
   }
-
   public Date getCreated( Object entity )
   {
     if( persistenceCache.containsKey( entity ) )
