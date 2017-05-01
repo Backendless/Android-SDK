@@ -66,10 +66,13 @@ public class FootprintsManager
 
   public String getMeta( Object entity )
   {
-    if( persistenceCache.containsKey( entity ) )
-    {
-      return getEntityFootprint( entity ).get__meta();
-    }
+    Object obj = persistenceCache.get( entity );
+
+    if( obj != null && obj instanceof Footprint )
+      return ((Footprint) obj).get__meta();
+
+    if( obj != null && obj instanceof BackendlessUser )
+      ((BackendlessUser) obj).getProperty( "__meta" );
 
     return null;
   }
