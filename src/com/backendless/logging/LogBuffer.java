@@ -115,7 +115,7 @@ public class LogBuffer
   private void scheduledTask()
   {
     if( Backendless.isCodeRunner() )
-      throw new AccessControlException( "You have no permission to thread manipulation" );
+      return;
 
     if( !scheduledExecutorService.isShutdown() )
     {
