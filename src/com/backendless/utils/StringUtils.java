@@ -29,6 +29,11 @@ public class StringUtils
     return string == null || string.isEmpty();
   }
 
+  public static boolean notEmpty( CharSequence string )
+  {
+    return string != null && string.length() > 0;
+  }
+
   public static void checkNotNullOrEmpty( String string, String errorMessage )
   {
     if( isNullOrEmpty( string ) )

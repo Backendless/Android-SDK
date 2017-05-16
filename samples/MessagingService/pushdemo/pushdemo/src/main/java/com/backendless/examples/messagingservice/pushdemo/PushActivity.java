@@ -89,6 +89,7 @@ public class PushActivity extends Activity
           publishOptions.putHeader( PublishOptions.ANDROID_TICKER_TEXT_TAG, getString( R.string.app_name ) );
           publishOptions.putHeader( PublishOptions.ANDROID_CONTENT_TITLE_TAG, getString( R.string.app_name ) );
           publishOptions.putHeader( PublishOptions.ANDROID_CONTENT_TEXT_TAG, message );
+          publishOptions.putHeader( PublishOptions.ANDROID_CONTENT_SOUND_TAG, "android.resource://" + getPackageName() + "/" + R.raw.notification );
         }
 
         Backendless.Messaging.publish( Defaults.CHANNEL_NAME, message, publishOptions, deliveryOptions, new BackendlessCallback<MessageStatus>()

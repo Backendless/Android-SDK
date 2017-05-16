@@ -3,6 +3,7 @@ package com.backendless.push;
 import android.app.*;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -12,11 +13,16 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.messaging.PublishOptions;
 
+import android.net.Uri;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import static com.backendless.utils.StringUtils.notEmpty;
+
 public class BackendlessPushService extends IntentService implements PushReceiverCallback
 {
+  public static final String DEFAULT_SOUND_FLAG = "DEFAULT";
+
   static final String TAG = "com.backendless.push.BackendlessPushService";
   private static final Random random = new Random();
 
@@ -132,8 +138,9 @@ public class BackendlessPushService extends IntentService implements PushReceive
         CharSequence tickerText = intent.getStringExtra( PublishOptions.ANDROID_TICKER_TEXT_TAG );
         CharSequence contentTitle = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TITLE_TAG );
         CharSequence contentText = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TEXT_TAG );
+        CharSequence soundLocation = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_SOUND_TAG );
 
-        if( tickerText != null && tickerText.length() > 0 )
+        if( notEmpty( tickerText ) )
         {
           int appIcon = context.getApplicationInfo().icon;
           if( appIcon == 0 )
@@ -141,14 +148,22 @@ public class BackendlessPushService extends IntentService implements PushReceive
 
           Intent notificationIntent = context.getPackageManager().getLaunchIntentForPackage( context.getApplicationInfo().packageName );
           PendingIntent contentIntent = PendingIntent.getActivity( context, 0, notificationIntent, 0 );
-          Notification notification = new Notification.Builder( context )
+          Notification.Builder notificationBuilder = new Notification.Builder( context )
               .setSmallIcon( appIcon )
               .setTicker( tickerText )
               .setContentTitle( contentTitle )
               .setContentText( contentText )
               .setContentIntent( contentIntent )
-              .setWhen( System.currentTimeMillis() )
-              .build();
+              .setWhen( System.currentTimeMillis() );
+
+          if( notEmpty( soundLocation ) )
+          {
+            notificationBuilder.setSound( soundLocation.toString().toUpperCase().equals( DEFAULT_SOUND_FLAG )
+                ? RingtoneManager.getDefaultUri( RingtoneManager.TYPE_NOTIFICATION )
+                : Uri.parse( soundLocation.toString() ) );
+          }
+
+          Notification notification = notificationBuilder.build();
           notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
           int customLayout = context.getResources().getIdentifier( "notification", "layout", context.getPackageName() );
