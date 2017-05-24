@@ -785,6 +785,9 @@ public final class Persistence
   {
     String id = null;
 
+    if( entity instanceof Map )
+      return (String) ((Map) entity).get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+
     if( ReflectionUtil.hasField( entity.getClass(), Persistence.DEFAULT_OBJECT_ID_FIELD ) )
     {
       try
