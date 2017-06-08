@@ -6,5 +6,5 @@ public abstract class TimerExtender
   {
   }
 
-  public abstract void execute( );
+  public abstract void execute();
 }
