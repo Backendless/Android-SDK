@@ -39,27 +39,27 @@ public class CustomService
     return instance;
   }
 
-  public <T> T invoke( String serviceName, String serviceVersion, String method, Object[] arguments )
+  public <T> T invoke( String serviceName, String method, Object[] arguments )
   {
-    Object[] args =  new Object[] { serviceName, serviceVersion, method, arguments };
+    Object[] args =  new Object[] { serviceName, method, arguments };
     return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args );
   }
 
-   public <T> T invoke( String serviceName, String serviceVersion, String method, Object[] arguments, Class<?> clazz )
+   public <T> T invoke( String serviceName, String method, Object[] arguments, Class<?> clazz )
   {
-    Object[] args = new Object[] { serviceName, serviceVersion, method, arguments };
+    Object[] args = new Object[] { serviceName, method, arguments };
     return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, new AdaptingResponder( clazz, new PoJoAdaptingPolicy() ) );
   }
 
-  public <E> void invoke( String serviceName, String serviceVersion, String method, Object[] arguments, AsyncCallback<E> callback )
+  public <E> void invoke( String serviceName, String method, Object[] arguments, AsyncCallback<E> callback )
   {
-    Object[] args = new Object[] { serviceName, serviceVersion, method, arguments };
+    Object[] args = new Object[] { serviceName, method, arguments };
     Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, callback );
   }
 
-  public <E> void invoke( String serviceName, String serviceVersion, String method, Object[] arguments, Class<?> clazz, AsyncCallback<E> callback )
+  public <E> void invoke( String serviceName, String method, Object[] arguments, Class<?> clazz, AsyncCallback<E> callback )
   {
-    Object[] args = new Object[] { serviceName, serviceVersion, method, arguments };
+    Object[] args = new Object[] { serviceName, method, arguments };
     Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, callback, new AdaptingResponder( clazz, new PoJoAdaptingPolicy() ) );
   }
 }
