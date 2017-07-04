@@ -118,19 +118,19 @@ public abstract class PersistenceExtender<T>
   {
   }
 
-  public void beforeFirst( RunnerContext context ) throws Exception
+  public void beforeFirst( RunnerContext context, String[] relations, int relationsDepth, String[] properties ) throws Exception
   {
   }
 
-  public void afterFirst( RunnerContext context, ExecutionResult<T> entity ) throws Exception
+  public void afterFirst( RunnerContext context, String[] relations, int relationsDepth, String[] properties, ExecutionResult<T> entity ) throws Exception
   {
   }
 
-  public void beforeLast( RunnerContext context ) throws Exception
+  public void beforeLast( RunnerContext context, String[] relations, int relationsDepth, String[] properties ) throws Exception
   {
   }
 
-  public void afterLast( RunnerContext context, ExecutionResult<T> entity ) throws Exception
+  public void afterLast( RunnerContext context, String[] relations, int relationsDepth, String[] properties, ExecutionResult<T> entity ) throws Exception
   {
   }
 
