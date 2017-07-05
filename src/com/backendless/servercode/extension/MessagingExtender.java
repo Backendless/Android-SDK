@@ -30,34 +30,27 @@ public abstract class MessagingExtender
   {
   }
 
-  public void beforeSubscribe( RunnerContext context,
-                               String subscriptionId,
-                               String channel,
-                               SubscriptionOptions options ) throws Exception
+  public void beforeSubscribe( RunnerContext context, String channel, SubscriptionOptions options ) throws Exception
   {
   }
 
-  public void afterSubscribe( RunnerContext context, String subscriptionId,
-                                String channel,
-                                SubscriptionOptions options,
-                                ExecutionResult<String> subscriberId ) throws Exception
+  public void afterSubscribe( RunnerContext context, String channel, SubscriptionOptions options, ExecutionResult<String> subscriberId ) throws Exception
   {
   }
 
-  public void beforePoll( RunnerContext context, String subscriptionId ) throws Exception
+  public void beforePoll( RunnerContext context ) throws Exception
   {
   }
 
-  public void afterPoll( RunnerContext context, String subscriptionId,
-                         ExecutionResult<List<Message>> messages ) throws Exception
+  public void afterPoll( RunnerContext context, ExecutionResult<List<Message>> messages ) throws Exception
   {
   }
 
-  public void beforeCancel( RunnerContext context, String subscriptionId ) throws Exception
+  public void beforeCancel( RunnerContext context, String messageId ) throws Exception
   {
   }
 
-  public void afterCancel( RunnerContext context, String subscriptionId, ExecutionResult<MessageStatus> status ) throws Exception
+  public void afterCancel( RunnerContext context, String messageId, ExecutionResult<MessageStatus> status ) throws Exception
   {
   }
 

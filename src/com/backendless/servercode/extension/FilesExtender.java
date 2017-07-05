@@ -24,53 +24,19 @@ import com.backendless.servercode.RunnerContext;
 
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: ivanlappo
- * Date: 5/20/13
- * Time: 12:40 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public abstract class FilesExtender
 {
   public FilesExtender()
   {
   }
 
-  /**
-   * Use beforeUpload method
-   *
-   * @param context
-   * @param fileUrlLocation
-   * @throws Exception
-   */
-  @Deprecated
-  public void beforeMoveToRepository( RunnerContext context, String fileUrlLocation ) throws Exception
-  {
-  }
-
-  /**
-   * Use afterUpload method
-   *
-   * @param context
-   * @param fileUrlLocation
-   * @param result
-   * @throws Exception
-   */
-  @Deprecated
-  public void afterMoveToRepository( RunnerContext context, String fileUrlLocation, ExecutionResult<String> result ) throws Exception
-  {
-  }
-
   public void beforeUpload( RunnerContext context, String fileUrlLocation ) throws Exception
   {
-    beforeMoveToRepository( context, fileUrlLocation );
   }
 
-  public void afterUpload( RunnerContext context, String fileUrlLocation,
-                           ExecutionResult<String> result ) throws Exception
+  public void afterUpload( RunnerContext context, String fileUrlLocation, ExecutionResult<String> result ) throws Exception
   {
-    afterMoveToRepository( context, fileUrlLocation, result );
   }
 
   public void beforeDeleteFileOrDirectory( RunnerContext context, String fileUrlLocation ) throws Exception
