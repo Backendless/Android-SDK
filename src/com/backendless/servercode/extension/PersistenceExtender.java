@@ -148,7 +148,7 @@ public abstract class PersistenceExtender<T>
 
   }
 
-  public void afterAddRelation( RunnerContext context, String columnName, String parentObjectId, Object childrenArrayORWhereClause, ExecutionResult<Integer> result )
+  public void afterAddRelation( RunnerContext context, String columnName, String parentObjectId, Object childrenArrayORWhereClause )
   {
 
   }
@@ -158,7 +158,7 @@ public abstract class PersistenceExtender<T>
 
   }
 
-  public void afterSetRelation( RunnerContext context, String columnName, String parentObjectId, Object childrenArrayORWhereClause, ExecutionResult<Integer> result )
+  public void afterSetRelation( RunnerContext context, String columnName, String parentObjectId, Object childrenArrayORWhereClause )
   {
 
   }
@@ -168,7 +168,7 @@ public abstract class PersistenceExtender<T>
 
   }
 
-  public void afterDeleteRelation( RunnerContext context, String columnName, String parentObjectId, Object childrenArrayORWhereClause, ExecutionResult<Integer> result )
+  public void afterDeleteRelation( RunnerContext context, String columnName, String parentObjectId, Object childrenArrayORWhereClause )
   {
 
   }
