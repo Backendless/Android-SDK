@@ -100,7 +100,7 @@ class UserServiceAndroidExtra
                                  GraphResponse response )
         {
           FacebookBundle facebookBundle = new FacebookBundle( response, accessToken );
-          Object[] requestData = new Object[] { facebookBundle.accessToken, facebookFieldsMappings };
+          Object[] requestData = new Object[] { null, facebookBundle.accessToken, null, null, facebookFieldsMappings };
           Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithFacebook", requestData, responder, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
         }
       } );
@@ -126,7 +126,7 @@ class UserServiceAndroidExtra
 
   void loginWithGooglePlusSdk(  String accessToken, final Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder )
   {
-     Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithGooglePlus", new Object[] { accessToken, fieldsMappings }, new AsyncCallback<BackendlessUser>()
+    Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithGooglePlus", new Object[] { null, accessToken, null, fieldsMappings }, new AsyncCallback<BackendlessUser>()
     {
       @Override
       public void handleResponse( BackendlessUser response )
