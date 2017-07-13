@@ -100,7 +100,7 @@ class UserServiceAndroidExtra
                                  GraphResponse response )
         {
           FacebookBundle facebookBundle = new FacebookBundle( response, accessToken );
-          Object[] requestData = new Object[] { facebookBundle.socialUserId, facebookBundle.accessToken, facebookBundle.expirationDate, facebookBundle.permissions, facebookFieldsMappings };
+          Object[] requestData = new Object[] { facebookBundle.accessToken, facebookFieldsMappings };
           Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithFacebook", requestData, responder, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
         }
       } );
@@ -124,10 +124,9 @@ class UserServiceAndroidExtra
     new AbstractSocialLoginStrategy.Builder( context, webView, SocialType.TWITTER, twitterFieldsMappings, null, getSocialDialogResponder( responder ) ).build().run();
   }
 
-  void loginWithGooglePlusSdk(  String tokenId, String accessToken, final Map<String, String> fieldsMappings,
-                             List<String> permissions, final AsyncCallback<BackendlessUser> responder )
+  void loginWithGooglePlusSdk(  String accessToken, final Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder )
   {
-     Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithGooglePlus", new Object[] { tokenId, accessToken, permissions, fieldsMappings }, new AsyncCallback<BackendlessUser>()
+     Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithGooglePlus", new Object[] { accessToken, fieldsMappings }, new AsyncCallback<BackendlessUser>()
     {
       @Override
       public void handleResponse( BackendlessUser response )
