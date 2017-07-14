@@ -85,10 +85,7 @@ class UserServiceAndroidExtra
          }
        } );
 
-
-
     LoginManager.getInstance().logInWithReadPermissions( context, permissions );
-
   }
 
   private void getBackendlessUser( final AccessToken accessToken, final Map<String, String> facebookFieldsMappings, final AsyncCallback<BackendlessUser> responder )

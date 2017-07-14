@@ -279,23 +279,27 @@ public final class UserService
                                                        internalResponder );
   }
 
+  @Deprecated
   public void loginWithFacebook( android.app.Activity context, final AsyncCallback<BackendlessUser> responder )
   {
     loginWithFacebook( context, null, null, null, responder );
   }
 
+  @Deprecated
   public void loginWithFacebook( android.app.Activity context, android.webkit.WebView webView,
                                  final AsyncCallback<BackendlessUser> responder )
   {
     loginWithFacebook( context, webView, null, null, responder );
   }
 
+  @Deprecated
   public void loginWithFacebook( android.app.Activity context, android.webkit.WebView webView,
                                  final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
   {
     loginWithFacebook( context, webView, null, null, responder, stayLoggedIn );
   }
 
+  @Deprecated
   public void loginWithFacebook( android.app.Activity context, android.webkit.WebView webView,
                                  Map<String, String> facebookFieldsMappings, List<String> permissions,
                                  final AsyncCallback<BackendlessUser> responder )
@@ -303,6 +307,7 @@ public final class UserService
     loginWithFacebook( context, webView, facebookFieldsMappings, permissions, responder, false );
   }
 
+  @Deprecated
   public void loginWithFacebook( android.app.Activity context, android.webkit.WebView webView,
                                  Map<String, String> facebookFieldsMappings, List<String> permissions,
                                  final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
@@ -358,23 +363,27 @@ public final class UserService
     getUserServiceAndroidExtra().loginWithTwitter( context, webView, twitterFieldsMappings, getUserLoginAsyncHandler( responder, stayLoggedIn ) );
   }
 
+  @Deprecated
   public void loginWithGooglePlus( android.app.Activity context, final AsyncCallback<BackendlessUser> responder )
   {
     loginWithGooglePlus( context, null, null, null, responder );
   }
 
+  @Deprecated
   public void loginWithGooglePlus( android.app.Activity context, android.webkit.WebView webView,
                                  final AsyncCallback<BackendlessUser> responder )
   {
     loginWithGooglePlus( context, webView, null, null, responder );
   }
 
+  @Deprecated
   public void loginWithGooglePlus( android.app.Activity context, android.webkit.WebView webView,
                                  final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
   {
     loginWithGooglePlus( context, webView, null, null, responder, stayLoggedIn );
   }
 
+  @Deprecated
   public void loginWithGooglePlus( android.app.Activity context, android.webkit.WebView webView,
                                  Map<String, String> googlePlusFieldsMappings, List<String> permissions,
                                  final AsyncCallback<BackendlessUser> responder )
@@ -382,6 +391,7 @@ public final class UserService
     loginWithGooglePlus( context, webView, googlePlusFieldsMappings, permissions, responder, false );
   }
 
+  @Deprecated
   public void loginWithGooglePlus( android.app.Activity context, android.webkit.WebView webView,
                                  Map<String, String> googlePlusFieldsMappings, List<String> permissions,
                                  final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
