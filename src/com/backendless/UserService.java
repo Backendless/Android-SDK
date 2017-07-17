@@ -271,11 +271,13 @@ public final class UserService
     loginWithFacebookSdk( accessToken, null, responder, false );
   }
 
+  @Deprecated
   public void loginWithFacebookSdk( android.app.Activity context, CallbackManager callbackManager, final AsyncCallback<BackendlessUser> responder )
   {
     loginWithFacebookSdk(context, callbackManager, responder, false );
   }
 
+  @Deprecated
   public void loginWithFacebookSdk( android.app.Activity context, CallbackManager callbackManager, final
                                     AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn  )
   {
@@ -283,12 +285,14 @@ public final class UserService
     getUserServiceAndroidExtra().loginWithFacebookSdk( context, callbackManager, internalResponder );
   }
 
+  @Deprecated
   public void loginWithFacebookSdk( android.app.Activity context, final Map<String, String> facebookFieldsMappings,
                                     final List<String> permissions, CallbackManager callbackManager, final AsyncCallback<BackendlessUser> responder )
   {
     loginWithFacebookSdk( context, facebookFieldsMappings, permissions, callbackManager, responder, false );
   }
 
+  @Deprecated
   public void loginWithFacebookSdk( android.app.Activity context, final Map<String, String> facebookFieldsMappings,
                              final List<String> permissions, CallbackManager callbackManager, final
                                     AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
