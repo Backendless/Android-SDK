@@ -143,7 +143,7 @@ class UserServiceAndroidExtra
 
   void loginWithFacebookSdk(  String accessToken, final Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder )
   {
-    Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithFacebook", new Object[] { null, accessToken, null, fieldsMappings }, new AsyncCallback<BackendlessUser>()
+    Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithFacebook", new Object[] { null, accessToken, null, null, fieldsMappings }, new AsyncCallback<BackendlessUser>()
     {
       @Override
       public void handleResponse( BackendlessUser response )
@@ -158,7 +158,7 @@ class UserServiceAndroidExtra
         if( responder != null )
           responder.handleFault( fault );
       }
-    } );
+    }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
   }
 
   void loginWithGooglePlus( android.app.Activity context, android.webkit.WebView webView,
