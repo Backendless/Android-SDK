@@ -252,6 +252,25 @@ public final class UserService
       }
   }
 
+  public void loginWithFacebookSdk( String accessToken, final Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  {
+    AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler(responder, stayLoggedIn);
+    getUserServiceAndroidExtra().loginWithFacebookSdk(accessToken, fieldsMappings, internalResponder);
+  }
+
+  public void loginWithFacebookSdk( String accessToken, final Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder)
+  {
+    loginWithFacebookSdk( accessToken, fieldsMappings, responder, false );
+  }
+  public void loginWithFacebookSdk( String accessToken, final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn)
+  {
+    loginWithFacebookSdk( accessToken, null, responder, stayLoggedIn );
+  }
+  public void loginWithFacebookSdk( String accessToken, final AsyncCallback<BackendlessUser> responder)
+  {
+    loginWithFacebookSdk( accessToken, null, responder, false );
+  }
+
   public void loginWithFacebookSdk( android.app.Activity context, CallbackManager callbackManager, final AsyncCallback<BackendlessUser> responder )
   {
     loginWithFacebookSdk(context, callbackManager, responder, false );
@@ -409,10 +428,6 @@ public final class UserService
     loginWithGooglePlusSdk(accessToken, (Map<String, String>) null, responder, stayLoggedIn);
   }
 
-  public void loginWithGooglePlusSdk( String accessToken, final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn) {
-    loginWithGooglePlusSdk(accessToken, (Map<String, String>) null, responder, stayLoggedIn);
-  }
-
   @Deprecated
   public void loginWithGooglePlusSdk( String tokenId, String accessToken, final Map<String, String> fieldsMappings,
                                      List<String> permissions, final AsyncCallback<BackendlessUser> responder ) {
@@ -428,6 +443,18 @@ public final class UserService
   public void loginWithGooglePlusSdk( String accessToken, final Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn) {
     AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler(responder, stayLoggedIn);
     getUserServiceAndroidExtra().loginWithGooglePlusSdk(accessToken, fieldsMappings, internalResponder);
+  }
+
+  public void loginWithGooglePlusSdk( String accessToken, final Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder) {
+    loginWithGooglePlusSdk(accessToken, fieldsMappings, responder, false);
+  }
+
+  public void loginWithGooglePlusSdk( String accessToken, final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn) {
+    loginWithGooglePlusSdk(accessToken, (Map<String, String>) null, responder, stayLoggedIn);
+  }
+
+  public void loginWithGooglePlusSdk( String accessToken, final AsyncCallback<BackendlessUser> responder) {
+    loginWithGooglePlusSdk(accessToken, (Map<String, String>) null, responder, false);
   }
 
   public void logout() throws BackendlessException

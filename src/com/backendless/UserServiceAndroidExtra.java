@@ -141,6 +141,26 @@ class UserServiceAndroidExtra
     } );
   }
 
+  void loginWithFacebookSdk(  String accessToken, final Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder )
+  {
+    Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithFacebook", new Object[] { null, accessToken, null, fieldsMappings }, new AsyncCallback<BackendlessUser>()
+    {
+      @Override
+      public void handleResponse( BackendlessUser response )
+      {
+        if( responder != null )
+          responder.handleResponse( response );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        if( responder != null )
+          responder.handleFault( fault );
+      }
+    } );
+  }
+
   void loginWithGooglePlus( android.app.Activity context, android.webkit.WebView webView,
                           Map<String, String> googlePlusFieldsMappings, List<String> permissions,
                           final AsyncCallback<BackendlessUser> responder )
