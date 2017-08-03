@@ -1,0 +1,59 @@
+apply plugin: 'com.android.application'
+
+android {
+	compileSdkVersion 25
+	buildToolsVersion "26.0.0"
+	defaultConfig {
+		applicationId "com.backendless.examples.login_with_sdk"
+		minSdkVersion 25
+		targetSdkVersion 25
+		versionCode 1
+		versionName "1.0"
+		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+	}
+	buildTypes {
+		release {
+			minifyEnabled false
+//			proguardFile 'proguard-google-api-client.txt'
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		}
+	}
+}
+
+dependencies {
+	// please, set the current version of backendless sdk for Android here.
+	compile 'com.backendless:backendless:x.x.x'
+
+	compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+
+	compile ('com.google.api-client:google-api-client:1.22.0'){
+		exclude group: 'com.google.code.findbugs', module: 'jsr305'
+	}
+
+//	compile 'com.google.android.gms:play-services:11.0.4'
+	compile 'com.google.android.gms:play-services-auth:11.0.4'
+//	compile 'com.google.android.gms:play-services-plus:11.0.4'
+
+	compile fileTree(dir: 'libs', include: ['*.jar'])
+	androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+		exclude group: 'com.android.support', module: 'support-annotations'
+	})
+
+	testCompile 'junit:junit:4.12'
+}
+
+apply plugin: 'com.google.gms.google-services'
+
+android {
+	lintOptions {
+		abortOnError false
+	}
+
+	defaultConfig {
+		multiDexEnabled true
+	}
+
+	dexOptions {
+		javaMaxHeapSize "3g" //specify the heap size for the dex process
+	}
+}
