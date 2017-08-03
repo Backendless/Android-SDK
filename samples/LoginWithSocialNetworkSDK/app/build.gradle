@@ -21,16 +21,18 @@ android {
 }
 
 dependencies {
-	compile files('/Data/Backendless/Android-SDK/build/libs/backendless-4.0.1-snapshot.jar')
+	// please, set the current version of backendless sdk for Android here.
+	compile 'com.backendless:backendless:x.x.x'
+
 	compile 'com.facebook.android:facebook-android-sdk:[4,5)'
 
 	compile ('com.google.api-client:google-api-client:1.22.0'){
 		exclude group: 'com.google.code.findbugs', module: 'jsr305'
 	}
 
-//	compile 'com.google.android.gms:play-services:11.0.2'
-	compile 'com.google.android.gms:play-services-auth:11.0.2'
-//	compile 'com.google.android.gms:play-services-plus:11.0.2'
+//	compile 'com.google.android.gms:play-services:11.0.4'
+	compile 'com.google.android.gms:play-services-auth:11.0.4'
+//	compile 'com.google.android.gms:play-services-plus:11.0.4'
 
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 	androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
