@@ -27,19 +27,12 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="26dp" android:id="@+id/textView_gpSocialAccountInfo"
-			android:textStyle="normal|bold" android:layout_below="@+id/button_gpLoginInBackendless" android:layout_alignParentStart="true"/>
+			android:textStyle="normal|bold" android:layout_below="@+id/button_googlePlusLogin" android:layout_alignParentStart="true"/>
 	<Button
-			android:text="@string/btn_LoginBackendless"
+			android:text="@string/btn_LogoutBackendless"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:id="@+id/button_gpLoginInBackendless"
-			android:fontFamily="sans-serif-medium" android:textAllCaps="false" android:layout_alignParentTop="true"
-			android:layout_alignParentEnd="true" android:enabled="false"/>
-	<Button
-			android:text="@string/btn_LogoutGooglePlus"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:id="@+id/button_googlePlusLogout"
+			android:id="@+id/button_gpBackendlessLogout"
 			android:fontFamily="sans-serif-medium" android:textAllCaps="false"
 			android:layout_alignParentTop="true" android:layout_alignParentStart="true" android:enabled="true"
 			android:visibility="invisible"/>

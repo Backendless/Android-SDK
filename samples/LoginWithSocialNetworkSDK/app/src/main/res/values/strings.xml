@@ -4,10 +4,7 @@
 	<string name="title_loginWithGooglePlusSDK">Login with GooglePlus SDK</string>
 
 	<string name="btn_LoginFacebook">Login in Facebook</string>
-	<string name="btn_LogoutFacebook">Logout from Facebook</string>
 	<string name="btn_LoginGooglePlus">Login in GooglePlus</string>
-	<string name="btn_LogoutGooglePlus">Logout from GooglePlus</string>
-	<string name="btn_LoginBackendless">Login in Backendless</string>
 	<string name="btn_LogoutBackendless">Logout from Backendless</string>
 
 	<string name="textView_SocialAccountInfo">Social Account Info</string>

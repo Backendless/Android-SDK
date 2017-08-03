@@ -36,22 +36,15 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="26dp" android:id="@+id/textView_fbSocialAccountInfo"
-			android:textStyle="normal|bold" android:layout_below="@+id/button_FacebookLogout" android:layout_alignParentStart="true"/>
+			android:textStyle="normal|bold" android:layout_below="@+id/button_fbBackendlessLogout" android:layout_alignParentStart="true"/>
 	<Button
-			android:text="@string/btn_LogoutFacebook"
+			android:text="@string/btn_LogoutBackendless"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:id="@+id/button_FacebookLogout"
+			android:id="@+id/button_fbBackendlessLogout"
 			android:fontFamily="sans-serif-medium" android:textAllCaps="false"
 			android:layout_alignParentTop="true" android:layout_alignParentStart="true"
 			android:visibility="invisible" android:enabled="true"/>
-	<Button
-			android:text="@string/btn_LoginBackendless"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:id="@+id/button_fbLoginInBackendless"
-			android:fontFamily="sans-serif-medium" android:textAllCaps="false" android:layout_alignParentTop="true"
-			android:layout_alignParentEnd="true" android:enabled="false"/>
 	<EditText
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"

@@ -24,8 +24,7 @@ import java.util.Map;
 public class LoginWithFacebookSDKActivity extends Activity {
 
 	private LoginButton loginFacebookButton;
-	private Button logoutFacebookButton;
-	private Button loginInBackendless;
+	private Button fbLogoutBackendlessButton;
 	private EditText socialAccountInfo;
 	private EditText backendlessUserInfo;
 
@@ -46,8 +45,7 @@ public class LoginWithFacebookSDKActivity extends Activity {
 
 	private void initUI() {
 		loginFacebookButton = (LoginButton) findViewById(R.id.button_FacebookLogin);
-		logoutFacebookButton = (Button) findViewById(R.id.button_FacebookLogout);
-		loginInBackendless = (Button) findViewById(R.id.button_fbLoginInBackendless);
+		fbLogoutBackendlessButton = (Button) findViewById(R.id.button_fbBackendlessLogout);
 		socialAccountInfo = (EditText) findViewById(R.id.editText_fbSocialAccountInfo);
 		backendlessUserInfo = (EditText) findViewById(R.id.editText_fbBackendlessUserInfo);
 	}
@@ -55,47 +53,40 @@ public class LoginWithFacebookSDKActivity extends Activity {
 	private void initUIBehaviour() {
 		callbackManager = configureFacebookSDKLogin();
 
-		logoutFacebookButton.setOnClickListener(new View.OnClickListener() {
+		fbLogoutBackendlessButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				logoutFromFacebook();
+				if (isLoggedInBackendless)
+					logoutFromBackendless();
+
+				if (isLoggedInFacebook)
+					logoutFromFacebook();
 			}
 		});
 
 		if (AccessToken.getCurrentAccessToken() != null)
 		{
-			isLoginnedInFacebook = true;
-			fbAccessToken = null;
-			loginFacebookButton.setVisibility(View.INVISIBLE);
-			logoutFacebookButton.setVisibility(View.VISIBLE);
+			isLoggedInFacebook = true;
+			fbAccessToken = AccessToken.getCurrentAccessToken().getToken();
 		}
-
-		loginInBackendless.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (isLoginnedInBackendless)
-					logoutFromBackendless();
-				else
-					loginInBackendless();
-			}
-		});
 
 		BackendlessUser user = Backendless.UserService.CurrentUser();
 		if (user != null)
 		{
-			isLoginnedInBackendless = true;
+			isLoggedInBackendless = true;
 			backendlessUserInfo.setTextColor(getColor(android.R.color.black));
 			backendlessUserInfo.setText("Current user: " + user.getEmail());
-			loginInBackendless.setText(getString(R.string.btn_LogoutBackendless));
+			loginFacebookButton.setVisibility(View.INVISIBLE);
+			fbLogoutBackendlessButton.setVisibility(View.VISIBLE);
 		}
 	}
 
-	private void loginInBackendless()
+	private void loginToBackendless()
 	{
 		Backendless.UserService.loginWithFacebookSdk(fbAccessToken, new AsyncCallback<BackendlessUser>() {
 			@Override
 			public void handleResponse(BackendlessUser response) {
-				isLoginnedInBackendless = true;
+				isLoggedInBackendless = true;
 
 				String msg = "ObjectId: " + response.getObjectId() + "\n"
 						+ "UserId: " + response.getUserId() + "\n"
@@ -108,7 +99,8 @@ public class LoginWithFacebookSDKActivity extends Activity {
 				backendlessUserInfo.setTextColor(getColor(android.R.color.black));
 				backendlessUserInfo.setText(msg);
 
-				loginInBackendless.setText(getString(R.string.btn_LogoutBackendless));
+				loginFacebookButton.setVisibility(View.INVISIBLE);
+				fbLogoutBackendlessButton.setVisibility(View.VISIBLE);
 			}
 
 			@Override
@@ -123,12 +115,12 @@ public class LoginWithFacebookSDKActivity extends Activity {
 		Backendless.UserService.logout(new AsyncCallback<Void>() {
 			@Override
 			public void handleResponse(Void response) {
-				isLoginnedInBackendless = false;
+				isLoggedInBackendless = false;
 				backendlessUserInfo.setTextColor(getColor(android.R.color.black));
 				backendlessUserInfo.setText("");
-				loginInBackendless.setText(getString(R.string.btn_LoginBackendless));
-				if (!isLoginnedInFacebook)
-					loginInBackendless.setEnabled(false);
+
+				fbLogoutBackendlessButton.setVisibility(View.INVISIBLE);
+				loginFacebookButton.setVisibility(View.VISIBLE);
 			}
 
 			@Override
@@ -150,7 +142,7 @@ public class LoginWithFacebookSDKActivity extends Activity {
 		loginFacebookButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 			@Override
 			public void onSuccess(LoginResult loginResult) {
-				isLoginnedInFacebook = true;
+				isLoggedInFacebook = true;
 
 				fbAccessToken = loginResult.getAccessToken().getToken();
 				String msg = "ApplicationId: " + loginResult.getAccessToken().getApplicationId() + "\n"
@@ -160,10 +152,12 @@ public class LoginWithFacebookSDKActivity extends Activity {
 						+ "Expires: " + loginResult.getAccessToken().getExpires().toString();
 				socialAccountInfo.setTextColor(getColor(android.R.color.black));
 				socialAccountInfo.setText(msg);
-				loginInBackendless.setEnabled(true);
 
-				loginFacebookButton.setVisibility(View.INVISIBLE);
-				logoutFacebookButton.setVisibility(View.VISIBLE);
+				if (!isLoggedInBackendless)
+					loginToBackendless();
+				else
+					loginFacebookButton.setVisibility(View.INVISIBLE);
+					fbLogoutBackendlessButton.setVisibility(View.VISIBLE);
 			}
 
 			@Override
@@ -178,8 +172,7 @@ public class LoginWithFacebookSDKActivity extends Activity {
 				String msg = exception.getMessage() + "\nCause:\n" + (exception.getCause() != null ? exception.getCause().getMessage() : "none");
 				socialAccountInfo.setTextColor(getColor(android.R.color.holo_red_dark));
 				socialAccountInfo.setText(msg);
-				isLoginnedInFacebook = false;
-				loginInBackendless.setEnabled(false);
+				isLoggedInFacebook = false;
 			}
 		});
 
@@ -188,21 +181,16 @@ public class LoginWithFacebookSDKActivity extends Activity {
 
 	private void logoutFromFacebook()
 	{
-		if (!isLoginnedInFacebook)
+		if (!isLoggedInFacebook)
 			return;
 
 		if (AccessToken.getCurrentAccessToken() != null)
 			LoginManager.getInstance().logOut();
 
-		isLoginnedInFacebook = false;
+		isLoggedInFacebook = false;
 		fbAccessToken = null;
 		socialAccountInfo.setTextColor(getColor(android.R.color.black));
 		socialAccountInfo.setText("");
-		if (!isLoginnedInBackendless)
-			loginInBackendless.setEnabled(false);
-
-		logoutFacebookButton.setVisibility(View.INVISIBLE);
-		loginFacebookButton.setVisibility(View.VISIBLE);
 	}
 
 	@Override

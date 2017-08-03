@@ -34,8 +34,7 @@ import java.util.concurrent.TimeUnit;
 public class LoginWithGooglePlusSDKActivity extends Activity {
 
 	private SignInButton loginGooglePlusButton;
-	private Button logoutGooglePlusButton;
-	private Button loginInBackendless;
+	private Button gpLogoutBackendlessButton;
 	private EditText socialAccountInfo;
 	private EditText backendlessUserInfo;
 
@@ -57,9 +56,8 @@ public class LoginWithGooglePlusSDKActivity extends Activity {
 
 	private void initUI() {
 		loginGooglePlusButton = (SignInButton) findViewById(R.id.button_googlePlusLogin);
-		logoutGooglePlusButton = (Button) findViewById(R.id.button_googlePlusLogout);
+		gpLogoutBackendlessButton = (Button) findViewById(R.id.button_gpBackendlessLogout);
 
-		loginInBackendless = (Button) findViewById(R.id.button_gpLoginInBackendless);
 		socialAccountInfo = (EditText) findViewById(R.id.editText_gpSocialAccountInfo);
 		backendlessUserInfo = (EditText) findViewById(R.id.editText_gpBackendlessUserInfo);
 	}
@@ -74,39 +72,35 @@ public class LoginWithGooglePlusSDKActivity extends Activity {
 				handleSignInResult((GoogleSignInResult) pendingResult.get());
 		}
 
-		logoutGooglePlusButton.setOnClickListener(new View.OnClickListener() {
+		gpLogoutBackendlessButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				logoutFromGoogle();
-			}
-		});
-
-		loginInBackendless.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (isLoginnedInBackendless)
+				if (isLoggedInBackendless)
 					logoutFromBackendless();
-				else
-					loginInBackendless();
+
+				if (isLoggedInGoogle)
+					logoutFromGoogle();
 			}
 		});
 
 		BackendlessUser user = Backendless.UserService.CurrentUser();
 		if (user != null)
 		{
-			isLoginnedInBackendless = true;
+			isLoggedInBackendless = true;
 			backendlessUserInfo.setTextColor(getColor(android.R.color.black));
 			backendlessUserInfo.setText("Current user: " + user.getEmail());
-			loginInBackendless.setText(getString(R.string.btn_LogoutBackendless));
+
+			loginGooglePlusButton.setVisibility(View.INVISIBLE);
+			gpLogoutBackendlessButton.setVisibility(View.VISIBLE);
 		}
 	}
 
-	private void loginInBackendless()
+	private void loginToBackendless()
 	{
 		Backendless.UserService.loginWithGooglePlusSdk(gpAccessToken, new AsyncCallback<BackendlessUser>() {
 			@Override
 			public void handleResponse(BackendlessUser response) {
-				isLoginnedInBackendless = true;
+				isLoggedInBackendless = true;
 
 				String msg = "ObjectId: " + response.getObjectId() + "\n"
 						+ "UserId: " + response.getUserId() + "\n"
@@ -119,7 +113,8 @@ public class LoginWithGooglePlusSDKActivity extends Activity {
 				backendlessUserInfo.setTextColor(getColor(android.R.color.black));
 				backendlessUserInfo.setText(msg);
 
-				loginInBackendless.setText(getString(R.string.btn_LogoutBackendless));
+				loginGooglePlusButton.setVisibility(View.INVISIBLE);
+				gpLogoutBackendlessButton.setVisibility(View.VISIBLE);
 			}
 
 			@Override
@@ -134,12 +129,12 @@ public class LoginWithGooglePlusSDKActivity extends Activity {
 		Backendless.UserService.logout(new AsyncCallback<Void>() {
 			@Override
 			public void handleResponse(Void response) {
-				isLoginnedInBackendless = false;
+				isLoggedInBackendless = false;
 				backendlessUserInfo.setTextColor(getColor(android.R.color.black));
 				backendlessUserInfo.setText("");
-				loginInBackendless.setText(getString(R.string.btn_LoginBackendless));
-				if (!isLoginnedInGoogle)
-					loginInBackendless.setEnabled(false);
+
+				gpLogoutBackendlessButton.setVisibility(View.INVISIBLE);
+				loginGooglePlusButton.setVisibility(View.VISIBLE);
 			}
 
 			@Override
@@ -165,8 +160,8 @@ public class LoginWithGooglePlusSDKActivity extends Activity {
 				//.addOnConnectionFailedListener(this)
 				.addApi(Auth.CREDENTIALS_API)
 				.addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-				.addScope(new Scope(Scopes.PROFILE))
-				.addScope(new Scope(Scopes.PLUS_ME))
+//				.addScope(new Scope(Scopes.PROFILE))
+//				.addScope(new Scope(Scopes.PLUS_ME))
 				.build();
 
 		loginGooglePlusButton.setOnClickListener(new View.OnClickListener() {
@@ -192,18 +187,27 @@ public class LoginWithGooglePlusSDKActivity extends Activity {
 	private void handleSignInResult(GoogleSignInResult result) {
 		//Log.d(TAG, "handleSignInResult:" + result.isSuccess());
 		if (result.isSuccess()) {
-			isLoginnedInGoogle = true;
+			isLoggedInGoogle = true;
 			loginGooglePlusButton.setVisibility(View.INVISIBLE);
-			logoutGooglePlusButton.setVisibility(View.VISIBLE);
+			gpLogoutBackendlessButton.setVisibility(View.VISIBLE);
 
-//			GoogleAuthUtil.getAccountId()
-//			gpAccessToken = GoogleAuthUtil.getToken(LoginWithGooglePlusSDKActivity.this, result.getSignInAccount(), "");
+			//this is old approach to get google access token:
+			//final String scopes = "oauth2:" + Scopes.PLUS_LOGIN + " " + Scopes.PLUS_ME + " " + Scopes.PROFILE + " " + Scopes.EMAIL;
+			//gpAccessToken = GoogleAuthUtil.getToken(LoginWithGooglePlusSDKActivity.this, result.getSignInAccount().getEmail(), scopes);
+
 			final String gpAuthToken = result.getSignInAccount().getServerAuthCode();
 
 			Thread t = new Thread(new Runnable() {
 				@Override
 				public void run() {
 					exchangeAuthTokenOnAccessToken(gpAuthToken);
+
+					/***********************************************************************
+					 * Now that the login to Google has completed successfully, the code
+					 * will login to Backendless by "exchanging" Google's access token
+					 * for BackendlessUser. This is done in the loginToBackendless() method.
+					 ***********************************************************************/
+					loginToBackendless();
 				}
 			});
 			t.setDaemon(true);
@@ -224,9 +228,7 @@ public class LoginWithGooglePlusSDKActivity extends Activity {
 			String msg = "Unsuccessful login.\nStatus message:\n" + result.getStatus().getStatusMessage();
 			socialAccountInfo.setTextColor(getColor(android.R.color.holo_red_dark));
 			socialAccountInfo.setText(msg);
-			isLoginnedInGoogle = false;
-			if (!isLoginnedInBackendless)
-				loginInBackendless.setEnabled(false);
+			isLoggedInGoogle = false;
 			//updateUI(false);
 		}
 	}
@@ -262,17 +264,13 @@ public class LoginWithGooglePlusSDKActivity extends Activity {
 			@Override
 			public void run() {
 				socialAccountInfo.setText(msg);
-				loginInBackendless.setEnabled(true);
 			}
 		});
-		return tokenResponse.getAccessToken();
+		return gpAccessToken;
 	}
 
 	private void logoutFromGoogle()
 	{
-		if (!isLoginnedInGoogle)
-			return;
-
 		AsyncTask.execute(new Runnable() {
 			@Override
 			public void run() {
@@ -291,15 +289,13 @@ public class LoginWithGooglePlusSDKActivity extends Activity {
 							if (!status.isSuccess())
 								return;
 
-							isLoginnedInGoogle = false;
-							logoutGooglePlusButton.setVisibility(View.INVISIBLE);
+							isLoggedInGoogle = false;
+							gpLogoutBackendlessButton.setVisibility(View.INVISIBLE);
 							loginGooglePlusButton.setVisibility(View.VISIBLE);
 
 							gpAccessToken = null;
 							socialAccountInfo.setTextColor(getColor(android.R.color.black));
 							socialAccountInfo.setText("");
-							if (!isLoginnedInBackendless)
-								loginInBackendless.setEnabled(false);
 						}
 					});
 			}
