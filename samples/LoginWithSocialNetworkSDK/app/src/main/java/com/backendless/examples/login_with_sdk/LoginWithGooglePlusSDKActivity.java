@@ -43,8 +43,8 @@ public class LoginWithGooglePlusSDKActivity extends Activity {
 	private GoogleApiClient mGoogleApiClient;
 	private String gpAccessToken = null;
 
-	private boolean isLoginnedInGoogle = false;
-	private boolean isLoginnedInBackendless = false;
+	private boolean isLoggedInGoogle = false;
+	private boolean isLoggedInBackendless = false;
 
 
 	@Override

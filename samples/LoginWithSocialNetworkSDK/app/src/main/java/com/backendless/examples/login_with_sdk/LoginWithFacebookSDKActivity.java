@@ -32,8 +32,8 @@ public class LoginWithFacebookSDKActivity extends Activity {
 	private CallbackManager callbackManager;
 	private String fbAccessToken = null;
 
-	private boolean isLoginnedInFacebook = false;
-	private boolean isLoginnedInBackendless = false;
+	private boolean isLoggedInFacebook = false;
+	private boolean isLoggedInBackendless = false;
 
 
 	@Override
