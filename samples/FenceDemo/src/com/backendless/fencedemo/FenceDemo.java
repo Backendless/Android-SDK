@@ -326,10 +326,10 @@ public class FenceDemo extends Activity
     }
     else
     {
-      Backendless.Geo.getPoints( fenceName, new AsyncCallback<BackendlessCollection<GeoPoint>>()
+      Backendless.Geo.getPoints( fenceName, new AsyncCallback<Collection<GeoPoint>>()
       {
         @Override
-        public void handleResponse( BackendlessCollection<GeoPoint> response )
+        public void handleResponse( Collection<GeoPoint> response )
         {
           int quantity = response.getTotalObjects();
           Toast.makeText( FenceDemo.this, "Found " + quantity + " points", Toast.LENGTH_SHORT ).show();

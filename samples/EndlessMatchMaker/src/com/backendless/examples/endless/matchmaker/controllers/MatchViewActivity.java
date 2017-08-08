@@ -229,10 +229,10 @@ public class MatchViewActivity extends Activity
   }
 
   //Callbacks section
-  private AsyncCallback<BackendlessCollection<SearchMatchesResult>> gotFoodCallback = new ResponseAsyncCallback<BackendlessCollection<SearchMatchesResult>>( MatchViewActivity.this )
+  private AsyncCallback<Collection<SearchMatchesResult>> gotFoodCallback = new ResponseAsyncCallback<Collection<SearchMatchesResult>>( MatchViewActivity.this )
   {
     @Override
-    public void handleResponse( BackendlessCollection<SearchMatchesResult> response )
+    public void handleResponse( Collection<SearchMatchesResult> response )
     {
       for( SearchMatchesResult geoPoint : response.getCurrentPage() )
       {
@@ -258,10 +258,10 @@ public class MatchViewActivity extends Activity
       }
     }
   };
-  private AsyncCallback<BackendlessCollection<SearchMatchesResult>> gotMusicCallback = new ResponseAsyncCallback<BackendlessCollection<SearchMatchesResult>>( MatchViewActivity.this )
+  private AsyncCallback<Collection<SearchMatchesResult>> gotMusicCallback = new ResponseAsyncCallback<Collection<SearchMatchesResult>>( MatchViewActivity.this )
   {
     @Override
-    public void handleResponse( BackendlessCollection<SearchMatchesResult> response )
+    public void handleResponse( Collection<SearchMatchesResult> response )
     {
       for( SearchMatchesResult geoPoint : response.getCurrentPage() )
       {
@@ -287,10 +287,10 @@ public class MatchViewActivity extends Activity
       }
     }
   };
-  private AsyncCallback<BackendlessCollection<SearchMatchesResult>> gotHobbiesCallback = new ResponseAsyncCallback<BackendlessCollection<SearchMatchesResult>>( MatchViewActivity.this )
+  private AsyncCallback<Collection<SearchMatchesResult>> gotHobbiesCallback = new ResponseAsyncCallback<Collection<SearchMatchesResult>>( MatchViewActivity.this )
   {
     @Override
-    public void handleResponse( BackendlessCollection<SearchMatchesResult> response )
+    public void handleResponse( Collection<SearchMatchesResult> response )
     {
       for( SearchMatchesResult geoPoint : response.getCurrentPage() )
       {
@@ -317,10 +317,10 @@ public class MatchViewActivity extends Activity
     }
   };
 
-  private AsyncCallback<BackendlessCollection<SearchMatchesResult>> gotTravelCallback = new ResponseAsyncCallback<BackendlessCollection<SearchMatchesResult>>( MatchViewActivity.this )
+  private AsyncCallback<Collection<SearchMatchesResult>> gotTravelCallback = new ResponseAsyncCallback<Collection<SearchMatchesResult>>( MatchViewActivity.this )
   {
     @Override
-    public void handleResponse( BackendlessCollection<SearchMatchesResult> response )
+    public void handleResponse( Collection<SearchMatchesResult> response )
     {
       for( SearchMatchesResult geoPoint : response.getCurrentPage() )
       {

@@ -18,58 +18,52 @@
 
 package com.backendless.core.responder.policy;
 
-import com.backendless.BackendlessCollection;
 import weborb.client.Fault;
 import weborb.client.IResponder;
 import weborb.exceptions.AdaptingException;
-import weborb.reader.AnonymousObject;
 import weborb.reader.ArrayType;
 import weborb.reader.NamedObject;
 import weborb.types.IAdaptingType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CollectionAdaptingPolicy<E> implements IAdaptingPolicy<E>
 {
   @Override
   public Object adapt( Class<E> clazz, IAdaptingType entity, IResponder nextResponder )
   {
-    BackendlessCollection<?> result = null;
+    List<E> result = null;
 
     try
     {
-      BackendlessCollection<E> list = createListOfType( clazz );
+      List<E> list = new ArrayList<>();
+      if( entity == null )
+        return list;
 
-      AnonymousObject bodyValue = (AnonymousObject) ((NamedObject) entity).getTypedObject();
-      ArrayType data = (ArrayType) bodyValue.getProperties().get( "data" );
+      ArrayType data = (ArrayType) entity;
 
-      if( data != null )
+      Object[] dataArray = (Object[]) data.getArray();
+
+      if( weborb.types.Types.getMappedClientClass( clazz.getName() ) == null )
       {
-        Object[] dataArray = (Object[]) data.getArray();
-
-        if( weborb.types.Types.getMappedClientClass( clazz.getName() ) == null )
-        {
-          for( int i = 0; i < dataArray.length; i++ )
-            ((NamedObject) dataArray[ i ]).setDefaultType( clazz );
-        }
+        for ( Object aDataArray : dataArray )
+          ( (NamedObject) aDataArray ).setDefaultType( clazz );
       }
 
-      result = (BackendlessCollection<?>) entity.adapt( list.getClass() );
+      result = (List<E>) entity.adapt( list.getClass() );
 
       if( nextResponder != null )
         nextResponder.responseHandler( result );
     }
     catch( AdaptingException e )
     {
-      Fault fault = new Fault( "Unable to adapt response to BackendlessCollection", e.getMessage() );
+      Fault fault = new Fault( "Unable to adapt response to List<" + clazz.getName() + ">", e.getMessage() );
 
       if( nextResponder != null )
         nextResponder.errorHandler( fault );
     }
 
     return result;
-  }
-
-  private static <E> BackendlessCollection<E> createListOfType( Class<E> type )
-  {
-    return new BackendlessCollection<E>();
   }
 }

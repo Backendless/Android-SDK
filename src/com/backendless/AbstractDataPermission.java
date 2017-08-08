@@ -24,6 +24,7 @@ import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.persistence.PersistenceOperations;
 import com.backendless.utils.PermissionTypes;
+
 import java.util.Map;
 
 public abstract class AbstractDataPermission
@@ -130,22 +131,19 @@ public abstract class AbstractDataPermission
 
   private <T> Object[] buildArgs( T dataObject, String principal, PermissionTypes permissionType )
   {
-    String appId = Backendless.getApplicationId();
-    String version = Backendless.getVersion();
-    String tableName;
-
-    if( dataObject instanceof Map )
-      tableName = ( String ) ( ( Map ) dataObject ).get( "___class" );
-    else
-      tableName = BackendlessSerializer.getSimpleName( dataObject.getClass() );
-
+    final String tableName;
     String objectId = Persistence.getEntityId( dataObject );
     PersistenceOperations operation = getOperation();
 
-    if( principal != null )
-      return new Object[] { appId, version, tableName, principal, objectId, operation, permissionType };
+    if( dataObject instanceof Map )
+      tableName = ( String ) ( (Map) dataObject ).get( "___class" );
     else
-      return new Object[] { appId, version, tableName, objectId, operation, permissionType };
+      tableName =  BackendlessSerializer.getSimpleName( dataObject.getClass() );
+
+    if( principal != null )
+      return new Object[] { tableName, principal, objectId, operation, permissionType };
+    else
+      return new Object[] { tableName, objectId, operation, permissionType };
   }
 
   private <T> void serverCall( AsyncCallback<T> responder, String method, Object[] args, Class type )

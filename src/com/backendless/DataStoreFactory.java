@@ -5,7 +5,7 @@
  *  <p/>
  *  ********************************************************************************************************************
  *  <p/>
- *  Copyright 2012 BACKENDLESS.COM. All Rights Reserved.
+ *  Copyright 2(Integer)null12 BACKENDLESS.COM. All Rights Reserved.
  *  <p/>
  *  NOTICE: All information contained herein is, and remains the property of Backendless.com and its suppliers,
  *  if any. The intellectual and technical concepts contained herein are proprietary to Backendless.com and its
@@ -20,9 +20,12 @@ package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
-import com.backendless.persistence.BackendlessDataQuery;
+import com.backendless.persistence.BackendlessSerializer;
+import com.backendless.persistence.DataQueryBuilder;
+import com.backendless.persistence.LoadRelationsQueryBuilder;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 class DataStoreFactory
@@ -65,7 +68,7 @@ class DataStoreFactory
       }
 
       @Override
-      public E findFirst( int relationsDepth ) throws BackendlessException
+      public E findFirst( Integer relationsDepth ) throws BackendlessException
       {
         return findFirst( emptyRelations, relationsDepth );
       }
@@ -73,12 +76,24 @@ class DataStoreFactory
       @Override
       public E findFirst( List<String> relations ) throws BackendlessException
       {
-        return findFirst( relations, 0 );
+        return findFirst( relations, (Integer)null );
       }
 
-      private E findFirst( List<String> relations, int relationsDepth ) throws BackendlessException
+      private E findFirst( List<String> relations, Integer relationsDepth ) throws BackendlessException
       {
         return Backendless.Persistence.first( entityClass, relations, relationsDepth );
+      }
+
+      @Override
+      public int getObjectCount()
+      {
+        return Backendless.Persistence.getObjectCount( entityClass );
+      }
+
+      @Override
+      public int getObjectCount( DataQueryBuilder dataQueryBuilder )
+      {
+        return Backendless.Persistence.getObjectCount( entityClass, dataQueryBuilder );
       }
 
       public void findFirst( final AsyncCallback<E> responder )
@@ -87,7 +102,7 @@ class DataStoreFactory
       }
 
       @Override
-      public void findFirst( int relationsDepth, final AsyncCallback<E> responder )
+      public void findFirst( Integer relationsDepth, final AsyncCallback<E> responder )
       {
         findFirst( emptyRelations, relationsDepth, responder );
       }
@@ -95,10 +110,10 @@ class DataStoreFactory
       @Override
       public void findFirst( List<String> relations, AsyncCallback<E> responder )
       {
-        findFirst( relations, 0, responder );
+        findFirst( relations, (Integer)null, responder );
       }
 
-      private void findFirst( List<String> relations, int relationsDepth, final AsyncCallback<E> responder )
+      private void findFirst( List<String> relations, Integer relationsDepth, final AsyncCallback<E> responder )
       {
         Backendless.Persistence.first( entityClass, relations, relationsDepth, responder );
       }
@@ -110,7 +125,7 @@ class DataStoreFactory
       }
 
       @Override
-      public E findLast( int relationsDepth ) throws BackendlessException
+      public E findLast( Integer relationsDepth ) throws BackendlessException
       {
         return findLast( emptyRelations, relationsDepth );
       }
@@ -118,10 +133,10 @@ class DataStoreFactory
       @Override
       public E findLast( List<String> relations ) throws BackendlessException
       {
-        return findLast( relations, 0 );
+        return findLast( relations, (Integer)null );
       }
 
-      private E findLast( List<String> relations, int relationsDepth ) throws BackendlessException
+      private E findLast( List<String> relations, Integer relationsDepth ) throws BackendlessException
       {
         return Backendless.Persistence.last( entityClass, relations, relationsDepth );
       }
@@ -133,7 +148,7 @@ class DataStoreFactory
       }
 
       @Override
-      public void findLast( int relationsDepth, final AsyncCallback<E> responder )
+      public void findLast( Integer relationsDepth, final AsyncCallback<E> responder )
       {
         findLast( emptyRelations, relationsDepth, responder );
       }
@@ -141,36 +156,36 @@ class DataStoreFactory
       @Override
       public void findLast( List<String> relations, AsyncCallback<E> responder )
       {
-        findLast( relations, 0, responder );
+        findLast( relations, (Integer)null, responder );
       }
 
-      private void findLast( List<String> relations, int relationsDepth, final AsyncCallback<E> responder )
+      private void findLast( List<String> relations, Integer relationsDepth, final AsyncCallback<E> responder )
       {
         Backendless.Persistence.last( entityClass, relations, relationsDepth, responder );
       }
 
       @Override
-      public BackendlessCollection<E> find() throws BackendlessException
+      public List<E> find() throws BackendlessException
       {
-        return Backendless.Persistence.find( entityClass, new BackendlessDataQuery() );
+        return Backendless.Persistence.find( entityClass, DataQueryBuilder.create() );
       }
 
       @Override
-      public BackendlessCollection<E> find( BackendlessDataQuery dataQueryOptions ) throws BackendlessException
+      public List<E> find( DataQueryBuilder dataQueryBuilder ) throws BackendlessException
       {
-        return Backendless.Persistence.find( entityClass, dataQueryOptions );
+        return Backendless.Persistence.find( entityClass, dataQueryBuilder );
       }
 
       @Override
-      public void find( AsyncCallback<BackendlessCollection<E>> responder )
+      public void find( AsyncCallback<List<E>> responder )
       {
-        Backendless.Persistence.find( entityClass, new BackendlessDataQuery(), responder );
+        Backendless.Persistence.find( entityClass, DataQueryBuilder.create(), responder );
       }
 
       @Override
-      public void find( BackendlessDataQuery dataQueryOptions, AsyncCallback<BackendlessCollection<E>> responder )
+      public void find( DataQueryBuilder dataQueryBuilder, AsyncCallback<List<E>> responder )
       {
-        Backendless.Persistence.find( entityClass, dataQueryOptions, responder );
+        Backendless.Persistence.find( entityClass, dataQueryBuilder, responder );
       }
 
       @Override
@@ -186,13 +201,13 @@ class DataStoreFactory
       }
 
       @Override
-      public E findById( String objectId, int relationsDepth ) throws BackendlessException
+      public E findById( String objectId, Integer relationsDepth ) throws BackendlessException
       {
         return Backendless.Persistence.findById( entityClass, objectId, emptyRelations, relationsDepth );
       }
 
       @Override
-      public E findById( String objectId, List<String> relations, int relationsDepth ) throws BackendlessException
+      public E findById( String objectId, List<String> relations, Integer relationsDepth ) throws BackendlessException
       {
         return Backendless.Persistence.findById( entityClass, objectId, relations, relationsDepth );
       }
@@ -206,17 +221,17 @@ class DataStoreFactory
       @Override
       public E findById( E entity, List<String> relations )
       {
-        return findById( entity, relations, 0 );
+        return findById( entity, relations, (Integer)null );
       }
 
       @Override
-      public E findById( E entity, int relationsDepth )
+      public E findById( E entity, Integer relationsDepth )
       {
         return findById( entity, emptyRelations, relationsDepth );
       }
 
       @Override
-      public E findById( E entity, List<String> relations, int relationsDepth )
+      public E findById( E entity, List<String> relations, Integer relationsDepth )
       {
         return Backendless.Data.findById( entity, relations, relationsDepth );
       }
@@ -234,13 +249,13 @@ class DataStoreFactory
       }
 
       @Override
-      public void findById( String objectId, int relationsDepth, AsyncCallback<E> responder )
+      public void findById( String objectId, Integer relationsDepth, AsyncCallback<E> responder )
       {
         findById( objectId, emptyRelations, relationsDepth, responder );
       }
 
       @Override
-      public void findById( String objectId, List<String> relations, int relationsDepth, AsyncCallback<E> responder )
+      public void findById( String objectId, List<String> relations, Integer relationsDepth, AsyncCallback<E> responder )
       {
         Backendless.Persistence.findById( entityClass, objectId, relations, relationsDepth, responder );
       }
@@ -254,31 +269,237 @@ class DataStoreFactory
       @Override
       public void findById( E entity, List<String> relations, AsyncCallback<E> responder )
       {
-        findById( entity, relations, 0, responder );
+        findById( entity, relations, (Integer)null, responder );
       }
 
       @Override
-      public void findById( E entity, int relationsDepth, AsyncCallback<E> responder )
+      public void findById( E entity, Integer relationsDepth, AsyncCallback<E> responder )
       {
         findById( entity, emptyRelations, relationsDepth, responder );
       }
 
       @Override
-      public void findById( E entity, List<String> relations, int relationsDepth, AsyncCallback<E> responder )
+      public void findById( E entity, List<String> relations, Integer relationsDepth, AsyncCallback<E> responder )
       {
         Backendless.Data.findById( entity, relations, relationsDepth, responder );
       }
 
       @Override
-      public void loadRelations( E entity, List<String> relations ) throws BackendlessException
+      public E findById( String id, DataQueryBuilder queryBuilder ) throws BackendlessException
       {
-        Backendless.Persistence.loadRelations( entity, relations );
+        return Backendless.Persistence.findById( entityClass, id, queryBuilder );
       }
 
       @Override
-      public void loadRelations( E entity, List<String> relations, AsyncCallback<E> responder )
+      public E findById( E entity, DataQueryBuilder queryBuilder ) throws BackendlessException
       {
-        Backendless.Persistence.loadRelations( entity, relations, responder );
+        return Backendless.Persistence.findById( entity, queryBuilder );
+      }
+
+      @Override
+      public void findById( String id, DataQueryBuilder queryBuilder, AsyncCallback<E> responder )
+      {
+        Backendless.Persistence.findById( entityClass, id, queryBuilder, responder );
+      }
+
+      @Override
+      public void findById( E entity, DataQueryBuilder queryBuilder, AsyncCallback<E> responder )
+      {
+        Backendless.Persistence.findById( entity, queryBuilder, responder );
+      }
+
+      @Override
+      public <R> List<R> loadRelations( String objectId, LoadRelationsQueryBuilder<R> queryBuilder )
+      {
+        String typeName = BackendlessSerializer.getSimpleName( entityClass );
+        return Backendless.Persistence.loadRelations( typeName, objectId, queryBuilder, queryBuilder.getRelationType() );
+      }
+
+      @Override
+      public <R> void loadRelations( String objectId, LoadRelationsQueryBuilder<R> queryBuilder, AsyncCallback<List<R>> responder )
+      {
+        String typeName = BackendlessSerializer.getSimpleName( entityClass );
+        Backendless.Persistence.loadRelations( typeName, objectId, queryBuilder, queryBuilder.getRelationType(), responder );
+      }
+
+      @Override
+      public void getObjectCount( AsyncCallback<Integer> responder )
+      {
+        Backendless.Persistence.getObjectCount( entityClass, responder );
+      }
+
+      @Override
+      public void getObjectCount( DataQueryBuilder dataQueryBuilder, AsyncCallback<Integer> responder )
+      {
+        Backendless.Persistence.getObjectCount( entityClass, dataQueryBuilder, responder );
+      }
+
+      @Override
+      public <R> int addRelation( E parent, String relationColumnName, Collection<R> children )
+      {
+        String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
+
+        String parentObjectId = Persistence.getEntityId( parent );
+        Collection<String> childObjectIds = new ArrayList<>();
+        for( R child : children )
+        {
+          String childObjectId = Persistence.getEntityId( child );
+          childObjectIds.add( childObjectId );
+        }
+
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, childObjectIds };
+        return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args );
+      }
+
+      @Override
+      public <R> void addRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Integer> callback )
+      {
+        String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
+
+        String parentObjectId = Persistence.getEntityId( parent );
+        Collection<String> childObjectIds = new ArrayList<>();
+        for( R child : children )
+        {
+          String childObjectId = Persistence.getEntityId( child );
+          childObjectIds.add( childObjectId );
+        }
+
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, childObjectIds };
+        Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args, callback );
+      }
+
+      @Override
+      public int addRelation( E parent, String relationColumnName, String whereClause )
+      {
+        String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
+
+        String parentObjectId = Persistence.getEntityId( parent );
+
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
+        return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args );
+      }
+
+      @Override
+      public void addRelation( E parent, String relationColumnName, String whereClause, AsyncCallback<Integer> callback )
+      {
+        String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
+
+        String parentObjectId = Persistence.getEntityId( parent );
+
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
+        Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args, callback );
+      }
+
+      @Override
+      public <R> int setRelation( E parent, String relationColumnName, Collection<R> children )
+      {
+        String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
+
+        String parentObjectId = Persistence.getEntityId( parent );
+        Collection<String> childObjectIds = new ArrayList<>();
+        for( R child : children )
+        {
+          String childObjectId = Persistence.getEntityId( child );
+          childObjectIds.add( childObjectId );
+        }
+
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, childObjectIds };
+        return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args );
+      }
+
+      @Override
+      public <R> void setRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Integer> callback )
+      {
+        String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
+
+        String parentObjectId = Persistence.getEntityId( parent );
+        Collection<String> childObjectIds = new ArrayList<>();
+        for( R child : children )
+        {
+          String childObjectId = Persistence.getEntityId( child );
+          childObjectIds.add( childObjectId );
+        }
+
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, childObjectIds };
+        Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args, callback );
+      }
+
+      @Override
+      public int setRelation( E parent, String relationColumnName, String whereClause )
+      {
+        String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
+
+        String parentObjectId = Persistence.getEntityId( parent );
+
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
+        return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args );
+      }
+
+      @Override
+      public void setRelation( E parent, String relationColumnName, String whereClause, AsyncCallback<Integer> callback )
+      {
+        String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
+
+        String parentObjectId = Persistence.getEntityId( parent );
+
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
+        Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args, callback );
+      }
+
+      @Override
+      public <R> int deleteRelation( E parent, String relationColumnName, Collection<R> children )
+      {
+        String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
+
+        String parentObjectId = Persistence.getEntityId( parent );
+        Collection<String> childObjectIds = new ArrayList<>();
+        for( R child : children )
+        {
+          String childObjectId = Persistence.getEntityId( child );
+          childObjectIds.add( childObjectId );
+        }
+
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, childObjectIds };
+        return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args );
+      }
+
+      @Override
+      public <R> void deleteRelation( E parent, String relationColumnName, Collection<R> children, AsyncCallback<Integer> callback )
+      {
+        String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
+
+        String parentObjectId = Persistence.getEntityId( parent );
+        Collection<String> childObjectIds = new ArrayList<>();
+        for( R child : children )
+        {
+          String childObjectId = Persistence.getEntityId( child );
+          childObjectIds.add( childObjectId );
+        }
+
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, childObjectIds };
+        Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args, callback );
+      }
+
+      @Override
+      public int deleteRelation( E parent, String relationColumnName, String whereClause )
+      {
+        String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
+
+        String parentObjectId = Persistence.getEntityId( parent );
+
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
+        return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args );
+      }
+
+      @Override
+      public void deleteRelation( E parent, String relationColumnName, String whereClause, AsyncCallback<Integer> callback )
+      {
+        String parentTableName = BackendlessSerializer.getSimpleName( parent.getClass() );
+
+        String parentObjectId = Persistence.getEntityId( parent );
+
+        Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
+        Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args, callback );
       }
     };
   }

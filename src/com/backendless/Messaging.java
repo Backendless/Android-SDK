@@ -37,19 +37,27 @@ package com.backendless;/*
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
-
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
-import com.backendless.messaging.*;
+import com.backendless.messaging.BodyParts;
+import com.backendless.messaging.DeliveryOptions;
+import com.backendless.messaging.Message;
+import com.backendless.messaging.MessageStatus;
+import com.backendless.messaging.PublishOptions;
+import com.backendless.messaging.PublishStatusEnum;
+import com.backendless.messaging.PushBroadcastMask;
+import com.backendless.messaging.SubscriptionOptions;
 import com.backendless.push.GCMRegistrar;
-
-import com.backendless.services.messaging.MessageStatus;
-import com.backendless.services.messaging.PublishStatusEnum;
 import weborb.types.Types;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 public final class Messaging
 {
@@ -211,7 +219,7 @@ public final class Messaging
     if( expiration != 0 )
       deviceRegistration.setExpiration( new Date( expiration ) );
 
-    return Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "registerDevice", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), deviceRegistration } );
+    return Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "registerDevice", new Object[] { deviceRegistration } );
   }
 
   public void registerDeviceOnServer( String deviceToken, final List<String> channels, final long expiration,
@@ -231,7 +239,7 @@ public final class Messaging
       if( expiration != 0 )
         deviceRegistration.setExpiration( new Date( expiration ) );
 
-      Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "registerDevice", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), deviceRegistration }, new AsyncCallback<String>()
+      Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "registerDevice", new Object[] { deviceRegistration }, new AsyncCallback<String>()
       {
         @Override
         public void handleResponse( String response )
@@ -304,12 +312,12 @@ public final class Messaging
 
   public boolean unregisterDeviceOnServer() throws BackendlessException
   {
-    return (Boolean) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), DEVICE_ID } );
+    return (Boolean) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { DEVICE_ID } );
   }
 
   public void unregisterDeviceOnServer( final AsyncCallback<Boolean> responder )
   {
-    Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), DEVICE_ID }, responder );
+    Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { DEVICE_ID }, responder );
   }
 
   public DeviceRegistration getDeviceRegistration() throws BackendlessException
@@ -319,7 +327,7 @@ public final class Messaging
 
   public DeviceRegistration getRegistrations() throws BackendlessException
   {
-    return (DeviceRegistration) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "getDeviceRegistrationByDeviceId", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), DEVICE_ID } );
+    return (DeviceRegistration) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "getDeviceRegistrationByDeviceId", new Object[] { DEVICE_ID } );
   }
 
   public void getDeviceRegistration( AsyncCallback<DeviceRegistration> responder )
@@ -329,7 +337,7 @@ public final class Messaging
 
   public void getRegistrations( AsyncCallback<DeviceRegistration> responder )
   {
-    Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "getDeviceRegistrationByDeviceId", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), DEVICE_ID }, responder );
+    Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "getDeviceRegistrationByDeviceId", new Object[] { DEVICE_ID }, responder );
   }
 
   /**
@@ -420,7 +428,7 @@ public final class Messaging
       deliveryOptions.setPushBroadcast( PushBroadcastMask.ALL );
     }
 
-    return (MessageStatus) Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "publish", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channelName, message, publishOptions, deliveryOptions } );
+    return (MessageStatus) Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "publish", new Object[] { channelName, message, publishOptions, deliveryOptions } );
   }
 
   private String getCheckedChannelName( String channelName )
@@ -502,7 +510,7 @@ public final class Messaging
       if( message == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_MESSAGE );
 
-      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "publish", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channelName, message, publishOptions, deliveryOptions }, responder );
+      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "publish", new Object[] { channelName, message, publishOptions, deliveryOptions }, responder );
     }
     catch( Throwable e )
     {
@@ -527,7 +535,7 @@ public final class Messaging
     if( messageId == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_MESSAGE_ID );
     MessageStatus messageStatus = Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "getMessageStatus", new Object[]
-            { Backendless.getApplicationId(), Backendless.getVersion(), messageId } );
+            { messageId } );
 
     return messageStatus;
   }
@@ -539,7 +547,7 @@ public final class Messaging
       if( messageId == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_MESSAGE_ID );
 
-      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "getMessageStatus", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), messageId }, responder );
+      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "getMessageStatus", new Object[] { messageId }, responder );
     }
     catch( Throwable e )
     {
@@ -553,7 +561,7 @@ public final class Messaging
     if( messageId == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_MESSAGE_ID );
 
-    MessageStatus cancel = Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "cancel", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), messageId } );
+    MessageStatus cancel = Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "cancel", new Object[] { messageId } );
     return cancel.getStatus() == PublishStatusEnum.CANCELLED;
   }
 
@@ -564,7 +572,7 @@ public final class Messaging
       if( messageId == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_MESSAGE_ID );
 
-      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "cancel", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), messageId }, responder );
+      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "cancel", new Object[] { messageId }, responder );
     }
     catch( Throwable e )
     {
@@ -610,7 +618,7 @@ public final class Messaging
     if( subscriptionOptions == null )
       subscriptionOptions = new SubscriptionOptions();
 
-    return Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionOptions } );
+    return Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[] { channelName, subscriptionOptions } );
   }
 
   public Subscription subscribe( String channelName,
@@ -703,7 +711,7 @@ public final class Messaging
       if( subscriptionOptions == null )
         subscriptionOptions = new SubscriptionOptions();
 
-      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionOptions }, responder );
+      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[] { channelName, subscriptionOptions }, responder );
     }
     catch( Throwable e )
     {
@@ -749,7 +757,7 @@ public final class Messaging
     if( subscriptionId == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_SUBSCRIPTION_ID );
 
-    Object[] result = (Object[]) Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "pollMessages", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionId } );
+    Object[] result = (Object[]) Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "pollMessages", new Object[] { channelName, subscriptionId } );
 
     return result.length == 0 ? new ArrayList<Message>() : Arrays.asList( (Message[]) result );
   }
@@ -763,7 +771,7 @@ public final class Messaging
       if( subscriptionId == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_SUBSCRIPTION_ID );
 
-      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "pollMessages", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), channelName, subscriptionId }, new AsyncCallback<Object[]>()
+      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "pollMessages", new Object[] { channelName, subscriptionId }, new AsyncCallback<Object[]>()
       {
         @Override
         public void handleResponse( Object[] response )
@@ -787,37 +795,37 @@ public final class Messaging
     }
   }
 
-  public void sendTextEmail( String subject, String messageBody, List<String> recipients )
+  public MessageStatus sendTextEmail( String subject, String messageBody, List<String> recipients )
   {
-    sendEmail( subject, new BodyParts( messageBody, null ), recipients, new ArrayList<String>() );
+    return sendEmail( subject, new BodyParts( messageBody, null ), recipients, new ArrayList<String>() );
   }
 
-  public void sendTextEmail( String subject, String messageBody, String recipient )
+  public MessageStatus sendTextEmail( String subject, String messageBody, String recipient )
   {
-    sendEmail( subject, new BodyParts( messageBody, null ), Arrays.asList( recipient ), new ArrayList<String>() );
+    return sendEmail( subject, new BodyParts( messageBody, null ), Arrays.asList( recipient ), new ArrayList<String>() );
   }
 
-  public void sendHTMLEmail( String subject, String messageBody, List<String> recipients )
+  public MessageStatus sendHTMLEmail( String subject, String messageBody, List<String> recipients )
   {
-    sendEmail( subject, new BodyParts( null, messageBody ), recipients, new ArrayList<String>() );
+    return sendEmail( subject, new BodyParts( null, messageBody ), recipients, new ArrayList<String>() );
   }
 
-  public void sendHTMLEmail( String subject, String messageBody, String recipient )
+  public MessageStatus sendHTMLEmail( String subject, String messageBody, String recipient )
   {
-    sendEmail( subject, new BodyParts( null, messageBody ), Arrays.asList( recipient ), new ArrayList<String>() );
+    return sendEmail( subject, new BodyParts( null, messageBody ), Arrays.asList( recipient ), new ArrayList<String>() );
   }
 
-  public void sendEmail( String subject, BodyParts bodyParts, String recipient, List<String> attachments )
+  public MessageStatus sendEmail( String subject, BodyParts bodyParts, String recipient, List<String> attachments )
   {
-    sendEmail( subject, bodyParts, Arrays.asList( recipient ), attachments );
+    return sendEmail( subject, bodyParts, Arrays.asList( recipient ), attachments );
   }
 
-  public void sendEmail( String subject, BodyParts bodyParts, String recipient )
+  public MessageStatus sendEmail( String subject, BodyParts bodyParts, String recipient )
   {
-    sendEmail( subject, bodyParts, Arrays.asList( recipient ), new ArrayList<String>() );
+    return sendEmail( subject, bodyParts, Arrays.asList( recipient ), new ArrayList<String>() );
   }
 
-  public void sendEmail( String subject, BodyParts bodyParts, List<String> recipients, List<String> attachments )
+  public MessageStatus sendEmail( String subject, BodyParts bodyParts, List<String> recipients, List<String> attachments )
   {
     if( subject == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_SUBJECT );
@@ -831,43 +839,43 @@ public final class Messaging
     if( attachments == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ATTACHMENTS );
 
-    Invoker.invokeSync( EMAIL_MANAGER_SERVER_ALIAS, "send", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), subject, bodyParts, recipients, attachments } );
+    return Invoker.invokeSync( EMAIL_MANAGER_SERVER_ALIAS, "send", new Object[] { subject, bodyParts, recipients, attachments } );
   }
 
-  public void sendTextEmail( String subject, String messageBody, List<String> recipients, final AsyncCallback<Void> responder )
+  public void sendTextEmail( String subject, String messageBody, List<String> recipients, final AsyncCallback<MessageStatus> responder )
   {
     sendEmail( subject, new BodyParts( messageBody, null ), recipients, new ArrayList<String>(), responder );
   }
 
-  public void sendTextEmail( String subject, String messageBody, String recipient, final AsyncCallback<Void> responder )
+  public void sendTextEmail( String subject, String messageBody, String recipient, final AsyncCallback<MessageStatus> responder )
   {
     sendEmail( subject, new BodyParts( messageBody, null ), Arrays.asList( recipient ), new ArrayList<String>(), responder );
   }
 
   public void sendHTMLEmail( String subject, String messageBody, List<String> recipients,
-                             final AsyncCallback<Void> responder )
+                             final AsyncCallback<MessageStatus> responder )
   {
     sendEmail( subject, new BodyParts( null, messageBody ), recipients, new ArrayList<String>(), responder );
   }
 
-  public void sendHTMLEmail( String subject, String messageBody, String recipient, final AsyncCallback<Void> responder )
+  public void sendHTMLEmail( String subject, String messageBody, String recipient, final AsyncCallback<MessageStatus> responder )
   {
     sendEmail( subject, new BodyParts( null, messageBody ), Arrays.asList( recipient ), new ArrayList<String>(), responder );
   }
 
   public void sendEmail( String subject, BodyParts bodyParts, String recipient, List<String> attachments,
-                         final AsyncCallback<Void> responder )
+                         final AsyncCallback<MessageStatus> responder )
   {
     sendEmail( subject, bodyParts, Arrays.asList( recipient ), attachments, responder );
   }
 
-  public void sendEmail( String subject, BodyParts bodyParts, String recipient, final AsyncCallback<Void> responder )
+  public void sendEmail( String subject, BodyParts bodyParts, String recipient, final AsyncCallback<MessageStatus> responder )
   {
     sendEmail( subject, bodyParts, Arrays.asList( recipient ), new ArrayList<String>(), responder );
   }
 
   public void sendEmail( String subject, BodyParts bodyParts, List<String> recipients, List<String> attachments,
-                         final AsyncCallback<Void> responder )
+                         final AsyncCallback<MessageStatus> responder )
   {
     try
     {
@@ -883,7 +891,7 @@ public final class Messaging
       if( attachments == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ATTACHMENTS );
 
-      Invoker.invokeAsync( EMAIL_MANAGER_SERVER_ALIAS, "send", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), subject, bodyParts, recipients, attachments }, responder );
+      Invoker.invokeAsync( EMAIL_MANAGER_SERVER_ALIAS, "send", new Object[] { subject, bodyParts, recipients, attachments }, responder );
     }
     catch( Throwable e )
     {

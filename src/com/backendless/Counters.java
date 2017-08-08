@@ -70,12 +70,12 @@ public final class Counters
 
   public void reset( String counterName )
   {
-    Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, "reset", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName } );
+    Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, "reset", new Object[] { counterName } );
   }
 
   public void reset( String counterName, AsyncCallback callback )
   {
-    Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "reset", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName }, callback );
+    Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "reset", new Object[] { counterName }, callback );
   }
 
   public Long get( String counterName )
@@ -87,7 +87,7 @@ public final class Counters
   {
     try
     {
-      Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "get", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName }, new AtomicCallback( responder ) );
+      Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "get", new Object[] { counterName }, new AtomicCallback( responder ) );
     }
     catch( Throwable e )
     {
@@ -105,7 +105,7 @@ public final class Counters
   {
     try
     {
-      Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "getAndIncrement", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName }, new AtomicCallback( responder ) );
+      Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "getAndIncrement", new Object[] { counterName }, new AtomicCallback( responder ) );
     }
     catch( Throwable e )
     {
@@ -123,7 +123,7 @@ public final class Counters
   {
     try
     {
-      Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "incrementAndGet", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName }, new AtomicCallback( responder ) );
+      Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "incrementAndGet", new Object[] { counterName }, new AtomicCallback( responder ) );
     }
     catch( Throwable e )
     {
@@ -141,7 +141,7 @@ public final class Counters
   {
     try
     {
-      Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "getAndDecrement", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName }, new AtomicCallback( responder ) );
+      Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "getAndDecrement", new Object[] { counterName }, new AtomicCallback( responder ) );
     }
     catch( Throwable e )
     {
@@ -159,7 +159,7 @@ public final class Counters
   {
     try
     {
-      Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "decrementAndGet", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName }, new AtomicCallback( responder ) );
+      Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "decrementAndGet", new Object[] { counterName }, new AtomicCallback( responder ) );
     }
     catch( Throwable e )
     {
@@ -177,7 +177,7 @@ public final class Counters
   {
     try
     {
-      Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "addAndGet", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName, value }, new AtomicCallback( responder ) );
+      Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "addAndGet", new Object[] { counterName, value }, new AtomicCallback( responder ) );
     }
     catch( Throwable e )
     {
@@ -195,7 +195,7 @@ public final class Counters
   {
     try
     {
-      Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "getAndAdd", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName, value }, new AtomicCallback( responder ) );
+      Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "getAndAdd", new Object[] { counterName, value }, new AtomicCallback( responder ) );
     }
     catch( Throwable e )
     {
@@ -206,14 +206,14 @@ public final class Counters
 
   public boolean compareAndSet( String counterName, Number expected, Number updated )
   {
-    return (Boolean) Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, "compareAndSet", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName, expected, updated } );
+    return (Boolean) Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, "compareAndSet", new Object[] { counterName, expected, updated } );
   }
 
   public void compareAndSet( String counterName, Number expected, Number updated, AsyncCallback<Boolean> responder )
   {
     try
     {
-      Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "compareAndSet", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName, expected, updated }, responder );
+      Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "compareAndSet", new Object[] { counterName, expected, updated }, responder );
     }
     catch( Throwable e )
     {
@@ -224,14 +224,14 @@ public final class Counters
 
   private Long runGetOperation( String operationName, String counterName )
   {
-    Number responseValue = Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, operationName, new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName } );
+    Number responseValue = Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, operationName, new Object[] { counterName } );
     responseValue = convertToType( responseValue, Long.class );
     return (Long) responseValue;
   }
 
   private Long runGetOperation( String operationName, String counterName, Number value )
   {
-    Number responseValue = Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, operationName, new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), counterName, value } );
+    Number responseValue = Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, operationName, new Object[] { counterName, value } );
     responseValue = convertToType( responseValue, Long.class );
     return (Long) responseValue;
   }

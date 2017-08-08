@@ -5,7 +5,7 @@ apply plugin: 'signing'
 
 
 group 'com.backendless'
-version '3.1.1-snapshot'
+version '4.0.1-snapshot'
 archivesBaseName='backendless'
 
 
@@ -19,6 +19,8 @@ def getMavenSettingsCredentials = {
     def output = xmlSlurper.parse(mavenSettings)
     return output.servers."server"
 }
+
+[compileJava, compileTestJava]*.options*.compilerArgs = ['-g', '-parameters']
 
 if (JavaVersion.current().isJava8Compatible())
 {
@@ -56,7 +58,6 @@ artifacts {
 uploadArchives {
     repositories {
         mavenDeployer {
-
 
             def ossrhUsername=''
             def ossrhPassword=''
@@ -139,6 +140,7 @@ sourceSets {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven {
         url "http://maven.backendless.com/repository/backendless_public"
@@ -187,6 +189,7 @@ task copySampleJars << {
     copyT(jar.archivePath, projectDir.path+'/samples/FenceDemo/libs', jar.getArchiveName(  ))
     copyT(jar.archivePath, projectDir.path+'/samples/GeoService/geodemo/libs', jar.getArchiveName(  ))
     copyT(jar.archivePath, projectDir.path+'/samples/MessagingService/pubsubdemo/libs', jar.getArchiveName(  ))
+    copyT(jar.archivePath, projectDir.path+'/samples/MessagingService/pushdemo/libs', jar.getArchiveName(  ))
     copyT(jar.archivePath, projectDir.path+'/samples/UserService/FacebookSDKSamples/login/libs', jar.getArchiveName(  ))
     copyT(jar.archivePath, projectDir.path+'/samples/UserService/rolesdemo/libs/', jar.getArchiveName(  ))
     copyT(jar.archivePath, projectDir.path+'/samples/UserService/userservicedemo/libs', jar.getArchiveName(  ))
@@ -215,7 +218,7 @@ dependencies {
     provided fileTree(dir: 'libs', include: 'android.support.v4.jar')
     provided fileTree(dir: 'libs', include: 'FacebookSDK.jar')
     provided fileTree(dir: 'libs', include: 'maps.jar')
-    compile( group: "com.backendless", name: "commons", version: "3.1.0", changing: true) {
+    compile( group: "com.backendless", name: "commons", version: "4.0.b18", changing: true) {
         exclude group: 'com.fasterxml.jackson.core'
     }
     compile( group: "weborb", name: "weborbclient", version: "5.1.0.210", changing: true)

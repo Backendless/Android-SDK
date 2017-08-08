@@ -85,10 +85,7 @@ class UserServiceAndroidExtra
          }
        } );
 
-
-
     LoginManager.getInstance().logInWithReadPermissions( context, permissions );
-
   }
 
   private void getBackendlessUser( final AccessToken accessToken, final Map<String, String> facebookFieldsMappings, final AsyncCallback<BackendlessUser> responder )
@@ -100,7 +97,7 @@ class UserServiceAndroidExtra
                                  GraphResponse response )
         {
           FacebookBundle facebookBundle = new FacebookBundle( response, accessToken );
-          Object[] requestData = new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), facebookBundle.socialUserId, facebookBundle.accessToken, facebookBundle.expirationDate, facebookBundle.permissions, facebookFieldsMappings };
+          Object[] requestData = new Object[] { null, facebookBundle.accessToken, null, null, facebookFieldsMappings };
           Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithFacebook", requestData, responder, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
         }
       } );
@@ -124,10 +121,12 @@ class UserServiceAndroidExtra
     new AbstractSocialLoginStrategy.Builder( context, webView, SocialType.TWITTER, twitterFieldsMappings, null, getSocialDialogResponder( responder ) ).build().run();
   }
 
-  void loginWithGooglePlusSdk(  String tokenId, String accessToken, final Map<String, String> fieldsMappings,
-                             List<String> permissions, final AsyncCallback<BackendlessUser> responder )
+  void loginWithGooglePlusSdk(  String accessToken, Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder )
   {
-     Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithGooglePlus", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), tokenId, accessToken, permissions, fieldsMappings }, new AsyncCallback<BackendlessUser>()
+    if (fieldsMappings == null)
+      fieldsMappings = new HashMap<>();
+
+    Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithGooglePlus", new Object[] { null, accessToken, null, fieldsMappings }, new AsyncCallback<BackendlessUser>()
     {
       @Override
       public void handleResponse( BackendlessUser response )
@@ -143,6 +142,29 @@ class UserServiceAndroidExtra
           responder.handleFault( fault );
       }
     } );
+  }
+
+  void loginWithFacebookSdk(  String accessToken, Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder )
+  {
+    if (fieldsMappings == null)
+      fieldsMappings = new HashMap<>();
+
+    Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithFacebook", new Object[] { null, accessToken, null, null, fieldsMappings }, new AsyncCallback<BackendlessUser>()
+    {
+      @Override
+      public void handleResponse( BackendlessUser response )
+      {
+        if( responder != null )
+          responder.handleResponse( response );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        if( responder != null )
+          responder.handleFault( fault );
+      }
+    }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
   }
 
   void loginWithGooglePlus( android.app.Activity context, android.webkit.WebView webView,

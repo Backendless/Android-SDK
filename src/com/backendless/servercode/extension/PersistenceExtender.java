@@ -18,13 +18,14 @@
 
 package com.backendless.servercode.extension;
 
-import com.backendless.BackendlessCollection;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.property.ObjectProperty;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
+import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,7 +41,8 @@ public abstract class PersistenceExtender<T>
   {
   }
 
-  public void afterFindById( RunnerContext context, Object objectId, String[] relations, ExecutionResult<T> entity ) throws Exception
+  public void afterFindById( RunnerContext context, Object objectId, String[] relations,
+                             ExecutionResult<T> entity ) throws Exception
   {
   }
 
@@ -71,12 +73,13 @@ public abstract class PersistenceExtender<T>
   }
 
   public void beforeLoadRelations( RunnerContext context, Object objectId, String entityName,
-                                   String[] relations ) throws Exception
+                                   String relationName, int pageSize, int offset ) throws Exception
   {
   }
 
-  public void afterLoadRelations( RunnerContext context, Object objectId, String entityName, String[] relations,
-                                  ExecutionResult<Map> entity ) throws Exception
+  public void afterLoadRelations( RunnerContext context, Object objectId, String entityName,
+                                  String relationName, int pageSize, int offset,
+                                  ExecutionResult<List> collection ) throws Exception
   {
   }
 
@@ -101,7 +104,8 @@ public abstract class PersistenceExtender<T>
   {
   }
 
-  public void afterDescribe( RunnerContext context, String entityName, ExecutionResult<ObjectProperty[]> propertiesFound ) throws Exception
+  public void afterDescribe( RunnerContext context, String entityName,
+                             ExecutionResult<List<ObjectProperty>> propertiesFound ) throws Exception
   {
   }
 
@@ -110,24 +114,63 @@ public abstract class PersistenceExtender<T>
   }
 
   public void afterFind( RunnerContext context, BackendlessDataQuery query,
-                         ExecutionResult<BackendlessCollection<T>> collection ) throws Exception
+                         ExecutionResult<List<T>> List ) throws Exception
   {
   }
 
-  public void beforeFirst( RunnerContext context ) throws Exception
+  public void beforeFirst( RunnerContext context, String[] relations, Integer relationsDepth, String[] properties ) throws Exception
   {
   }
 
-  public void afterFirst( RunnerContext context, ExecutionResult<T> entity ) throws Exception
+  public void afterFirst( RunnerContext context, String[] relations, Integer relationsDepth, String[] properties, ExecutionResult<T> entity ) throws Exception
   {
   }
 
-  public void beforeLast( RunnerContext context ) throws Exception
+  public void beforeLast( RunnerContext context, String[] relations, Integer relationsDepth, String[] properties ) throws Exception
   {
   }
 
-  public void afterLast( RunnerContext context, ExecutionResult<T> entity ) throws Exception
+  public void afterLast( RunnerContext context, String[] relations, Integer relationsDepth, String[] properties, ExecutionResult<T> entity ) throws Exception
   {
+  }
+
+  public void beforeCount( RunnerContext context, BackendlessDataQuery query ) throws Exception
+  {
+  }
+
+  public void afterCount( RunnerContext context, BackendlessDataQuery query,
+                         ExecutionResult<Integer> result ) throws Exception
+  {
+  }
+
+  public void beforeAddRelation( RunnerContext context, String columnName, String parentObjectId, Object childrenArrayORWhereClause )
+  {
+
+  }
+
+  public void afterAddRelation( RunnerContext context, String columnName, String parentObjectId, Object childrenArrayORWhereClause, ExecutionResult<Integer> result )
+  {
+
+  }
+
+  public void beforeSetRelation( RunnerContext context, String columnName, String parentObjectId, Object childrenArrayORWhereClause )
+  {
+
+  }
+
+  public void afterSetRelation( RunnerContext context, String columnName, String parentObjectId, Object childrenArrayORWhereClause, ExecutionResult<Integer> result )
+  {
+
+  }
+
+  public void beforeDeleteRelation( RunnerContext context, String columnName, String parentObjectId, Object childrenArrayORWhereClause )
+  {
+
+  }
+
+  public void afterDeleteRelation( RunnerContext context, String columnName, String parentObjectId, Object childrenArrayORWhereClause, ExecutionResult<Integer> result )
+  {
+
   }
 }
 

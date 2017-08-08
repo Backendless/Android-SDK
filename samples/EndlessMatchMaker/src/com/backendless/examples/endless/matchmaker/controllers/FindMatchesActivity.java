@@ -134,10 +134,10 @@ public class FindMatchesActivity extends Activity
       BackendlessGeoQuery backendlessGeoQuery = new BackendlessGeoQuery( BackendlessUser.EMAIL_KEY, email );
       Backendless.Geo.getPoints( backendlessGeoQuery, gotCurrentUserGeoPointCallback );
       BackendlessGeoQuery backendlessGeoQueryGlobal = new BackendlessGeoQuery();
-      Backendless.Geo.getPoints( backendlessGeoQueryGlobal, new AsyncCallback<BackendlessCollection<GeoPoint>>()
+      Backendless.Geo.getPoints( backendlessGeoQueryGlobal, new AsyncCallback<Collection<GeoPoint>>()
       {
         @Override
-        public void handleResponse( BackendlessCollection<GeoPoint> geoPointBackendlessCollection )
+        public void handleResponse( Collection<GeoPoint> geoPointBackendlessCollection )
         {
           List<GeoPoint> geoPoints = geoPointBackendlessCollection.getCurrentPage();
 
@@ -230,10 +230,10 @@ public class FindMatchesActivity extends Activity
   }
 
   //Callbacks section
-  private AsyncCallback<BackendlessCollection<GeoPoint>> gotPointsCallback = new ResponseAsyncCallback<BackendlessCollection<GeoPoint>>( this )
+  private AsyncCallback<Collection<GeoPoint>> gotPointsCallback = new ResponseAsyncCallback<Collection<GeoPoint>>( this )
   {
     @Override
-    public void handleResponse( BackendlessCollection<GeoPoint> response )
+    public void handleResponse( Collection<GeoPoint> response )
     {
       List<GeoPoint> geoPoints = response.getCurrentPage();
 
@@ -263,10 +263,10 @@ public class FindMatchesActivity extends Activity
     }
   };
 
-  private AsyncCallback<BackendlessCollection<GeoPoint>> gotCurrentUserGeoPointCallback = new ResponseAsyncCallback<BackendlessCollection<GeoPoint>>( this )
+  private AsyncCallback<Collection<GeoPoint>> gotCurrentUserGeoPointCallback = new ResponseAsyncCallback<Collection<GeoPoint>>( this )
   {
     @Override
-    public void handleResponse( BackendlessCollection<GeoPoint> response )
+    public void handleResponse( Collection<GeoPoint> response )
     {
       List<GeoPoint> points = response.getCurrentPage();
       String hereMessage = "You are here";
@@ -316,10 +316,10 @@ public class FindMatchesActivity extends Activity
 
       BackendlessDataQuery backendlessDataQuery = new BackendlessDataQuery( "email = '" + Backendless.UserService.CurrentUser().getEmail() + "'" );
       backendlessDataQuery.setQueryOptions( new QueryOptions( 50, 0 ) );
-      Backendless.Persistence.of( UserPreferences.class ).find( backendlessDataQuery, new ResponseAsyncCallback<BackendlessCollection<UserPreferences>>( FindMatchesActivity.this )
+      Backendless.Persistence.of( UserPreferences.class ).find( backendlessDataQuery, new ResponseAsyncCallback<Collection<UserPreferences>>( FindMatchesActivity.this )
       {
         @Override
-        public void handleResponse( BackendlessCollection<UserPreferences> response )
+        public void handleResponse( Collection<UserPreferences> response )
         {
           List<UserPreferences> userPreferenceses = response.getCurrentPage();
 
@@ -374,10 +374,10 @@ public class FindMatchesActivity extends Activity
     }
   };
   //Callbacks section
-  private AsyncCallback<BackendlessCollection<GeoPoint>> gotPingsCallback = new ResponseAsyncCallback<BackendlessCollection<GeoPoint>>( FindMatchesActivity.this )
+  private AsyncCallback<Collection<GeoPoint>> gotPingsCallback = new ResponseAsyncCallback<Collection<GeoPoint>>( FindMatchesActivity.this )
   {
     @Override
-    public void handleResponse( BackendlessCollection<GeoPoint> response )
+    public void handleResponse( Collection<GeoPoint> response )
     {
       boolean triger = false;
 

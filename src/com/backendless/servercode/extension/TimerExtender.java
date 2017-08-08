@@ -6,5 +6,5 @@ public abstract class TimerExtender
   {
   }
 
-  public abstract void execute( String appVersionId ) throws Exception;
+  public abstract void execute();
 }

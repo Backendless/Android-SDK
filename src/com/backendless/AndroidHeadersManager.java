@@ -40,8 +40,6 @@ class AndroidHeadersManager implements IHeadersManager
 
   private void initialFill()
   {
-    addHeader( HeadersManager.HeadersEnum.APP_ID_NAME, Backendless.getApplicationId() );
-    addHeader( HeadersManager.HeadersEnum.SECRET_KEY_NAME, Backendless.getSecretKey() );
     addHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME, DeviceType.ANDROID.name() );
     addHeader( HeadersManager.HeadersEnum.API_VERSION, "1.0" );
     addHeaders( Backendless.getHeaders() );

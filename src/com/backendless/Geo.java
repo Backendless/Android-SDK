@@ -29,10 +29,7 @@ import com.backendless.geo.*;
 import com.backendless.geo.geofence.*;
 import weborb.types.Types;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class Geo
 {
@@ -62,7 +59,7 @@ public final class Geo
   {
     checkCategoryName( categoryName );
 
-    return (GeoCategory) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "addCategory", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), categoryName } );
+    return (GeoCategory) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "addCategory", new Object[] { categoryName } );
   }
 
   public void addCategory( String categoryName, AsyncCallback<GeoCategory> responder )
@@ -71,7 +68,7 @@ public final class Geo
     {
       checkCategoryName( categoryName );
 
-      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "addCategory", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), categoryName }, responder );
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "addCategory", new Object[] { categoryName }, responder );
     }
     catch( Throwable e )
     {
@@ -84,7 +81,7 @@ public final class Geo
   {
     checkCategoryName( categoryName );
 
-    return (Boolean) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "deleteCategory", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), categoryName } );
+    return (Boolean) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "deleteCategory", new Object[] { categoryName } );
   }
 
   public void deleteCategory( String categoryName, AsyncCallback<Boolean> responder )
@@ -93,7 +90,7 @@ public final class Geo
     {
       checkCategoryName( categoryName );
 
-      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "deleteCategory", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), categoryName }, responder );
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "deleteCategory", new Object[] { categoryName }, responder );
     }
     catch( Throwable e )
     {
@@ -123,7 +120,7 @@ public final class Geo
 
     String remoteMethod = geoPoint.getObjectId() == null ? "addPoint" : "updatePoint";
 
-    return (GeoPoint) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, remoteMethod, new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint } );
+    return (GeoPoint) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, remoteMethod, new Object[] { geoPoint } );
   }
 
   public void savePoint( final double latitude, final double longitude, final Map<String, Object> metadata,
@@ -149,7 +146,7 @@ public final class Geo
 
       String remoteMethod = geoPoint.getObjectId() == null ? "addPoint" : "updatePoint";
 
-      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, remoteMethod, new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint }, responder );
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, remoteMethod, new Object[] { geoPoint }, responder );
     }
     catch( Throwable e )
     {
@@ -160,49 +157,40 @@ public final class Geo
 
   public void removePoint( GeoPoint geoPoint )
   {
-    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "removePoint", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId() } );
+    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "removePoint", new Object[] { geoPoint.getObjectId() } );
   }
 
   public void removePoint( GeoPoint geoPoint, AsyncCallback<Void> responder )
   {
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "removePoint", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId() }, responder );
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "removePoint", new Object[] { geoPoint.getObjectId() }, responder );
   }
 
-  public BackendlessCollection<GeoPoint> getPoints( BackendlessGeoQuery geoQuery ) throws BackendlessException
+  public List<GeoPoint> getPoints( BackendlessGeoQuery geoQuery ) throws BackendlessException
   {
     checkGeoQuery( geoQuery );
-    CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
-    BackendlessCollection<GeoPoint> result = (BackendlessCollection<GeoPoint>) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getPoints", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoQuery }, new AdaptingResponder<GeoPoint>( GeoPoint.class, adaptingPolicy ) );
-
-    complementResponse( result, geoQuery );
+    CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<>();
+    List<GeoPoint> result = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getPoints", new Object[] { geoQuery }, new AdaptingResponder<>( GeoPoint.class, adaptingPolicy ) );
 
     if( geoQuery.getDpp() != null && geoQuery.getDpp() > 0 )
-    {
-      setReferenceToCluster( result );
-    }
+      setReferenceToCluster( result, geoQuery );
 
     return result;
   }
 
-  public void getPoints( final BackendlessGeoQuery geoQuery,
-                         final AsyncCallback<BackendlessCollection<GeoPoint>> responder )
+  public void getPoints( final BackendlessGeoQuery geoQuery, final AsyncCallback<List<GeoPoint>> responder )
   {
     try
     {
       checkGeoQuery( geoQuery );
       CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
 
-      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getPoints", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoQuery }, new AsyncCallback<BackendlessCollection<GeoPoint>>()
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getPoints", new Object[] { geoQuery }, new AsyncCallback<List<GeoPoint>>()
       {
         @Override
-        public void handleResponse( BackendlessCollection<GeoPoint> response )
+        public void handleResponse( List<GeoPoint> response )
         {
-          complementResponse( response, geoQuery );
-
           if( geoQuery.getDpp() != null && geoQuery.getDpp() > 0 )
-          {
-            setReferenceToCluster( response );
-          }
+            setReferenceToCluster( response, geoQuery );
 
           if( responder != null )
             responder.handleResponse( response );
@@ -222,31 +210,25 @@ public final class Geo
     }
   }
 
-  public BackendlessCollection<GeoPoint> getPoints( final GeoCluster geoCluster )
+  public List<GeoPoint> getPoints( final GeoCluster geoCluster )
   {
     CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
-    BackendlessCollection<GeoPoint> result = (BackendlessCollection<GeoPoint>) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "loadGeoPoints", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoCluster.getObjectId(), geoCluster.getGeoQuery() }, new AdaptingResponder<GeoPoint>( GeoPoint.class, adaptingPolicy ) );
-
-    result.setQuery( geoCluster.getGeoQuery() );
-    result.setType( GeoPoint.class );
+    List<GeoPoint> result = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "loadGeoPoints", new Object[] { geoCluster.getObjectId(), geoCluster.getGeoQuery() }, new AdaptingResponder<GeoPoint>( GeoPoint.class, adaptingPolicy ) );
 
     return result;
   }
 
-  public void getPoints( final GeoCluster geoCluster, final AsyncCallback<BackendlessCollection<GeoPoint>> responder )
+  public void getPoints( final GeoCluster geoCluster, final AsyncCallback<List<GeoPoint>> responder )
   {
     try
     {
       CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
 
-      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadGeoPoints", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoCluster.getObjectId(), geoCluster.getGeoQuery() }, new AsyncCallback<BackendlessCollection<GeoPoint>>()
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadGeoPoints", new Object[] { geoCluster.getObjectId(), geoCluster.getGeoQuery() }, new AsyncCallback<List<GeoPoint>>()
       {
         @Override
-        public void handleResponse( BackendlessCollection<GeoPoint> response )
+        public void handleResponse( List<GeoPoint> response )
         {
-          response.setQuery( geoCluster.getGeoQuery() );
-          response.setType( GeoPoint.class );
-
           if( responder != null )
             responder.handleResponse( response );
         }
@@ -266,8 +248,7 @@ public final class Geo
     }
   }
 
-  public BackendlessCollection<SearchMatchesResult> relativeFind(
-          BackendlessGeoQuery geoQuery ) throws BackendlessException
+  public List<SearchMatchesResult> relativeFind( BackendlessGeoQuery geoQuery ) throws BackendlessException
   {
     if( geoQuery == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_GEO_QUERY );
@@ -275,42 +256,34 @@ public final class Geo
     if( geoQuery.getRelativeFindMetadata().isEmpty() || geoQuery.getRelativeFindPercentThreshold() == 0 )
       throw new IllegalArgumentException( ExceptionMessage.INCONSISTENT_GEO_RELATIVE );
 
-    CollectionAdaptingPolicy<SearchMatchesResult> adaptingPolicy = new CollectionAdaptingPolicy<SearchMatchesResult>();
-    BackendlessCollection<SearchMatchesResult> result = (BackendlessCollection<SearchMatchesResult>) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "relativeFind", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoQuery }, new AdaptingResponder<SearchMatchesResult>( SearchMatchesResult.class, adaptingPolicy ) );
-
-    result.setQuery( geoQuery );
-    result.setType( SearchMatchesResult.class );
+    CollectionAdaptingPolicy<SearchMatchesResult> adaptingPolicy = new CollectionAdaptingPolicy<>();
+    List<SearchMatchesResult> result = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "relativeFind", new Object[] { geoQuery }, new AdaptingResponder<>( SearchMatchesResult.class, adaptingPolicy ) );
 
     return result;
   }
 
-  public BackendlessCollection<GeoPoint> getPoints( String geofenceName,
-                                                    BackendlessGeoQuery query ) throws BackendlessException
+  public List<GeoPoint> getPoints( String geofenceName, BackendlessGeoQuery query ) throws BackendlessException
   {
     checkGeoQuery( query );
-    CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
-    BackendlessCollection<GeoPoint> result = (BackendlessCollection<GeoPoint>) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getPoints", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geofenceName, query }, new AdaptingResponder<GeoPoint>( GeoPoint.class, adaptingPolicy ) );
-
-    complementResponse( result, query );
+    CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<>();
+    List<GeoPoint> result = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getPoints", new Object[] { geofenceName, query }, new AdaptingResponder<>( GeoPoint.class, adaptingPolicy ) );
 
     return result;
   }
 
   public void getPoints( final String geofenceName, final BackendlessGeoQuery query,
-                         final AsyncCallback<BackendlessCollection<GeoPoint>> responder )
+                         final AsyncCallback<List<GeoPoint>> responder )
   {
     try
     {
       checkGeoQuery( query );
-      CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
+      CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<>();
 
-      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getPoints", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geofenceName, query }, new AsyncCallback<BackendlessCollection<GeoPoint>>()
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getPoints", new Object[] { geofenceName, query }, new AsyncCallback<List<GeoPoint>>()
       {
         @Override
-        public void handleResponse( BackendlessCollection<GeoPoint> response )
+        public void handleResponse( List<GeoPoint> response )
         {
-          complementResponse( response, query );
-
           if( responder != null )
             responder.handleResponse( response );
         }
@@ -320,7 +293,7 @@ public final class Geo
         {
           responder.handleFault( fault );
         }
-      }, new AdaptingResponder<GeoPoint>( GeoPoint.class, adaptingPolicy ) );
+      }, new AdaptingResponder<>( GeoPoint.class, adaptingPolicy ) );
     }
     catch( Throwable e )
     {
@@ -329,18 +302,18 @@ public final class Geo
     }
   }
 
-  public BackendlessCollection<GeoPoint> getPoints( String geofenceName ) throws BackendlessException
+  public List<GeoPoint> getPoints( String geofenceName ) throws BackendlessException
   {
     return getPoints( geofenceName, new BackendlessGeoQuery() );
   }
 
-  public void getPoints( final String geofenceName, final AsyncCallback<BackendlessCollection<GeoPoint>> responder )
+  public void getPoints( final String geofenceName, final AsyncCallback<List<GeoPoint>> responder )
   {
     getPoints( geofenceName, new BackendlessGeoQuery(), responder );
   }
 
   public void relativeFind( final BackendlessGeoQuery geoQuery,
-                            final AsyncCallback<BackendlessCollection<SearchMatchesResult>> responder )
+                            final AsyncCallback<List<SearchMatchesResult>> responder )
   {
     try
     {
@@ -350,16 +323,13 @@ public final class Geo
       if( geoQuery.getRelativeFindMetadata().isEmpty() || geoQuery.getRelativeFindPercentThreshold() == 0 )
         throw new IllegalArgumentException( ExceptionMessage.INCONSISTENT_GEO_RELATIVE );
 
-      CollectionAdaptingPolicy<SearchMatchesResult> adaptingPolicy = new CollectionAdaptingPolicy<SearchMatchesResult>();
+      CollectionAdaptingPolicy<SearchMatchesResult> adaptingPolicy = new CollectionAdaptingPolicy<>();
 
-      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "relativeFind", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoQuery }, new AsyncCallback<BackendlessCollection<SearchMatchesResult>>()
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "relativeFind", new Object[] { geoQuery }, new AsyncCallback<List<SearchMatchesResult>>()
       {
         @Override
-        public void handleResponse( BackendlessCollection<SearchMatchesResult> response )
+        public void handleResponse( List<SearchMatchesResult> response )
         {
-          response.setQuery( geoQuery );
-          response.setType( SearchMatchesResult.class );
-
           if( responder != null )
             responder.handleResponse( response );
         }
@@ -370,7 +340,7 @@ public final class Geo
           if( responder != null )
             responder.handleFault( fault );
         }
-      }, new AdaptingResponder<SearchMatchesResult>( SearchMatchesResult.class, adaptingPolicy ) );
+      }, new AdaptingResponder<>( SearchMatchesResult.class, adaptingPolicy ) );
     }
     catch( Throwable e )
     {
@@ -381,29 +351,29 @@ public final class Geo
 
   public List<GeoCategory> getCategories() throws BackendlessException
   {
-    GeoCategory[] response = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getCategories", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() } );
-
-    return Arrays.asList( response );
+    CollectionAdaptingPolicy<GeoCategory> adaptingPolicy = new CollectionAdaptingPolicy<>();
+    return Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "getCategories", new Object[] {}, new AdaptingResponder<>( GeoCategory.class, adaptingPolicy )  );
   }
 
   public void getCategories( final AsyncCallback<List<GeoCategory>> responder )
   {
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getCategories", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() }, new AsyncCallback<GeoCategory[]>()
+    CollectionAdaptingPolicy<GeoCategory> adaptingPolicy = new CollectionAdaptingPolicy<>();
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getCategories", new Object[] {}, new AsyncCallback<List<GeoCategory>>()
     {
       @Override
-      public void handleResponse( GeoCategory[] response )
+      public void handleResponse( final List<GeoCategory> response )
       {
         if( responder != null )
-          responder.handleResponse( Arrays.asList( response ) );
+          responder.handleResponse( response );
       }
 
       @Override
-      public void handleFault( BackendlessFault fault )
+      public void handleFault( final BackendlessFault fault )
       {
         if( responder != null )
           responder.handleFault( fault );
       }
-    } );
+    }, new AdaptingResponder<>( GeoCategory.class, adaptingPolicy ) );
   }
 
   public GeoPoint loadMetadata( final GeoPoint geoPoint )
@@ -411,11 +381,11 @@ public final class Geo
     Map<String, Object> metadata;
     if( geoPoint instanceof GeoCluster )
     {
-      metadata = (Map<String, Object>) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId(), ((GeoCluster) geoPoint).getGeoQuery() } );
+      metadata = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { geoPoint.getObjectId(), ((GeoCluster) geoPoint).getGeoQuery() } );
     }
     else
     {
-      metadata = (Map<String, Object>) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId(), null } );
+      metadata = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { geoPoint.getObjectId(), null } );
     }
 
     geoPoint.setMetadata( metadata );
@@ -445,23 +415,23 @@ public final class Geo
 
     if( geoPoint instanceof GeoCluster )
     {
-      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId(), ((GeoCluster) geoPoint).getGeoQuery() }, invoker );
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { geoPoint.getObjectId(), ((GeoCluster) geoPoint).getGeoQuery() }, invoker );
     }
     else
     {
-      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoPoint.getObjectId(), null }, invoker );
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadMetadata", new Object[] { geoPoint.getObjectId(), null }, invoker );
     }
   }
 
   public int runOnEnterAction( String geoFenceName ) throws BackendlessException
   {
-    return (Integer) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnEnterAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName } );
+    return (Integer) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnEnterAction", new Object[] { geoFenceName } );
   }
 
   public void runOnEnterAction( String geoFenceName,
                                 final AsyncCallback<Integer> responder ) throws BackendlessException
   {
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnEnterAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName }, new AsyncCallback<Integer>()
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnEnterAction", new Object[] { geoFenceName }, new AsyncCallback<Integer>()
     {
       @Override
       public void handleResponse( Integer response )
@@ -481,13 +451,13 @@ public final class Geo
 
   public void runOnEnterAction( String geoFenceName, GeoPoint geoPoint ) throws BackendlessException
   {
-    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnEnterAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName, geoPoint } );
+    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnEnterAction", new Object[] { geoFenceName, geoPoint } );
   }
 
   public void runOnEnterAction( String geoFenceName, GeoPoint geoPoint,
                                 final AsyncCallback<Void> responder ) throws BackendlessException
   {
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnEnterAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName, geoPoint }, new AsyncCallback<Void>()
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnEnterAction", new Object[] { geoFenceName, geoPoint }, new AsyncCallback<Void>()
     {
       @Override
       public void handleResponse( Void response )
@@ -507,12 +477,12 @@ public final class Geo
 
   public int runOnStayAction( String geoFenceName ) throws BackendlessException
   {
-    return (Integer) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName } );
+    return (Integer) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { geoFenceName } );
   }
 
   public void runOnStayAction( String geoFenceName, final AsyncCallback<Integer> responder ) throws BackendlessException
   {
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName }, new AsyncCallback<Integer>()
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { geoFenceName }, new AsyncCallback<Integer>()
     {
       @Override
       public void handleResponse( Integer response )
@@ -532,13 +502,13 @@ public final class Geo
 
   public void runOnStayAction( String geoFenceName, GeoPoint geoPoint ) throws BackendlessException
   {
-    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName, geoPoint } );
+    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { geoFenceName, geoPoint } );
   }
 
   public void runOnStayAction( String geoFenceName, GeoPoint geoPoint,
                                final AsyncCallback<Void> responder ) throws BackendlessException
   {
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName, geoPoint }, new AsyncCallback<Void>()
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnStayAction", new Object[] { geoFenceName, geoPoint }, new AsyncCallback<Void>()
     {
       @Override
       public void handleResponse( Void response )
@@ -558,12 +528,12 @@ public final class Geo
 
   public int runOnExitAction( String geoFenceName ) throws BackendlessException
   {
-    return (Integer) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnExitAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName } );
+    return (Integer) Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnExitAction", new Object[] { geoFenceName } );
   }
 
   public void runOnExitAction( String geoFenceName, final AsyncCallback<Integer> responder ) throws BackendlessException
   {
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnExitAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName }, new AsyncCallback<Integer>()
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnExitAction", new Object[] { geoFenceName }, new AsyncCallback<Integer>()
     {
       @Override
       public void handleResponse( Integer response )
@@ -583,13 +553,13 @@ public final class Geo
 
   public void runOnExitAction( String geoFenceName, GeoPoint geoPoint ) throws BackendlessException
   {
-    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnExitAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName, geoPoint } );
+    Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "runOnExitAction", new Object[] { geoFenceName, geoPoint } );
   }
 
   public void runOnExitAction( String geoFenceName, GeoPoint geoPoint,
                                final AsyncCallback<Void> responder ) throws BackendlessException
   {
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnExitAction", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geoFenceName, geoPoint }, new AsyncCallback<Void>()
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "runOnExitAction", new Object[] { geoFenceName, geoPoint }, new AsyncCallback<Void>()
     {
       @Override
       public void handleResponse( Void response )
@@ -676,7 +646,7 @@ public final class Geo
 
   private void startGeofenceMonitoring( final ICallback callback, final AsyncCallback<Void> responder )
   {
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] { Backendless.getApplicationId(), Backendless.getVersion() }, new AsyncCallback<Object[]>()
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFences", new Object[] {}, new AsyncCallback<Object[]>()
     {
       @Override
       public void handleResponse( Object[] geoFences )
@@ -712,13 +682,13 @@ public final class Geo
 //     if (GeoFenceMonitoring.getInstance().containsGeoFence( geofenceName ))
 //       throw new BackendlessException( String.format( ExceptionMessage.GEOFENCE_ALREADY_MONITORING, geofenceName ) );
 
-    if ( GeoFenceMonitoring.getInstance().containsGeoFence( geofenceName ) && responder != null )
+    if( GeoFenceMonitoring.getInstance().containsGeoFence( geofenceName ) && responder != null )
     {
       responder.handleFault( new BackendlessFault( String.format( ExceptionMessage.GEOFENCE_ALREADY_MONITORING, geofenceName ) ) );
       return;
     }
 
-    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFence", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), geofenceName }, new AsyncCallback<GeoFence>()
+    Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "getFence", new Object[] { geofenceName }, new AsyncCallback<GeoFence>()
     {
       @Override
       public void handleResponse( GeoFence geoFences )
@@ -789,21 +759,13 @@ public final class Geo
     return geoFenceMonitoring;
   }
 
-  private void complementResponse( BackendlessCollection<GeoPoint> collection, BackendlessGeoQuery query )
+  private void setReferenceToCluster( List<GeoPoint> collection, BackendlessGeoQuery geoQuery )
   {
-    collection.setQuery( query );
-    collection.setType( GeoPoint.class );
-  }
-
-  private void setReferenceToCluster( BackendlessCollection<GeoPoint> collection )
-  {
-    BackendlessGeoQuery geoQuery = new ProtectedBackendlessGeoQuery( (BackendlessGeoQuery) collection.getQuery() );
-    for( GeoPoint geoPoint : collection.getData() )
+    BackendlessGeoQuery protectedQuery = new ProtectedBackendlessGeoQuery( geoQuery );
+    for( GeoPoint geoPoint : collection )
     {
       if( geoPoint instanceof GeoCluster )
-      {
-        ((GeoCluster) geoPoint).setGeoQuery( geoQuery );
-      }
+        ((GeoCluster) geoPoint).setGeoQuery( protectedQuery );
     }
   }
 
@@ -885,6 +847,46 @@ public final class Geo
       {
         throw new IllegalArgumentException( ExceptionMessage.WRONG_CLUSTERISATION_QUERY );
       }
+    }
+  }
+
+  public int getGeopointCount( BackendlessGeoQuery query )
+  {
+    Object[] args = new Object[] { query };
+    return Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "count", args );
+  }
+
+  public int getGeopointCount( String geoFenceName, BackendlessGeoQuery query )
+  {
+    Object[] args = new Object[] { geoFenceName, query };
+    return Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "count", args );
+  }
+
+  public void getGeopointCount( BackendlessGeoQuery query, AsyncCallback<Integer> responder )
+  {
+    try
+    {
+      Object[] args = new Object[] { query };
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "count", args, responder );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
+  public void getGeopointCount( String geoFenceName, BackendlessGeoQuery query, AsyncCallback<Integer> responder )
+  {
+    try
+    {
+      Object[] args = new Object[] { geoFenceName, query };
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "count", args, responder );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
     }
   }
 }

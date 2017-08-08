@@ -18,28 +18,53 @@
 
 package com.backendless.servercode.extension;
 
+import com.backendless.files.FileInfo;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
-/**
- * Created with IntelliJ IDEA.
- * User: ivanlappo
- * Date: 5/20/13
- * Time: 12:40 PM
- * To change this template use File | Settings | File Templates.
- */
+import java.util.List;
+
+
 public abstract class FilesExtender
 {
   public FilesExtender()
   {
   }
 
+  /**
+   * Use beforeUpload method
+   *
+   * @param context
+   * @param fileUrlLocation
+   * @throws Exception
+   */
+  @Deprecated
   public void beforeMoveToRepository( RunnerContext context, String fileUrlLocation ) throws Exception
   {
   }
 
+  /**
+   * Use afterUpload method
+   *
+   * @param context
+   * @param fileUrlLocation
+   * @param result
+   * @throws Exception
+   */
+  @Deprecated
   public void afterMoveToRepository( RunnerContext context, String fileUrlLocation, ExecutionResult<String> result ) throws Exception
   {
+  }
+
+  public void beforeUpload( RunnerContext context, String fileUrlLocation ) throws Exception
+  {
+    beforeMoveToRepository( context, fileUrlLocation );
+  }
+
+  public void afterUpload( RunnerContext context, String fileUrlLocation,
+                           ExecutionResult<String> result ) throws Exception
+  {
+    afterMoveToRepository( context, fileUrlLocation, result );
   }
 
   public void beforeDeleteFileOrDirectory( RunnerContext context, String fileUrlLocation ) throws Exception
@@ -80,5 +105,37 @@ public abstract class FilesExtender
   {
   }
 
+  public void beforeCount( RunnerContext context, String path, String pattern, boolean recursive, boolean isCountDirectories )
+          throws Exception
+  {
+  }
+
+  public void afterCount( RunnerContext context, String path, String pattern, boolean recursive, boolean isCountDirectories,
+                          ExecutionResult<Integer> result ) throws Exception
+  {
+  }
+
+  public void beforeExists( RunnerContext context, String path )
+          throws Exception
+  {
+  }
+
+  public void afterExists( RunnerContext context, String path,
+                           ExecutionResult<Boolean> result ) throws Exception
+  {
+  }
+
+  public void beforeListing( RunnerContext context, String path, String pattern,
+                             boolean recursive, int pageSize,
+                             int offset )
+          throws Exception
+  {
+  }
+
+  public void afterListing( RunnerContext context, String path, String pattern,
+                            boolean recursive, int pageSize,
+                            int offset, ExecutionResult<List<FileInfo>> result ) throws Exception
+  {
+  }
 }
 

@@ -1,0 +1,35 @@
+<resources>
+	<string name="app_name">Login with social networks SDK</string>
+	<string name="title_loginWithFacebookSDK">Login with Facebook SDK</string>
+	<string name="title_loginWithGooglePlusSDK">Login with GooglePlus SDK</string>
+
+	<string name="btn_LoginFacebook">Login in Facebook</string>
+	<string name="btn_LoginGooglePlus">Login in GooglePlus</string>
+	<string name="btn_LogoutBackendless">Logout from Backendless</string>
+
+	<string name="textView_SocialAccountInfo">Social Account Info</string>
+	<string name="textView_BackendlessUserInfo">Backendles User info</string>
+	<string name="editText_SocialAccountInfo">You should login in social network first.</string>
+	<string name="editText_fbBackendlessUserInfo">You should login as Backendles user firs.</string>
+
+
+	<!-- __________ change this credentials and configure your applications __________ -->
+	<!-- You also need to set android debug key in Facebook and Google apps -->
+
+	<!-- for Facebook -->
+	<!-- https://developers.facebook.com/docs/facebook-login/android -->
+	<string name="facebook_app_id"></string>
+	<string name="fb_login_protocol_scheme">fb...</string>
+
+	<!-- for Google -->
+	<!-- https://developers.google.com/identity/sign-in/android/start-integrating -->
+	<string name="gp_WebApp_ClientId"></string>
+	<string name="gp_WebApp_ClientSecret"></string>
+
+	<!-- for Backendless -->
+	<string name="backendless_AppId"></string>
+	<string name="backendless_ApiKey"></string>
+	<string name="backendless_ApiHost"></string>
+	<!-- __________ end __________ -->
+
+</resources>

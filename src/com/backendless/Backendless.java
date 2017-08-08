@@ -21,6 +21,8 @@ package com.backendless;
 import android.content.Context;
 import android.content.Intent;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.files.BackendlessFile;
+import com.backendless.files.BackendlessFileFactory;
 import com.backendless.geo.LocationTracker;
 import com.backendless.io.BackendlessUserFactory;
 import com.backendless.io.BackendlessUserWriter;
@@ -99,17 +101,16 @@ public final class Backendless
    *
    * @param applicationId a Backendless application ID, which could be retrieved at the Backendless console
    * @param secretKey     a Backendless application secret key, which could be retrieved at the Backendless console
-   * @param version       identifies the version of the application. A version represents a snapshot of the configuration settings, set of schemas, user properties, etc.
    */
-  public static void initApp( String applicationId, String secretKey, String version )
+  public static void initApp( String applicationId, String secretKey )
   {
     if( isAndroid() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_CONTEXT );
 
-    initApp( null, applicationId, secretKey, version );
+    initApp( null, applicationId, secretKey );
   }
 
-  public static void initApp( Object context, final String applicationId, final String secretKey, final String version )
+  public static void initApp( Object context, final String applicationId, final String secretKey )
   {
     if( isAndroid() && context == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_CONTEXT );
@@ -120,17 +121,17 @@ public final class Backendless
     if( secretKey == null || secretKey.equals( "" ) )
       throw new IllegalArgumentException( ExceptionMessage.NULL_SECRET_KEY );
 
-    if( version == null || version.equals( "" ) )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_VERSION );
-
-    ContextHandler.setContext( context );
     prefs.onCreate( context );
-    prefs.initPreferences( applicationId, secretKey, version );
+    prefs.initPreferences( applicationId, secretKey );
 
     MessageWriter.addTypeWriter( BackendlessUser.class, new BackendlessUserWriter() );
     MessageWriter.addTypeWriter( Double.class, new DoubleWriter() );
     ObjectFactories.addArgumentObjectFactory( BackendlessUser.class.getName(), new BackendlessUserFactory() );
+    ObjectFactories.addArgumentObjectFactory( BackendlessFile.class.getName(), new BackendlessFileFactory() );
+    ContextHandler.setContext( context );
+
     HeadersManager.cleanHeaders();
+    Invoker.reinitialize();
 
     if( isAndroid )
     {
@@ -198,14 +199,6 @@ public final class Backendless
     return prefs.getSecretKey();
   }
 
-  public static String getVersion()
-  {
-    if( prefs == null )
-      throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
-
-    return prefs.getVersion();
-  }
-
   protected static Map<String, String> getHeaders()
   {
     if( prefs == null )
@@ -222,6 +215,8 @@ public final class Backendless
   public static void setUrl( String url )
   {
     Backendless.url = url;
+    if( prefs != null && prefs.isAuthKeysExist() )
+      Invoker.reinitialize();
   }
 
   public static boolean isCodeRunner()

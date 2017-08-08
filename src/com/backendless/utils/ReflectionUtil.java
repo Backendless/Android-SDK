@@ -40,7 +40,7 @@ public class ReflectionUtil
   public static Object getFieldValue( Object object, String lowerKey, String upperKey ) //throws NoSuchFieldException
   {
     if( object == null )
-      throw new BackendlessException( "Unable to retrieve field/property - " + lowerKey );
+      return null;
 
     Method getMethod = getMethod( object, "get" + lowerKey );
 
@@ -87,7 +87,8 @@ public class ReflectionUtil
          // ignore, the rest of the method will do other checks
        }
 
-       throw new BackendlessException( "Unable to retrieve value for field/property '" + lowerKey );
+       //throw new BackendlessException( "Unable to retrieve value for field/property '" + lowerKey );
+       return null;
      }
   }
 

@@ -58,7 +58,7 @@ public class Cache
   public void put( String key, Object object, int timeToLive, AsyncCallback<Object> callback )
   {
     byte[] bytes = serialize( object );
-    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "putBytes", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, bytes, timeToLive }, callback );
+    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "putBytes", new Object[] { key, bytes, timeToLive }, callback );
   }
 
   public void put( String key, Object object, AsyncCallback<Object> callback )
@@ -74,12 +74,12 @@ public class Cache
   public void put( String key, Object object, int timeToLive )
   {
     byte[] bytes = serialize( object );
-    Invoker.invokeSync( CACHE_SERVER_ALIAS, "putBytes", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, bytes, timeToLive }, getChainedResponder() );
+    Invoker.invokeSync( CACHE_SERVER_ALIAS, "putBytes", new Object[] { key, bytes, timeToLive }, getChainedResponder() );
   }
 
   public <T> T get( String key, Class<? extends T> type )
   {
-    byte[] bytes = Invoker.invokeSync( CACHE_SERVER_ALIAS, "getBytes", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key }, new AdaptingResponder<byte[]>( byte[].class, new PoJoAdaptingPolicy<byte[]>() ) );
+    byte[] bytes = Invoker.invokeSync( CACHE_SERVER_ALIAS, "getBytes", new Object[] { key }, new AdaptingResponder<byte[]>( byte[].class, new PoJoAdaptingPolicy<byte[]>() ) );
 
     if( bytes == null )
       return null;
@@ -112,22 +112,22 @@ public class Cache
 
   public Boolean contains( String key )
   {
-    return Invoker.invokeSync( CACHE_SERVER_ALIAS, "containsKey", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key }, getChainedResponder() );
+    return Invoker.invokeSync( CACHE_SERVER_ALIAS, "containsKey", new Object[] { key }, getChainedResponder() );
   }
 
   public void contains( String key, AsyncCallback<Boolean> callback )
   {
-    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "containsKey", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key }, callback );
+    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "containsKey", new Object[] { key }, callback );
   }
 
   public void expireIn( String key, int seconds )
   {
-    Invoker.invokeSync( CACHE_SERVER_ALIAS, "expireIn", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, seconds }, getChainedResponder() );
+    Invoker.invokeSync( CACHE_SERVER_ALIAS, "expireIn", new Object[] { key, seconds }, getChainedResponder() );
   }
 
   public void expireIn( String key, int seconds, AsyncCallback<Object> callback )
   {
-    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "expireIn", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, seconds }, callback );
+    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "expireIn", new Object[] { key, seconds }, callback );
   }
 
   public void expireAt( String key, Date date )
@@ -137,7 +137,7 @@ public class Cache
 
   public void expireAt( String key, long timestamp )
   {
-    Invoker.invokeSync( CACHE_SERVER_ALIAS, "expireAt", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timestamp }, getChainedResponder() );
+    Invoker.invokeSync( CACHE_SERVER_ALIAS, "expireAt", new Object[] { key, timestamp }, getChainedResponder() );
   }
 
   public void expireAt( String key, Date date, AsyncCallback<Object> callback )
@@ -147,17 +147,17 @@ public class Cache
 
   public void expireAt( String key, long timestamp, AsyncCallback<Object> callback )
   {
-    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "expireAt", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key, timestamp }, callback );
+    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "expireAt", new Object[] { key, timestamp }, callback );
   }
 
   public void delete( String key )
   {
-    Invoker.invokeSync( CACHE_SERVER_ALIAS, "delete", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key }, getChainedResponder() );
+    Invoker.invokeSync( CACHE_SERVER_ALIAS, "delete", new Object[] { key }, getChainedResponder() );
   }
 
   public void delete( final String key, final AsyncCallback<Object> callback )
   {
-    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "delete", new Object[] { Backendless.getApplicationId(), Backendless.getVersion(), key }, callback );
+    Invoker.invokeAsync( CACHE_SERVER_ALIAS, "delete", new Object[] { key }, callback );
   }
 
   private static <T> IChainedResponder getChainedResponder()

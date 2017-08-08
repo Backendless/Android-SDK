@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:id="@+id/activity_login_with_google_plus_sdk"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:paddingLeft="@dimen/activity_horizontal_margin"
+		android:paddingRight="@dimen/activity_horizontal_margin"
+		android:paddingTop="@dimen/activity_vertical_margin"
+		android:paddingBottom="@dimen/activity_vertical_margin"
+		tools:context="com.backendless.examples.login_with_sdk.LoginWithGooglePlusSDKActivity">
+
+	<EditText
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:ems="10"
+			android:layout_marginTop="0dp"
+			android:id="@+id/editText_gpSocialAccountInfo" android:text="@string/editText_SocialAccountInfo"
+			android:textSize="14sp" android:layout_below="@+id/textView_gpSocialAccountInfo" android:layout_alignParentStart="true"
+			android:singleLine="false" android:selectAllOnFocus="false" android:textAlignment="viewStart"
+			android:layout_alignParentEnd="true" android:editable="false" tools:editable="false" android:inputType="none"
+			android:textColor="@android:color/holo_red_dark" android:scrollbars="vertical" android:scrollbarAlwaysDrawVerticalTrack="true"
+			android:scrollIndicators="top|bottom" android:lines="9"/>
+	<TextView
+			android:text="@string/textView_SocialAccountInfo"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="26dp" android:id="@+id/textView_gpSocialAccountInfo"
+			android:textStyle="normal|bold" android:layout_below="@+id/button_googlePlusLogin" android:layout_alignParentStart="true"/>
+	<Button
+			android:text="@string/btn_LogoutBackendless"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/button_gpBackendlessLogout"
+			android:fontFamily="sans-serif-medium" android:textAllCaps="false"
+			android:layout_alignParentTop="true" android:layout_alignParentStart="true" android:enabled="true"
+			android:visibility="invisible"/>
+	<EditText
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:inputType="none"
+			android:ems="10"
+			android:id="@+id/editText_gpBackendlessUserInfo"
+			android:text="@string/editText_fbBackendlessUserInfo" android:textSize="14sp"
+			android:editable="false"
+			android:textColor="@android:color/holo_red_dark" android:layout_below="@+id/textView_gpBackendlessUserInfo"
+			android:layout_alignParentStart="true" android:layout_alignParentEnd="true" android:scrollbars="vertical"
+			android:scrollbarAlwaysDrawVerticalTrack="true" android:scrollIndicators="top|bottom" android:lines="9"/>
+	<TextView
+			android:text="@string/textView_BackendlessUserInfo"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/textView_gpBackendlessUserInfo"
+			android:textStyle="normal|bold" android:textSize="14sp"
+			android:layout_marginTop="15dp" android:layout_below="@+id/editText_gpSocialAccountInfo"
+			android:layout_alignParentStart="true"/>
+	<com.google.android.gms.common.SignInButton
+			android:text="@string/btn_LoginGooglePlus"
+			android:id="@+id/button_googlePlusLogin"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:layout_alignParentTop="true" android:layout_alignParentStart="true"/>
+
+</RelativeLayout>

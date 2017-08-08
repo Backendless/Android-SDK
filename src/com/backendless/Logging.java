@@ -37,6 +37,20 @@ public class Logging
   {
   }
 
+  /**
+   * Configuring a Log Buffer Policy
+   * The log buffer policy controls the following aspects of log message submission from the client app to the server:
+   * - the maximum number of log messages stored in the buffer
+   * - the maximum time interval (in seconds) between message transmissions
+   * The log exhibits the behavior defined below based on the configuration parameters established with the API:
+   * - flushes the log messages to the server when the maximum of messages have been collected
+   * - flushes the messages after the configured time interval elapses
+   * - delivers log messages immediately if the number of messages is set to 0 (zero)
+   * @param numOfMessages sets the maximum limit for the number of messages
+   * @param timeFrequencyInSeconds time frequency/interval in seconds defining how often log messages from the buffer should be flushed to the server.
+   *                               The value of zero indicates immediate delivery of messages to the server, bypassing the buffer.
+   *                               This parameter will be ignored if you are using this method from Business Logic code. Log messages flushes to the server when the maximum of messages have been collected
+   */
   public void setLogReportingPolicy( int numOfMessages, int timeFrequencyInSeconds )
   {
     LogBuffer.getInstance().setLogReportingPolicy( numOfMessages, timeFrequencyInSeconds );

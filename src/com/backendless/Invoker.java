@@ -29,33 +29,27 @@ import weborb.client.Fault;
 import weborb.client.IChainedResponder;
 import weborb.client.IResponder;
 import weborb.client.WeborbClient;
+import weborb.util.ThreadContext;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings( "unchecked" )
 public class Invoker
 {
-  private static final String URL_ENDING = "/" + Backendless.getVersion() + "/binary";
   private static final String DESTINATION = "GenericDestination";
   private static final int DEFAULT_TIMEOUT = 100500;
-  private static final Object webOrbClientLock = new Object();
   private static WeborbClient weborbClient;
+
+  static void reinitialize()
+  {
+    String urlEnding = Backendless.getUrl() + '/' + Backendless.getApplicationId() + '/' + Backendless.getSecretKey() + "/binary";
+    weborbClient = new WeborbClient( urlEnding, DEFAULT_TIMEOUT, DESTINATION );
+    weborbClient.setCookiesDateFormat( "EEE, dd-MMM-yy HH:mm:ss z" );
+
+    if( Backendless.isAndroid() )
+      weborbClient.setHostnameVerifier( new org.apache.http.conn.ssl.StrictHostnameVerifier() );
+  }
 
   public static WeborbClient getWebOrbClient()
   {
-    if( weborbClient == null )
-    {
-      synchronized( webOrbClientLock )
-      {
-        if( weborbClient == null )
-        {
-          weborbClient = new WeborbClient( Backendless.getUrl() + URL_ENDING, DEFAULT_TIMEOUT, DESTINATION );
-          weborbClient.setCookiesDateFormat( "EEE, dd-MMM-yy HH:mm:ss z" );
-
-          if( Backendless.isAndroid() )
-            InvokerAndroidAdds.updateClient( weborbClient );
-        }
-      }
-    }
-
     return weborbClient;
   }
 
@@ -64,8 +58,8 @@ public class Invoker
     invokeAsync( className, methodName, args, callback, null );
   }
 
-    public static <T> void invokeAsync( final String className, final String methodName, final Object[] args,
-                                         final AsyncCallback<T> callback, final IChainedResponder responder )
+  public static <T> void invokeAsync( final String className, final String methodName, final Object[] args,
+                                      final AsyncCallback<T> callback, final IChainedResponder responder )
   {
     ThreadPoolService.getPoolExecutor().execute( new Runnable()
     {
@@ -85,8 +79,8 @@ public class Invoker
     } );
   }
 
-    public static <T> T invokeSync( String className, String methodName, Object[] args,
-                                     IChainedResponder chainedResponder ) throws BackendlessException
+  public static <T> T invokeSync( String className, String methodName, Object[] args,
+                                  IChainedResponder chainedResponder ) throws BackendlessException
   {
     SyncResponder invokeResponder = new SyncResponder();
 
@@ -97,6 +91,7 @@ public class Invoker
 
     try
     {
+      ThreadContext.cleanup();
       getWebOrbClient().invoke( className, methodName, args, null, null, HeadersManager.getInstance().getHeaders(), chainedResponder );
     }
     catch( Exception e )
@@ -107,7 +102,7 @@ public class Invoker
     return (T) invokeResponder.getResult();
   }
 
-    public static <T> T invokeSync( String className, String methodName, Object[] args ) throws BackendlessException
+  public static <T> T invokeSync( String className, String methodName, Object[] args ) throws BackendlessException
   {
     return (T) invokeSync( className, methodName, args, null );
   }

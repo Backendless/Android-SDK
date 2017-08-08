@@ -34,7 +34,7 @@ public class ExceptionMessage
   public final static String NULL_FACEBOOK_RESPONSE_OBJECT = "Facebook response cannot be null.";
   public static final String NULL_FACEBOOK_USER_ID = "Facebook user id cannot be null";
 
-  public final static String NULL_CONTEXT = "Context cannot be null. Use Backendless.initApp( Context context, String applicationId, String secretKey, String version ) for proper initialization.";
+  public final static String NULL_CONTEXT = "Context cannot be null. Use Backendless.initApp( Context context, String applicationId, String secretKey ) for proper initialization.";
 
   public final static String NULL_CATEGORY_NAME = "Category name cannot be null or empty.";
   public final static String NULL_GEOPOINT = "Geopoint cannot be null.";
@@ -146,4 +146,8 @@ public class ExceptionMessage
   public final static String INCORRECT_MESSAGE_TYPE = "Message object can not be instance of PublishOptions or DeliveryOptions class";
   public final static String INVALID_CLASS = "Cannot use inner or anonymous classes. Make sure the class is public. It cannot be inner or anonymous";
 
+  public static String NULL_FIELD( String field )
+  {
+    return field + " cannot be null or empty.";
+  }
 }

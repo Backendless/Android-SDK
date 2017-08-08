@@ -71,12 +71,12 @@ public class PointCommentsActivity extends Activity
         backendlessDataQuery.addProperty( "message" );
         backendlessDataQuery.setWhereClause( "geoPointId=" + "'" + geoPointId + "'" );
         progressDialog = ProgressDialog.show( PointCommentsActivity.this, "", "Loading", true );
-        Backendless.Persistence.of( Comment.class ).find( backendlessDataQuery, new AsyncCallback<BackendlessCollection<Comment>>()
+        Backendless.Persistence.of( Comment.class ).find( backendlessDataQuery, new AsyncCallback<Collection<Comment>>()
         {
           @Override
-          public void handleResponse( BackendlessCollection<Comment> response )
+          public void handleResponse( Collection<Comment> response )
           {
-            BackendlessCollection<Comment> comments = response;
+            Collection<Comment> comments = response;
             for( int i = 0; i < comments.getCurrentPage().size(); i++ )
             {
               Comment comment = comments.getCurrentPage().get( i );

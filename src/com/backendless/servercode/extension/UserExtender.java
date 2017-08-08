@@ -18,7 +18,7 @@
 
 package com.backendless.servercode.extension;
 
-import com.backendless.BackendlessCollection;
+import com.backendless.BackendlessUser;
 import com.backendless.commons.util.SocialType;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.property.UserProperty;
@@ -26,15 +26,9 @@ import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-/**
- * Created with IntelliJ IDEA.
- * User: ivanlappo
- * Date: 5/20/13
- * Time: 12:40 PM
- * To change this template use File | Settings | File Templates.
- */
 public abstract class UserExtender
 {
   public UserExtender()
@@ -46,8 +40,7 @@ public abstract class UserExtender
 
   }
 
-  public void afterFind( RunnerContext context, BackendlessDataQuery query,
-                         ExecutionResult<BackendlessCollection> result ) throws Exception
+  public void afterFind( RunnerContext context, BackendlessDataQuery query, ExecutionResult<List<BackendlessUser>> result ) throws Exception
   {
   }
 
@@ -56,7 +49,8 @@ public abstract class UserExtender
 
   }
 
-  public void afterFindById( RunnerContext context, Object objectId, String[] relations, ExecutionResult<HashMap> result ) throws Exception
+  public void afterFindById( RunnerContext context, Object objectId, String[] relations,
+                             ExecutionResult<BackendlessUser> result ) throws Exception
   {
   }
 
@@ -64,15 +58,16 @@ public abstract class UserExtender
   {
   }
 
-  public void afterLogin( RunnerContext context, String login, String password, ExecutionResult<HashMap> result ) throws Exception
+  public void afterLogin( RunnerContext context, String login, String password, ExecutionResult<BackendlessUser> result ) throws Exception
   {
   }
 
-  public void beforeSocialLogin( RunnerContext context, Map<String, String> userValues, SocialType socialType) throws Exception
+  public void beforeSocialLogin( RunnerContext context, Map<String, String> userValues, SocialType socialType ) throws Exception
   {
   }
 
-  public void afterSocialLogin( RunnerContext context, Map<String, String> userValues, SocialType socialType, ExecutionResult<HashMap> result ) throws Exception
+  public void afterSocialLogin( RunnerContext context, Map<String, String> userValues, SocialType socialType,
+                                ExecutionResult<BackendlessUser> result ) throws Exception
   {
   }
 
@@ -80,7 +75,7 @@ public abstract class UserExtender
   {
   }
 
-  public void afterRegister( RunnerContext context, HashMap userValues, ExecutionResult<HashMap> result ) throws Exception
+  public void afterRegister( RunnerContext context, HashMap userValues, ExecutionResult<BackendlessUser> result ) throws Exception
   {
   }
 
@@ -88,7 +83,8 @@ public abstract class UserExtender
   {
   }
 
-  public void afterSocialRegister( RunnerContext context, Map<String, String> userValues, SocialType socialType, ExecutionResult<HashMap> result ) throws Exception
+  public void afterSocialRegister( RunnerContext context, Map<String, String> userValues, SocialType socialType,
+                                   ExecutionResult<BackendlessUser> result ) throws Exception
   {
   }
 
@@ -96,7 +92,7 @@ public abstract class UserExtender
   {
   }
 
-  public void afterUpdate( RunnerContext context, HashMap userValues, ExecutionResult<HashMap> result ) throws Exception
+  public void afterUpdate( RunnerContext context, HashMap userValues, ExecutionResult<BackendlessUser> result ) throws Exception
   {
   }
 
@@ -121,8 +117,7 @@ public abstract class UserExtender
   {
   }
 
-  public void afterRemoveBulk( RunnerContext context, String whereClause,
-                               ExecutionResult<Integer> result ) throws Exception
+  public void afterRemoveBulk( RunnerContext context, String whereClause, ExecutionResult<Integer> result ) throws Exception
   {
   }
 
@@ -130,7 +125,7 @@ public abstract class UserExtender
   {
   }
 
-  public void afterDescribe( RunnerContext context, ExecutionResult<UserProperty[]> result ) throws Exception
+  public void afterDescribe( RunnerContext context, ExecutionResult<List<UserProperty>> result ) throws Exception
   {
   }
 
@@ -158,4 +153,3 @@ public abstract class UserExtender
   {
   }
 }
-

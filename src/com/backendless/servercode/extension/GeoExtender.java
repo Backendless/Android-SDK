@@ -1,11 +1,12 @@
 package com.backendless.servercode.extension;
 
-import com.backendless.BackendlessCollection;
 import com.backendless.geo.BackendlessGeoQuery;
 import com.backendless.geo.GeoCategory;
 import com.backendless.geo.GeoPoint;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -50,8 +51,7 @@ public abstract class GeoExtender
   {
   }
 
-  public void afterGetCategories( RunnerContext context,
-                                  ExecutionResult<GeoCategory[]> categories ) throws Exception
+  public void afterGetCategories( RunnerContext context, ExecutionResult<List<GeoCategory>> categories ) throws Exception
   {
   }
 
@@ -60,7 +60,7 @@ public abstract class GeoExtender
   }
 
   public void afterGetPoints( RunnerContext context, BackendlessGeoQuery query,
-                              ExecutionResult<BackendlessCollection<GeoPoint>> points ) throws Exception
+                              ExecutionResult<List<GeoPoint>> points ) throws Exception
   {
   }
 
@@ -88,7 +88,7 @@ public abstract class GeoExtender
   }
 
   public void afterRelativeFind( RunnerContext context, BackendlessGeoQuery backendlessGeoQuery,
-                                 ExecutionResult<BackendlessCollection<GeoPoint>> findPoints ) throws Exception
+                                 ExecutionResult<List<GeoPoint>> findPoints ) throws Exception
   {
   }
 }

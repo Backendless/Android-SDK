@@ -54,12 +54,13 @@ public class FootprintsManager
 
   public String getObjectId( Object entity )
   {
+    if( entity instanceof BackendlessUser )
+      return ((BackendlessUser) entity).getObjectId();
+
     Footprint footprint = getEntityFootprint( entity );
 
     if( footprint != null )
       return footprint.getObjectId();
-    else if( entity instanceof BackendlessUser )
-      return ((BackendlessUser) entity).getObjectId();
 
     return null;
   }
@@ -76,7 +77,6 @@ public class FootprintsManager
 
     return null;
   }
-
   public Date getCreated( Object entity )
   {
     if( persistenceCache.containsKey( entity ) )
@@ -178,9 +178,11 @@ public class FootprintsManager
 
             // retrieve persisted entity's field value (which is collection)
             Collection persistedEntityFieldValue = getFieldValueAsCollection(persistedEntity, entry.getKey());
+            if (persistedEntityFieldValue.isEmpty())
+              continue;
+
             // retrieve initial entity's field value (which is collection)
             Collection initialEntityFieldValue = getFieldValueAsCollection(initialEntity, entry.getKey());
-
             Collection mapCollection = (Collection) entry.getValue();
 
             // recursively duplicate footprint for each object in collection
@@ -349,11 +351,21 @@ public class FootprintsManager
 
       try
       {
-        if( instance instanceof BackendlessCollection )
+        if( instance instanceof Collection )
         {
-          AnonymousObject typedObject = (AnonymousObject) ((NamedObject) entity).getTypedObject();
-          ArrayType dataArray = (ArrayType) typedObject.getProperties().get( "data" );
-          Object[] instances = ((BackendlessCollection) instance).getCurrentPage().toArray();
+          ArrayType dataArray = null;
+
+          if( entity instanceof ArrayType )
+          {
+            dataArray = (ArrayType) entity;
+          }
+          else if( entity instanceof NamedObject )
+          {
+            AnonymousObject typedObject = (AnonymousObject) ((NamedObject) entity).getTypedObject();
+            dataArray = (ArrayType) typedObject.getProperties().get( "data" );
+          }
+
+          Object[] instances = ((Collection) instance).toArray();
           putEntityFootprintToCache( instances, dataArray );
         }
         else if( entity instanceof NamedObject )
@@ -384,7 +396,9 @@ public class FootprintsManager
             if( entityEntryValue instanceof NamedObject || entityEntryValue instanceof ArrayType )
             {
               Object innerInstance = getFieldValue( instance, entityEntry.getKey() );
-              putEntityFootprintToCache( innerInstance, entityEntry.getValue() );
+
+              if( innerInstance != null )
+                putEntityFootprintToCache( innerInstance, entityEntry.getValue() );
             }
           }
 
@@ -394,6 +408,7 @@ public class FootprintsManager
       }
       catch( Exception e )
       {/*Error in caching process should not fail application*/
+        //e.printStackTrace();
       }
 
       marked.remove( entity );
