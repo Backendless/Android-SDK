@@ -70,5 +70,13 @@ public abstract class MessagingExtender
   public void afterSendEmail( RunnerContext context, String subject, BodyParts bodyParts, List<String> recipients, List<String> attachments, ExecutionResult<MessageStatus> msgStatus ) throws Exception
   {
   }
+
+  public void beforeGetMessageStatus( RunnerContext context, String messageId ) throws Exception
+  {
+  }
+
+  public void afterGetMessageStatus( RunnerContext context, String messageId, ExecutionResult<MessageStatus> msgStatus ) throws Exception
+  {
+  }
 }
 
