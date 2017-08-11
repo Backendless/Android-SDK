@@ -2,6 +2,7 @@ package com.backendless.servercode;
 
 import com.backendless.commons.DeviceType;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ public class RunnerContext extends AbstractContext
   private Map missingProperties;
   private Object prematureResult;
   private String eventContext;
+  private Map<String, Object> crossHandlerData;
 
   public String getAppId()
   {
@@ -111,6 +113,24 @@ public class RunnerContext extends AbstractContext
   public void setHttpHeaders( Map<String, String> httpHeaders )
   {
     this.httpHeaders = httpHeaders;
+  }
+
+  public Map<String, Object> getCrossHandlerData()
+  {
+    return crossHandlerData;
+  }
+
+  public void setCrossHandlerData( Map<String, Object> crossHandlerData )
+  {
+    this.crossHandlerData = crossHandlerData;
+  }
+
+  public void addCrossHandlerData( String key, Object value )
+  {
+    if( this.crossHandlerData == null )
+      this.crossHandlerData = new HashMap<>();
+
+    this.crossHandlerData.put( key, value );
   }
 
   @Override
