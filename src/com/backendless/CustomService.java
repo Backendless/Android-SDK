@@ -21,6 +21,7 @@ package com.backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
+import com.backendless.core.responder.policy.UniversalAdaptingPolicy;
 
 public class CustomService
 {
@@ -48,7 +49,7 @@ public class CustomService
    public <T> T invoke( String serviceName, String method, Object[] arguments, Class<?> clazz )
   {
     Object[] args = new Object[] { serviceName, method, arguments };
-    return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, new AdaptingResponder( clazz, new PoJoAdaptingPolicy() ) );
+    return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, new AdaptingResponder( clazz, new UniversalAdaptingPolicy() ) );
   }
 
   public <E> void invoke( String serviceName, String method, Object[] arguments, AsyncCallback<E> callback )
@@ -60,6 +61,6 @@ public class CustomService
   public <E> void invoke( String serviceName, String method, Object[] arguments, Class<?> clazz, AsyncCallback<E> callback )
   {
     Object[] args = new Object[] { serviceName, method, arguments };
-    Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, callback, new AdaptingResponder( clazz, new PoJoAdaptingPolicy() ) );
+    Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, callback, new AdaptingResponder( clazz, new UniversalAdaptingPolicy() ) );
   }
 }

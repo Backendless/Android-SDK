@@ -45,10 +45,11 @@ public class CollectionAdaptingPolicy<E> implements IAdaptingPolicy<E>
 
       Object[] dataArray = (Object[]) data.getArray();
 
-      if( weborb.types.Types.getMappedClientClass( clazz.getName() ) == null )
+      if( clazz != null && weborb.types.Types.getMappedClientClass( clazz.getName() ) == null )
       {
         for ( Object aDataArray : dataArray )
-          ( (NamedObject) aDataArray ).setDefaultType( clazz );
+          if( aDataArray instanceof  NamedObject)
+           ((NamedObject) aDataArray).setDefaultType( clazz );
       }
 
       result = (List<E>) entity.adapt( list.getClass() );
