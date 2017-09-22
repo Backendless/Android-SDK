@@ -47,8 +47,9 @@
         <activity android:name=".PushActivity"
                   android:screenOrientation="portrait"/>
 
-        <receiver android:name=".PushReceiver"
-                  android:permission="com.google.android.c2dm.permission.SEND">
+        <receiver
+                android:name=".MyPushBroadcastReceiver"
+                android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
@@ -56,5 +57,6 @@
                 <category android:name="com.backendless.examples.messagingservice.pushdemo"/>
             </intent-filter>
         </receiver>
+        <service android:name=".MyPushService" />
     </application>
 </manifest> 

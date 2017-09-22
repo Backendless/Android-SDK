@@ -31,9 +31,8 @@ public class NotificationLookAndFeel
 {
   private static final String COLOR_SEARCH_RECURSE_TIP = "SOME_SAMPLE_TEXT";
   private static float notification_text_size;
-  private static Integer notification_text_color = null;
+  private static int notification_text_color = android.R.color.black;
   private static float notification_title_size_factor = (float) 1.0;
-  private static float notification_description_size_factor = (float) 0.8;
 
   private boolean recurseGroup( Context context, ViewGroup gp )
   {
@@ -67,9 +66,6 @@ public class NotificationLookAndFeel
 
   void extractColors( Context context )
   {
-    if( notification_text_color != null )
-      return;
-
     try
     {
       Notification ntf = new Notification();

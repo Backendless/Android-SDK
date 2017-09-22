@@ -3,7 +3,14 @@ package com.backendless.utils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import weborb.protocols.jsonrpc.JsonTextReader;
+import weborb.types.IAdaptingType;
+import weborb.util.io.ISerializer;
+import weborb.util.io.Serializer;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,6 +27,8 @@ import java.util.Map;
  */
 
 public class JSONObjectConverter {
+
+
     public static Map<String, Object> toMap(JSONObject object) throws JSONException {
         Map<String, Object> map = new HashMap();
         Iterator keys = object.keys();
@@ -48,5 +57,56 @@ public class JSONObjectConverter {
         } else {
             return json;
         }
+    }
+
+    public static String toJSONString( Object object )
+    {
+        try
+        {
+            return new String( Serializer.toBytes( object, ISerializer.JSON ) );
+        }
+        catch( Exception e )
+        {
+            return null;
+        }
+    }
+
+    public static HashMap getJSONObject( String jsonString )
+    {
+      InputStream stream = new ByteArrayInputStream( jsonString.getBytes() );
+      InputStreamReader streamReader = null;
+      JsonTextReader reader = null;
+
+      try
+      {
+        streamReader = new InputStreamReader( stream, "UTF8" );
+        reader = new JsonTextReader( streamReader );
+        reader.read();
+        IAdaptingType jsonType = weborb.protocols.jsonrpc.JsonRequestParser.readJSON( reader );
+        return (HashMap) jsonType.adapt( HashMap.class );
+      }
+      catch( Throwable t )
+      {
+        //e.printStackTrace();
+        return null;
+      }
+      finally
+      {
+        try
+        {
+          if( reader != null )
+            reader.close();
+
+          if( streamReader != null )
+            streamReader.close();
+
+          if( stream != null )
+            stream.close();
+        }
+        catch( Throwable t )
+        {
+
+        }
+      }
     }
 }
