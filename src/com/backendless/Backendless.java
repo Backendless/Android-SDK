@@ -28,15 +28,21 @@ import com.backendless.io.BackendlessUserFactory;
 import com.backendless.io.BackendlessUserWriter;
 import com.backendless.io.DoubleWriter;
 import com.backendless.persistence.BackendlessSerializer;
+import com.backendless.persistence.QueryOptions;
 import com.backendless.persistence.RealmSerializer;
 import com.backendless.persistence.local.UserIdStorageFactory;
 import com.backendless.persistence.local.UserTokenStorageFactory;
+import weborb.ORBConstants;
 import weborb.config.ORBConfig;
 import weborb.util.ObjectFactories;
 import weborb.util.log.ILoggingConstants;
 import weborb.util.log.Log;
+import weborb.writer.IProtocolFormatter;
+import weborb.writer.ITypeWriter;
 import weborb.writer.MessageWriter;
+import weborb.writer.amf.AmfV3Formatter;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,6 +97,29 @@ public final class Backendless
     prefs = BackendlessPrefsFactory.create( isAndroid() );
     if( isAndroid )
       Media = com.backendless.Media.getInstance();
+
+    AmfV3Formatter.AddTypeWriter( QueryOptions.class, new ITypeWriter()
+    {
+      @Override
+      public void write( Object o, IProtocolFormatter iProtocolFormatter ) throws IOException
+      {
+        QueryOptions queryOptions = (QueryOptions) o;
+        Map<String, Object> queryOptionsMap = new HashMap<>(  );
+        queryOptionsMap.put( ORBConstants.WEBORB_TYPE_NAME.toString(), QueryOptions.class.getSimpleName() );
+        queryOptionsMap.put( "sortBy", queryOptions.getSortBy() );
+        queryOptionsMap.put( "related", queryOptions.getRelated() );
+        if( queryOptions.getRelationsDepth() != null )
+          queryOptionsMap.put( "relationsDepth", queryOptions.getRelationsDepth() );
+
+        MessageWriter.writeObject( queryOptionsMap, iProtocolFormatter );
+      }
+
+      @Override
+      public boolean isReferenceableType()
+      {
+        return false;
+      }
+    } );
   }
 
   /**
