@@ -99,7 +99,7 @@ public class QueryOptions
     this.relationsDepth = relationsDepth;
   }
 
-  public int getRelationsDepth()
+  public Integer getRelationsDepth()
   {
     return relationsDepth;
   }
