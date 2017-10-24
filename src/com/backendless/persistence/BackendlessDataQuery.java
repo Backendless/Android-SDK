@@ -29,6 +29,8 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
   private List<String> properties;
   private String whereClause;
   private QueryOptions queryOptions;
+  private List<String> groupBy = new ArrayList<>();
+  private String havingClause = "";
 
   public BackendlessDataQuery()
   {
@@ -101,6 +103,26 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
   public void setQueryOptions( QueryOptions queryOptions )
   {
     this.queryOptions = queryOptions;
+  }
+
+  public List<String> getGroupBy()
+  {
+    return groupBy;
+  }
+
+  public void setGroupBy( List<String> groupBy )
+  {
+    this.groupBy = groupBy;
+  }
+
+  public String getHavingClause()
+  {
+    return havingClause;
+  }
+
+  public void setHavingClause( String havingClause )
+  {
+    this.havingClause = havingClause;
   }
 
   @Override

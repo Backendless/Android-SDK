@@ -10,12 +10,16 @@ public class DataQueryBuilder
   private QueryOptionsBuilder<DataQueryBuilder> queryOptionsBuilder;
   private List<String> properties;
   private String whereClause;
+  private List<String> groupBy;
+  private String havingClause;
 
   private DataQueryBuilder()
   {
     properties = new ArrayList<>();
     pagedQueryBuilder = new PagedQueryBuilder<>( this );
     queryOptionsBuilder = new QueryOptionsBuilder<>( this );
+    groupBy = new ArrayList<>();
+    havingClause = "";
   }
 
   public static DataQueryBuilder create()
@@ -30,6 +34,8 @@ public class DataQueryBuilder
     dataQuery.setQueryOptions( queryOptionsBuilder.build() );
     dataQuery.setProperties( properties );
     dataQuery.setWhereClause( whereClause );
+    dataQuery.setGroupBy( groupBy );
+    dataQuery.setHavingClause( havingClause );
 
     return dataQuery;
   }
@@ -133,5 +139,39 @@ public class DataQueryBuilder
   public DataQueryBuilder setRelationsDepth( Integer relationsDepth )
   {
     return queryOptionsBuilder.setRelationsDepth( relationsDepth );
+  }
+
+  public List<String> getGroupBy()
+  {
+    return groupBy;
+  }
+
+  public DataQueryBuilder setGroupBy( List<String> groupBy )
+  {
+    this.groupBy = groupBy;
+    return this;
+  }
+
+  public DataQueryBuilder setGroupBy( String... groupBy )
+  {
+    Collections.addAll( this.groupBy, groupBy );
+    return this;
+  }
+
+  public DataQueryBuilder addGroupBy( String groupBy )
+  {
+    this.groupBy.add( groupBy );
+    return this;
+  }
+
+  public String getHavingClause()
+  {
+    return havingClause;
+  }
+
+  public DataQueryBuilder setHavingClause( String havingClause )
+  {
+    this.havingClause = havingClause;
+    return this;
   }
 }
