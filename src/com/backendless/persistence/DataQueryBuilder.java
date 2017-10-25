@@ -141,32 +141,22 @@ public class DataQueryBuilder
     return queryOptionsBuilder.setRelationsDepth( relationsDepth );
   }
 
-  public List<String> getGroupBy()
-  {
-    return groupBy;
-  }
-
-  public DataQueryBuilder setGroupBy( List<String> groupBy )
+  public DataQueryBuilder setGroupByProperties( List<String> groupBy )
   {
     this.groupBy = groupBy;
     return this;
   }
 
-  public DataQueryBuilder setGroupBy( String... groupBy )
+  public DataQueryBuilder addGroupByProperties( String... groupBy )
   {
     Collections.addAll( this.groupBy, groupBy );
     return this;
   }
 
-  public DataQueryBuilder addGroupBy( String groupBy )
+  public DataQueryBuilder addGroupByProperty( String groupBy )
   {
     this.groupBy.add( groupBy );
     return this;
-  }
-
-  public String getHavingClause()
-  {
-    return havingClause;
   }
 
   public DataQueryBuilder setHavingClause( String havingClause )
