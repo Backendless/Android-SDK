@@ -51,11 +51,14 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
     this.queryOptions = queryOptions;
   }
 
-  public BackendlessDataQuery( List<String> properties, String whereClause, QueryOptions queryOptions )
+  public BackendlessDataQuery( List<String> properties, String whereClause, QueryOptions queryOptions,
+                               List<String> groupBy, String havingClause )
   {
     this.properties = properties;
     this.whereClause = whereClause;
     this.queryOptions = queryOptions;
+    this.groupBy = groupBy;
+    this.havingClause = havingClause;
   }
 
   public List<String> getProperties()
@@ -132,6 +135,8 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
     result.setProperties( getProperties() );
     result.setWhereClause( whereClause );
     result.setQueryOptions( getQueryOptions() );
+    result.setGroupBy( groupBy );
+    result.setHavingClause( havingClause );
     return result;
   }
 }
