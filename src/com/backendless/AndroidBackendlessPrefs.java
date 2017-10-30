@@ -22,7 +22,7 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
     super();
   }
 
-  public void initPreferences( String applicationId, String secretKey, String version )
+  public void initPreferences( String applicationId, String secretKey )
   {
     super.initPreferences( applicationId, secretKey );
     saveAuthKeysToPreferences( authKeys );
@@ -97,9 +97,8 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
   {
     String applicationId = sharedPreferences.getString( Type.APPLICATION_ID.name64(), null );
     String secretKey = sharedPreferences.getString( Type.SECRET_KEY.name64(), null );
-    String version = sharedPreferences.getString( Type.VERSION.name64(), null );
 
-    if( applicationId != null && secretKey != null && version != null )
+    if( applicationId != null && secretKey != null )
     {
       authKeys = new AuthKeys( applicationId, secretKey );
       return true;
@@ -145,7 +144,6 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
   {
     APPLICATION_ID,
     SECRET_KEY,
-    VERSION,
     HEADERS;
 
     String name64()
