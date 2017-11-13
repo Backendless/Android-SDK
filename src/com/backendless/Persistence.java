@@ -43,13 +43,11 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public final class Persistence
 {
@@ -379,7 +377,8 @@ public final class Persistence
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-    Objects.requireNonNull( queryBuilder, ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
+    if( queryBuilder == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
 
     Object entityArg = ReflectionUtil.hasField( entity.getClass(), Persistence.DEFAULT_OBJECT_ID_FIELD ) ?
             entity :
@@ -468,7 +467,8 @@ public final class Persistence
       if( entity == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-      Objects.requireNonNull( queryBuilder, ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
+      if( queryBuilder == null )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
 
       Object entityArg = ReflectionUtil.hasField( entity.getClass(), Persistence.DEFAULT_OBJECT_ID_FIELD ) ?
               entity :
@@ -509,7 +509,8 @@ public final class Persistence
                                     Class<T> relatedType ) throws BackendlessException
   {
     StringUtils.checkEmpty( objectId, ExceptionMessage.NULL_ENTITY );
-    Objects.requireNonNull( queryBuilder, ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
+    if( queryBuilder == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
 
     BackendlessDataQuery dataQuery = queryBuilder.build();
     String relationName = dataQuery.getQueryOptions().getRelated().iterator().next();
@@ -525,7 +526,8 @@ public final class Persistence
                                  Class<T> relatedType, final AsyncCallback<List<T>> responder )
   {
     StringUtils.checkEmpty( objectId, ExceptionMessage.NULL_ENTITY );
-    Objects.requireNonNull( queryBuilder, ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
+    if( queryBuilder == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
 
     BackendlessDataQuery dataQuery = queryBuilder.build();
     String relationName = dataQuery.getQueryOptions().getRelated().iterator().next();
@@ -624,7 +626,8 @@ public final class Persistence
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
-    Objects.requireNonNull( queryBuilder, ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
+    if( queryBuilder == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
 
     Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), queryBuilder.build() };
 
@@ -635,7 +638,8 @@ public final class Persistence
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
-    Objects.requireNonNull( queryBuilder, ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
+    if( queryBuilder == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
 
     BackendlessDataQuery dataQuery = queryBuilder.build();
     try
@@ -831,7 +835,9 @@ public final class Persistence
 
   <E> int getObjectCount( final Class<E> entity, DataQueryBuilder queryBuilder )
   {
-    Objects.requireNonNull( queryBuilder, ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
+    if( queryBuilder == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
+
     BackendlessDataQuery dataQuery = queryBuilder.build();
     Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), dataQuery };
     return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args );
@@ -853,7 +859,9 @@ public final class Persistence
 
   <E> void getObjectCount( final Class<E> entity, DataQueryBuilder queryBuilder, AsyncCallback<Integer> responder )
   {
-    Objects.requireNonNull( queryBuilder, ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
+    if( queryBuilder == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
+
     BackendlessDataQuery dataQuery = queryBuilder.build();
     try
     {
@@ -898,7 +906,9 @@ public final class Persistence
 
   public List<Map<String, Object>> getView( String viewName, DataQueryBuilder queryBuilder )
   {
-    Objects.requireNonNull( queryBuilder, ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
+    if( queryBuilder == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
+
     BackendlessDataQuery dataQuery = queryBuilder.build();
     Object[] args = new Object[] { viewName, dataQuery };
     return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredView", args );
@@ -906,7 +916,9 @@ public final class Persistence
 
   public void getView( String viewName, DataQueryBuilder queryBuilder, AsyncCallback<Map<String, Object>> responder )
   {
-    Objects.requireNonNull( queryBuilder, ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
+    if( queryBuilder == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
+
     BackendlessDataQuery dataQuery = queryBuilder.build();
 
     Object[] args = new Object[] { viewName, dataQuery };

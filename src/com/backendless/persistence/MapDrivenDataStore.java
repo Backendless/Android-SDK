@@ -42,7 +42,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class MapDrivenDataStore implements IDataStore<Map>
 {
@@ -490,7 +489,9 @@ public class MapDrivenDataStore implements IDataStore<Map>
   @Override
   public int getObjectCount( DataQueryBuilder dataQueryBuilder )
   {
-    Objects.requireNonNull( dataQueryBuilder, ExceptionMessage.NULL_FIELD( "dataQueryBuilder" ) );
+    if( dataQueryBuilder == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_FIELD( "dataQueryBuilder" ) );
+
     BackendlessDataQuery dataQuery = dataQueryBuilder.build();
     Object[] args = new Object[] { tableName, dataQuery };
     return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args );
@@ -516,7 +517,9 @@ public class MapDrivenDataStore implements IDataStore<Map>
   {
     try
     {
-      Objects.requireNonNull( dataQueryBuilder, ExceptionMessage.NULL_FIELD( "dataQueryBuilder" ) );
+      if( dataQueryBuilder == null )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_FIELD( "dataQueryBuilder" ) );
+
       BackendlessDataQuery dataQuery = dataQueryBuilder.build();
       Object[] args = new Object[] { tableName, dataQuery };
       Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args, responder );
