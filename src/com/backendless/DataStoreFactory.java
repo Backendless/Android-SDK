@@ -27,6 +27,7 @@ import com.backendless.persistence.LoadRelationsQueryBuilder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 class DataStoreFactory
 {
@@ -59,6 +60,34 @@ class DataStoreFactory
       public void remove( final E entity, final AsyncCallback<Long> responder )
       {
         Backendless.Persistence.remove( entity, responder );
+      }
+
+      @Override
+      public int remove( String whereClause ) throws BackendlessException
+      {
+        Object[] args = new Object[] { entityClass, whereClause };
+        return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "removeBulk", args );
+      }
+
+      @Override
+      public void remove( String whereClause, AsyncCallback<Integer> responder ) throws BackendlessException
+      {
+        Object[] args = new Object[] { entityClass, whereClause };
+        Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "removeBulk", args, responder );
+      }
+
+      @Override
+      public int update( String whereClause, Map<String, Object> changes ) throws BackendlessException
+      {
+        Object[] args = new Object[] { entityClass, whereClause, changes };
+        return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "updateBulk", args );
+      }
+
+      @Override
+      public void update( String whereClause, Map<String, Object> changes, AsyncCallback<Integer> responder ) throws BackendlessException
+      {
+        Object[] args = new Object[] { entityClass, whereClause, changes };
+        Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "updateBulk", args, responder );
       }
 
       @Override
