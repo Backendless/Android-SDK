@@ -25,6 +25,7 @@ import com.backendless.persistence.LoadRelationsQueryBuilder;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public interface IDataStore<E>
 {
@@ -35,6 +36,14 @@ public interface IDataStore<E>
   Long remove( E entity ) throws BackendlessException;
 
   void remove( E entity, AsyncCallback<Long> responder );
+
+  int remove( String whereClause ) throws BackendlessException;
+
+  void remove( String whereClause, AsyncCallback<Integer> responder ) throws BackendlessException;
+
+  int update( String whereClause, Map<String, Object> changes ) throws BackendlessException;
+
+  void update( String whereClause, Map<String, Object> changes, AsyncCallback<Integer> responder ) throws BackendlessException;
 
   E findFirst() throws BackendlessException;
 
