@@ -63,31 +63,27 @@ class DataStoreFactory
       }
 
       @Override
-      public int remove( String whereClause ) throws BackendlessException
+      public int remove( final String whereClause ) throws BackendlessException
       {
-        Object[] args = new Object[] { entityClass, whereClause };
-        return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "removeBulk", args );
+        return Backendless.Persistence.remove( BackendlessSerializer.getSimpleName( entityClass ), whereClause );
       }
 
       @Override
-      public void remove( String whereClause, AsyncCallback<Integer> responder ) throws BackendlessException
+      public void remove( final String whereClause, AsyncCallback<Integer> responder ) throws BackendlessException
       {
-        Object[] args = new Object[] { entityClass, whereClause };
-        Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "removeBulk", args, responder );
+        Backendless.Persistence.remove( BackendlessSerializer.getSimpleName( entityClass ), whereClause, responder );
       }
 
       @Override
-      public int update( String whereClause, Map<String, Object> changes ) throws BackendlessException
+      public int update( final String whereClause, Map<String, Object> changes ) throws BackendlessException
       {
-        Object[] args = new Object[] { entityClass, whereClause, changes };
-        return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "updateBulk", args );
+        return Backendless.Persistence.update( BackendlessSerializer.getSimpleName( entityClass ), whereClause, changes );
       }
 
       @Override
-      public void update( String whereClause, Map<String, Object> changes, AsyncCallback<Integer> responder ) throws BackendlessException
+      public void update( final String whereClause, Map<String, Object> changes, AsyncCallback<Integer> responder ) throws BackendlessException
       {
-        Object[] args = new Object[] { entityClass, whereClause, changes };
-        Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "updateBulk", args, responder );
+        Backendless.Persistence.update( BackendlessSerializer.getSimpleName( entityClass ), whereClause, changes, responder );
       }
 
       @Override

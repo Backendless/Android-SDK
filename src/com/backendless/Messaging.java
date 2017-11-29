@@ -365,7 +365,7 @@ public final class Messaging
    *                      automatically creates it.
    * @param   message     object to publish. The object can be of any data type - a primitive value, String, Date, a
    *                      user-defined complex type, a collection or an array of these types.
-   * @return ${@link com.backendless.services.messaging.MessageStatus} - a data structure which contains ID of the published
+   * @return ${@link com.backendless.messaging.MessageStatus} - a data structure which contains ID of the published
    *         message and the status of the publish operation.
    * @throws  BackendlessException
    */
