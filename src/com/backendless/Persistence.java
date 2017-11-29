@@ -332,6 +332,30 @@ public final class Persistence
     }
   }
 
+  int remove( final String entityName, final String whereClause ) throws BackendlessException
+  {
+    Object[] args = new Object[] { entityName, whereClause };
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "removeBulk", args );
+  }
+
+  void remove( final String entityName, final String whereClause, AsyncCallback<Integer> responder ) throws BackendlessException
+  {
+    Object[] args = new Object[] { entityName, whereClause };
+    Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "removeBulk", args, responder );
+  }
+
+  int update( final String entityName, final String whereClause, Map<String, Object> changes ) throws BackendlessException
+  {
+    Object[] args = new Object[] { entityName, whereClause, changes };
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "updateBulk", args );
+  }
+
+  void update( final String entityName, final String whereClause, Map<String, Object> changes, AsyncCallback<Integer> responder ) throws BackendlessException
+  {
+    Object[] args = new Object[] { entityName, whereClause, changes };
+    Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "updateBulk", args, responder );
+  }
+
   protected <E> E findById( final Class<E> entity, final String id,
                             final List<String> relations ) throws BackendlessException
   {

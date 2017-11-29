@@ -128,28 +128,28 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public int remove( String whereClause ) throws BackendlessException
+  public int remove( final String whereClause ) throws BackendlessException
   {
     Object[] args = new Object[] { tableName, whereClause };
     return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "removeBulk", args );
   }
 
   @Override
-  public void remove( String whereClause, AsyncCallback<Integer> responder ) throws BackendlessException
+  public void remove( final String whereClause, AsyncCallback<Integer> responder ) throws BackendlessException
   {
     Object[] args = new Object[] { tableName, whereClause };
     Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "removeBulk", args, responder );
   }
 
   @Override
-  public int update( String whereClause, Map<String, Object> changes ) throws BackendlessException
+  public int update( final String whereClause, Map<String, Object> changes ) throws BackendlessException
   {
     Object[] args = new Object[] { tableName, whereClause, changes };
     return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "updateBulk", args );
   }
 
   @Override
-  public void update( String whereClause, Map<String, Object> changes, AsyncCallback<Integer> responder ) throws BackendlessException
+  public void update( final String whereClause, Map<String, Object> changes, AsyncCallback<Integer> responder ) throws BackendlessException
   {
     Object[] args = new Object[] { tableName, whereClause, changes };
     Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "updateBulk", args, responder );
