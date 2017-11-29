@@ -2,6 +2,7 @@ package com.backendless;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.utils.AndroidIO;
 
 import java.io.IOException;
@@ -66,6 +67,9 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
 
   private boolean restoreHeadersFromPreferences()
   {
+    if( sharedPreferences == null )
+      throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
+    
     String rawHeaders = sharedPreferences.getString( Type.HEADERS.name64(), null );
 
     if( rawHeaders != null )
@@ -95,6 +99,9 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
 
   private boolean restoreAuthKeysFromPreferences()
   {
+    if( sharedPreferences == null )
+      throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
+    
     String applicationId = sharedPreferences.getString( Type.APPLICATION_ID.name64(), null );
     String secretKey = sharedPreferences.getString( Type.SECRET_KEY.name64(), null );
 
@@ -132,6 +139,9 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
 
   private void cleanHeadersFromPreferences()
   {
+    if( sharedPreferences == null )
+      throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
+    
     if( sharedPreferences.contains( Type.HEADERS.name64() ) )
     {
       SharedPreferences.Editor editor = sharedPreferences.edit();
