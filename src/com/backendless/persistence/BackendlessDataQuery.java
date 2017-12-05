@@ -29,6 +29,8 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
   private List<String> properties;
   private String whereClause;
   private QueryOptions queryOptions;
+  private List<String> groupBy = new ArrayList<>();
+  private String havingClause = "";
 
   public BackendlessDataQuery()
   {
@@ -49,11 +51,14 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
     this.queryOptions = queryOptions;
   }
 
-  public BackendlessDataQuery( List<String> properties, String whereClause, QueryOptions queryOptions )
+  public BackendlessDataQuery( List<String> properties, String whereClause, QueryOptions queryOptions,
+                               List<String> groupBy, String havingClause )
   {
     this.properties = properties;
     this.whereClause = whereClause;
     this.queryOptions = queryOptions;
+    this.groupBy = groupBy;
+    this.havingClause = havingClause;
   }
 
   public List<String> getProperties()
@@ -103,6 +108,26 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
     this.queryOptions = queryOptions;
   }
 
+  public List<String> getGroupBy()
+  {
+    return groupBy;
+  }
+
+  public void setGroupBy( List<String> groupBy )
+  {
+    this.groupBy = groupBy;
+  }
+
+  public String getHavingClause()
+  {
+    return havingClause;
+  }
+
+  public void setHavingClause( String havingClause )
+  {
+    this.havingClause = havingClause;
+  }
+
   @Override
   public BackendlessDataQuery newInstance()
   {
@@ -110,6 +135,8 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
     result.setProperties( getProperties() );
     result.setWhereClause( whereClause );
     result.setQueryOptions( getQueryOptions() );
+    result.setGroupBy( groupBy );
+    result.setHavingClause( havingClause );
     return result;
   }
 }
