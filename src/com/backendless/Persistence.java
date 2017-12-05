@@ -19,6 +19,7 @@
 package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.commons.persistence.EntityDescription;
 import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 import com.backendless.exceptions.BackendlessException;
@@ -923,9 +924,28 @@ public final class Persistence
     while( entryIterator.hasNext() )
     {
       Map.Entry<String, Object> entry = entryIterator.next();
-      if( (entry.getValue() == null || entry.getValue() instanceof Map || entry.getValue() instanceof Collection || entry.getValue().getClass().isArray()) && !entry.getKey().equals( DEFAULT_OBJECT_ID_FIELD ) && !entry.getKey().equals( DEFAULT_CREATED_FIELD ) && !entry.getKey().equals( DEFAULT_UPDATED_FIELD ) && !entry.getKey().equals( DEFAULT_META_FIELD ) )
+      if( isRelationField( entry ) && !isSystemField( entry ) )
+      {
         entryIterator.remove();
+      }
     }
+  }
+
+  private boolean isRelationField( Map.Entry<String, Object> entry )
+  {
+    return entry.getValue() == null
+            || entry.getValue() instanceof Map
+            || entry.getValue() instanceof EntityDescription
+            || entry.getValue() instanceof Collection
+            || entry.getValue().getClass().isArray();
+  }
+
+  private boolean isSystemField( Map.Entry<String, Object> entry )
+  {
+    return entry.getKey().equals( DEFAULT_OBJECT_ID_FIELD )
+            || entry.getKey().equals( DEFAULT_CREATED_FIELD )
+            || entry.getKey().equals( DEFAULT_UPDATED_FIELD )
+            || entry.getKey().equals( DEFAULT_META_FIELD );
   }
 
   public List<Map<String, Object>> getView( String viewName, DataQueryBuilder queryBuilder )
