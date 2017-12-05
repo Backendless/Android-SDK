@@ -141,21 +141,15 @@ public class DataQueryBuilder
     return queryOptionsBuilder.setRelationsDepth( relationsDepth );
   }
 
-  public DataQueryBuilder setGroupByProperties( List<String> groupBy )
+  public DataQueryBuilder setGroupBy( List<String> groupBy )
   {
     this.groupBy = groupBy;
     return this;
   }
 
-  public DataQueryBuilder addGroupByProperties( String... groupBy )
+  public DataQueryBuilder addGroupBy( String... groupBy )
   {
     Collections.addAll( this.groupBy, groupBy );
-    return this;
-  }
-
-  public DataQueryBuilder addGroupByProperty( String groupBy )
-  {
-    this.groupBy.add( groupBy );
     return this;
   }
 
