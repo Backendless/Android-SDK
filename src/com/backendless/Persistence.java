@@ -19,7 +19,6 @@
 package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
-import com.backendless.commons.persistence.EntityDescription;
 import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 import com.backendless.exceptions.BackendlessException;
@@ -32,6 +31,7 @@ import com.backendless.persistence.LoadRelationsQueryBuilder;
 import com.backendless.persistence.MapDrivenDataStore;
 import com.backendless.persistence.QueryOptions;
 import com.backendless.property.ObjectProperty;
+import com.backendless.utils.MapEntityUtil;
 import com.backendless.utils.ReflectionUtil;
 import com.backendless.utils.ResponderHelper;
 import com.backendless.utils.StringUtils;
@@ -45,8 +45,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -93,7 +91,7 @@ public final class Persistence
 
     checkDeclaredType( entity.getClass() );
     final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
-    removeNullsAndRelations(serializedEntity);
+    MapEntityUtil.removeNullsAndRelations( serializedEntity);
 
     MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
     {
@@ -148,7 +146,7 @@ public final class Persistence
 
       checkDeclaredType( entity.getClass() );
       final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
-      removeNullsAndRelations( serializedEntity );
+      MapEntityUtil.removeNullsAndRelations( serializedEntity );
 
       MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
       {
@@ -916,36 +914,6 @@ public final class Persistence
     {
       throw new IllegalArgumentException( ExceptionMessage.ENTITY_MISSING_DEFAULT_CONSTRUCTOR );
     }
-  }
-
-  private void removeNullsAndRelations( Map<String, Object> entityMap )
-  {
-    Iterator<Map.Entry<String, Object>> entryIterator = entityMap.entrySet().iterator();
-    while( entryIterator.hasNext() )
-    {
-      Map.Entry<String, Object> entry = entryIterator.next();
-      if( isRelationField( entry ) && !isSystemField( entry ) )
-      {
-        entryIterator.remove();
-      }
-    }
-  }
-
-  private boolean isRelationField( Map.Entry<String, Object> entry )
-  {
-    return entry.getValue() == null
-            || entry.getValue() instanceof Map
-            || entry.getValue() instanceof EntityDescription
-            || entry.getValue() instanceof Collection
-            || entry.getValue().getClass().isArray();
-  }
-
-  private boolean isSystemField( Map.Entry<String, Object> entry )
-  {
-    return entry.getKey().equals( DEFAULT_OBJECT_ID_FIELD )
-            || entry.getKey().equals( DEFAULT_CREATED_FIELD )
-            || entry.getKey().equals( DEFAULT_UPDATED_FIELD )
-            || entry.getKey().equals( DEFAULT_META_FIELD );
   }
 
   public List<Map<String, Object>> getView( String viewName, DataQueryBuilder queryBuilder )
