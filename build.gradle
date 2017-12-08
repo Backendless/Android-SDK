@@ -5,7 +5,7 @@ apply plugin: 'signing'
 
 
 group 'com.backendless'
-version '4.3.7-snapshot'
+version '4.5-real-time-snapshot'
 archivesBaseName='backendless'
 
 
@@ -218,10 +218,15 @@ dependencies {
     provided fileTree(dir: 'libs', include: 'android.support.v4.jar')
     provided fileTree(dir: 'libs', include: 'FacebookSDK.jar')
     provided fileTree(dir: 'libs', include: 'maps.jar')
-    compile( group: "com.backendless", name: "commons", version: "4.4.0", changing: true) {
+    compile( group: "com.backendless", name: "commons", version: "4-real-time", changing: true) {
         exclude group: 'com.fasterxml.jackson.core'
     }
     compile( group: "weborb", name: "weborbclient", version: "5.1.0.210", changing: true)
 
+    compileOnly ('io.socket:socket.io-client:1.0.0') {
+//       excluding org.json which is provided by Android
+      exclude group: 'org.json', module: 'json'
+    }
 }
+
 apply plugin: 'java'
