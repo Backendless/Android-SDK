@@ -1,5 +1,7 @@
 package com.backendless.rt;
 
+import com.backendless.Backendless;
+import com.backendless.persistence.local.UserTokenStorageFactory;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -41,11 +43,21 @@ abstract class SocketIOConnectionManager
 
       try
       {
-        final String lookup = rtLookupService.lookup();
-        logger.info( "Looked up for server " + lookup );
         final IO.Options opts = new IO.Options();
         opts.reconnection = false;
-        socket = IO.socket( lookup, opts );
+
+        opts.path = "/" + Backendless.getApplicationId();
+
+        opts.query = "secretKey=" + Backendless.getSecretKey() + "&binary=true";
+
+        final String host = rtLookupService.lookup() + opts.path;
+        logger.info( "Looked up for server " + host );
+
+        String userToken = UserTokenStorageFactory.instance().getStorage().get();
+        if( userToken != null && !userToken.isEmpty() )
+          opts.query += "&userToken=" + userToken;
+
+        socket = IO.socket( host, opts );
         logger.info( "Socket object created" );
       }
       catch( URISyntaxException e )

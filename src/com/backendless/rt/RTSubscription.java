@@ -1,25 +1,23 @@
 package com.backendless.rt;
 
 import com.backendless.async.callback.AsyncCallback;
+import weborb.types.IAdaptingType;
 import weborb.v3types.GUID;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
-class RTSubscription<T>
+class RTSubscription
 {
   private final String id;
-  private AsyncCallback<T> callback;
-  private final RTTypes rtType;
-  private final RTEvent rtEvent;
-  private SubscriptionNames subscriptionName;
-  private final Collection<String> options = new ArrayList<>(  );
+  private AsyncCallback<IAdaptingType> callback;
+  private final SubscriptionNames subscriptionName;
+  private final Map<String, Object> options = new HashMap<>(  );
 
-  RTSubscription( RTTypes rtType, RTEvent rtEvent )
+  RTSubscription( SubscriptionNames subscriptionName )
   {
+    this.subscriptionName = subscriptionName;
     this.id = new GUID().toString();
-    this.rtType = rtType;
-    this.rtEvent = rtEvent;
   }
 
   public String getId()
@@ -28,53 +26,37 @@ class RTSubscription<T>
   }
 
 
-  public AsyncCallback<T> getCallback()
+  public AsyncCallback<IAdaptingType> getCallback()
   {
     return callback;
   }
 
-  public RTSubscription setCallback( AsyncCallback<T> callback )
+  public RTSubscription setCallback( AsyncCallback<IAdaptingType> callback )
   {
     this.callback = callback;
     return this;
   }
 
-  public RTTypes getRtType()
+  public RTSubscription putOption(String key, Object value)
   {
-    return rtType;
-  }
-
-  public RTEvent getRtEvent()
-  {
-    return rtEvent;
-  }
-
-  public SubscriptionNames getSubscriptionName()
-  {
-    return subscriptionName;
-  }
-
-  public RTSubscription setSubscriptionName( SubscriptionNames subscriptionName )
-  {
-    this.subscriptionName = subscriptionName;
+    options.put( key, value );
     return this;
-  }
-
-  public RTSubscription addOption( String option )
-  {
-     options.add( option );
-     return this;
-  }
-
-  public Collection<String> getOptions()
-  {
-    return options;
   }
 
   @Override
   public String toString()
   {
-    return "RTSubscription{" + "id='" + id + '\'' + ", callback=" + callback + ", rtType=" + rtType + ", rtEvent="
-            + rtEvent + ", subscriptionName=" + subscriptionName + ", options=" + options + '}';
+    return "RTSubscription{" + "id='" + id + '\'' + ", callback=" + callback + ", subscriptionName=" + subscriptionName + ", options=" + options + '}';
+  }
+
+  public Map<String, Object> toArgs()
+  {
+    final Map<String, Object> args = new HashMap<>(  );
+
+    args.put( "id", id );
+    args.put( "name", subscriptionName.name()  );
+    args.put( "options", options );
+
+    return args;
   }
 }
