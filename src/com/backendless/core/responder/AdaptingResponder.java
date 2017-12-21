@@ -74,7 +74,10 @@ public class AdaptingResponder<E> implements IRawResponder
 
     if( ((IAdaptingType) adaptingType).getDefaultType().equals( ErrMessage.class ) )
     {
-      handledAsFault( (AnonymousObject) bodyHolder, nextResponder );
+      if( nextResponder != null )
+      {
+        nextResponder.errorHandler( adaptFault( (AnonymousObject) bodyHolder ) );
+      }
     }
     else
     {
@@ -110,20 +113,16 @@ public class AdaptingResponder<E> implements IRawResponder
     return clazz;
   }
 
-  private void handledAsFault( AnonymousObject bodyHolder, IResponder responder )
+  public static BackendlessFault adaptFault( AnonymousObject bodyHolder )
   {
-    if( responder != null )
-    {
-      final StringType faultMessage = (StringType) bodyHolder.getProperties().get( "faultString" );
-      final StringType faultDetail = (StringType) bodyHolder.getProperties().get( "faultDetail" );
-      final StringType faultCode = (StringType) bodyHolder.getProperties().get( "faultCode" );
-      final AnonymousObject extendedData = (AnonymousObject) bodyHolder.getProperties().get( "extendedData" );
+    final StringType faultMessage = (StringType) bodyHolder.getProperties().get( "faultString" );
+    final StringType faultDetail = (StringType) bodyHolder.getProperties().get( "faultDetail" );
+    final StringType faultCode = (StringType) bodyHolder.getProperties().get( "faultCode" );
+    final AnonymousObject extendedData = (AnonymousObject) bodyHolder.getProperties().get( "extendedData" );
 
-      final Fault fault = new BackendlessFault( new Fault( (String) faultMessage.defaultAdapt(),
-                                                           (String) faultDetail.defaultAdapt(),
-                                                           (String) faultCode.defaultAdapt() ),
-                                                (Map<String, Object>) extendedData.defaultAdapt() );
-      responder.errorHandler( fault );
-    }
+    return new BackendlessFault( new Fault( (String) faultMessage.defaultAdapt(),
+                                            (String) faultDetail.defaultAdapt(),
+                                            (String) faultCode.defaultAdapt() ),
+                                 (Map<String, Object>) extendedData.defaultAdapt() );
   }
 }

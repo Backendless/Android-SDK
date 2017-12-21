@@ -23,6 +23,7 @@ import com.backendless.IDataStore;
 import com.backendless.Invoker;
 import com.backendless.Persistence;
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
@@ -33,7 +34,6 @@ import weborb.client.IResponder;
 import weborb.exceptions.AdaptingException;
 import weborb.reader.AnonymousObject;
 import weborb.reader.NamedObject;
-import weborb.reader.StringType;
 import weborb.types.IAdaptingType;
 import weborb.v3types.ErrMessage;
 
@@ -727,7 +727,10 @@ public class MapDrivenDataStore implements IDataStore<Map>
 
       if( ((IAdaptingType) adaptingType).getDefaultType().equals( ErrMessage.class ) )
       {
-        handledAsFault( (AnonymousObject) bodyHolder, nextResponder );
+        if( nextResponder != null )
+        {
+          nextResponder.errorHandler( AdaptingResponder.adaptFault( (AnonymousObject) bodyHolder ) );
+        }
       }
       else
       {
@@ -750,23 +753,6 @@ public class MapDrivenDataStore implements IDataStore<Map>
     public void errorHandler( Fault fault )
     {
       nextResponder.errorHandler( fault );
-    }
-
-    private void handledAsFault( AnonymousObject bodyHolder, IResponder responder )
-    {
-      if( responder != null )
-      {
-        final StringType faultMessage = (StringType) bodyHolder.getProperties().get( "faultString" );
-        final StringType faultDetail = (StringType) bodyHolder.getProperties().get( "faultDetail" );
-        final StringType faultCode = (StringType) bodyHolder.getProperties().get( "faultCode" );
-        final AnonymousObject extendedData = (AnonymousObject) bodyHolder.getProperties().get( "extendedData" );
-
-        final Fault fault = new BackendlessFault( new Fault( (String) faultMessage.defaultAdapt(),
-                                                             (String) faultDetail.defaultAdapt(),
-                                                             (String) faultCode.defaultAdapt() ),
-                                                  (Map<String, Object>) extendedData.defaultAdapt() );
-        responder.errorHandler( fault );
-      }
     }
   }
 }
