@@ -119,7 +119,9 @@ public class Invoker
 
     public void errorHandler( Fault fault )
     {
-      this.exception = new BackendlessException( new BackendlessFault( fault ) );
+      this.exception = (fault instanceof BackendlessFault)
+              ? new BackendlessException( (BackendlessFault) fault )
+              : new BackendlessException( new BackendlessFault( fault ) );
     }
 
     public Object getResult() throws BackendlessException

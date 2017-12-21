@@ -31,6 +31,8 @@ import weborb.reader.StringType;
 import weborb.types.IAdaptingType;
 import weborb.v3types.ErrMessage;
 
+import java.util.Map;
+
 public class AdaptingResponder<E> implements IRawResponder
 {
   private Class<E> clazz;
@@ -112,11 +114,15 @@ public class AdaptingResponder<E> implements IRawResponder
   {
     if( responder != null )
     {
-      StringType faultMessage = (StringType) bodyHolder.getProperties().get( "faultString" );
-      StringType faultDetail = (StringType) bodyHolder.getProperties().get( "faultDetail" );
-      StringType faultCode = (StringType) bodyHolder.getProperties().get( "faultCode" );
+      final StringType faultMessage = (StringType) bodyHolder.getProperties().get( "faultString" );
+      final StringType faultDetail = (StringType) bodyHolder.getProperties().get( "faultDetail" );
+      final StringType faultCode = (StringType) bodyHolder.getProperties().get( "faultCode" );
+      final AnonymousObject extendedData = (AnonymousObject) bodyHolder.getProperties().get( "extendedData" );
 
-      Fault fault = new Fault( (String) faultMessage.defaultAdapt(), (String) faultDetail.defaultAdapt(), (String) faultCode.defaultAdapt() );
+      final Fault fault = new BackendlessFault( new Fault( (String) faultMessage.defaultAdapt(),
+                                                           (String) faultDetail.defaultAdapt(),
+                                                           (String) faultCode.defaultAdapt() ),
+                                                (Map<String, Object>) extendedData.defaultAdapt() );
       responder.errorHandler( fault );
     }
   }

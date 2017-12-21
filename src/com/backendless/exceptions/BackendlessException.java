@@ -18,6 +18,8 @@
 
 package com.backendless.exceptions;
 
+import java.util.Map;
+
 public class BackendlessException extends RuntimeException
 {
   private static final long serialVersionUID = -7537447408166433783L;
@@ -101,6 +103,11 @@ public class BackendlessException extends RuntimeException
     return backendlessFault.getDetail();
   }
 
+  public Map<String, Object> getExtendedData()
+  {
+    return backendlessFault.getExtendedData();
+  }
+
   @Override
   public String toString()
   {
@@ -108,6 +115,7 @@ public class BackendlessException extends RuntimeException
     sb.append( getClass().getSimpleName() );
     sb.append( "{ code: '" ).append( getCode() ).append( '\'' );
     sb.append( ", message: '" ).append( getMessage() ).append( '\'' );
+    sb.append( ", extendedData: '").append( getExtendedData() ).append( '\'' );
     sb.append( " }" );
     return sb.toString();
   }
