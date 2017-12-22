@@ -7,14 +7,14 @@ import weborb.v3types.GUID;
 import java.util.HashMap;
 import java.util.Map;
 
-class RTSubscription
+public class RTSubscription
 {
   private final String id;
   private AsyncCallback<IAdaptingType> callback;
   private final SubscriptionNames subscriptionName;
   private final Map<String, Object> options = new HashMap<>(  );
 
-  RTSubscription( SubscriptionNames subscriptionName )
+  protected RTSubscription( SubscriptionNames subscriptionName )
   {
     this.subscriptionName = subscriptionName;
     this.id = new GUID().toString();
@@ -37,7 +37,7 @@ class RTSubscription
     return this;
   }
 
-  public RTSubscription putOption(String key, Object value)
+  protected RTSubscription putOption(String key, Object value)
   {
     options.put( key, value );
     return this;
@@ -49,7 +49,7 @@ class RTSubscription
     return "RTSubscription{" + "id='" + id + '\'' + ", callback=" + callback + ", subscriptionName=" + subscriptionName + ", options=" + options + '}';
   }
 
-  public Map<String, Object> toArgs()
+  Map<String, Object> toArgs()
   {
     final Map<String, Object> args = new HashMap<>(  );
 

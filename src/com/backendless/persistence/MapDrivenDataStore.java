@@ -26,6 +26,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.rt.data.DataListener;
 import com.backendless.utils.ResponderHelper;
 import weborb.client.Fault;
 import weborb.client.IRawResponder;
@@ -707,6 +708,12 @@ public class MapDrivenDataStore implements IDataStore<Map>
 
     Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, whereClause };
     Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args, callback );
+  }
+
+  @Override
+  public DataListener<Map> rt()
+  {
+    return Backendless.RT.Data.of( tableName );
   }
 
   private class MapDrivenResponder implements IRawResponder

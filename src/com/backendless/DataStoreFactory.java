@@ -23,6 +23,7 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.persistence.DataQueryBuilder;
 import com.backendless.persistence.LoadRelationsQueryBuilder;
+import com.backendless.rt.data.DataListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -525,6 +526,12 @@ class DataStoreFactory
 
         Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
         Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args, callback );
+      }
+
+      @Override
+      public DataListener<E> rt()
+      {
+        return Backendless.RT.Data.of( entityClass );
       }
     };
   }
