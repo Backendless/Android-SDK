@@ -29,20 +29,23 @@ public class DataListener<T> extends RTListener
 
   public void addCreateListener( AsyncCallback<T> callback )
   {
-    DataSubscription subscription = new DataSubscription( RTDataEvents.created, tableName );
-    subscription.setCallback( createCallback( callback ) );
+    DataSubscription subscription = new DataSubscription( RTDataEvents.created, tableName, createCallback( callback ) );
     addEventListener( subscription );
   }
 
   public void addCreateListener( String whereClause, AsyncCallback<T> callback )
   {
-    DataSubscription subscription = new DataSubscription( RTDataEvents.created, tableName ).withWhere( whereClause );
-    subscription.setCallback( createCallback( callback ) );
+    DataSubscription subscription = new DataSubscription( RTDataEvents.created, tableName, createCallback( callback ) )
+            .withWhere( whereClause );
+
     addEventListener( subscription );
   }
 
   private AsyncCallback<IAdaptingType> createCallback( final AsyncCallback<T> callback )
   {
+    if( callback == null )
+      throw new IllegalArgumentException( "Callback can not be null" );
+
     return new AsyncCallback<IAdaptingType>()
     {
       @Override
