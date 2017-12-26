@@ -240,7 +240,6 @@ public class BackendlessPushService extends IntentService implements PushReceive
     if( templateDTO.getButtonTemplate().getSound() != null )
       sound = Uri.parse( templateDTO.getButtonTemplate().getSound() );
 
-
     notificationBuilder
             .setAutoCancel( true )
             .setDefaults( Notification.DEFAULT_ALL )
@@ -249,15 +248,16 @@ public class BackendlessPushService extends IntentService implements PushReceive
             .setTicker( templateDTO.getTickerText() )
             .setPriority( templateDTO.getPriority() )
             .setColor( templateDTO.getColorCode() )
+            .setColorized( templateDTO.getColorized() )
             .setLights( templateDTO.getLightsColor(), templateDTO.getLightsOnMs(), templateDTO.getLightsOffMs() )
-
+            .setContentTitle( templateDTO.getFirstRowTitle() )
             .setBadgeIconType( templateDTO.getBadge() )
+
             .setVisibility( templateDTO.getButtonTemplate().getVisibility() )
             .setVibrate( vibrate )
             .setSound( sound )
 
-            .setContentText( messageText )
-            ;
+            .setContentText( messageText );
 
     return notificationBuilder.build();
   }
