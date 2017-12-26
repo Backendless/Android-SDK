@@ -1,14 +1,16 @@
 package com.backendless.rt;
 
-import com.backendless.Backendless;
-import com.backendless.rt.data.RTDataEvents;
+import com.backendless.exceptions.BackendlessFault;
 import io.socket.emitter.Emitter;
+import weborb.reader.AnonymousObject;
+import weborb.types.IAdaptingType;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static com.backendless.utils.WeborbSerializationHelper.*;
 
 class RTClientSocketIO implements RTClient
 {
@@ -32,13 +34,46 @@ class RTClientSocketIO implements RTClient
       @Override
       void subscriptionResult( Object... args )
       {
+        logger.info( "subscription result " + Arrays.toString( args ) );
 
+        if( args == null || args.length < 1 )
+        {
+          logger.warning( "subscription result is null or empty" );
+          return;
+        }
+
+        AnonymousObject result = (AnonymousObject) deserialize( args[ 0 ] );
+
+        String id = asString( result, "id" );
+
+        logger.info( "Got result for subscription " + id );
+
+        RTSubscription subscription = subscriptions.get( id );
+
+        if( subscription == null )
+        {
+          logger.info( "There is no handler for subscription " + id );
+          return;
+        }
+
+        final Object error = asObject( result, "error" );
+
+        if( error != null )
+        {
+          logger.info( "got error " + error.toString() );
+          final BackendlessFault fault = new BackendlessFault( error.toString() );
+          subscription.getCallback().handleFault( fault );
+          return;
+        }
+
+        IAdaptingType data = asAdaptingType( result, "data" );
+        subscription.getCallback().handleResponse( data );
       }
 
       @Override
       void invocationResult( Object... args )
       {
-
+        logger.info( "invocation result " + Arrays.toString( args ) );
       }
     };
 
@@ -56,9 +91,7 @@ class RTClientSocketIO implements RTClient
 
   private Emitter subOn( RTSubscription subscription )
   {
-    final Emitter emitter = connectionManager
-            .get()
-            .emit( "SUB_ON", subscription.getId(), subscription.getSubscriptionName(), subscription.getOptions().toArray() );
+    final Emitter emitter = connectionManager.get().emit( "SUB_ON", serialize( subscription.toArgs() ) );
 
     logger.info( "subOn called" );
     return emitter;
@@ -66,7 +99,7 @@ class RTClientSocketIO implements RTClient
 
   private Emitter subOff( String subscriptionId )
   {
-    final Emitter emitter = connectionManager.get().emit( "SUB_OFF", subscriptionId );
+    final Emitter emitter = connectionManager.get().emit( "SUB_OFF", serialize( subscriptionId ) );
     logger.info( "subOff called" );
     return emitter;
   }
