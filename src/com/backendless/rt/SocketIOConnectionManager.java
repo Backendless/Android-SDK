@@ -48,7 +48,7 @@ abstract class SocketIOConnectionManager
 
         opts.path = "/" + Backendless.getApplicationId();
 
-        opts.query = "secretKey=" + Backendless.getSecretKey() + "&binary=true";
+        opts.query = "apiKey=" + Backendless.getSecretKey() + "&binary=true";
 
         final String host = rtLookupService.lookup() + opts.path;
         logger.info( "Looked up for server " + host );
