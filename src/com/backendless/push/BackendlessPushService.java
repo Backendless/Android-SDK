@@ -240,10 +240,6 @@ public class BackendlessPushService extends IntentService implements PushReceive
     if( templateDTO.getButtonTemplate().getSound() != null )
       sound = Uri.parse( templateDTO.getButtonTemplate().getSound() );
 
-    // TODO
-    // templateDTO.getSecondRowTitle()
-    // templateDTO.getThirdRowTitle()
-
     notificationBuilder
             .setAutoCancel( true )
             .setDefaults( Notification.DEFAULT_ALL )
@@ -262,10 +258,6 @@ public class BackendlessPushService extends IntentService implements PushReceive
             .setSound( sound )
 
             .setContentText( messageText );
-
-    // TODO
-    //templateDTO.getButtonTemplate().getActions()
-    //.addAction( NotificationCompat.Action action )
 
     return notificationBuilder.build();
   }
