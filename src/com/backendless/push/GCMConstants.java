@@ -30,7 +30,7 @@ public class GCMConstants
   public static final String EXTRA_UNREGISTERED = "unregistered";
   public static final String EXTRA_ERROR = "error";
   public static final String EXTRA_IS_INTERNAL = "internal_registration";
-  public static final String EXTRA_REGISTRATION_ID = "registration_id";
+  public static final String EXTRA_REGISTRATION_IDS = "registration_id";
   public static final String EXTRA_DEVICE_TOKEN = "device_token";
   public static final String EXTRA_SPECIAL_MESSAGE = "message_type";
   public static final String VALUE_DELETED_MESSAGES = "deleted_messages";

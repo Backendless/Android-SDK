@@ -28,7 +28,13 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Build;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public final class GCMRegistrar
 {
@@ -40,7 +46,7 @@ public final class GCMRegistrar
   private static final String MESSAGING_PREFERENCES = "com.backendless.push";
   private static final int DEFAULT_BACKOFF_MS = 3000;
   private static final String PROPERTY_GCM_DEVICE_TOKEN = "gcmDeviceToken";
-  private static final String PROPERTY_REGISTRATION_ID = "registrationId";
+  private static final String PROPERTY_REGISTRATION_IDS = "registrationIds";
   private static final String PROPERTY_EXPIRATION = "registrationDate";
   private static final String PROPERTY_APP_VERSION = "appVersion";
   private static final String PROPERTY_SENDER_ID = "SenderId";
@@ -166,7 +172,7 @@ public final class GCMRegistrar
     Intent intent = new Intent();
     intent.setAction( GCMConstants.INTENT_FROM_GCM_REGISTRATION_CALLBACK );
     intent.putExtra( GCMConstants.EXTRA_IS_INTERNAL, true );
-    intent.putExtra( GCMConstants.EXTRA_REGISTRATION_ID, registrationInfo.getRegistrationId() );
+    intent.putExtra( GCMConstants.EXTRA_REGISTRATION_IDS, registrationInfo.getRegistrationIds() );
     intent.putExtra( GCMConstants.EXTRA_DEVICE_TOKEN, registrationInfo.getGcmDeviceToken() );
     context.sendOrderedBroadcast( intent, null );
   }
@@ -214,7 +220,7 @@ public final class GCMRegistrar
     final SharedPreferences prefs = getGCMPreferences( context );
     RegistrationInfo registrationInfo = new RegistrationInfo();
     registrationInfo.setGcmDeviceToken( prefs.getString( PROPERTY_GCM_DEVICE_TOKEN, "" ) );
-    registrationInfo.setRegistrationId( prefs.getString( PROPERTY_REGISTRATION_ID, "" ) );
+    registrationInfo.setRegistrationIds( prefs.getString( PROPERTY_REGISTRATION_IDS, "" ) );
     registrationInfo.setRegistrationExpiration( prefs.getLong( PROPERTY_EXPIRATION, 0 ) );
     int oldVersion = prefs.getInt( PROPERTY_APP_VERSION, Integer.MIN_VALUE );
     int newVersion = getAppVersion( context );
@@ -222,7 +228,7 @@ public final class GCMRegistrar
     if(registrationInfo.getGcmDeviceToken() == null || registrationInfo.getGcmDeviceToken().equals( "" ))
       return null;
 
-    if(registrationInfo.getRegistrationId() == null || registrationInfo.getRegistrationId().equals( "" ))
+    if(registrationInfo.getRegistrationIds() == null || registrationInfo.getRegistrationIds().isEmpty())
       return null;
 
     if( (oldVersion != Integer.MIN_VALUE && oldVersion != newVersion) || registrationInfo.getRegistrationExpiration() == null || registrationInfo.getRegistrationExpiration() < System.currentTimeMillis() )
@@ -242,7 +248,7 @@ public final class GCMRegistrar
   static void clearRegistration( Context context )
   {
     setGCMdeviceToken( context, "" );
-    setRegistrationId( context, "", 0 );
+    setRegistrationIds( context, "", 0 );
   }
 
   static void setGCMdeviceToken( Context context, String deviceToken )
@@ -254,10 +260,10 @@ public final class GCMRegistrar
     editor.commit();
   }
 
-  static void setRegistrationId( Context context, String registrationId, long expirationDate )
+  static void setRegistrationIds( Context context, String registrationIds, long expirationDate )
   {
     SharedPreferences.Editor editor = getGCMPreferences( context ).edit();
-    editor.putString( PROPERTY_REGISTRATION_ID, registrationId );
+    editor.putString( PROPERTY_REGISTRATION_IDS, registrationIds );
     editor.putLong( PROPERTY_EXPIRATION, expirationDate );
     editor.commit();
   }
