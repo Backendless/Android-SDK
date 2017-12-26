@@ -10,11 +10,11 @@ import java.util.Map;
 public class RTSubscription
 {
   private final String id;
-  private final AsyncCallback<IAdaptingType> callback;
+  private final RTCallback callback;
   private final SubscriptionNames subscriptionName;
   private final Map<String, Object> options = new HashMap<>(  );
 
-  protected RTSubscription( SubscriptionNames subscriptionName, AsyncCallback<IAdaptingType> callback )
+  protected RTSubscription( SubscriptionNames subscriptionName, RTCallback callback )
   {
     if( callback == null )
       throw new IllegalArgumentException( "Callback can not be null" );
@@ -30,7 +30,7 @@ public class RTSubscription
   }
 
 
-  public AsyncCallback<IAdaptingType> getCallback()
+  public RTCallback getCallback()
   {
     return callback;
   }
@@ -39,6 +39,16 @@ public class RTSubscription
   {
     options.put( key, value );
     return this;
+  }
+
+  public SubscriptionNames getSubscriptionName()
+  {
+    return subscriptionName;
+  }
+
+  public Object getOption( String key )
+  {
+    return options.get( key );
   }
 
   @Override
