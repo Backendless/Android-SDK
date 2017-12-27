@@ -249,7 +249,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
       @Override
       public void handleFault( BackendlessFault fault )
       {
-        callback.onError( context, "Could not register device on Backendless server: " + fault.getMessage() );
+        callback.onError( context, "Could not register device on Backendless server: " + fault.toString() );
       }
     } );
   }
@@ -268,7 +268,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
       @Override
       public void handleFault( BackendlessFault fault )
       {
-        callback.onError( context, "Could not unregister device on Backendless server: " + fault.getMessage() );
+        callback.onError( context, "Could not unregister device on Backendless server: " + fault.toString() );
       }
     } );
   }
