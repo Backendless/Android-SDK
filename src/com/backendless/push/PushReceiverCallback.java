@@ -9,7 +9,7 @@ import android.content.Intent;
 public interface PushReceiverCallback
 {
 
-  void onRegistered( Context context, String registrationId );
+  void onRegistered( Context context, String registrationIds );
 
   void onUnregistered( Context context, Boolean unregistered );
 

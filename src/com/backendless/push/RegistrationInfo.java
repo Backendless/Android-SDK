@@ -21,7 +21,7 @@ package com.backendless.push;
 class RegistrationInfo
 {
   private String gcmDeviceToken = "";
-  private String registrationId = "";
+  private String registrationIds = "";
   private Long registrationExpiration;
 
   public String getGcmDeviceToken()
@@ -34,14 +34,14 @@ class RegistrationInfo
     this.gcmDeviceToken = gcmDeviceToken;
   }
 
-  public String getRegistrationId()
+  public String getRegistrationIds()
   {
-    return registrationId;
+    return registrationIds;
   }
 
-  public void setRegistrationId( String registrationId )
+  public void setRegistrationIds( String registrationId )
   {
-    this.registrationId = registrationId;
+    this.registrationIds = registrationId;
   }
 
   public Long getRegistrationExpiration()
