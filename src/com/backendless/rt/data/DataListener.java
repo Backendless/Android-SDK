@@ -1,6 +1,8 @@
 package com.backendless.rt.data;
 
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.async.message.AsyncMessage;
+import com.backendless.core.ResponseCarrier;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.rt.RTCallback;
@@ -300,18 +302,19 @@ public class DataListener<T> extends RTListener
       {
         try
         {
-          callback.handleResponse( (T) response.adapt( clazz ) );
+          final T adaptedResponse = (T) response.adapt( clazz );
+          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<T>( adaptedResponse, callback ) );
         }
         catch( AdaptingException e )
         {
-          callback.handleFault( new BackendlessFault( e.getMessage() ) );
+          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<T>( new BackendlessFault( e.getMessage() ), callback ) );
         }
       }
 
       @Override
       public void handleFault( BackendlessFault fault )
       {
-        callback.handleFault( fault );
+        ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<T>( fault, callback ) );
       }
     };
   }
