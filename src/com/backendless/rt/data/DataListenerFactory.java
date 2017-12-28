@@ -3,7 +3,6 @@ package com.backendless.rt.data;
 import com.backendless.rt.AbstractListenerFactory;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class DataListenerFactory extends AbstractListenerFactory<DataListener>
 {
@@ -13,9 +12,9 @@ public class DataListenerFactory extends AbstractListenerFactory<DataListener>
     return create( entity.getName(), new Provider()
     {
       @Override
-      public DataListener<T> create()
+      public DataListenerImpl create()
       {
-        return new DataListener( entity );
+        return new DataListenerImpl( entity );
       }
     } );
   }
@@ -26,9 +25,9 @@ public class DataListenerFactory extends AbstractListenerFactory<DataListener>
     return create( tableName, new Provider()
     {
       @Override
-      public DataListener<Map> create()
+      public DataListenerImpl create()
       {
-        return new DataListener( tableName );
+        return new DataListenerImpl( tableName );
       }
     } );
   }
