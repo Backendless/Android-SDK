@@ -1,5 +1,7 @@
 package com.backendless.rt;
 
+import com.backendless.async.message.AsyncMessage;
+import com.backendless.core.ResponseCarrier;
 import com.backendless.exceptions.BackendlessFault;
 import io.socket.emitter.Emitter;
 import weborb.reader.AnonymousObject;
@@ -62,12 +64,12 @@ class RTClientSocketIO implements RTClient
         {
           logger.info( "got error " + error.toString() );
           final BackendlessFault fault = new BackendlessFault( error.toString() );
-          subscription.getCallback().handleFault( fault );
+          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<>( fault, subscription.getCallback() ) );
           return;
         }
 
         IAdaptingType data = asAdaptingType( result, "data" );
-        subscription.getCallback().handleResponse( data );
+        ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<>( data, subscription.getCallback() ) );
       }
 
       @Override

@@ -220,7 +220,7 @@ public class DataListener<T> extends RTListener
       @Override
       public boolean test( RTSubscription subscription )
       {
-        return isCreateSubscription( subscription, event );
+        return isEventSubscription( subscription, event );
       }
     } );
   }
@@ -233,7 +233,7 @@ public class DataListener<T> extends RTListener
       @Override
       public boolean test( RTSubscription subscription )
       {
-        return isCreateSubscription( subscription, event )
+        return isEventSubscription( subscription, event )
                 && subscription.getCallback().usersCallback().equals( callback );
       }
     } );
@@ -248,7 +248,7 @@ public class DataListener<T> extends RTListener
       @Override
       public boolean test( RTSubscription subscription )
       {
-        return isCreateSubscription( subscription, event )
+        return isEventSubscription( subscription, event )
                 && subscription.getCallback().usersCallback().equals( callback )
                 && whereClause.equals(((DataSubscription)subscription).getWhereClause());
       }
@@ -263,33 +263,28 @@ public class DataListener<T> extends RTListener
       @Override
       public boolean test( RTSubscription subscription )
       {
-        return isCreateSubscription( subscription, event )
+        return isEventSubscription( subscription, event )
                 && whereClause.equals(((DataSubscription)subscription).getWhereClause());
       }
     } );
   }
 
-  private boolean isCreateSubscription( RTSubscription subscription, RTDataEvents event )
+  private boolean isEventSubscription( RTSubscription subscription, RTDataEvents event )
   {
     if( !(subscription instanceof DataSubscription))
       return false;
 
     DataSubscription dataSubscription = (DataSubscription) subscription;
 
-    if(dataSubscription.getSubscriptionName() == SubscriptionNames.OBJECTS_CHANGES
-            && dataSubscription.getEvent() == event )
-    {
-      return true;
-    }
-
-    return false;
+    return dataSubscription.getSubscriptionName() == SubscriptionNames.OBJECTS_CHANGES
+            && dataSubscription.getEvent() == event;
   }
 
-  private RTCallback<T> createCallback( final AsyncCallback<T> callback )
+  private RTCallback createCallback( final AsyncCallback<T> callback )
   {
     checkCallback( callback );
 
-    return new RTCallback<T>()
+    return new RTCallback()
     {
       @Override
       public AsyncCallback<T> usersCallback()
@@ -303,18 +298,18 @@ public class DataListener<T> extends RTListener
         try
         {
           final T adaptedResponse = (T) response.adapt( clazz );
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<T>( adaptedResponse, callback ) );
+          callback.handleResponse( adaptedResponse );
         }
         catch( AdaptingException e )
         {
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<T>( new BackendlessFault( e.getMessage() ), callback ) );
+          callback.handleFault( new BackendlessFault( e.getMessage() ) );
         }
       }
 
       @Override
       public void handleFault( BackendlessFault fault )
       {
-        ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<T>( fault, callback ) );
+        callback.handleFault( fault );
       }
     };
   }

@@ -1,16 +1,16 @@
 package com.backendless.rt.data;
 
+import com.backendless.rt.AbstractListenerFactory;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class DataListenerFactory
+public class DataListenerFactory extends AbstractListenerFactory<DataListener>
 {
-  private final ConcurrentHashMap<String, DataListener> listeners = new ConcurrentHashMap<>();
-  private final Object lock = new Object();
-
+  @SuppressWarnings( "unchecked" )
   public <T> DataListener<T> of( final Class<T> entity )
   {
-    return of( entity.getName(), new Provider<T>()
+    return create( entity.getName(), new Provider()
     {
       @Override
       public DataListener<T> create()
@@ -20,41 +20,16 @@ public class DataListenerFactory
     } );
   }
 
+  @SuppressWarnings( "unchecked" )
   public DataListener<Map> of( final String tableName )
   {
-    return of( tableName, new Provider()
+    return create( tableName, new Provider()
     {
       @Override
-      public DataListener create()
+      public DataListener<Map> create()
       {
         return new DataListener( tableName );
       }
     } );
-  }
-
-  private <T> DataListener<T> of( final String key, Provider provider )
-  {
-    DataListener listener = listeners.get( key );
-
-    if( listener == null )
-    {
-      synchronized( lock )
-      {
-        listener = listeners.get( key );
-
-        if( listener == null )
-        {
-          listener = provider.create();
-          listeners.put( key, listener );
-        }
-      }
-    }
-
-    return listener;
-  }
-
-  private interface Provider<T>
-  {
-    DataListener<T> create();
   }
 }
