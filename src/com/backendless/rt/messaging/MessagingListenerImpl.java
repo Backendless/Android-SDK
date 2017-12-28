@@ -12,6 +12,7 @@ public class MessagingListenerImpl extends RTListenerImpl implements MessagingLi
 {
   private final String channel;
   private final RTClient rtClient = RTClientFactory.get();
+  private volatile boolean connected;
 
   MessagingListenerImpl( String channel )
   {
@@ -21,6 +22,18 @@ public class MessagingListenerImpl extends RTListenerImpl implements MessagingLi
   public void connect( )
   {
     connect( null );
+  }
+
+  @Override
+  public void disconnect()
+  {
+
+  }
+
+  @Override
+  public boolean isConnected()
+  {
+    return false;
   }
 
   public void connect( final AsyncCallback<Void> callback )
@@ -36,6 +49,7 @@ public class MessagingListenerImpl extends RTListenerImpl implements MessagingLi
       @Override
       public void handleResponse( IAdaptingType response )
       {
+        connected = true;
         if( callback != null )
           callback.handleResponse( null );
       }
@@ -48,13 +62,14 @@ public class MessagingListenerImpl extends RTListenerImpl implements MessagingLi
       }
     } );
 
+    addEventListener( messagingSubscription );
     rtClient.subscribe( messagingSubscription );
   }
 
   @Override
   public void addConnectListener( AsyncCallback<Void> callback )
   {
-
+      connect( callback );
   }
 
   @Override

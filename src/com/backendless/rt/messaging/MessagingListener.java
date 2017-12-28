@@ -7,6 +7,10 @@ public interface MessagingListener extends RTListener
 {
   void connect( );
 
+  void disconnect();
+
+  boolean isConnected();
+
   void connect( AsyncCallback<Void> callback );
 
   void addConnectListener( AsyncCallback<Void> callback );
