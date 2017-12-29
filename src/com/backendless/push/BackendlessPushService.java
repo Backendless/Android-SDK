@@ -7,6 +7,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
@@ -18,16 +20,19 @@ import android.widget.RemoteViews;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.backendless.messaging.Action;
 import com.backendless.messaging.AndroidPushTemplate;
 import com.backendless.messaging.PublishOptions;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class BackendlessPushService extends IntentService implements PushReceiverCallback
 {
@@ -38,7 +43,6 @@ public class BackendlessPushService extends IntentService implements PushReceive
   private static final String TOKEN = Long.toBinaryString( random.nextLong() );
   private static final String EXTRA_TOKEN = "token";
   private static Map<String, AndroidPushTemplate> pushNotificationTemplateDTOs = Collections.emptyMap();
-  private static final AtomicInteger ints = new AtomicInteger(  );
 
   private PushReceiverCallback callback;
 
@@ -137,7 +141,8 @@ public class BackendlessPushService extends IntentService implements PushReceive
 
   private void handleMessage( final Context context, Intent intent )
   {
-    String contentText = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TEXT_TAG );
+    final int messageId = intent.getIntExtra( BackendlessBroadcastReceiver.EXTRA_MESSAGE_ID, 0 );
+    final String contentText = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TEXT_TAG );
 
     try
     {
@@ -146,7 +151,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
       {
         AndroidPushTemplate androidPushTemplateDTO = pushNotificationTemplateDTOs.get( templateName );
         Notification notification = convertFromTemplate( androidPushTemplateDTO, contentText );
-        showNotification( notification, androidPushTemplateDTO.getName() );
+        showNotification( notification, androidPushTemplateDTO.getName(), messageId );
         return;
       }
 
@@ -155,7 +160,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
       {
         AndroidPushTemplate androidPushTemplateDTO = (AndroidPushTemplate) weborb.util.io.Serializer.fromBytes( immediatePush.getBytes(), weborb.util.io.Serializer.JSON, false );
         Notification notification = convertFromTemplate( androidPushTemplateDTO, contentText );
-        showNotification( notification, androidPushTemplateDTO.getName() );
+        showNotification( notification, androidPushTemplateDTO.getName(), messageId );
         return;
       }
 
@@ -220,49 +225,94 @@ public class BackendlessPushService extends IntentService implements PushReceive
 
   private Notification convertFromTemplate( AndroidPushTemplate templateDTO, String messageText )
   {
-    String channelId = Backendless.getApplicationId() + ":" + templateDTO.getName();
-
     // Notification channel ID is ignored for Android 7.1.1 (API level 25) and lower.
     // NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder( getApplicationContext(), channelId)
 
-    NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder( getApplicationContext(), channelId );
+    NotificationCompat.Builder notificationBuilder;
+    // android.os.Build.VERSION_CODES.O == 26
+    if( android.os.Build.VERSION.SDK_INT >= 26 )
+    {
+      final String channelId = Backendless.getApplicationId() + ":" + templateDTO.getName();
+      NotificationChannel notificationChannel = new NotificationChannel( channelId, templateDTO.getName(), NotificationManager.IMPORTANCE_DEFAULT );
+      notificationChannel.setShowBadge( templateDTO.getButtonTemplate().getShowBadge() );
+      notificationChannel.setBypassDnd( templateDTO.getButtonTemplate().getBypassDND() );
 
-    long[] vibrate = null;
+      NotificationManager notificationManager = (NotificationManager) getSystemService( Context.NOTIFICATION_SERVICE );
+      notificationManager.createNotificationChannel( notificationChannel );
+
+      notificationBuilder = new NotificationCompat.Builder( getApplicationContext(), notificationChannel.getId() );
+    }
+    else
+    {
+      notificationBuilder = new NotificationCompat.Builder( getApplicationContext() );
+    }
+
+    notificationBuilder.setDefaults( Notification.DEFAULT_ALL );
+
     if( templateDTO.getButtonTemplate().getVibrate() != null )
     {
-      vibrate = new long[ templateDTO.getButtonTemplate().getVibrate().length ];
+      long[] vibrate = new long[ templateDTO.getButtonTemplate().getVibrate().length ];
       int index = 0;
       for( long l : templateDTO.getButtonTemplate().getVibrate() )
         vibrate[ index++ ] = l;
+      notificationBuilder.setVibrate( vibrate );
     }
 
-    Uri sound = null;
     if( templateDTO.getButtonTemplate().getSound() != null )
-      sound = Uri.parse( templateDTO.getButtonTemplate().getSound() );
+      notificationBuilder.setSound( Uri.parse( templateDTO.getButtonTemplate().getSound() ) );
+
+    try
+    {
+      InputStream is = (InputStream) new URL( templateDTO.getAttachmentUrl() ).getContent();
+      Bitmap bitmap = BitmapFactory.decodeStream( is );
+      if( bitmap != null )
+        notificationBuilder.setStyle( new NotificationCompat.BigPictureStyle().bigPicture( bitmap ) );
+      else
+        Log.i( TAG, "Cannot convert rich media for notification into bitmap." );
+    }
+    catch( IOException e )
+    {
+      Log.e( TAG, "Cannot receive rich media for notification." );
+    }
+
 
     notificationBuilder
             .setAutoCancel( true )
             .setDefaults( Notification.DEFAULT_ALL )
-            .setWhen( System.currentTimeMillis() )
+            .setWhen( System.currentTimeMillis() + 1000 )
             .setSmallIcon( Integer.parseInt( templateDTO.getIcon() ) )
-            .setTicker( templateDTO.getTickerText() )
             .setPriority( templateDTO.getPriority() )
             .setColor( templateDTO.getColorCode() )
             .setColorized( templateDTO.getColorized() )
             .setLights( templateDTO.getLightsColor(), templateDTO.getLightsOnMs(), templateDTO.getLightsOffMs() )
-            .setContentTitle( templateDTO.getFirstRowTitle() )
             .setBadgeIconType( templateDTO.getBadge() )
-
             .setVisibility( templateDTO.getButtonTemplate().getVisibility() )
-            .setVibrate( vibrate )
-            .setSound( sound )
 
+            .setTicker( templateDTO.getTickerText() )
+            .setContentTitle( templateDTO.getFirstRowTitle() )
             .setContentText( messageText );
+
+
+    if (templateDTO.getButtonTemplate().getActions() != null)
+    {
+      List<NotificationCompat.Action> actions = createActions(templateDTO.getButtonTemplate().getActions());
+      for( NotificationCompat.Action action : actions )
+        notificationBuilder.addAction( action );
+    }
 
     return notificationBuilder.build();
   }
 
-  private void showNotification( final Notification notification, final String tag )
+  private List<NotificationCompat.Action> createActions( Action[] actions )
+  {
+    List<NotificationCompat.Action> notifActoins = new ArrayList<>(  );
+
+    // TODO
+
+    return notifActoins;
+  }
+
+  private void showNotification( final Notification notification, final String tag, final int messageId )
   {
     final NotificationManagerCompat notificationManager = NotificationManagerCompat.from( getApplicationContext() );
     Handler handler = new Handler( Looper.getMainLooper() );
@@ -271,7 +321,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
       @Override
       public void run()
       {
-        notificationManager.notify( tag, ints.getAndIncrement(), notification );
+        notificationManager.notify( tag, messageId, notification );
       }
     } );
   }
