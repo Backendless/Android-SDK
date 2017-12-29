@@ -3,15 +3,13 @@ package com.backendless.rt.messaging;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.rt.RTListener;
 
-public interface MessagingListener extends RTListener
+public interface Channel extends RTListener
 {
   void connect( );
 
   void disconnect();
 
   boolean isConnected();
-
-  void connect( AsyncCallback<Void> callback );
 
   void addConnectListener( AsyncCallback<Void> callback );
 
