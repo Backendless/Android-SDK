@@ -3,6 +3,7 @@ package com.backendless.push;
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -15,6 +16,7 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.RemoteInput;
 import android.util.Log;
 import android.widget.RemoteViews;
 import com.backendless.Backendless;
@@ -150,7 +152,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
       if( templateName != null )
       {
         AndroidPushTemplate androidPushTemplateDTO = pushNotificationTemplateDTOs.get( templateName );
-        Notification notification = convertFromTemplate( androidPushTemplateDTO, contentText );
+        Notification notification = convertFromTemplate( context, androidPushTemplateDTO, contentText, messageId );
         showNotification( notification, androidPushTemplateDTO.getName(), messageId );
         return;
       }
@@ -159,7 +161,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
       if( immediatePush != null )
       {
         AndroidPushTemplate androidPushTemplateDTO = (AndroidPushTemplate) weborb.util.io.Serializer.fromBytes( immediatePush.getBytes(), weborb.util.io.Serializer.JSON, false );
-        Notification notification = convertFromTemplate( androidPushTemplateDTO, contentText );
+        Notification notification = convertFromTemplate( context, androidPushTemplateDTO, contentText, messageId );
         showNotification( notification, androidPushTemplateDTO.getName(), messageId );
         return;
       }
@@ -223,7 +225,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
     }
   }
 
-  private Notification convertFromTemplate( AndroidPushTemplate templateDTO, String messageText )
+  private Notification convertFromTemplate( Context context, AndroidPushTemplate templateDTO, String messageText, int messageId )
   {
     // Notification channel ID is ignored for Android 7.1.1 (API level 25) and lower.
     // NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder( getApplicationContext(), channelId)
@@ -275,7 +277,6 @@ public class BackendlessPushService extends IntentService implements PushReceive
       Log.e( TAG, "Cannot receive rich media for notification." );
     }
 
-
     notificationBuilder
             .setAutoCancel( true )
             .setDefaults( Notification.DEFAULT_ALL )
@@ -287,15 +288,21 @@ public class BackendlessPushService extends IntentService implements PushReceive
             .setLights( templateDTO.getLightsColor(), templateDTO.getLightsOnMs(), templateDTO.getLightsOffMs() )
             .setBadgeIconType( templateDTO.getBadge() )
             .setVisibility( templateDTO.getButtonTemplate().getVisibility() )
+            .setAutoCancel( templateDTO.getCancelOnTap() )
 
             .setTicker( templateDTO.getTickerText() )
             .setContentTitle( templateDTO.getFirstRowTitle() )
             .setContentText( messageText );
 
+    if( templateDTO.getCancelAfter() != null && templateDTO.getCancelAfter() != 0 )
+      notificationBuilder.setTimeoutAfter( templateDTO.getCancelAfter() );
+
+    // TODO: on tap
+    // TODO: on cancel
 
     if (templateDTO.getButtonTemplate().getActions() != null)
     {
-      List<NotificationCompat.Action> actions = createActions(templateDTO.getButtonTemplate().getActions());
+      List<NotificationCompat.Action> actions = createActions(context, templateDTO.getButtonTemplate().getActions(), templateDTO.getName(), messageId);
       for( NotificationCompat.Action action : actions )
         notificationBuilder.addAction( action );
     }
@@ -303,13 +310,35 @@ public class BackendlessPushService extends IntentService implements PushReceive
     return notificationBuilder.build();
   }
 
-  private List<NotificationCompat.Action> createActions( Action[] actions )
+  private List<NotificationCompat.Action> createActions( Context context, Action[] actions, String templateName, int messageId )
   {
-    List<NotificationCompat.Action> notifActoins = new ArrayList<>(  );
+    List<NotificationCompat.Action> notifActions = new ArrayList<>();
 
-    // TODO
+    int i = 1;
+    for( Action a : actions )
+    {
+      Intent actionIntent = new Intent( a.getAction() );
+      actionIntent.setClassName( context, a.getTarget() );
+      actionIntent.putExtra( BackendlessBroadcastReceiver.EXTRA_MESSAGE_ID, messageId );
+      actionIntent.putExtra( PublishOptions.NOTIFICATION_TAG, templateName );
+      actionIntent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
 
-    return notifActoins;
+      // user should use messageId and tag(templateName) to cancel notification.
+
+      PendingIntent pendingIntent = PendingIntent.getActivity( context, messageId * 3 + i++, actionIntent, PendingIntent.FLAG_UPDATE_CURRENT );
+
+      NotificationCompat.Action.Builder actionBuilder = new NotificationCompat.Action.Builder( 0, a.getTitle(), pendingIntent );
+
+      if( a.getOptions() == 1 )
+      {
+        // user should use the 'title' of the button to retrieve user's input.
+        RemoteInput remoteInput = new RemoteInput.Builder( a.getTitle() ).build();
+        actionBuilder.setAllowGeneratedReplies( true ).addRemoteInput( remoteInput );
+      }
+      notifActions.add( actionBuilder.build() );
+    }
+
+    return notifActions;
   }
 
   private void showNotification( final Notification notification, final String tag, final int messageId )
