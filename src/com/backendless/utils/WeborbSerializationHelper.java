@@ -69,4 +69,24 @@ public class WeborbSerializationHelper
   {
     return (IAdaptingType) object.getProperties().get( key );
   }
+
+  public static IAdaptingType asAdaptingType( IAdaptingType object, String key )
+  {
+
+    final AnonymousObject anonymousObject;
+    if( object instanceof AnonymousObject )
+    {
+      anonymousObject = (AnonymousObject) object;
+    }
+    else if( object instanceof CacheableAdaptingTypeWrapper )
+    {
+      anonymousObject = (AnonymousObject) ((CacheableAdaptingTypeWrapper) object).getType();
+    }
+    else
+    {
+      throw new IllegalArgumentException( "object should be or contains AnonymousObject" );
+    }
+
+    return (IAdaptingType) anonymousObject.getProperties().get( key );
+  }
 }

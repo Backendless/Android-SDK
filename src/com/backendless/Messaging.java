@@ -50,6 +50,8 @@ import com.backendless.messaging.PublishStatusEnum;
 import com.backendless.messaging.PushBroadcastMask;
 import com.backendless.messaging.SubscriptionOptions;
 import com.backendless.push.GCMRegistrar;
+import com.backendless.rt.messaging.Channel;
+import com.backendless.rt.messaging.ChannelFactory;
 import weborb.types.Types;
 
 import java.util.ArrayList;
@@ -69,6 +71,7 @@ public final class Messaging
   private final static String OS;
   private final static String OS_VERSION;
   private static final Messaging instance = new Messaging();
+  private static final ChannelFactory chanelFactory = new ChannelFactory();
 
   private Messaging()
   {
@@ -581,173 +584,14 @@ public final class Messaging
     }
   }
 
-  public Subscription subscribe( AsyncCallback<List<Message>> subscriptionResponder ) throws BackendlessException
+  public Channel subscribe( )
   {
-    return subscribe( DEFAULT_CHANNEL_NAME, subscriptionResponder, null, 0 );
+      return subscribe( "default" );
   }
 
-  public Subscription subscribe( String channelName, AsyncCallback<List<Message>> subscriptionResponder,
-                                 SubscriptionOptions subscriptionOptions,
-                                 int pollingInterval ) throws BackendlessException
+  public Channel subscribe( String channelName )
   {
-    checkChannelName( channelName );
-
-    if( pollingInterval < 0 )
-      throw new IllegalArgumentException( ExceptionMessage.WRONG_POLLING_INTERVAL );
-
-    String subscriptionId = subscribeForPollingAccess( channelName, subscriptionOptions );
-
-    Subscription subscription = new Subscription();
-    subscription.setChannelName( channelName );
-    subscription.setSubscriptionId( subscriptionId );
-
-    if( pollingInterval != 0 )
-      subscription.setPollingInterval( pollingInterval );
-
-    subscription.onSubscribe( subscriptionResponder );
-
-    return subscription;
-  }
-
-  private String subscribeForPollingAccess( String channelName,
-                                            SubscriptionOptions subscriptionOptions ) throws BackendlessException
-  {
-    if( channelName == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_CHANNEL_NAME );
-
-    if( subscriptionOptions == null )
-      subscriptionOptions = new SubscriptionOptions();
-
-    return Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[] { channelName, subscriptionOptions } );
-  }
-
-  public Subscription subscribe( String channelName,
-                                 AsyncCallback<List<Message>> subscriptionResponder ) throws BackendlessException
-  {
-    return subscribe( channelName, subscriptionResponder, null, 0 );
-  }
-
-  public Subscription subscribe( int pollingInterval,
-                                 AsyncCallback<List<Message>> subscriptionResponder ) throws BackendlessException
-  {
-    return subscribe( DEFAULT_CHANNEL_NAME, subscriptionResponder, null, pollingInterval );
-  }
-
-  public Subscription subscribe( String channelName, int pollingInterval,
-                                 AsyncCallback<List<Message>> subscriptionResponder ) throws BackendlessException
-  {
-    return subscribe( channelName, subscriptionResponder, null, pollingInterval );
-  }
-
-  public Subscription subscribe( AsyncCallback<List<Message>> subscriptionResponder,
-                                 SubscriptionOptions subscriptionOptions ) throws BackendlessException
-  {
-    return subscribe( DEFAULT_CHANNEL_NAME, subscriptionResponder, subscriptionOptions, 0 );
-  }
-
-  public Subscription subscribe( String channelName, AsyncCallback<List<Message>> subscriptionResponder,
-                                 SubscriptionOptions subscriptionOptions ) throws BackendlessException
-  {
-    return subscribe( channelName, subscriptionResponder, subscriptionOptions, 0 );
-  }
-
-  public void subscribe( AsyncCallback<List<Message>> subscriptionResponder, AsyncCallback<Subscription> responder )
-  {
-    subscribe( DEFAULT_CHANNEL_NAME, subscriptionResponder, null, 0, responder );
-  }
-
-  public void subscribe( final String channelName, final AsyncCallback<List<Message>> subscriptionResponder,
-                         SubscriptionOptions subscriptionOptions, final int pollingInterval,
-                         final AsyncCallback<Subscription> responder )
-  {
-    try
-    {
-      checkChannelName( channelName );
-
-      if( pollingInterval < 0 )
-        throw new IllegalArgumentException( ExceptionMessage.WRONG_POLLING_INTERVAL );
-
-      subscribeForPollingAccess( channelName, subscriptionOptions, new AsyncCallback<String>()
-      {
-        @Override
-        public void handleResponse( String subscriptionId )
-        {
-          Subscription subscription = new Subscription();
-          subscription.setChannelName( channelName );
-          subscription.setSubscriptionId( subscriptionId );
-
-          if( pollingInterval != 0 )
-            subscription.setPollingInterval( pollingInterval );
-
-          subscription.onSubscribe( subscriptionResponder );
-
-          if( responder != null )
-            responder.handleResponse( subscription );
-        }
-
-        @Override
-        public void handleFault( BackendlessFault fault )
-        {
-          if( responder != null )
-            responder.handleFault( fault );
-        }
-      } );
-    }
-    catch( Throwable e )
-    {
-      if( responder != null )
-        responder.handleFault( new BackendlessFault( e ) );
-    }
-  }
-
-  private void subscribeForPollingAccess( String channelName, SubscriptionOptions subscriptionOptions,
-                                          AsyncCallback<String> responder )
-  {
-    try
-    {
-      if( channelName == null )
-        throw new IllegalArgumentException( ExceptionMessage.NULL_CHANNEL_NAME );
-
-      if( subscriptionOptions == null )
-        subscriptionOptions = new SubscriptionOptions();
-
-      Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "subscribeForPollingAccess", new Object[] { channelName, subscriptionOptions }, responder );
-    }
-    catch( Throwable e )
-    {
-      if( responder != null )
-        responder.handleFault( new BackendlessFault( e ) );
-    }
-  }
-
-  public void subscribe( String channelName, AsyncCallback<List<Message>> subscriptionResponder,
-                         AsyncCallback<Subscription> responder )
-  {
-    subscribe( channelName, subscriptionResponder, null, 0, responder );
-  }
-
-  public void subscribe( int pollingInterval, AsyncCallback<List<Message>> subscriptionResponder,
-                         AsyncCallback<Subscription> responder )
-  {
-    subscribe( DEFAULT_CHANNEL_NAME, subscriptionResponder, null, pollingInterval, responder );
-  }
-
-  public void subscribe( String channelName, int pollingInterval, AsyncCallback<List<Message>> subscriptionResponder,
-                         AsyncCallback<Subscription> responder )
-  {
-    subscribe( channelName, subscriptionResponder, null, pollingInterval, responder );
-  }
-
-  public void subscribe( AsyncCallback<List<Message>> subscriptionResponder, SubscriptionOptions subscriptionOptions,
-                         AsyncCallback<Subscription> responder )
-  {
-    subscribe( DEFAULT_CHANNEL_NAME, subscriptionResponder, subscriptionOptions, 0, responder );
-  }
-
-  public void subscribe( String channelName, AsyncCallback<List<Message>> subscriptionResponder,
-                         SubscriptionOptions subscriptionOptions, AsyncCallback<Subscription> responder )
-  {
-    subscribe( channelName, subscriptionResponder, subscriptionOptions, 0, responder );
+    return chanelFactory.create( channelName );
   }
 
   public List<Message> pollMessages( String channelName, String subscriptionId ) throws BackendlessException

@@ -41,4 +41,9 @@ public class MessagingSubscription extends RTSubscription
     return messagingSubscription;
   }
 
+  String getSelector()
+  {
+    return (String) getOption( "selector" );
+  }
+
 }

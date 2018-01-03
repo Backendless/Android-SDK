@@ -25,11 +25,17 @@ public interface Channel extends RTListener
 
   <T> void addMessageListener( String selector, AsyncCallback<T> callback, Class<T> clazz );
 
+  void addMessageListener( String selector, final MessageInfoCallback callback );
+
+  void addMessageListener( final MessageInfoCallback callback );
+
   void removeMessageListeners( String selector );
 
-  void removeMessageListeners( AsyncCallback<String> callback );
+  void removeMessageListeners( AsyncCallback<?> callback );
 
-  void removeMessageListeners( String selector,  AsyncCallback<String> callback );
+  void removeMessageListeners( String selector, AsyncCallback<?> callback );
+
+  void removeAllMessageListeners();
 
   //----------------------------------
 
