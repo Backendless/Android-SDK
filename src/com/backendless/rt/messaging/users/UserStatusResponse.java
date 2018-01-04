@@ -1,5 +1,7 @@
 package com.backendless.rt.messaging.users;
 
+import java.util.Arrays;
+
 public class UserStatusResponse
 {
   private UserStatus status;
@@ -25,5 +27,11 @@ public class UserStatusResponse
   {
     this.data = data;
     return this;
+  }
+
+  @Override
+  public String toString()
+  {
+    return "UserStatusResponse{" + "status=" + status + ", data=" + Arrays.toString( data ) + '}';
   }
 }
