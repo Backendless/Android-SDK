@@ -1,6 +1,8 @@
 package com.backendless.rt.messaging;
 
+import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.messaging.PublishMessageInfo;
 import com.backendless.rt.RTCallback;
@@ -8,6 +10,8 @@ import com.backendless.rt.RTClient;
 import com.backendless.rt.RTClientFactory;
 import com.backendless.rt.RTListenerImpl;
 import com.backendless.rt.RTMethodRequest;
+import com.backendless.rt.SubscriptionNames;
+import com.backendless.rt.messaging.users.UserStatusResponse;
 import com.backendless.utils.WeborbSerializationHelper;
 import weborb.exceptions.AdaptingException;
 import weborb.types.IAdaptingType;
@@ -369,6 +373,62 @@ public class ChannelImpl extends RTListenerImpl implements Channel
      removeMessageListeners( callback );
   }
 
+  @Override
+  public void addUserStatusListener( final AsyncCallback<UserStatusResponse> callback )
+  {
+    if( callback == null )
+      throw new BackendlessException( "Callback can not be null" );
+
+    RTCallback rtCallback = new RTCallback()
+    {
+      @Override
+      public AsyncCallback usersCallback()
+      {
+        return callback;
+      }
+
+      @Override
+      public void handleResponse( IAdaptingType response )
+      {
+        try
+        {
+          UserStatusResponse userStatusResponse = (UserStatusResponse) response.adapt( UserStatusResponse.class );
+          callback.handleResponse( userStatusResponse );
+        }
+        catch( AdaptingException e )
+        {
+          callback.handleFault( new BackendlessFault( e.getMessage() ) );
+        }
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        callback.handleFault( fault );
+      }
+    };
+
+    addUserListener( rtCallback );
+  }
+
+  @Override
+  public void removeUserStatusListeners()
+  {
+    for( MessagingSubscription messagingSubscription : messagingCallbacks )
+    {
+      if( messagingSubscription.getSubscriptionName() == SubscriptionNames.PUB_SUB_USERS )
+      {
+        removeSubscription( messagingSubscription );
+      }
+    }
+  }
+
+  @Override
+  public void removeUserStatusListeners( AsyncCallback<UserStatusResponse> callback )
+  {
+     removeMessageListeners( callback );
+  }
+
   private void addMessageListener( String selector, RTCallback rtCallback )
   {
     MessagingSubscription subscription = selector == null ? MessagingSubscription.subscribe( channel, rtCallback ) : MessagingSubscription.subscribe( channel, selector, rtCallback );
@@ -382,6 +442,16 @@ public class ChannelImpl extends RTListenerImpl implements Channel
   private void addCommandListener( RTCallback rtCallback )
   {
     MessagingSubscription subscription = MessagingSubscription.command( channel, rtCallback );
+
+    messagingCallbacks.add( subscription );
+
+    if( isConnected() )
+      rtClient.subscribe( subscription );
+  }
+
+  private void addUserListener( RTCallback rtCallback )
+  {
+    MessagingSubscription subscription = MessagingSubscription.userStatus( channel, rtCallback );
 
     messagingCallbacks.add( subscription );
 

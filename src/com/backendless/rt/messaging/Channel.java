@@ -2,6 +2,7 @@ package com.backendless.rt.messaging;
 
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.rt.RTListener;
+import com.backendless.rt.messaging.users.UserStatusResponse;
 
 public interface Channel extends RTListener
 {
@@ -48,4 +49,12 @@ public interface Channel extends RTListener
   <T> void sendCommand( String type, Object data, AsyncCallback<Void> callback );
 
   void removeCommandListener( AsyncCallback<RTCommand> callback );
+
+  //----------------------------------
+
+  void addUserStatusListener( AsyncCallback<UserStatusResponse> callback );
+
+  void removeUserStatusListeners();
+
+  void removeUserStatusListeners( AsyncCallback<UserStatusResponse> callback );
 }

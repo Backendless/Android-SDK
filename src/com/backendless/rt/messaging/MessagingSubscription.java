@@ -52,6 +52,17 @@ public class MessagingSubscription extends RTSubscription
     return messagingSubscription;
   }
 
+  public static MessagingSubscription userStatus( String channel,  RTCallback callback )
+  {
+    if(channel == null || channel.isEmpty())
+      throw new IllegalArgumentException( "channel can't be or empty" );
+
+    final MessagingSubscription messagingSubscription = new MessagingSubscription( SubscriptionNames.PUB_SUB_USERS, callback );
+    messagingSubscription.putOption( "channel", channel );
+
+    return messagingSubscription;
+  }
+
   String getSelector()
   {
     return (String) getOption( "selector" );
