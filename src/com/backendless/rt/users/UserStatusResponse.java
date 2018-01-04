@@ -1,4 +1,4 @@
-package com.backendless.rt.messaging.users;
+package com.backendless.rt.users;
 
 import java.util.Arrays;
 

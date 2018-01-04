@@ -1,17 +1,18 @@
 package com.backendless.rt.messaging;
 
-import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.messaging.PublishMessageInfo;
+import com.backendless.rt.Command;
 import com.backendless.rt.RTCallback;
 import com.backendless.rt.RTClient;
 import com.backendless.rt.RTClientFactory;
 import com.backendless.rt.RTListenerImpl;
 import com.backendless.rt.RTMethodRequest;
 import com.backendless.rt.SubscriptionNames;
-import com.backendless.rt.messaging.users.UserStatusResponse;
+import com.backendless.rt.users.UserInfo;
+import com.backendless.rt.users.UserStatusResponse;
 import com.backendless.utils.WeborbSerializationHelper;
 import weborb.exceptions.AdaptingException;
 import weborb.types.IAdaptingType;
@@ -272,7 +273,7 @@ public class ChannelImpl extends RTListenerImpl implements Channel
   }
 
   @Override
-  public <T> void addCommandListener( final Class<T> dataType, final AsyncCallback<RTCommand<T>> callback )
+  public <T> void addCommandListener( final Class<T> dataType, final AsyncCallback<Command<T>> callback )
   {
     RTCallback rtCallback = new RTCallback()
     {
@@ -287,16 +288,21 @@ public class ChannelImpl extends RTListenerImpl implements Channel
       {
         try
         {
-          RTCommand<T> rtCommand = RTCommand.of( dataType );
+          Command<T> command = Command.of( dataType );
 
-          rtCommand.setConnectionId( WeborbSerializationHelper.asString( response, "connectionId" ) );
-          rtCommand.setType( WeborbSerializationHelper.asString( response, "type" ) );
-          rtCommand.setUserId( WeborbSerializationHelper.asString( response, "userId" ) );
+          UserInfo userInfo = new UserInfo();
+
+          command.setUserInfo( userInfo );
+
+          userInfo.setConnectionId( WeborbSerializationHelper.asString( response, "connectionId" ) );
+          userInfo.setUserId( WeborbSerializationHelper.asString( response, "userId" ) );
+
+          command.setType( WeborbSerializationHelper.asString( response, "type" ) );
 
           IAdaptingType data = WeborbSerializationHelper.asAdaptingType( response, "data" );
 
-          rtCommand.setData( (T) data.adapt( dataType ) );
-          callback.handleResponse( rtCommand );
+          command.setData( (T) data.adapt( dataType ) );
+          callback.handleResponse( command );
         }
         catch( AdaptingException e )
         {
@@ -315,7 +321,7 @@ public class ChannelImpl extends RTListenerImpl implements Channel
   }
 
   @Override
-  public void addCommandListener( AsyncCallback<RTCommand<String>> callback )
+  public void addCommandListener( AsyncCallback<Command<String>> callback )
   {
      addCommandListener( String.class, callback );
   }
@@ -368,7 +374,7 @@ public class ChannelImpl extends RTListenerImpl implements Channel
   }
 
   @Override
-  public void removeCommandListener( AsyncCallback<RTCommand> callback )
+  public void removeCommandListener( AsyncCallback<Command> callback )
   {
      removeMessageListeners( callback );
   }

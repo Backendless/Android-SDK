@@ -1,10 +1,10 @@
 package com.backendless.rt.messaging;
 
+import com.backendless.rt.CommandRequest;
 import com.backendless.rt.MethodTypes;
 import com.backendless.rt.RTCallback;
-import com.backendless.rt.RTMethodRequest;
 
-class MessagingCommandRequest extends RTMethodRequest
+class MessagingCommandRequest extends CommandRequest
 {
   MessagingCommandRequest( String channel, RTCallback callback )
   {
@@ -12,15 +12,17 @@ class MessagingCommandRequest extends RTMethodRequest
     putOption( "channel", channel );
   }
 
-  MessagingCommandRequest setData( Object data )
+  @Override
+  protected MessagingCommandRequest setData( Object data )
   {
-    putOption( "data", data );
+    super.setData( data );
     return this;
   }
 
-  MessagingCommandRequest setType( String type )
+  @Override
+  protected MessagingCommandRequest setType( String type )
   {
-    putOption( "type", type );
+    super.setType( type );
     return this;
   }
 }
