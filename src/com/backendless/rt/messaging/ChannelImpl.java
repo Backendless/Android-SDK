@@ -7,21 +7,26 @@ import com.backendless.rt.RTCallback;
 import com.backendless.rt.RTClient;
 import com.backendless.rt.RTClientFactory;
 import com.backendless.rt.RTListenerImpl;
+import com.backendless.rt.RTMethodRequest;
 import com.backendless.utils.WeborbSerializationHelper;
 import weborb.exceptions.AdaptingException;
 import weborb.types.IAdaptingType;
 
-import java.util.Collection;
 import java.util.Iterator;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Logger;
 
 public class ChannelImpl extends RTListenerImpl implements Channel
 {
+  private static final Logger logger = Logger.getLogger( "ChannelImpl" );
+
   private final String channel;
   private final RTClient rtClient = RTClientFactory.get();
   private volatile boolean connected;
-  private final Collection<AsyncCallback<Void>> connectedCallbacks = new CopyOnWriteArrayList<>();
+  private final CopyOnWriteArrayList<AsyncCallback<Void>> connectedCallbacks = new CopyOnWriteArrayList<>();
   private final CopyOnWriteArrayList<MessagingSubscription> messagingCallbacks = new CopyOnWriteArrayList<>();
+  private final ConcurrentLinkedDeque<RTMethodRequest> commandsToSend = new ConcurrentLinkedDeque<>();
   private final MessagingSubscription connectSubscription;
 
   ChannelImpl( String channel )
@@ -59,6 +64,14 @@ public class ChannelImpl extends RTListenerImpl implements Channel
         for( MessagingSubscription messagingCallback : messagingCallbacks )
         {
           rtClient.subscribe( messagingCallback );
+        }
+
+        RTMethodRequest methodRequest = commandsToSend.poll();
+
+        while( methodRequest != null )
+        {
+          rtClient.invoke( methodRequest );
+          methodRequest = commandsToSend.poll();
         }
       }
 
@@ -255,32 +268,120 @@ public class ChannelImpl extends RTListenerImpl implements Channel
   }
 
   @Override
-  public <T> void addCommandListener( Class<T> dataType, AsyncCallback<RTCommand<T>> callback )
+  public <T> void addCommandListener( final Class<T> dataType, final AsyncCallback<RTCommand<T>> callback )
   {
+    RTCallback rtCallback = new RTCallback()
+    {
+      @Override
+      public AsyncCallback usersCallback()
+      {
+        return callback;
+      }
 
+      @Override
+      public void handleResponse( IAdaptingType response )
+      {
+        try
+        {
+          RTCommand<T> rtCommand = RTCommand.of( dataType );
+
+          rtCommand.setConnectionId( WeborbSerializationHelper.asString( response, "connectionId" ) );
+          rtCommand.setType( WeborbSerializationHelper.asString( response, "type" ) );
+          rtCommand.setUserId( WeborbSerializationHelper.asString( response, "userId" ) );
+
+          IAdaptingType data = WeborbSerializationHelper.asAdaptingType( response, "data" );
+
+          rtCommand.setData( (T) data.adapt( dataType ) );
+          callback.handleResponse( rtCommand );
+        }
+        catch( AdaptingException e )
+        {
+          callback.handleFault( new BackendlessFault( e.getMessage() ) );
+        }
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        callback.handleFault( fault );
+      }
+    };
+
+    addCommandListener( rtCallback );
   }
 
   @Override
   public void addCommandListener( AsyncCallback<RTCommand<String>> callback )
   {
-
+     addCommandListener( String.class, callback );
   }
 
   @Override
-  public <T> void sendCommand( RTCommand<T> command )
+  public <T> void sendCommand( String type, Object data )
+  {
+    sendCommand( type, data, null );
+  }
+
+  @Override
+  public <T> void sendCommand( String type, Object data, final AsyncCallback<Void> callback )
   {
 
+    logger.fine( "Send command with type" + type );
+    RTMethodRequest rtMethodRequest = new MessagingCommandRequest( channel, new RTCallback()
+    {
+      @Override
+      public AsyncCallback usersCallback()
+      {
+        return callback;
+      }
+
+      @Override
+      public void handleResponse( IAdaptingType response )
+      {
+        logger.info( "command sent" );
+
+        if( callback != null )
+          callback.handleResponse( null );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        logger.info( "command fault " + fault );
+        if( callback != null )
+          callback.handleFault( fault );
+      }
+    } ).setData( data ).setType( type );
+
+    if( connected )
+    {
+      rtClient.invoke( rtMethodRequest );
+    }
+    else
+    {
+      commandsToSend.addFirst( rtMethodRequest );
+    }
   }
 
   @Override
   public void removeCommandListener( AsyncCallback<RTCommand> callback )
   {
-
+     removeMessageListeners( callback );
   }
 
   private void addMessageListener( String selector, RTCallback rtCallback )
   {
     MessagingSubscription subscription = selector == null ? MessagingSubscription.subscribe( channel, rtCallback ) : MessagingSubscription.subscribe( channel, selector, rtCallback );
+
+    messagingCallbacks.add( subscription );
+
+    if( isConnected() )
+      rtClient.subscribe( subscription );
+  }
+
+  private void addCommandListener( RTCallback rtCallback )
+  {
+    MessagingSubscription subscription = MessagingSubscription.command( channel, rtCallback );
 
     messagingCallbacks.add( subscription );
 

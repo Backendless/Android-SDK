@@ -143,7 +143,7 @@ abstract class SocketIOConnectionManager
     }
   }
 
-  private boolean isConnected()
+  public boolean isConnected()
   {
     return socket != null && socket.connected();
   }

@@ -10,16 +10,20 @@ import weborb.types.IAdaptingType;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.logging.Logger;
 
 import static com.backendless.utils.WeborbSerializationHelper.*;
 
 class RTClientSocketIO implements RTClient
 {
-
   private static final Logger logger = Logger.getLogger( "RTClient" );
 
   private Map<String, RTSubscription> subscriptions = new ConcurrentHashMap<>();
+
+  private Map<String, RTMethodRequest> sentRequests = new ConcurrentHashMap<>();
+
+  private ConcurrentLinkedDeque<RTMethodRequest> methodsToSend = new ConcurrentLinkedDeque<>();
 
   private final SocketIOConnectionManager connectionManager;
 
@@ -37,48 +41,59 @@ class RTClientSocketIO implements RTClient
       void subscriptionResult( Object... args )
       {
         logger.info( "subscription result " + Arrays.toString( args ) );
-
-        if( args == null || args.length < 1 )
-        {
-          logger.warning( "subscription result is null or empty" );
-          return;
-        }
-
-        AnonymousObject result = (AnonymousObject) deserialize( args[ 0 ] );
-
-        String id = asString( result, "id" );
-
-        logger.info( "Got result for subscription " + id );
-
-        RTSubscription subscription = subscriptions.get( id );
-
-        if( subscription == null )
-        {
-          logger.info( "There is no handler for subscription " + id );
-          return;
-        }
-
-        final Object error = asObject( result, "error" );
-
-        if( error != null )
-        {
-          logger.info( "got error " + error.toString() );
-          final BackendlessFault fault = new BackendlessFault( error.toString() );
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<>( fault, subscription.getCallback() ) );
-          return;
-        }
-
-        IAdaptingType data = asAdaptingType( result, "data" );
-        ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<>( data, subscription.getCallback() ) );
+        handleResult( args, subscriptions );
       }
 
       @Override
       void invocationResult( Object... args )
       {
         logger.info( "invocation result " + Arrays.toString( args ) );
+        RTRequest request = handleResult( args, sentRequests );
+
+        if( request != null )
+        {
+          sentRequests.remove( request.getId() );
+        }
       }
     };
+  }
 
+  private RTRequest handleResult( Object[] args, Map<String, ? extends RTRequest> requestMap )
+  {
+    if( args == null || args.length < 1 )
+    {
+      logger.warning( "subscription result is null or empty" );
+      return null;
+    }
+
+    AnonymousObject result = (AnonymousObject) deserialize( args[ 0 ] );
+
+    String id = asString( result, "id" );
+
+    logger.info( "Got result for subscription " + id );
+
+    RTRequest request = requestMap.get( id );
+
+    if( request == null )
+    {
+      logger.info( "There is no handler for subscription " + id );
+      return null;
+    }
+
+    final Object error = asObject( result, "error" );
+
+    if( error != null )
+    {
+      logger.info( "got error " + error.toString() );
+      final BackendlessFault fault = new BackendlessFault( error.toString() );
+      ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<>( fault, request.getCallback() ) );
+      return request;
+    }
+
+    IAdaptingType data = asAdaptingType( result, "data" );
+    ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<>( data, request.getCallback() ) );
+
+    return request;
   }
 
   @Override
@@ -87,23 +102,9 @@ class RTClientSocketIO implements RTClient
     logger.info( "try to subscribe " + subscription );
     subscriptions.put( subscription.getId(), subscription );
 
-    subOn( subscription );
+    if( connectionManager.get().connected() )
+      subOn( subscription );
 
-  }
-
-  private Emitter subOn( RTSubscription subscription )
-  {
-    final Emitter emitter = connectionManager.get().emit( "SUB_ON", serialize( subscription.toArgs() ) );
-
-    logger.info( "subOn called" );
-    return emitter;
-  }
-
-  private Emitter subOff( String subscriptionId )
-  {
-    final Emitter emitter = connectionManager.get().emit( "SUB_OFF", serialize( subscriptionId ) );
-    logger.info( "subOff called" );
-    return emitter;
   }
 
   @Override
@@ -121,7 +122,7 @@ class RTClientSocketIO implements RTClient
     subscriptions.remove( subscriptionId );
     logger.info( "subscription removed" );
 
-    if( subscriptions.size() == 0 )
+    if( subscriptions.isEmpty() && sentRequests.isEmpty() )
     {
       connectionManager.disconnect();
     }
@@ -142,6 +143,15 @@ class RTClientSocketIO implements RTClient
   @Override
   public void invoke( RTMethodRequest methodRequest )
   {
+    sentRequests.put( methodRequest.getId(), methodRequest );
+    if( connectionManager.isConnected() )
+    {
+      metReq( methodRequest );
+    }
+    else
+    {
+      methodsToSend.addFirst( methodRequest );
+    }
 
   }
 
@@ -151,5 +161,35 @@ class RTClientSocketIO implements RTClient
     {
       subOn( rtSubscription );
     }
+
+    RTMethodRequest methodRequest = methodsToSend.poll();
+    while( methodRequest != null )
+    {
+      metReq( methodRequest );
+      methodRequest = methodsToSend.poll();
+    }
+  }
+
+  private Emitter subOn( RTSubscription subscription )
+  {
+    final Emitter emitter = connectionManager.get().emit( "SUB_ON", serialize( subscription.toArgs() ) );
+
+    logger.info( "subOn called" );
+    return emitter;
+  }
+
+  private Emitter subOff( String subscriptionId )
+  {
+    final Emitter emitter = connectionManager.get().emit( "SUB_OFF", serialize( subscriptionId ) );
+    logger.info( "subOff called" );
+    return emitter;
+  }
+
+  private Emitter metReq( RTMethodRequest methodRequest )
+  {
+    final Emitter emitter = connectionManager.get().emit( "MET_REQ", serialize( methodRequest.toArgs() ) );
+
+    logger.info( "subOn called" );
+    return emitter;
   }
 }

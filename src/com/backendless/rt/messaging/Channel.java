@@ -43,7 +43,9 @@ public interface Channel extends RTListener
 
   void addCommandListener( AsyncCallback<RTCommand<String>> callback );
 
-  <T> void sendCommand( RTCommand<T> command );
+  <T> void sendCommand( String type, Object data );
+
+  <T> void sendCommand( String type, Object data, AsyncCallback<Void> callback );
 
   void removeCommandListener( AsyncCallback<RTCommand> callback );
 }

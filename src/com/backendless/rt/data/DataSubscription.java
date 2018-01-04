@@ -1,10 +1,8 @@
 package com.backendless.rt.data;
 
-import com.backendless.async.callback.AsyncCallback;
 import com.backendless.rt.RTCallback;
 import com.backendless.rt.RTSubscription;
 import com.backendless.rt.SubscriptionNames;
-import weborb.types.IAdaptingType;
 
 class DataSubscription extends RTSubscription
 {
@@ -36,6 +34,5 @@ class DataSubscription extends RTSubscription
   {
     return (String) getOption( "whereClause" );
   }
-
 
 }

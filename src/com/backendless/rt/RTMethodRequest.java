@@ -1,54 +1,24 @@
 package com.backendless.rt;
 
-import com.backendless.async.callback.AsyncCallback;
-
-class RTMethodRequest<T>
+public class RTMethodRequest extends AbstractRequest
 {
-  private String id;
   private final MethodTypes methodType;
-  private AsyncCallback<T> callback;
-  private Object[] args;
 
-  RTMethodRequest( MethodTypes methodType )
+  public RTMethodRequest( MethodTypes methodType, RTCallback callback )
   {
+    super( callback );
     this.methodType = methodType;
   }
 
-  public String getId()
+  @Override
+  public String getName()
   {
-    return id;
-  }
-
-  public RTMethodRequest setId( String id )
-  {
-    this.id = id;
-    return this;
-  }
-
-  public AsyncCallback<T> getCallback()
-  {
-    return callback;
-  }
-
-  public RTMethodRequest setCallback( AsyncCallback<T> callback )
-  {
-    this.callback = callback;
-    return this;
-  }
-
-  public Object[] getArgs()
-  {
-    return args;
-  }
-
-  public RTMethodRequest setArgs( Object[] args )
-  {
-    this.args = args;
-    return this;
+    return methodType.name();
   }
 
   public MethodTypes getMethodType()
   {
     return methodType;
   }
+
 }

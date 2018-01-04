@@ -25,7 +25,7 @@ public class RTCommand<T>
     this.dataType = dataType;
   }
 
-  private final Class<T> dataType;
+  private final transient Class<T> dataType;
   private String type;
   private T data;
   private String connectionId;
@@ -75,8 +75,9 @@ public class RTCommand<T>
     return this;
   }
 
-  public Class<T> getDataType()
+  @Override
+  public String toString()
   {
-    return dataType;
+    return "RTCommand{" + "dataType=" + dataType + ", type='" + type + '\'' + ", data=" + data + ", connectionId='" + connectionId + '\'' + ", userId='" + userId + '\'' + '}';
   }
 }

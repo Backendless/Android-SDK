@@ -45,6 +45,31 @@ public class WeborbSerializationHelper
     }
   }
 
+  public static String asString( IAdaptingType object, String key )
+  {
+    final AnonymousObject anonymousObject = cast( object );
+
+    return asString( anonymousObject, key );
+  }
+
+  private static AnonymousObject cast( IAdaptingType object )
+  {
+    final AnonymousObject anonymousObject;
+    if( object instanceof AnonymousObject )
+    {
+      anonymousObject = (AnonymousObject) object;
+    }
+    else if( object instanceof CacheableAdaptingTypeWrapper )
+    {
+      anonymousObject = (AnonymousObject) ((CacheableAdaptingTypeWrapper) object).getType();
+    }
+    else
+    {
+      throw new IllegalArgumentException( "object should be or contains AnonymousObject" );
+    }
+    return anonymousObject;
+  }
+
   public static String asString( AnonymousObject object, String key )
   {
     try
@@ -72,21 +97,7 @@ public class WeborbSerializationHelper
 
   public static IAdaptingType asAdaptingType( IAdaptingType object, String key )
   {
-
-    final AnonymousObject anonymousObject;
-    if( object instanceof AnonymousObject )
-    {
-      anonymousObject = (AnonymousObject) object;
-    }
-    else if( object instanceof CacheableAdaptingTypeWrapper )
-    {
-      anonymousObject = (AnonymousObject) ((CacheableAdaptingTypeWrapper) object).getType();
-    }
-    else
-    {
-      throw new IllegalArgumentException( "object should be or contains AnonymousObject" );
-    }
-
+    final AnonymousObject anonymousObject = cast( object );
     return (IAdaptingType) anonymousObject.getProperties().get( key );
   }
 }

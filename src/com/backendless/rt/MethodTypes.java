@@ -1,6 +1,6 @@
 package com.backendless.rt;
 
-enum MethodTypes
+public enum MethodTypes
 {
   SET_USER_TOKEN,
   PUB_SUB_COMMAND,
