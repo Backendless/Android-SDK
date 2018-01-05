@@ -4,12 +4,13 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.messaging.PublishMessageInfo;
-import com.backendless.rt.command.Command;
+import com.backendless.rt.ConnectListener;
 import com.backendless.rt.RTCallback;
 import com.backendless.rt.RTClient;
 import com.backendless.rt.RTClientFactory;
 import com.backendless.rt.RTListenerImpl;
 import com.backendless.rt.SubscriptionNames;
+import com.backendless.rt.command.Command;
 import com.backendless.rt.command.CommandListener;
 import com.backendless.rt.users.UserStatusResponse;
 import com.backendless.utils.WeborbSerializationHelper;
@@ -26,10 +27,7 @@ public class ChannelImpl extends RTListenerImpl implements Channel
 
   private final String channel;
   private final RTClient rtClient = RTClientFactory.get();
-  private volatile boolean connected;
-  private final CopyOnWriteArrayList<AsyncCallback<Void>> connectedCallbacks = new CopyOnWriteArrayList<>();
   private final CopyOnWriteArrayList<MessagingSubscription> messagingCallbacks = new CopyOnWriteArrayList<>();
-  private final MessagingSubscription connectSubscription;
 
   private final CommandListener<MessagingSubscription, MessagingCommandRequest> commandListener = new CommandListener<MessagingSubscription, MessagingCommandRequest>()
   {
@@ -54,42 +52,20 @@ public class ChannelImpl extends RTListenerImpl implements Channel
     @Override
     public boolean isConnected()
     {
-      return connected;
+      return connectListener.isConnected();
     }
   };
 
-  ChannelImpl( String channel )
+  private final ConnectListener<MessagingSubscription> connectListener;
+
+  ChannelImpl( final String channel )
   {
     this.channel = channel;
-    connectSubscription = createConnectSubscription( channel );
-    connect();
-  }
-
-  public void connect( )
-  {
-    addEventListener( connectSubscription );
-    rtClient.subscribe( connectSubscription );
-  }
-
-  private MessagingSubscription createConnectSubscription( String channel )
-  {
-    return MessagingSubscription.connect( channel, new RTCallback()
+    connectListener = new ConnectListener<MessagingSubscription>( channel )
     {
       @Override
-      public AsyncCallback usersCallback()
+      public void connected()
       {
-        return null;
-      }
-
-      @Override
-      public void handleResponse( IAdaptingType response )
-      {
-        connected = true;
-        for( AsyncCallback<Void> connectedCallback : connectedCallbacks )
-        {
-          connectedCallback.handleResponse( null );
-        }
-
         for( MessagingSubscription messagingCallback : messagingCallbacks )
         {
           rtClient.subscribe( messagingCallback );
@@ -99,43 +75,41 @@ public class ChannelImpl extends RTListenerImpl implements Channel
       }
 
       @Override
-      public void handleFault( BackendlessFault fault )
+      public MessagingSubscription createSubscription( RTCallback callback )
       {
-        connected = false;
-        for( AsyncCallback<Void> connectedCallback : connectedCallbacks )
-        {
-          connectedCallback.handleFault( fault );
-        }
+        return MessagingSubscription.connect( channel, callback );
       }
-    } );
+    };
+    connect();
+  }
+
+  public void connect( )
+  {
+    connectListener.connect();
   }
 
   @Override
   public void disconnect()
   {
-    rtClient.unsubscribe( connectSubscription.getId() );
-    connected = false;
+    connectListener.disconnect();
   }
 
   @Override
   public boolean isConnected()
   {
-    return connected;
+    return connectListener.isConnected();
   }
 
   @Override
   public void addConnectListener( AsyncCallback<Void> callback )
   {
-      if( connected )
-        callback.handleResponse( null );
-
-      connectedCallbacks.add( callback );
+      connectListener.addConnectListener( callback );
   }
 
   @Override
   public void removeConnectListeners( AsyncCallback<Void> callback )
   {
-     connectedCallbacks.remove( callback );
+     connectListener.removeConnectListeners( callback );
   }
 
   //---messaging
@@ -283,7 +257,7 @@ public class ChannelImpl extends RTListenerImpl implements Channel
     while( iterator.hasNext() )
     {
       MessagingSubscription messagingSubscription = iterator.next();
-      if( connected )
+      if( isConnected() )
       {
         rtClient.unsubscribe( messagingSubscription.getId() );
       }
@@ -401,7 +375,7 @@ public class ChannelImpl extends RTListenerImpl implements Channel
     //we can do it because it is CopyOnWriteArrayList so we iterate through the copy
     messagingCallbacks.remove( messagingSubscription );
 
-    if( connected )
+    if( isConnected() )
     {
       rtClient.unsubscribe( messagingSubscription.getId() );
     }
