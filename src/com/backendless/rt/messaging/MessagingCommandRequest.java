@@ -1,6 +1,6 @@
 package com.backendless.rt.messaging;
 
-import com.backendless.rt.CommandRequest;
+import com.backendless.rt.command.CommandRequest;
 import com.backendless.rt.MethodTypes;
 import com.backendless.rt.RTCallback;
 

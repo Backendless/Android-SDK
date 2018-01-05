@@ -4,21 +4,19 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.messaging.PublishMessageInfo;
-import com.backendless.rt.Command;
+import com.backendless.rt.command.Command;
 import com.backendless.rt.RTCallback;
 import com.backendless.rt.RTClient;
 import com.backendless.rt.RTClientFactory;
 import com.backendless.rt.RTListenerImpl;
-import com.backendless.rt.RTMethodRequest;
 import com.backendless.rt.SubscriptionNames;
-import com.backendless.rt.users.UserInfo;
+import com.backendless.rt.command.CommandListener;
 import com.backendless.rt.users.UserStatusResponse;
 import com.backendless.utils.WeborbSerializationHelper;
 import weborb.exceptions.AdaptingException;
 import weborb.types.IAdaptingType;
 
 import java.util.Iterator;
-import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
 
@@ -31,8 +29,34 @@ public class ChannelImpl extends RTListenerImpl implements Channel
   private volatile boolean connected;
   private final CopyOnWriteArrayList<AsyncCallback<Void>> connectedCallbacks = new CopyOnWriteArrayList<>();
   private final CopyOnWriteArrayList<MessagingSubscription> messagingCallbacks = new CopyOnWriteArrayList<>();
-  private final ConcurrentLinkedDeque<RTMethodRequest> commandsToSend = new ConcurrentLinkedDeque<>();
   private final MessagingSubscription connectSubscription;
+
+  private final CommandListener<MessagingSubscription, MessagingCommandRequest> commandListener = new CommandListener<MessagingSubscription, MessagingCommandRequest>()
+  {
+    @Override
+    public void addSubscription( MessagingSubscription subscription )
+    {
+      messagingCallbacks.add( subscription );
+    }
+
+    @Override
+    public MessagingSubscription createSubscription( RTCallback rtCallback )
+    {
+      return MessagingSubscription.command( channel, rtCallback );
+    }
+
+    @Override
+    public MessagingCommandRequest createCommandRequest( RTCallback rtCallback )
+    {
+      return new MessagingCommandRequest( channel, rtCallback );
+    }
+
+    @Override
+    public boolean isConnected()
+    {
+      return connected;
+    }
+  };
 
   ChannelImpl( String channel )
   {
@@ -71,13 +95,7 @@ public class ChannelImpl extends RTListenerImpl implements Channel
           rtClient.subscribe( messagingCallback );
         }
 
-        RTMethodRequest methodRequest = commandsToSend.poll();
-
-        while( methodRequest != null )
-        {
-          rtClient.invoke( methodRequest );
-          methodRequest = commandsToSend.poll();
-        }
+        commandListener.connected();
       }
 
       @Override
@@ -275,49 +293,7 @@ public class ChannelImpl extends RTListenerImpl implements Channel
   @Override
   public <T> void addCommandListener( final Class<T> dataType, final AsyncCallback<Command<T>> callback )
   {
-    RTCallback rtCallback = new RTCallback()
-    {
-      @Override
-      public AsyncCallback usersCallback()
-      {
-        return callback;
-      }
-
-      @Override
-      public void handleResponse( IAdaptingType response )
-      {
-        try
-        {
-          Command<T> command = Command.of( dataType );
-
-          UserInfo userInfo = new UserInfo();
-
-          command.setUserInfo( userInfo );
-
-          userInfo.setConnectionId( WeborbSerializationHelper.asString( response, "connectionId" ) );
-          userInfo.setUserId( WeborbSerializationHelper.asString( response, "userId" ) );
-
-          command.setType( WeborbSerializationHelper.asString( response, "type" ) );
-
-          IAdaptingType data = WeborbSerializationHelper.asAdaptingType( response, "data" );
-
-          command.setData( (T) data.adapt( dataType ) );
-          callback.handleResponse( command );
-        }
-        catch( AdaptingException e )
-        {
-          callback.handleFault( new BackendlessFault( e.getMessage() ) );
-        }
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        callback.handleFault( fault );
-      }
-    };
-
-    addCommandListener( rtCallback );
+    commandListener.addCommandListener( dataType, callback );
   }
 
   @Override
@@ -335,42 +311,7 @@ public class ChannelImpl extends RTListenerImpl implements Channel
   @Override
   public <T> void sendCommand( String type, Object data, final AsyncCallback<Void> callback )
   {
-
-    logger.fine( "Send command with type" + type );
-    RTMethodRequest rtMethodRequest = new MessagingCommandRequest( channel, new RTCallback()
-    {
-      @Override
-      public AsyncCallback usersCallback()
-      {
-        return callback;
-      }
-
-      @Override
-      public void handleResponse( IAdaptingType response )
-      {
-        logger.info( "command sent" );
-
-        if( callback != null )
-          callback.handleResponse( null );
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        logger.info( "command fault " + fault );
-        if( callback != null )
-          callback.handleFault( fault );
-      }
-    } ).setData( data ).setType( type );
-
-    if( connected )
-    {
-      rtClient.invoke( rtMethodRequest );
-    }
-    else
-    {
-      commandsToSend.addFirst( rtMethodRequest );
-    }
+    commandListener.sendCommand( type, data, callback );
   }
 
   @Override
@@ -438,16 +379,6 @@ public class ChannelImpl extends RTListenerImpl implements Channel
   private void addMessageListener( String selector, RTCallback rtCallback )
   {
     MessagingSubscription subscription = selector == null ? MessagingSubscription.subscribe( channel, rtCallback ) : MessagingSubscription.subscribe( channel, selector, rtCallback );
-
-    messagingCallbacks.add( subscription );
-
-    if( isConnected() )
-      rtClient.subscribe( subscription );
-  }
-
-  private void addCommandListener( RTCallback rtCallback )
-  {
-    MessagingSubscription subscription = MessagingSubscription.command( channel, rtCallback );
 
     messagingCallbacks.add( subscription );
 

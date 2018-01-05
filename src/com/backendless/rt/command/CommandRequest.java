@@ -1,5 +1,8 @@
-package com.backendless.rt;
+package com.backendless.rt.command;
 
+import com.backendless.rt.MethodTypes;
+import com.backendless.rt.RTCallback;
+import com.backendless.rt.RTMethodRequest;
 
 public class CommandRequest extends RTMethodRequest
 {

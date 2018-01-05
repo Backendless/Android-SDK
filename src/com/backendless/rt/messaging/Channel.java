@@ -1,7 +1,7 @@
 package com.backendless.rt.messaging;
 
 import com.backendless.async.callback.AsyncCallback;
-import com.backendless.rt.Command;
+import com.backendless.rt.command.Command;
 import com.backendless.rt.RTListener;
 import com.backendless.rt.users.UserStatusResponse;
 

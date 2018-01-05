@@ -1,4 +1,4 @@
-package com.backendless.rt;
+package com.backendless.rt.command;
 
 import com.backendless.rt.users.UserInfo;
 
