@@ -25,6 +25,9 @@ import com.backendless.exceptions.BackendlessFault;
 import com.backendless.messaging.Action;
 import com.backendless.messaging.AndroidPushTemplate;
 import com.backendless.messaging.PublishOptions;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,7 +47,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
   private static final int MAX_BACKOFF_MS = (int) TimeUnit.SECONDS.toMillis( 3600 );
   private static final String TOKEN = Long.toBinaryString( random.nextLong() );
   private static final String EXTRA_TOKEN = "token";
-  private static Map<String, AndroidPushTemplate> pushNotificationTemplateDTOs = Collections.emptyMap();
+  private static Map<String, AndroidPushTemplate> pushNotificationTemplateDTOs = null;
 
   private PushReceiverCallback callback;
 
@@ -151,6 +154,8 @@ public class BackendlessPushService extends IntentService implements PushReceive
       final String templateName = intent.getStringExtra( PublishOptions.TEMPLATE_NAME );
       if( templateName != null )
       {
+        if (pushNotificationTemplateDTOs == null)
+          restorePushTemplates();
         AndroidPushTemplate androidPushTemplateDTO = pushNotificationTemplateDTOs.get( templateName );
         Notification notification = convertFromTemplate( context, androidPushTemplateDTO, contentText, messageId );
         showNotification( notification, androidPushTemplateDTO.getName(), messageId );
@@ -167,8 +172,6 @@ public class BackendlessPushService extends IntentService implements PushReceive
       }
 
       boolean showPushNotification = callback.onMessage( context, intent );
-
-      // TODO: perfrom actions for push templates
 
       if( showPushNotification )
       {
@@ -228,40 +231,48 @@ public class BackendlessPushService extends IntentService implements PushReceive
   private Notification convertFromTemplate( Context context, AndroidPushTemplate templateDTO, String messageText, int messageId )
   {
     // Notification channel ID is ignored for Android 7.1.1 (API level 25) and lower.
-    // NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder( getApplicationContext(), channelId)
 
     NotificationCompat.Builder notificationBuilder;
     // android.os.Build.VERSION_CODES.O == 26
-    if( android.os.Build.VERSION.SDK_INT >= 26 )
+    if( android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O )
     {
       final String channelId = Backendless.getApplicationId() + ":" + templateDTO.getName();
-      NotificationChannel notificationChannel = new NotificationChannel( channelId, templateDTO.getName(), NotificationManager.IMPORTANCE_DEFAULT );
-      notificationChannel.setShowBadge( templateDTO.getButtonTemplate().getShowBadge() );
-      notificationChannel.setBypassDnd( templateDTO.getButtonTemplate().getBypassDND() );
-
       NotificationManager notificationManager = (NotificationManager) getSystemService( Context.NOTIFICATION_SERVICE );
-      notificationManager.createNotificationChannel( notificationChannel );
 
-      notificationBuilder = new NotificationCompat.Builder( getApplicationContext(), notificationChannel.getId() );
+      NotificationChannel notificationChannel = notificationManager.getNotificationChannel( channelId );
+
+      if( notificationChannel == null )
+      {
+        notificationChannel = this.createNotificationChannel( channelId, templateDTO );
+        notificationManager.createNotificationChannel( notificationChannel );
+      }
+      notificationBuilder = new NotificationCompat.Builder( getApplicationContext(), channelId );
+      notificationBuilder.setDefaults( Notification.DEFAULT_ALL );
     }
     else
     {
       notificationBuilder = new NotificationCompat.Builder( getApplicationContext() );
+      notificationBuilder.setDefaults( Notification.DEFAULT_ALL );
+      notificationBuilder.setPriority( templateDTO.getPriority() );
+
+      if( templateDTO.getButtonTemplate().getSound() != null )
+        notificationBuilder.setSound( Uri.parse( templateDTO.getButtonTemplate().getSound() ) );
+
+      // lights
+
+      if( templateDTO.getButtonTemplate().getVibrate() != null )
+      {
+        long[] vibrate = new long[ templateDTO.getButtonTemplate().getVibrate().length ];
+        int index = 0;
+        for( long l : templateDTO.getButtonTemplate().getVibrate() )
+          vibrate[ index++ ] = l;
+
+        notificationBuilder.setVibrate( vibrate );
+      }
+
+      notificationBuilder.setVisibility( templateDTO.getButtonTemplate().getVisibility() );
     }
 
-    notificationBuilder.setDefaults( Notification.DEFAULT_ALL );
-
-    if( templateDTO.getButtonTemplate().getVibrate() != null )
-    {
-      long[] vibrate = new long[ templateDTO.getButtonTemplate().getVibrate().length ];
-      int index = 0;
-      for( long l : templateDTO.getButtonTemplate().getVibrate() )
-        vibrate[ index++ ] = l;
-      notificationBuilder.setVibrate( vibrate );
-    }
-
-    if( templateDTO.getButtonTemplate().getSound() != null )
-      notificationBuilder.setSound( Uri.parse( templateDTO.getButtonTemplate().getSound() ) );
 
     try
     {
@@ -278,18 +289,14 @@ public class BackendlessPushService extends IntentService implements PushReceive
     }
 
     notificationBuilder
-            .setAutoCancel( true )
             .setDefaults( Notification.DEFAULT_ALL )
             .setWhen( System.currentTimeMillis() + 1000 )
             .setSmallIcon( Integer.parseInt( templateDTO.getIcon() ) )
-            .setPriority( templateDTO.getPriority() )
             .setColor( templateDTO.getColorCode() )
             .setColorized( templateDTO.getColorized() )
             .setLights( templateDTO.getLightsColor(), templateDTO.getLightsOnMs(), templateDTO.getLightsOffMs() )
             .setBadgeIconType( templateDTO.getBadge() )
-            .setVisibility( templateDTO.getButtonTemplate().getVisibility() )
             .setAutoCancel( templateDTO.getCancelOnTap() )
-
             .setTicker( templateDTO.getTickerText() )
             .setContentTitle( templateDTO.getFirstRowTitle() )
             .setContentText( messageText );
@@ -297,8 +304,12 @@ public class BackendlessPushService extends IntentService implements PushReceive
     if( templateDTO.getCancelAfter() != null && templateDTO.getCancelAfter() != 0 )
       notificationBuilder.setTimeoutAfter( templateDTO.getCancelAfter() );
 
-    // TODO: on tap
-    // TODO: on cancel
+    Intent notificationIntent = context.getPackageManager().getLaunchIntentForPackage( context.getPackageName() );
+    notificationIntent.putExtra( BackendlessBroadcastReceiver.EXTRA_MESSAGE_ID, messageId );
+    notificationIntent.putExtra( PublishOptions.NOTIFICATION_TAG, templateDTO.getName() );
+    notificationIntent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
+    PendingIntent contentIntent = PendingIntent.getActivity( context, messageId * 3, notificationIntent, 0 );
+    notificationBuilder.setContentIntent( contentIntent );
 
     if (templateDTO.getButtonTemplate().getActions() != null)
     {
@@ -317,8 +328,8 @@ public class BackendlessPushService extends IntentService implements PushReceive
     int i = 1;
     for( Action a : actions )
     {
-      Intent actionIntent = new Intent( a.getAction() );
-      actionIntent.setClassName( context, a.getTarget() );
+      Intent actionIntent = new Intent( a.getTitle() );
+      actionIntent.setClassName( context, a.getId() );
       actionIntent.putExtra( BackendlessBroadcastReceiver.EXTRA_MESSAGE_ID, messageId );
       actionIntent.putExtra( PublishOptions.NOTIFICATION_TAG, templateName );
       actionIntent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
@@ -332,13 +343,40 @@ public class BackendlessPushService extends IntentService implements PushReceive
       if( a.getOptions() == 1 )
       {
         // user should use the 'title' of the button to retrieve user's input.
-        RemoteInput remoteInput = new RemoteInput.Builder( a.getTitle() ).build();
+        RemoteInput remoteInput = new RemoteInput.Builder( PublishOptions.INLINE_REPLY ).build();
         actionBuilder.setAllowGeneratedReplies( true ).addRemoteInput( remoteInput );
       }
       notifActions.add( actionBuilder.build() );
     }
 
     return notifActions;
+  }
+
+  private NotificationChannel createNotificationChannel( final String channelId, final AndroidPushTemplate templateDTO )
+  {
+    NotificationChannel notificationChannel = new NotificationChannel( channelId, templateDTO.getName(), NotificationManager.IMPORTANCE_DEFAULT );
+    notificationChannel.setShowBadge( templateDTO.getButtonTemplate().getShowBadge() );
+    notificationChannel.setImportance( templateDTO.getPriority() );
+
+    if( templateDTO.getButtonTemplate().getSound() != null )
+      notificationChannel.setSound( Uri.parse( templateDTO.getButtonTemplate().getSound() ), null );
+
+    notificationChannel.enableLights( true );
+    notificationChannel.setLightColor( templateDTO.getLightsColor() );
+
+    if( templateDTO.getButtonTemplate().getVibrate() != null )
+    {
+      long[] vibrate = new long[ templateDTO.getButtonTemplate().getVibrate().length ];
+      int index = 0;
+      for( long l : templateDTO.getButtonTemplate().getVibrate() )
+        vibrate[ index++ ] = l;
+
+      notificationChannel.setVibrationPattern( vibrate );
+    }
+
+    notificationChannel.setLockscreenVisibility( templateDTO.getButtonTemplate().getVisibility() );
+    notificationChannel.setBypassDnd( templateDTO.getButtonTemplate().getBypassDND() );
+    return notificationChannel;
   }
 
   private void showNotification( final Notification notification, final String tag, final int messageId )
@@ -421,7 +459,8 @@ public class BackendlessPushService extends IntentService implements PushReceive
         {
           Object[] obj = (Object[]) weborb.util.io.Serializer.fromBytes( registrationInfo.getBytes(), weborb.util.io.Serializer.JSON, false );
           ids = (String) obj[0];
-          createNotificationChannels( (Map<String, AndroidPushTemplate>) obj[1] );
+          BackendlessPushService.pushNotificationTemplateDTOs = Collections.unmodifiableMap( (Map<String,AndroidPushTemplate>) obj[1] );
+          savePushTemplates( registrationInfo.getBytes() );
         }
         catch( IOException e )
         {
@@ -440,14 +479,41 @@ public class BackendlessPushService extends IntentService implements PushReceive
     } );
   }
 
-  private void createNotificationChannels( Map<String, AndroidPushTemplate> pushNotificationTemplateDTOs)
+  private void savePushTemplates( byte[] rawBytes )
   {
-    BackendlessPushService.pushNotificationTemplateDTOs = Collections.unmodifiableMap( pushNotificationTemplateDTOs );
-
-    //TODO
-    for (Map.Entry<String, AndroidPushTemplate> template : pushNotificationTemplateDTOs.entrySet())
+    try
     {
+      JSONArray jsonArray = new JSONArray( new String( rawBytes));
+      JSONObject templates = jsonArray.getJSONObject( 1 );
+      Backendless.savePushTemplates( templates.toString() );
+    }
+    catch( JSONException e )
+    {
+      Log.e( TAG, "Cannot deserialize AndroidPushTemplate to JSONObject.", e );
+    }
+  }
 
+  private void restorePushTemplates()
+  {
+    String rawTemplates = Backendless.getPushTemplatesAsJson();
+
+    if (rawTemplates == null)
+    {
+      pushNotificationTemplateDTOs = Collections.emptyMap();
+      return;
+    }
+
+    Map<String, AndroidPushTemplate> templates;
+    try
+    {
+      templates = (Map<String, AndroidPushTemplate>)
+      weborb.util.io.Serializer.fromBytes( rawTemplates.getBytes(), weborb.util.io.Serializer.JSON, false );
+      pushNotificationTemplateDTOs = Collections.unmodifiableMap(templates);
+    }
+    catch( IOException e )
+    {
+      pushNotificationTemplateDTOs = Collections.emptyMap();
+      Log.e( TAG, "Cannot deserialize AndroidPushTemplate to JSONObject.", e );
     }
   }
 

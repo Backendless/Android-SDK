@@ -72,29 +72,21 @@ public final class Backendless
   {
   }
 
-  public static boolean isAndroid()
-  {
-    if( isAndroid == null )
-    {
-      try
-      {
-        Class.forName( "android.os.Handler" );
-        isAndroid = true;
-      }
-      catch ( ClassNotFoundException e )
-      {
-        isAndroid = false;
-      }
-    }
-
-    return isAndroid;
-  }
-
   static
   {
+    try
+    {
+      Class.forName( "android.os.Handler" );
+      isAndroid = true;
+    }
+    catch ( ClassNotFoundException e )
+    {
+      isAndroid = false;
+    }
+
     ORBConfig.getORBConfig();
     Log.removeLogger( ILoggingConstants.DEFAULT_LOGGER );
-    prefs = BackendlessPrefsFactory.create( isAndroid() );
+    prefs = BackendlessPrefsFactory.create( isAndroid );
     if( isAndroid )
       Media = com.backendless.Media.getInstance();
 
@@ -133,7 +125,7 @@ public final class Backendless
    */
   public static void initApp( String applicationId, String secretKey )
   {
-    if( isAndroid() )
+    if( isAndroid )
       throw new IllegalArgumentException( ExceptionMessage.NULL_CONTEXT );
 
     initApp( null, applicationId, secretKey );
@@ -141,7 +133,7 @@ public final class Backendless
 
   public static void initApp( Object context, final String applicationId, final String secretKey )
   {
-    if( isAndroid() && context == null )
+    if( isAndroid && context == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_CONTEXT );
 
     if( applicationId == null || applicationId.equals( "" ) )
@@ -251,5 +243,21 @@ public final class Backendless
   public static boolean isCodeRunner()
   {
     return isCodeRunner;
+  }
+
+  public static void savePushTemplates( String pushTemplatesAsJson )
+  {
+    if( !isAndroid )
+      return;
+
+    ((AndroidBackendlessPrefs) prefs).savePushTemplate( pushTemplatesAsJson );
+  }
+
+  public static String getPushTemplatesAsJson()
+  {
+    if( !isAndroid )
+      return null;
+
+    return ((AndroidBackendlessPrefs) prefs).getPushTemplateAsJson();
   }
 }
