@@ -48,7 +48,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
   private static final int MAX_BACKOFF_MS = (int) TimeUnit.SECONDS.toMillis( 3600 );
   private static final String TOKEN = Long.toBinaryString( random.nextLong() );
   private static final String EXTRA_TOKEN = "token";
-  private static Map<String, AndroidPushTemplate> pushNotificationTemplateDTOs = null;
+  private static Map<String, AndroidPushTemplate> pushNotificationTemplateDTOs;
 
   private PushReceiverCallback callback;
 
