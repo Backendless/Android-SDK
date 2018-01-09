@@ -247,6 +247,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
         notificationChannel = this.createNotificationChannel( channelId, templateDTO );
         notificationManager.createNotificationChannel( notificationChannel );
       }
+
       notificationBuilder = new NotificationCompat.Builder( getApplicationContext(), channelId );
       notificationBuilder.setDefaults( Notification.DEFAULT_ALL );
 
@@ -254,7 +255,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
         notificationBuilder.setColorized( templateDTO.getColorized() );
 
       if( templateDTO.getBadge() != null )
-        notificationBuilder.setBadgeIconType( templateDTO.getBadge() );
+        notificationBuilder.setBadgeIconType( templateDTO.getBadge() ); // Notification.BADGE_ICON_SMALL
 
       if( templateDTO.getCancelAfter() != null && templateDTO.getCancelAfter() != 0 )
         notificationBuilder.setTimeoutAfter( templateDTO.getCancelAfter() );
@@ -263,7 +264,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
     {
       notificationBuilder = new NotificationCompat.Builder( getApplicationContext() );
       notificationBuilder.setDefaults( Notification.DEFAULT_ALL );
-      notificationBuilder.setPriority( templateDTO.getPriority() );
+      notificationBuilder.setPriority( templateDTO.getPriority() ); // Notification.PRIORITY_DEFAULT
 
       if( templateDTO.getButtonTemplate().getSound() != null )
         notificationBuilder.setSound( Uri.parse( templateDTO.getButtonTemplate().getSound() ) );
@@ -358,7 +359,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
   {
     NotificationChannel notificationChannel = new NotificationChannel( channelId, templateDTO.getName(), NotificationManager.IMPORTANCE_DEFAULT );
     notificationChannel.setShowBadge( templateDTO.getButtonTemplate().getShowBadge() );
-    notificationChannel.setImportance( templateDTO.getPriority() );
+    notificationChannel.setImportance( templateDTO.getPriority() ); // NotificationManager.IMPORTANCE_DEFAULT
 
     if( templateDTO.getButtonTemplate().getSound() != null )
       notificationChannel.setSound( Uri.parse( templateDTO.getButtonTemplate().getSound() ), null );
@@ -376,7 +377,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
       notificationChannel.setVibrationPattern( vibrate );
     }
 
-    notificationChannel.setLockscreenVisibility( templateDTO.getButtonTemplate().getVisibility() );
+    notificationChannel.setLockscreenVisibility( templateDTO.getButtonTemplate().getVisibility() ); // Notification.VISIBILITY_PUBLIC
     notificationChannel.setBypassDnd( templateDTO.getButtonTemplate().getBypassDND() );
     return notificationChannel;
   }
