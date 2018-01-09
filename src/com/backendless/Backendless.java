@@ -114,6 +114,11 @@ public final class Backendless
     } );
   }
 
+  public static boolean isAndroid()
+  {
+    return isAndroid;
+  }
+
   /**
    * Initializes the Backendless API and all Backendless dependencies. This is the first step in using the client API.
    * <p>
