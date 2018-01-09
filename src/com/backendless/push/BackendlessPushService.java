@@ -39,6 +39,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+
 public class BackendlessPushService extends IntentService implements PushReceiverCallback
 {
   private static final String TAG = "BackendlessPushService";
@@ -306,7 +307,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
 
     Intent notificationIntent = context.getPackageManager().getLaunchIntentForPackage( context.getPackageName() );
     notificationIntent.putExtra( BackendlessBroadcastReceiver.EXTRA_MESSAGE_ID, messageId );
-    notificationIntent.putExtra( PublishOptions.NOTIFICATION_TAG, templateDTO.getName() );
+    notificationIntent.putExtra( PublishOptions.TEMPLATE_NAME, templateDTO.getName() );
     notificationIntent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
     PendingIntent contentIntent = PendingIntent.getActivity( context, messageId * 3, notificationIntent, 0 );
     notificationBuilder.setContentIntent( contentIntent );
@@ -331,7 +332,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
       Intent actionIntent = new Intent( a.getTitle() );
       actionIntent.setClassName( context, a.getId() );
       actionIntent.putExtra( BackendlessBroadcastReceiver.EXTRA_MESSAGE_ID, messageId );
-      actionIntent.putExtra( PublishOptions.NOTIFICATION_TAG, templateName );
+      actionIntent.putExtra( PublishOptions.TEMPLATE_NAME, templateName );
       actionIntent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
 
       // user should use messageId and tag(templateName) to cancel notification.
