@@ -274,6 +274,14 @@ public class BackendlessPushService extends IntentService implements PushReceive
       notificationBuilder.setVisibility( templateDTO.getButtonTemplate().getVisibility() );
     }
 
+    if( android.os.Build.VERSION.SDK_INT >= 23 )
+    {
+      if( templateDTO.getCancelAfter() != null && templateDTO.getCancelAfter() != 0 )
+        notificationBuilder.setTimeoutAfter( templateDTO.getCancelAfter() );
+
+      if( templateDTO.getBadge() != null )
+        notificationBuilder.setBadgeIconType( templateDTO.getBadge() );
+    }
 
     try
     {
@@ -296,14 +304,10 @@ public class BackendlessPushService extends IntentService implements PushReceive
             .setColor( templateDTO.getColorCode() )
             .setColorized( templateDTO.getColorized() )
             .setLights( templateDTO.getLightsColor(), templateDTO.getLightsOnMs(), templateDTO.getLightsOffMs() )
-            .setBadgeIconType( templateDTO.getBadge() )
             .setAutoCancel( templateDTO.getCancelOnTap() )
             .setTicker( templateDTO.getTickerText() )
             .setContentTitle( templateDTO.getFirstRowTitle() )
             .setContentText( messageText );
-
-    if( templateDTO.getCancelAfter() != null && templateDTO.getCancelAfter() != 0 )
-      notificationBuilder.setTimeoutAfter( templateDTO.getCancelAfter() );
 
     Intent notificationIntent = context.getPackageManager().getLaunchIntentForPackage( context.getPackageName() );
     notificationIntent.putExtra( BackendlessBroadcastReceiver.EXTRA_MESSAGE_ID, messageId );
