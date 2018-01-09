@@ -65,25 +65,28 @@ public final class Backendless
   public static Media Media;
   private static String url = "https://api.backendless.com";
   private static final BackendlessPrefs prefs;
-  private static Boolean isAndroid;
+  private static final boolean isAndroid = checkAndroidEnvironment();
   private static boolean isCodeRunner = false;
 
   private Backendless()
   {
   }
 
-  static
+  private static boolean checkAndroidEnvironment()
   {
     try
     {
       Class.forName( "android.os.Handler" );
-      isAndroid = true;
+      return true;
     }
     catch ( ClassNotFoundException e )
     {
-      isAndroid = false;
+      return false;
     }
+  }
 
+  static
+  {
     ORBConfig.getORBConfig();
     Log.removeLogger( ILoggingConstants.DEFAULT_LOGGER );
     prefs = BackendlessPrefsFactory.create( isAndroid );
