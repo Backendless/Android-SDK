@@ -235,7 +235,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
 
     NotificationCompat.Builder notificationBuilder;
     // android.os.Build.VERSION_CODES.O == 26
-    if( android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O )
+    if( android.os.Build.VERSION.SDK_INT >= 26 )
     {
       final String channelId = Backendless.getApplicationId() + ":" + templateDTO.getName();
       NotificationManager notificationManager = (NotificationManager) getSystemService( Context.NOTIFICATION_SERVICE );
