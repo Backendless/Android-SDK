@@ -13,6 +13,8 @@ import weborb.exceptions.AdaptingException;
 import weborb.types.IAdaptingType;
 
 import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class CommandListener<T extends RTSubscription, R extends CommandRequest>
@@ -22,6 +24,13 @@ public abstract class CommandListener<T extends RTSubscription, R extends Comman
   private final RTClient rtClient = RTClientFactory.get();
   private final ConcurrentLinkedDeque<RTMethodRequest> commandsToSend = new ConcurrentLinkedDeque<>();
 
+  public abstract CopyOnWriteArrayList<T> getSubscriptionHolder();
+
+  public abstract T createSubscription( RTCallback rtCallback );
+
+  public abstract R createCommandRequest( RTCallback rtCallback );
+
+  public abstract boolean isConnected();
 
   public void connected()
   {
@@ -121,20 +130,36 @@ public abstract class CommandListener<T extends RTSubscription, R extends Comman
     }
   }
 
+  public void removeCommandListener( AsyncCallback<Command> callback )
+  {
+    final CopyOnWriteArrayList<T> subscriptionHolder = getSubscriptionHolder();
+    for( T messagingSubscription : subscriptionHolder )
+    {
+      if( messagingSubscription.getCallback().usersCallback() == callback )
+      {
+        //we can do it because it is CopyOnWriteArrayList so we iterate through the copy
+        subscriptionHolder.remove( messagingSubscription );
 
+        if( isConnected() )
+        {
+          rtClient.unsubscribe( messagingSubscription.getId() );
+        }
+      }
+    }
+  }
 
   private void addCommandListener( RTCallback rtCallback )
   {
+    logger.fine( "try to add command listener" );
     T subscription = createSubscription( rtCallback );
-    addSubscription( subscription );
+    logger.log( Level.FINE, "subscription object {0}", new Object[]{subscription} );
+    getSubscriptionHolder().add( subscription );
 
     if( isConnected() )
+    {
+      logger.fine("subscription is connected try to subscribe");
       rtClient.subscribe( subscription );
+    }
   }
-
-  public abstract void addSubscription( T subscription );
-  public abstract T createSubscription( RTCallback rtCallback );
-  public abstract R createCommandRequest( RTCallback rtCallback );
-  public abstract boolean isConnected();
 
 }

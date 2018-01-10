@@ -82,6 +82,11 @@ public abstract class ConnectListener<T extends RTSubscription>
     connectedCallbacks.remove( callback );
   }
 
+  public void removeConnectListeners(  )
+  {
+    connectedCallbacks.clear();
+  }
+
   public abstract void connected();
   public abstract T createSubscription( RTCallback callback );
 }

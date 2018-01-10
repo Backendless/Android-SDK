@@ -32,9 +32,9 @@ public class ChannelImpl extends RTListenerImpl implements Channel
   private final CommandListener<MessagingSubscription, MessagingCommandRequest> commandListener = new CommandListener<MessagingSubscription, MessagingCommandRequest>()
   {
     @Override
-    public void addSubscription( MessagingSubscription subscription )
+    public CopyOnWriteArrayList<MessagingSubscription> getSubscriptionHolder()
     {
-      messagingCallbacks.add( subscription );
+      return messagingCallbacks;
     }
 
     @Override

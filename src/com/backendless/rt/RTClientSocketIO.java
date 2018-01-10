@@ -41,14 +41,14 @@ class RTClientSocketIO implements RTClient
       void subscriptionResult( Object... args )
       {
         logger.info( "subscription result " + Arrays.toString( args ) );
-        handleResult( args, subscriptions );
+        handleResult( args, subscriptions, "data" );
       }
 
       @Override
       void invocationResult( Object... args )
       {
         logger.info( "invocation result " + Arrays.toString( args ) );
-        RTRequest request = handleResult( args, sentRequests );
+        RTRequest request = handleResult( args, sentRequests, "result" );
 
         if( request != null )
         {
@@ -58,7 +58,7 @@ class RTClientSocketIO implements RTClient
     };
   }
 
-  private RTRequest handleResult( Object[] args, Map<String, ? extends RTRequest> requestMap )
+  private RTRequest handleResult( Object[] args, Map<String, ? extends RTRequest> requestMap, String resultKey )
   {
     if( args == null || args.length < 1 )
     {
@@ -90,7 +90,7 @@ class RTClientSocketIO implements RTClient
       return request;
     }
 
-    IAdaptingType data = asAdaptingType( result, "data" );
+    IAdaptingType data = asAdaptingType( result, resultKey );
     ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<>( data, request.getCallback() ) );
 
     return request;
