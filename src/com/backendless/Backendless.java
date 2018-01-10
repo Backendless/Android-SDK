@@ -65,14 +65,14 @@ public final class Backendless
   public static Media Media;
   private static String url = "https://api.backendless.com";
   private static final BackendlessPrefs prefs;
-  private static final boolean isAndroid = checkAndroidEnvironment();
+  private static final boolean isAndroid = getEnvironment();
   private static boolean isCodeRunner = false;
 
   private Backendless()
   {
   }
 
-  private static boolean checkAndroidEnvironment()
+  private static boolean getEnvironment()
   {
     try
     {
