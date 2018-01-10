@@ -346,7 +346,6 @@ public class BackendlessPushService extends IntentService implements PushReceive
 
       if( a.getOptions() == 1 )
       {
-        // user should use the 'title' of the button to retrieve user's input.
         RemoteInput remoteInput = new RemoteInput.Builder( PublishOptions.INLINE_REPLY ).build();
         actionBuilder.setAllowGeneratedReplies( true ).addRemoteInput( remoteInput );
       }
