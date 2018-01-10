@@ -1,5 +1,7 @@
 package com.backendless;
 
+import com.backendless.exceptions.ExceptionMessage;
+
 import java.util.Map;
 
 /**
@@ -16,8 +18,7 @@ class BackendlessPrefs
 
   public void initPreferences( String applicationId, String secretKey )
   {
-    AuthKeys authKeys = new AuthKeys( applicationId, secretKey );
-    this.authKeys = authKeys;
+    this.authKeys = new AuthKeys( applicationId, secretKey );
   }
 
   public void setHeaders( Map<String, String> headers )
@@ -57,6 +58,9 @@ class BackendlessPrefs
 
   private synchronized AuthKeys getAuthKeys()
   {
+    if( authKeys == null)
+      throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
+    
     return authKeys;
   }
 
