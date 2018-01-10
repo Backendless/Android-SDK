@@ -510,8 +510,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
     Map<String, AndroidPushTemplate> templates;
     try
     {
-      templates = (Map<String, AndroidPushTemplate>)
-      weborb.util.io.Serializer.fromBytes( rawTemplates.getBytes(), weborb.util.io.Serializer.JSON, false );
+      templates = (Map<String, AndroidPushTemplate>) weborb.util.io.Serializer.fromBytes( rawTemplates.getBytes(), weborb.util.io.Serializer.JSON, false );
       pushNotificationTemplateDTOs = Collections.unmodifiableMap(templates);
     }
     catch( IOException e )
