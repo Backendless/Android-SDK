@@ -298,7 +298,8 @@ public class BackendlessPushService extends IntentService implements PushReceive
 
     notificationBuilder
             .setDefaults( Notification.DEFAULT_ALL )
-            .setWhen( System.currentTimeMillis() + 1000 )
+            .setShowWhen( true )
+            .setWhen( System.currentTimeMillis() )
             .setSmallIcon( Integer.parseInt( templateDTO.getIcon() ) )
             .setColor( templateDTO.getColorCode() )
             .setLights( templateDTO.getLightsColor(), templateDTO.getLightsOnMs(), templateDTO.getLightsOffMs() )
