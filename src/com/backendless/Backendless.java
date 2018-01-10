@@ -48,6 +48,11 @@ import java.util.Map;
 
 public final class Backendless
 {
+  private static String url = "https://api.backendless.com";
+  private static final boolean isAndroid = getEnvironment();
+  private static boolean isCodeRunner = false;
+  private static final BackendlessPrefs prefs;
+
   public static final FootprintsManager FootprintsManager = com.backendless.FootprintsManager.getInstance();
   public static final UserService UserService = com.backendless.UserService.getInstance();
   public static final Persistence Persistence = com.backendless.Persistence.getInstance();
@@ -63,10 +68,7 @@ public final class Backendless
   public static final CustomService CustomService = com.backendless.CustomService.getInstance();
   public static final Logging Logging = com.backendless.Logging.getInstance();
   public static Media Media;
-  private static String url = "https://api.backendless.com";
-  private static final BackendlessPrefs prefs;
-  private static final boolean isAndroid = getEnvironment();
-  private static boolean isCodeRunner = false;
+
 
   private Backendless()
   {
