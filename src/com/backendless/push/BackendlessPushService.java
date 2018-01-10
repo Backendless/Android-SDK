@@ -493,7 +493,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
     }
     catch( JSONException e )
     {
-      Log.e( TAG, "Cannot deserialize AndroidPushTemplate to JSONObject.", e );
+      Log.w( TAG, "Cannot deserialize AndroidPushTemplate to JSONObject.", e );
     }
   }
 
@@ -516,7 +516,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
     catch( IOException e )
     {
       pushNotificationTemplateDTOs = Collections.emptyMap();
-      Log.e( TAG, "Cannot deserialize AndroidPushTemplate to JSONObject.", e );
+      Log.w( TAG, "Cannot deserialize AndroidPushTemplate to JSONObject.", e );
     }
   }
 
