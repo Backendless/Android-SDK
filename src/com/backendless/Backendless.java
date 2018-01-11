@@ -48,6 +48,11 @@ import java.util.Map;
 
 public final class Backendless
 {
+  private static String url = "https://api.backendless.com";
+  private static final boolean isAndroid = isAndroidEnvironment();
+  private static boolean isCodeRunner = false;
+  private static final BackendlessPrefs prefs;
+
   public static final FootprintsManager FootprintsManager = com.backendless.FootprintsManager.getInstance();
   public static final UserService UserService = com.backendless.UserService.getInstance();
   public static final Persistence Persistence = com.backendless.Persistence.getInstance();
@@ -63,38 +68,30 @@ public final class Backendless
   public static final CustomService CustomService = com.backendless.CustomService.getInstance();
   public static final Logging Logging = com.backendless.Logging.getInstance();
   public static Media Media;
-  private static String url = "https://api.backendless.com";
-  private static final BackendlessPrefs prefs;
-  private static Boolean isAndroid;
-  private static boolean isCodeRunner = false;
+
 
   private Backendless()
   {
   }
 
-  public static boolean isAndroid()
+  private static boolean isAndroidEnvironment()
   {
-    if( isAndroid == null )
+    try
     {
-      try
-      {
-        Class.forName( "android.os.Handler" );
-        isAndroid = true;
-      }
-      catch ( ClassNotFoundException e )
-      {
-        isAndroid = false;
-      }
+      Class.forName( "android.os.Handler" );
+      return true;
     }
-
-    return isAndroid;
+    catch ( ClassNotFoundException e )
+    {
+      return false;
+    }
   }
 
   static
   {
     ORBConfig.getORBConfig();
     Log.removeLogger( ILoggingConstants.DEFAULT_LOGGER );
-    prefs = BackendlessPrefsFactory.create( isAndroid() );
+    prefs = BackendlessPrefsFactory.create( isAndroid );
     if( isAndroid )
       Media = com.backendless.Media.getInstance();
 
@@ -122,6 +119,11 @@ public final class Backendless
     } );
   }
 
+  public static boolean isAndroid()
+  {
+    return isAndroid;
+  }
+
   /**
    * Initializes the Backendless API and all Backendless dependencies. This is the first step in using the client API.
    * <p>
@@ -133,7 +135,7 @@ public final class Backendless
    */
   public static void initApp( String applicationId, String secretKey )
   {
-    if( isAndroid() )
+    if( isAndroid )
       throw new IllegalArgumentException( ExceptionMessage.NULL_CONTEXT );
 
     initApp( null, applicationId, secretKey );
@@ -141,7 +143,7 @@ public final class Backendless
 
   public static void initApp( Object context, final String applicationId, final String secretKey )
   {
-    if( isAndroid() && context == null )
+    if( isAndroid && context == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_CONTEXT );
 
     if( applicationId == null || applicationId.equals( "" ) )
@@ -251,5 +253,21 @@ public final class Backendless
   public static boolean isCodeRunner()
   {
     return isCodeRunner;
+  }
+
+  public static void savePushTemplates( String pushTemplatesAsJson )
+  {
+    if( !isAndroid )
+      return;
+
+    ((AndroidBackendlessPrefs) prefs).savePushTemplate( pushTemplatesAsJson );
+  }
+
+  public static String getPushTemplatesAsJson()
+  {
+    if( !isAndroid )
+      return null;
+
+    return ((AndroidBackendlessPrefs) prefs).getPushTemplateAsJson();
   }
 }

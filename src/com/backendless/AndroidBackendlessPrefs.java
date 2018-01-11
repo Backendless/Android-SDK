@@ -154,7 +154,8 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
   {
     APPLICATION_ID,
     SECRET_KEY,
-    HEADERS;
+    HEADERS,
+    PUSH_TEMPLATES;
 
     String name64()
     {
@@ -162,4 +163,15 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
     }
   }
 
+  void savePushTemplate( String pushTemplatesAsJson )
+  {
+    SharedPreferences.Editor editor = sharedPreferences.edit();
+    editor.putString( Type.PUSH_TEMPLATES.name64(), pushTemplatesAsJson );
+    editor.commit();
+  }
+
+  String getPushTemplateAsJson()
+  {
+    return sharedPreferences.getString( Type.PUSH_TEMPLATES.name64(), null );
+  }
 }

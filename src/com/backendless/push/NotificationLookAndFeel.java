@@ -73,7 +73,6 @@ public class NotificationLookAndFeel
     try
     {
       Notification ntf = new Notification();
-      ntf.setLatestEventInfo( context, COLOR_SEARCH_RECURSE_TIP, "Utest", null );
       LinearLayout group = new LinearLayout( context );
       ViewGroup event = (ViewGroup) ntf.contentView.apply( context, group );
       recurseGroup( context, event );

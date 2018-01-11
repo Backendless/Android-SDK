@@ -7,12 +7,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.SystemClock;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
 import com.backendless.Backendless;
@@ -27,7 +22,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
+
 
 public class BackendlessPushService extends IntentService implements PushReceiverCallback
 {
@@ -37,8 +32,6 @@ public class BackendlessPushService extends IntentService implements PushReceive
   private static final int MAX_BACKOFF_MS = (int) TimeUnit.SECONDS.toMillis( 3600 );
   private static final String TOKEN = Long.toBinaryString( random.nextLong() );
   private static final String EXTRA_TOKEN = "token";
-  private static Map<String, AndroidPushTemplate> pushNotificationTemplateDTOs = Collections.emptyMap();
-  private static final AtomicInteger ints = new AtomicInteger(  );
 
   private PushReceiverCallback callback;
 
@@ -137,31 +130,33 @@ public class BackendlessPushService extends IntentService implements PushReceive
 
   private void handleMessage( final Context context, Intent intent )
   {
-    String contentText = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TEXT_TAG );
+    final int messageId = intent.getIntExtra( BackendlessBroadcastReceiver.EXTRA_MESSAGE_ID, 0 );
+    final String contentText = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TEXT_TAG );
 
     try
     {
       final String templateName = intent.getStringExtra( PublishOptions.TEMPLATE_NAME );
       if( templateName != null )
       {
-        AndroidPushTemplate androidPushTemplateDTO = pushNotificationTemplateDTOs.get( templateName );
-        Notification notification = convertFromTemplate( androidPushTemplateDTO, contentText );
-        showNotification( notification, androidPushTemplateDTO.getName() );
+        if (PushTemplateHelper.getPushNotificationTemplates() == null)
+          PushTemplateHelper.restorePushTemplates();
+
+        AndroidPushTemplate androidPushTemplate = PushTemplateHelper.getPushNotificationTemplates().get( templateName );
+        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, contentText, messageId );
+        PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), messageId );
         return;
       }
 
       String immediatePush = intent.getStringExtra( PublishOptions.ANDROID_IMMEDIATE_PUSH );
       if( immediatePush != null )
       {
-        AndroidPushTemplate androidPushTemplateDTO = (AndroidPushTemplate) weborb.util.io.Serializer.fromBytes( immediatePush.getBytes(), weborb.util.io.Serializer.JSON, false );
-        Notification notification = convertFromTemplate( androidPushTemplateDTO, contentText );
-        showNotification( notification, androidPushTemplateDTO.getName() );
+        AndroidPushTemplate androidPushTemplate = (AndroidPushTemplate) weborb.util.io.Serializer.fromBytes( immediatePush.getBytes(), weborb.util.io.Serializer.JSON, false );
+        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, contentText, messageId );
+        PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), messageId );
         return;
       }
 
       boolean showPushNotification = callback.onMessage( context, intent );
-
-      // TODO: perfrom actions for push templates
 
       if( showPushNotification )
       {
@@ -216,64 +211,6 @@ public class BackendlessPushService extends IntentService implements PushReceive
     {
       Log.e( TAG, "Error processing push notification", throwable );
     }
-  }
-
-  private Notification convertFromTemplate( AndroidPushTemplate templateDTO, String messageText )
-  {
-    String channelId = Backendless.getApplicationId() + ":" + templateDTO.getName();
-
-    // Notification channel ID is ignored for Android 7.1.1 (API level 25) and lower.
-    // NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder( getApplicationContext(), channelId)
-
-    NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder( getApplicationContext(), channelId );
-
-    long[] vibrate = null;
-    if( templateDTO.getButtonTemplate().getVibrate() != null )
-    {
-      vibrate = new long[ templateDTO.getButtonTemplate().getVibrate().length ];
-      int index = 0;
-      for( long l : templateDTO.getButtonTemplate().getVibrate() )
-        vibrate[ index++ ] = l;
-    }
-
-    Uri sound = null;
-    if( templateDTO.getButtonTemplate().getSound() != null )
-      sound = Uri.parse( templateDTO.getButtonTemplate().getSound() );
-
-    notificationBuilder
-            .setAutoCancel( true )
-            .setDefaults( Notification.DEFAULT_ALL )
-            .setWhen( System.currentTimeMillis() )
-            .setSmallIcon( Integer.parseInt( templateDTO.getIcon() ) )
-            .setTicker( templateDTO.getTickerText() )
-            .setPriority( templateDTO.getPriority() )
-            .setColor( templateDTO.getColorCode() )
-            .setColorized( templateDTO.getColorized() )
-            .setLights( templateDTO.getLightsColor(), templateDTO.getLightsOnMs(), templateDTO.getLightsOffMs() )
-            .setContentTitle( templateDTO.getFirstRowTitle() )
-            .setBadgeIconType( templateDTO.getBadge() )
-
-            .setVisibility( templateDTO.getButtonTemplate().getVisibility() )
-            .setVibrate( vibrate )
-            .setSound( sound )
-
-            .setContentText( messageText );
-
-    return notificationBuilder.build();
-  }
-
-  private void showNotification( final Notification notification, final String tag )
-  {
-    final NotificationManagerCompat notificationManager = NotificationManagerCompat.from( getApplicationContext() );
-    Handler handler = new Handler( Looper.getMainLooper() );
-    handler.post( new Runnable()
-    {
-      @Override
-      public void run()
-      {
-        notificationManager.notify( tag, ints.getAndIncrement(), notification );
-      }
-    } );
   }
 
   private void handleRegistration( final Context context, Intent intent )
@@ -342,7 +279,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
         {
           Object[] obj = (Object[]) weborb.util.io.Serializer.fromBytes( registrationInfo.getBytes(), weborb.util.io.Serializer.JSON, false );
           ids = (String) obj[0];
-          createNotificationChannels( (Map<String, AndroidPushTemplate>) obj[1] );
+          PushTemplateHelper.setPushNotificationTemplates( (Map<String,AndroidPushTemplate>) obj[1], registrationInfo.getBytes() );
         }
         catch( IOException e )
         {
@@ -359,17 +296,6 @@ public class BackendlessPushService extends IntentService implements PushReceive
         callback.onError( context, "Could not register device on Backendless server: " + fault.toString() );
       }
     } );
-  }
-
-  private void createNotificationChannels( Map<String, AndroidPushTemplate> pushNotificationTemplateDTOs)
-  {
-    BackendlessPushService.pushNotificationTemplateDTOs = Collections.unmodifiableMap( pushNotificationTemplateDTOs );
-
-    //TODO
-    for (Map.Entry<String, AndroidPushTemplate> template : pushNotificationTemplateDTOs.entrySet())
-    {
-
-    }
   }
 
   private void unregisterFurther( final Context context )
