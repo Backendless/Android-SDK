@@ -49,7 +49,7 @@ import java.util.Map;
 public final class Backendless
 {
   private static String url = "https://api.backendless.com";
-  private static final boolean isAndroid = getEnvironment();
+  private static final boolean isAndroid = isAndroidEnvironment();
   private static boolean isCodeRunner = false;
   private static final BackendlessPrefs prefs;
 
@@ -74,7 +74,7 @@ public final class Backendless
   {
   }
 
-  private static boolean getEnvironment()
+  private static boolean isAndroidEnvironment()
   {
     try
     {

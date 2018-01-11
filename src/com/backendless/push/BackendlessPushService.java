@@ -138,20 +138,21 @@ public class BackendlessPushService extends IntentService implements PushReceive
       final String templateName = intent.getStringExtra( PublishOptions.TEMPLATE_NAME );
       if( templateName != null )
       {
-        if (PushTemplateHelper.getPushNotificationTemplateDTOs() == null)
+        if (PushTemplateHelper.getPushNotificationTemplates() == null)
           PushTemplateHelper.restorePushTemplates();
-        AndroidPushTemplate androidPushTemplateDTO = PushTemplateHelper.getPushNotificationTemplateDTOs().get( templateName );
-        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplateDTO, contentText, messageId );
-        PushTemplateHelper.showNotification( context, notification, androidPushTemplateDTO.getName(), messageId );
+
+        AndroidPushTemplate androidPushTemplate = PushTemplateHelper.getPushNotificationTemplates().get( templateName );
+        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, contentText, messageId );
+        PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), messageId );
         return;
       }
 
       String immediatePush = intent.getStringExtra( PublishOptions.ANDROID_IMMEDIATE_PUSH );
       if( immediatePush != null )
       {
-        AndroidPushTemplate androidPushTemplateDTO = (AndroidPushTemplate) weborb.util.io.Serializer.fromBytes( immediatePush.getBytes(), weborb.util.io.Serializer.JSON, false );
-        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplateDTO, contentText, messageId );
-        PushTemplateHelper.showNotification( context, notification, androidPushTemplateDTO.getName(), messageId );
+        AndroidPushTemplate androidPushTemplate = (AndroidPushTemplate) weborb.util.io.Serializer.fromBytes( immediatePush.getBytes(), weborb.util.io.Serializer.JSON, false );
+        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, contentText, messageId );
+        PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), messageId );
         return;
       }
 
@@ -278,7 +279,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
         {
           Object[] obj = (Object[]) weborb.util.io.Serializer.fromBytes( registrationInfo.getBytes(), weborb.util.io.Serializer.JSON, false );
           ids = (String) obj[0];
-          PushTemplateHelper.setPushNotificationTemplateDTOs( (Map<String,AndroidPushTemplate>) obj[1], registrationInfo.getBytes() );
+          PushTemplateHelper.setPushNotificationTemplates( (Map<String,AndroidPushTemplate>) obj[1], registrationInfo.getBytes() );
         }
         catch( IOException e )
         {
