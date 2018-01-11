@@ -19,12 +19,14 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.RemoteInput;
 import android.util.Log;
 import android.widget.RemoteViews;
+
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.messaging.Action;
 import com.backendless.messaging.AndroidPushTemplate;
 import com.backendless.messaging.PublishOptions;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -296,13 +298,23 @@ public class BackendlessPushService extends IntentService implements PushReceive
       Log.e( TAG, "Cannot receive rich media for notification." );
     }
 
+    int icon = 0;
+    if (templateDTO.getIcon() != null) {
+      icon = context.getResources().getIdentifier(templateDTO.getIcon(), "drawable", context.getPackageName());
+      if (icon == 0)
+        icon = context.getResources().getIdentifier("ic_launcher", "drawable", context.getPackageName());
+      if (icon != 0)
+        notificationBuilder.setSmallIcon( icon );
+    }
+
+    if (templateDTO.getLightsColor() != null && templateDTO.getLightsOnMs() != null && templateDTO.getLightsOffMs() != null)
+      notificationBuilder.setLights(templateDTO.getLightsColor(), templateDTO.getLightsOnMs(), templateDTO.getLightsOffMs());
+
     notificationBuilder
             .setDefaults( Notification.DEFAULT_ALL )
             .setShowWhen( true )
             .setWhen( System.currentTimeMillis() )
-            .setSmallIcon( Integer.parseInt( templateDTO.getIcon() ) )
             .setColor( templateDTO.getColorCode() )
-            .setLights( templateDTO.getLightsColor(), templateDTO.getLightsOnMs(), templateDTO.getLightsOffMs() )
             .setAutoCancel( templateDTO.getCancelOnTap() )
             .setTicker( templateDTO.getTickerText() )
             .setContentTitle( templateDTO.getFirstRowTitle() )
