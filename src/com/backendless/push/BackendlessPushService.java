@@ -131,7 +131,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
   private void handleMessage( final Context context, Intent intent )
   {
     final int messageId = intent.getIntExtra( BackendlessBroadcastReceiver.EXTRA_MESSAGE_ID, 0 );
-    final String contentText = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TEXT_TAG );
+    final String message = intent.getStringExtra( PublishOptions.MESSAGE_TAG );
 
     try
     {
@@ -142,7 +142,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
           PushTemplateHelper.restorePushTemplates();
 
         AndroidPushTemplate androidPushTemplate = PushTemplateHelper.getPushNotificationTemplates().get( templateName );
-        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, contentText, messageId );
+        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId );
         PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), messageId );
         return;
       }
@@ -151,7 +151,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
       if( immediatePush != null )
       {
         AndroidPushTemplate androidPushTemplate = (AndroidPushTemplate) weborb.util.io.Serializer.fromBytes( immediatePush.getBytes(), weborb.util.io.Serializer.JSON, false );
-        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, contentText, messageId );
+        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId );
         PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), messageId );
         return;
       }
@@ -165,6 +165,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
 
         if( tickerText != null && tickerText.length() > 0 )
         {
+          final String contentText = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TEXT_TAG );
           int appIcon = context.getApplicationInfo().icon;
           if( appIcon == 0 )
             appIcon = android.R.drawable.sym_def_app_icon;
