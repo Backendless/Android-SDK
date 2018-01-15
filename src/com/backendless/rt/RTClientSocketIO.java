@@ -1,5 +1,6 @@
 package com.backendless.rt;
 
+import com.backendless.async.callback.AsyncCallback;
 import com.backendless.async.message.AsyncMessage;
 import com.backendless.core.ResponseCarrier;
 import com.backendless.exceptions.BackendlessFault;
@@ -131,13 +132,32 @@ class RTClientSocketIO implements RTClient
   @Override
   public void userLoggedIn( String userToken )
   {
+    if(connectionManager.isConnected())
+    {
+      RTMethodRequest methodRequest = new RTMethodRequest( MethodTypes.SET_USER_TOKEN, new RTCallbackWithFault()
+      {
+        @Override
+        public AsyncCallback usersCallback()
+        {
+          return null;
+        }
 
+        @Override
+        public void handleResponse( IAdaptingType response )
+        {
+          logger.fine( "user logged in/out success" );
+        }
+      } );
+
+      methodRequest.putOption( "userToken", userToken );
+      invoke( methodRequest );
+    }
   }
 
   @Override
   public void userLoggedOut()
   {
-
+    userLoggedIn( null );
   }
 
   @Override

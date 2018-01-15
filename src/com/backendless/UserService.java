@@ -29,6 +29,7 @@ import com.backendless.persistence.local.UserIdStorageFactory;
 import com.backendless.persistence.local.UserTokenStorageFactory;
 import com.backendless.property.AbstractProperty;
 import com.backendless.property.UserProperty;
+import com.backendless.rt.RTClientFactory;
 import com.facebook.CallbackManager;
 import weborb.types.Types;
 
@@ -486,6 +487,7 @@ public final class UserService
     HeadersManager.getInstance().removeHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY );
     UserTokenStorageFactory.instance().getStorage().set( "" );
     UserIdStorageFactory.instance().getStorage().set( "" );
+    RTClientFactory.get().userLoggedOut();
   }
 
   public void logout( final AsyncCallback<Void> responder )
@@ -819,6 +821,8 @@ public final class UserService
       UserTokenStorageFactory.instance().getStorage().set( userToken );
       UserIdStorageFactory.instance().getStorage().set( Backendless.UserService.CurrentUser().getUserId() );
     }
+
+    RTClientFactory.get().userLoggedIn( userToken );
   }
 
   private AsyncCallback<BackendlessUser> getUserLoginAsyncHandler(
