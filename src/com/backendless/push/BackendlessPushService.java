@@ -138,12 +138,15 @@ public class BackendlessPushService extends IntentService implements PushReceive
       final String templateName = intent.getStringExtra( PublishOptions.TEMPLATE_NAME );
       if( templateName != null )
       {
-        if (PushTemplateHelper.getPushNotificationTemplates() == null)
+        if( PushTemplateHelper.getPushNotificationTemplates() == null )
           PushTemplateHelper.restorePushTemplates();
 
         AndroidPushTemplate androidPushTemplate = PushTemplateHelper.getPushNotificationTemplates().get( templateName );
-        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId );
-        PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), messageId );
+        if( androidPushTemplate != null )
+        {
+          Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId );
+          PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), messageId );
+        }
         return;
       }
 
