@@ -106,6 +106,13 @@ abstract class SocketIOConnectionManager
           logger.info( "Got met res" );
           invocationResult( args );
         }
+      } ).on( Socket.EVENT_ERROR, new Emitter.Listener()
+      {
+        @Override
+        public void call( Object... args )
+        {
+           logger.severe( "ERROR from rt sever: " + Arrays.toString( args ) );
+        }
       } );
 
       socket.connect();
