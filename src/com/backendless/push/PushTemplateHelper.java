@@ -139,11 +139,13 @@ public class PushTemplateHelper
     }
 
     int icon = 0;
-    if (template.getIcon() != null) {
-      icon = context.getResources().getIdentifier(template.getIcon(), "drawable", context.getPackageName());
-      if (icon == 0)
-        icon = context.getResources().getIdentifier("ic_launcher", "drawable", context.getPackageName());
-      if (icon != 0)
+    if( template.getIcon() != null )
+      icon = context.getResources().getIdentifier( template.getIcon(), "drawable", context.getPackageName() );
+
+    if( icon == 0 )
+    {
+      icon = context.getResources().getIdentifier( "ic_launcher", "drawable", context.getPackageName() );
+      if( icon != 0 )
         notificationBuilder.setSmallIcon( icon );
     }
 
@@ -169,13 +171,14 @@ public class PushTemplateHelper
     Intent notificationIntent = context.getPackageManager().getLaunchIntentForPackage( context.getPackageName() );
     notificationIntent.putExtra( BackendlessBroadcastReceiver.EXTRA_MESSAGE_ID, messageId );
     notificationIntent.putExtra( PublishOptions.TEMPLATE_NAME, template.getName() );
+    notificationIntent.putExtra( PublishOptions.MESSAGE_TAG, messageText );
     notificationIntent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
     PendingIntent contentIntent = PendingIntent.getActivity( context, messageId * 3, notificationIntent, 0 );
     notificationBuilder.setContentIntent( contentIntent );
 
     if (template.getButtonTemplate().getActions() != null)
     {
-      List<NotificationCompat.Action> actions = createActions( context, template.getButtonTemplate().getActions(), template.getName(), messageId);
+      List<NotificationCompat.Action> actions = createActions( context, template.getButtonTemplate().getActions(), template.getName(), messageId, messageText );
       for( NotificationCompat.Action action : actions )
         notificationBuilder.addAction( action );
     }
@@ -183,7 +186,7 @@ public class PushTemplateHelper
     return notificationBuilder.build();
   }
 
-  static private List<NotificationCompat.Action> createActions( Context context, Action[] actions, String templateName, int messageId )
+  static private List<NotificationCompat.Action> createActions( Context context, Action[] actions, String templateName, int messageId, String messageText )
   {
     List<NotificationCompat.Action> notifActions = new ArrayList<>();
 
@@ -193,6 +196,7 @@ public class PushTemplateHelper
       Intent actionIntent = new Intent( a.getTitle() );
       actionIntent.setClassName( context, a.getId() );
       actionIntent.putExtra( BackendlessBroadcastReceiver.EXTRA_MESSAGE_ID, messageId );
+      actionIntent.putExtra( PublishOptions.MESSAGE_TAG, messageText );
       actionIntent.putExtra( PublishOptions.TEMPLATE_NAME, templateName );
       actionIntent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
 
