@@ -182,8 +182,7 @@ public final class GCMRegistrar
     GCMRegistrar.resetBackoff( context );
     setSenderId( context, senderId );
 
-    if( expiration != null )
-      setRegistrationExpiration( context, expiration.getTime() );
+    setRegistrationExpiration( context, expiration );
 
     if( channels != null )
       setChannels( context, channels );
@@ -314,23 +313,23 @@ public final class GCMRegistrar
     return prefs.getString( PROPERTY_SENDER_ID, "" );
   }
 
-  static void setRegistrationExpiration( Context context, long registrationExpiration )
+  static void setRegistrationExpiration( Context context, Date expiration )
   {
     SharedPreferences prefs = getMessagingPreferences( context );
     SharedPreferences.Editor editor = prefs.edit();
-    editor.putLong( PROPERTY_REGISTRATION_EXP, registrationExpiration );
+
+    if( expiration != null )
+      editor.putLong( PROPERTY_REGISTRATION_EXP, expiration.getTime() );
+    else
+      editor.remove( PROPERTY_REGISTRATION_EXP );
+
     editor.commit();
   }
 
   static long getRegistrationExpiration( Context context )
   {
     SharedPreferences prefs = getMessagingPreferences( context );
-    long prefsLong = prefs.getLong( PROPERTY_REGISTRATION_EXP, 0 );
-
-    if( prefsLong <= 0 )
-      return System.currentTimeMillis() + GCMRegistrar.DEFAULT_ON_SERVER_LIFESPAN_MS;
-
-    return prefsLong;
+    return prefs.getLong( PROPERTY_REGISTRATION_EXP, 0 );
   }
 
   static void setChannels( Context context, Collection<String> channels )

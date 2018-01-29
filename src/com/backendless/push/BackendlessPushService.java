@@ -245,7 +245,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
       GCMRegistrar.resetBackoff( context );
       GCMRegistrar.setGCMdeviceToken( context, "" );
       GCMRegistrar.setChannels( context, Collections.<String>emptyList() );
-      GCMRegistrar.setRegistrationExpiration( context, -1 );
+      GCMRegistrar.setRegistrationExpiration( context, null );
       unregisterFurther( context );
       return;
     }
