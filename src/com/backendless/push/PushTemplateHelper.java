@@ -143,11 +143,10 @@ public class PushTemplateHelper
       icon = context.getResources().getIdentifier( template.getIcon(), "drawable", context.getPackageName() );
 
     if( icon == 0 )
-    {
       icon = context.getResources().getIdentifier( "ic_launcher", "drawable", context.getPackageName() );
-      if( icon != 0 )
+
+    if( icon != 0 )
         notificationBuilder.setSmallIcon( icon );
-    }
 
     if (template.getLightsColor() != null && template.getLightsOnMs() != null && template.getLightsOffMs() != null)
       notificationBuilder.setLights(template.getLightsColor(), template.getLightsOnMs(), template.getLightsOffMs());
