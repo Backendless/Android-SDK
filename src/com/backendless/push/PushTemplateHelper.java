@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
@@ -76,7 +78,7 @@ public class PushTemplateHelper
 
       if( notificationChannel == null )
       {
-        notificationChannel = PushTemplateHelper.createNotificationChannel( channelId, template );
+        notificationChannel = PushTemplateHelper.createNotificationChannel( context, channelId, template );
         notificationManager.createNotificationChannel( notificationChannel );
       }
 
@@ -104,8 +106,12 @@ public class PushTemplateHelper
       else
         notificationBuilder.setPriority( Notification.PRIORITY_DEFAULT );
 
-      if( template.getButtonTemplate().getSound() != null )
-        notificationBuilder.setSound( Uri.parse( template.getButtonTemplate().getSound() ) );
+      if( template.getButtonTemplate() != null && template.getButtonTemplate().getSound() != null )
+      {
+        int soundResource = context.getResources().getIdentifier( template.getButtonTemplate().getSound(), "raw", context.getPackageName() );
+        Uri soundUri = Uri.parse( "android.resource://" + context.getPackageName() + "/" + soundResource );
+        notificationBuilder.setSound( soundUri, AudioManager.STREAM_NOTIFICATION );
+      }
 
       if( template.getButtonTemplate().getVibrate() != null )
       {
@@ -186,6 +192,23 @@ public class PushTemplateHelper
     return notificationBuilder.build();
   }
 
+  static private Uri getSoundUri(Context context, String soundResourceName)
+  {
+      int soundResource = context.getResources().getIdentifier( soundResourceName, "raw", context.getPackageName() );
+
+      AudioAttributes audioAttributes = new AudioAttributes.Builder()
+              .setUsage( AudioAttributes.USAGE_NOTIFICATION_RINGTONE )
+              .setContentType( AudioAttributes.CONTENT_TYPE_SONIFICATION )
+              .setFlags( AudioAttributes.FLAG_AUDIBILITY_ENFORCED )
+              .setLegacyStreamType( AudioManager.STREAM_NOTIFICATION )
+              .build();
+
+      Uri soundUri = Uri.parse( "android.resource://" + context.getPackageName() + "/" + soundResource );
+      //Ringtone r = RingtoneManager.getRingtone( getApplicationContext(), sound );
+      //r.play();
+      return soundUri;
+  }
+
   static private List<NotificationCompat.Action> createActions( Context context, Action[] actions, String templateName, int messageId, String messageText )
   {
     List<NotificationCompat.Action> notifActions = new ArrayList<>();
@@ -217,14 +240,25 @@ public class PushTemplateHelper
     return notifActions;
   }
 
-  static private NotificationChannel createNotificationChannel( final String channelId, final AndroidPushTemplate template )
+  static private NotificationChannel createNotificationChannel( Context context, final String channelId, final AndroidPushTemplate template )
   {
     NotificationChannel notificationChannel = new NotificationChannel( channelId, template.getName(), NotificationManager.IMPORTANCE_DEFAULT );
     notificationChannel.setShowBadge( template.getButtonTemplate().getShowBadge() );
     notificationChannel.setImportance( template.getPriority() ); // NotificationManager.IMPORTANCE_DEFAULT
 
-    if( template.getButtonTemplate().getSound() != null )
-      notificationChannel.setSound( Uri.parse( template.getButtonTemplate().getSound() ), null );
+    if( template.getButtonTemplate() != null && template.getButtonTemplate().getSound() != null )
+    {
+      int soundResource = context.getResources().getIdentifier( template.getButtonTemplate().getSound(), "raw", context.getPackageName() );
+      AudioAttributes audioAttributes = new AudioAttributes.Builder()
+              .setUsage( AudioAttributes.USAGE_NOTIFICATION_RINGTONE )
+              .setContentType( AudioAttributes.CONTENT_TYPE_SONIFICATION )
+              .setFlags( AudioAttributes.FLAG_AUDIBILITY_ENFORCED )
+              .setLegacyStreamType( AudioManager.STREAM_NOTIFICATION )
+              .build();
+
+      Uri soundUri = Uri.parse( "android.resource://" + context.getPackageName() + "/" + soundResource );
+      notificationChannel.setSound( soundUri, audioAttributes );
+    }
 
     notificationChannel.enableLights( true );
     notificationChannel.setLightColor( template.getLightsColor() );
