@@ -194,19 +194,19 @@ public class PushTemplateHelper
 
   static private Uri getSoundUri(Context context, String soundResourceName)
   {
-      int soundResource = context.getResources().getIdentifier( soundResourceName, "raw", context.getPackageName() );
+    int soundResource = context.getResources().getIdentifier( soundResourceName, "raw", context.getPackageName() );
 
-      AudioAttributes audioAttributes = new AudioAttributes.Builder()
-              .setUsage( AudioAttributes.USAGE_NOTIFICATION_RINGTONE )
-              .setContentType( AudioAttributes.CONTENT_TYPE_SONIFICATION )
-              .setFlags( AudioAttributes.FLAG_AUDIBILITY_ENFORCED )
-              .setLegacyStreamType( AudioManager.STREAM_NOTIFICATION )
-              .build();
+    AudioAttributes audioAttributes = new AudioAttributes.Builder()
+            .setUsage( AudioAttributes.USAGE_NOTIFICATION_RINGTONE )
+            .setContentType( AudioAttributes.CONTENT_TYPE_SONIFICATION )
+            .setFlags( AudioAttributes.FLAG_AUDIBILITY_ENFORCED )
+            .setLegacyStreamType( AudioManager.STREAM_NOTIFICATION )
+            .build();
 
-      Uri soundUri = Uri.parse( "android.resource://" + context.getPackageName() + "/" + soundResource );
-      //Ringtone r = RingtoneManager.getRingtone( getApplicationContext(), sound );
-      //r.play();
-      return soundUri;
+    Uri soundUri = Uri.parse( "android.resource://" + context.getPackageName() + "/" + soundResource );
+    //Ringtone r = RingtoneManager.getRingtone( getApplicationContext(), sound );
+    //r.play();
+    return soundUri;
   }
 
   static private List<NotificationCompat.Action> createActions( Context context, Action[] actions, String templateName, int messageId, String messageText )
