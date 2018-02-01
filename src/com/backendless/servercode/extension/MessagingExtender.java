@@ -54,6 +54,22 @@ public abstract class MessagingExtender
   {
   }
 
+  public void beforePush( RunnerContext context, String templateDescription ) throws Exception
+  {
+  }
+
+  public void afterPush( RunnerContext context, String templateDescription, ExecutionResult<MessageStatus> status ) throws Exception
+  {
+  }
+
+  public void beforePushWithTemplate( RunnerContext context, String templateName ) throws Exception
+  {
+  }
+
+  public void afterPushWithTemplate( RunnerContext context, String templateName, ExecutionResult<MessageStatus> status ) throws Exception
+  {
+  }
+
   public void beforeDeviceRegistration( RunnerContext context, DeviceRegistration registrationDto ) throws Exception
   {
   }
