@@ -160,11 +160,11 @@ public class PushTemplateHelper
       notificationBuilder.setAutoCancel( false );
 
     notificationBuilder
-            .setDefaults( Notification.DEFAULT_ALL )
             .setShowWhen( true )
             .setWhen( System.currentTimeMillis() )
-            .setTicker( template.getTickerText() )
             .setContentTitle( template.getFirstRowTitle() )
+            .setSubText( template.getThirdRowTitle() )
+            .setTicker( template.getTickerText() )
             .setContentText( messageText );
 
     Intent notificationIntent = context.getPackageManager().getLaunchIntentForPackage( context.getPackageName() );
