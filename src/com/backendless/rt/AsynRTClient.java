@@ -121,4 +121,10 @@ class AsynRTClient implements RTClient
   {
     rtClient.disconnect();
   }
+
+  @Override
+  public boolean isAvailable()
+  {
+    return rtClient.isAvailable();
+  }
 }

@@ -28,4 +28,6 @@ public interface RTClient
   void connect();
 
   void disconnect();
+
+  boolean isAvailable();
 }
