@@ -10,6 +10,7 @@ class RTLookupService
   private static final Logger logger = Logger.getLogger( "RTLookupService" );
 
   private static final int INITIAL_TIMEOUT = 100;
+  private static final int MAX_TIMEOUT = 60 * 1000; // 60 sec
   private int retryTimeout = INITIAL_TIMEOUT;
 
   synchronized String lookup()
@@ -34,6 +35,9 @@ class RTLookupService
       }
 
       retryTimeout *= 2;
+
+      if( retryTimeout > MAX_TIMEOUT )
+        retryTimeout = MAX_TIMEOUT;
 
       return lookup();
     }

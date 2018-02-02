@@ -15,10 +15,12 @@ abstract class SocketIOConnectionManager
   private static final Logger logger = Logger.getLogger( "SocketIOConnectionManager" );
   private static final RTLookupService rtLookupService = new RTLookupService();
   private static final int INITIAL_TIMEOUT = 100;
+  private static final int MAX_TIMEOUT = 2 * 60 * 1000; //2 min
 
   private final Object lock = new Object();
 
   private int retryConnectTimeout = INITIAL_TIMEOUT;
+  private int retryAttempt = 0;
   private Socket socket;
 
   Socket get()
@@ -41,28 +43,29 @@ abstract class SocketIOConnectionManager
         return socket;
       }
 
+      final IO.Options opts = new IO.Options();
+      opts.reconnection = false;
+
+      opts.path = "/" + Backendless.getApplicationId();
+
+      opts.query = "apiKey=" + Backendless.getSecretKey() + "&binary=true";
+
+      final String host = rtLookupService.lookup() + opts.path;
+      logger.info( "Looked up for server " + host );
+
+      String userToken = UserTokenStorageFactory.instance().getStorage().get();
+      if( userToken != null && !userToken.isEmpty() )
+        opts.query += "&userToken=" + userToken;
+
       try
       {
-        final IO.Options opts = new IO.Options();
-        opts.reconnection = false;
-
-        opts.path = "/" + Backendless.getApplicationId();
-
-        opts.query = "apiKey=" + Backendless.getSecretKey() + "&binary=true";
-
-        final String host = rtLookupService.lookup() + opts.path;
-        logger.info( "Looked up for server " + host );
-
-        String userToken = UserTokenStorageFactory.instance().getStorage().get();
-        if( userToken != null && !userToken.isEmpty() )
-          opts.query += "&userToken=" + userToken;
-
         socket = IO.socket( host, opts );
         logger.info( "Socket object created" );
       }
       catch( URISyntaxException e )
       {
-        return handleConnectionFailed();
+        logger.severe( e.getMessage() );
+        return get();
       }
 
       socket.on( Socket.EVENT_CONNECT, new Emitter.Listener()
@@ -72,6 +75,7 @@ abstract class SocketIOConnectionManager
         {
           logger.info( "Connected event" );
           retryConnectTimeout = INITIAL_TIMEOUT;
+          retryAttempt = 0;
           connected();
         }
       } ).on( Socket.EVENT_DISCONNECT, new Emitter.Listener()
@@ -80,15 +84,18 @@ abstract class SocketIOConnectionManager
         public void call( Object... args )
         {
           logger.info( "Disconnected event" );
-          handleConnectionFailed();
+          disconnected();
+          reconnect();
         }
       } ).on( Socket.EVENT_CONNECT_ERROR, new Emitter.Listener()
       {
         @Override
         public void call( Object... args )
         {
-          logger.severe( "Connection failed " + Arrays.toString( args ) );
-          handleConnectionFailed();
+          final String error = Arrays.toString( args );
+          logger.severe( "Connection failed " + error );
+          connectError( error );
+          reconnect();
         }
       } ).on( "SUB_RES", new Emitter.Listener()
       {
@@ -111,7 +118,10 @@ abstract class SocketIOConnectionManager
         @Override
         public void call( Object... args )
         {
-           logger.severe( "ERROR from rt sever: " + Arrays.toString( args ) );
+          final String error = Arrays.toString( args );
+          logger.severe( "ERROR from rt sever: " + error );
+          connectError( error );
+          reconnect();
         }
       } );
 
@@ -121,8 +131,11 @@ abstract class SocketIOConnectionManager
     return socket;
   }
 
-  private Socket handleConnectionFailed()
+  private void reconnect()
   {
+    if( socket == null )
+      return;
+
     disconnect();
     logger.info( "Wait for " + retryConnectTimeout + " before reconnect" );
     try
@@ -135,7 +148,15 @@ abstract class SocketIOConnectionManager
     }
 
     retryConnectTimeout *= 2;
-    return get();
+
+    if( retryConnectTimeout > MAX_TIMEOUT )
+      retryConnectTimeout = MAX_TIMEOUT;
+
+    retryAttempt++;
+
+    reconnectAttempt( retryAttempt, retryConnectTimeout );
+
+    get();
   }
 
   void disconnect()
@@ -156,6 +177,12 @@ abstract class SocketIOConnectionManager
   }
 
   abstract void connected();
+
+  abstract void reconnectAttempt( int attempt, int timeout );
+
+  abstract void connectError( String error );
+
+  abstract void disconnected();
 
   abstract void subscriptionResult( Object... args );
 

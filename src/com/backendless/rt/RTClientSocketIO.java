@@ -1,6 +1,8 @@
 package com.backendless.rt;
 
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.async.callback.Fault;
+import com.backendless.async.callback.Result;
 import com.backendless.async.message.AsyncMessage;
 import com.backendless.core.ResponseCarrier;
 import com.backendless.exceptions.BackendlessFault;
@@ -28,6 +30,11 @@ class RTClientSocketIO implements RTClient
 
   private final SocketIOConnectionManager connectionManager;
 
+  private Result<Void> connectCallback;
+  private Fault connectErrorCallback;
+  private Result<Void> disconnectCallback;
+  private Result<ReconnectAttempt> reconnectAttemptCallback;
+
   RTClientSocketIO( )
   {
     this.connectionManager = new SocketIOConnectionManager()
@@ -36,6 +43,25 @@ class RTClientSocketIO implements RTClient
       void connected()
       {
         resubscribe();
+        connectCallback.handle( null );
+      }
+
+      @Override
+      void reconnectAttempt( int attempt, int timeout )
+      {
+        reconnectAttemptCallback.handle( new ReconnectAttempt( attempt, timeout ) );
+      }
+
+      @Override
+      void connectError( String error )
+      {
+        connectErrorCallback.handle( new BackendlessFault( error ) );
+      }
+
+      @Override
+      void disconnected()
+      {
+        disconnectCallback.handle( null );
       }
 
       @Override
@@ -173,6 +199,48 @@ class RTClientSocketIO implements RTClient
       methodsToSend.addFirst( methodRequest );
     }
 
+  }
+
+  @Override
+  public void setConnectEventListener( Result<Void> callback )
+  {
+    connectCallback = callback;
+  }
+
+  @Override
+  public void setReconnectAttemptEventListener( Result<ReconnectAttempt> callback )
+  {
+    reconnectAttemptCallback = callback;
+  }
+
+  @Override
+  public void setConnectErrorEventListener( Fault fault )
+  {
+    connectErrorCallback = fault;
+  }
+
+  @Override
+  public void setDisconnectEventListener( Result<Void> callback )
+  {
+    disconnectCallback = callback;
+  }
+
+  @Override
+  public boolean isConnected()
+  {
+    return connectionManager.isConnected();
+  }
+
+  @Override
+  public void connect()
+  {
+    connectionManager.get();
+  }
+
+  @Override
+  public void disconnect()
+  {
+    connectionManager.disconnect();
   }
 
   private void resubscribe()

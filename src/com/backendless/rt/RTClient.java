@@ -1,5 +1,8 @@
 package com.backendless.rt;
 
+import com.backendless.async.callback.Fault;
+import com.backendless.async.callback.Result;
+
 public interface RTClient
 {
   void subscribe( RTSubscription subscription );
@@ -11,4 +14,18 @@ public interface RTClient
   void userLoggedOut();
 
   void invoke( RTMethodRequest methodRequest );
+
+  void setConnectEventListener( Result<Void> callback );
+
+  void setReconnectAttemptEventListener( Result<ReconnectAttempt> callback );
+
+  void setConnectErrorEventListener( Fault fault );
+
+  void setDisconnectEventListener( Result<Void> callback );
+
+  boolean isConnected();
+
+  void connect();
+
+  void disconnect();
 }

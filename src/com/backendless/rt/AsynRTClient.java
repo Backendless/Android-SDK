@@ -1,6 +1,8 @@
 package com.backendless.rt;
 
 import com.backendless.ThreadPoolService;
+import com.backendless.async.callback.Fault;
+import com.backendless.async.callback.Result;
 
 class AsynRTClient implements RTClient
 {
@@ -69,5 +71,54 @@ class AsynRTClient implements RTClient
         rtClient.invoke( methodRequest );
       }
     } );
+  }
+
+  @Override
+  public void setConnectEventListener( Result<Void> callback )
+  {
+    rtClient.setConnectEventListener( callback );
+  }
+
+  @Override
+  public void setReconnectAttemptEventListener( Result<ReconnectAttempt> callback )
+  {
+    rtClient.setReconnectAttemptEventListener( callback );
+  }
+
+  @Override
+  public void setConnectErrorEventListener( Fault fault )
+  {
+    rtClient.setConnectErrorEventListener( fault );
+  }
+
+  @Override
+  public void setDisconnectEventListener( Result<Void> callback )
+  {
+    rtClient.setDisconnectEventListener( callback );
+  }
+
+  @Override
+  public boolean isConnected()
+  {
+    return rtClient.isConnected();
+  }
+
+  @Override
+  public void connect()
+  {
+    ThreadPoolService.getPoolExecutor().execute( new Runnable()
+    {
+      @Override
+      public void run()
+      {
+        rtClient.connect();
+      }
+    } );
+  }
+
+  @Override
+  public void disconnect()
+  {
+    rtClient.disconnect();
   }
 }
