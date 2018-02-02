@@ -530,6 +530,22 @@ public final class Messaging
     publish( null, message, publishOptions, deliveryOptions, responder );
   }
 
+  public MessageStatus pushWithTemplate( String templateName )
+  {
+    if( templateName == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_TEMPLATE_NAME );
+
+    return (MessageStatus) Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "pushWithTemplate", new Object[] { templateName } );
+  }
+
+  public void pushWithTemplate( String templateName, final AsyncCallback<MessageStatus> responder )
+  {
+    if( templateName == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_TEMPLATE_NAME );
+
+    Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "pushWithTemplate", new Object[] { templateName }, responder );
+  }
+
   public MessageStatus getMessageStatus( String messageId )
   {
     if( messageId == null )
