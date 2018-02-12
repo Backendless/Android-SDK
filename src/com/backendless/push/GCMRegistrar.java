@@ -220,7 +220,10 @@ public final class GCMRegistrar
     RegistrationInfo registrationInfo = new RegistrationInfo();
     registrationInfo.setGcmDeviceToken( prefs.getString( PROPERTY_GCM_DEVICE_TOKEN, "" ) );
     registrationInfo.setRegistrationIds( prefs.getString( PROPERTY_REGISTRATION_IDS, "" ) );
-    registrationInfo.setRegistrationExpiration( prefs.getLong( PROPERTY_EXPIRATION, 0 ) );
+
+    if ( prefs.contains( PROPERTY_EXPIRATION ) )
+      registrationInfo.setRegistrationExpiration( prefs.getLong( PROPERTY_EXPIRATION, 0 ) );
+
     int oldVersion = prefs.getInt( PROPERTY_APP_VERSION, Integer.MIN_VALUE );
     int newVersion = getAppVersion( context );
 
@@ -230,7 +233,8 @@ public final class GCMRegistrar
     if(registrationInfo.getRegistrationIds() == null || registrationInfo.getRegistrationIds().isEmpty())
       return null;
 
-    if( (oldVersion != Integer.MIN_VALUE && oldVersion != newVersion) || registrationInfo.getRegistrationExpiration() == null || registrationInfo.getRegistrationExpiration() < System.currentTimeMillis() )
+    Long expiration = registrationInfo.getRegistrationExpiration();
+    if( (oldVersion != Integer.MIN_VALUE && oldVersion != newVersion) || ( expiration != null && expiration > 0  && expiration < System.currentTimeMillis() ) )
     {
       clearRegistration( context );
       return null;
@@ -248,6 +252,7 @@ public final class GCMRegistrar
   {
     setGCMdeviceToken( context, "" );
     setRegistrationIds( context, "", 0 );
+    setChannels(context, Collections.EMPTY_LIST);
   }
 
   static void setGCMdeviceToken( Context context, String deviceToken )
