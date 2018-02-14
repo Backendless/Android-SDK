@@ -51,6 +51,7 @@ public class ExceptionMessage
   public final static String NULL_MESSAGE = "Message cannot be null. Use an empty string instead.";
   public final static String NULL_MESSAGE_ID = "Message id cannot be null or empty.";
   public final static String NULL_SUBSCRIPTION_ID = "Subscription id cannot be null or empty.";
+  public final static String NULL_EMPTY_TEMPLATE_NAME = "Template name can not be null or empty.";
 
   public final static String NULL_FILE = "File cannot be null.";
   public final static String NULL_PATH = "File path cannot be null or empty.";
