@@ -18,42 +18,44 @@ public class RTService
 
   public RTService()
   {
-
-    rtClient.setConnectEventListener( new Result<Void>()
+    if(rtClient.isAvailable())
     {
-      @Override
-      public void handle( Void result )
+      rtClient.setConnectEventListener( new Result<Void>()
       {
-        RTService.this.handle( result, connectListeners );
-      }
-    } );
+        @Override
+        public void handle( Void result )
+        {
+          RTService.this.handle( result, connectListeners );
+        }
+      } );
 
-    rtClient.setDisconnectEventListener( new Result<Void>()
-    {
-      @Override
-      public void handle( Void result )
+      rtClient.setDisconnectEventListener( new Result<Void>()
       {
-        RTService.this.handle( result, disconnectListeners );
-      }
-    } );
+        @Override
+        public void handle( Void result )
+        {
+          RTService.this.handle( result, disconnectListeners );
+        }
+      } );
 
-    rtClient.setConnectErrorEventListener( new Fault()
-    {
-      @Override
-      public void handle( BackendlessFault fault )
+      rtClient.setConnectErrorEventListener( new Fault()
       {
-        RTService.this.handle( fault, connectErrorListeners );
-      }
-    } );
+        @Override
+        public void handle( BackendlessFault fault )
+        {
+          RTService.this.handle( fault, connectErrorListeners );
+        }
+      } );
 
-    rtClient.setReconnectAttemptEventListener( new Result<ReconnectAttempt>()
-    {
-      @Override
-      public void handle( ReconnectAttempt result )
+      rtClient.setReconnectAttemptEventListener( new Result<ReconnectAttempt>()
       {
-        RTService.this.handle( result, reconnectListeners );
-      }
-    } );
+        @Override
+        public void handle( ReconnectAttempt result )
+        {
+          RTService.this.handle( result, reconnectListeners );
+        }
+      } );
+    }
   }
 
   public final DataListenerFactory Data = new DataListenerFactory();

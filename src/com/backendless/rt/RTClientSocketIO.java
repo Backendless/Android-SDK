@@ -243,6 +243,12 @@ class RTClientSocketIO implements RTClient
     connectionManager.disconnect();
   }
 
+  @Override
+  public boolean isAvailable()
+  {
+    return true;
+  }
+
   private void resubscribe()
   {
     for( RTSubscription rtSubscription : subscriptions.values() )
