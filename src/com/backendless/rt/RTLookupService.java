@@ -14,7 +14,12 @@ class RTLookupService
   private static final int MAX_TIMEOUT = 60 * 1000; // 60 sec
   private int retryTimeout = INITIAL_TIMEOUT;
 
-  private Result<ReconnectAttempt> reconnectAttemptListener;
+  private final Result<ReconnectAttempt> reconnectAttemptListener;
+
+  RTLookupService( Result<ReconnectAttempt> reconnectAttemptListener )
+  {
+    this.reconnectAttemptListener = reconnectAttemptListener;
+  }
 
   synchronized String lookup( int retry )
   {
@@ -46,16 +51,5 @@ class RTLookupService
 
       return lookup( ++retry );
     }
-  }
-
-  public Result<ReconnectAttempt> getReconnectAttemptListener()
-  {
-    return reconnectAttemptListener;
-  }
-
-  public RTLookupService setReconnectAttemptListener( Result<ReconnectAttempt> reconnectAttemptListener )
-  {
-    this.reconnectAttemptListener = reconnectAttemptListener;
-    return this;
   }
 }

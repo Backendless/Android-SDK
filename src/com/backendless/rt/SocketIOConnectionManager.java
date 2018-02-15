@@ -20,8 +20,7 @@ abstract class SocketIOConnectionManager
 
   SocketIOConnectionManager()
   {
-    rtLookupService = new RTLookupService();
-    rtLookupService.setReconnectAttemptListener( new Result<ReconnectAttempt>()
+    rtLookupService = new RTLookupService( new Result<ReconnectAttempt>()
     {
       @Override
       public void handle( ReconnectAttempt result )
