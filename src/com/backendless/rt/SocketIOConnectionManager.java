@@ -1,6 +1,7 @@
 package com.backendless.rt;
 
 import com.backendless.Backendless;
+import com.backendless.async.callback.Result;
 import com.backendless.persistence.local.UserTokenStorageFactory;
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -13,11 +14,26 @@ import java.util.logging.Logger;
 abstract class SocketIOConnectionManager
 {
   private static final Logger logger = Logger.getLogger( "SocketIOConnectionManager" );
-  private static final RTLookupService rtLookupService = new RTLookupService();
+
   private static final int INITIAL_TIMEOUT = 100;
   private static final int MAX_TIMEOUT = 2 * 60 * 1000; //2 min
 
+  SocketIOConnectionManager()
+  {
+    rtLookupService = new RTLookupService();
+    rtLookupService.setReconnectAttemptListener( new Result<ReconnectAttempt>()
+    {
+      @Override
+      public void handle( ReconnectAttempt result )
+      {
+        retryAttempt = result.getAttempt();
+        reconnectAttempt( retryAttempt, result.getTimeout() );
+      }
+    } );
+  }
+
   private final Object lock = new Object();
+  private final RTLookupService rtLookupService;
 
   private int retryConnectTimeout = INITIAL_TIMEOUT;
   private int retryAttempt = 0;
@@ -50,7 +66,7 @@ abstract class SocketIOConnectionManager
 
       opts.query = "apiKey=" + Backendless.getSecretKey() + "&binary=true";
 
-      final String host = rtLookupService.lookup() + opts.path;
+      final String host = rtLookupService.lookup( retryAttempt ) + opts.path;
       logger.info( "Looked up for server " + host );
 
       String userToken = UserTokenStorageFactory.instance().getStorage().get();
@@ -62,7 +78,7 @@ abstract class SocketIOConnectionManager
         socket = IO.socket( host, opts );
         logger.info( "Socket object created" );
       }
-      catch( URISyntaxException e )
+      catch( RuntimeException | URISyntaxException e )
       {
         logger.severe( e.getMessage() );
         return get();

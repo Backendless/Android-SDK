@@ -7,7 +7,6 @@ import com.backendless.rt.users.UserInfo;
 import com.backendless.rt.users.UserStatus;
 
 import java.util.Collection;
-import java.util.Map;
 
 public interface SharedObject extends RTListener
 {
