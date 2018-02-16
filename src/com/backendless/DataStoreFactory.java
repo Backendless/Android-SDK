@@ -23,7 +23,7 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.persistence.DataQueryBuilder;
 import com.backendless.persistence.LoadRelationsQueryBuilder;
-import com.backendless.rt.data.DataListener;
+import com.backendless.rt.data.EventHandler;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -529,7 +529,7 @@ class DataStoreFactory
       }
 
       @Override
-      public DataListener<E> rt()
+      public EventHandler<E> rt()
       {
         return Backendless.RT.Data.of( entityClass );
       }

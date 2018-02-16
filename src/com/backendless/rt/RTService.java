@@ -3,7 +3,7 @@ package com.backendless.rt;
 import com.backendless.async.callback.Fault;
 import com.backendless.async.callback.Result;
 import com.backendless.exceptions.BackendlessFault;
-import com.backendless.rt.data.DataListenerFactory;
+import com.backendless.rt.data.EventHandlerFactory;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -58,7 +58,7 @@ public class RTService
     }
   }
 
-  public final DataListenerFactory Data = new DataListenerFactory();
+  public final EventHandlerFactory Data = new EventHandlerFactory();
 
   public void addConnectEventListener( Result<Void> callback )
   {

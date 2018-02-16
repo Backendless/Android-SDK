@@ -27,7 +27,7 @@ import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
-import com.backendless.rt.data.DataListener;
+import com.backendless.rt.data.EventHandler;
 import com.backendless.utils.ResponderHelper;
 import weborb.client.Fault;
 import weborb.client.IRawResponder;
@@ -711,7 +711,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public DataListener<Map> rt()
+  public EventHandler<Map> rt()
   {
     return Backendless.RT.Data.of( tableName );
   }

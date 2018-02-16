@@ -12,18 +12,18 @@ import weborb.types.IAdaptingType;
 
 import java.util.HashMap;
 
-public class DataListenerImpl<T> extends RTListenerImpl implements DataListener<T>
+public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<T>
 {
   private final Class clazz;
   private final String tableName;
 
-  DataListenerImpl( Class<T> clazz )
+  EventHandlerImpl( Class<T> clazz )
   {
     this.clazz = clazz;
     this.tableName = BackendlessSerializer.getSimpleName( clazz );
   }
 
-  DataListenerImpl( String tableName )
+  EventHandlerImpl( String tableName )
   {
     this.clazz = HashMap.class;
     this.tableName = tableName;

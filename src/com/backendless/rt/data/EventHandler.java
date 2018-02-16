@@ -3,7 +3,7 @@ package com.backendless.rt.data;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.rt.RTListener;
 
-public interface DataListener<T> extends RTListener
+public interface EventHandler<T> extends RTListener
 {
   void addCreateListener( AsyncCallback<T> callback );
 
