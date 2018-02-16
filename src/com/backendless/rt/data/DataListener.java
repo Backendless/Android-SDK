@@ -41,9 +41,9 @@ public interface DataListener<T> extends RTListener
 
   void removeDeleteListeners( String whereClause );
 
-  void addBulkUpdateListener( AsyncCallback<T> callback );
+  void addBulkUpdateListener( AsyncCallback<BulkEvent> callback );
 
-  void addBulkUpdateListener( String whereClause, AsyncCallback<T> callback );
+  void addBulkUpdateListener( String whereClause, AsyncCallback<BulkEvent> callback );
 
   void removeBulkUpdateListeners();
 
@@ -53,9 +53,9 @@ public interface DataListener<T> extends RTListener
 
   void removeBulkUpdateListeners( String whereClause );
 
-  void addBulkDeleteListener( AsyncCallback<T> callback );
+  void addBulkDeleteListener( AsyncCallback<BulkEvent> callback );
 
-  void addBulkDeleteListener( String whereClause, AsyncCallback<T> callback );
+  void addBulkDeleteListener( String whereClause, AsyncCallback<BulkEvent> callback );
 
   void removeBulkDeleteListeners();
 

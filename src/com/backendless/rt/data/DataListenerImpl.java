@@ -158,16 +158,16 @@ public class DataListenerImpl<T> extends RTListenerImpl implements DataListener<
   //--------bulk-update-------
 
   @Override
-  public void addBulkUpdateListener( AsyncCallback<T> callback )
+  public void addBulkUpdateListener( AsyncCallback<BulkEvent> callback )
   {
-    DataSubscription subscription = new DataSubscription( RTDataEvents.bulk_updated, tableName, createCallback( callback ) );
+    DataSubscription subscription = new DataSubscription( RTDataEvents.bulk_updated, tableName, createCallback( callback, BulkEvent.class ) );
     addEventListener( subscription );
   }
 
   @Override
-  public void addBulkUpdateListener( String whereClause, AsyncCallback<T> callback )
+  public void addBulkUpdateListener( String whereClause, AsyncCallback<BulkEvent> callback )
   {
-    DataSubscription subscription = new DataSubscription( RTDataEvents.bulk_updated, tableName, createCallback( callback ) )
+    DataSubscription subscription = new DataSubscription( RTDataEvents.bulk_updated, tableName, createCallback( callback, BulkEvent.class ) )
             .withWhere( whereClause );
 
     addEventListener( subscription );
@@ -200,16 +200,16 @@ public class DataListenerImpl<T> extends RTListenerImpl implements DataListener<
   //--------bulk-remove-------
 
   @Override
-  public void addBulkDeleteListener( AsyncCallback<T> callback )
+  public void addBulkDeleteListener( AsyncCallback<BulkEvent> callback )
   {
-    DataSubscription subscription = new DataSubscription( RTDataEvents.bulk_deleted, tableName, createCallback( callback ) );
+    DataSubscription subscription = new DataSubscription( RTDataEvents.bulk_deleted, tableName, createCallback( callback, BulkEvent.class ) );
     addEventListener( subscription );
   }
 
   @Override
-  public void addBulkDeleteListener( String whereClause, AsyncCallback<T> callback )
+  public void addBulkDeleteListener( String whereClause, AsyncCallback<BulkEvent> callback )
   {
-    DataSubscription subscription = new DataSubscription( RTDataEvents.bulk_deleted, tableName, createCallback( callback ) )
+    DataSubscription subscription = new DataSubscription( RTDataEvents.bulk_deleted, tableName, createCallback( callback, BulkEvent.class ) )
             .withWhere( whereClause );
 
     addEventListener( subscription );
@@ -310,12 +310,17 @@ public class DataListenerImpl<T> extends RTListenerImpl implements DataListener<
 
   private RTCallback createCallback( final AsyncCallback<T> callback )
   {
+    return createCallback( callback, clazz );
+  }
+
+  private <Type> RTCallback createCallback( final AsyncCallback<Type> callback, final Class<Type> classType )
+  {
     checkCallback( callback );
 
     return new RTCallback()
     {
       @Override
-      public AsyncCallback<T> usersCallback()
+      public AsyncCallback<Type> usersCallback()
       {
         return callback;
       }
@@ -325,7 +330,7 @@ public class DataListenerImpl<T> extends RTListenerImpl implements DataListener<
       {
         try
         {
-          final T adaptedResponse = (T) response.adapt( clazz );
+          final Type adaptedResponse = (Type) response.adapt( classType );
           callback.handleResponse( adaptedResponse );
         }
         catch( AdaptingException e )
@@ -342,7 +347,7 @@ public class DataListenerImpl<T> extends RTListenerImpl implements DataListener<
     };
   }
 
-  private void checkCallback( AsyncCallback<T> callback )
+  private void checkCallback( AsyncCallback callback )
   {
     if( callback == null )
       throw new IllegalArgumentException( "Callback can not be null" );
