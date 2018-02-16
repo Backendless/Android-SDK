@@ -27,6 +27,7 @@ abstract class SocketIOConnectionManager
       {
         retryAttempt = result.getAttempt();
         reconnectAttempt( retryAttempt, result.getTimeout() );
+        connectError( result.getError() );
       }
     } );
   }
@@ -79,6 +80,7 @@ abstract class SocketIOConnectionManager
       }
       catch( RuntimeException | URISyntaxException e )
       {
+        connectError( e.getMessage() );
         logger.severe( e.getMessage() );
         return get();
       }
@@ -98,7 +100,8 @@ abstract class SocketIOConnectionManager
         @Override
         public void call( Object... args )
         {
-          logger.info( "Disconnected event" );
+          final String error = Arrays.toString( args );
+          logger.info( "Disconnected event " + error );
           disconnected();
           reconnect();
         }

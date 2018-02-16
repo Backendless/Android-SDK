@@ -44,7 +44,8 @@ class RTLookupService
 
       retryTimeout *= 2;
 
-      reconnectAttemptListener.handle( new ReconnectAttempt( retry, retryTimeout ) );
+      if(reconnectAttemptListener != null)
+        reconnectAttemptListener.handle( new ReconnectAttempt( retry, retryTimeout, e.toString() ) );
 
       if( retryTimeout > MAX_TIMEOUT )
         retryTimeout = MAX_TIMEOUT;
