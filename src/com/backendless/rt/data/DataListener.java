@@ -13,7 +13,7 @@ public interface DataListener<T> extends RTListener
 
   void removeCreateListeners( String whereClause, AsyncCallback<T> callback );
 
-  void removeCreateListeners( AsyncCallback<T> callback );
+  void removeCreateListener( AsyncCallback<T> callback );
 
   void removeCreateListeners( String whereClause );
 
@@ -25,7 +25,7 @@ public interface DataListener<T> extends RTListener
 
   void removeUpdateListeners( String whereClause, AsyncCallback<T> callback );
 
-  void removeUpdateListeners( AsyncCallback<T> callback );
+  void removeUpdateListener( AsyncCallback<T> callback );
 
   void removeUpdateListeners( String whereClause );
 
@@ -37,7 +37,7 @@ public interface DataListener<T> extends RTListener
 
   void removeDeleteListeners( String whereClause, AsyncCallback<T> callback );
 
-  void removeDeleteListeners( AsyncCallback<T> callback );
+  void removeDeleteListener( AsyncCallback<T> callback );
 
   void removeDeleteListeners( String whereClause );
 
@@ -49,7 +49,7 @@ public interface DataListener<T> extends RTListener
 
   void removeBulkUpdateListeners( String whereClause, AsyncCallback<T> callback );
 
-  void removeBulkUpdateListeners( AsyncCallback<T> callback );
+  void removeBulkUpdateListener( AsyncCallback<T> callback );
 
   void removeBulkUpdateListeners( String whereClause );
 
@@ -61,7 +61,7 @@ public interface DataListener<T> extends RTListener
 
   void removeBulkDeleteListeners( String whereClause, AsyncCallback<T> callback );
 
-  void removeBulkDeleteListeners( AsyncCallback<T> callback );
+  void removeBulkDeleteListener( AsyncCallback<T> callback );
 
   void removeBulkDeleteListeners( String whereClause );
 }

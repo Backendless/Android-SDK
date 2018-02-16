@@ -33,7 +33,7 @@ public interface Channel extends RTListener
 
   void removeMessageListeners( String selector );
 
-  void removeMessageListeners( AsyncCallback<?> callback );
+  void removeMessageListener( AsyncCallback<?> callback );
 
   void removeMessageListeners( String selector, AsyncCallback<?> callback );
 
@@ -57,5 +57,5 @@ public interface Channel extends RTListener
 
   void removeUserStatusListeners();
 
-  void removeUserStatusListeners( AsyncCallback<UserStatusResponse> callback );
+  void removeUserStatusListener( AsyncCallback<UserStatusResponse> callback );
 }

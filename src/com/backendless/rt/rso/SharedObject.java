@@ -12,19 +12,19 @@ public interface SharedObject extends RTListener
 {
   void addConnectListener( AsyncCallback<Void> callback );
 
-  void removeConnectListeners( AsyncCallback<Void> callback );
+  void removeConnectListener( AsyncCallback<Void> callback );
 
   void removeConnectListeners();
 
   void addChangesListener( AsyncCallback<SharedObjectChanges> callback );
 
-  void removeChangesListeners( AsyncCallback<SharedObjectChanges> callback );
+  void removeChangesListener( AsyncCallback<SharedObjectChanges> callback );
 
   void removeChangesListeners();
 
   void addClearListener( AsyncCallback<UserInfo> callback );
 
-  void removeClearListeners( AsyncCallback<UserInfo> callback );
+  void removeClearListener( AsyncCallback<UserInfo> callback );
 
   void removeClearListeners();
 
@@ -32,13 +32,13 @@ public interface SharedObject extends RTListener
 
   <T> void addCommandListener( Class<T> dataType, AsyncCallback<Command<T>> callback );
 
-  void removeCommandListeners( AsyncCallback<Command> callback );
+  void removeCommandListener( AsyncCallback<Command> callback );
 
   void removeCommandListeners();
 
   void addUserStatusListener( AsyncCallback<UserStatus> callback );
 
-  void removeUserStatusListeners( AsyncCallback<UserStatus> callback );
+  void removeUserStatusListener( AsyncCallback<UserStatus> callback );
 
   void removeUserStatusListeners();
 

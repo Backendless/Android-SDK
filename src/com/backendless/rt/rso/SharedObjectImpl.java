@@ -144,7 +144,7 @@ public class SharedObjectImpl implements SharedObject
   }
 
   @Override
-  public void removeConnectListeners( AsyncCallback<Void> callback )
+  public void removeConnectListener( AsyncCallback<Void> callback )
   {
     connectListener.removeConnectListeners( callback );
   }
@@ -201,7 +201,7 @@ public class SharedObjectImpl implements SharedObject
   }
 
   @Override
-  public void removeChangesListeners( AsyncCallback<SharedObjectChanges> callback )
+  public void removeChangesListener( AsyncCallback<SharedObjectChanges> callback )
   {
     removeSubscription( callback );
   }
@@ -246,7 +246,7 @@ public class SharedObjectImpl implements SharedObject
   }
 
   @Override
-  public void removeClearListeners( AsyncCallback<UserInfo> callback )
+  public void removeClearListener( AsyncCallback<UserInfo> callback )
   {
     removeSubscription( callback );
   }
@@ -270,7 +270,7 @@ public class SharedObjectImpl implements SharedObject
   }
 
   @Override
-  public void removeCommandListeners( AsyncCallback<Command> callback )
+  public void removeCommandListener( AsyncCallback<Command> callback )
   {
     commandListener.removeCommandListener( callback );
   }
@@ -313,7 +313,7 @@ public class SharedObjectImpl implements SharedObject
   }
 
   @Override
-  public void removeUserStatusListeners( AsyncCallback<UserStatus> callback )
+  public void removeUserStatusListener( AsyncCallback<UserStatus> callback )
   {
     removeSubscription( callback );
   }

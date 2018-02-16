@@ -60,7 +60,7 @@ public class DataListenerImpl<T> extends RTListenerImpl implements DataListener<
   }
 
   @Override
-  public void removeCreateListeners( final AsyncCallback<T> callback )
+  public void removeCreateListener( final AsyncCallback<T> callback )
   {
     removeListeners( RTDataEvents.created, callback );
   }
@@ -102,7 +102,7 @@ public class DataListenerImpl<T> extends RTListenerImpl implements DataListener<
   }
 
   @Override
-  public void removeUpdateListeners( final AsyncCallback<T> callback )
+  public void removeUpdateListener( final AsyncCallback<T> callback )
   {
     removeListeners( RTDataEvents.updated, callback );
   }
@@ -144,7 +144,7 @@ public class DataListenerImpl<T> extends RTListenerImpl implements DataListener<
   }
 
   @Override
-  public void removeDeleteListeners( final AsyncCallback<T> callback )
+  public void removeDeleteListener( final AsyncCallback<T> callback )
   {
     removeListeners( RTDataEvents.deleted, callback );
   }
@@ -186,7 +186,7 @@ public class DataListenerImpl<T> extends RTListenerImpl implements DataListener<
   }
 
   @Override
-  public void removeBulkUpdateListeners( final AsyncCallback<T> callback )
+  public void removeBulkUpdateListener( final AsyncCallback<T> callback )
   {
     removeListeners( RTDataEvents.bulk_updated, callback );
   }
@@ -228,7 +228,7 @@ public class DataListenerImpl<T> extends RTListenerImpl implements DataListener<
   }
 
   @Override
-  public void removeBulkDeleteListeners( final AsyncCallback<T> callback )
+  public void removeBulkDeleteListener( final AsyncCallback<T> callback )
   {
     removeListeners( RTDataEvents.bulk_deleted, callback );
   }

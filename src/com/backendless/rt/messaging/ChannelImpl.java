@@ -223,7 +223,7 @@ public class ChannelImpl extends RTListenerImpl implements Channel
   }
 
   @Override
-  public void removeMessageListeners( AsyncCallback<?> callback )
+  public void removeMessageListener( AsyncCallback<?> callback )
   {
     for( MessagingSubscription messagingSubscription : messagingCallbacks )
     {
@@ -291,7 +291,7 @@ public class ChannelImpl extends RTListenerImpl implements Channel
   @Override
   public void removeCommandListener( AsyncCallback<Command> callback )
   {
-     removeMessageListeners( callback );
+     removeMessageListener( callback );
   }
 
   @Override
@@ -345,9 +345,9 @@ public class ChannelImpl extends RTListenerImpl implements Channel
   }
 
   @Override
-  public void removeUserStatusListeners( AsyncCallback<UserStatusResponse> callback )
+  public void removeUserStatusListener( AsyncCallback<UserStatusResponse> callback )
   {
-     removeMessageListeners( callback );
+     removeMessageListener( callback );
   }
 
   private void addMessageListener( String selector, RTCallback rtCallback )
