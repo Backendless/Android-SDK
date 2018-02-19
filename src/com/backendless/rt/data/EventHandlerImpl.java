@@ -54,7 +54,7 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   }
 
   @Override
-  public void removeCreateListeners( final String whereClause, final AsyncCallback<T> callback )
+  public void removeCreateListener( final String whereClause, final AsyncCallback<T> callback )
   {
     removeListeners( RTDataEvents.created, whereClause, callback );
   }
@@ -96,7 +96,7 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   }
 
   @Override
-  public void removeUpdateListeners( final String whereClause, final AsyncCallback<T> callback )
+  public void removeUpdateListener( final String whereClause, final AsyncCallback<T> callback )
   {
     removeListeners( RTDataEvents.updated, whereClause, callback );
   }
@@ -138,7 +138,7 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   }
 
   @Override
-  public void removeDeleteListeners( final String whereClause, final AsyncCallback<T> callback )
+  public void removeDeleteListener( final String whereClause, final AsyncCallback<T> callback )
   {
     removeListeners( RTDataEvents.deleted, whereClause, callback );
   }
@@ -180,13 +180,13 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   }
 
   @Override
-  public void removeBulkUpdateListeners( final String whereClause, final AsyncCallback<T> callback )
+  public void removeBulkUpdateListener( final String whereClause, final AsyncCallback<BulkEvent> callback )
   {
     removeListeners( RTDataEvents.bulk_updated, whereClause, callback );
   }
 
   @Override
-  public void removeBulkUpdateListener( final AsyncCallback<T> callback )
+  public void removeBulkUpdateListener( final AsyncCallback<BulkEvent> callback )
   {
     removeListeners( RTDataEvents.bulk_updated, callback );
   }
@@ -222,13 +222,13 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   }
 
   @Override
-  public void removeBulkDeleteListeners( final String whereClause, final AsyncCallback<T> callback )
+  public void removeBulkDeleteListener( final String whereClause, final AsyncCallback<BulkEvent> callback )
   {
     removeListeners( RTDataEvents.bulk_deleted, whereClause, callback );
   }
 
   @Override
-  public void removeBulkDeleteListener( final AsyncCallback<T> callback )
+  public void removeBulkDeleteListener( final AsyncCallback<BulkEvent> callback )
   {
     removeListeners( RTDataEvents.bulk_deleted, callback );
   }
@@ -253,7 +253,7 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
     } );
   }
 
-  private void removeListeners( final RTDataEvents event, final AsyncCallback<T> callback )
+  private void removeListeners( final RTDataEvents event, final AsyncCallback callback )
   {
     checkCallback( callback );
     removeEventListener( new Predicate()
@@ -267,7 +267,7 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
     } );
   }
 
-  private void removeListeners( final RTDataEvents event, final String whereClause, final AsyncCallback<T> callback )
+  private void removeListeners( final RTDataEvents event, final String whereClause, final AsyncCallback callback )
   {
     checkCallback( callback );
     checkWhereClause( whereClause );
