@@ -283,6 +283,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
         {
           Object[] obj = (Object[]) weborb.util.io.Serializer.fromBytes( registrationInfo.getBytes(), weborb.util.io.Serializer.JSON, false );
           ids = (String) obj[0];
+          PushTemplateHelper.deleteNotificationChannel( context );
           PushTemplateHelper.setPushNotificationTemplates( (Map<String,AndroidPushTemplate>) obj[1], registrationInfo.getBytes() );
         }
         catch( IOException e )
@@ -304,6 +305,8 @@ public class BackendlessPushService extends IntentService implements PushReceive
 
   private void unregisterFurther( final Context context )
   {
+    PushTemplateHelper.deleteNotificationChannel( context );
+
     Backendless.Messaging.unregisterDeviceOnServer( new AsyncCallback<Boolean>()
     {
       @Override
