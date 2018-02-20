@@ -106,7 +106,6 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver implements P
         completeWakefulIntent( intent );
       }
     }
-    setResultCode( Activity.RESULT_OK );
   }
 
   private static void aquireLock( Context context, Intent intent )
