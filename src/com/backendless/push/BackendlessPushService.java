@@ -154,6 +154,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
       if( immediatePush != null )
       {
         AndroidPushTemplate androidPushTemplate = (AndroidPushTemplate) weborb.util.io.Serializer.fromBytes( immediatePush.getBytes(), weborb.util.io.Serializer.JSON, false );
+        androidPushTemplate.setName("ImmediateMessage");
         Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId );
         PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), messageId );
         return;
