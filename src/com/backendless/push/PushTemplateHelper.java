@@ -268,6 +268,7 @@ public class PushTemplateHelper
         vibrate[ index++ ] = l;
 
       notificationChannel.setVibrationPattern( vibrate );
+      notificationChannel.enableVibration( true );
     }
 
     if (template.getButtonTemplate().getVisibility() != null)
