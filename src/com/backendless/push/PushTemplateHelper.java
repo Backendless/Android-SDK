@@ -101,8 +101,8 @@ public class PushTemplateHelper
       notificationBuilder = new NotificationCompat.Builder( context.getApplicationContext() );
       notificationBuilder.setDefaults( Notification.DEFAULT_ALL );
 
-      if (template.getPriority() != null)
-        notificationBuilder.setPriority( template.getPriority() );
+      if( template.getPriority() != null && template.getPriority() > 0 && template.getPriority() < 6 )
+        notificationBuilder.setPriority( template.getPriority() - 3 );
       else
         notificationBuilder.setPriority( Notification.PRIORITY_DEFAULT );
 
@@ -237,7 +237,7 @@ public class PushTemplateHelper
   {
     notificationChannel.setShowBadge( template.getButtonTemplate().getShowBadge() );
 
-    if (template.getPriority() != null)
+    if( template.getPriority() != null && template.getPriority() > 0 && template.getPriority() < 6 )
       notificationChannel.setImportance( template.getPriority() ); // NotificationManager.IMPORTANCE_DEFAULT
 
     if( template.getButtonTemplate() != null && template.getButtonTemplate().getSound() != null )
