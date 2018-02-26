@@ -1,6 +1,10 @@
 package com.backendless.push;
 
-import android.app.*;
+import android.app.AlarmManager;
+import android.app.IntentService;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
@@ -9,10 +13,16 @@ import android.widget.RemoteViews;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.backendless.messaging.AndroidPushTemplate;
 import com.backendless.messaging.PublishOptions;
 
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
 
 public class BackendlessPushService extends IntentService implements PushReceiverCallback
 {
@@ -120,19 +130,46 @@ public class BackendlessPushService extends IntentService implements PushReceive
 
   private void handleMessage( final Context context, Intent intent )
   {
+    final int messageId = intent.getIntExtra( BackendlessBroadcastReceiver.EXTRA_MESSAGE_ID, 0 );
+    final String message = intent.getStringExtra( PublishOptions.MESSAGE_TAG );
 
     try
     {
+      final String templateName = intent.getStringExtra( PublishOptions.TEMPLATE_NAME );
+      if( templateName != null )
+      {
+        if( PushTemplateHelper.getPushNotificationTemplates() == null )
+          PushTemplateHelper.restorePushTemplates();
+
+        AndroidPushTemplate androidPushTemplate = PushTemplateHelper.getPushNotificationTemplates().get( templateName );
+        if( androidPushTemplate != null )
+        {
+          Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId );
+          PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), messageId );
+        }
+        return;
+      }
+
+      String immediatePush = intent.getStringExtra( PublishOptions.ANDROID_IMMEDIATE_PUSH );
+      if( immediatePush != null )
+      {
+        AndroidPushTemplate androidPushTemplate = (AndroidPushTemplate) weborb.util.io.Serializer.fromBytes( immediatePush.getBytes(), weborb.util.io.Serializer.JSON, false );
+        androidPushTemplate.setName("ImmediateMessage");
+        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId );
+        PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), messageId );
+        return;
+      }
+
       boolean showPushNotification = callback.onMessage( context, intent );
 
       if( showPushNotification )
       {
         CharSequence tickerText = intent.getStringExtra( PublishOptions.ANDROID_TICKER_TEXT_TAG );
         CharSequence contentTitle = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TITLE_TAG );
-        CharSequence contentText = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TEXT_TAG );
 
         if( tickerText != null && tickerText.length() > 0 )
         {
+          final String contentText = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TEXT_TAG );
           int appIcon = context.getApplicationInfo().icon;
           if( appIcon == 0 )
             appIcon = android.R.drawable.sym_def_app_icon;
@@ -183,22 +220,22 @@ public class BackendlessPushService extends IntentService implements PushReceive
 
   private void handleRegistration( final Context context, Intent intent )
   {
-    String registrationId = intent.getStringExtra( GCMConstants.EXTRA_REGISTRATION_ID );
+    String registrationIds = intent.getStringExtra( GCMConstants.EXTRA_REGISTRATION_IDS );
     String error = intent.getStringExtra( GCMConstants.EXTRA_ERROR );
     String unregistered = intent.getStringExtra( GCMConstants.EXTRA_UNREGISTERED );
     boolean isInternal = intent.getBooleanExtra( GCMConstants.EXTRA_IS_INTERNAL, false );
 
     // registration succeeded
-    if( registrationId != null )
+    if( registrationIds != null )
     {
       if( isInternal )
       {
-        callback.onRegistered( context, registrationId );
+        callback.onRegistered( context, registrationIds );
       }
 
       GCMRegistrar.resetBackoff( context );
-      GCMRegistrar.setGCMdeviceToken( context, registrationId );
-      registerFurther( context, registrationId );
+      GCMRegistrar.setGCMdeviceToken( context, registrationIds );
+      registerFurther( context, registrationIds );
       return;
     }
 
@@ -209,7 +246,7 @@ public class BackendlessPushService extends IntentService implements PushReceive
       GCMRegistrar.resetBackoff( context );
       GCMRegistrar.setGCMdeviceToken( context, "" );
       GCMRegistrar.setChannels( context, Collections.<String>emptyList() );
-      GCMRegistrar.setRegistrationExpiration( context, -1 );
+      GCMRegistrar.setRegistrationExpiration( context, null );
       unregisterFurther( context );
       return;
     }
@@ -240,35 +277,50 @@ public class BackendlessPushService extends IntentService implements PushReceive
     Backendless.Messaging.registerDeviceOnServer( GCMregistrationId, new ArrayList<>( GCMRegistrar.getChannels( context ) ), registrationExpiration, new AsyncCallback<String>()
     {
       @Override
-      public void handleResponse( String registrationId )
+      public void handleResponse( String registrationInfo )
       {
-        GCMRegistrar.setRegistrationId( context, registrationId, registrationExpiration );
-        callback.onRegistered( context, registrationId );
+        String ids;
+        try
+        {
+          Object[] obj = (Object[]) weborb.util.io.Serializer.fromBytes( registrationInfo.getBytes(), weborb.util.io.Serializer.JSON, false );
+          ids = (String) obj[0];
+          PushTemplateHelper.deleteNotificationChannel( context );
+          PushTemplateHelper.setPushNotificationTemplates( (Map<String,AndroidPushTemplate>) obj[1], registrationInfo.getBytes() );
+        }
+        catch( IOException e )
+        {
+          callback.onError( context, "Could not deserialize server response: " + e.getMessage() );
+          return;
+        }
+        GCMRegistrar.setRegistrationIds( context, ids, registrationExpiration );
+        callback.onRegistered( context, registrationInfo );
       }
 
       @Override
       public void handleFault( BackendlessFault fault )
       {
-        callback.onError( context, "Could not register device on Backendless server: " + fault.getMessage() );
+        callback.onError( context, "Could not register device on Backendless server: " + fault.toString() );
       }
     } );
   }
 
   private void unregisterFurther( final Context context )
   {
+    PushTemplateHelper.deleteNotificationChannel( context );
+
     Backendless.Messaging.unregisterDeviceOnServer( new AsyncCallback<Boolean>()
     {
       @Override
       public void handleResponse( Boolean unregistered )
       {
-        GCMRegistrar.setRegistrationId( context, "", 0 );
+        GCMRegistrar.setRegistrationIds( context, "", 0 );
         callback.onUnregistered( context, unregistered );
       }
 
       @Override
       public void handleFault( BackendlessFault fault )
       {
-        callback.onError( context, "Could not unregister device on Backendless server: " + fault.getMessage() );
+        callback.onError( context, "Could not unregister device on Backendless server: " + fault.toString() );
       }
     } );
   }

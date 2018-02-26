@@ -148,6 +148,7 @@ repositories {
     flatDir {
         dirs 'libs'
     }
+    jcenter()
 }
 
 publishing {
@@ -214,8 +215,10 @@ configurations.all {
 
 dependencies {
     compile fileTree(dir: 'libs', include: 'mediaLib.jar')
-    provided fileTree(dir: 'libs', include: 'android.jar')
-    provided fileTree(dir: 'libs', include: 'android.support.v4.jar')
+    provided fileTree(dir: 'libs', include: 'android-26.jar')
+    provided fileTree(dir: 'libs', include: 'support-compat-26.1.0.jar')
+    provided fileTree(dir: 'libs', include: 'support-fragment-26.1.0.jar')
+    provided fileTree(dir: 'libs', include: 'support-annotations-26.1.0.jar')
     provided fileTree(dir: 'libs', include: 'FacebookSDK.jar')
     provided fileTree(dir: 'libs', include: 'maps.jar')
     compile( group: "com.backendless", name: "commons", version: "4.4.6", changing: true) {

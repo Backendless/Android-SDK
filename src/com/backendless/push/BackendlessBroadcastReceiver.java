@@ -35,8 +35,8 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver implements P
 {
   private static final String TAG = "BackendlessBroadcastReceiver";
   private static final String EXTRA_WAKE_LOCK_ID = "com.backendless.wakelockid";
-  static final String EXTRA_MESSAGE_ID = "com.backendless.messageid";
   private static final Map<Integer, PowerManager.WakeLock> activeWakeLocks = new HashMap<>();
+  public static final String EXTRA_MESSAGE_ID = "com.backendless.messageid";
 
   private static int mNextId = 1;
 
@@ -106,7 +106,6 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver implements P
         completeWakefulIntent( intent );
       }
     }
-    setResultCode( Activity.RESULT_OK );
   }
 
   private static void aquireLock( Context context, Intent intent )
