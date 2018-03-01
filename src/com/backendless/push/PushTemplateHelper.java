@@ -266,8 +266,8 @@ public class PushTemplateHelper
 
     if (template.getLightsColor() != null)
     {
-      notificationChannel.setLightColor( template.getLightsColor()|0xFF000000 );
       notificationChannel.enableLights( true );
+      notificationChannel.setLightColor( template.getLightsColor()|0xFF000000 );
     }
 
     if( template.getButtonTemplate().getVibrate() != null )
@@ -277,8 +277,8 @@ public class PushTemplateHelper
       for( long l : template.getButtonTemplate().getVibrate() )
         vibrate[ index++ ] = l;
 
-      notificationChannel.setVibrationPattern( vibrate );
       notificationChannel.enableVibration( true );
+      notificationChannel.setVibrationPattern( vibrate );
     }
 
     if (template.getButtonTemplate().getVisibility() != null)
