@@ -285,7 +285,13 @@ public class BackendlessPushService extends IntentService implements PushReceive
           Object[] obj = (Object[]) weborb.util.io.Serializer.fromBytes( registrationInfo.getBytes(), weborb.util.io.Serializer.JSON, false );
           ids = (String) obj[0];
           PushTemplateHelper.deleteNotificationChannel( context );
-          PushTemplateHelper.setPushNotificationTemplates( (Map<String,AndroidPushTemplate>) obj[1], registrationInfo.getBytes() );
+          Map<String,AndroidPushTemplate> templates = (Map<String,AndroidPushTemplate>) obj[1];
+
+          if( android.os.Build.VERSION.SDK_INT > 25 )
+            for( AndroidPushTemplate templ : templates.values() )
+              PushTemplateHelper.getOrCreateNotificationChannel( context.getApplicationContext(), templ );
+
+          PushTemplateHelper.setPushNotificationTemplates( templates, registrationInfo.getBytes() );
         }
         catch( IOException e )
         {
@@ -306,8 +312,6 @@ public class BackendlessPushService extends IntentService implements PushReceive
 
   private void unregisterFurther( final Context context )
   {
-    PushTemplateHelper.deleteNotificationChannel( context );
-
     Backendless.Messaging.unregisterDeviceOnServer( new AsyncCallback<Boolean>()
     {
       @Override

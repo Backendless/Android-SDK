@@ -65,24 +65,16 @@ public class PushTemplateHelper
 
   static Notification convertFromTemplate( Context context, AndroidPushTemplate template, String messageText, int messageId )
   {
+    context = context.getApplicationContext();
     // Notification channel ID is ignored for Android 7.1.1 (API level 25) and lower.
 
     NotificationCompat.Builder notificationBuilder;
     // android.os.Build.VERSION_CODES.O == 26
-    if( android.os.Build.VERSION.SDK_INT >= 26 )
+    if( android.os.Build.VERSION.SDK_INT > 25 )
     {
-      final String channelId = Backendless.getApplicationId() + ":" + template.getName();
-      NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
+      NotificationChannel notificationChannel = getOrCreateNotificationChannel( context, template );
 
-      NotificationChannel notificationChannel = notificationManager.getNotificationChannel( channelId );
-
-      if( notificationChannel == null )
-        notificationChannel = new NotificationChannel( channelId, template.getName(), NotificationManager.IMPORTANCE_DEFAULT );
-
-      PushTemplateHelper.updateNotificationChannel( context, notificationChannel, template );
-      notificationManager.createNotificationChannel( notificationChannel );
-
-      notificationBuilder = new NotificationCompat.Builder( context.getApplicationContext(), channelId );
+      notificationBuilder = new NotificationCompat.Builder( context, notificationChannel.getId() );
       notificationBuilder.setDefaults( Notification.DEFAULT_ALL );
 
       if( template.getColorized() != null )
@@ -94,11 +86,11 @@ public class PushTemplateHelper
         notificationBuilder.setBadgeIconType( Notification.BADGE_ICON_NONE );
 
       if( template.getCancelAfter() != null && template.getCancelAfter() != 0 )
-        notificationBuilder.setTimeoutAfter( template.getCancelAfter() );
+        notificationBuilder.setTimeoutAfter( template.getCancelAfter()*1000 );
     }
     else
     {
-      notificationBuilder = new NotificationCompat.Builder( context.getApplicationContext() );
+      notificationBuilder = new NotificationCompat.Builder( context );
       notificationBuilder.setDefaults( Notification.DEFAULT_ALL );
 
       if( template.getPriority() != null && template.getPriority() > 0 && template.getPriority() < 6 )
@@ -126,7 +118,7 @@ public class PushTemplateHelper
       if (template.getButtonTemplate().getVisibility() != null)
         notificationBuilder.setVisibility( template.getButtonTemplate().getVisibility() );
       else
-        notificationBuilder.setVisibility( template.getButtonTemplate().getVisibility() );
+        notificationBuilder.setVisibility( Notification.VISIBILITY_PUBLIC );
     }
 
     if (template.getAttachmentUrl() != null)
@@ -158,10 +150,10 @@ public class PushTemplateHelper
         notificationBuilder.setSmallIcon( icon );
 
     if (template.getLightsColor() != null && template.getLightsOnMs() != null && template.getLightsOffMs() != null)
-      notificationBuilder.setLights(template.getLightsColor(), template.getLightsOnMs(), template.getLightsOffMs());
+      notificationBuilder.setLights(template.getLightsColor()|0xFF000000, template.getLightsOnMs(), template.getLightsOffMs());
 
     if (template.getColorCode() != null)
-      notificationBuilder.setColor( template.getColorCode() );
+      notificationBuilder.setColor( template.getColorCode()|0xFF000000 );
 
     if (template.getCancelOnTap() != null)
       notificationBuilder.setAutoCancel( template.getCancelOnTap() );
@@ -227,10 +219,28 @@ public class PushTemplateHelper
 
   static public void deleteNotificationChannel( Context context )
   {
-    NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
+    if( android.os.Build.VERSION.SDK_INT < 26 )
+      return;
+
+      NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
     List<NotificationChannel> notificationChannels = notificationManager.getNotificationChannels();
     for (NotificationChannel notifChann : notificationChannels)
       notificationManager.deleteNotificationChannel( notifChann.getId() );
+  }
+
+  static public NotificationChannel getOrCreateNotificationChannel( Context context, final AndroidPushTemplate template )
+  {
+    final String channelId = Backendless.getApplicationId() + ":" + template.getName();
+    NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
+
+    NotificationChannel notificationChannel = notificationManager.getNotificationChannel( channelId );
+
+    if( notificationChannel == null )
+      notificationChannel = new NotificationChannel( channelId, template.getName(), NotificationManager.IMPORTANCE_DEFAULT );
+
+    PushTemplateHelper.updateNotificationChannel( context, notificationChannel, template );
+    notificationManager.createNotificationChannel( notificationChannel );
+    return notificationChannel;
   }
 
   static private NotificationChannel updateNotificationChannel( Context context, NotificationChannel notificationChannel, final AndroidPushTemplate template )
@@ -256,8 +266,8 @@ public class PushTemplateHelper
 
     if (template.getLightsColor() != null)
     {
+      notificationChannel.setLightColor( template.getLightsColor()|0xFF000000 );
       notificationChannel.enableLights( true );
-      notificationChannel.setLightColor( template.getLightsColor() );
     }
 
     if( template.getButtonTemplate().getVibrate() != null )
