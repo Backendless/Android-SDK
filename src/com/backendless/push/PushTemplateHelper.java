@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
@@ -75,15 +76,15 @@ public class PushTemplateHelper
       NotificationChannel notificationChannel = getOrCreateNotificationChannel( context, template );
 
       notificationBuilder = new NotificationCompat.Builder( context, notificationChannel.getId() );
-      notificationBuilder.setDefaults( Notification.DEFAULT_ALL );
 
       if( template.getColorized() != null )
         notificationBuilder.setColorized( template.getColorized() );
 
-      if( template.getBadge() != null )
+      if( template.getBadge() != null &&
+          ( template.getBadge() == NotificationCompat.BADGE_ICON_SMALL || template.getBadge() == NotificationCompat.BADGE_ICON_LARGE ) )
         notificationBuilder.setBadgeIconType( template.getBadge() );
       else
-        notificationBuilder.setBadgeIconType( Notification.BADGE_ICON_NONE );
+        notificationBuilder.setBadgeIconType( NotificationCompat.BADGE_ICON_NONE );
 
       if( template.getCancelAfter() != null && template.getCancelAfter() != 0 )
         notificationBuilder.setTimeoutAfter( template.getCancelAfter()*1000 );
@@ -91,19 +92,22 @@ public class PushTemplateHelper
     else
     {
       notificationBuilder = new NotificationCompat.Builder( context );
-      notificationBuilder.setDefaults( Notification.DEFAULT_ALL );
 
       if( template.getPriority() != null && template.getPriority() > 0 && template.getPriority() < 6 )
         notificationBuilder.setPriority( template.getPriority() - 3 );
       else
-        notificationBuilder.setPriority( Notification.PRIORITY_DEFAULT );
+        notificationBuilder.setPriority( NotificationCompat.PRIORITY_DEFAULT );
 
+      Uri soundUri;
       if( template.getButtonTemplate() != null && template.getButtonTemplate().getSound() != null )
       {
         int soundResource = context.getResources().getIdentifier( template.getButtonTemplate().getSound(), "raw", context.getPackageName() );
-        Uri soundUri = Uri.parse( "android.resource://" + context.getPackageName() + "/" + soundResource );
-        notificationBuilder.setSound( soundUri, AudioManager.STREAM_NOTIFICATION );
+        soundUri = Uri.parse( "android.resource://" + context.getPackageName() + "/" + soundResource );
       }
+      else
+        soundUri = RingtoneManager.getDefaultUri( RingtoneManager.TYPE_NOTIFICATION );
+
+      notificationBuilder.setSound( soundUri, AudioManager.STREAM_NOTIFICATION );
 
       if( template.getButtonTemplate().getVibrate() != null )
       {
@@ -121,21 +125,59 @@ public class PushTemplateHelper
         notificationBuilder.setVisibility( Notification.VISIBILITY_PUBLIC );
     }
 
-    if (template.getAttachmentUrl() != null)
+    if( template.getAttachmentUrl() != null )
     {
       try
       {
-        InputStream is = (InputStream) new URL(template.getAttachmentUrl()).getContent();
-        Bitmap bitmap = BitmapFactory.decodeStream(is);
+        InputStream is = (InputStream) new URL( template.getAttachmentUrl() ).getContent();
+        Bitmap bitmap = BitmapFactory.decodeStream( is );
 
-        if (bitmap != null)
-          notificationBuilder.setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bitmap));
+        if( bitmap != null )
+          notificationBuilder.setStyle( new NotificationCompat.BigPictureStyle().bigPicture( bitmap ) );
         else
-          Log.i(PushTemplateHelper.class.getSimpleName(), "Cannot convert rich media for notification into bitmap.");
+          Log.i( PushTemplateHelper.class.getSimpleName(), "Cannot convert rich media for notification into bitmap." );
       }
-      catch (IOException e)
+      catch( IOException e )
       {
-        Log.e(PushTemplateHelper.class.getSimpleName(), "Cannot receive rich media for notification.");
+        Log.e( PushTemplateHelper.class.getSimpleName(), "Cannot receive rich media for notification." );
+      }
+    }
+    else if( messageText.length() > 35 )
+    {
+      NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle()
+              .setSummaryText( template.getThirdRowTitle() )
+              .setBigContentTitle( template.getFirstRowTitle() )
+              .bigText( messageText );
+      notificationBuilder.setStyle( bigText );
+    }
+
+    if( template.getLargeIcon() != null )
+    {
+      if (template.getLargeIcon().startsWith( "http" ))
+      {
+        try
+        {
+          InputStream is = (InputStream) new URL( template.getLargeIcon() ).getContent();
+          Bitmap bitmap = BitmapFactory.decodeStream( is );
+
+          if( bitmap != null )
+            notificationBuilder.setLargeIcon( bitmap );
+          else
+            Log.i( PushTemplateHelper.class.getSimpleName(), "Cannot convert Large Icon into bitmap." );
+        }
+        catch( IOException e )
+        {
+          Log.e( PushTemplateHelper.class.getSimpleName(), "Cannot receive bitmap for Large Icon." );
+        }
+      }
+      else
+      {
+        int largeIconResource = context.getResources().getIdentifier( template.getLargeIcon(), "raw", context.getPackageName() );
+        if (largeIconResource != 0)
+        {
+          Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), largeIconResource);
+          notificationBuilder.setLargeIcon( bitmap );
+        }
       }
     }
 
@@ -250,19 +292,23 @@ public class PushTemplateHelper
     if( template.getPriority() != null && template.getPriority() > 0 && template.getPriority() < 6 )
       notificationChannel.setImportance( template.getPriority() ); // NotificationManager.IMPORTANCE_DEFAULT
 
+    AudioAttributes audioAttributes = new AudioAttributes.Builder()
+            .setUsage( AudioAttributes.USAGE_NOTIFICATION_RINGTONE )
+            .setContentType( AudioAttributes.CONTENT_TYPE_SONIFICATION )
+            .setFlags( AudioAttributes.FLAG_AUDIBILITY_ENFORCED )
+            .setLegacyStreamType( AudioManager.STREAM_NOTIFICATION )
+            .build();
+
+    Uri soundUri;
     if( template.getButtonTemplate() != null && template.getButtonTemplate().getSound() != null )
     {
       int soundResource = context.getResources().getIdentifier( template.getButtonTemplate().getSound(), "raw", context.getPackageName() );
-      AudioAttributes audioAttributes = new AudioAttributes.Builder()
-              .setUsage( AudioAttributes.USAGE_NOTIFICATION_RINGTONE )
-              .setContentType( AudioAttributes.CONTENT_TYPE_SONIFICATION )
-              .setFlags( AudioAttributes.FLAG_AUDIBILITY_ENFORCED )
-              .setLegacyStreamType( AudioManager.STREAM_NOTIFICATION )
-              .build();
-
-      Uri soundUri = Uri.parse( "android.resource://" + context.getPackageName() + "/" + soundResource );
-      notificationChannel.setSound( soundUri, audioAttributes );
+      soundUri = Uri.parse( "android.resource://" + context.getPackageName() + "/" + soundResource );
     }
+    else
+      soundUri = RingtoneManager.getDefaultUri( RingtoneManager.TYPE_NOTIFICATION );
+
+    notificationChannel.setSound( soundUri, null );
 
     if (template.getLightsColor() != null)
     {
