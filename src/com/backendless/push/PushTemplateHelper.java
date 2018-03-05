@@ -18,10 +18,12 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.RemoteInput;
 import android.util.Log;
+
 import com.backendless.Backendless;
 import com.backendless.messaging.Action;
 import com.backendless.messaging.AndroidPushTemplate;
 import com.backendless.messaging.PublishOptions;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -107,9 +109,10 @@ public class PushTemplateHelper
       else
         soundUri = RingtoneManager.getDefaultUri( RingtoneManager.TYPE_NOTIFICATION );
 
-      notificationBuilder.setSound( soundUri, AudioManager.STREAM_NOTIFICATION );
+      if ( notificationBuilder.getPriority() > NotificationCompat.PRIORITY_LOW )
+        notificationBuilder.setSound( soundUri, AudioManager.STREAM_NOTIFICATION );
 
-      if( template.getButtonTemplate().getVibrate() != null )
+      if( template.getButtonTemplate().getVibrate() != null && notificationBuilder.getPriority() > NotificationCompat.PRIORITY_LOW )
       {
         long[] vibrate = new long[ template.getButtonTemplate().getVibrate().length ];
         int index = 0;
@@ -118,11 +121,11 @@ public class PushTemplateHelper
 
         notificationBuilder.setVibrate( vibrate );
       }
-
-      if (template.getButtonTemplate().getVisibility() != null)
+      
+      if ( template.getButtonTemplate().getVisibility() != null )
         notificationBuilder.setVisibility( template.getButtonTemplate().getVisibility() );
       else
-        notificationBuilder.setVisibility( Notification.VISIBILITY_PUBLIC );
+        notificationBuilder.setVisibility( NotificationCompat.VISIBILITY_PUBLIC );
     }
 
     if( template.getAttachmentUrl() != null )
@@ -308,7 +311,7 @@ public class PushTemplateHelper
     else
       soundUri = RingtoneManager.getDefaultUri( RingtoneManager.TYPE_NOTIFICATION );
 
-    notificationChannel.setSound( soundUri, null );
+    notificationChannel.setSound( soundUri, audioAttributes );
 
     if (template.getLightsColor() != null)
     {
@@ -327,10 +330,10 @@ public class PushTemplateHelper
       notificationChannel.setVibrationPattern( vibrate );
     }
 
-    if (template.getButtonTemplate().getVisibility() != null)
+    if ( template.getButtonTemplate().getVisibility() != null )
       notificationChannel.setLockscreenVisibility( template.getButtonTemplate().getVisibility() );
     else
-      notificationChannel.setLockscreenVisibility( Notification.VISIBILITY_PUBLIC );
+      notificationChannel.setLockscreenVisibility( NotificationCompat.VISIBILITY_PUBLIC );
 
     if( template.getButtonTemplate().getBypassDND() != null )
       notificationChannel.setBypassDnd( template.getButtonTemplate().getBypassDND() );
