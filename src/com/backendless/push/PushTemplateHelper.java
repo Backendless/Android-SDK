@@ -18,12 +18,10 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.RemoteInput;
 import android.util.Log;
-
 import com.backendless.Backendless;
 import com.backendless.messaging.Action;
 import com.backendless.messaging.AndroidPushTemplate;
 import com.backendless.messaging.PublishOptions;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -280,9 +278,10 @@ public class PushTemplateHelper
 
     NotificationChannel notificationChannel = notificationManager.getNotificationChannel( channelId );
 
-    if( notificationChannel == null )
-      notificationChannel = new NotificationChannel( channelId, template.getName(), NotificationManager.IMPORTANCE_DEFAULT );
+    if( notificationChannel != null )
+      return notificationChannel;
 
+    notificationChannel = new NotificationChannel( channelId, template.getName(), NotificationManager.IMPORTANCE_DEFAULT );
     PushTemplateHelper.updateNotificationChannel( context, notificationChannel, template );
     notificationManager.createNotificationChannel( notificationChannel );
     return notificationChannel;
