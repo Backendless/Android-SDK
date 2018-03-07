@@ -98,19 +98,21 @@ public class PushTemplateHelper
       else
         notificationBuilder.setPriority( NotificationCompat.PRIORITY_DEFAULT );
 
-      Uri soundUri;
-      if( template.getButtonTemplate() != null && template.getButtonTemplate().getSound() != null )
+      if( notificationBuilder.getPriority() > NotificationCompat.PRIORITY_LOW )
       {
-        int soundResource = context.getResources().getIdentifier( template.getButtonTemplate().getSound(), "raw", context.getPackageName() );
-        soundUri = Uri.parse( "android.resource://" + context.getPackageName() + "/" + soundResource );
-      }
-      else
-        soundUri = RingtoneManager.getDefaultUri( RingtoneManager.TYPE_NOTIFICATION );
+        Uri soundUri;
+        if( template.getButtonTemplate() != null && template.getButtonTemplate().getSound() != null && !template.getButtonTemplate().getSound().isEmpty() )
+        {
+          int soundResource = context.getResources().getIdentifier( template.getButtonTemplate().getSound(), "raw", context.getPackageName() );
+          soundUri = Uri.parse( "android.resource://" + context.getPackageName() + "/" + soundResource );
+        }
+        else
+          soundUri = RingtoneManager.getDefaultUri( RingtoneManager.TYPE_NOTIFICATION );
 
-      if ( notificationBuilder.getPriority() > NotificationCompat.PRIORITY_LOW )
         notificationBuilder.setSound( soundUri, AudioManager.STREAM_NOTIFICATION );
+      }
 
-      if( template.getButtonTemplate().getVibrate() != null && notificationBuilder.getPriority() > NotificationCompat.PRIORITY_LOW )
+      if( template.getButtonTemplate().getVibrate() != null && template.getButtonTemplate().getVibrate().length > 0 && notificationBuilder.getPriority() > NotificationCompat.PRIORITY_LOW )
       {
         long[] vibrate = new long[ template.getButtonTemplate().getVibrate().length ];
         int index = 0;
@@ -302,7 +304,7 @@ public class PushTemplateHelper
             .build();
 
     Uri soundUri;
-    if( template.getButtonTemplate() != null && template.getButtonTemplate().getSound() != null )
+    if( template.getButtonTemplate() != null && template.getButtonTemplate().getSound() != null && !template.getButtonTemplate().getSound().isEmpty() )
     {
       int soundResource = context.getResources().getIdentifier( template.getButtonTemplate().getSound(), "raw", context.getPackageName() );
       soundUri = Uri.parse( "android.resource://" + context.getPackageName() + "/" + soundResource );
@@ -318,7 +320,7 @@ public class PushTemplateHelper
       notificationChannel.setLightColor( template.getLightsColor()|0xFF000000 );
     }
 
-    if( template.getButtonTemplate().getVibrate() != null )
+    if( template.getButtonTemplate().getVibrate() != null && template.getButtonTemplate().getVibrate().length > 0 )
     {
       long[] vibrate = new long[ template.getButtonTemplate().getVibrate().length ];
       int index = 0;
