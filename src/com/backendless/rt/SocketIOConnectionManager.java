@@ -1,6 +1,7 @@
 package com.backendless.rt;
 
 import com.backendless.Backendless;
+import com.backendless.HeadersManager;
 import com.backendless.async.callback.Result;
 import com.backendless.persistence.local.UserTokenStorageFactory;
 import io.socket.client.IO;
@@ -69,7 +70,7 @@ abstract class SocketIOConnectionManager
       final String host = rtLookupService.lookup( retryAttempt ) + opts.path;
       logger.info( "Looked up for server " + host );
 
-      String userToken = UserTokenStorageFactory.instance().getStorage().get();
+      String userToken = HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY );
       if( userToken != null && !userToken.isEmpty() )
         opts.query += "&userToken=" + userToken;
 
