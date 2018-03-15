@@ -819,6 +819,11 @@ public final class UserService
       UserTokenStorageFactory.instance().getStorage().set( userToken );
       UserIdStorageFactory.instance().getStorage().set( Backendless.UserService.CurrentUser().getUserId() );
     }
+    else
+    {
+      UserTokenStorageFactory.instance().getStorage().set( "" );
+      UserIdStorageFactory.instance().getStorage().set( "" );
+    }
   }
 
   private AsyncCallback<BackendlessUser> getUserLoginAsyncHandler(
