@@ -49,9 +49,6 @@ import java.util.Map;
  */
 public class LocationTracker extends Service implements LocationListener
 {
-  private static final String APPLICATION_ID = "applicationId";
-  private static final String SECRET_KEY = "secretKey";
-  private static final String URL = "url";
   private static final String LOCATION = "location";
   private static final String LOCATION_LISTENERS = "locationListeners";
   private static final String LOCATION_LATITUDE_TAG = "locationLatitude";
@@ -76,8 +73,7 @@ public class LocationTracker extends Service implements LocationListener
   public void onCreate()
   {
     super.onCreate();
-
-    initApplication();
+    Backendless.initApplicationFromProperties( this );
     init();
     initLocationListeners();
 
@@ -86,8 +82,6 @@ public class LocationTracker extends Service implements LocationListener
       listenBestProvider();
       changeLocation();
     }
-
-    saveApplicationInfo();
   }
 
   @Override
@@ -236,28 +230,6 @@ public class LocationTracker extends Service implements LocationListener
       locationListeners.get( name ).onLocationChanged( location );
 
     saveLocationListeners();
-  }
-
-  private void initApplication()
-  {
-    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences( getApplicationContext() );
-    String url = sharedPref.getString( URL, null );
-
-    if( url != null )
-    {
-      Backendless.setUrl( url );
-      Backendless.initApp( this, sharedPref.getString( APPLICATION_ID, null ), sharedPref.getString( SECRET_KEY, null ) );
-    }
-  }
-
-  private void saveApplicationInfo()
-  {
-    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences( getApplicationContext() );
-    SharedPreferences.Editor editor = sharedPref.edit();
-    editor.putString( APPLICATION_ID, Backendless.getApplicationId() );
-    editor.putString( SECRET_KEY, Backendless.getSecretKey() );
-    editor.putString( URL, Backendless.getUrl() );
-    editor.apply();
   }
 
   private void initLocationListeners()
