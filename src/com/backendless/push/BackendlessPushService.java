@@ -1,13 +1,14 @@
 package com.backendless.push;
 
 import android.app.AlarmManager;
-import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
+import android.support.v4.app.JobIntentService;
 import android.util.Log;
 import android.widget.RemoteViews;
 import com.backendless.Backendless;
@@ -23,10 +24,21 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-
-public class BackendlessPushService extends IntentService implements PushReceiverCallback
+/**
+ * <p>Firstly you should inherit this class for your own needs. For example to handle push messages manually.
+ *
+ * <p>Secondary you should declare this service in 'AndroidManifest.xml' like this:<br/>
+ * <pre>{@code
+ * <service android:name="com.backendless.push.BackendlessPushService"
+ *           android:permission="android.permission.BIND_JOB_SERVICE">
+ * </service>
+ * }
+ * </pre>
+ */
+public class BackendlessPushService extends JobIntentService implements PushReceiverCallback
 {
-  private static final String TAG = "BackendlessPushService";
+  private static final String TAG = BackendlessPushService.class.getSimpleName();
+  private static final int JOB_ID = 1000;
   private static final Random random = new Random();
 
   private static final int MAX_BACKOFF_MS = (int) TimeUnit.SECONDS.toMillis( 3600 );
@@ -35,49 +47,25 @@ public class BackendlessPushService extends IntentService implements PushReceive
 
   private PushReceiverCallback callback;
 
-  public BackendlessPushService()
+  static void enqueueWork( Context context, Intent work )
   {
-    this( "BackendlessPushService" );
+    JobIntentService.enqueueWork( context, BackendlessPushService.class, JOB_ID, work );
   }
 
-  public BackendlessPushService( String name )
+  public BackendlessPushService()
   {
-    super( name );
     this.callback = this;
   }
 
   public BackendlessPushService( PushReceiverCallback callback )
   {
-    super(null);
     this.callback = callback;
   }
 
-  /**
-   * At this point {@link com.backendless.push.BackendlessBroadcastReceiver}
-   * is still holding a wake lock
-   * for us.  We can do whatever we need to here and then tell it that
-   * it can release the wakelock.  This sample just does some slow work,
-   * but more complicated implementations could take their own wake
-   * lock here before releasing the receiver's.
-   * <p/>
-   * Note that when using this approach you should be aware that if your
-   * service gets killed and restarted while in the middle of such work
-   * (so the Intent gets re-delivered to perform the work again), it will
-   * at that point no longer be holding a wake lock since we are depending
-   * on SimpleWakefulReceiver to that for us.  If this is a concern, you can
-   * acquire a separate wake lock here.
-   */
   @Override
-  protected void onHandleIntent( Intent intent )
+  protected void onHandleWork( @NonNull Intent intent )
   {
-    try
-    {
-      handleIntent( this, intent );
-    }
-    finally
-    {
-      BackendlessBroadcastReceiver.completeWakefulIntent( intent );
-    }
+    handleIntent( this, intent );
   }
 
   public void onRegistered( Context context, String registrationId )

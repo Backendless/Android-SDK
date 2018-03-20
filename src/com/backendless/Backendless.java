@@ -68,7 +68,7 @@ public final class Backendless
   public static final CustomService CustomService = com.backendless.CustomService.getInstance();
   public static final Logging Logging = com.backendless.Logging.getInstance();
   public static Media Media;
-
+  private static boolean initialized;
 
   private Backendless()
   {
@@ -135,10 +135,12 @@ public final class Backendless
    */
   public static void initApp( String applicationId, String secretKey )
   {
-    if( isAndroid )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_CONTEXT );
-
     initApp( null, applicationId, secretKey );
+  }
+
+  public static boolean isInitialized()
+  {
+    return initialized;
   }
 
   public static void initApp( Object context, final String applicationId, final String secretKey )
@@ -195,6 +197,7 @@ public final class Backendless
     {
 
     }
+    initialized = true;
   }
 
   public static void setUIState( String state )
@@ -246,6 +249,10 @@ public final class Backendless
   public static void setUrl( String url )
   {
     Backendless.url = url;
+
+    if ( prefs != null )
+      prefs.setUrl( url );
+
     if( prefs != null && prefs.isAuthKeysExist() )
       Invoker.reinitialize();
   }
@@ -269,5 +276,13 @@ public final class Backendless
       return null;
 
     return ((AndroidBackendlessPrefs) prefs).getPushTemplateAsJson();
+  }
+
+  public static void initApplicationFromProperties( Context context )
+  {
+    prefs.onCreate( context );
+
+    Backendless.initApp( context, prefs.getApplicationId(), prefs.getSecretKey() );
+    Backendless.setUrl( prefs.getUrl() );
   }
 }
