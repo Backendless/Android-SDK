@@ -103,7 +103,7 @@ abstract class SocketIOConnectionManager
         {
           final String error = Arrays.toString( args );
           logger.info( "Disconnected event " + error );
-          disconnected();
+          disconnected( error );
           reconnect();
         }
       } ).on( Socket.EVENT_CONNECT_ERROR, new Emitter.Listener()
@@ -201,7 +201,7 @@ abstract class SocketIOConnectionManager
 
   abstract void connectError( String error );
 
-  abstract void disconnected();
+  abstract void disconnected( String cause );
 
   abstract void subscriptionResult( Object... args );
 

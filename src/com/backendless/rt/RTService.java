@@ -12,7 +12,7 @@ public class RTService
   private final RTClient rtClient = RTClientFactory.get();
 
   private final CopyOnWriteArrayList<Result<Void>> connectListeners = new CopyOnWriteArrayList<>();
-  private final CopyOnWriteArrayList<Result<Void>> disconnectListeners = new CopyOnWriteArrayList<>();
+  private final CopyOnWriteArrayList<Result<String>> disconnectListeners = new CopyOnWriteArrayList<>();
   private final CopyOnWriteArrayList<Result<ReconnectAttempt>> reconnectListeners = new CopyOnWriteArrayList<>();
   private final CopyOnWriteArrayList<Fault> connectErrorListeners = new CopyOnWriteArrayList<>();
 
@@ -29,10 +29,10 @@ public class RTService
         }
       } );
 
-      rtClient.setDisconnectEventListener( new Result<Void>()
+      rtClient.setDisconnectEventListener( new Result<String>()
       {
         @Override
-        public void handle( Void result )
+        public void handle( String result )
         {
           RTService.this.handle( result, disconnectListeners );
         }
@@ -78,7 +78,7 @@ public class RTService
     connectErrorListeners.add( fault );
   }
 
-  public void addDisconnectEventListener( Result<Void> callback )
+  public void addDisconnectEventListener( Result<String> callback )
   {
     disconnectListeners.add( callback );
   }

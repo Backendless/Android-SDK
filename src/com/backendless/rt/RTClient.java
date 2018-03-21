@@ -21,7 +21,7 @@ public interface RTClient
 
   void setConnectErrorEventListener( Fault fault );
 
-  void setDisconnectEventListener( Result<Void> callback );
+  void setDisconnectEventListener( Result<String> callback );
 
   boolean isConnected();
 

@@ -92,7 +92,7 @@ class AsynRTClient implements RTClient
   }
 
   @Override
-  public void setDisconnectEventListener( Result<Void> callback )
+  public void setDisconnectEventListener( Result<String> callback )
   {
     rtClient.setDisconnectEventListener( callback );
   }

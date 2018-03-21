@@ -54,7 +54,7 @@ public class RTClientWithoutSocketIO implements RTClient
   }
 
   @Override
-  public void setDisconnectEventListener( Result<Void> callback )
+  public void setDisconnectEventListener( Result<String> callback )
   {
     throw new NoSocketIOException();
   }

@@ -32,7 +32,7 @@ class RTClientSocketIO implements RTClient
 
   private Result<Void> connectCallback;
   private Fault connectErrorCallback;
-  private Result<Void> disconnectCallback;
+  private Result<String> disconnectCallback;
   private Result<ReconnectAttempt> reconnectAttemptCallback;
 
   RTClientSocketIO( )
@@ -59,7 +59,7 @@ class RTClientSocketIO implements RTClient
       }
 
       @Override
-      void disconnected()
+      void disconnected( String error)
       {
         disconnectCallback.handle( null );
       }
@@ -220,7 +220,7 @@ class RTClientSocketIO implements RTClient
   }
 
   @Override
-  public void setDisconnectEventListener( Result<Void> callback )
+  public void setDisconnectEventListener( Result<String> callback )
   {
     disconnectCallback = callback;
   }
