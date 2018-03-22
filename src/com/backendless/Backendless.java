@@ -155,6 +155,7 @@ public final class Backendless
       throw new IllegalArgumentException( ExceptionMessage.NULL_SECRET_KEY );
 
     prefs.onCreate( context );
+    prefs.setUrl( url );
     prefs.initPreferences( applicationId, secretKey );
 
     MessageWriter.addTypeWriter( BackendlessUser.class, new BackendlessUserWriter() );
@@ -250,11 +251,11 @@ public final class Backendless
   {
     Backendless.url = url;
 
-    if ( prefs != null )
-      prefs.setUrl( url );
-
     if( prefs != null && prefs.isAuthKeysExist() )
+    {
+      prefs.setUrl( url );
       Invoker.reinitialize();
+    }
   }
 
   public static boolean isCodeRunner()

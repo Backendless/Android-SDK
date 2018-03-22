@@ -65,8 +65,8 @@ uploadArchives {
 //            Properties props = new Properties()
 //            props.load(new FileInputStream("/Users/ksv/dev/Android-SDK/ossrh.properties"))
 //
-//            def ossrhUsername=props.getProperty( "user.name" )
-//            def ossrhPassword=props.getProperty( "user.password" )
+//            ossrhUsername=props.getProperty( "user.name" )
+//            ossrhPassword=props.getProperty( "user.password" )
 
             pom.whenConfigured {
                 p -> p.dependencies = p.dependencies.findAll {
@@ -183,21 +183,25 @@ jar {
     }
 }
 
-task copySampleJars << {
-    copyT(jar.archivePath, projectDir.path+'/samples/DataService/tododemo/libs', jar.getArchiveName(  ))
-    copyT(jar.archivePath, projectDir.path+'/samples/EndlessMatchMaker/libs', jar.getArchiveName(  ))
-    copyT(jar.archivePath, projectDir.path+'/samples/EndlessTagging/libs', jar.getArchiveName(  ))
-    copyT(jar.archivePath, projectDir.path+'/samples/FenceDemo/libs', jar.getArchiveName(  ))
-    copyT(jar.archivePath, projectDir.path+'/samples/GeoService/geodemo/libs', jar.getArchiveName(  ))
-    copyT(jar.archivePath, projectDir.path+'/samples/MessagingService/pubsubdemo/libs', jar.getArchiveName(  ))
-    copyT(jar.archivePath, projectDir.path+'/samples/MessagingService/pushdemo/libs', jar.getArchiveName(  ))
-    copyT(jar.archivePath, projectDir.path+'/samples/UserService/FacebookSDKSamples/login/libs', jar.getArchiveName(  ))
-    copyT(jar.archivePath, projectDir.path+'/samples/UserService/rolesdemo/libs/', jar.getArchiveName(  ))
-    copyT(jar.archivePath, projectDir.path+'/samples/UserService/userservicedemo/libs', jar.getArchiveName(  ))
+task copySampleJars {
+    doLast {
+        copyT( jar.archivePath, projectDir.path + '/samples/DataService/tododemo/libs', jar.getArchiveName() )
+        copyT( jar.archivePath, projectDir.path + '/samples/EndlessMatchMaker/libs', jar.getArchiveName() )
+        copyT( jar.archivePath, projectDir.path + '/samples/EndlessTagging/libs', jar.getArchiveName() )
+        copyT( jar.archivePath, projectDir.path + '/samples/FenceDemo/libs', jar.getArchiveName() )
+        copyT( jar.archivePath, projectDir.path + '/samples/GeoService/geodemo/libs', jar.getArchiveName() )
+        copyT( jar.archivePath, projectDir.path + '/samples/MessagingService/pubsubdemo/libs', jar.getArchiveName() )
+        copyT( jar.archivePath, projectDir.path + '/samples/MessagingService/pushdemo/libs', jar.getArchiveName() )
+        copyT( jar.archivePath, projectDir.path + '/samples/UserService/FacebookSDKSamples/login/libs', jar.getArchiveName() )
+        copyT( jar.archivePath, projectDir.path + '/samples/UserService/rolesdemo/libs/', jar.getArchiveName() )
+        copyT( jar.archivePath, projectDir.path + '/samples/UserService/userservicedemo/libs', jar.getArchiveName() )
+    }
 }
 
-task copyJarToOut << {
-    copyT(jar.archivePath, projectDir.path+'/out', jar.getArchiveName(  ))
+task copyJarToOut {
+    doLast {
+        copyT( jar.archivePath, projectDir.path + '/out', jar.getArchiveName() )
+    }
 }
 
 def copyT(fromPath, toPath, archName)
