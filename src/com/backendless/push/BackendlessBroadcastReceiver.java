@@ -86,7 +86,6 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver implements P
     if( !Backendless.isInitialized() )
       Backendless.initApplicationFromProperties( context );
 
-    ComponentName comp = new ComponentName( context, getServiceClass() );
-    BackendlessPushService.enqueueWork( context, intent.setComponent( comp ) );
+    BackendlessPushService.enqueueWork( context, getServiceClass(), intent );
   }
 }

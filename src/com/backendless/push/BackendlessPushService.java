@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
@@ -29,11 +30,12 @@ import java.util.concurrent.TimeUnit;
  *
  * <p>Secondary you should declare this service in 'AndroidManifest.xml' like this:<br/>
  * <pre>{@code
- * <service android:name="com.backendless.push.BackendlessPushService"
+ * <service android:name="full.qualified.class.name"
  *           android:permission="android.permission.BIND_JOB_SERVICE">
  * </service>
  * }
  * </pre>
+ * Where {@code 'full.qualified.class.name'} is {@code 'com.backendless.push.BackendlessPushService'} or your own class that inherit it.
  */
 public class BackendlessPushService extends JobIntentService implements PushReceiverCallback
 {
@@ -47,9 +49,10 @@ public class BackendlessPushService extends JobIntentService implements PushRece
 
   private PushReceiverCallback callback;
 
-  static void enqueueWork( Context context, Intent work )
+  static void enqueueWork( Context context, Class cls, Intent work )
   {
-    JobIntentService.enqueueWork( context, BackendlessPushService.class, JOB_ID, work );
+    ComponentName comp = new ComponentName( context, cls );
+    JobIntentService.enqueueWork( context, cls, JOB_ID, work.setComponent( comp ) );
   }
 
   public BackendlessPushService()
@@ -63,7 +66,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
   }
 
   @Override
-  protected void onHandleWork( @NonNull Intent intent )
+  final protected void onHandleWork( @NonNull Intent intent )
   {
     handleIntent( this, intent );
   }
