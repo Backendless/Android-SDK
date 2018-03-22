@@ -70,7 +70,7 @@ public final class Backendless
   public static final Logging Logging = com.backendless.Logging.getInstance();
   public static final RTService RT = new RTService();
   public static Media Media;
-
+  private static boolean initialized;
 
   private Backendless()
   {
@@ -137,10 +137,12 @@ public final class Backendless
    */
   public static void initApp( String applicationId, String secretKey )
   {
-    if( isAndroid )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_CONTEXT );
-
     initApp( null, applicationId, secretKey );
+  }
+
+  public static boolean isInitialized()
+  {
+    return initialized;
   }
 
   public static void initApp( Object context, final String applicationId, final String secretKey )
@@ -155,6 +157,7 @@ public final class Backendless
       throw new IllegalArgumentException( ExceptionMessage.NULL_SECRET_KEY );
 
     prefs.onCreate( context );
+    prefs.setUrl( url );
     prefs.initPreferences( applicationId, secretKey );
 
     MessageWriter.addTypeWriter( BackendlessUser.class, new BackendlessUserWriter() );
@@ -197,6 +200,7 @@ public final class Backendless
     {
 
     }
+    initialized = true;
   }
 
   public static void setUIState( String state )
@@ -248,8 +252,12 @@ public final class Backendless
   public static void setUrl( String url )
   {
     Backendless.url = url;
+
     if( prefs != null && prefs.isAuthKeysExist() )
+    {
+      prefs.setUrl( url );
       Invoker.reinitialize();
+    }
   }
 
   public static boolean isCodeRunner()
@@ -271,5 +279,13 @@ public final class Backendless
       return null;
 
     return ((AndroidBackendlessPrefs) prefs).getPushTemplateAsJson();
+  }
+
+  public static void initApplicationFromProperties( Context context )
+  {
+    prefs.onCreate( context );
+
+    Backendless.initApp( context, prefs.getApplicationId(), prefs.getSecretKey() );
+    Backendless.setUrl( prefs.getUrl() );
   }
 }

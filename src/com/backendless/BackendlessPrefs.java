@@ -11,6 +11,7 @@ class BackendlessPrefs
 {
   protected AuthKeys authKeys;
   protected Map<String, String> headers;
+  protected String url;
 
   public BackendlessPrefs()
   {
@@ -67,5 +68,18 @@ class BackendlessPrefs
   boolean isAuthKeysExist()
   {
     return authKeys != null;
+  }
+
+  public void setUrl( String url )
+  {
+    this.url = url;
+  }
+
+  public String getUrl()
+  {
+    if( this.url == null)
+      throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
+
+    return this.url;
   }
 }

@@ -1,13 +1,15 @@
 package com.backendless.push;
 
 import android.app.AlarmManager;
-import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
+import android.support.v4.app.JobIntentService;
 import android.util.Log;
 import android.widget.RemoteViews;
 import com.backendless.Backendless;
@@ -23,10 +25,22 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-
-public class BackendlessPushService extends IntentService implements PushReceiverCallback
+/**
+ * <p>Firstly you should inherit this class for your own needs. For example to handle push messages manually.
+ *
+ * <p>Secondary you should declare this service in 'AndroidManifest.xml' like this:<br/>
+ * <pre>{@code
+ * <service android:name="full.qualified.class.name"
+ *           android:permission="android.permission.BIND_JOB_SERVICE">
+ * </service>
+ * }
+ * </pre>
+ * Where {@code 'full.qualified.class.name'} is {@code 'com.backendless.push.BackendlessPushService'} or your own class that inherit it.
+ */
+public class BackendlessPushService extends JobIntentService implements PushReceiverCallback
 {
-  private static final String TAG = "BackendlessPushService";
+  private static final String TAG = BackendlessPushService.class.getSimpleName();
+  private static final int JOB_ID = 1000;
   private static final Random random = new Random();
 
   private static final int MAX_BACKOFF_MS = (int) TimeUnit.SECONDS.toMillis( 3600 );
@@ -35,49 +49,26 @@ public class BackendlessPushService extends IntentService implements PushReceive
 
   private PushReceiverCallback callback;
 
-  public BackendlessPushService()
+  static void enqueueWork( Context context, Class cls, Intent work )
   {
-    this( "BackendlessPushService" );
+    ComponentName comp = new ComponentName( context, cls );
+    JobIntentService.enqueueWork( context, cls, JOB_ID, work.setComponent( comp ) );
   }
 
-  public BackendlessPushService( String name )
+  public BackendlessPushService()
   {
-    super( name );
     this.callback = this;
   }
 
   public BackendlessPushService( PushReceiverCallback callback )
   {
-    super(null);
     this.callback = callback;
   }
 
-  /**
-   * At this point {@link com.backendless.push.BackendlessBroadcastReceiver}
-   * is still holding a wake lock
-   * for us.  We can do whatever we need to here and then tell it that
-   * it can release the wakelock.  This sample just does some slow work,
-   * but more complicated implementations could take their own wake
-   * lock here before releasing the receiver's.
-   * <p/>
-   * Note that when using this approach you should be aware that if your
-   * service gets killed and restarted while in the middle of such work
-   * (so the Intent gets re-delivered to perform the work again), it will
-   * at that point no longer be holding a wake lock since we are depending
-   * on SimpleWakefulReceiver to that for us.  If this is a concern, you can
-   * acquire a separate wake lock here.
-   */
   @Override
-  protected void onHandleIntent( Intent intent )
+  final protected void onHandleWork( @NonNull Intent intent )
   {
-    try
-    {
-      handleIntent( this, intent );
-    }
-    finally
-    {
-      BackendlessBroadcastReceiver.completeWakefulIntent( intent );
-    }
+    handleIntent( this, intent );
   }
 
   public void onRegistered( Context context, String registrationId )
@@ -144,6 +135,12 @@ public class BackendlessPushService extends IntentService implements PushReceive
         AndroidPushTemplate androidPushTemplate = PushTemplateHelper.getPushNotificationTemplates().get( templateName );
         if( androidPushTemplate != null )
         {
+          if( androidPushTemplate.getContentAvailable() != null && androidPushTemplate.getContentAvailable() == 1 )
+          {
+            callback.onMessage( context, intent );
+            return;
+          }
+
           Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId );
           PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), messageId );
         }
@@ -154,6 +151,13 @@ public class BackendlessPushService extends IntentService implements PushReceive
       if( immediatePush != null )
       {
         AndroidPushTemplate androidPushTemplate = (AndroidPushTemplate) weborb.util.io.Serializer.fromBytes( immediatePush.getBytes(), weborb.util.io.Serializer.JSON, false );
+
+        if( androidPushTemplate.getContentAvailable() != null && androidPushTemplate.getContentAvailable() == 1 )
+        {
+          callback.onMessage( context, intent );
+          return;
+        }
+
         androidPushTemplate.setName("ImmediateMessage");
         Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId );
         PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), messageId );
@@ -285,7 +289,13 @@ public class BackendlessPushService extends IntentService implements PushReceive
           Object[] obj = (Object[]) weborb.util.io.Serializer.fromBytes( registrationInfo.getBytes(), weborb.util.io.Serializer.JSON, false );
           ids = (String) obj[0];
           PushTemplateHelper.deleteNotificationChannel( context );
-          PushTemplateHelper.setPushNotificationTemplates( (Map<String,AndroidPushTemplate>) obj[1], registrationInfo.getBytes() );
+          Map<String,AndroidPushTemplate> templates = (Map<String,AndroidPushTemplate>) obj[1];
+
+          if( android.os.Build.VERSION.SDK_INT > 25 )
+            for( AndroidPushTemplate templ : templates.values() )
+              PushTemplateHelper.getOrCreateNotificationChannel( context.getApplicationContext(), templ );
+
+          PushTemplateHelper.setPushNotificationTemplates( templates, registrationInfo.getBytes() );
         }
         catch( IOException e )
         {
@@ -306,8 +316,6 @@ public class BackendlessPushService extends IntentService implements PushReceive
 
   private void unregisterFurther( final Context context )
   {
-    PushTemplateHelper.deleteNotificationChannel( context );
-
     Backendless.Messaging.unregisterDeviceOnServer( new AsyncCallback<Boolean>()
     {
       @Override

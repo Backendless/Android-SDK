@@ -57,6 +57,29 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
     return getAuthKeys().getSecretKey();
   }
 
+  public void setUrl( String url )
+  {
+    if( sharedPreferences == null )
+      throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
+
+    SharedPreferences.Editor editor = sharedPreferences.edit();
+    editor.putString( Type.URL_KEY.name64(), url );
+    editor.commit();
+
+    this.url = url;
+  }
+
+  public String getUrl()
+  {
+    if( sharedPreferences == null )
+      throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
+
+    if( this.url == null )
+      this.url = sharedPreferences.getString( Type.URL_KEY.name64(), Backendless.getUrl() );
+
+    return this.url;
+  }
+
   public synchronized Map getHeaders()
   {
     if( headers == null )
@@ -102,7 +125,7 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
     if( sharedPreferences == null )
       throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
     
-    String applicationId = sharedPreferences.getString( Type.APPLICATION_ID.name64(), null );
+    String applicationId = sharedPreferences.getString( Type.APPLICATION_ID_KEY.name64(), null );
     String secretKey = sharedPreferences.getString( Type.SECRET_KEY.name64(), null );
 
     if( applicationId != null && secretKey != null )
@@ -120,7 +143,7 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
     {
       SharedPreferences.Editor editor = sharedPreferences.edit();
       String rawHeaders = AndroidIO.mapToString( headers );
-      editor.putString( Type.APPLICATION_ID.name64(), rawHeaders );
+      editor.putString( Type.APPLICATION_ID_KEY.name64(), rawHeaders );
       editor.commit();
     }
     catch ( IOException e )
@@ -132,7 +155,7 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
   private void saveAuthKeysToPreferences( AuthKeys authKeys )
   {
     SharedPreferences.Editor editor = sharedPreferences.edit();
-    editor.putString( Type.APPLICATION_ID.name64(), authKeys.getApplicationId() );
+    editor.putString( Type.APPLICATION_ID_KEY.name64(), authKeys.getApplicationId() );
     editor.putString( Type.SECRET_KEY.name64(), authKeys.getSecretKey() );
     editor.commit();
   }
@@ -150,19 +173,6 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
     }
   }
 
-  enum Type
-  {
-    APPLICATION_ID,
-    SECRET_KEY,
-    HEADERS,
-    PUSH_TEMPLATES;
-
-    String name64()
-    {
-      return UUID.nameUUIDFromBytes( this.name().getBytes() ).toString();
-    }
-  }
-
   void savePushTemplate( String pushTemplatesAsJson )
   {
     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -173,5 +183,20 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
   String getPushTemplateAsJson()
   {
     return sharedPreferences.getString( Type.PUSH_TEMPLATES.name64(), null );
+  }
+
+
+  enum Type
+  {
+    APPLICATION_ID_KEY,
+    SECRET_KEY,
+    URL_KEY,
+    HEADERS,
+    PUSH_TEMPLATES;
+
+    String name64()
+    {
+      return UUID.nameUUIDFromBytes( this.name().getBytes() ).toString();
+    }
   }
 }
