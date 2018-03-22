@@ -3,7 +3,8 @@ package com.backendless.rt;
 import com.backendless.Backendless;
 import com.backendless.HeadersManager;
 import com.backendless.async.callback.Result;
-import com.backendless.persistence.local.UserTokenStorageFactory;
+import com.backendless.utils.timeout.TimeOutManager;
+import com.backendless.utils.timeout.TimeOutManagerImpl;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
@@ -16,9 +17,6 @@ abstract class SocketIOConnectionManager
 {
   private static final Logger logger = Logger.getLogger( "SocketIOConnectionManager" );
 
-  private static final int INITIAL_TIMEOUT = 100;
-  private static final int MAX_TIMEOUT = 2 * 60 * 1000; //2 min
-
   SocketIOConnectionManager()
   {
     rtLookupService = new RTLookupService( new Result<ReconnectAttempt>()
@@ -26,18 +24,16 @@ abstract class SocketIOConnectionManager
       @Override
       public void handle( ReconnectAttempt result )
       {
-        retryAttempt = result.getAttempt();
-        reconnectAttempt( retryAttempt, result.getTimeout() );
+        reconnectAttempt( result.getAttempt(), result.getTimeout() );
         connectError( result.getError() );
       }
-    } );
+    }, timeOutManager );
   }
 
   private final Object lock = new Object();
   private final RTLookupService rtLookupService;
 
-  private int retryConnectTimeout = INITIAL_TIMEOUT;
-  private int retryAttempt = 0;
+  private TimeOutManager timeOutManager = new TimeOutManagerImpl();
   private Socket socket;
 
   Socket get()
@@ -67,7 +63,7 @@ abstract class SocketIOConnectionManager
 
       opts.query = "apiKey=" + Backendless.getSecretKey() + "&binary=true";
 
-      final String host = rtLookupService.lookup( retryAttempt ) + opts.path;
+      final String host = rtLookupService.lookup( ) + opts.path;
       logger.info( "Looked up for server " + host );
 
       String userToken = HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY );
@@ -92,8 +88,7 @@ abstract class SocketIOConnectionManager
         public void call( Object... args )
         {
           logger.info( "Connected event" );
-          retryConnectTimeout = INITIAL_TIMEOUT;
-          retryAttempt = 0;
+          timeOutManager.reset();
           connected();
         }
       } ).on( Socket.EVENT_DISCONNECT, new Emitter.Listener()
@@ -156,6 +151,7 @@ abstract class SocketIOConnectionManager
       return;
 
     disconnect();
+    final int retryConnectTimeout = timeOutManager.nextTimeout();
     logger.info( "Wait for " + retryConnectTimeout + " before reconnect" );
     try
     {
@@ -166,14 +162,7 @@ abstract class SocketIOConnectionManager
       throw new RuntimeException( e1 );
     }
 
-    retryConnectTimeout *= 2;
-
-    if( retryConnectTimeout > MAX_TIMEOUT )
-      retryConnectTimeout = MAX_TIMEOUT;
-
-    retryAttempt++;
-
-    reconnectAttempt( retryAttempt, retryConnectTimeout );
+    reconnectAttempt( timeOutManager.repeatedTimes(), retryConnectTimeout );
 
     get();
   }
