@@ -64,7 +64,7 @@ public class PushTemplateHelper
     }
   }
 
-  static Notification convertFromTemplate( Context context, AndroidPushTemplate template, String messageText, int messageId )
+  static Notification convertFromTemplate( Context context, AndroidPushTemplate template, String messageText, int messageId, String contentTitle, String summarySubText )
   {
     context = context.getApplicationContext();
     // Notification channel ID is ignored for Android 7.1.1 (API level 25) and lower.
@@ -148,8 +148,8 @@ public class PushTemplateHelper
     else if( messageText.length() > 35 )
     {
       NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle()
-              .setSummaryText( template.getThirdRowTitle() )
-              .setBigContentTitle( template.getFirstRowTitle() )
+              .setBigContentTitle( contentTitle != null ? contentTitle : template.getContentTitle() )
+              .setSummaryText( summarySubText != null ? summarySubText : template.getSummarySubText() )
               .bigText( messageText );
       notificationBuilder.setStyle( bigText );
     }
@@ -208,8 +208,8 @@ public class PushTemplateHelper
     notificationBuilder
             .setShowWhen( true )
             .setWhen( System.currentTimeMillis() )
-            .setContentTitle( template.getFirstRowTitle() )
-            .setSubText( template.getThirdRowTitle() )
+            .setContentTitle( contentTitle != null ? contentTitle : template.getContentTitle() )
+            .setSubText( summarySubText != null ? summarySubText : template.getSummarySubText() )
             .setTicker( template.getTickerText() )
             .setContentText( messageText );
 
