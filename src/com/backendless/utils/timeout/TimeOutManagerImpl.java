@@ -3,7 +3,7 @@ package com.backendless.utils.timeout;
 public class TimeOutManagerImpl implements TimeOutManager
 {
   private static final int INITIAL_TIMEOUT = 200;
-  private static final int MAX_TIMEOUT = 2 * 60 * 1000; //2 min
+  private static final int MAX_TIMEOUT = 60 * 1000; //1 min
   private static final int REPEAT_TIMES_BEFORE_INCREASE = 10;
 
   private int repeatedTimes;
