@@ -155,8 +155,8 @@ public final class Backendless
       throw new IllegalArgumentException( ExceptionMessage.NULL_SECRET_KEY );
 
     prefs.onCreate( context );
-    prefs.setUrl( url );
     prefs.initPreferences( applicationId, secretKey );
+    prefs.setUrl( url );
 
     MessageWriter.addTypeWriter( BackendlessUser.class, new BackendlessUserWriter() );
     MessageWriter.addTypeWriter( Double.class, new DoubleWriter() );
@@ -279,7 +279,7 @@ public final class Backendless
     return ((AndroidBackendlessPrefs) prefs).getPushTemplateAsJson();
   }
 
-  public static void initApplicationFromProperties( Context context )
+  public static void initApplicationFromProperties( Object context )
   {
     prefs.onCreate( context );
 
