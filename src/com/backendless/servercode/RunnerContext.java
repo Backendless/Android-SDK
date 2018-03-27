@@ -8,10 +8,10 @@ import java.util.Map;
 
 public class RunnerContext extends AbstractContext
 {
-  private Map missingProperties;
+  private Map<String, Object> missingProperties = new HashMap<>();
   private Object prematureResult;
   private String eventContext;
-  private Map<String, Object> crossHandlerData;
+  private Map<String, Object> crossHandlerData = new HashMap<>();
 
   public String getAppId()
   {
@@ -75,14 +75,17 @@ public class RunnerContext extends AbstractContext
     this.userRoles = userRole;
   }
 
-  public Map getMissingProperties()
+  public Map<String, Object> getMissingProperties()
   {
     return missingProperties;
   }
 
-  public void setMissingProperties( Map missingProperties )
+  public void setMissingProperties( Map<String, Object> missingProperties )
   {
-    this.missingProperties = missingProperties;
+    if( missingProperties == null )
+      this.missingProperties = new HashMap<>();
+    else
+      this.missingProperties = missingProperties;
   }
 
   public Object getPrematureResult()
@@ -122,14 +125,14 @@ public class RunnerContext extends AbstractContext
 
   public void setCrossHandlerData( Map<String, Object> crossHandlerData )
   {
-    this.crossHandlerData = crossHandlerData;
+    if( crossHandlerData == null )
+      this.crossHandlerData = new HashMap<>();
+    else
+      this.crossHandlerData = crossHandlerData;
   }
 
   public void addCrossHandlerData( String key, Object value )
   {
-    if( this.crossHandlerData == null )
-      this.crossHandlerData = new HashMap<>();
-
     this.crossHandlerData.put( key, value );
   }
 
