@@ -23,10 +23,8 @@ import com.backendless.property.ObjectProperty;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
-import java.util.List;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -51,6 +49,14 @@ public abstract class PersistenceExtender<T>
   }
 
   public void afterCreate( RunnerContext context, T t, ExecutionResult<T> entity ) throws Exception
+  {
+  }
+
+  public void beforeCreateBulk( RunnerContext context, List<T> entities )
+  {
+  }
+
+  public void afterCreateBulk( RunnerContext context, List<T> entities, ExecutionResult<Void> result )
   {
   }
 
