@@ -225,7 +225,7 @@ dependencies {
     provided fileTree(dir: 'libs', include: 'support-annotations-26.1.0.jar')
     provided fileTree(dir: 'libs', include: 'FacebookSDK.jar')
     provided fileTree(dir: 'libs', include: 'maps.jar')
-    compile( group: "com.backendless", name: "commons", version: "4.4.6", changing: true) {
+    compile( group: "com.backendless", name: "commons", version: "4.4.7", changing: true) {
         exclude group: 'com.fasterxml.jackson.core'
     }
     compile( group: "weborb", name: "weborbclient", version: "5.1.0.210", changing: true)
