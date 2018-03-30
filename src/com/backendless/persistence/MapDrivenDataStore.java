@@ -56,11 +56,16 @@ public class MapDrivenDataStore implements IDataStore<Map>
   @Override
   public void create( List<Map> objects ) throws BackendlessException
   {
-    create( objects, null );
+    create( objects, null, false );
   }
 
   @Override
-  public void create( List<Map> objects, AsyncCallback responder ) throws BackendlessException
+  public void create( List<Map> objects, AsyncCallback responder )
+  {
+    create( objects, responder, true );
+  }
+
+  private void create( List<Map> objects, AsyncCallback responder, boolean async ) throws BackendlessException
   {
     if( objects == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_BULK );
@@ -70,10 +75,10 @@ public class MapDrivenDataStore implements IDataStore<Map>
 
     Object[] args = new Object[]{tableName, objects};
 
-    if( responder == null )
-      Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args );
-    else
+    if( async )
       Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args, responder );
+    else
+      Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args );
   }
 
   @Override
