@@ -41,6 +41,7 @@ public class ExceptionMessage
   public final static String DEFAULT_CATEGORY_NAME = "cannot add or delete a default category name.";
   public final static String EMPTY_CATEGORY_NAME = "Geo category name can not be empty.";
 
+  public final static String NULL_BULK = "Object array for bulk operations cannot be null";
   public final static String NULL_ENTITY = "Entity cannot be null.";
   public final static String NULL_ENTITY_NAME = "Entity name cannot be null or empty.";
   public final static String NULL_ID = "Id cannot be null or empty.";
