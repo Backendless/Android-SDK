@@ -84,6 +84,28 @@ public final class Persistence
     weborb.types.Types.addClientClassMapping( tableName, clazz );
   }
 
+  public <E> void create( List<E> objects ) throws BackendlessException
+  {
+     create( objects, null );
+  }
+
+  public <E> void create( List<E> objects, final AsyncCallback responder )
+  {
+    if( objects == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_BULK );
+
+    if( objects.isEmpty() )
+      return;
+    
+    String tableName =  BackendlessSerializer.getSimpleName( objects.get( 0 ).getClass() );
+    Object[] args = new Object[] { tableName , objects };
+
+    if( responder == null )
+      Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args );
+    else
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args, responder );
+  }
+
   public <E> E save( final E entity ) throws BackendlessException
   {
     if( entity == null )
