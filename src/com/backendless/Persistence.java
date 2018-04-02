@@ -89,12 +89,12 @@ public final class Persistence
      create( objects, null, false );
   }
 
-  public <E> void create( List<E> objects, final AsyncCallback responder )
+  public <E> void create( List<E> objects, final AsyncCallback<Void> responder )
   {
     create( objects, responder, true );
   }
 
-  private <E> void create( List<E> objects, final AsyncCallback responder, boolean async )
+  private <E> void create( List<E> objects, final AsyncCallback<Void> responder, boolean async )
   {
     if( objects == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_BULK );
