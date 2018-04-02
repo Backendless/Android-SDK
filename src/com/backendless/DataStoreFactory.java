@@ -40,6 +40,18 @@ class DataStoreFactory
     {
 
       @Override
+      public void create( List<E> objects ) throws BackendlessException
+      {
+        Backendless.Persistence.create( objects );
+      }
+
+      @Override
+      public void create( List<E> objects, AsyncCallback responder ) throws BackendlessException
+      {
+        Backendless.Persistence.create( objects, responder );
+      }
+
+      @Override
       public E save( final E entity ) throws BackendlessException
       {
         return Backendless.Persistence.save( entity );

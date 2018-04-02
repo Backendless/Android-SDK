@@ -30,6 +30,10 @@ import java.util.Map;
 
 public interface IDataStore<E>
 {
+  void create( List<E> objects ) throws BackendlessException;
+
+  void create( List<E> objects, AsyncCallback responder ) throws BackendlessException;
+
   E save( E entity ) throws BackendlessException;
 
   void save( E entity, AsyncCallback<E> responder );
