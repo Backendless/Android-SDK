@@ -123,6 +123,8 @@ public class BackendlessPushService extends JobIntentService implements PushRece
   {
     final int messageId = intent.getIntExtra( BackendlessBroadcastReceiver.EXTRA_MESSAGE_ID, 0 );
     final String message = intent.getStringExtra( PublishOptions.MESSAGE_TAG );
+    final String contentTitle = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TITLE_TAG );
+    final String summarySubText = intent.getStringExtra( PublishOptions.ANDROID_SUMMARY_SUBTEXT_TAG );
 
     try
     {
@@ -141,7 +143,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
             return;
           }
 
-          Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId );
+          Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId, contentTitle, summarySubText );
           PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), messageId );
         }
         return;
@@ -159,7 +161,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
         }
 
         androidPushTemplate.setName("ImmediateMessage");
-        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId );
+        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId, contentTitle, summarySubText );
         PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), messageId );
         return;
       }
@@ -169,7 +171,6 @@ public class BackendlessPushService extends JobIntentService implements PushRece
       if( showPushNotification )
       {
         CharSequence tickerText = intent.getStringExtra( PublishOptions.ANDROID_TICKER_TEXT_TAG );
-        CharSequence contentTitle = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TITLE_TAG );
 
         if( tickerText != null && tickerText.length() > 0 )
         {
