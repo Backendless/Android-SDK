@@ -33,6 +33,7 @@ import com.backendless.persistence.RealmSerializer;
 import com.backendless.persistence.local.UserIdStorageFactory;
 import com.backendless.persistence.local.UserTokenStorageFactory;
 import com.backendless.rt.RTService;
+import com.backendless.rt.RTServiceImpl;
 import weborb.ORBConstants;
 import weborb.config.ORBConfig;
 import weborb.util.ObjectFactories;
@@ -68,7 +69,7 @@ public final class Backendless
   public static final Counters Counters = com.backendless.Counters.getInstance();
   public static final CustomService CustomService = com.backendless.CustomService.getInstance();
   public static final Logging Logging = com.backendless.Logging.getInstance();
-  public static final RTService RT = new RTService();
+  public static final RTService RT = new RTServiceImpl();
   public static Media Media;
   private static boolean initialized;
 

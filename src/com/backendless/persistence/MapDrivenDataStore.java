@@ -28,6 +28,7 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.rt.data.EventHandler;
+import com.backendless.rt.data.EventHandlerFactory;
 import com.backendless.utils.ResponderHelper;
 import weborb.client.Fault;
 import weborb.client.IRawResponder;
@@ -47,11 +48,15 @@ import java.util.Map;
 public class MapDrivenDataStore implements IDataStore<Map>
 {
   private static final List<String> emptyRelations = new ArrayList<String>();
+  private final static EventHandlerFactory eventHandlerFactory = new EventHandlerFactory();
   private String tableName;
+
+  private final EventHandler<Map> eventHandler;
 
   public MapDrivenDataStore( String tableName )
   {
     this.tableName = tableName;
+    eventHandler = eventHandlerFactory.of( tableName );
   }
 
   @Override
@@ -741,7 +746,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   @Override
   public EventHandler<Map> rt()
   {
-    return Backendless.RT.Data.of( tableName );
+    return eventHandler;
   }
 
   private class MapDrivenResponder implements IRawResponder
