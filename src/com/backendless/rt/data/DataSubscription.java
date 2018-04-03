@@ -22,7 +22,7 @@ class DataSubscription extends RTSubscription
   RTDataEvents getEvent()
   {
     final String eventStr = (String) getOption( "event" );
-    return eventStr == null ? null : RTDataEvents.valueOf( eventStr );
+    return eventStr == null ? null : RTDataEvents.forName( eventStr );
   }
 
   String getTableName()
