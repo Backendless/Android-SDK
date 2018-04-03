@@ -50,7 +50,7 @@ class DataStoreFactory
       }
 
       @Override
-      public void create( List<E> objects, AsyncCallback responder ) throws BackendlessException
+      public void create( List<E> objects, AsyncCallback<Void> responder ) throws BackendlessException
       {
         Backendless.Persistence.create( objects, responder );
       }
