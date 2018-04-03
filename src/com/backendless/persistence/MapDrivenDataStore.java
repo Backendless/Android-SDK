@@ -60,12 +60,12 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public void create( List<Map> objects, AsyncCallback responder )
+  public void create( List<Map> objects, AsyncCallback<Void> responder )
   {
     create( objects, responder, true );
   }
 
-  private void create( List<Map> objects, AsyncCallback responder, boolean async ) throws BackendlessException
+  private void create( List<Map> objects, AsyncCallback<Void> responder, boolean async ) throws BackendlessException
   {
     if( objects == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_BULK );
