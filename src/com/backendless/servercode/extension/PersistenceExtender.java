@@ -56,7 +56,7 @@ public abstract class PersistenceExtender<T>
   {
   }
 
-  public void afterCreateBulk( RunnerContext context, List<T> entities, ExecutionResult<Void> result )
+  public void afterCreateBulk( RunnerContext context, List<T> entities, ExecutionResult<List<String>> result )
   {
   }
 
