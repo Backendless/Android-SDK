@@ -7,11 +7,14 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.JobIntentService;
 import android.util.Log;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
@@ -49,10 +52,33 @@ public class BackendlessPushService extends JobIntentService implements PushRece
 
   private PushReceiverCallback callback;
 
-  static void enqueueWork( Context context, Class cls, Intent work )
+  static void enqueueWork( final Context context, final Class cls, final Intent work )
   {
     ComponentName comp = new ComponentName( context, cls );
-    JobIntentService.enqueueWork( context, cls, JOB_ID, work.setComponent( comp ) );
+    try
+    {
+      JobIntentService.enqueueWork( context, cls, JOB_ID, work.setComponent( comp ) );
+    }
+    catch( RuntimeException e )
+    {
+      if( e.getMessage() != null && e.getMessage().contains( "does not require android.permission.BIND_JOB_SERVICE" ) )
+      {
+        Log.e( BackendlessPushService.class.getSimpleName(), "You should set the 'android.permission.BIND_JOB_SERVICE' permission in 'AndroidManifest.xml' for '" + cls.getName() + "'. See Android documentation on https://developer.android.com/reference/android/app/job/JobService.html#PERMISSION_BIND" );
+
+        Handler handler = new Handler( Looper.getMainLooper() );
+        for( int i = 1; i < 5; i++ )
+          handler.postDelayed( new Runnable()
+          {
+            @Override
+            public void run()
+            {
+              Toast.makeText( context.getApplicationContext(), "Configuration error in AndroidManifest for '" + cls.getSimpleName() + "'! See logcat.", Toast.LENGTH_LONG ).show();
+            }
+          }, 2000 * i );
+      }
+      else
+        throw e;
+    }
   }
 
   public BackendlessPushService()
