@@ -29,9 +29,9 @@ import java.util.Map;
 
 public interface IDataStore<E>
 {
-  void create( List<E> objects ) throws BackendlessException;
+  List<String> create( List<E> objects ) throws BackendlessException;
 
-  void create( List<E> objects, AsyncCallback<Void> responder ) throws BackendlessException;
+  void create( List<E> objects, AsyncCallback<List<String>> responder ) throws BackendlessException;
 
   E save( E entity ) throws BackendlessException;
 

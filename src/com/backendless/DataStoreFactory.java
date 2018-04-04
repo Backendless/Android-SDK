@@ -39,13 +39,13 @@ class DataStoreFactory
     {
 
       @Override
-      public void create( List<E> objects ) throws BackendlessException
+      public List<String> create( List<E> objects ) throws BackendlessException
       {
-        Backendless.Persistence.create( objects );
+        return Backendless.Persistence.create( objects );
       }
 
       @Override
-      public void create( List<E> objects, AsyncCallback<Void> responder ) throws BackendlessException
+      public void create( List<E> objects, AsyncCallback<List<String>> responder ) throws BackendlessException
       {
         Backendless.Persistence.create( objects, responder );
       }
