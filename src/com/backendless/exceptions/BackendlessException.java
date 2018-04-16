@@ -95,7 +95,9 @@ public class BackendlessException extends RuntimeException
   @Override
   public String getMessage()
   {
-    return backendlessFault.getMessage();
+
+    final String message = backendlessFault.getMessage();
+    return message == null ? backendlessFault.getDetail() : message;
   }
 
   public String getDetail()
