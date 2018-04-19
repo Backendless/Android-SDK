@@ -83,7 +83,10 @@ public final class Messaging
     String id = null;
     if( Backendless.isAndroid() )
     {
-      id = Build.SERIAL;
+      if( android.os.Build.VERSION.SDK_INT < 26 )
+        id = Build.SERIAL;
+      else
+        id = Build.getSerial();
       OS_VERSION = String.valueOf( Build.VERSION.SDK_INT );
       OS = "ANDROID";
     }
