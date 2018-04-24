@@ -44,6 +44,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -57,9 +58,7 @@ public final class Persistence
   public final static String DEFAULT_CREATED_FIELD = "created";
   public final static String DEFAULT_UPDATED_FIELD = "updated";
   public final static String DEFAULT_META_FIELD = "__meta";
-
   public final static String REST_CLASS_FIELD = "___class";
-
   public final static String PARCELABLE_CREATOR_FIELD_NAME = "CREATOR";
 
   public final static String LOAD_ALL_RELATIONS = "*";
@@ -84,31 +83,33 @@ public final class Persistence
     weborb.types.Types.addClientClassMapping( tableName, clazz );
   }
 
-  public <E> void create( List<E> objects ) throws BackendlessException
+  public <E> List<String> create( List<E> objects ) throws BackendlessException
   {
-     create( objects, null, false );
+     return create( objects, null, false );
   }
 
-  public <E> void create( List<E> objects, final AsyncCallback<Void> responder )
+  public <E> void create( List<E> objects, final AsyncCallback<List<String>> responder )
   {
     create( objects, responder, true );
   }
 
-  private <E> void create( List<E> objects, final AsyncCallback<Void> responder, boolean async )
+  private <E> List<String> create( List<E> objects, final AsyncCallback<List<String>> responder, boolean async )
   {
     if( objects == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_BULK );
 
     if( objects.isEmpty() )
-      return;
+      return new ArrayList<>();
     
     String tableName =  BackendlessSerializer.getSimpleName( objects.get( 0 ).getClass() );
     Object[] args = new Object[] { tableName , objects };
 
     if( async )
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args, responder );
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args, responder, ResponderHelper.getCollectionAdaptingResponder( String.class ) );
     else
-      Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args );
+      return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args, ResponderHelper.getCollectionAdaptingResponder( String.class ) );
+
+    return null;
   }
 
   public <E> E save( final E entity ) throws BackendlessException

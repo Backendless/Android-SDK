@@ -60,31 +60,33 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public void create( List<Map> objects ) throws BackendlessException
+  public List<String> create( List<Map> objects ) throws BackendlessException
   {
-    create( objects, null, false );
+    return create( objects, null, false );
   }
 
   @Override
-  public void create( List<Map> objects, AsyncCallback<Void> responder )
+  public void create( List<Map> objects, AsyncCallback<List<String>> responder )
   {
     create( objects, responder, true );
   }
 
-  private void create( List<Map> objects, AsyncCallback<Void> responder, boolean async ) throws BackendlessException
+  private List<String> create( List<Map> objects, AsyncCallback<List<String>> responder, boolean async ) throws BackendlessException
   {
     if( objects == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_BULK );
 
     if( objects.isEmpty() )
-      return;
+      return new ArrayList<>();
 
     Object[] args = new Object[]{tableName, objects};
 
     if( async )
-      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args, responder );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args, responder, ResponderHelper.getCollectionAdaptingResponder( String.class ) );
     else
-      Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args );
+      return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args, ResponderHelper.getCollectionAdaptingResponder( String.class ) );
+
+    return null;
   }
 
   @Override

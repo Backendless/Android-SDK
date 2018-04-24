@@ -228,7 +228,7 @@ dependencies {
     compile( group: "com.backendless", name: "commons", version: "4.4.7", changing: true) {
         exclude group: 'com.fasterxml.jackson.core'
     }
-    compile( group: "weborb", name: "weborbclient", version: "5.1.0.210", changing: true)
+    compile( group: "weborb", name: "weborbclient", version: "5.1.0.212", changing: true)
 
     compileOnly ('io.socket:socket.io-client:1.0.0') {
 //       excluding org.json which is provided by Android
