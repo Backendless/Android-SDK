@@ -11,6 +11,8 @@ public interface RTService
 
   void addConnectErrorListener( Fault fault );
 
+  void removeConnectionListeners();
+
   void addDisconnectListener( Result<String> callback );
 
   <T extends Result> void removeListener( T callback );

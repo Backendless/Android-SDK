@@ -79,6 +79,12 @@ public class RTServiceImpl implements RTService
   }
 
   @Override
+  public void removeConnectionListeners()
+  {
+    connectListeners.clear();
+  }
+
+  @Override
   public void addDisconnectListener( Result<String> callback )
   {
     disconnectListeners.add( callback );
