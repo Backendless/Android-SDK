@@ -2,6 +2,7 @@ package com.backendless.rt;
 
 import com.backendless.Backendless;
 import com.backendless.HeadersManager;
+import com.backendless.Messaging;
 import com.backendless.async.callback.Result;
 import com.backendless.utils.timeout.TimeOutManager;
 import com.backendless.utils.timeout.TimeOutManagerImpl;
@@ -61,7 +62,9 @@ abstract class SocketIOConnectionManager
 
       opts.path = "/" + Backendless.getApplicationId();
 
-      opts.query = "apiKey=" + Backendless.getSecretKey() + "&binary=true";
+      opts.query = "apiKey=" + Backendless.getSecretKey()
+              + "&clientId=" + Backendless.Messaging.getDeviceId()
+              + "&binary=true";
 
       final String host = rtLookupService.lookup( ) + opts.path;
       logger.info( "Looked up for server " + host );
@@ -69,6 +72,8 @@ abstract class SocketIOConnectionManager
       String userToken = HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY );
       if( userToken != null && !userToken.isEmpty() )
         opts.query += "&userToken=" + userToken;
+
+      logger.info( "try to connect with to host with query: " + opts.query );
 
       try
       {

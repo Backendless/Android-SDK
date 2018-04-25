@@ -63,7 +63,14 @@ import java.util.UUID;
 
 public final class Messaging
 {
+  /**
+   * Access will be removed in later releases
+   *
+   * @deprecated use {@link #getDeviceId()} instead.
+   */
+  @Deprecated
   public static String DEVICE_ID;
+
   private final static String MESSAGING_MANAGER_SERVER_ALIAS = "com.backendless.services.messaging.MessagingService";
   private final static String DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS = "com.backendless.services.messaging.DeviceRegistrationService";
   private final static String EMAIL_MANAGER_SERVER_ALIAS = "com.backendless.services.mail.CustomersEmailService";
@@ -761,5 +768,10 @@ public final class Messaging
       if( responder != null )
         responder.handleFault( new BackendlessFault( e ) );
     }
+  }
+
+  public String getDeviceId()
+  {
+    return DEVICE_ID;
   }
 }
