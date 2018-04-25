@@ -111,7 +111,7 @@ class RTClientSocketIO implements RTClient
 
     if( error != null )
     {
-      logger.info( "got error " + error.toString() );
+      logger.severe( "got error " + error.toString() );
       final BackendlessFault fault = new BackendlessFault( error.toString() );
       ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<>( fault, request.getCallback() ) );
       return request;
