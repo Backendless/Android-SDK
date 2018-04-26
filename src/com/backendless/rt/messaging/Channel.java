@@ -11,7 +11,7 @@ public interface Channel extends RTListener
 
   void leave();
 
-  boolean isConnected();
+  boolean isJoined();
 
   void addConnectListener( AsyncCallback<Void> callback );
 

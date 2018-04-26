@@ -95,7 +95,7 @@ public class ChannelImpl extends RTListenerImpl implements Channel
   }
 
   @Override
-  public boolean isConnected()
+  public boolean isJoined()
   {
     return connectListener.isConnected();
   }
@@ -257,7 +257,7 @@ public class ChannelImpl extends RTListenerImpl implements Channel
     while( iterator.hasNext() )
     {
       MessagingSubscription messagingSubscription = iterator.next();
-      if( isConnected() )
+      if( isJoined() )
       {
         rtClient.unsubscribe( messagingSubscription.getId() );
       }
@@ -356,7 +356,7 @@ public class ChannelImpl extends RTListenerImpl implements Channel
 
     messagingCallbacks.add( subscription );
 
-    if( isConnected() )
+    if( isJoined() )
       rtClient.subscribe( subscription );
   }
 
@@ -366,7 +366,7 @@ public class ChannelImpl extends RTListenerImpl implements Channel
 
     messagingCallbacks.add( subscription );
 
-    if( isConnected() )
+    if( isJoined() )
       rtClient.subscribe( subscription );
   }
 
@@ -375,7 +375,7 @@ public class ChannelImpl extends RTListenerImpl implements Channel
     //we can do it because it is CopyOnWriteArrayList so we iterate through the copy
     messagingCallbacks.remove( messagingSubscription );
 
-    if( isConnected() )
+    if( isJoined() )
     {
       rtClient.unsubscribe( messagingSubscription.getId() );
     }
