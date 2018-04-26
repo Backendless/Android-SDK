@@ -80,16 +80,16 @@ public class ChannelImpl extends RTListenerImpl implements Channel
         return MessagingSubscription.connect( channel, callback );
       }
     };
-    connect();
+    join();
   }
 
-  public void connect( )
+  public void join( )
   {
     connectListener.connect();
   }
 
   @Override
-  public void disconnect()
+  public void leave()
   {
     connectListener.disconnect();
   }

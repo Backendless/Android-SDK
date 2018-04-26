@@ -7,9 +7,9 @@ import com.backendless.rt.users.UserStatusResponse;
 
 public interface Channel extends RTListener
 {
-  void connect( );
+  void join( );
 
-  void disconnect();
+  void leave();
 
   boolean isConnected();
 
