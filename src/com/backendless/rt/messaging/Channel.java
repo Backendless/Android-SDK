@@ -5,6 +5,8 @@ import com.backendless.rt.command.Command;
 import com.backendless.rt.RTListener;
 import com.backendless.rt.users.UserStatusResponse;
 
+import java.util.Map;
+
 public interface Channel extends RTListener
 {
   void join( );

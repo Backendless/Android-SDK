@@ -12,9 +12,11 @@ import com.backendless.rt.RTListenerImpl;
 import com.backendless.rt.SubscriptionNames;
 import com.backendless.rt.command.Command;
 import com.backendless.rt.command.CommandListener;
+import com.backendless.rt.messaging.adapt.MessageAdapter;
 import com.backendless.rt.users.UserStatusResponse;
 import com.backendless.utils.WeborbSerializationHelper;
 import weborb.exceptions.AdaptingException;
+import weborb.reader.StringType;
 import weborb.types.IAdaptingType;
 
 import java.util.Iterator;
@@ -148,8 +150,7 @@ public class ChannelImpl extends RTListenerImpl implements Channel
         try
         {
           IAdaptingType message = WeborbSerializationHelper.asAdaptingType( response, "message" );
-
-          T adaptedResponse = (T) message.adapt( clazz );
+          T adaptedResponse = (T) MessageAdapter.adapt( message, clazz );
           callback.handleResponse( adaptedResponse );
         }
         catch( AdaptingException e )
@@ -352,7 +353,12 @@ public class ChannelImpl extends RTListenerImpl implements Channel
 
   private void addMessageListener( String selector, RTCallback rtCallback )
   {
-    MessagingSubscription subscription = selector == null ? MessagingSubscription.subscribe( channel, rtCallback ) : MessagingSubscription.subscribe( channel, selector, rtCallback );
+    MessagingSubscription subscription;
+
+    if( selector == null )
+      subscription = MessagingSubscription.subscribe( channel, rtCallback );
+    else
+      subscription = MessagingSubscription.subscribe( channel, selector, rtCallback );
 
     messagingCallbacks.add( subscription );
 

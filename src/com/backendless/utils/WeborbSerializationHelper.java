@@ -21,7 +21,7 @@ public class WeborbSerializationHelper
     }
     catch( Exception e )
     {
-      logger.severe( "weborb serialization error " + e.toString() );
+      logger.severe( "Unable to deserialize object. Error " + e.toString() );
       throw new RuntimeException( e );
     }
   }
@@ -40,7 +40,7 @@ public class WeborbSerializationHelper
     }
     catch( Exception e )
     {
-      logger.severe( "weborb deserialization error " + e.toString() );
+      logger.severe( "Unable to deserialize object. Error " + e.toString() );
       throw new RuntimeException( e );
     }
   }
@@ -65,7 +65,7 @@ public class WeborbSerializationHelper
     }
     else
     {
-      throw new IllegalArgumentException( "object should be or contains AnonymousObject" );
+      throw new IllegalArgumentException( "Object must be of or contain the AnonymousObject type" );
     }
     return anonymousObject;
   }
@@ -79,7 +79,7 @@ public class WeborbSerializationHelper
     }
     catch( AdaptingException e )
     {
-      logger.severe( "get weborb string error " + e.getMessage() );
+      logger.severe( "Unable to adapt object to string " + e.getMessage() );
       throw new RuntimeException( e );
     }
   }

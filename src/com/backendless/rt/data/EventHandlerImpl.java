@@ -1,5 +1,7 @@
 package com.backendless.rt.data;
 
+import com.backendless.Backendless;
+import com.backendless.Persistence;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessSerializer;
@@ -76,14 +78,18 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   @Override
   public void addUpdateListener( AsyncCallback<T> callback )
   {
-    DataSubscription subscription = new DataSubscription( RTDataEvents.updated, tableName, createCallback( callback ) );
+    AsyncCallback<T> updateWithActiveRecordCallback = createActiveRecordCallback( callback );
+    RTCallback rtCallback = createCallback( updateWithActiveRecordCallback );
+    DataSubscription subscription = new DataSubscription( RTDataEvents.updated, tableName, rtCallback );
     addEventListener( subscription );
   }
 
   @Override
   public void addUpdateListener( String whereClause, AsyncCallback<T> callback )
   {
-    DataSubscription subscription = new DataSubscription( RTDataEvents.updated, tableName, createCallback( callback ) )
+    AsyncCallback<T> updateWithActiveRecordCallback = createActiveRecordCallback( callback );
+    RTCallback rtCallback = createCallback( updateWithActiveRecordCallback );
+    DataSubscription subscription = new DataSubscription( RTDataEvents.updated, tableName, rtCallback )
             .withWhere( whereClause );
 
     addEventListener( subscription );
@@ -306,6 +312,35 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
 
     return dataSubscription.getSubscriptionName() == SubscriptionNames.OBJECTS_CHANGES
             && dataSubscription.getEvent() == event;
+  }
+
+  private AsyncCallback<T> createActiveRecordCallback( final AsyncCallback<T> originalCallback )
+  {
+    return new AsyncCallback<T>()
+    {
+      @Override
+      public void handleResponse( T updatedEntityFromServer )
+      {
+        String objectId = Persistence.getEntityId( updatedEntityFromServer );
+        /*Object activeRecord = ActiveRecordRegistry.get( objectId );
+
+        if( activeRecord == null )
+        {
+          originalCallback.handleResponse( updatedEntityFromServer );
+        }
+        else
+        {
+
+        }
+        */
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+
+      }
+    };
   }
 
   private RTCallback createCallback( final AsyncCallback<T> callback )
