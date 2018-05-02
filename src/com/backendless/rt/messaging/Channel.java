@@ -13,9 +13,9 @@ public interface Channel extends RTListener
 
   boolean isJoined();
 
-  void addConnectListener( AsyncCallback<Void> callback );
+  void addJoinListener( AsyncCallback<Void> callback );
 
-  void removeConnectListeners( AsyncCallback<Void> callback );
+  void removeJoinListeners( AsyncCallback<Void> callback );
 
   //----------------------------------
 
