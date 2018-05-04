@@ -11,6 +11,7 @@ import weborb.reader.AnonymousObject;
 import weborb.types.IAdaptingType;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
@@ -274,7 +275,9 @@ class RTClientSocketIO implements RTClient
 
   private Emitter subOff( String subscriptionId )
   {
-    final Emitter emitter = connectionManager.get().emit( "SUB_OFF", serialize( subscriptionId ) );
+    Map<String, String> request = new HashMap<>(  );
+    request.put( "id", subscriptionId );
+    final Emitter emitter = connectionManager.get().emit( "SUB_OFF", serialize( request ) );
     logger.info( "subOff called" );
     return emitter;
   }
