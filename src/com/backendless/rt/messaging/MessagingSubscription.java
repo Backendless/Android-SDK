@@ -15,7 +15,7 @@ public class MessagingSubscription extends RTSubscription
   public static MessagingSubscription connect( String channel, RTCallback callback )
   {
     if(channel == null || channel.isEmpty())
-      throw new IllegalArgumentException( "channel can't be or empty" );
+      throw createChannelNullException();
 
     final MessagingSubscription messagingSubscription = new MessagingSubscription( SubscriptionNames.PUB_SUB_CONNECT, callback );
     messagingSubscription.putOption( "channel", channel );
@@ -23,10 +23,15 @@ public class MessagingSubscription extends RTSubscription
     return messagingSubscription;
   }
 
+  private static IllegalArgumentException createChannelNullException()
+  {
+    return new IllegalArgumentException( "channel can't be null or empty" );
+  }
+
   public static MessagingSubscription subscribe( String channel, RTCallback callback )
   {
     if(channel == null || channel.isEmpty())
-      throw new IllegalArgumentException( "channel can't be or empty" );
+      throw createChannelNullException();
 
     final MessagingSubscription messagingSubscription = new MessagingSubscription( SubscriptionNames.PUB_SUB_MESSAGES, callback );
     messagingSubscription.putOption( "channel", channel );
@@ -44,7 +49,7 @@ public class MessagingSubscription extends RTSubscription
   public static MessagingSubscription command( String channel,  RTCallback callback )
   {
     if(channel == null || channel.isEmpty())
-      throw new IllegalArgumentException( "channel can't be or empty" );
+      throw createChannelNullException();
 
     final MessagingSubscription messagingSubscription = new MessagingSubscription( SubscriptionNames.PUB_SUB_COMMANDS, callback );
     messagingSubscription.putOption( "channel", channel );
@@ -55,7 +60,7 @@ public class MessagingSubscription extends RTSubscription
   public static MessagingSubscription userStatus( String channel,  RTCallback callback )
   {
     if(channel == null || channel.isEmpty())
-      throw new IllegalArgumentException( "channel can't be or empty" );
+      throw createChannelNullException();
 
     final MessagingSubscription messagingSubscription = new MessagingSubscription( SubscriptionNames.PUB_SUB_USERS, callback );
     messagingSubscription.putOption( "channel", channel );
