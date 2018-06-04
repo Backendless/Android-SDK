@@ -118,6 +118,7 @@ public class BackendlessException extends RuntimeException
     sb.append( "{ code: '" ).append( getCode() ).append( '\'' );
     sb.append( ", message: '" ).append( getMessage() ).append( '\'' );
     sb.append( ", extendedData: '").append( getExtendedData() ).append( '\'' );
+    sb.append( ", detail: '" ).append( getDetail() ).append( '\'' );
     sb.append( " }" );
     return sb.toString();
   }

@@ -5,7 +5,7 @@ apply plugin: 'signing'
 
 
 group 'com.backendless'
-version '4.5.0-snapshot'
+version '4.5.1-real-time-snapshot'
 archivesBaseName='backendless'
 
 
@@ -230,5 +230,10 @@ dependencies {
     }
     compile( group: "weborb", name: "weborbclient", version: "5.1.0.212", changing: true)
 
+    compileOnly ('io.socket:socket.io-client:1.0.0') {
+//       excluding org.json which is provided by Android
+      exclude group: 'org.json', module: 'json'
+    }
 }
+
 apply plugin: 'java'

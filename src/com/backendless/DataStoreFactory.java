@@ -23,6 +23,8 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.persistence.DataQueryBuilder;
 import com.backendless.persistence.LoadRelationsQueryBuilder;
+import com.backendless.rt.data.EventHandler;
+import com.backendless.rt.data.EventHandlerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,11 +34,14 @@ import java.util.Map;
 class DataStoreFactory
 {
   private static final List<String> emptyRelations = new ArrayList<String>();
+  private final static EventHandlerFactory eventHandlerFactory = new EventHandlerFactory();
 
   protected static <E> IDataStore<E> createDataStore( final Class<E> entityClass )
   {
+
     return new IDataStore<E>()
     {
+      private EventHandler<E> eventHandler = eventHandlerFactory.of( entityClass );
 
       @Override
       public List<String> create( List<E> objects ) throws BackendlessException
@@ -537,6 +542,12 @@ class DataStoreFactory
 
         Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
         Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args, callback );
+      }
+
+      @Override
+      public EventHandler<E> rt()
+      {
+        return eventHandler;
       }
     };
   }

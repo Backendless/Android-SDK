@@ -20,6 +20,10 @@ package com.backendless.messaging;
 
 import weborb.v3types.GUID;
 
+/**
+ * The class is deprecated, it is left to maintain backward compatibility. The class will be deleted in a future release
+ */
+@Deprecated
 public class SubscriptionOptions
 {
   private String subscriberId;

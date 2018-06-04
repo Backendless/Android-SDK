@@ -22,6 +22,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.persistence.DataQueryBuilder;
 import com.backendless.persistence.LoadRelationsQueryBuilder;
+import com.backendless.rt.data.EventHandler;
 
 import java.util.Collection;
 import java.util.List;
@@ -169,4 +170,6 @@ public interface IDataStore<E>
   int deleteRelation( E parent, String relationColumnName, String whereClause );
 
   void deleteRelation( E parent, String relationColumnName, String whereClause, AsyncCallback<Integer> callback );
+
+  EventHandler<E> rt();
 }
