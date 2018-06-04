@@ -776,9 +776,4 @@ public final class Messaging
         responder.handleFault( new BackendlessFault( e ) );
     }
   }
-
-  public String getDeviceId()
-  {
-    return DEVICE_ID;
-  }
 }
