@@ -37,6 +37,7 @@ package com.backendless;/*
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.provider.Settings;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
@@ -63,14 +64,6 @@ import java.util.UUID;
 
 public final class Messaging
 {
-  /**
-   * Access will be removed in later releases
-   *
-   * @deprecated use {@link #getDeviceId()} instead.
-   */
-  @Deprecated
-  public static String DEVICE_ID;
-
   private final static String MESSAGING_MANAGER_SERVER_ALIAS = "com.backendless.services.messaging.MessagingService";
   private final static String DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS = "com.backendless.services.messaging.DeviceRegistrationService";
   private final static String EMAIL_MANAGER_SERVER_ALIAS = "com.backendless.services.mail.CustomersEmailService";
@@ -90,13 +83,8 @@ public final class Messaging
 
   static
   {
-    String id = null;
     if( Backendless.isAndroid() )
     {
-      if( android.os.Build.VERSION.SDK_INT < 26 )
-        id = Build.SERIAL;
-      else
-        id = Build.getSerial();
       OS_VERSION = String.valueOf( Build.VERSION.SDK_INT );
       OS = "ANDROID";
     }
@@ -105,8 +93,22 @@ public final class Messaging
       OS_VERSION = System.getProperty( "os.version" );
       OS = System.getProperty( "os.name" );
     }
+  }
 
-    if( id == null || id.equals( "" ) )
+  static class DeviceIdHolder
+  {
+    static String id;
+
+    static void init( Context context )
+    {
+      if( android.os.Build.VERSION.SDK_INT < 27 )
+        id = Build.SERIAL;
+      else
+        id = Settings.Secure.getString( context.getContentResolver(), Settings.Secure.ANDROID_ID );
+    }
+
+    static void init()
+    {
       try
       {
         id = UUID.randomUUID().toString();
@@ -121,9 +123,14 @@ public final class Messaging
         builder.append( System.getProperty( "java.home" ) );
         id = UUID.nameUUIDFromBytes( builder.toString().getBytes() ).toString();
       }
-
-    DEVICE_ID = id;
+    }
   }
+
+  public static String getDeviceId()
+  {
+    return DeviceIdHolder.id;
+  }
+
 
   static Messaging getInstance()
   {
@@ -224,7 +231,7 @@ public final class Messaging
       throw new IllegalArgumentException( ExceptionMessage.NULL_DEVICE_TOKEN );
 
     DeviceRegistration deviceRegistration = new DeviceRegistration();
-    deviceRegistration.setDeviceId( DEVICE_ID );
+    deviceRegistration.setDeviceId( getDeviceId() );
     deviceRegistration.setOs( OS );
     deviceRegistration.setOsVersion( OS_VERSION );
     deviceRegistration.setDeviceToken( deviceToken );
@@ -244,7 +251,7 @@ public final class Messaging
         throw new IllegalArgumentException( ExceptionMessage.NULL_DEVICE_TOKEN );
 
       DeviceRegistration deviceRegistration = new DeviceRegistration();
-      deviceRegistration.setDeviceId( DEVICE_ID );
+      deviceRegistration.setDeviceId( getDeviceId() );
       deviceRegistration.setOs( OS );
       deviceRegistration.setOsVersion( OS_VERSION );
       deviceRegistration.setDeviceToken( deviceToken );
@@ -325,12 +332,12 @@ public final class Messaging
 
   public boolean unregisterDeviceOnServer() throws BackendlessException
   {
-    return (Boolean) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { DEVICE_ID } );
+    return (Boolean) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { getDeviceId() } );
   }
 
   public void unregisterDeviceOnServer( final AsyncCallback<Boolean> responder )
   {
-    Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { DEVICE_ID }, responder );
+    Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { getDeviceId() }, responder );
   }
 
   public DeviceRegistration getDeviceRegistration() throws BackendlessException
@@ -340,7 +347,7 @@ public final class Messaging
 
   public DeviceRegistration getRegistrations() throws BackendlessException
   {
-    return (DeviceRegistration) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "getDeviceRegistrationByDeviceId", new Object[] { DEVICE_ID } );
+    return (DeviceRegistration) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "getDeviceRegistrationByDeviceId", new Object[] { getDeviceId() } );
   }
 
   public void getDeviceRegistration( AsyncCallback<DeviceRegistration> responder )
@@ -350,7 +357,7 @@ public final class Messaging
 
   public void getRegistrations( AsyncCallback<DeviceRegistration> responder )
   {
-    Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "getDeviceRegistrationByDeviceId", new Object[] { DEVICE_ID }, responder );
+    Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "getDeviceRegistrationByDeviceId", new Object[] { getDeviceId() }, responder );
   }
 
   /**
