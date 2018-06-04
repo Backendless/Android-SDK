@@ -172,6 +172,11 @@ public final class Backendless
       Context appContext = ( (Context) context ).getApplicationContext();
       UserTokenStorageFactory.instance().init( appContext );
       UserIdStorageFactory.instance().init( appContext );
+      com.backendless.Messaging.DeviceIdHolder.init( appContext );
+    }
+    else
+    {
+      com.backendless.Messaging.DeviceIdHolder.init( );
     }
 
     if( isCodeRunner() )
