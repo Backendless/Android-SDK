@@ -20,7 +20,7 @@ public class RTClientWithoutSocketIO implements RTClient
   @Override
   public void userLoggedIn( String userToken )
   {
-    throw new NoSocketIOException();
+    //ignore
   }
 
   @Override
