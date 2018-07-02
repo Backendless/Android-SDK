@@ -23,8 +23,6 @@ import com.backendless.servercode.InvocationContext;
 class CodeRunnerUserIdStorage implements IStorage<String>
 {
   private static final CodeRunnerUserIdStorage instance = new CodeRunnerUserIdStorage();
-  private String userToken;
-
 
   public static CodeRunnerUserIdStorage instance()
   {

@@ -28,7 +28,13 @@ import java.util.Map;
  */
 public class InvocationContext extends AbstractContext
 {
-  private static ThreadLocal<InvocationContext> threadLocal = new InheritableThreadLocal<>();
+  private static ThreadLocal<InvocationContext> threadLocal = new InheritableThreadLocal<InvocationContext>(){
+    @Override
+    protected InvocationContext initialValue()
+    {
+      return new InvocationContext( );
+    }
+  };
 
   private static InvocationContext getCurrentContext()
   {
@@ -45,6 +51,8 @@ public class InvocationContext extends AbstractContext
     this.deviceType = DeviceType.valueOf( deviceType );
     this.httpHeaders = httpHeaders;
   }
+
+  private InvocationContext( ) {}
 
   public static String asString()
   {

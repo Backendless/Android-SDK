@@ -26,7 +26,7 @@ public class RTClientWithoutSocketIO implements RTClient
   @Override
   public void userLoggedOut()
   {
-    throw new NoSocketIOException();
+    //ignore
   }
 
   @Override
