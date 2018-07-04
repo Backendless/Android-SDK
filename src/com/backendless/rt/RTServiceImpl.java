@@ -126,14 +126,7 @@ public class RTServiceImpl implements RTService
 
   private <T extends Result> void removeEventListeners( T callback, CopyOnWriteArrayList<T> listeners )
   {
-    for( T listener : listeners )
-    {
-      if( listener == callback )
-      {
-        //we can do it because it is CopyOnWriteArrayList so we iterate through the copy
-        listeners.remove( callback );
-      }
-    }
+    listeners.remove( callback );
   }
 
   @SuppressWarnings( "unchecked" )
