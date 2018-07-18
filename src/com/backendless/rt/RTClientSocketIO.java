@@ -197,7 +197,7 @@ class RTClientSocketIO implements RTClient
     }
     else
     {
-      methodsToSend.addFirst( methodRequest );
+      methodsToSend.addLast( methodRequest );
     }
 
   }
