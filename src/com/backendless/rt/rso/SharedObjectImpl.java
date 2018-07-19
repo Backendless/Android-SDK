@@ -146,7 +146,7 @@ public class SharedObjectImpl implements SharedObject
   @Override
   public void removeConnectListener( AsyncCallback<Void> callback )
   {
-    connectListener.removeConnectListeners( callback );
+    connectListener.removeConnectListener( callback );
   }
 
   @Override
