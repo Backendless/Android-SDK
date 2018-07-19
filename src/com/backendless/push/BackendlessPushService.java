@@ -107,6 +107,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
 
   public boolean onMessage( Context context, Intent intent )
   {
+    Log.i( TAG, "A silent notification has been received by Backendless Push Service. The notification has not been handled since it requires a custom push service class which extends from com.backendless.push.BackendlessPushService. The notification payload can be found within intent extras: intent.getStringExtra(PublishOptions.<CONSTANT_VALUE>)." );
     return true;
   }
 

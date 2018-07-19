@@ -270,7 +270,7 @@ public class PushTemplateHelper
     if( android.os.Build.VERSION.SDK_INT < 26 )
       return;
 
-      NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
+    NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
     List<NotificationChannel> notificationChannels = notificationManager.getNotificationChannels();
     for (NotificationChannel notifChann : notificationChannels)
       notificationManager.deleteNotificationChannel( notifChann.getId() );
