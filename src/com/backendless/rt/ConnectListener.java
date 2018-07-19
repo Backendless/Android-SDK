@@ -77,7 +77,7 @@ public abstract class ConnectListener<T extends RTSubscription>
     connectedCallbacks.add( callback );
   }
 
-  public void removeConnectListeners( AsyncCallback<Void> callback )
+  public void removeConnectListener( AsyncCallback<Void> callback )
   {
     connectedCallbacks.remove( callback );
   }

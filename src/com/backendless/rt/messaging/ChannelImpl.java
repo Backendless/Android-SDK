@@ -107,9 +107,9 @@ public class ChannelImpl extends RTListenerImpl implements Channel
   }
 
   @Override
-  public void removeJoinListeners( AsyncCallback<Void> callback )
+  public void removeJoinListener( AsyncCallback<Void> callback )
   {
-     connectListener.removeConnectListeners( callback );
+     connectListener.removeConnectListener( callback );
   }
 
   //---messaging
