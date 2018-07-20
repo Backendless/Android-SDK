@@ -9,9 +9,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
 
-/**
- * Created by dzidzoiev on 11/8/15.
- */
+
 class AndroidBackendlessPrefs extends BackendlessPrefs
 {
   public static final String PREFS_NAME = "BackendlessPrefs";
@@ -185,6 +183,17 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
     return sharedPreferences.getString( Type.PUSH_TEMPLATES.name64(), null );
   }
 
+  int getNotificationIdGeneratorInitValue()
+  {
+    return sharedPreferences.getInt( Type.NOTIFICATION_ID_GENERATOR.name64(), 0 );
+  }
+
+  void saveNotificationIdGeneratorState( int value )
+  {
+    SharedPreferences.Editor editor = sharedPreferences.edit();
+    editor.putInt( Type.NOTIFICATION_ID_GENERATOR.name64(), value );
+    editor.commit();
+  }
 
   enum Type
   {
@@ -192,7 +201,8 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
     SECRET_KEY,
     URL_KEY,
     HEADERS,
-    PUSH_TEMPLATES;
+    PUSH_TEMPLATES,
+    NOTIFICATION_ID_GENERATOR;
 
     String name64()
     {

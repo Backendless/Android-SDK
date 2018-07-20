@@ -65,7 +65,7 @@ public class PushTemplateHelper
     }
   }
 
-  static Notification convertFromTemplate( Context context, AndroidPushTemplate template, String messageText, int messageId, String contentTitle, String summarySubText )
+  static Notification convertFromTemplate( Context context, AndroidPushTemplate template, String messageText, String messageId, String contentTitle, String summarySubText, int notificationId )
   {
     ButtonTemplate buttonTemplate = template.getButtonTemplate();
 
@@ -221,12 +221,13 @@ public class PushTemplateHelper
     notificationIntent.putExtra( PublishOptions.TEMPLATE_NAME, template.getName() );
     notificationIntent.putExtra( PublishOptions.MESSAGE_TAG, messageText );
     notificationIntent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
-    PendingIntent contentIntent = PendingIntent.getActivity( context, messageId * 3, notificationIntent, 0 );
+
+    PendingIntent contentIntent = PendingIntent.getActivity( context, notificationId * 3, notificationIntent, 0 );
     notificationBuilder.setContentIntent( contentIntent );
 
     if ( buttonTemplate != null && buttonTemplate.getActions() != null)
     {
-      List<NotificationCompat.Action> actions = createActions( context, buttonTemplate.getActions(), template.getName(), messageId, messageText );
+      List<NotificationCompat.Action> actions = createActions( context, buttonTemplate.getActions(), template.getName(), messageId, messageText, notificationId );
       for( NotificationCompat.Action action : actions )
         notificationBuilder.addAction( action );
     }
@@ -234,7 +235,7 @@ public class PushTemplateHelper
     return notificationBuilder.build();
   }
 
-  static private List<NotificationCompat.Action> createActions( Context context, Action[] actions, String templateName, int messageId, String messageText )
+  static private List<NotificationCompat.Action> createActions( Context context, Action[] actions, String templateName, String messageId, String messageText, int notificationId )
   {
     List<NotificationCompat.Action> notifActions = new ArrayList<>();
 
@@ -250,7 +251,7 @@ public class PushTemplateHelper
 
       // user should use messageId and tag(templateName) to cancel notification.
 
-      PendingIntent pendingIntent = PendingIntent.getActivity( context, messageId * 3 + i++, actionIntent, PendingIntent.FLAG_UPDATE_CURRENT );
+      PendingIntent pendingIntent = PendingIntent.getActivity( context, notificationId * 3 + i++, actionIntent, PendingIntent.FLAG_UPDATE_CURRENT );
 
       NotificationCompat.Action.Builder actionBuilder = new NotificationCompat.Action.Builder( 0, a.getTitle(), pendingIntent );
 
@@ -350,7 +351,7 @@ public class PushTemplateHelper
     return notificationChannel;
   }
 
-  static void showNotification( final Context context, final Notification notification, final String tag, final int messageId )
+  static void showNotification( final Context context, final Notification notification, final String tag, final int notificationId )
   {
     final NotificationManagerCompat notificationManager = NotificationManagerCompat.from( context.getApplicationContext() );
     Handler handler = new Handler( Looper.getMainLooper() );
@@ -359,7 +360,7 @@ public class PushTemplateHelper
       @Override
       public void run()
       {
-        notificationManager.notify( tag, messageId, notification );
+        notificationManager.notify( tag, notificationId, notification );
       }
     } );
   }

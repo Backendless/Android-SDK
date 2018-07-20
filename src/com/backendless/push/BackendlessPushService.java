@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * <p>Firstly you should inherit this class for your own needs. For example to handle push messages manually.
@@ -49,6 +50,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
   private static final int MAX_BACKOFF_MS = (int) TimeUnit.SECONDS.toMillis( 3600 );
   private static final String TOKEN = Long.toBinaryString( random.nextLong() );
   private static final String EXTRA_TOKEN = "token";
+  private static AtomicInteger notificationIdGenerator;
 
   private PushReceiverCallback callback;
 
@@ -84,11 +86,22 @@ public class BackendlessPushService extends JobIntentService implements PushRece
   public BackendlessPushService()
   {
     this.callback = this;
+    if( BackendlessPushService.notificationIdGenerator == null )
+      BackendlessPushService.notificationIdGenerator = new AtomicInteger( Backendless.getNotificationIdGeneratorInitValue() );
   }
 
   public BackendlessPushService( PushReceiverCallback callback )
   {
     this.callback = callback;
+    if( BackendlessPushService.notificationIdGenerator == null )
+      BackendlessPushService.notificationIdGenerator = new AtomicInteger( Backendless.getNotificationIdGeneratorInitValue() );
+  }
+
+  @Override
+  public void onDestroy()
+  {
+    super.onDestroy();
+    Backendless.saveNotificationIdGeneratorState( BackendlessPushService.notificationIdGenerator.get() );
   }
 
   @Override
@@ -148,10 +161,12 @@ public class BackendlessPushService extends JobIntentService implements PushRece
 
   private void handleMessage( final Context context, Intent intent )
   {
-    final int messageId = intent.getIntExtra( BackendlessBroadcastReceiver.EXTRA_MESSAGE_ID, 0 );
+    final String messageId = intent.getStringExtra( BackendlessBroadcastReceiver.EXTRA_MESSAGE_ID );
     final String message = intent.getStringExtra( PublishOptions.MESSAGE_TAG );
     final String contentTitle = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TITLE_TAG );
     final String summarySubText = intent.getStringExtra( PublishOptions.ANDROID_SUMMARY_SUBTEXT_TAG );
+
+    int notificationId = BackendlessPushService.notificationIdGenerator.getAndIncrement();
 
     try
     {
@@ -170,8 +185,8 @@ public class BackendlessPushService extends JobIntentService implements PushRece
             return;
           }
 
-          Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId, contentTitle, summarySubText );
-          PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), messageId );
+          Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId, contentTitle, summarySubText, notificationId );
+          PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), notificationId );
         }
         return;
       }
@@ -188,8 +203,8 @@ public class BackendlessPushService extends JobIntentService implements PushRece
         }
 
         androidPushTemplate.setName("ImmediateMessage");
-        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId, contentTitle, summarySubText );
-        PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), messageId );
+        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId, contentTitle, summarySubText, notificationId );
+        PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), notificationId );
         return;
       }
 
@@ -240,7 +255,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
           }
 
           NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
-          notificationManager.notify( intent.getIntExtra( BackendlessBroadcastReceiver.EXTRA_MESSAGE_ID, 0 ), notification );
+          notificationManager.notify( notificationId, notification );
         }
       }
     }
