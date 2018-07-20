@@ -49,7 +49,6 @@ import com.backendless.messaging.MessageStatus;
 import com.backendless.messaging.PublishOptions;
 import com.backendless.messaging.PublishStatusEnum;
 import com.backendless.messaging.PushBroadcastMask;
-import com.backendless.messaging.SubscriptionOptions;
 import com.backendless.push.GCMRegistrar;
 import com.backendless.rt.messaging.Channel;
 import com.backendless.rt.messaging.ChannelFactory;
@@ -58,6 +57,7 @@ import weborb.types.Types;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -139,7 +139,7 @@ public final class Messaging
 
   public void registerDevice( String GCMSenderID )
   {
-    registerDevice( GCMSenderID, "" );
+    registerDevice( GCMSenderID, (String) null );
   }
 
   public void registerDevice( String GCMSenderID, String channel )
@@ -149,12 +149,12 @@ public final class Messaging
 
   public void registerDevice( String GCMSenderID, AsyncCallback<Void> callback )
   {
-    registerDevice( GCMSenderID, "", callback );
+    registerDevice( GCMSenderID, (String) null, callback );
   }
 
   public void registerDevice( String GCMSenderID, String channel, AsyncCallback<Void> callback )
   {
-    registerDevice( GCMSenderID, (channel == null || channel.equals( "" )) ? null : Arrays.asList( channel ), null, callback );
+    registerDevice( GCMSenderID, Arrays.asList( channel ), null, callback );
   }
 
   public void registerDevice( String GCMSenderID, List<String> channels, Date expiration )
@@ -162,8 +162,7 @@ public final class Messaging
     registerDevice( GCMSenderID, channels, expiration, null );
   }
 
-  public void registerDevice( final String GCMSenderID, final List<String> channels, final Date expiration,
-                              final AsyncCallback<Void> callback )
+  public void registerDevice( final String GCMSenderID, final List<String> channels, final Date expiration, final AsyncCallback<Void> callback )
   {
     new AsyncTask<Void, Void, RuntimeException>()
     {
@@ -203,9 +202,12 @@ public final class Messaging
   private synchronized void registerDeviceGCMSync( Context context, String GCMSenderID, List<String> channels,
                                                    Date expiration ) throws BackendlessException
   {
-    if( channels != null )
-      for( String channel : channels )
-        checkChannelName( channel );
+    if( channels == null || channels.isEmpty() ||
+        (channels.size() == 1 && (channels.get( 0 ) == null || channels.get( 0 ).isEmpty())) )
+      channels = Arrays.asList( "default" );
+
+    for( String channel : channels )
+      checkChannelName( channel );
 
     if( expiration != null && expiration.before( Calendar.getInstance().getTime() ) )
       throw new IllegalArgumentException( ExceptionMessage.WRONG_EXPIRATION_DATE );
