@@ -126,7 +126,7 @@ public abstract class CommandListener<T extends RTSubscription, R extends Comman
     }
     else
     {
-      commandsToSend.addFirst( rtMethodRequest );
+      commandsToSend.addLast( rtMethodRequest );
     }
   }
 
