@@ -294,4 +294,17 @@ public final class Backendless
     Backendless.initApp( context, prefs.getApplicationId(), prefs.getSecretKey() );
     Backendless.setUrl( prefs.getUrl() );
   }
+
+  public static int getNotificationIdGeneratorInitValue()
+  {
+    if( !isAndroid )
+      return 0;
+
+    return ((AndroidBackendlessPrefs) prefs).getNotificationIdGeneratorInitValue();
+  }
+
+  public static void saveNotificationIdGeneratorState( int value )
+  {
+    ((AndroidBackendlessPrefs) prefs).saveNotificationIdGeneratorState( value );
+  }
 }
