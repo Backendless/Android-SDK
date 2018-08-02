@@ -41,12 +41,12 @@ public class BackendlessFile
     return fileURL;
   }
 
-  public void remove() throws BackendlessException
+  public int remove() throws BackendlessException
   {
-    Backendless.Files.remove( fileURL );
+    return Backendless.Files.remove( fileURL );
   }
 
-  public void remove( AsyncCallback<Void> responder )
+  public void remove( AsyncCallback<Integer> responder )
   {
     Backendless.Files.remove( fileURL, responder );
   }

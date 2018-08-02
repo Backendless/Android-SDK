@@ -67,13 +67,26 @@ public abstract class FilesExtender
     afterMoveToRepository( context, fileUrlLocation, result );
   }
 
+  @Deprecated
   public void beforeDeleteFileOrDirectory( RunnerContext context, String fileUrlLocation ) throws Exception
   {
   }
 
+  @Deprecated
   public void afterDeleteFileOrDirectory( RunnerContext context, String fileUrlLocation,
-                                          ExecutionResult result ) throws Exception
+                                          ExecutionResult<Integer> result ) throws Exception
   {
+  }
+
+  public void beforeDeleteFileOrDirectory( RunnerContext context, String fileUrlLocation, String pattern, boolean recursive ) throws Exception
+  {
+    this.beforeDeleteFileOrDirectory( context, fileUrlLocation );
+  }
+
+  public void afterDeleteFileOrDirectory( RunnerContext context, String fileUrlLocation, String pattern, boolean recursive,
+                                          ExecutionResult<Integer> result ) throws Exception
+  {
+    this.afterDeleteFileOrDirectory( context, fileUrlLocation, result );
   }
 
   public void beforeSaveFileFromByteArray( RunnerContext context, String fileUrlLocation, Boolean overwrite ) throws Exception
