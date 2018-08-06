@@ -124,11 +124,6 @@ public class PushTemplateHelper
 
         notificationBuilder.setVibrate( vibrate );
       }
-      
-      if ( buttonTemplate != null && buttonTemplate.getVisibility() != null )
-        notificationBuilder.setVisibility( buttonTemplate.getVisibility() );
-      else
-        notificationBuilder.setVisibility( NotificationCompat.VISIBILITY_PUBLIC );
     }
 
     if( template.getAttachmentUrl() != null )
@@ -213,7 +208,6 @@ public class PushTemplateHelper
             .setWhen( System.currentTimeMillis() )
             .setContentTitle( contentTitle != null ? contentTitle : template.getContentTitle() )
             .setSubText( summarySubText != null ? summarySubText : template.getSummarySubText() )
-            .setTicker( template.getTickerText() )
             .setContentText( messageText );
 
     Intent notificationIntent = context.getPackageManager().getLaunchIntentForPackage( context.getPackageName() );
@@ -337,16 +331,6 @@ public class PushTemplateHelper
       notificationChannel.enableVibration( true );
       notificationChannel.setVibrationPattern( vibrate );
     }
-
-    if ( buttonTemplate != null && buttonTemplate.getVisibility() != null )
-      notificationChannel.setLockscreenVisibility( buttonTemplate.getVisibility() );
-    else
-      notificationChannel.setLockscreenVisibility( NotificationCompat.VISIBILITY_PUBLIC );
-
-    if( buttonTemplate != null && buttonTemplate.getBypassDND() != null )
-      notificationChannel.setBypassDnd( buttonTemplate.getBypassDND() );
-    else
-      notificationChannel.setBypassDnd( false );
 
     return notificationChannel;
   }
