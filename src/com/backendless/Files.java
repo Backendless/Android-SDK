@@ -257,46 +257,42 @@ public final class Files
     }
   }
 
-  public void remove( String fileUrl ) throws BackendlessException
+  public int remove( String fileUrl ) throws BackendlessException
   {
-    if( fileUrl == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
-
-    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectory", new Object[] { fileUrl } );
+    return this.removeDirectory( fileUrl );
   }
 
-  public void removeDirectory( String directoryPath ) throws BackendlessException
+  public int removeDirectory( String directoryPath ) throws BackendlessException
+  {
+    return this.removeDirectory( directoryPath, "*", true );
+  }
+
+  public int removeDirectory( String directoryPath, String pattern, boolean recursive ) throws BackendlessException
   {
     if( directoryPath == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
 
-    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectory", new Object[] { directoryPath } );
+    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectory", new Object[] { directoryPath, pattern, recursive } );
   }
 
-  public void remove( String fileUrl, AsyncCallback<Void> responder )
+  public void remove( String fileUrl, AsyncCallback<Integer> responder )
   {
-    try
-    {
-      if( fileUrl == null )
-        throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
-
-      Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectory", new Object[] { fileUrl }, responder );
-    }
-    catch( Throwable e )
-    {
-      if( responder != null )
-        responder.handleFault( new BackendlessFault( e ) );
-    }
+    this.removeDirectory( fileUrl, responder );
   }
 
-  public void removeDirectory( String directoryPath, AsyncCallback<Void> responder )
+  public void removeDirectory( String directoryPath, AsyncCallback<Integer> responder )
+  {
+    this.removeDirectory( directoryPath, "*", true, responder );
+  }
+
+  public void removeDirectory( String directoryPath, String pattern, boolean recursive, AsyncCallback<Integer> responder )
   {
     try
     {
       if( directoryPath == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
 
-      Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectory", new Object[] { directoryPath }, responder );
+      Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectory", new Object[] { directoryPath, "*", true }, responder );
     }
     catch( Throwable e )
     {
