@@ -21,7 +21,6 @@ import android.util.Log;
 import com.backendless.Backendless;
 import com.backendless.messaging.Action;
 import com.backendless.messaging.AndroidPushTemplate;
-import com.backendless.messaging.ButtonTemplate;
 import com.backendless.messaging.PublishOptions;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,8 +66,6 @@ public class PushTemplateHelper
 
   static Notification convertFromTemplate( Context context, AndroidPushTemplate template, String messageText, String messageId, String contentTitle, String summarySubText, int notificationId )
   {
-    ButtonTemplate buttonTemplate = template.getButtonTemplate();
-
     context = context.getApplicationContext();
     // Notification channel ID is ignored for Android 7.1.1 (API level 25) and lower.
 
@@ -104,9 +101,9 @@ public class PushTemplateHelper
       if( notificationBuilder.getPriority() > NotificationCompat.PRIORITY_LOW )
       {
         Uri soundUri;
-        if( buttonTemplate != null && buttonTemplate.getSound() != null && !buttonTemplate.getSound().isEmpty() )
+        if( template.getSound() != null && !template.getSound().isEmpty() )
         {
-          int soundResource = context.getResources().getIdentifier( buttonTemplate.getSound(), "raw", context.getPackageName() );
+          int soundResource = context.getResources().getIdentifier( template.getSound(), "raw", context.getPackageName() );
           soundUri = Uri.parse( "android.resource://" + context.getPackageName() + "/" + soundResource );
         }
         else
@@ -115,11 +112,11 @@ public class PushTemplateHelper
         notificationBuilder.setSound( soundUri, AudioManager.STREAM_NOTIFICATION );
       }
 
-      if( buttonTemplate != null && buttonTemplate.getVibrate() != null && buttonTemplate.getVibrate().length > 0 && notificationBuilder.getPriority() > NotificationCompat.PRIORITY_LOW )
+      if( template.getVibrate() != null && template.getVibrate().length > 0 && notificationBuilder.getPriority() > NotificationCompat.PRIORITY_LOW )
       {
-        long[] vibrate = new long[ buttonTemplate.getVibrate().length ];
+        long[] vibrate = new long[ template.getVibrate().length ];
         int index = 0;
-        for( long l : buttonTemplate.getVibrate() )
+        for( long l : template.getVibrate() )
           vibrate[ index++ ] = l;
 
         notificationBuilder.setVibrate( vibrate );
@@ -219,9 +216,9 @@ public class PushTemplateHelper
     PendingIntent contentIntent = PendingIntent.getActivity( context, notificationId * 3, notificationIntent, 0 );
     notificationBuilder.setContentIntent( contentIntent );
 
-    if ( buttonTemplate != null && buttonTemplate.getActions() != null)
+    if ( template.getActions() != null)
     {
-      List<NotificationCompat.Action> actions = createActions( context, buttonTemplate.getActions(), template.getName(), messageId, messageText, notificationId );
+      List<NotificationCompat.Action> actions = createActions( context, template.getActions(), template.getName(), messageId, messageText, notificationId );
       for( NotificationCompat.Action action : actions )
         notificationBuilder.addAction( action );
     }
@@ -289,10 +286,8 @@ public class PushTemplateHelper
 
   static private NotificationChannel updateNotificationChannel( Context context, NotificationChannel notificationChannel, final AndroidPushTemplate template )
   {
-    ButtonTemplate buttonTemplate = template.getButtonTemplate();
-
-    if( buttonTemplate != null && buttonTemplate.getShowBadge() != null )
-      notificationChannel.setShowBadge( buttonTemplate.getShowBadge() );
+    if( template.getShowBadge() != null )
+      notificationChannel.setShowBadge( template.getShowBadge() );
 
     if( template.getPriority() != null && template.getPriority() > 0 && template.getPriority() < 6 )
       notificationChannel.setImportance( template.getPriority() ); // NotificationManager.IMPORTANCE_DEFAULT
@@ -305,9 +300,9 @@ public class PushTemplateHelper
             .build();
 
     Uri soundUri;
-    if( buttonTemplate != null && buttonTemplate.getSound() != null && !buttonTemplate.getSound().isEmpty() )
+    if( template.getSound() != null && !template.getSound().isEmpty() )
     {
-      int soundResource = context.getResources().getIdentifier( buttonTemplate.getSound(), "raw", context.getPackageName() );
+      int soundResource = context.getResources().getIdentifier( template.getSound(), "raw", context.getPackageName() );
       soundUri = Uri.parse( "android.resource://" + context.getPackageName() + "/" + soundResource );
     }
     else
@@ -321,11 +316,11 @@ public class PushTemplateHelper
       notificationChannel.setLightColor( template.getLightsColor()|0xFF000000 );
     }
 
-    if( buttonTemplate != null && buttonTemplate.getVibrate() != null && buttonTemplate.getVibrate().length > 0 )
+    if( template.getVibrate() != null && template.getVibrate().length > 0 )
     {
-      long[] vibrate = new long[ buttonTemplate.getVibrate().length ];
+      long[] vibrate = new long[ template.getVibrate().length ];
       int index = 0;
-      for( long l : buttonTemplate.getVibrate() )
+      for( long l : template.getVibrate() )
         vibrate[ index++ ] = l;
 
       notificationChannel.enableVibration( true );
