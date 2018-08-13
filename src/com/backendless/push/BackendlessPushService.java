@@ -2,6 +2,7 @@ package com.backendless.push;
 
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -43,6 +44,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class BackendlessPushService extends JobIntentService implements PushReceiverCallback
 {
+  public static final String IMMEDIATE_MESSAGE = "ImmediateMessage";
   private static final String TAG = BackendlessPushService.class.getSimpleName();
   private static final int JOB_ID = 1000;
   private static final Random random = new Random();
@@ -202,7 +204,14 @@ public class BackendlessPushService extends JobIntentService implements PushRece
           return;
         }
 
-        androidPushTemplate.setName("ImmediateMessage");
+        if( androidPushTemplate.getName() == null || androidPushTemplate.getName().isEmpty() )
+          androidPushTemplate.setName( BackendlessPushService.IMMEDIATE_MESSAGE );
+
+        NotificationChannel notificationChannel = PushTemplateHelper.getNotificationChannel( context, androidPushTemplate.getName() );
+
+        if( notificationChannel == null )
+          androidPushTemplate.setName( BackendlessPushService.IMMEDIATE_MESSAGE );
+
         Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId, contentTitle, summarySubText, notificationId );
         PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), notificationId );
         return;
