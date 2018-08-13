@@ -268,6 +268,13 @@ public class PushTemplateHelper
       notificationManager.deleteNotificationChannel( notifChann.getId() );
   }
 
+  static public NotificationChannel getNotificationChannel( final Context context, final String templateName )
+  {
+    final String channelId = Backendless.getApplicationId() + ":" + templateName;
+    NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
+    return notificationManager.getNotificationChannel( channelId );
+  }
+
   static public NotificationChannel getOrCreateNotificationChannel( Context context, final AndroidPushTemplate template )
   {
     final String channelId = Backendless.getApplicationId() + ":" + template.getName();

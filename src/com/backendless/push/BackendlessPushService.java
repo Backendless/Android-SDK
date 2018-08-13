@@ -43,6 +43,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class BackendlessPushService extends JobIntentService implements PushReceiverCallback
 {
+  public static final String IMMEDIATE_MESSAGE = "ImmediateMessage";
   private static final String TAG = BackendlessPushService.class.getSimpleName();
   private static final int JOB_ID = 1000;
   private static final Random random = new Random();
@@ -202,7 +203,15 @@ public class BackendlessPushService extends JobIntentService implements PushRece
           return;
         }
 
-        androidPushTemplate.setName("ImmediateMessage");
+        if( androidPushTemplate.getName() == null || androidPushTemplate.getName().isEmpty() )
+          androidPushTemplate.setName( BackendlessPushService.IMMEDIATE_MESSAGE );
+
+        if( android.os.Build.VERSION.SDK_INT > 25 )
+        {
+          if( PushTemplateHelper.getNotificationChannel( context, androidPushTemplate.getName() ) == null )
+            androidPushTemplate.setName( BackendlessPushService.IMMEDIATE_MESSAGE );
+        }
+
         Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId, contentTitle, summarySubText, notificationId );
         PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), notificationId );
         return;
