@@ -272,7 +272,7 @@ public final class Files
     if( directoryPath == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
 
-    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectory", new Object[] { directoryPath, pattern, recursive } );
+    return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectoryWithCount", new Object[] { directoryPath, pattern, recursive } );
   }
 
   public void remove( String fileUrl, AsyncCallback<Integer> responder )
@@ -292,7 +292,7 @@ public final class Files
       if( directoryPath == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
 
-      Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectory", new Object[] { directoryPath, "*", true }, responder );
+      Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "deleteFileOrDirectoryWithCount", new Object[] { directoryPath, "*", true }, responder );
     }
     catch( Throwable e )
     {
