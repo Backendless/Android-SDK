@@ -77,9 +77,6 @@ public class PushTemplateHelper
 
       notificationBuilder = new NotificationCompat.Builder( context, notificationChannel.getId() );
 
-      if( template.getColorized() != null )
-        notificationBuilder.setColorized( template.getColorized() );
-
       if( template.getBadge() != null &&
           ( template.getBadge() == NotificationCompat.BADGE_ICON_SMALL || template.getBadge() == NotificationCompat.BADGE_ICON_LARGE ) )
         notificationBuilder.setBadgeIconType( template.getBadge() );
