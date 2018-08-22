@@ -19,24 +19,12 @@
 package com.backendless.push;
 
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.os.PowerManager;
 import com.backendless.Backendless;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class BackendlessBroadcastReceiver extends BroadcastReceiver implements PushReceiverCallback
 {
-  private static final String TAG = BackendlessBroadcastReceiver.class.getSimpleName();
-  private static final String EXTRA_WAKE_LOCK_ID = "com.backendless.wakelockid";
-  private static final Map<Integer, PowerManager.WakeLock> activeWakeLocks = new HashMap<>();
-  public static final String EXTRA_MESSAGE_ID = "com.backendless.messageid";
-
-  private static int mNextId = 1;
-
   public BackendlessBroadcastReceiver()
   {
   }
