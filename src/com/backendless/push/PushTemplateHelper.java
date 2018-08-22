@@ -205,7 +205,7 @@ public class PushTemplateHelper
             .setContentText( messageText );
 
     Intent notificationIntent = context.getPackageManager().getLaunchIntentForPackage( context.getPackageName() );
-    notificationIntent.putExtra( BackendlessBroadcastReceiver.EXTRA_MESSAGE_ID, messageId );
+    notificationIntent.putExtra( PublishOptions.MESSAGE_ID, messageId );
     notificationIntent.putExtra( PublishOptions.TEMPLATE_NAME, template.getName() );
     notificationIntent.putExtra( PublishOptions.MESSAGE_TAG, messageText );
     notificationIntent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
@@ -232,7 +232,7 @@ public class PushTemplateHelper
     {
       Intent actionIntent = new Intent( a.getTitle() );
       actionIntent.setClassName( context, a.getId() );
-      actionIntent.putExtra( BackendlessBroadcastReceiver.EXTRA_MESSAGE_ID, messageId );
+      actionIntent.putExtra( PublishOptions.MESSAGE_ID, messageId );
       actionIntent.putExtra( PublishOptions.MESSAGE_TAG, messageText );
       actionIntent.putExtra( PublishOptions.TEMPLATE_NAME, templateName );
       actionIntent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );

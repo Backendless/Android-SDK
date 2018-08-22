@@ -162,7 +162,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
 
   private void handleMessage( final Context context, Intent intent )
   {
-    final String messageId = intent.getStringExtra( BackendlessBroadcastReceiver.EXTRA_MESSAGE_ID );
+    final String messageId = intent.getStringExtra( PublishOptions.MESSAGE_ID );
     final String message = intent.getStringExtra( PublishOptions.MESSAGE_TAG );
     final String contentTitle = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TITLE_TAG );
     final String summarySubText = intent.getStringExtra( PublishOptions.ANDROID_SUMMARY_SUBTEXT_TAG );
