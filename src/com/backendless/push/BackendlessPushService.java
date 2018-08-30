@@ -8,6 +8,8 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
@@ -222,7 +224,10 @@ public class BackendlessPushService extends JobIntentService implements PushRece
       boolean showPushNotification = callback.onMessage( context, intent );
 
       if( showPushNotification )
-        fallBackMode( context, message, contentTitle, summarySubText, notificationId );
+      {
+        String soundResource = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_SOUND_TAG );
+        fallBackMode( context, message, contentTitle, summarySubText, soundResource, notificationId );
+      }
     }
     catch ( Throwable throwable )
     {
@@ -230,7 +235,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
     }
   }
 
-  private void fallBackMode( Context context, String message, String contentTitle, String summarySubText, final int notificationId )
+  private void fallBackMode( Context context, String message, String contentTitle, String summarySubText, String soundResource, final int notificationId )
   {
     final String channelName = "Fallback";
     final NotificationCompat.Builder notificationBuilder;
@@ -245,6 +250,15 @@ public class BackendlessPushService extends JobIntentService implements PushRece
       if( notificationChannel == null )
       {
         notificationChannel = new NotificationChannel( channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT );
+
+        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                .setUsage( AudioAttributes.USAGE_NOTIFICATION_RINGTONE )
+                .setContentType( AudioAttributes.CONTENT_TYPE_SONIFICATION )
+                .setFlags( AudioAttributes.FLAG_AUDIBILITY_ENFORCED )
+                .setLegacyStreamType( AudioManager.STREAM_NOTIFICATION )
+                .build();
+
+        notificationChannel.setSound( PushTemplateHelper.getSoundUri( context, soundResource ), audioAttributes );
         notificationManager.createNotificationChannel( notificationChannel );
       }
 
@@ -252,6 +266,8 @@ public class BackendlessPushService extends JobIntentService implements PushRece
     }
     else
       notificationBuilder = new NotificationCompat.Builder( context );
+
+    notificationBuilder.setSound( PushTemplateHelper.getSoundUri( context, soundResource ), AudioManager.STREAM_NOTIFICATION );
 
     int appIcon = context.getApplicationInfo().icon;
     if( appIcon == 0 )
