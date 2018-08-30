@@ -2,6 +2,7 @@ package com.backendless.push;
 
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -12,8 +13,9 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.JobIntentService;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
-import android.widget.RemoteViews;
 import android.widget.Toast;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
@@ -220,58 +222,63 @@ public class BackendlessPushService extends JobIntentService implements PushRece
       boolean showPushNotification = callback.onMessage( context, intent );
 
       if( showPushNotification )
-      {
-        CharSequence tickerText = intent.getStringExtra( PublishOptions.ANDROID_TICKER_TEXT_TAG );
-
-        if( tickerText != null && tickerText.length() > 0 )
-        {
-          final String contentText = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TEXT_TAG );
-          int appIcon = context.getApplicationInfo().icon;
-          if( appIcon == 0 )
-            appIcon = android.R.drawable.sym_def_app_icon;
-
-          Intent notificationIntent = context.getPackageManager().getLaunchIntentForPackage( context.getApplicationInfo().packageName );
-          PendingIntent contentIntent = PendingIntent.getActivity( context, 0, notificationIntent, 0 );
-          Notification notification = new Notification.Builder( context )
-              .setSmallIcon( appIcon )
-              .setTicker( tickerText )
-              .setContentTitle( contentTitle )
-              .setContentText( contentText )
-              .setContentIntent( contentIntent )
-              .setWhen( System.currentTimeMillis() )
-              .build();
-          notification.flags |= Notification.FLAG_AUTO_CANCEL;
-
-          int customLayout = context.getResources().getIdentifier( "notification", "layout", context.getPackageName() );
-          int customLayoutTitle = context.getResources().getIdentifier( "title", "id", context.getPackageName() );
-          int customLayoutDescription = context.getResources().getIdentifier( "text", "id", context.getPackageName() );
-          int customLayoutImageContainer = context.getResources().getIdentifier( "image", "id", context.getPackageName() );
-          int customLayoutImage = context.getResources().getIdentifier( "push_icon", "drawable", context.getPackageName() );
-
-          if( customLayout > 0 && customLayoutTitle > 0 && customLayoutDescription > 0 && customLayoutImageContainer > 0 )
-          {
-            NotificationLookAndFeel lookAndFeel = new NotificationLookAndFeel();
-            lookAndFeel.extractColors( context );
-            RemoteViews contentView = new RemoteViews( context.getPackageName(), customLayout );
-            contentView.setTextViewText( customLayoutTitle, contentTitle );
-            contentView.setTextViewText( customLayoutDescription, contentText );
-            contentView.setTextColor( customLayoutTitle, lookAndFeel.getTextColor() );
-            contentView.setFloat( customLayoutTitle, "setTextSize", lookAndFeel.getTextSize() );
-            contentView.setTextColor( customLayoutDescription, lookAndFeel.getTextColor() );
-            contentView.setFloat( customLayoutDescription, "setTextSize", lookAndFeel.getTextSize() );
-            contentView.setImageViewResource( customLayoutImageContainer, customLayoutImage );
-            notification.contentView = contentView;
-          }
-
-          NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
-          notificationManager.notify( notificationId, notification );
-        }
-      }
+        fallBackMode( context, message, contentTitle, summarySubText, notificationId );
     }
     catch ( Throwable throwable )
     {
       Log.e( TAG, "Error processing push notification", throwable );
     }
+  }
+
+  private void fallBackMode( Context context, String message, String contentTitle, String summarySubText, final int notificationId )
+  {
+    final String channelName = "Fallback";
+    final NotificationCompat.Builder notificationBuilder;
+
+    // android.os.Build.VERSION_CODES.O == 26
+    if( android.os.Build.VERSION.SDK_INT > 25 )
+    {
+      final String channelId = Backendless.getApplicationId() + ":" + channelName;
+      NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
+      NotificationChannel notificationChannel = notificationManager.getNotificationChannel( channelId );
+
+      if( notificationChannel == null )
+      {
+        notificationChannel = new NotificationChannel( channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT );
+        notificationManager.createNotificationChannel( notificationChannel );
+      }
+
+      notificationBuilder = new NotificationCompat.Builder( context, notificationChannel.getId() );
+    }
+    else
+      notificationBuilder = new NotificationCompat.Builder( context );
+
+    int appIcon = context.getApplicationInfo().icon;
+    if( appIcon == 0 )
+      appIcon = android.R.drawable.sym_def_app_icon;
+
+    Intent notificationIntent = context.getPackageManager().getLaunchIntentForPackage( context.getApplicationInfo().packageName );
+    PendingIntent contentIntent = PendingIntent.getActivity( context, 0, notificationIntent, 0 );
+
+    notificationBuilder.setContentIntent( contentIntent )
+            .setSmallIcon( appIcon )
+            .setContentTitle( contentTitle )
+            .setSubText( summarySubText )
+            .setContentText( message )
+            .setWhen( System.currentTimeMillis() )
+            .setAutoCancel( true )
+            .build();
+
+    final NotificationManagerCompat notificationManager = NotificationManagerCompat.from( context );
+    Handler handler = new Handler( Looper.getMainLooper() );
+    handler.post( new Runnable()
+    {
+      @Override
+      public void run()
+      {
+        notificationManager.notify( channelName, notificationId, notificationBuilder.build() );
+      }
+    } );
   }
 
   private void handleRegistration( final Context context, Intent intent )
