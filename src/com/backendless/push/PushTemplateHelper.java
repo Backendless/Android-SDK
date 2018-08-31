@@ -96,18 +96,7 @@ public class PushTemplateHelper
         notificationBuilder.setPriority( NotificationCompat.PRIORITY_DEFAULT );
 
       if( notificationBuilder.getPriority() > NotificationCompat.PRIORITY_LOW )
-      {
-        Uri soundUri;
-        if( template.getSound() != null && !template.getSound().isEmpty() )
-        {
-          int soundResource = context.getResources().getIdentifier( template.getSound(), "raw", context.getPackageName() );
-          soundUri = Uri.parse( "android.resource://" + context.getPackageName() + "/" + soundResource );
-        }
-        else
-          soundUri = RingtoneManager.getDefaultUri( RingtoneManager.TYPE_NOTIFICATION );
-
-        notificationBuilder.setSound( soundUri, AudioManager.STREAM_NOTIFICATION );
-      }
+        notificationBuilder.setSound( PushTemplateHelper.getSoundUri( context, template.getSound() ), AudioManager.STREAM_NOTIFICATION );
 
       if( template.getVibrate() != null && template.getVibrate().length > 0 && notificationBuilder.getPriority() > NotificationCompat.PRIORITY_LOW )
       {
@@ -223,6 +212,20 @@ public class PushTemplateHelper
     return notificationBuilder.build();
   }
 
+  static Uri getSoundUri( Context context, String resource )
+  {
+    Uri soundUri;
+    if( resource != null && !resource.isEmpty() )
+    {
+      int soundResource = context.getResources().getIdentifier( resource, "raw", context.getPackageName() );
+      soundUri = Uri.parse( "android.resource://" + context.getPackageName() + "/" + soundResource );
+    }
+    else
+      soundUri = RingtoneManager.getDefaultUri( RingtoneManager.TYPE_NOTIFICATION );
+
+    return soundUri;
+  }
+
   static private List<NotificationCompat.Action> createActions( Context context, Action[] actions, String templateName, String messageId, String messageText, int notificationId )
   {
     List<NotificationCompat.Action> notifActions = new ArrayList<>();
@@ -303,16 +306,7 @@ public class PushTemplateHelper
             .setLegacyStreamType( AudioManager.STREAM_NOTIFICATION )
             .build();
 
-    Uri soundUri;
-    if( template.getSound() != null && !template.getSound().isEmpty() )
-    {
-      int soundResource = context.getResources().getIdentifier( template.getSound(), "raw", context.getPackageName() );
-      soundUri = Uri.parse( "android.resource://" + context.getPackageName() + "/" + soundResource );
-    }
-    else
-      soundUri = RingtoneManager.getDefaultUri( RingtoneManager.TYPE_NOTIFICATION );
-
-    notificationChannel.setSound( soundUri, audioAttributes );
+    notificationChannel.setSound( PushTemplateHelper.getSoundUri( context, template.getSound() ), audioAttributes );
 
     if (template.getLightsColor() != null)
     {
