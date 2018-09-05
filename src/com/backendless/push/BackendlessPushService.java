@@ -378,7 +378,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
           return;
         }
         GCMRegistrar.setRegistrationIds( context, ids, registrationExpiration );
-        callback.onRegistered( context, registrationInfo );
+        callback.onRegistered( context, ids );
       }
 
       @Override
