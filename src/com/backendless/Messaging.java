@@ -49,6 +49,8 @@ import com.backendless.messaging.MessageStatus;
 import com.backendless.messaging.PublishOptions;
 import com.backendless.messaging.PublishStatusEnum;
 import com.backendless.messaging.PushBroadcastMask;
+import com.backendless.push.BackendlessPushService;
+import com.backendless.push.FCMRegistration;
 import com.backendless.push.GCMRegistrar;
 import com.backendless.rt.messaging.Channel;
 import com.backendless.rt.messaging.ChannelFactory;
@@ -137,31 +139,55 @@ public final class Messaging
     return instance;
   }
 
+  /**
+   * <b>GCM support will be removed after April 2019.</b>
+   */
+  @Deprecated
   public void registerDevice( String GCMSenderID )
   {
     registerDevice( GCMSenderID, (String) null );
   }
 
+  /**
+   * <b>GCM support will be removed after April 2019.</b>
+   */
+  @Deprecated
   public void registerDevice( String GCMSenderID, String channel )
   {
     registerDevice( GCMSenderID, channel, null );
   }
 
+  /**
+   * <b>GCM support will be removed after April 2019.</b>
+   */
+  @Deprecated
   public void registerDevice( String GCMSenderID, AsyncCallback<Void> callback )
   {
     registerDevice( GCMSenderID, (String) null, callback );
   }
 
+  /**
+   * <b>GCM support will be removed after April 2019.</b>
+   */
+  @Deprecated
   public void registerDevice( String GCMSenderID, String channel, AsyncCallback<Void> callback )
   {
     registerDevice( GCMSenderID, Arrays.asList( channel ), null, callback );
   }
 
+  /**
+   * <b>GCM support will be removed after April 2019.</b>
+   */
+  @Deprecated
   public void registerDevice( String GCMSenderID, List<String> channels, Date expiration )
   {
     registerDevice( GCMSenderID, channels, expiration, null );
   }
 
+  /**
+   * <b>GCM support will be removed after April 2019.</b>
+   */
+  @Deprecated
   public void registerDevice( final String GCMSenderID, final List<String> channels, final Date expiration, final AsyncCallback<Void> callback )
   {
     new AsyncTask<Void, Void, RuntimeException>()
@@ -199,12 +225,19 @@ public final class Messaging
     }.execute();
   }
 
+  /**
+   * <b>GCM support will be removed after April 2019.</b>
+   */
+  @Deprecated
   private synchronized void registerDeviceGCMSync( Context context, String GCMSenderID, List<String> channels,
                                                    Date expiration ) throws BackendlessException
   {
+    if (BackendlessPushService.isFCM( ContextHandler.getAppContext() ) )
+      throw new IllegalStateException( "The method is intended only for old GCM messaging, which support will be stopped after April 2019." );
+
     if( channels == null || channels.isEmpty() ||
-        (channels.size() == 1 && (channels.get( 0 ) == null || channels.get( 0 ).isEmpty())) )
-      channels = Arrays.asList( "default" );
+            (channels.size() == 1 && (channels.get( 0 ) == null || channels.get( 0 ).isEmpty())) )
+      channels = Collections.singletonList( DEFAULT_CHANNEL_NAME );
 
     for( String channel : channels )
       checkChannelName( channel );
@@ -215,6 +248,77 @@ public final class Messaging
     GCMRegistrar.checkDevice( context );
     GCMRegistrar.checkManifest( context );
     GCMRegistrar.register( context, GCMSenderID, channels, expiration );
+  }
+
+  /**
+   * For FireBase messaging only.
+   * @throws BackendlessException
+   */
+  public void registerDevice() throws BackendlessException
+  {
+    registerDevice( (AsyncCallback<String>) null );
+  }
+
+  /**
+   * For FireBase messaging only.
+   * @throws BackendlessException
+   */
+  public void registerDevice( AsyncCallback<String> callback ) throws BackendlessException
+  {
+    registerDevice( Collections.singletonList( DEFAULT_CHANNEL_NAME ), callback );
+  }
+
+  /**
+   * For FireBase messaging only.
+   * @throws BackendlessException
+   */
+  public void registerDevice( List<String> channels ) throws BackendlessException
+  {
+    registerDevice( Collections.singletonList( DEFAULT_CHANNEL_NAME ), (AsyncCallback<String>) null );
+  }
+
+  /**
+   * For FireBase messaging only.
+   * @throws BackendlessException
+   */
+  public void registerDevice( List<String> channels, AsyncCallback<String> callback ) throws BackendlessException
+  {
+    registerDevice( channels, (Date) null, callback );
+  }
+
+  /**
+   * For FireBase messaging only.
+   * @throws BackendlessException
+   */
+  public void registerDevice( List<String> channels, Date expiration ) throws BackendlessException
+  {
+    registerDevice( channels, expiration, (AsyncCallback<String>) null );
+  }
+
+  /**
+   * For FireBase messaging only.
+   * @throws BackendlessException
+   */
+  public void registerDevice( List<String> channels, Date expiration, AsyncCallback<String> callback ) throws BackendlessException
+  {
+    if( !BackendlessPushService.isFCM( ContextHandler.getAppContext() ) )
+      throw new IllegalStateException( "The method is intended only for FireBase messaging." );
+
+    if( channels == null || channels.isEmpty() ||
+            (channels.size() == 1 && (channels.get( 0 ) == null || channels.get( 0 ).isEmpty())) )
+      channels = Collections.singletonList( DEFAULT_CHANNEL_NAME );
+
+    for( String channel : channels )
+      checkChannelName( channel );
+
+    long expirationMs = 0;
+    if( expiration != null)
+      if (expiration.before( Calendar.getInstance().getTime() ) )
+        throw new IllegalArgumentException( ExceptionMessage.WRONG_EXPIRATION_DATE );
+      else
+        expirationMs = expiration.getTime();
+
+    FCMRegistration.registerDevice( ContextHandler.getAppContext(), channels, expirationMs, callback );
   }
 
   private void checkChannelName( String channelName ) throws BackendlessException
@@ -287,10 +391,20 @@ public final class Messaging
 
   public void unregisterDevice()
   {
-    unregisterDevice( null );
+    unregisterDevice( (List<String>) null );
   }
 
-  public void unregisterDevice( final AsyncCallback<Void> callback )
+  public void unregisterDevice( List<String> channels )
+  {
+    unregisterDevice( channels, null );
+  }
+
+  public void unregisterDevice( AsyncCallback<Void> callback )
+  {
+    unregisterDevice( null, callback );
+  }
+
+  public void unregisterDevice( final List<String> channels, final AsyncCallback<Void> callback )
   {
     new AsyncTask<Void, Void, RuntimeException>()
     {
@@ -301,10 +415,15 @@ public final class Messaging
         {
           Context context = ContextHandler.getAppContext();
 
-          if( !GCMRegistrar.isRegistered( context ) )
-            return new IllegalArgumentException( ExceptionMessage.DEVICE_NOT_REGISTERED );
+          if ( BackendlessPushService.isFCM( context ) )
+            FCMRegistration.unregisterDevice( context, channels );
+          else
+          {
+            if( !GCMRegistrar.isRegistered( context ) )
+              return new IllegalArgumentException( ExceptionMessage.DEVICE_NOT_REGISTERED );
 
-          GCMRegistrar.unregister( context );
+            GCMRegistrar.unregister( context );
+          }
           return null;
         }
         catch( RuntimeException t )
@@ -621,7 +740,7 @@ public final class Messaging
 
   public Channel subscribe( )
   {
-      return subscribe( "default" );
+      return subscribe( DEFAULT_CHANNEL_NAME );
   }
 
   public Channel subscribe( String channelName )
