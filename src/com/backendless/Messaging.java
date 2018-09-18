@@ -252,7 +252,6 @@ public final class Messaging
 
   /**
    * For FireBase messaging only.
-   * @throws BackendlessException
    */
   public void registerDevice()
   {
@@ -261,7 +260,6 @@ public final class Messaging
 
   /**
    * For FireBase messaging only.
-   * @throws BackendlessException
    */
   public void registerDevice( AsyncCallback<String> callback )
   {
@@ -270,7 +268,6 @@ public final class Messaging
 
   /**
    * For FireBase messaging only.
-   * @throws BackendlessException
    */
   public void registerDevice( List<String> channels )
   {
@@ -279,7 +276,6 @@ public final class Messaging
 
   /**
    * For FireBase messaging only.
-   * @throws BackendlessException
    */
   public void registerDevice( List<String> channels, AsyncCallback<String> callback )
   {
@@ -288,7 +284,6 @@ public final class Messaging
 
   /**
    * For FireBase messaging only.
-   * @throws BackendlessException
    */
   public void registerDevice( List<String> channels, Date expiration )
   {
@@ -297,7 +292,6 @@ public final class Messaging
 
   /**
    * For FireBase messaging only.
-   * @throws BackendlessException
    */
   public void registerDevice( List<String> channels, Date expiration, AsyncCallback<String> callback )
   {
@@ -547,7 +541,6 @@ public final class Messaging
    *                      publisher ID (an arbitrary, application-specific string value identifying the publisher),
    *                      subtopic value and/or a collection of headers.
    * @return a data structure which contains ID of the published message and the status of the publish operation.
-   * @throws BackendlessException
    */
   public MessageStatus publish( String channelName, Object message,
                                 PublishOptions publishOptions )
@@ -573,7 +566,6 @@ public final class Messaging
    *                      devices (or a group of devices grouped by the operating system), delayed delivery or repeated
    *                      delivery.
    * @return a data structure which contains ID of the published message and the status of the publish operation.
-   * @throws BackendlessException
    */
   public MessageStatus publish( String channelName, Object message, PublishOptions publishOptions,
                                 DeliveryOptions deliveryOptions )
@@ -636,7 +628,6 @@ public final class Messaging
    *                      devices (or a group of devices grouped by the operating system), delayed delivery or repeated
    *                      delivery.
    * @return a data structure which contains ID of the published message and the status of the publish operation.
-   * @throws BackendlessException
    */
   public MessageStatus publish( Object message, PublishOptions publishOptions,
                                 DeliveryOptions deliveryOptions )
