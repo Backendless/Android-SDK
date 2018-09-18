@@ -68,7 +68,7 @@ public class FCMRegistration
   public static void unregisterDevice( final Context appContext, final List<String> channels )
   {
     Intent msgWork = new Intent( BackendlessPushService.ACTION_FCM_UNREGISTRATION );
-    msgWork.putExtra( BackendlessPushService.KEY_CHANNELS, channels.toArray() );
+    msgWork.putStringArrayListExtra( BackendlessPushService.KEY_CHANNELS, new ArrayList<>(channels) );
     BackendlessPushService.enqueueWork( appContext, msgWork );
   }
 
@@ -77,15 +77,19 @@ public class FCMRegistration
     FirebaseMessaging.getInstance().unsubscribeFromTopic( DEFAULT_TOPIC ).addOnCompleteListener( new OnCompleteListener<Void>()
     {
       @Override
-      public void onComplete(
-              @NonNull
-                      Task<Void> task )
+      public void onComplete( @NonNull Task<Void> task )
       {
-        if( !task.isSuccessful() )
+        if( task.isSuccessful() )
+        {
+          Log.d( TAG, "Unsubscribed on FCM." );
+          callback.onUnregistered( context, true );
+        }
+        else
+        {
           Log.e( TAG, "Failed to unsubscribe in FCM.", task.getException() );
-
-        String reason = (task.getException() != null) ? Objects.toString( task.getException().getMessage() ) : "";
-        callback.onError( context, "Failed to unsubscribe in FCM. " + reason );
+          String reason = (task.getException() != null) ? Objects.toString( task.getException().getMessage() ) : "";
+          callback.onError( context, "Failed to unsubscribe on FCM. " + reason );
+        }
       }
     } );
   }

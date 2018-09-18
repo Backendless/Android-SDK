@@ -24,7 +24,6 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 import android.widget.Toast;
 import com.backendless.Backendless;
-import com.backendless.DeviceRegistration;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.messaging.AndroidPushTemplate;
@@ -32,7 +31,6 @@ import com.backendless.messaging.PublishOptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -544,15 +542,16 @@ public class BackendlessPushService extends JobIntentService implements PushRece
   {
     List<String> channels = intent.getStringArrayListExtra( BackendlessPushService.KEY_CHANNELS );
 
-    Backendless.Messaging.unregisterDeviceOnServer( new AsyncCallback<Boolean>()
+    Backendless.Messaging.unregisterDeviceOnServer( channels, new AsyncCallback<Integer>()
     {
       @Override
-      public void handleResponse( Boolean response )
+      public void handleResponse( Integer response )
       {
         Log.d( TAG, "Unregistered on Backendless." );
-
-
-        callback.onUnregistered( context, response );
+        if( response < 1 )
+          FCMRegistration.unregisterDeviceOnFCM( context, callback );
+        else
+          callback.onUnregistered( context, true );
       }
 
       @Override
@@ -562,32 +561,32 @@ public class BackendlessPushService extends JobIntentService implements PushRece
         callback.onError( context, "Could not unregister device on Backendless server: " + fault.toString() );
       }
     } );
+  }
 
+  private void refreshTokenOnBackendless( final Context context, Intent intent )
+  {
+    String newDeviceToken = intent.getStringExtra( BackendlessPushService.KEY_DEVICE_TOKEN );
 
-    //DeviceRegistration registration =
-    Backendless.Messaging.getRegistrations( new AsyncCallback<DeviceRegistration>()
+    Backendless.Messaging.refreshDeviceToken( newDeviceToken, new AsyncCallback<Boolean>()
     {
       @Override
-      public void handleResponse( DeviceRegistration response )
+      public void handleResponse( Boolean response )
       {
-        Log.d( TAG, "" );
+        if( response )
+          Log.d( TAG, "Device token refreshed successfully." );
+        else
+        {
+          Log.d( TAG, "Device is not registered on any channel." );
+          FCMRegistration.unregisterDeviceOnFCM( context, callback );
+        }
       }
 
       @Override
       public void handleFault( BackendlessFault fault )
       {
-        Log.d( TAG, "Can not find device registrations. " + fault.toString() );
+        Log.e( TAG, "Can not refresh device token on Backendless. " + fault.getMessage() );
       }
     } );
-
-    // if there are no registrations left on the server
-    FCMRegistration.unregisterDeviceOnFCM( context, callback );
-  }
-
-  private void refreshTokenOnBackendless( final Context context, Intent intent )
-  {
-    // TODO: get current channels
-    // TODO: reregister with new token
   }
 
   public static boolean isFCM( Context appContext )

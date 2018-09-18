@@ -461,6 +461,26 @@ public final class Messaging
     Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { getDeviceId() }, responder );
   }
 
+  public int unregisterDeviceOnServer( List<String> channels ) throws BackendlessException
+  {
+    return (int) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { getDeviceId(), channels } );
+  }
+
+  public void unregisterDeviceOnServer( List<String> channels, final AsyncCallback<Integer> responder )
+  {
+    Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { getDeviceId(), channels }, responder );
+  }
+
+  public boolean refreshDeviceToken( String newDeviceToken )
+  {
+    return Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "refreshDeviceToken", new Object[] { getDeviceId(), newDeviceToken } );
+  }
+
+  public void refreshDeviceToken( String newDeviceToken, final AsyncCallback<Boolean> responder )
+  {
+    Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "refreshDeviceToken", new Object[] { getDeviceId(), newDeviceToken }, responder );
+  }
+
   public DeviceRegistration getDeviceRegistration() throws BackendlessException
   {
     return getRegistrations();
