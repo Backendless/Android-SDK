@@ -230,7 +230,7 @@ public final class Messaging
    */
   @Deprecated
   private synchronized void registerDeviceGCMSync( Context context, String GCMSenderID, List<String> channels,
-                                                   Date expiration ) throws BackendlessException
+                                                   Date expiration )
   {
     if (BackendlessPushService.isFCM( ContextHandler.getAppContext() ) )
       throw new IllegalStateException( "The method is intended only for old GCM messaging, which support will be stopped after April 2019." );
@@ -254,7 +254,7 @@ public final class Messaging
    * For FireBase messaging only.
    * @throws BackendlessException
    */
-  public void registerDevice() throws BackendlessException
+  public void registerDevice()
   {
     registerDevice( (AsyncCallback<String>) null );
   }
@@ -263,7 +263,7 @@ public final class Messaging
    * For FireBase messaging only.
    * @throws BackendlessException
    */
-  public void registerDevice( AsyncCallback<String> callback ) throws BackendlessException
+  public void registerDevice( AsyncCallback<String> callback )
   {
     registerDevice( Collections.singletonList( DEFAULT_CHANNEL_NAME ), callback );
   }
@@ -272,7 +272,7 @@ public final class Messaging
    * For FireBase messaging only.
    * @throws BackendlessException
    */
-  public void registerDevice( List<String> channels ) throws BackendlessException
+  public void registerDevice( List<String> channels )
   {
     registerDevice( Collections.singletonList( DEFAULT_CHANNEL_NAME ), (AsyncCallback<String>) null );
   }
@@ -281,7 +281,7 @@ public final class Messaging
    * For FireBase messaging only.
    * @throws BackendlessException
    */
-  public void registerDevice( List<String> channels, AsyncCallback<String> callback ) throws BackendlessException
+  public void registerDevice( List<String> channels, AsyncCallback<String> callback )
   {
     registerDevice( channels, (Date) null, callback );
   }
@@ -290,7 +290,7 @@ public final class Messaging
    * For FireBase messaging only.
    * @throws BackendlessException
    */
-  public void registerDevice( List<String> channels, Date expiration ) throws BackendlessException
+  public void registerDevice( List<String> channels, Date expiration )
   {
     registerDevice( channels, expiration, (AsyncCallback<String>) null );
   }
@@ -299,7 +299,7 @@ public final class Messaging
    * For FireBase messaging only.
    * @throws BackendlessException
    */
-  public void registerDevice( List<String> channels, Date expiration, AsyncCallback<String> callback ) throws BackendlessException
+  public void registerDevice( List<String> channels, Date expiration, AsyncCallback<String> callback )
   {
     if( !BackendlessPushService.isFCM( ContextHandler.getAppContext() ) )
       throw new IllegalStateException( "The method is intended only for FireBase messaging." );
@@ -321,7 +321,7 @@ public final class Messaging
     FCMRegistration.registerDevice( ContextHandler.getAppContext(), channels, expirationMs, callback );
   }
 
-  private void checkChannelName( String channelName ) throws BackendlessException
+  private void checkChannelName( String channelName )
   {
     if( channelName == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_CHANNEL_NAME );
@@ -330,8 +330,7 @@ public final class Messaging
       throw new IllegalArgumentException( ExceptionMessage.NULL_CHANNEL_NAME );
   }
 
-  public String registerDeviceOnServer( String deviceToken, final List<String> channels,
-                                        final long expiration ) throws BackendlessException
+  public String registerDeviceOnServer( String deviceToken, final List<String> channels, final long expiration )
   {
     if( deviceToken == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_DEVICE_TOKEN );
@@ -451,7 +450,7 @@ public final class Messaging
     }.execute();
   }
 
-  public boolean unregisterDeviceOnServer() throws BackendlessException
+  public boolean unregisterDeviceOnServer()
   {
     return (Boolean) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { getDeviceId() } );
   }
@@ -461,7 +460,7 @@ public final class Messaging
     Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { getDeviceId() }, responder );
   }
 
-  public int unregisterDeviceOnServer( List<String> channels ) throws BackendlessException
+  public int unregisterDeviceOnServer( List<String> channels )
   {
     return (int) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { getDeviceId(), channels } );
   }
@@ -481,12 +480,12 @@ public final class Messaging
     Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "refreshDeviceToken", new Object[] { getDeviceId(), newDeviceToken }, responder );
   }
 
-  public DeviceRegistration getDeviceRegistration() throws BackendlessException
+  public DeviceRegistration getDeviceRegistration()
   {
     return getRegistrations();
   }
 
-  public DeviceRegistration getRegistrations() throws BackendlessException
+  public DeviceRegistration getRegistrations()
   {
     return (DeviceRegistration) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "getDeviceRegistrationByDeviceId", new Object[] { getDeviceId() } );
   }
@@ -510,7 +509,7 @@ public final class Messaging
    * @return a data structure which contains ID of the published message and the status of the publish operation.
    * @throws  BackendlessException
    */
-  public MessageStatus publish( Object message ) throws BackendlessException
+  public MessageStatus publish( Object message )
   {
     if( message instanceof PublishOptions || message instanceof DeliveryOptions )
       throw new IllegalArgumentException( ExceptionMessage.INCORRECT_MESSAGE_TYPE );
@@ -530,7 +529,7 @@ public final class Messaging
    *         message and the status of the publish operation.
    * @throws  BackendlessException
    */
-  public MessageStatus publish( String channelName, Object message ) throws BackendlessException
+  public MessageStatus publish( String channelName, Object message )
   {
     return publish( channelName, message, new PublishOptions() );
   }
@@ -551,7 +550,7 @@ public final class Messaging
    * @throws BackendlessException
    */
   public MessageStatus publish( String channelName, Object message,
-                                PublishOptions publishOptions ) throws BackendlessException
+                                PublishOptions publishOptions )
   {
     return publish( channelName, message, publishOptions, new DeliveryOptions() );
   }
@@ -577,7 +576,7 @@ public final class Messaging
    * @throws BackendlessException
    */
   public MessageStatus publish( String channelName, Object message, PublishOptions publishOptions,
-                                DeliveryOptions deliveryOptions ) throws BackendlessException
+                                DeliveryOptions deliveryOptions )
   {
     channelName = getCheckedChannelName( channelName );
 
@@ -616,7 +615,7 @@ public final class Messaging
    * @return a data structure which contains ID of the published message and the status of the publish operation.
    * @throws  BackendlessException
    */
-  public MessageStatus publish( Object message, PublishOptions publishOptions ) throws BackendlessException
+  public MessageStatus publish( Object message, PublishOptions publishOptions )
   {
     return publish( null, message, publishOptions );
   }
@@ -640,7 +639,7 @@ public final class Messaging
    * @throws BackendlessException
    */
   public MessageStatus publish( Object message, PublishOptions publishOptions,
-                                DeliveryOptions deliveryOptions ) throws BackendlessException
+                                DeliveryOptions deliveryOptions )
   {
     return publish( null, message, publishOptions, deliveryOptions );
   }
@@ -733,7 +732,7 @@ public final class Messaging
     }
   }
 
-  public boolean cancel( String messageId ) throws BackendlessException
+  public boolean cancel( String messageId )
   {
     if( messageId == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_MESSAGE_ID );
@@ -768,7 +767,7 @@ public final class Messaging
     return chanelFactory.create( channelName );
   }
 
-  public List<Message> pollMessages( String channelName, String subscriptionId ) throws BackendlessException
+  public List<Message> pollMessages( String channelName, String subscriptionId )
   {
     checkChannelName( channelName );
 
