@@ -40,6 +40,7 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver implements P
    * This method is no need anymore. All you need is just declare your implementation in AndroidManifest.xml.
    * @return
    */
+  @Deprecated
   public Class<? extends BackendlessPushService> getServiceClass()
   {
     return BackendlessPushService.class;
