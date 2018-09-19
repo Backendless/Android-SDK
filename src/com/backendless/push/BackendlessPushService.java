@@ -117,7 +117,12 @@ public class BackendlessPushService extends JobIntentService implements PushRece
 
     if( BackendlessPushService.pushServiceClassName == null )
     {
-      throw new IllegalStateException( "A reference to BackendlessPushService is missing in AndroidManifest.xml. Make sure to add <service android:name=\"com.backendless.push.BackendlessPushService\" /> to the manifest file. Alternatively, if you have a custom push service implementation, make sure your class inherits from \"com.backendless.push.BackendlessPushService\" and is registered in the manifest file as <service android:name=\"your push service fully qualified class name\" />" );
+      throw new IllegalStateException(
+        "A reference to BackendlessPushService is missing in AndroidManifest.xml. Make sure to add" +
+        "<service android:name=\"com.backendless.push.BackendlessPushService\" /> to the manifest file." +
+        "Alternatively, if you have a custom push service implementation, make sure your class inherits from" +
+        "\"com.backendless.push.BackendlessPushService\" and is registered in the manifest file" +
+        "as <service android:name=\"your push service fully qualified class name\" />" );
     }
     else
       return BackendlessPushService.pushServiceClassName;
