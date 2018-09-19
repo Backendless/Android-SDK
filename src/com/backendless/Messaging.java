@@ -300,18 +300,21 @@ public final class Messaging
 
     if( channels == null || channels.isEmpty() ||
             (channels.size() == 1 && (channels.get( 0 ) == null || channels.get( 0 ).isEmpty())) )
+    {
       channels = Collections.singletonList( DEFAULT_CHANNEL_NAME );
+    }
 
     for( String channel : channels )
       checkChannelName( channel );
 
     long expirationMs = 0;
     if( expiration != null)
-      if (expiration.before( Calendar.getInstance().getTime() ) )
+    {
+      if( expiration.before( Calendar.getInstance().getTime() ) )
         throw new IllegalArgumentException( ExceptionMessage.WRONG_EXPIRATION_DATE );
       else
         expirationMs = expiration.getTime();
-
+    }
     FCMRegistration.registerDevice( ContextHandler.getAppContext(), channels, expirationMs, callback );
   }
 
@@ -409,7 +412,9 @@ public final class Messaging
           Context context = ContextHandler.getAppContext();
 
           if ( BackendlessPushService.isFCM( context ) )
+          {
             FCMRegistration.unregisterDevice( context, channels );
+          }
           else
           {
             if( !GCMRegistrar.isRegistered( context ) )

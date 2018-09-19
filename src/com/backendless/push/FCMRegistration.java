@@ -41,24 +41,24 @@ public class FCMRegistration
           @Override
           public void onComplete( @NonNull Task<InstanceIdResult> task )
           {
-          if( !task.isSuccessful() )
-          {
-            Log.e( TAG, "Can not retrieve deviceToken from FCM.", task.getException() );
-            if (callback != null)
-              callback.handleFault( new BackendlessFault( "Can not retrieve deviceToken from FCM. " + task.getException().getMessage() ) );
-          }
-          else
-          {
-            String deviceToken = task.getResult().getToken();
-            Intent msgWork = new Intent( BackendlessPushService.ACTION_FCM_REGISTRATION );
-            msgWork.putExtra( BackendlessPushService.KEY_DEVICE_TOKEN, deviceToken );
-            msgWork.putStringArrayListExtra( BackendlessPushService.KEY_CHANNELS, new ArrayList<>(channels) );
-            msgWork.putExtra( BackendlessPushService.KEY_EXPIRATION, expiration );
-            BackendlessPushService.enqueueWork( appContext, msgWork );
+            if( !task.isSuccessful() )
+            {
+              Log.e( TAG, "Can not retrieve deviceToken from FCM.", task.getException() );
+              if( callback != null )
+                callback.handleFault( new BackendlessFault( "Can not retrieve deviceToken from FCM. " + task.getException().getMessage() ) );
+            }
+            else
+            {
+              String deviceToken = task.getResult().getToken();
+              Intent msgWork = new Intent( BackendlessPushService.ACTION_FCM_REGISTRATION );
+              msgWork.putExtra( BackendlessPushService.KEY_DEVICE_TOKEN, deviceToken );
+              msgWork.putStringArrayListExtra( BackendlessPushService.KEY_CHANNELS, new ArrayList<>( channels ) );
+              msgWork.putExtra( BackendlessPushService.KEY_EXPIRATION, expiration );
+              BackendlessPushService.enqueueWork( appContext, msgWork );
 
-            if (callback != null)
-              callback.handleResponse( deviceToken );
-          }
+              if( callback != null )
+                callback.handleResponse( deviceToken );
+            }
           }
         } );
       }
