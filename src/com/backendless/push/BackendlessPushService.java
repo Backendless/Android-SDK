@@ -613,7 +613,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
     }
     catch( ClassNotFoundException e )
     {
-      Log.i( TAG, "Class FirebaseMessagingService not found. Try to use GCM." );
+      Log.i( TAG, "Class FirebaseMessagingService not found. GCM will be used." );
       return isFCM = false;
     }
 
@@ -657,7 +657,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
 
       if( !flag )
       {
-        Log.i( TAG, "Class FirebaseMessagingService not found. Try to use GCM." );
+        Log.i( TAG, "Class FirebaseMessagingService not found. GCM will be used." );
         return isFCM = false;
       }
     }
