@@ -237,7 +237,9 @@ public final class Messaging
 
     if( channels == null || channels.isEmpty() ||
             (channels.size() == 1 && (channels.get( 0 ) == null || channels.get( 0 ).isEmpty())) )
+    {
       channels = Collections.singletonList( DEFAULT_CHANNEL_NAME );
+    }
 
     for( String channel : channels )
       checkChannelName( channel );
