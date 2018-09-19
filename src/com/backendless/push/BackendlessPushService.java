@@ -112,7 +112,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
     catch( PackageManager.NameNotFoundException e )
     {
       Log.e( TAG, "Can not load current app package." );
-      throw new IllegalStateException( "Can not load current app package." );
+      throw new IllegalStateException( "Can not load current app package.", e );
     }
 
     if( BackendlessPushService.pushServiceClassName == null )
@@ -651,7 +651,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
         }
         catch( ClassNotFoundException e )
         {
-          Log.e( TAG, "Can not load declared service class.", e );
+          Log.w( TAG, "You have declared class in AndroidManifest.xml that is not present in your app.", e );
         }
       }
 
@@ -664,7 +664,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
     catch( PackageManager.NameNotFoundException e )
     {
       Log.e( TAG, "Can not load current app package." );
-      throw new IllegalStateException( "Can not load current app package." );
+      throw new IllegalStateException( "Can not load current app package.", e );
     }
 
     final String action = "com.google.firebase.MESSAGING_EVENT";
