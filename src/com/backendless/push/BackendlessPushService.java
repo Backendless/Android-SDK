@@ -452,6 +452,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
 
         for( String id : channelRegistrations.values() )
           sb.append( id ).append( ',' );
+
         sb.delete( sb.length() - 1, sb.length() );
 
         GCMRegistrar.setRegistrationIds( context, sb.toString(), registrationExpiration );
