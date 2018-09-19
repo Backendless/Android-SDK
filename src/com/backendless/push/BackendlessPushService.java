@@ -105,7 +105,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
         }
         catch( ClassNotFoundException e )
         {
-          Log.e( TAG, "Can not load declared service class.", e );
+          Log.w( TAG, "You have declared class in AndroidManifest.xml that is not present in your app.", e );
         }
       }
     }
@@ -116,7 +116,9 @@ public class BackendlessPushService extends JobIntentService implements PushRece
     }
 
     if( BackendlessPushService.pushServiceClassName == null )
-      throw new IllegalStateException( "Can not find 'com.backendless.push.BackendlessPushService' or it inheritor in AndroidManifest.xml." );
+    {
+      throw new IllegalStateException( "A reference to BackendlessPushService is missing in AndroidManifest.xml. Make sure to add <service android:name=\"com.backendless.push.BackendlessPushService\" /> to the manifest file. Alternatively, if you have a custom push service implementation, make sure your class inherits from \"com.backendless.push.BackendlessPushService\" and is registered in the manifest file as <service android:name=\"your push service fully qualified class name\" />" );
+    }
     else
       return BackendlessPushService.pushServiceClassName;
   }
@@ -208,8 +210,10 @@ public class BackendlessPushService extends JobIntentService implements PushRece
   public void onRegistered( Context context, Map<String, String> channelRegistrations )
   {
     StringBuilder sb = new StringBuilder();
+
     for( String id : channelRegistrations.values() )
       sb.append( id ).append( ',' );
+
     sb.delete( sb.length() - 1, sb.length() );
     onRegistered( context, sb.toString() );
   }
@@ -445,6 +449,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
         Map<String, String> channelRegistrations = processRegistrationPayload( context, registrationInfo );
 
         StringBuilder sb = new StringBuilder();
+
         for( String id : channelRegistrations.values() )
           sb.append( id ).append( ',' );
         sb.delete( sb.length() - 1, sb.length() );
@@ -489,6 +494,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
     }
     catch( IOException e )
     {
+      Log.e( TAG, "Could not deserialize server response: " + e.getMessage() );
       callback.onError( context, "Could not deserialize server response: " + e.getMessage() );
       return null;
     }
@@ -497,19 +503,23 @@ public class BackendlessPushService extends JobIntentService implements PushRece
     Map<String, AndroidPushTemplate> templates = (Map<String, AndroidPushTemplate>) obj[ 1 ];
 
     if( android.os.Build.VERSION.SDK_INT > 25 )
+    {
       for( AndroidPushTemplate templ : templates.values() )
         PushTemplateHelper.getOrCreateNotificationChannel( context.getApplicationContext(), templ );
+    }
 
     PushTemplateHelper.setPushNotificationTemplates( templates, payload.getBytes() );
 
     String regs = (String) obj[ 0 ];
     Map<String, String> channelRegistrations = new HashMap<>();
     String[] regPairs = regs.split( "," );
+
     for( String pair : regPairs )
     {
       String[] valueKey = pair.split( "::" );
       channelRegistrations.put( valueKey[1], valueKey[0] );
     }
+
     return channelRegistrations;
   }
 
