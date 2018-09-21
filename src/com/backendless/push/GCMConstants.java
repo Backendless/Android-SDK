@@ -18,6 +18,7 @@
 
 package com.backendless.push;
 
+@Deprecated
 public class GCMConstants
 {
   public static final String INTENT_TO_GCM_REGISTRATION = "com.google.android.c2dm.intent.REGISTER";

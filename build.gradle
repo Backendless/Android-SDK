@@ -5,7 +5,7 @@ apply plugin: 'signing'
 
 
 group 'com.backendless'
-version '5.1.0-snapshot'
+version '5.2.0-snapshot'
 archivesBaseName='backendless'
 
 
@@ -149,6 +149,7 @@ repositories {
         dirs 'libs'
     }
     jcenter()
+    google()
 }
 
 publishing {
@@ -223,6 +224,10 @@ dependencies {
     provided fileTree(dir: 'libs', include: 'support-compat-26.1.0.jar')
     provided fileTree(dir: 'libs', include: 'support-fragment-26.1.0.jar')
     provided fileTree(dir: 'libs', include: 'support-annotations-26.1.0.jar')
+    provided fileTree(dir: 'libs', include: 'firebase-iid-17.0.1.jar')
+    provided fileTree(dir: 'libs', include: 'firebase-messaging-17.3.1.jar')
+    provided fileTree(dir: 'libs', include: 'play-services-basement-15.0.1.jar')
+    provided fileTree(dir: 'libs', include: 'play-services-tasks-15.0.1.jar')
     provided fileTree(dir: 'libs', include: 'FacebookSDK.jar')
     provided fileTree(dir: 'libs', include: 'maps.jar')
     compile( group: "com.backendless", name: "commons", version: "5.1.2", changing: true) {

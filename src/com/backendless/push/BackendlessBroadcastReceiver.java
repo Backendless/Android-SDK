@@ -23,12 +23,24 @@ import android.content.Context;
 import android.content.Intent;
 import com.backendless.Backendless;
 
+import java.util.Map;
+
+/**
+ * <b>GCM support will be removed after April 2019.</b>
+ * Please, use instead {@link com.backendless.push.BackendlessPushService} and {@link com.backendless.push.BackendlessFCMService}
+ */
+@Deprecated
 public class BackendlessBroadcastReceiver extends BroadcastReceiver implements PushReceiverCallback
 {
   public BackendlessBroadcastReceiver()
   {
   }
 
+  /**
+   * This method is no need anymore. All you need is just declare your implementation in AndroidManifest.xml.
+   * @return
+   */
+  @Deprecated
   public Class<? extends BackendlessPushService> getServiceClass()
   {
     return BackendlessPushService.class;
@@ -68,12 +80,20 @@ public class BackendlessBroadcastReceiver extends BroadcastReceiver implements P
     throw new RuntimeException( message );
   }
 
+  /**
+   * @deprecated Extend {@link BackendlessPushService} instead.
+   */
+  @Override
+  public void onRegistered( Context context, Map<String, String> channelRegistrations )
+  {
+  }
+
   @Override
   public final void onReceive( Context context, Intent intent )
   {
     if( !Backendless.isInitialized() )
       Backendless.initApplicationFromProperties( context );
 
-    BackendlessPushService.enqueueWork( context, getServiceClass(), intent );
+    BackendlessPushService.enqueueWork( context, intent );
   }
 }

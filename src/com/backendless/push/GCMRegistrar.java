@@ -36,6 +36,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
+@Deprecated
 public final class GCMRegistrar
 {
   public static final int DEFAULT_ON_SERVER_LIFESPAN_MS = /*2 days*/1000 * 60 * 60 * 24 * 2;
@@ -61,6 +63,11 @@ public final class GCMRegistrar
     DEFAULT_PERMISSIONS = new ArrayList<>();
     DEFAULT_PERMISSIONS.add( GCMConstants.PERMISSION_GCM_MESSAGE );
     DEFAULT_PERMISSIONS.add( GCMConstants.PERMISSION_ANDROID_INTERNET );
+  }
+
+  private GCMRegistrar()
+  {
+    throw new UnsupportedOperationException();
   }
 
   public static void checkDevice( Context context )
@@ -359,10 +366,5 @@ public final class GCMRegistrar
   private static SharedPreferences getMessagingPreferences( Context context )
   {
     return context.getSharedPreferences( MESSAGING_PREFERENCES, Context.MODE_PRIVATE );
-  }
-
-  private GCMRegistrar()
-  {
-    throw new UnsupportedOperationException();
   }
 }

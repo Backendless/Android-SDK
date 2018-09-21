@@ -54,7 +54,7 @@ public class PushTemplateHelper
   {
     try
     {
-      JSONArray jsonArray = new JSONArray( new String( rawBytes));
+      JSONArray jsonArray = new JSONArray( new String( rawBytes) );
       JSONObject templates = jsonArray.getJSONObject( 1 );
       Backendless.savePushTemplates( templates.toString() );
     }
