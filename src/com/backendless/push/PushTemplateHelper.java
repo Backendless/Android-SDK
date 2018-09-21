@@ -83,6 +83,9 @@ public class PushTemplateHelper
       else
         notificationBuilder.setBadgeIconType( NotificationCompat.BADGE_ICON_NONE );
 
+      if( template.getBadgeNumber() != null )
+        notificationBuilder.setNumber( template.getBadgeNumber() );
+
       if( template.getCancelAfter() != null && template.getCancelAfter() != 0 )
         notificationBuilder.setTimeoutAfter( template.getCancelAfter()*1000 );
     }
