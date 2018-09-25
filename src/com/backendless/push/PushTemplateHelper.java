@@ -12,6 +12,7 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
@@ -41,6 +42,9 @@ public class PushTemplateHelper
 
   public static Map<String, AndroidPushTemplate> getPushNotificationTemplates()
   {
+    if (pushNotificationTemplates == null)
+      PushTemplateHelper.restorePushTemplates();
+
     return pushNotificationTemplates;
   }
 
@@ -64,18 +68,41 @@ public class PushTemplateHelper
     }
   }
 
-  static Notification convertFromTemplate( Context context, AndroidPushTemplate template, String messageText, String messageId, String contentTitle, String summarySubText, int notificationId )
+  static Notification convertFromTemplate( final Context context, final AndroidPushTemplate template, final Bundle bundle, int notificationId )
   {
-    context = context.getApplicationContext();
+    Context appContext = context.getApplicationContext();
     // Notification channel ID is ignored for Android 7.1.1 (API level 25) and lower.
+
+    Bundle newBundle = new Bundle( );
+
+    if( template.getCustomHeaders() != null && !template.getCustomHeaders().isEmpty() )
+    {
+      for( Map.Entry<String, String> header : template.getCustomHeaders().entrySet() )
+        newBundle.putString( header.getKey(), header.getValue() );
+    }
+
+    newBundle.putAll( bundle );
+
+    String messageText = bundle.getString( PublishOptions.MESSAGE_TAG );
+    String contentTitle = bundle.getString( PublishOptions.ANDROID_CONTENT_TITLE_TAG );
+    String summarySubText = bundle.getString( PublishOptions.ANDROID_SUMMARY_SUBTEXT_TAG );
+
+    contentTitle = contentTitle != null ? contentTitle : template.getContentTitle();
+    summarySubText = summarySubText != null ? summarySubText : template.getSummarySubText();
+
+    newBundle.putString( PublishOptions.ANDROID_CONTENT_TITLE_TAG, contentTitle );
+    newBundle.putString( PublishOptions.ANDROID_SUMMARY_SUBTEXT_TAG, summarySubText );
+    newBundle.putInt( PublishOptions.NOTIFICATION_ID, notificationId );
+    newBundle.putString( PublishOptions.TEMPLATE_NAME, template.getName() );
+
 
     NotificationCompat.Builder notificationBuilder;
     // android.os.Build.VERSION_CODES.O == 26
     if( android.os.Build.VERSION.SDK_INT > 25 )
     {
-      NotificationChannel notificationChannel = getOrCreateNotificationChannel( context, template );
+      NotificationChannel notificationChannel = getOrCreateNotificationChannel( appContext, template );
 
-      notificationBuilder = new NotificationCompat.Builder( context, notificationChannel.getId() );
+      notificationBuilder = new NotificationCompat.Builder( appContext, notificationChannel.getId() );
 
       if( template.getBadge() != null &&
           ( template.getBadge() == NotificationCompat.BADGE_ICON_SMALL || template.getBadge() == NotificationCompat.BADGE_ICON_LARGE ) )
@@ -91,7 +118,7 @@ public class PushTemplateHelper
     }
     else
     {
-      notificationBuilder = new NotificationCompat.Builder( context );
+      notificationBuilder = new NotificationCompat.Builder( appContext );
 
       if( template.getPriority() != null && template.getPriority() > 0 && template.getPriority() < 6 )
         notificationBuilder.setPriority( template.getPriority() - 3 );
@@ -99,7 +126,7 @@ public class PushTemplateHelper
         notificationBuilder.setPriority( NotificationCompat.PRIORITY_DEFAULT );
 
       if( notificationBuilder.getPriority() > NotificationCompat.PRIORITY_LOW )
-        notificationBuilder.setSound( PushTemplateHelper.getSoundUri( context, template.getSound() ), AudioManager.STREAM_NOTIFICATION );
+        notificationBuilder.setSound( PushTemplateHelper.getSoundUri( appContext, template.getSound() ), AudioManager.STREAM_NOTIFICATION );
 
       if( template.getVibrate() != null && template.getVibrate().length > 0 && notificationBuilder.getPriority() > NotificationCompat.PRIORITY_LOW )
       {
@@ -159,10 +186,10 @@ public class PushTemplateHelper
       }
       else
       {
-        int largeIconResource = context.getResources().getIdentifier( template.getLargeIcon(), "raw", context.getPackageName() );
+        int largeIconResource = appContext.getResources().getIdentifier( template.getLargeIcon(), "raw", appContext.getPackageName() );
         if (largeIconResource != 0)
         {
-          Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), largeIconResource);
+          Bitmap bitmap = BitmapFactory.decodeResource(appContext.getResources(), largeIconResource);
           notificationBuilder.setLargeIcon( bitmap );
         }
       }
@@ -170,10 +197,10 @@ public class PushTemplateHelper
 
     int icon = 0;
     if( template.getIcon() != null )
-      icon = context.getResources().getIdentifier( template.getIcon(), "drawable", context.getPackageName() );
+      icon = appContext.getResources().getIdentifier( template.getIcon(), "drawable", appContext.getPackageName() );
 
     if( icon == 0 )
-      icon = context.getResources().getIdentifier( "ic_launcher", "drawable", context.getPackageName() );
+      icon = appContext.getResources().getIdentifier( "ic_launcher", "drawable", appContext.getPackageName() );
 
     if( icon != 0 )
         notificationBuilder.setSmallIcon( icon );
@@ -196,18 +223,16 @@ public class PushTemplateHelper
             .setSubText( summarySubText != null ? summarySubText : template.getSummarySubText() )
             .setContentText( messageText );
 
-    Intent notificationIntent = context.getPackageManager().getLaunchIntentForPackage( context.getPackageName() );
-    notificationIntent.putExtra( PublishOptions.MESSAGE_ID, messageId );
-    notificationIntent.putExtra( PublishOptions.TEMPLATE_NAME, template.getName() );
-    notificationIntent.putExtra( PublishOptions.MESSAGE_TAG, messageText );
+    Intent notificationIntent = appContext.getPackageManager().getLaunchIntentForPackage( appContext.getPackageName() );
+    notificationIntent.putExtras( newBundle.deepCopy() );
     notificationIntent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
 
-    PendingIntent contentIntent = PendingIntent.getActivity( context, notificationId * 3, notificationIntent, 0 );
+    PendingIntent contentIntent = PendingIntent.getActivity( appContext, notificationId * 3, notificationIntent, 0 );
     notificationBuilder.setContentIntent( contentIntent );
 
-    if ( template.getActions() != null)
+    if( template.getActions() != null )
     {
-      List<NotificationCompat.Action> actions = createActions( context, template.getActions(), template.getName(), messageId, messageText, notificationId );
+      List<NotificationCompat.Action> actions = createActions( appContext, template.getActions(), newBundle, notificationId );
       for( NotificationCompat.Action action : actions )
         notificationBuilder.addAction( action );
     }
@@ -229,7 +254,7 @@ public class PushTemplateHelper
     return soundUri;
   }
 
-  static private List<NotificationCompat.Action> createActions( Context context, Action[] actions, String templateName, String messageId, String messageText, int notificationId )
+  static private List<NotificationCompat.Action> createActions( final Context appContext, final Action[] actions, final Bundle bundle, int notificationId )
   {
     List<NotificationCompat.Action> notifActions = new ArrayList<>();
 
@@ -237,15 +262,13 @@ public class PushTemplateHelper
     for( Action a : actions )
     {
       Intent actionIntent = new Intent( a.getTitle() );
-      actionIntent.setClassName( context, a.getId() );
-      actionIntent.putExtra( PublishOptions.MESSAGE_ID, messageId );
-      actionIntent.putExtra( PublishOptions.MESSAGE_TAG, messageText );
-      actionIntent.putExtra( PublishOptions.TEMPLATE_NAME, templateName );
+      actionIntent.setClassName( appContext, a.getId() );
+      actionIntent.putExtras( bundle.deepCopy() );
       actionIntent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
 
       // user should use messageId and tag(templateName) to cancel notification.
 
-      PendingIntent pendingIntent = PendingIntent.getActivity( context, notificationId * 3 + i++, actionIntent, PendingIntent.FLAG_UPDATE_CURRENT );
+      PendingIntent pendingIntent = PendingIntent.getActivity( appContext, notificationId * 3 + i++, actionIntent, PendingIntent.FLAG_UPDATE_CURRENT );
 
       NotificationCompat.Action.Builder actionBuilder = new NotificationCompat.Action.Builder( 0, a.getTitle(), pendingIntent );
 
@@ -345,7 +368,7 @@ public class PushTemplateHelper
     } );
   }
 
-  static void restorePushTemplates()
+  private static void restorePushTemplates()
   {
     String rawTemplates = Backendless.getPushTemplatesAsJson();
 
