@@ -270,33 +270,10 @@ public class BackendlessPushService extends JobIntentService implements PushRece
     if( !showPushNotification )
       return;
 
-    final String messageId = intent.getStringExtra( PublishOptions.MESSAGE_ID );
-    final String message = intent.getStringExtra( PublishOptions.MESSAGE_TAG );
-    final String contentTitle = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TITLE_TAG );
-    final String summarySubText = intent.getStringExtra( PublishOptions.ANDROID_SUMMARY_SUBTEXT_TAG );
-
     int notificationId = BackendlessPushService.notificationIdGenerator.getAndIncrement();
 
     try
     {
-      final String templateName = intent.getStringExtra( PublishOptions.TEMPLATE_NAME );
-      if( templateName != null )
-      {
-        if( PushTemplateHelper.getPushNotificationTemplates() == null )
-          PushTemplateHelper.restorePushTemplates();
-
-        AndroidPushTemplate androidPushTemplate = PushTemplateHelper.getPushNotificationTemplates().get( templateName );
-        if( androidPushTemplate != null )
-        {
-          if( androidPushTemplate.getContentAvailable() != null && androidPushTemplate.getContentAvailable() == 1 )
-            return;
-
-          Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId, contentTitle, summarySubText, notificationId );
-          PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), notificationId );
-        }
-        return;
-      }
-
       String immediatePush = intent.getStringExtra( PublishOptions.ANDROID_IMMEDIATE_PUSH );
       if( immediatePush != null )
       {
@@ -314,11 +291,31 @@ public class BackendlessPushService extends JobIntentService implements PushRece
             androidPushTemplate.setName( BackendlessPushService.IMMEDIATE_MESSAGE );
         }
 
-        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, message, messageId, contentTitle, summarySubText, notificationId );
+        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, intent.getExtras().deepCopy(), notificationId );
         PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), notificationId );
         return;
       }
 
+      final String templateName = intent.getStringExtra( PublishOptions.TEMPLATE_NAME );
+      if( templateName != null )
+      {
+        AndroidPushTemplate androidPushTemplate = PushTemplateHelper.getPushNotificationTemplates().get( templateName );
+        if( androidPushTemplate != null )
+        {
+          if( androidPushTemplate.getContentAvailable() != null && androidPushTemplate.getContentAvailable() == 1 )
+            return;
+
+          Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, intent.getExtras().deepCopy(), notificationId );
+          intent.getExtras().deepCopy();
+          PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), notificationId );
+        }
+        return;
+      }
+
+
+      final String message = intent.getStringExtra( PublishOptions.MESSAGE_TAG );
+      final String contentTitle = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TITLE_TAG );
+      final String summarySubText = intent.getStringExtra( PublishOptions.ANDROID_SUMMARY_SUBTEXT_TAG );
       String soundResource = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_SOUND_TAG );
       fallBackMode( context, message, contentTitle, summarySubText, soundResource, notificationId );
     }
