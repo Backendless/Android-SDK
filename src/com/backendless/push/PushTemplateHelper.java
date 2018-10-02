@@ -196,11 +196,18 @@ public class PushTemplateHelper
     }
 
     int icon = 0;
+
+    // try to get icon from template
     if( template.getIcon() != null )
       icon = appContext.getResources().getIdentifier( template.getIcon(), "drawable", appContext.getPackageName() );
 
+    // try to get default icon
     if( icon == 0 )
-      icon = appContext.getResources().getIdentifier( "ic_launcher", "drawable", appContext.getPackageName() );
+    {
+      icon = context.getApplicationInfo().icon;
+      if( icon == 0 )
+        icon = android.R.drawable.sym_def_app_icon;
+    }
 
     if( icon != 0 )
         notificationBuilder.setSmallIcon( icon );
