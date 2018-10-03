@@ -100,7 +100,7 @@ public final class Persistence
 
     if( objects.isEmpty() )
       return new ArrayList<>();
-    
+
     String tableName =  BackendlessSerializer.getSimpleName( objects.get( 0 ).getClass() );
     Object[] args = new Object[] { tableName , objects };
 
@@ -254,6 +254,11 @@ public final class Persistence
       if( responder != null )
         responder.handleFault( new BackendlessFault( e ) );
     }
+  }
+
+  public void saveWhenPossible( final Object entity )
+  {
+    DelayedPersistence.queueSave( entity );
   }
 
   public <E> E create( Class<E> aClass, Map entity ) throws BackendlessException
