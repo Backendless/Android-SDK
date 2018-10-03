@@ -14,6 +14,7 @@ class DelayedPersistence
   private static Future<?> savingTask = null;
 
   private static final int INITIAL_BACKOFF = 5;
+  private static final long MAX_BACKOFF = TimeUnit.DAYS.toSeconds( 2 );
   private static final TimeUnit BACKOFF_TIME_UNIT = TimeUnit.SECONDS;
   private static int BACKOFF = INITIAL_BACKOFF;
 
@@ -49,8 +50,11 @@ class DelayedPersistence
           }
           catch( Exception e )
           {
-            savingTask = savingExecutor.schedule( this, BACKOFF, BACKOFF_TIME_UNIT );
-            BACKOFF *= 2;
+            if( BACKOFF < MAX_BACKOFF )
+            {
+              savingTask = savingExecutor.schedule( this, BACKOFF, BACKOFF_TIME_UNIT );
+              BACKOFF *= 2;
+            }
           }
         }
       } );
