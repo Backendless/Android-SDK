@@ -16,12 +16,14 @@ import java.util.Queue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 class DelayedPersistence
 {
   private static final Queue<Object> entitiesToSave;
-  private static final ScheduledExecutorService savingExecutor = Executors.newSingleThreadScheduledExecutor();
+  private static final ScheduledExecutorService savingExecutor =
+          Executors.newSingleThreadScheduledExecutor( new DefaultDaemonThreadFactory() );
   private static Future<?> savingTask = null;
 
   private static final int INITIAL_BACKOFF = 5;
@@ -206,6 +208,32 @@ class DelayedPersistence
       {
         return null;
       }
+    }
+  }
+
+  /**
+   * @see Executors : DefaultThreadFactory
+   */
+  static class DefaultDaemonThreadFactory implements ThreadFactory
+  {
+    private final ThreadGroup group;
+
+    DefaultDaemonThreadFactory()
+    {
+      SecurityManager s = System.getSecurityManager();
+      group = (s != null) ? s.getThreadGroup() :
+              Thread.currentThread().getThreadGroup();
+    }
+
+    public Thread newThread( Runnable r )
+    {
+      Thread t = new Thread( group, r, "offline-saving-queue-thread" );
+      t.setDaemon( true );
+
+      if( t.getPriority() != Thread.NORM_PRIORITY )
+        t.setPriority( Thread.NORM_PRIORITY );
+
+      return t;
     }
   }
 }
