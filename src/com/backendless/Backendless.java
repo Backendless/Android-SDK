@@ -182,6 +182,8 @@ public final class Backendless
       com.backendless.Messaging.DeviceIdHolder.init( );
     }
 
+    DelayedPersistence.resumeSaving();
+
     if( isCodeRunner() )
       return;
 

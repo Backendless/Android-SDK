@@ -34,6 +34,7 @@ class DelayedPersistence
   static
   {
     entitiesToSave = loadQueueFromStorage();
+    resumeSaving();
   }
 
   static synchronized void queueSave( final Object entity )
@@ -42,6 +43,11 @@ class DelayedPersistence
     entitiesToSave.offer( entity );
     saveQueueToStorage( entitiesToSave );
 
+    resumeSaving();
+  }
+
+  static synchronized void resumeSaving()
+  {
     // if there's no saving task running currently, create one
     if( savingTask == null || savingTask.isDone() )
     {
