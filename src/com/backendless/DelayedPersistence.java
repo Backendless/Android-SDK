@@ -157,11 +157,11 @@ class DelayedPersistence
 
   private static FileInputStream openQueueStorageInput()
   {
-    final Context context = ContextHandler.getAppContext();
-    if( context != null ) // Android environment
+    if( Backendless.isAndroid() )
     {
       try
       {
+        final Context context = ContextHandler.getAppContext();
         return context.openFileInput( STORAGE_FILE_NAME );
       }
       catch( FileNotFoundException ignored )
@@ -169,7 +169,7 @@ class DelayedPersistence
         return null;
       }
     }
-    else // Java environment
+    else
     {
       try
       {
@@ -184,11 +184,11 @@ class DelayedPersistence
 
   private static FileOutputStream openQueueStorageOutput()
   {
-    final Context context = ContextHandler.getAppContext();
-    if( context != null ) // Android environment
+    if( Backendless.isAndroid() )
     {
       try
       {
+        final Context context = ContextHandler.getAppContext();
         return context.openFileOutput( STORAGE_FILE_NAME, Context.MODE_PRIVATE );
       }
       catch( FileNotFoundException ignored )
@@ -196,7 +196,7 @@ class DelayedPersistence
         return null;
       }
     }
-    else // Java environment
+    else
     {
       try
       {
