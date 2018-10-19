@@ -186,7 +186,7 @@ public class PushTemplateHelper
       }
       else
       {
-        int largeIconResource = appContext.getResources().getIdentifier( template.getLargeIcon(), "raw", appContext.getPackageName() );
+        int largeIconResource = appContext.getResources().getIdentifier( template.getLargeIcon(), "drawable", appContext.getPackageName() );
         if (largeIconResource != 0)
         {
           Bitmap bitmap = BitmapFactory.decodeResource(appContext.getResources(), largeIconResource);
@@ -199,7 +199,12 @@ public class PushTemplateHelper
 
     // try to get icon from template
     if( template.getIcon() != null )
-      icon = appContext.getResources().getIdentifier( template.getIcon(), "drawable", appContext.getPackageName() );
+    {
+      icon = appContext.getResources().getIdentifier( template.getIcon(), "mipmap", appContext.getPackageName() );
+
+      if( icon == 0 )
+        icon = appContext.getResources().getIdentifier( template.getIcon(), "drawable", appContext.getPackageName() );
+    }
 
     // try to get default icon
     if( icon == 0 )

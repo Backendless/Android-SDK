@@ -242,7 +242,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
   @Override
   public boolean onMessage( Context context, Intent intent )
   {
-    Log.i( TAG, "A silent notification has been received by Backendless Push Service. The notification has not been handled since it requires a custom push service class which extends from com.backendless.push.BackendlessPushService. The notification payload can be found within intent extras: intent.getStringExtra(PublishOptions.<CONSTANT_VALUE>)." );
+    Log.i( TAG, "Notification has been received by default 'BackendlessPushService' class. You may override methods in a custom push service class which extends from 'com.backendless.push.BackendlessPushService'. The notification payload can be found within intent extras: intent.getStringExtra(PublishOptions.<CONSTANT_VALUE>)." );
     return true;
   }
 
@@ -530,7 +530,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
   {
     String deviceToken = intent.getStringExtra( BackendlessPushService.KEY_DEVICE_TOKEN );
     List<String> channels = intent.getStringArrayListExtra( BackendlessPushService.KEY_CHANNELS );
-    Long expiration = intent.getLongExtra( BackendlessPushService.KEY_EXPIRATION, 0 );
+    long expiration = intent.getLongExtra( BackendlessPushService.KEY_EXPIRATION, 0 );
 
     Backendless.Messaging.registerDeviceOnServer( deviceToken, channels, expiration, new AsyncCallback<String>()
     {
