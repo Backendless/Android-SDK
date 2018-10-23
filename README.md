@@ -3,14 +3,11 @@ This is a repo for the distribution of Backendless Pro - the self-hosted version
 
 ## Getting Started
 To get started:
-1. Download the `quickstart` [archive](TBD), which contains all the management scripts for the product. 
-1. Expand the archive into a directory.
-1. Open a command prompt/terminal window and change the current directory to the one from the item above.
-1. Run the following command, which will download and install all the required images:
+1. Download the `quickstart` [archive](TBD) and expand it into a directory. The archive contains all the management scripts for the product. 
+1. Open a command prompt/terminal window and change the current directory to the one from the item above. Run the following command, which will download and install all the required images:
     ```
     ./backendless_install.sh
     ```
-
 1. When the installation script runs, it will prompt you to enter port numbers for the following Backendless components:
     * MySQL (default port - 3306)
     * MongoDB (default port - 27017)
