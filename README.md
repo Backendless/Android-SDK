@@ -33,5 +33,6 @@ To get started:
     Backendless server is ready
     ````
 1. Now you can open and login to Backendless Console by openning `http://localhost:80` (if you specified a different port for `the web console server`, make sure to use it in the URL). You will see the Backendless Console login screen:
-1. While the command is running, make sure to request an evaluation license for Backendless Pro. To do this open the [Backendless Pro License Request page](https://backendless.com/products/pro/license-request/), fill out and submit the form - you will receive your license key via email right away.
-1. 
+    ![Backendless Login](images/backendless-login.jpg)
+1. Since this is the first time you access your installation, you will need to create a developer/admin account. To do that, click the **Register** link and fill out the registration form. This will create a Backendless account for your installation. Return to the Login form (which is accessible at the installation's URL `http://localhost:[PORT]`) and login to your account.     
+1. To proceed further, you need to request an evaluation license for Backendless Pro. To do this open the [Backendless Pro License Request page](https://backendless.com/products/pro/license-request/), fill out and submit the form - you will receive your license key via email right away.
