@@ -574,18 +574,22 @@ public final class Messaging
    *                      delivery.
    * @return a data structure which contains ID of the published message and the status of the publish operation.
    */
-  public MessageStatus publish( String channelName, Object message, PublishOptions publishOptions,
-                                DeliveryOptions deliveryOptions )
+  public MessageStatus publish( String channelName, Object message, PublishOptions publishOptions, DeliveryOptions deliveryOptions )
   {
     channelName = getCheckedChannelName( channelName );
 
     if( message == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_MESSAGE );
 
-    if( deliveryOptions.getPushBroadcast() == 0 && deliveryOptions.getPushSinglecast().isEmpty() )
+    if (deliveryOptions.getSegmentQuery() != null && deliveryOptions.getSegmentQuery().isEmpty())
     {
-      deliveryOptions.setPushBroadcast( PushBroadcastMask.ALL );
+      MessageStatus ms = new MessageStatus( null, PublishStatusEnum.FAILED );
+      ms.setErrorMessage( "Empty recipient list for singlecast publishing." );
+      return ms;
     }
+
+    if( deliveryOptions.getPushBroadcast() == 0 && deliveryOptions.getPushSinglecast() == null )
+      deliveryOptions.setPushBroadcast( PushBroadcastMask.ALL );
 
     return (MessageStatus) Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "publish", new Object[] { channelName, message, publishOptions, deliveryOptions } );
   }
@@ -667,6 +671,18 @@ public final class Messaging
 
       if( message == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_MESSAGE );
+
+      if( deliveryOptions.getSegmentQuery() != null && deliveryOptions.getSegmentQuery().isEmpty() )
+      {
+        MessageStatus ms = new MessageStatus( null, PublishStatusEnum.FAILED );
+        ms.setErrorMessage( "Empty recipient list for singlecast publishing." );
+        if( responder != null )
+          responder.handleResponse( ms );
+        return;
+      }
+
+      if( deliveryOptions.getPushBroadcast() == 0 && deliveryOptions.getPushSinglecast() == null )
+        deliveryOptions.setPushBroadcast( PushBroadcastMask.ALL );
 
       Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "publish", new Object[] { channelName, message, publishOptions, deliveryOptions }, responder );
     }
