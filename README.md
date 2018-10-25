@@ -23,13 +23,21 @@ To get started:
     ```
 1. During the installation you may see some errors, for example:
     ```
-    [ERROR] WaiterService - Consul is accessible, but there is no version
+    [INFO] WaiterService - SQL database 'main_backendless' is not accessible. Error message: Communications link failure
+    The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server..
+    Waiting for 3000 millis before retry...
     ```
-    You can ignore errors like that, they occur because various product components start in random order, but eventually auto-discover each other. Depending how fast your computer is and how much memory it has, the complete launch may take between 3 to 10 minutes. You will know it is done when you see the following message in the script output:
+    You can ignore errors like that, they occur because various product components start in random order, but eventually they auto-discover each other. Depending how fast your computer is and how much memory it has, the complete launch may take between 3 to 10 minutes. You will know it is done when you see the following message in the script output:
     ````
-    Backendless server is ready
+   [INFO] StartUpLogger - *************************************************************
+   [INFO] StartUpLogger - ******************** Backendless started ********************
+   [INFO] StartUpLogger - *************************************************************
+   Backendless server is ready
     ````
-1. Now you can open and login to Backendless Console by openning `http://localhost:80` (if you specified a different port for `the web console server`, make sure to use it in the URL). You will see the Backendless Console login screen:
+1. Now you can open Backendless Console by navigating to `http://localhost:80` (if you specified a different port for `the web console server`, make sure to use it in the URL). If this is the first time you run Backendless Pro, you will see the following screen:
+    ![Backendless Licensing Popup](images/licensing-popup.jpg)
+1. To proceed further, you need to request an evaluation license for Backendless Pro. To do this, either use the link in the popup or open the [Backendless Pro License Request page](https://backendless.com/products/pro/license-request/), fill out and submit the form - you will receive your license key via email right away.
+1. Paste the license key from the email into the `License Key` text area and click the **SAVE LICENSE KEY** button.
+1. You will see the Backendless Console login screen:
     ![Backendless Login](images/backendless-login.jpg)
 1. Since this is the first time you access your installation, you will need to create a developer/admin account. To do that, click the **Register** link and fill out the registration form. This will create a Backendless account for your installation. Return to the Login form (which is accessible at the installation's URL `http://localhost:[PORT]`) and login to your account.     
-1. To proceed further, you need to request an evaluation license for Backendless Pro. To do this open the [Backendless Pro License Request page](https://backendless.com/products/pro/license-request/), fill out and submit the form - you will receive your license key via email right away.
