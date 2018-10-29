@@ -40,4 +40,4 @@ To get started:
 1. Paste the license key from the email into the `License Key` text area and click the **SAVE LICENSE KEY** button.
 1. You will see the Backendless Console login screen:
 ![Backendless Login](images/backendless-login.jpg)
-1. Since this is the first time you access your installation, you will need to create a developer/admin account. To do that, click the **Register** link and fill out the registration form. This will create a Backendless account for your installation. Return to the Login form (which is accessible at the installation's URL `http://localhost:[PORT]`) and login to your account.     
+1. Since this is the first time you access your installation, you will need to create a developer/admin account. To do that, click the **Register** link and fill out the registration form. This will create a Backendless account for your installation. The confirmation page will say that an email is sent to your email address, ignore it and return to the login form (which is accessible at the installation's URL `http://localhost:[PORT]`) and login to your account using the registration credentials.     
