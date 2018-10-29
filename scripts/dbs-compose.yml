@@ -1,0 +1,66 @@
+version: '3.6'
+
+services:
+
+  bl-redis:
+    image: redis:4
+    hostname: bl-redis
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+    - "6379:6379"
+    volumes:
+    - ${MOUNTS}/redis/data:/data
+    networks:
+    - bkndls-net
+
+  bl-redis-debug:
+    image: redis:4
+    hostname: bl-redis-debug
+    command: ["redis-server", "--appendonly", "yes", "--port", "${BL_PROPERTY_config_redis_bl_debug_port}"]
+    ports:
+    - "${BL_PROPERTY_config_redis_bl_debug_port}:${BL_PROPERTY_config_redis_bl_debug_port}"
+    networks:
+    - bkndls-net
+
+
+  bl-mysql:
+    image: mysql:5.7
+    hostname: bl-mysql
+
+    environment:
+    - MYSQL_ROOT_PASSWORD=rootpassword
+    command: --lower_case_table_names=0
+
+    ports:
+    - "${BL_MYSQL_PORT}:3306"
+    volumes:
+    - ${MOUNTS}/mysql/data:/var/lib/mysql
+    - ${MOUNTS}/mysql/init:/docker-entrypoint-initdb.d
+    networks:
+    - bkndls-net
+
+
+  bl-mongo:
+    image: mongo:3.4.3
+    hostname: bl-mongo
+
+    #environment:
+    #- MONGO_INITDB_ROOT_USERNAME=root
+    #- MONGO_INITDB_ROOT_PASSWORD=rootpassword
+
+    ports:
+    - "${BL_MONGODB_PORT}:27017"
+    volumes:
+    - ${MOUNTS}/mongo/data:/data/db
+    networks:
+    - bkndls-net
+
+
+
+#volumes:
+#  appData:
+
+networks:
+  bkndls-net:
+
+

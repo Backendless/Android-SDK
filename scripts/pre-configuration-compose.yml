@@ -1,0 +1,23 @@
+version: '3.6'
+
+services:
+
+  bl-config-loader:
+    image: "${REGISTRY}bl-config-loader:${VERSION}"
+
+    env_file:
+      - ports.env
+
+    environment:
+      - consulConfig={"host":"bl-consul"}
+      - PRODUCT_VERSION=5_1_0
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 0s
+    networks:
+      - bkndls-net
+
+networks:
+  bkndls-net:
+

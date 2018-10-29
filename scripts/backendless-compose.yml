@@ -1,0 +1,277 @@
+version: '3.6'
+
+services:
+
+  bl-upgrade:
+    image: "${REGISTRY}bl-upgrade:${VERSION}"
+    #stop_signal: SIGINT
+    hostname: bl-upgrade
+    #command: []
+    env_file:
+      - ports.env
+    environment:
+      - BL_CONFIG_PROVIDER=consul
+      - BL_CONSUL_HOST=bl-consul
+      - BL_CONSUL_PORT=8500
+      - BL_MANAGEMENT_HTTP_PORT=2400
+
+        # will try to perform all steps of upgrader process without paying attention to code version
+      - forceUpgrade=false
+        # checks the versions of all app databases (and upgrades it if necessary) independently from the version in 'main_backendless.Version' (use in case if the db upgrade was failed during work, and some dbs have staied nonupdated)
+      - dbRepeatedUpgrade=false
+      - mainDBTargetVersion=6
+      - appDBTargetVersion=47
+      - updateDBThreadNumber=2
+      - applicationsToBeUpdatedFirst=main_application
+        # parameter for skipping WaiterService
+      - SKIP_VERSION_CHECK=false
+
+    #ports:
+    #- "9000:9000"
+    volumes:
+    #- nfsRepo:/opt/backendless/repo
+    - ${MOUNTS}/repo:/opt/backendless/repo
+    - ${MOUNTS}/upgrade-service/logs:/opt/backendless/upgrade-service/log
+    networks:
+    - bkndls-net
+
+    depends_on:
+    - bl-consul
+
+  bl-hazelcast:
+    image: "${REGISTRY}bl-hazelcast:${VERSION}"
+    hostname: bl-hazelcast
+
+    env_file:
+      - ports.env
+
+    environment:
+      - BL_CONFIG_PROVIDER=consul
+      - BL_CONSUL_HOST=bl-consul
+      - BL_CONSUL_PORT=8500
+      - BL_MANAGEMENT_HTTP_PORT=2400
+    networks:
+    - bkndls-net
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:2400/health"]
+      interval: 20s
+      timeout: 300s
+      retries: 3
+      start_period: 180s
+
+    depends_on:
+    - bl-consul
+
+  bl-server:
+    image: "${REGISTRY}bl-server:${VERSION}"
+    #stop_signal: SIGINT
+    hostname: bl-server
+    command: ["play"]
+
+    env_file:
+      - ports.env
+
+    environment:
+      - BL_CONFIG_PROVIDER=consul
+      - BL_CONSUL_HOST=bl-consul
+      - BL_CONSUL_PORT=8500
+
+    #environment:
+    #-
+
+    ports:
+    - "${BL_PROPERTY_config_server_publicPort}:9000"
+    volumes:
+    #- nfsRepo:/opt/backendless/repo
+    - ${MOUNTS}/repo:/opt/backendless/repo
+    - ${MOUNTS}/server/logs:/opt/backendless/server/play-logs
+    networks:
+    - bkndls-net
+
+    depends_on:
+    - bl-consul
+    - bl-redis
+    - bl-mysql
+    - bl-mongo
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000"]
+      interval: 20s
+      timeout: 1s
+      retries: 3
+      start_period: 180s
+
+  bl-taskman:
+    image: "${REGISTRY}bl-server:${VERSION}"
+    #stop_signal: SIGINT
+    hostname: bl-taskman
+    command: ["taskman"]
+
+    env_file:
+      - ports.env
+
+    environment:
+      - BL_CONFIG_PROVIDER=consul
+      - BL_CONSUL_HOST=bl-consul
+      - BL_CONSUL_PORT=8500
+
+    volumes:
+    #- nfsRepo:/opt/backendless/repo
+    - ${MOUNTS}/repo:/opt/backendless/repo
+    - ${MOUNTS}/taskman/logs:/opt/backendless/server/play-logs
+    networks:
+    - bkndls-net
+
+    depends_on:
+    - bl-redis
+    - bl-mysql
+    - bl-mongo
+    - bl-server
+
+
+  bl-coderunner-java:
+    image: "${REGISTRY}bl-coderunner-java:${VERSION}"
+    #stop_signal: SIGINT
+    hostname: bl-coderunner-java
+    #command: []
+
+    env_file:
+      - ports.env
+
+    environment:
+      - BL_CONFIG_PROVIDER=consul
+      - BL_CONSUL_HOST=bl-consul
+      - BL_CONSUL_PORT=8500
+      - BL_MANAGEMENT_HTTP_PORT=2400
+
+    #ports:
+    #- "9000:9000"
+    volumes:
+    #- nfsRepo:/opt/backendless/repo
+    - ${MOUNTS}/repo:/opt/backendless/repo
+    - ${MOUNTS}/coderunner-java/logs:/opt/backendless/coderunner/log
+    networks:
+    - bkndls-net
+
+    depends_on:
+    - bl-consul
+    - bl-server
+    - bl-redis
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:2400/health"]
+      interval: 20s
+      timeout: 300s
+      retries: 3
+      start_period: 180s
+
+
+  bl-coderunner-js:
+    image: "${REGISTRY}bl-coderunner-js:${VERSION}"
+    #stop_signal: SIGINT
+    hostname: bl-coderunner-js
+    #command: []
+
+    env_file:
+    - ports.env
+
+    environment:
+    - BL_CONSUL_HOST=bl-consul
+    - BL_CONSUL_PORT=8500
+    - BL_MANAGEMENT_HTTP_PORT=2992
+    - BL_JS_CODE_RUNNER_MODE=pro # can be only "cloud" or "pro"
+
+    #ports:
+    #- "2992:2992"
+    volumes:
+    #- nfsRepo:/opt/backendless/repo
+    - ${MOUNTS}/repo:/opt/backendless/repo
+    - ${MOUNTS}/coderunner-js/logs:/opt/backendless/logs
+    networks:
+    - bkndls-net
+
+    depends_on:
+    - bl-consul
+    - bl-server
+    - bl-redis
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:2992/health"]
+      interval: 20s
+      timeout: 1s
+      retries: 3
+      start_period: 10s
+
+  bl-web-console:
+    image: "${REGISTRY}bl-web-console:${VERSION}"
+    #stop_signal: SIGINT
+    hostname: bl-web-console
+    #command: []
+
+    env_file:
+    - ports.env
+
+    environment:
+    - BL_CONSUL_HOST=bl-consul
+    - BL_CONSUL_PORT=8500
+    - PORT=${BL_PROPERTY_config_console_port}
+
+    ports:
+    - "${BL_PROPERTY_config_console_port}:${BL_PROPERTY_config_console_port}"
+    volumes:
+    #- nfsRepo:/opt/backendless/repo
+    - ${MOUNTS}/repo:/opt/backendless/repo
+    - ${MOUNTS}/web-console/logs:/opt/backendless/console/logs
+    networks:
+    - bkndls-net
+
+    depends_on:
+    - bl-consul
+    - bl-server
+    - bl-redis
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${BL_PROPERTY_config_console_port}"]
+      interval: 20s
+      timeout: 2s
+      retries: 3
+      start_period: 10s
+
+  bl-rt-server:
+    image: "${REGISTRY}bl-rt-server:${VERSION}"
+    #stop_signal: SIGINT
+    hostname: bl-rt-server
+    #command: []
+
+    env_file:
+    - ports.env
+
+    environment:
+    - BL_CONSUL_HOST=bl-consul
+    - BL_CONSUL_PORT=8500
+    #- NODE_CONFIG={"socket-server": {"connection-host":"localhost","host":"bl-consul","port":5000,"connection-port":${BL_PROPERTY_config_rt_server_socketServer_connection_port}}}
+
+    ports:
+    - "${BL_PROPERTY_config_rt_server_socketServer_connection_port}:5000"
+    volumes:
+    - ${MOUNTS}/rt-server/logs:/opt/backendless/rt-server/logs
+    networks:
+    - bkndls-net
+
+    depends_on:
+    - bl-consul
+    - bl-server
+    - bl-redis
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 20s
+      timeout: 1s
+      retries: 3
+      start_period: 10s
+
+
+networks:
+  bkndls-net:
+

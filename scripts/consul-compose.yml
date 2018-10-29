@@ -1,0 +1,34 @@
+version: '3.6'
+
+services:
+
+  bl-consul:
+    image: consul:1.1.0
+    environment:
+      CONSUL_BIND_INTERFACE: eth0
+    networks:
+      - bkndls-net
+    depends_on:
+      - bkndls-net
+    ports:
+      - "8400:8400"
+      - "8500:8500"
+      - "8600:8600"
+    command: "agent -server -bootstrap-expect 1 -ui -client 0.0.0.0"
+    volumes:
+      - ${MOUNTS}/consul/server-bootstrap/data:/consul/data
+   
+    stop_grace_period: 1m30s
+    
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+
+
+#volumes:
+#  appData:
+
+networks:
+  bkndls-net:
+
