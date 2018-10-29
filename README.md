@@ -3,7 +3,7 @@ This is a repo for the distribution of Backendless Pro - the self-hosted version
 
 ## Getting Started
 To get started:
-1. Download the `quickstart` [archive](TBD) and expand it into a directory. The archive contains all the management scripts for the product. 
+1. Download the `quickstart` [archive](https://github.com/Backendless/BackendlessPro/archive/master.zip) and expand it into a directory. The archive contains all the management scripts for the product. 
 1. Open a command prompt/terminal window and change the current directory to the one from the item above. Run the following command, which will download and install all the required images:
     ```
     ./backendless_install.sh
