@@ -62,6 +62,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public final class Messaging
@@ -257,15 +258,7 @@ public final class Messaging
    */
   public void registerDevice()
   {
-    registerDevice( (AsyncCallback<String>) null );
-  }
-
-  /**
-   * For FireBase messaging only.
-   */
-  public void registerDevice( AsyncCallback<String> callback )
-  {
-    registerDevice( Collections.singletonList( DEFAULT_CHANNEL_NAME ), callback );
+    registerDevice( Collections.singletonList( DEFAULT_CHANNEL_NAME ) );
   }
 
   /**
@@ -273,15 +266,7 @@ public final class Messaging
    */
   public void registerDevice( List<String> channels )
   {
-    registerDevice( Collections.singletonList( DEFAULT_CHANNEL_NAME ), (AsyncCallback<String>) null );
-  }
-
-  /**
-   * For FireBase messaging only.
-   */
-  public void registerDevice( List<String> channels, AsyncCallback<String> callback )
-  {
-    registerDevice( channels, (Date) null, callback );
+    registerDevice( channels, (Date) null );
   }
 
   /**
@@ -289,13 +274,23 @@ public final class Messaging
    */
   public void registerDevice( List<String> channels, Date expiration )
   {
-    registerDevice( channels, expiration, (AsyncCallback<String>) null );
+    registerDevice( channels, expiration, (AsyncCallback<String>) null, (AsyncCallback<Map<String, String>>)null );
   }
 
   /**
    * For FireBase messaging only.
    */
-  public void registerDevice( List<String> channels, Date expiration, AsyncCallback<String> callback )
+  public void registerDevice( List<String> channels, AsyncCallback<String> fcmCallback, AsyncCallback<Map<String, String>> bkndlsCallback )
+  {
+    registerDevice( channels, (Date) null, fcmCallback, bkndlsCallback );
+  }
+
+  /**
+   * For FireBase messaging only.
+   * @param fcmCallback Triggered on successful/error event during registration on Google FCM. On success receives <b>deviceToken</b>.
+   * @param bkndlsCallback Triggered on successful/error event during registration on Backendless server. On success receive channelRegistrations map, where <i>key</i> is a <b>channel name</b> and <i>value</i> is a <b>device registration id</b> (table DeviceRegistrations).
+   */
+  public void registerDevice( List<String> channels, Date expiration, AsyncCallback<String> fcmCallback, AsyncCallback<Map<String, String>> bkndlsCallback )
   {
     if( !BackendlessPushService.isFCM( ContextHandler.getAppContext() ) )
       throw new IllegalStateException( "The method is intended only for FireBase messaging." );
@@ -317,7 +312,7 @@ public final class Messaging
       else
         expirationMs = expiration.getTime();
     }
-    FCMRegistration.registerDevice( ContextHandler.getAppContext(), channels, expirationMs, callback );
+    FCMRegistration.registerDevice( ContextHandler.getAppContext(), channels, expirationMs, fcmCallback, bkndlsCallback );
   }
 
   private void checkChannelName( String channelName )
@@ -397,12 +392,12 @@ public final class Messaging
     unregisterDevice( channels, null );
   }
 
-  public void unregisterDevice( AsyncCallback<Void> callback )
+  public void unregisterDevice( AsyncCallback<Integer> callback )
   {
     unregisterDevice( null, callback );
   }
 
-  public void unregisterDevice( final List<String> channels, final AsyncCallback<Void> callback )
+  public void unregisterDevice( final List<String> channels, final AsyncCallback<Integer> callback )
   {
     new AsyncTask<Void, Void, RuntimeException>()
     {
@@ -415,7 +410,7 @@ public final class Messaging
 
           if ( BackendlessPushService.isFCM( context ) )
           {
-            FCMRegistration.unregisterDevice( context, channels );
+            FCMRegistration.unregisterDevice( context, channels, callback );
           }
           else
           {
@@ -441,11 +436,6 @@ public final class Messaging
             throw result;
 
           callback.handleFault( new BackendlessFault( result ) );
-        }
-        else
-        {
-          if( callback != null )
-            callback.handleResponse( null );
         }
       }
     }.execute();
