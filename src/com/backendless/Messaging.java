@@ -50,6 +50,7 @@ import com.backendless.messaging.PublishOptions;
 import com.backendless.messaging.PublishStatusEnum;
 import com.backendless.messaging.PushBroadcastMask;
 import com.backendless.push.BackendlessPushService;
+import com.backendless.push.DeviceRegistrationResult;
 import com.backendless.push.FCMRegistration;
 import com.backendless.push.GCMRegistrar;
 import com.backendless.rt.messaging.Channel;
@@ -62,7 +63,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 public final class Messaging
@@ -274,23 +274,21 @@ public final class Messaging
    */
   public void registerDevice( List<String> channels, Date expiration )
   {
-    registerDevice( channels, expiration, (AsyncCallback<String>) null, (AsyncCallback<Map<String, String>>)null );
+    registerDevice( channels, expiration, (AsyncCallback<DeviceRegistrationResult>) null );
   }
 
   /**
    * For FireBase messaging only.
    */
-  public void registerDevice( List<String> channels, AsyncCallback<String> fcmCallback, AsyncCallback<Map<String, String>> bkndlsCallback )
+  public void registerDevice( List<String> channels, AsyncCallback<DeviceRegistrationResult> callback )
   {
-    registerDevice( channels, (Date) null, fcmCallback, bkndlsCallback );
+    registerDevice( channels, (Date) null, callback );
   }
 
   /**
    * For FireBase messaging only.
-   * @param fcmCallback Triggered on successful/error event during registration on Google FCM. On success receives <b>deviceToken</b>.
-   * @param bkndlsCallback Triggered on successful/error event during registration on Backendless server. On success receive channelRegistrations map, where <i>key</i> is a <b>channel name</b> and <i>value</i> is a <b>device registration id</b> (table DeviceRegistrations).
    */
-  public void registerDevice( List<String> channels, Date expiration, AsyncCallback<String> fcmCallback, AsyncCallback<Map<String, String>> bkndlsCallback )
+  public void registerDevice( List<String> channels, Date expiration, AsyncCallback<DeviceRegistrationResult> callback )
   {
     if( !BackendlessPushService.isFCM( ContextHandler.getAppContext() ) )
       throw new IllegalStateException( "The method is intended only for FireBase messaging." );
@@ -312,7 +310,7 @@ public final class Messaging
       else
         expirationMs = expiration.getTime();
     }
-    FCMRegistration.registerDevice( ContextHandler.getAppContext(), channels, expirationMs, fcmCallback, bkndlsCallback );
+    FCMRegistration.registerDevice( ContextHandler.getAppContext(), channels, expirationMs, callback );
   }
 
   private void checkChannelName( String channelName )

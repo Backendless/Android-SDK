@@ -26,7 +26,7 @@ public class FCMRegistration
   private static final String TAG = FCMRegistration.class.getSimpleName();
 
   public static void registerDevice( final Context appContext, final List<String> channels, final long expiration,
-                                     final AsyncCallback<String> fcmCallback, final AsyncCallback<Map<String, String>> bkndlsCallback )
+                                     final AsyncCallback<DeviceRegistrationResult> callback )
   {
     FirebaseMessaging.getInstance().subscribeToTopic( DEFAULT_TOPIC ).addOnCompleteListener( new OnCompleteListener<Void>()
     {
@@ -36,8 +36,8 @@ public class FCMRegistration
       if( !task.isSuccessful() )
       {
         Log.e( TAG, "Failed to subscribe in FCM.", task.getException() );
-        if (fcmCallback != null)
-          fcmCallback.handleFault( new BackendlessFault( "Failed to subscribe in FCM. " + task.getException().getMessage() ) );
+        if (callback != null)
+          callback.handleFault( new BackendlessFault( "Failed to subscribe in FCM. " + task.getException().getMessage() ) );
       }
       else
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener( new OnCompleteListener<InstanceIdResult>()
@@ -48,17 +48,21 @@ public class FCMRegistration
             if( !task.isSuccessful() )
             {
               Log.e( TAG, "Can not retrieve deviceToken from FCM.", task.getException() );
-              if( fcmCallback != null )
-                fcmCallback.handleFault( new BackendlessFault( "Can not retrieve deviceToken from FCM. " + task.getException().getMessage() ) );
+              if( callback != null )
+                callback.handleFault( new BackendlessFault( "Can not retrieve deviceToken from FCM. " + task.getException().getMessage() ) );
             }
             else
             {
               String deviceToken = task.getResult().getToken();
 
-              if( fcmCallback != null )
-                fcmCallback.handleResponse( deviceToken );
+              DeviceRegistrationResult devRegResult = null;
+              if( callback != null )
+              {
+                devRegResult = new DeviceRegistrationResult();
+                callback.handleResponse( devRegResult.setDeviceToken( deviceToken ) );
+              }
 
-              FCMRegistration.registerOnBackendless( appContext, deviceToken, channels, expiration, bkndlsCallback );
+              FCMRegistration.registerOnBackendless( appContext, deviceToken, channels, expiration, callback, devRegResult );
             }
           }
         } );
@@ -66,7 +70,7 @@ public class FCMRegistration
     } );
   }
 
-  private static void registerOnBackendless( final Context appContext, String deviceToken, List<String> channels, long expiration, final AsyncCallback<Map<String, String>> bkndlsCallback )
+  private static void registerOnBackendless( final Context appContext, String deviceToken, List<String> channels, long expiration, final AsyncCallback<DeviceRegistrationResult> callback, final DeviceRegistrationResult devRegResult )
   {
     Backendless.Messaging.registerDeviceOnServer( deviceToken, channels, expiration, new AsyncCallback<String>()
     {
@@ -76,13 +80,15 @@ public class FCMRegistration
         Log.d( TAG, "Registered on Backendless." );
         try
         {
-          Map<String, String> channelRegistrations = processRegistrationPayload( appContext, registrationInfo );
-          if( bkndlsCallback != null )
-            bkndlsCallback.handleResponse( channelRegistrations );
+          if( callback != null )
+          {
+            Map<String, String> channelRegistrations = processRegistrationPayload( appContext, registrationInfo );
+            callback.handleResponse( devRegResult.setChannelRegistrations( channelRegistrations ) );
+          }
         }
         catch( Exception e )
         {
-          bkndlsCallback.handleFault( new BackendlessFault( "Could not deserialize server response: " + e.getMessage() ) );
+          callback.handleFault( new BackendlessFault( "Could not deserialize server response: " + e.getMessage() ) );
         }
       }
 
@@ -90,8 +96,8 @@ public class FCMRegistration
       public void handleFault( BackendlessFault fault )
       {
         Log.d( TAG, "Could not register device on Backendless server: " + fault.toString() );
-        if( bkndlsCallback != null )
-          bkndlsCallback.handleFault( new BackendlessFault( "Could not register device on Backendless server: " + fault.toString() ) );
+        if( callback != null )
+          callback.handleFault( new BackendlessFault( "Could not register device on Backendless server: " + fault.toString() ) );
       }
     } );
   }
