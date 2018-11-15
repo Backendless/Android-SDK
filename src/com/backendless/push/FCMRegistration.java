@@ -54,14 +54,7 @@ public class FCMRegistration
             else
             {
               String deviceToken = task.getResult().getToken();
-
-              DeviceRegistrationResult devRegResult = null;
-              if( callback != null )
-              {
-                devRegResult = new DeviceRegistrationResult();
-                callback.handleResponse( devRegResult.setDeviceToken( deviceToken ) );
-              }
-
+              DeviceRegistrationResult devRegResult = (callback != null) ? new DeviceRegistrationResult().setDeviceToken( deviceToken ) : null;
               FCMRegistration.registerOnBackendless( appContext, deviceToken, channels, expiration, callback, devRegResult );
             }
           }
