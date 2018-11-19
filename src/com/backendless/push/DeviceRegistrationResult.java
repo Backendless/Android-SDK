@@ -40,4 +40,10 @@ public class DeviceRegistrationResult
     this.channelRegistrations = channelRegistrations;
     return this;
   }
+
+  @Override
+  public String toString()
+  {
+    return "DeviceRegistrationResult{" + "deviceToken='" + deviceToken + '\'' + ", channelRegistrations=" + channelRegistrations + '}';
+  }
 }
