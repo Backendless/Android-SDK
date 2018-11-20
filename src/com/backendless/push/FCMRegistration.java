@@ -105,7 +105,7 @@ public class FCMRegistration
         Log.d( TAG, "Unregistered on Backendless." );
         if( response < 1 )
           FCMRegistration.unregisterDeviceOnFCM( appContext, callback );
-        else
+        else if( callback != null )
           callback.handleResponse( response );
       }
 
@@ -113,7 +113,8 @@ public class FCMRegistration
       public void handleFault( BackendlessFault fault )
       {
         Log.d( TAG, "Could not unregister device on Backendless server: " + fault.toString() );
-        callback.handleFault( new BackendlessFault( "Could not unregister device on Backendless server: " + fault.toString() ) );
+        if (callback != null)
+          callback.handleFault( new BackendlessFault( "Could not unregister device on Backendless server: " + fault.toString() ) );
       }
     } );
   }
@@ -128,13 +129,15 @@ public class FCMRegistration
         if( task.isSuccessful() )
         {
           Log.d( TAG, "Unsubscribed on FCM." );
-          callback.handleResponse( 0 );
+          if( callback != null )
+            callback.handleResponse( 0 );
         }
         else
         {
           Log.e( TAG, "Failed to unsubscribe in FCM.", task.getException() );
           String reason = (task.getException() != null) ? Objects.toString( task.getException().getMessage() ) : "";
-          callback.handleFault( new BackendlessFault( "Failed to unsubscribe on FCM. " + reason ) );
+          if( callback != null )
+            callback.handleFault( new BackendlessFault( "Failed to unsubscribe on FCM. " + reason ) );
         }
       }
     } );
