@@ -18,7 +18,6 @@
 
 package com.backendless.files;
 
-import android.widget.ProgressBar;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
@@ -58,17 +57,17 @@ public class BackendlessFile
 
   public void download( String localFilePathName, AsyncCallback<File> callback )
   {
-    new FilesLoad().download( fileURL, localFilePathName, callback );
+    new FileDownload().download( fileURL, localFilePathName, callback );
   }
 
   public void download( OutputStream stream, AsyncCallback<Void> callback )
   {
-    new FilesLoad().download( fileURL, stream, callback );
+    new FileDownload().download( fileURL, stream, callback );
   }
 
   public void download( AsyncCallback<byte[]> callback )
   {
-    new FilesLoad().download( fileURL, callback );
+    new FileDownload().download( fileURL, callback );
   }
 
   /*

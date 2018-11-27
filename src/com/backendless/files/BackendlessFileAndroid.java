@@ -37,16 +37,16 @@ public class BackendlessFileAndroid extends BackendlessFile
 
   public void download( String localFilePathName, ProgressBar progressBar, AsyncCallback<File> callback )
   {
-    new FilesLoad().download( getFileURL(), localFilePathName, progressBar, callback );
+    new FileDownload().download( getFileURL(), localFilePathName, progressBar, callback );
   }
 
   public void download(OutputStream stream, ProgressBar progressBar, AsyncCallback<Void> callback )
   {
-    new FilesLoad().download( getFileURL(), stream, progressBar, callback );
+    new FileDownload().download( getFileURL(), stream, progressBar, callback );
   }
 
   public void download(ProgressBar progressBar, AsyncCallback<byte[]> callback )
   {
-    new FilesLoad().download( getFileURL(), progressBar, callback );
+    new FileDownload().download( getFileURL(), progressBar, callback );
   }
 }
