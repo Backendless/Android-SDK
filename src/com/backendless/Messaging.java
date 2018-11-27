@@ -136,41 +136,31 @@ public final class Messaging
     return instance;
   }
 
-  /**
-   * For FireBase messaging only.
-   */
   public void registerDevice()
   {
-    registerDevice( Collections.singletonList( DEFAULT_CHANNEL_NAME ) );
+    registerDevice( (List<String>) null );
   }
 
-  /**
-   * For FireBase messaging only.
-   */
+  public void registerDevice( AsyncCallback<DeviceRegistrationResult> callback )
+  {
+    registerDevice( (List<String>) null, callback );
+  }
+
   public void registerDevice( List<String> channels )
   {
     registerDevice( channels, (Date) null );
   }
 
-  /**
-   * For FireBase messaging only.
-   */
   public void registerDevice( List<String> channels, Date expiration )
   {
     registerDevice( channels, expiration, (AsyncCallback<DeviceRegistrationResult>) null );
   }
 
-  /**
-   * For FireBase messaging only.
-   */
   public void registerDevice( List<String> channels, AsyncCallback<DeviceRegistrationResult> callback )
   {
     registerDevice( channels, (Date) null, callback );
   }
 
-  /**
-   * For FireBase messaging only.
-   */
   public void registerDevice( List<String> channels, Date expiration, AsyncCallback<DeviceRegistrationResult> callback )
   {
     if( channels == null || channels.isEmpty() || (channels.size() == 1 && (channels.get( 0 ) == null || channels.get( 0 ).isEmpty())) )
