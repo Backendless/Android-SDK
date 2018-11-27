@@ -18,9 +18,16 @@
 
 package com.backendless.files;
 
+import android.widget.ProgressBar;
 import com.backendless.Backendless;
+import com.backendless.ThreadPoolService;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
+import com.backendless.exceptions.BackendlessFault;
+
+import java.io.File;
+import java.io.OutputStream;
+
 
 public class BackendlessFile
 {
@@ -50,6 +57,37 @@ public class BackendlessFile
   {
     Backendless.Files.remove( fileURL, responder );
   }
+
+  public void download( String localFilePathName, AsyncCallback<File> callback )
+  {
+    new FilesLoad().download( fileURL, localFilePathName, callback );
+  }
+
+  public void download( final OutputStream stream, final AsyncCallback<Void> callback )
+  {
+    new FilesLoad().download( fileURL, stream, callback );
+  }
+
+  public void download( final AsyncCallback<byte[]> callback )
+  {
+    new FilesLoad().download( fileURL, callback );
+  }
+
+  public void download( final String localFilePathName, final ProgressBar progressBar, final AsyncCallback<File> callback )
+  {
+    new FilesLoad().download( fileURL, localFilePathName, progressBar, callback );
+  }
+
+  public void download( final OutputStream stream, final ProgressBar progressBar, final AsyncCallback<Void> callback )
+  {
+    new FilesLoad().download( fileURL, stream, progressBar, callback );
+  }
+
+  public void download( final ProgressBar progressBar, final AsyncCallback<byte[]> callback )
+  {
+    new FilesLoad().download( fileURL, progressBar, callback );
+  }
+
   /*
   public void download()
   {
@@ -59,4 +97,5 @@ public class BackendlessFile
     baos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
   }
   */
+
 }
