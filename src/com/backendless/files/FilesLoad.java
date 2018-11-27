@@ -15,6 +15,8 @@ class FilesLoad {
 
   private static final byte[] DEFAULT_CHUNK_SIZE = new byte[1024];
 
+  public final static String FILE_DOWNLOAD_ERROR = "Could not download a file";
+
   void download(final String fileURL, final String localFilePathName, final AsyncCallback<File> callback)
   {
     ThreadPoolService.getPoolExecutor().execute(new Runnable()
@@ -24,7 +26,7 @@ class FilesLoad {
       {
         try
         {
-          callback.handleResponse( load( localFilePathName, fileURL ));
+          callback.handleResponse( download( localFilePathName, fileURL ));
         }
         catch ( Exception e )
         {
@@ -42,7 +44,7 @@ class FilesLoad {
       public void run()
       {
         try {
-          load( stream, fileURL );
+          download( stream, fileURL );
           callback.handleResponse( null );
         }
         catch (Exception e)
@@ -61,8 +63,7 @@ class FilesLoad {
       public void run()
       {
         try {
-          final byte[] fileInByte = new FilesLoad().load( fileURL );
-          callback.handleResponse( fileInByte );
+          callback.handleResponse( download( fileURL ));
         }
         catch (Exception e) {
           callback.handleFault( new BackendlessFault( e ));
@@ -80,8 +81,7 @@ class FilesLoad {
       public void run()
       {
         try {
-          final File file = new FilesLoad().load( localFilePathName, progressBar, fileURL );
-          callback.handleResponse( file );
+          callback.handleResponse( download( localFilePathName, progressBar, fileURL ) );
         }
         catch (Exception e) {
           callback.handleFault( new BackendlessFault( e ));
@@ -99,8 +99,8 @@ class FilesLoad {
       public void run()
       {
         try {
-          new FilesLoad().load( stream, progressBar, fileURL );
-          callback.handleResponse(null);
+          download( stream, progressBar, fileURL );
+          callback.handleResponse( null );
         }
         catch (Exception e)
         {
@@ -110,8 +110,8 @@ class FilesLoad {
     });
   }
 
-  public void download( final String fileURL, final ProgressBar progressBar,
-                        final AsyncCallback<byte[]> callback )
+  void download(final String fileURL, final ProgressBar progressBar,
+                final AsyncCallback<byte[]> callback)
   {
     ThreadPoolService.getPoolExecutor().execute(new Runnable()
     {
@@ -119,8 +119,7 @@ class FilesLoad {
       public void run()
       {
         try {
-          final byte[] fileInByte = new FilesLoad().load( progressBar, fileURL );
-          callback.handleResponse( fileInByte );
+          callback.handleResponse( download( progressBar, fileURL ));
         }
         catch (Exception e) {
           callback.handleFault( new BackendlessFault( e ));
@@ -129,7 +128,7 @@ class FilesLoad {
     });
   }
 
-  private File load(String localFilePathName, String fileURL)
+  private File download( String localFilePathName, String fileURL )
   {
     InputStream in = null;
     File file = new File( localFilePathName );
@@ -147,25 +146,25 @@ class FilesLoad {
     }
     catch( MalformedURLException e )
     {
-      throw new IllegalArgumentException( ExceptionMessage.FILE_UPLOAD_ERROR, e );
+      throw new IllegalArgumentException( FILE_DOWNLOAD_ERROR, e );
     }
     catch( IOException e )
     {
-      throw new BackendlessException( ExceptionMessage.FILE_UPLOAD_ERROR, e.getMessage() );
+      throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
     }
     finally {
       if (in != null) {
         try {
           in.close();
         } catch ( IOException e ) {
-          throw new BackendlessException( ExceptionMessage.FILE_UPLOAD_ERROR, e.getMessage() );
+          throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
         }
       }
       if (out != null) {
         try {
           out.close();
         } catch (IOException e) {
-          throw new BackendlessException( ExceptionMessage.FILE_UPLOAD_ERROR, e.getMessage() );
+          throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
         }
       }
     }
@@ -173,7 +172,7 @@ class FilesLoad {
     return file;
   }
 
-  void load( OutputStream out, String fileURL )
+  void download( OutputStream out, String fileURL )
   {
     InputStream in = null;
     try {
@@ -188,31 +187,31 @@ class FilesLoad {
     }
     catch( MalformedURLException e )
     {
-      throw new IllegalArgumentException( ExceptionMessage.FILE_UPLOAD_ERROR, e );
+      throw new IllegalArgumentException( FILE_DOWNLOAD_ERROR, e );
     }
     catch( IOException e )
     {
-      throw new BackendlessException( ExceptionMessage.FILE_UPLOAD_ERROR, e.getMessage() );
+      throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
     }
     finally {
       if (in != null) {
         try {
           in.close();
         } catch (IOException e) {
-          throw new BackendlessException( ExceptionMessage.FILE_UPLOAD_ERROR, e.getMessage() );
+          throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
         }
       }
       if (out != null) {
         try {
           out.close();
         } catch (IOException e) {
-          throw new BackendlessException( ExceptionMessage.FILE_UPLOAD_ERROR, e.getMessage() );
+          throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
         }
       }
     }
   }
 
-  byte[] load( String fileURL )
+  byte[] download( String fileURL )
   {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     InputStream in;
@@ -230,24 +229,24 @@ class FilesLoad {
     }
     catch( MalformedURLException e )
     {
-      throw new IllegalArgumentException( ExceptionMessage.FILE_UPLOAD_ERROR, e );
+      throw new IllegalArgumentException( FILE_DOWNLOAD_ERROR, e );
     }
     catch( IOException e )
     {
-      throw new BackendlessException( ExceptionMessage.FILE_UPLOAD_ERROR, e.getMessage() );
+      throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
     }
     finally {
       try {
         out.close();
       } catch (IOException e) {
-        throw new BackendlessException( ExceptionMessage.FILE_UPLOAD_ERROR, e.getMessage() );
+        throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
       }
     }
 
     return bytes;
   }
 
-  File load(String localFilePathName, ProgressBar progressBar, String fileURL )
+  File download(String localFilePathName, ProgressBar progressBar, String fileURL )
   {
     InputStream in = null;
     final File file = new File( localFilePathName );
@@ -273,25 +272,25 @@ class FilesLoad {
     }
     catch( MalformedURLException e )
     {
-      throw new IllegalArgumentException( ExceptionMessage.FILE_UPLOAD_ERROR, e );
+      throw new IllegalArgumentException( FILE_DOWNLOAD_ERROR, e );
     }
     catch( IOException e )
     {
-      throw new BackendlessException( ExceptionMessage.FILE_UPLOAD_ERROR, e.getMessage() );
+      throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
     }
     finally {
       if ( in != null ) {
         try {
           in.close();
         } catch ( IOException e ) {
-          throw new BackendlessException( ExceptionMessage.FILE_UPLOAD_ERROR, e.getMessage() );
+          throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
         }
       }
       if ( out != null ) {
         try {
           out.close();
         } catch (IOException e) {
-          throw new BackendlessException( ExceptionMessage.FILE_UPLOAD_ERROR, e.getMessage() );
+          throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
         }
       }
     }
@@ -299,7 +298,7 @@ class FilesLoad {
     return file;
   }
 
-  void load( OutputStream out, ProgressBar progressBar, String fileURL )
+  void download( OutputStream out, ProgressBar progressBar, String fileURL )
   {
     InputStream in = null;
     try {
@@ -322,31 +321,31 @@ class FilesLoad {
     }
     catch( MalformedURLException e )
     {
-      throw new IllegalArgumentException( ExceptionMessage.FILE_UPLOAD_ERROR, e );
+      throw new IllegalArgumentException( FILE_DOWNLOAD_ERROR, e );
     }
     catch( IOException e )
     {
-      throw new BackendlessException( ExceptionMessage.FILE_UPLOAD_ERROR, e.getMessage() );
+      throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
     }
     finally {
       if ( in != null ) {
         try {
           in.close();
         } catch (IOException e) {
-          throw new BackendlessException( ExceptionMessage.FILE_UPLOAD_ERROR, e.getMessage() );
+          throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
         }
       }
       if (out != null) {
         try {
           out.close();
         } catch (IOException e) {
-          throw new BackendlessException( ExceptionMessage.FILE_UPLOAD_ERROR, e.getMessage() );
+          throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
         }
       }
     }
   }
 
-  byte[] load( ProgressBar progressBar, String fileURL )
+  byte[] download( ProgressBar progressBar, String fileURL )
   {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     InputStream in;
@@ -372,17 +371,17 @@ class FilesLoad {
     }
     catch( MalformedURLException e )
     {
-      throw new IllegalArgumentException( ExceptionMessage.FILE_UPLOAD_ERROR, e );
+      throw new IllegalArgumentException( FILE_DOWNLOAD_ERROR, e );
     }
     catch( IOException e )
     {
-      throw new BackendlessException( ExceptionMessage.FILE_UPLOAD_ERROR, e.getMessage() );
+      throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
     }
     finally {
       try {
         out.close();
       } catch (IOException e) {
-        throw new BackendlessException( ExceptionMessage.FILE_UPLOAD_ERROR, e.getMessage() );
+        throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
       }
     }
 
