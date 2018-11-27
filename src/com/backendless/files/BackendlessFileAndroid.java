@@ -1,6 +1,11 @@
 package com.backendless.files;
 
 import android.os.AsyncTask;
+import android.widget.ProgressBar;
+import com.backendless.async.callback.AsyncCallback;
+
+import java.io.File;
+import java.io.OutputStream;
 
 /**********************************************************************************************************************
  * BACKENDLESS.COM CONFIDENTIAL
@@ -28,5 +33,20 @@ public class BackendlessFileAndroid extends BackendlessFile
   public AsyncTask getDownloadTask( String localDirectoryPath )
   {
     return new DownloadTask( getFileURL(), localDirectoryPath );
+  }
+
+  public void download( String localFilePathName, ProgressBar progressBar, AsyncCallback<File> callback )
+  {
+    new FilesLoad().download( getFileURL(), localFilePathName, progressBar, callback );
+  }
+
+  public void download(OutputStream stream, ProgressBar progressBar, AsyncCallback<Void> callback )
+  {
+    new FilesLoad().download( getFileURL(), stream, progressBar, callback );
+  }
+
+  public void download(ProgressBar progressBar, AsyncCallback<byte[]> callback )
+  {
+    new FilesLoad().download( getFileURL(), progressBar, callback );
   }
 }

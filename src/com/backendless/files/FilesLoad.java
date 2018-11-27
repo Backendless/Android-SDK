@@ -14,7 +14,7 @@ class FilesLoad {
 
   private static final byte[] DEFAULT_CHUNK_SIZE = new byte[1024];
 
-  public final static String FILE_DOWNLOAD_ERROR = "Could not download a file";
+  private final static String FILE_DOWNLOAD_ERROR = "Could not download a file";
 
   void download(final String fileURL, final String localFilePathName, final AsyncCallback<File> callback)
   {
@@ -71,8 +71,8 @@ class FilesLoad {
     });
   }
 
-  public void download( final String fileURL, final String localFilePathName,
-                        final ProgressBar progressBar, final AsyncCallback<File> callback )
+  void download(final String fileURL, final String localFilePathName,
+                final ProgressBar progressBar, final AsyncCallback<File> callback)
   {
     ThreadPoolService.getPoolExecutor().execute(new Runnable()
     {
@@ -89,8 +89,8 @@ class FilesLoad {
     });
   }
 
-  public void download( final String fileURL, final OutputStream stream,
-                        final ProgressBar progressBar, final AsyncCallback<Void> callback )
+  void download(final String fileURL, final OutputStream stream,
+                final ProgressBar progressBar, final AsyncCallback<Void> callback)
   {
     ThreadPoolService.getPoolExecutor().execute(new Runnable()
     {
@@ -171,7 +171,7 @@ class FilesLoad {
     return file;
   }
 
-  void download( OutputStream out, String fileURL )
+  private void download(OutputStream out, String fileURL)
   {
     InputStream in = null;
     try {
@@ -210,7 +210,7 @@ class FilesLoad {
     }
   }
 
-  byte[] download( String fileURL )
+  private byte[] download(String fileURL)
   {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     InputStream in;
@@ -245,7 +245,7 @@ class FilesLoad {
     return bytes;
   }
 
-  File download(String localFilePathName, ProgressBar progressBar, String fileURL )
+  private File download(String localFilePathName, ProgressBar progressBar, String fileURL)
   {
     InputStream in = null;
     final File file = new File( localFilePathName );
@@ -297,13 +297,12 @@ class FilesLoad {
     return file;
   }
 
-  void download( OutputStream out, ProgressBar progressBar, String fileURL )
+  private void download( OutputStream out, ProgressBar progressBar, String fileURL )
   {
     InputStream in = null;
     try {
       URL url = new URL( fileURL );
-
-      in = new BufferedInputStream( url.openStream() );
+      in = url.openStream();
 
       int fileSize = url.openConnection().getContentLength();
       int countReadSize = 0;
@@ -344,14 +343,13 @@ class FilesLoad {
     }
   }
 
-  byte[] download( ProgressBar progressBar, String fileURL )
+  private byte[] download( ProgressBar progressBar, String fileURL )
   {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
-    InputStream in;
-    URL url;
+    InputStream in = null;
     byte[] bytes;
     try {
-      url = new URL( fileURL );
+      URL url = new URL( fileURL );
       in = url.openStream ();
 
       int fileSize = url.openConnection().getContentLength();
@@ -377,10 +375,19 @@ class FilesLoad {
       throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
     }
     finally {
-      try {
-        out.close();
-      } catch (IOException e) {
-        throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
+      if ( in != null ) {
+        try {
+          in.close();
+        } catch (IOException e) {
+          new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
+        }
+      }
+      if ( out != null ) {
+        try {
+          out.close();
+        } catch (IOException e) {
+          new BackendlessException(FILE_DOWNLOAD_ERROR, e.getMessage());
+        }
       }
     }
 
