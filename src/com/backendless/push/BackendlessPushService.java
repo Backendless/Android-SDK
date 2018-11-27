@@ -40,6 +40,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * <b>Deprecated.</b> Use {@code BackendlessFCMService} instead.
+ *
  * <p>Firstly you should inherit this class for your own needs. For example to handle push messages manually.
  *
  * <p>Secondary you should declare this service in 'AndroidManifest.xml' like this:<br/>
@@ -51,20 +53,16 @@ import java.util.concurrent.atomic.AtomicInteger;
  * </pre>
  * Where {@code 'full.qualified.class.name'} is {@code 'com.backendless.push.BackendlessPushService'} or your own class that inherit it.
  */
+@Deprecated
 public class BackendlessPushService extends JobIntentService implements PushReceiverCallback
 {
   private static final String TAG = BackendlessPushService.class.getSimpleName();
-
-  public static final String ACTION_FCM_REGISTRATION = "BackendlessPushService.fcm.registration";
-  public static final String ACTION_FCM_UNREGISTRATION = "BackendlessPushService.fcm.unregistration";
-  public static final String ACTION_FCM_REFRESH_TOKEN = "BackendlessPushService.fcm.refresh_token";
-  public static final String ACTION_FCM_ONMESSAGE = "BackendlessPushService.fcm.onMessage";
 
   public static final String KEY_DEVICE_TOKEN = "BackendlessPushService.deviceToken";
   public static final String KEY_CHANNELS = "BackendlessPushService.channels";
   public static final String KEY_EXPIRATION = "BackendlessPushService.expiration";
 
-  public static final String IMMEDIATE_MESSAGE = "ImmediateMessage";
+  private static final String IMMEDIATE_MESSAGE = "ImmediateMessage";
   private static final int JOB_ID = 1000;
   private static final Random random = new Random( System.currentTimeMillis() );
 
@@ -194,19 +192,6 @@ public class BackendlessPushService extends JobIntentService implements PushRece
         break;
       case GCMConstants.INTENT_FROM_GCM_LIBRARY_RETRY:
         handleRetry( this, intent );
-        break;
-
-      case BackendlessPushService.ACTION_FCM_REGISTRATION:
-        registerOnBackendless( this, intent );
-        break;
-      case BackendlessPushService.ACTION_FCM_UNREGISTRATION:
-        unregisterOnBackendless( this, intent );
-        break;
-      case BackendlessPushService.ACTION_FCM_REFRESH_TOKEN:
-        refreshTokenOnBackendless( this, intent );
-        break;
-      case BackendlessPushService.ACTION_FCM_ONMESSAGE:
-        handleMessage( this, intent );
         break;
     }
   }
@@ -448,7 +433,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
       @Override
       public void handleResponse( String registrationInfo )
       {
-        Map<String, String> channelRegistrations = processRegistrationPayload( context, registrationInfo );
+        Map<String, String> channelRegistrations = FCMRegistration.processRegistrationPayload( context, registrationInfo );
 
         StringBuilder sb = new StringBuilder();
 
@@ -488,120 +473,6 @@ public class BackendlessPushService extends JobIntentService implements PushRece
     } );
   }
 
-  private Map<String, String> processRegistrationPayload( final Context context, final String payload )
-  {
-    Object[] obj;
-    try
-    {
-      obj = (Object[]) weborb.util.io.Serializer.fromBytes( payload.getBytes(), weborb.util.io.Serializer.JSON, false );
-    }
-    catch( IOException e )
-    {
-      Log.e( TAG, "Could not deserialize server response: " + e.getMessage() );
-      callback.onError( context, "Could not deserialize server response: " + e.getMessage() );
-      return null;
-    }
-
-    PushTemplateHelper.deleteNotificationChannel( context );
-    Map<String, AndroidPushTemplate> templates = (Map<String, AndroidPushTemplate>) obj[ 1 ];
-
-    if( android.os.Build.VERSION.SDK_INT > 25 )
-    {
-      for( AndroidPushTemplate templ : templates.values() )
-        PushTemplateHelper.getOrCreateNotificationChannel( context.getApplicationContext(), templ );
-    }
-
-    PushTemplateHelper.setPushNotificationTemplates( templates, payload.getBytes() );
-
-    String regs = (String) obj[ 0 ];
-    Map<String, String> channelRegistrations = new HashMap<>();
-    String[] regPairs = regs.split( "," );
-
-    for( String pair : regPairs )
-    {
-      String[] valueKey = pair.split( "::" );
-      channelRegistrations.put( valueKey[1], valueKey[0] );
-    }
-
-    return channelRegistrations;
-  }
-
-  private void registerOnBackendless( final Context context, Intent intent )
-  {
-    String deviceToken = intent.getStringExtra( BackendlessPushService.KEY_DEVICE_TOKEN );
-    List<String> channels = intent.getStringArrayListExtra( BackendlessPushService.KEY_CHANNELS );
-    long expiration = intent.getLongExtra( BackendlessPushService.KEY_EXPIRATION, 0 );
-
-    Backendless.Messaging.registerDeviceOnServer( deviceToken, channels, expiration, new AsyncCallback<String>()
-    {
-      @Override
-      public void handleResponse( String response )
-      {
-        Log.d( TAG, "Registered on Backendless." );
-        Map<String, String> channelRegistrations = processRegistrationPayload( context, response );
-        callback.onRegistered( context, channelRegistrations );
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        Log.d( TAG, "Could not register device on Backendless server: " + fault.toString() );
-        callback.onError( context, "Could not register device on Backendless server: " + fault.toString() );
-      }
-    } );
-  }
-
-  private void unregisterOnBackendless( final Context context, Intent intent )
-  {
-    List<String> channels = intent.getStringArrayListExtra( BackendlessPushService.KEY_CHANNELS );
-
-    Backendless.Messaging.unregisterDeviceOnServer( channels, new AsyncCallback<Integer>()
-    {
-      @Override
-      public void handleResponse( Integer response )
-      {
-        Log.d( TAG, "Unregistered on Backendless." );
-        if( response < 1 )
-          FCMRegistration.unregisterDeviceOnFCM( context, callback );
-        else
-          callback.onUnregistered( context, true );
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        Log.d( TAG, "Could not unregister device on Backendless server: " + fault.toString() );
-        callback.onError( context, "Could not unregister device on Backendless server: " + fault.toString() );
-      }
-    } );
-  }
-
-  private void refreshTokenOnBackendless( final Context context, Intent intent )
-  {
-    String newDeviceToken = intent.getStringExtra( BackendlessPushService.KEY_DEVICE_TOKEN );
-
-    Backendless.Messaging.refreshDeviceToken( newDeviceToken, new AsyncCallback<Boolean>()
-    {
-      @Override
-      public void handleResponse( Boolean response )
-      {
-        if( response )
-          Log.d( TAG, "Device token refreshed successfully." );
-        else
-        {
-          Log.d( TAG, "Device is not registered on any channel." );
-          FCMRegistration.unregisterDeviceOnFCM( context, callback );
-        }
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        Log.e( TAG, "Can not refresh device token on Backendless. " + fault.getMessage() );
-      }
-    } );
-  }
-
   public static boolean isFCM( Context appContext )
   {
     if( isFCM != null )
@@ -615,7 +486,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
     }
     catch( ClassNotFoundException e )
     {
-      Log.i( TAG, "Class FirebaseMessagingService not found. GCM will be used." );
+      Log.e( TAG, "Class FirebaseMessagingService cannot be found. FCM is not properly configured in your application." );
       return isFCM = false;
     }
 
@@ -636,8 +507,9 @@ public class BackendlessPushService extends JobIntentService implements PushRece
       }
       catch( ClassNotFoundException e )
       {
-        Log.e( TAG, "Can not load declared service class.", e );
-        throw new IllegalStateException( "Can not load declared service class.", e );
+        String error = "Unable to load com.backendless.push.BackendlessFCMService";
+        Log.e( TAG, error, e );
+        throw new IllegalStateException( error, e );
       }
 
       for( ServiceInfo srvInfo : services )
@@ -653,13 +525,13 @@ public class BackendlessPushService extends JobIntentService implements PushRece
         }
         catch( ClassNotFoundException e )
         {
-          Log.w( TAG, "You have declared class in AndroidManifest.xml that is not present in your app.", e );
+          Log.e( TAG, "An FCM service class is registered in AndroidManifest.xml but it cannot be found in your app. The class name is " + srvInfo.name, e );
         }
       }
 
       if( !flag )
       {
-        Log.i( TAG, "Class FirebaseMessagingService not found. GCM will be used." );
+        Log.i( TAG, "Class FirebaseMessagingService cannot found. FCM is not properly configured in your app." );
         return isFCM = false;
       }
     }
@@ -675,7 +547,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
     List<ResolveInfo> srvIntentFilters = packageManager.queryIntentServices( intent, PackageManager.GET_INTENT_FILTERS );
 
     if( srvIntentFilters.isEmpty() )
-      throw new IllegalStateException( "Missed intent-filter action " + action );
+      throw new IllegalStateException( "Missing the intent-filter action: " + action );
 
     return isFCM = true;
   }

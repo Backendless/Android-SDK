@@ -50,6 +50,7 @@ import com.backendless.messaging.PublishOptions;
 import com.backendless.messaging.PublishStatusEnum;
 import com.backendless.messaging.PushBroadcastMask;
 import com.backendless.push.BackendlessPushService;
+import com.backendless.push.DeviceRegistrationResult;
 import com.backendless.push.FCMRegistration;
 import com.backendless.push.GCMRegistrar;
 import com.backendless.rt.messaging.Channel;
@@ -253,63 +254,62 @@ public final class Messaging
   }
 
   /**
-   * For FireBase messaging only.
+   * For Firebase Cloud Messaging only
    */
   public void registerDevice()
   {
-    registerDevice( (AsyncCallback<String>) null );
+    registerDevice( Collections.singletonList( DEFAULT_CHANNEL_NAME ) );
   }
 
   /**
-   * For FireBase messaging only.
-   */
-  public void registerDevice( AsyncCallback<String> callback )
-  {
-    registerDevice( Collections.singletonList( DEFAULT_CHANNEL_NAME ), callback );
-  }
-
-  /**
-   * For FireBase messaging only.
+   * For Firebase Cloud Messaging only
    */
   public void registerDevice( List<String> channels )
   {
-    registerDevice( Collections.singletonList( DEFAULT_CHANNEL_NAME ), (AsyncCallback<String>) null );
+    registerDevice( channels, (Date) null );
   }
 
   /**
-   * For FireBase messaging only.
+   * For Firebase Cloud Messaging only
    */
-  public void registerDevice( List<String> channels, AsyncCallback<String> callback )
+  public void registerDevice( List<String> channels, Date expiration )
+  {
+    registerDevice( channels, expiration, (AsyncCallback<DeviceRegistrationResult>) null );
+  }
+
+  /**
+   * For Firebase Cloud Messaging only
+   */
+  public void registerDevice( AsyncCallback<DeviceRegistrationResult> callback )
+  {
+    registerDevice( Collections.singletonList( DEFAULT_CHANNEL_NAME ), (Date) null, callback );
+  }
+  
+  /**
+   * For Firebase Cloud Messaging only
+   */
+  public void registerDevice( List<String> channels, AsyncCallback<DeviceRegistrationResult> callback )
   {
     registerDevice( channels, (Date) null, callback );
   }
 
   /**
-   * For FireBase messaging only.
+   * For Firebase Cloud Messaging only
    */
-  public void registerDevice( List<String> channels, Date expiration )
-  {
-    registerDevice( channels, expiration, (AsyncCallback<String>) null );
-  }
-
-  /**
-   * For FireBase messaging only.
-   */
-  public void registerDevice( List<String> channels, Date expiration, AsyncCallback<String> callback )
+  public void registerDevice( List<String> channels, Date expiration, AsyncCallback<DeviceRegistrationResult> callback )
   {
     if( !BackendlessPushService.isFCM( ContextHandler.getAppContext() ) )
       throw new IllegalStateException( "The method is intended only for FireBase messaging." );
 
     if( channels == null || channels.isEmpty() ||
             (channels.size() == 1 && (channels.get( 0 ) == null || channels.get( 0 ).isEmpty())) )
-    {
       channels = Collections.singletonList( DEFAULT_CHANNEL_NAME );
-    }
 
     for( String channel : channels )
       checkChannelName( channel );
 
     long expirationMs = 0;
+
     if( expiration != null)
     {
       if( expiration.before( Calendar.getInstance().getTime() ) )
@@ -317,6 +317,7 @@ public final class Messaging
       else
         expirationMs = expiration.getTime();
     }
+
     FCMRegistration.registerDevice( ContextHandler.getAppContext(), channels, expirationMs, callback );
   }
 
@@ -397,12 +398,12 @@ public final class Messaging
     unregisterDevice( channels, null );
   }
 
-  public void unregisterDevice( AsyncCallback<Void> callback )
+  public void unregisterDevice( AsyncCallback<Integer> callback )
   {
     unregisterDevice( null, callback );
   }
 
-  public void unregisterDevice( final List<String> channels, final AsyncCallback<Void> callback )
+  public void unregisterDevice( final List<String> channels, final AsyncCallback<Integer> callback )
   {
     new AsyncTask<Void, Void, RuntimeException>()
     {
@@ -415,7 +416,7 @@ public final class Messaging
 
           if ( BackendlessPushService.isFCM( context ) )
           {
-            FCMRegistration.unregisterDevice( context, channels );
+            FCMRegistration.unregisterDevice( context, channels, callback );
           }
           else
           {
@@ -441,11 +442,6 @@ public final class Messaging
             throw result;
 
           callback.handleFault( new BackendlessFault( result ) );
-        }
-        else
-        {
-          if( callback != null )
-            callback.handleResponse( null );
         }
       }
     }.execute();
