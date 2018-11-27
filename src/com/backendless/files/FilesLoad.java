@@ -5,7 +5,6 @@ import com.backendless.ThreadPoolService;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
-import com.backendless.exceptions.ExceptionMessage;
 
 import java.io.*;
 import java.net.MalformedURLException;
