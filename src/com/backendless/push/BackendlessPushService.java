@@ -486,7 +486,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
     }
     catch( ClassNotFoundException e )
     {
-      Log.i( TAG, "Class FirebaseMessagingService not found. GCM will be used." );
+      Log.e( TAG, "Class FirebaseMessagingService cannot be found. FCM is not properly configured in your application." );
       return isFCM = false;
     }
 
@@ -507,8 +507,9 @@ public class BackendlessPushService extends JobIntentService implements PushRece
       }
       catch( ClassNotFoundException e )
       {
-        Log.e( TAG, "Can not load declared service class.", e );
-        throw new IllegalStateException( "Can not load declared service class.", e );
+        String error = "Unable to load com.backendless.push.BackendlessFCMService";
+        Log.e( TAG, error, e );
+        throw new IllegalStateException( error, e );
       }
 
       for( ServiceInfo srvInfo : services )
@@ -524,13 +525,13 @@ public class BackendlessPushService extends JobIntentService implements PushRece
         }
         catch( ClassNotFoundException e )
         {
-          Log.w( TAG, "You have declared class in AndroidManifest.xml that is not present in your app.", e );
+          Log.e( TAG, "An FCM service class is registered in AndroidManifest.xml but it cannot be found in your app. The class name is " + srvInfo.name, e );
         }
       }
 
       if( !flag )
       {
-        Log.i( TAG, "Class FirebaseMessagingService not found. GCM will be used." );
+        Log.i( TAG, "Class FirebaseMessagingService cannot found. FCM is not properly configured in your app." );
         return isFCM = false;
       }
     }
@@ -546,7 +547,7 @@ public class BackendlessPushService extends JobIntentService implements PushRece
     List<ResolveInfo> srvIntentFilters = packageManager.queryIntentServices( intent, PackageManager.GET_INTENT_FILTERS );
 
     if( srvIntentFilters.isEmpty() )
-      throw new IllegalStateException( "Missed intent-filter action " + action );
+      throw new IllegalStateException( "Missing the intent-filter action: " + action );
 
     return isFCM = true;
   }

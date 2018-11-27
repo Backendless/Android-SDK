@@ -254,7 +254,7 @@ public final class Messaging
   }
 
   /**
-   * For FireBase messaging only.
+   * For Firebase Cloud Messaging only
    */
   public void registerDevice()
   {
@@ -262,7 +262,7 @@ public final class Messaging
   }
 
   /**
-   * For FireBase messaging only.
+   * For Firebase Cloud Messaging only
    */
   public void registerDevice( List<String> channels )
   {
@@ -270,7 +270,7 @@ public final class Messaging
   }
 
   /**
-   * For FireBase messaging only.
+   * For Firebase Cloud Messaging only
    */
   public void registerDevice( List<String> channels, Date expiration )
   {
@@ -278,7 +278,15 @@ public final class Messaging
   }
 
   /**
-   * For FireBase messaging only.
+   * For Firebase Cloud Messaging only
+   */
+  public void registerDevice( AsyncCallback<DeviceRegistrationResult> callback )
+  {
+    registerDevice( Collections.singletonList( DEFAULT_CHANNEL_NAME ), (Date) null, callback );
+  }
+  
+  /**
+   * For Firebase Cloud Messaging only
    */
   public void registerDevice( List<String> channels, AsyncCallback<DeviceRegistrationResult> callback )
   {
@@ -286,7 +294,7 @@ public final class Messaging
   }
 
   /**
-   * For FireBase messaging only.
+   * For Firebase Cloud Messaging only
    */
   public void registerDevice( List<String> channels, Date expiration, AsyncCallback<DeviceRegistrationResult> callback )
   {
@@ -295,14 +303,13 @@ public final class Messaging
 
     if( channels == null || channels.isEmpty() ||
             (channels.size() == 1 && (channels.get( 0 ) == null || channels.get( 0 ).isEmpty())) )
-    {
       channels = Collections.singletonList( DEFAULT_CHANNEL_NAME );
-    }
 
     for( String channel : channels )
       checkChannelName( channel );
 
     long expirationMs = 0;
+
     if( expiration != null)
     {
       if( expiration.before( Calendar.getInstance().getTime() ) )
@@ -310,6 +317,7 @@ public final class Messaging
       else
         expirationMs = expiration.getTime();
     }
+
     FCMRegistration.registerDevice( ContextHandler.getAppContext(), channels, expirationMs, callback );
   }
 
