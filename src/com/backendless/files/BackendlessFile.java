@@ -25,7 +25,6 @@ import com.backendless.exceptions.BackendlessException;
 import java.io.File;
 import java.io.OutputStream;
 
-
 public class BackendlessFile
 {
   private String fileURL;
@@ -69,15 +68,5 @@ public class BackendlessFile
   {
     new FileDownload().download( fileURL, callback );
   }
-
-  /*
-  public void download()
-  {
-    URL file = new URL( fileURL );
-    ReadableByteChannel rbc = Channels.newChannel(file.openStream());
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    baos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-  }
-  */
 
 }

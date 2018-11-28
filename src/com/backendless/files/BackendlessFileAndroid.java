@@ -25,10 +25,11 @@ import java.io.OutputStream;
  **********************************************************************************************************************/
 public class BackendlessFileAndroid extends BackendlessFile
 {
+
   public BackendlessFileAndroid( String fileURL )
-   {
-     super( fileURL );
-   }
+  {
+    super( fileURL );
+  }
 
   public AsyncTask getDownloadTask( String localDirectoryPath )
   {
@@ -37,16 +38,17 @@ public class BackendlessFileAndroid extends BackendlessFile
 
   public void download( String localFilePathName, ProgressBar progressBar, AsyncCallback<File> callback )
   {
-    new FileDownload().download( getFileURL(), localFilePathName, progressBar, callback );
+    new FileDownloadAndroid().download( getFileURL(), localFilePathName, progressBar, callback );
   }
 
-  public void download(OutputStream stream, ProgressBar progressBar, AsyncCallback<Void> callback )
+  public void download( OutputStream stream, ProgressBar progressBar, AsyncCallback<Void> callback )
   {
-    new FileDownload().download( getFileURL(), stream, progressBar, callback );
+    new FileDownloadAndroid().download( getFileURL(), stream, progressBar, callback );
   }
 
-  public void download(ProgressBar progressBar, AsyncCallback<byte[]> callback )
+  public void download( ProgressBar progressBar, AsyncCallback<byte[]> callback )
   {
-    new FileDownload().download( getFileURL(), progressBar, callback );
+    new FileDownloadAndroid().download( getFileURL(), progressBar, callback );
   }
+
 }
