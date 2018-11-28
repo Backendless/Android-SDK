@@ -68,6 +68,15 @@ class FileDownload {
     });
   }
 
+  private byte[] download( String fileURL )
+  {
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+    download( out, fileURL );
+
+    return out.toByteArray();
+  }
+
   private File download( String localFilePathName, String fileURL )
   {
     File file = new File( localFilePathName );
@@ -124,42 +133,6 @@ class FileDownload {
         }
       }
     }
-  }
-
-  private byte[] download( String fileURL )
-  {
-    ByteArrayOutputStream out = new ByteArrayOutputStream();
-    InputStream in;
-    URL url;
-    byte[] bytes ;
-    try {
-      url = new URL( fileURL );
-      in = url.openStream ();
-
-      int count;
-      byte[] buffer = new byte[ 4096 ];
-      while (( count = in.read( buffer )) > 0 ) {
-        out.write( buffer, 0, count );
-      }
-      bytes = out.toByteArray();
-    }
-    catch( MalformedURLException e )
-    {
-      throw new IllegalArgumentException( FILE_DOWNLOAD_ERROR, e );
-    }
-    catch( IOException e )
-    {
-      throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
-    }
-    finally {
-      try {
-        out.close();
-      } catch (IOException e) {
-        throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
-      }
-    }
-
-    return bytes;
   }
 
 }
