@@ -266,8 +266,7 @@ public final class Messaging
 
   public void unregisterDevice( final List<String> channels, final AsyncCallback<Integer> callback )
   {
-    Context context = ContextHandler.getAppContext();
-    FCMRegistration.unregisterDevice( context, channels, callback );
+    FCMRegistration.unregisterDevice( ContextHandler.getAppContext(), channels, callback );
   }
 
   public boolean unregisterDeviceOnServer()
