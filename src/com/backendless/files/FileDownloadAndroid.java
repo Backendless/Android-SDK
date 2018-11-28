@@ -96,15 +96,12 @@ public class FileDownloadAndroid {
 
       int fileSize = url.openConnection().getContentLength();
       int countReadSize = 0;
-      int progress = 0;
-      progressBar.setProgress( progress );
-
+      progressBar.setProgress( 0 );
       int count;
       while (( count = in.read( DEFAULT_CHUNK_SIZE )) > 0 ) {
         out.write( DEFAULT_CHUNK_SIZE, 0, count );
         countReadSize += count;
-        progress = countReadSize * 100 / fileSize;
-        progressBar.setProgress( progress );
+        progressBar.setProgress( countReadSize * 100 / fileSize );
       }
     }
     catch( MalformedURLException e )
@@ -144,15 +141,12 @@ public class FileDownloadAndroid {
 
       int fileSize = url.openConnection().getContentLength();
       int countReadSize = 0;
-      int progress = 0;
-      progressBar.setProgress( progress );
-
+      progressBar.setProgress( 0 );
       int count;
       while ( (count = in.read( DEFAULT_CHUNK_SIZE )) > 0 ) {
         out.write( DEFAULT_CHUNK_SIZE, 0, count );
         countReadSize += count;
-        progress = countReadSize * 100 / fileSize;
-        progressBar.setProgress( progress );
+        progressBar.setProgress( countReadSize * 100 / fileSize );
       }
       bytes = out.toByteArray();
     }
