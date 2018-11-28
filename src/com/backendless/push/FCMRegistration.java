@@ -250,7 +250,7 @@ public class FCMRegistration
 
       if( !flag )
       {
-        String errorMsg = "Unable to register device. Make sure com.backendless.push.BackendlessFCMService or it's inheritor is registered in the Android manifest.";
+        String errorMsg = "Make sure com.backendless.push.BackendlessFCMService or it's inheritor is registered in the Android manifest.";
         Log.i( TAG, errorMsg );
         throw new IllegalStateException( errorMsg );
       }
