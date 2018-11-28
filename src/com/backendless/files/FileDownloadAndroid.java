@@ -72,55 +72,18 @@ public class FileDownloadAndroid {
     });
   }
 
-  private File download(String localFilePathName, ProgressBar progressBar, String fileURL)
+  private File download( String localFilePathName, ProgressBar progressBar, String fileURL )
   {
-    InputStream in = null;
     final File file = new File( localFilePathName );
 
-    BufferedOutputStream out = null;
+    BufferedOutputStream out;
     try {
-      URL url = new URL( fileURL );
-      in = new BufferedInputStream( url.openStream() );
       out = new BufferedOutputStream(new FileOutputStream( file ));
-
-      int fileSize = url.openConnection().getContentLength();
-      int countReadSize = 0;
-      int progress = 0;
-      progressBar.setProgress( progress );
-
-      int count;
-      while (( count = in.read( DEFAULT_CHUNK_SIZE )) > 0) {
-        out.write(DEFAULT_CHUNK_SIZE, 0, count);
-        countReadSize += count;
-        progress = countReadSize * 100 / fileSize;
-        progressBar.setProgress(progress);
-      }
-    }
-    catch( MalformedURLException e )
-    {
-      throw new IllegalArgumentException( FILE_DOWNLOAD_ERROR, e );
-    }
-    catch( IOException e )
-    {
+    } catch (FileNotFoundException e) {
       throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
     }
-    finally {
-      if ( in != null ) {
-        try {
-          in.close();
-        } catch ( IOException e ) {
-          throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
-        }
-      }
-      if ( out != null ) {
-        try {
-          out.close();
-        } catch (IOException e) {
-          throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
-        }
-      }
-    }
 
+    download( out, progressBar, fileURL );
     return file;
   }
 
