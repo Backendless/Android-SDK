@@ -11,8 +11,6 @@ import java.net.URL;
 
 class FileDownload {
 
-  private static final byte[] DEFAULT_CHUNK_SIZE = new byte[1024];
-
   private final static String FILE_DOWNLOAD_ERROR = "Could not download a file";
 
   void download(final String fileURL, final String localFilePathName, final AsyncCallback<File> callback)
@@ -97,8 +95,9 @@ class FileDownload {
       in = new BufferedInputStream( url.openStream() );
 
       int count;
-      while (( count = in.read( DEFAULT_CHUNK_SIZE )) > 0) {
-        out.write( DEFAULT_CHUNK_SIZE, 0, count );
+      byte[] buffer = new byte[ 4096 ];
+      while (( count = in.read( buffer )) > 0) {
+        out.write( buffer, 0, count );
       }
     }
     catch( MalformedURLException e )
@@ -138,8 +137,9 @@ class FileDownload {
       in = url.openStream ();
 
       int count;
-      while (( count = in.read( DEFAULT_CHUNK_SIZE )) > 0 ) {
-        out.write(DEFAULT_CHUNK_SIZE, 0, count);
+      byte[] buffer = new byte[ 4096 ];
+      while (( count = in.read( buffer )) > 0 ) {
+        out.write( buffer, 0, count );
       }
       bytes = out.toByteArray();
     }
