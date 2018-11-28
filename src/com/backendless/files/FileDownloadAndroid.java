@@ -77,11 +77,11 @@ public class FileDownloadAndroid {
     InputStream in = null;
     final File file = new File( localFilePathName );
 
-    FileOutputStream out = null;
+    BufferedOutputStream out = null;
     try {
       URL url = new URL( fileURL );
       in = new BufferedInputStream( url.openStream() );
-      out = new FileOutputStream( file );
+      out = new BufferedOutputStream(new FileOutputStream( file ));
 
       int fileSize = url.openConnection().getContentLength();
       int countReadSize = 0;

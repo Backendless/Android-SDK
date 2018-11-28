@@ -74,12 +74,12 @@ class FileDownload {
   {
     InputStream in = null;
     File file = new File( localFilePathName );
-    FileOutputStream out = null;
+    BufferedOutputStream out = null;
     try {
       URL url = new URL( fileURL );
 
       in = new BufferedInputStream( url.openStream() );
-      out = new FileOutputStream( file );
+      out = new BufferedOutputStream(new FileOutputStream( file ));
 
       int count;
       while (( count = in.read( DEFAULT_CHUNK_SIZE )) > 0 ) {
