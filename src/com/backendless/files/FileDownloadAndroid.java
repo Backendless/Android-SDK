@@ -12,8 +12,6 @@ import java.net.URL;
 
 public class FileDownloadAndroid {
 
-  private static final byte[] DEFAULT_CHUNK_SIZE = new byte[1024];
-
   private final static String FILE_DOWNLOAD_ERROR = "Could not download a file";
 
   void download(final String fileURL, final String localFilePathName,
@@ -34,8 +32,8 @@ public class FileDownloadAndroid {
     });
   }
 
-  void download(final String fileURL, final OutputStream stream,
-                final ProgressBar progressBar, final AsyncCallback<Void> callback)
+  void download( final String fileURL, final OutputStream stream,
+                final ProgressBar progressBar, final AsyncCallback<Void> callback )
   {
     ThreadPoolService.getPoolExecutor().execute(new Runnable()
     {
@@ -54,8 +52,8 @@ public class FileDownloadAndroid {
     });
   }
 
-  void download(final String fileURL, final ProgressBar progressBar,
-                final AsyncCallback<byte[]> callback)
+  void download( final String fileURL, final ProgressBar progressBar,
+                final AsyncCallback<byte[]> callback )
   {
     ThreadPoolService.getPoolExecutor().execute(new Runnable()
     {
@@ -98,8 +96,9 @@ public class FileDownloadAndroid {
       int countReadSize = 0;
       progressBar.setProgress( 0 );
       int count;
-      while (( count = in.read( DEFAULT_CHUNK_SIZE )) > 0 ) {
-        out.write( DEFAULT_CHUNK_SIZE, 0, count );
+      byte[] buffer = new byte[ 4096 ];
+      while (( count = in.read( buffer )) > 0 ) {
+        out.write( buffer, 0, count );
         countReadSize += count;
         progressBar.setProgress( countReadSize * 100 / fileSize );
       }
@@ -143,8 +142,9 @@ public class FileDownloadAndroid {
       int countReadSize = 0;
       progressBar.setProgress( 0 );
       int count;
-      while ( (count = in.read( DEFAULT_CHUNK_SIZE )) > 0 ) {
-        out.write( DEFAULT_CHUNK_SIZE, 0, count );
+      byte[] buffer = new byte[ 4096 ];
+      while ( (count = in.read( buffer )) > 0 ) {
+        out.write( buffer, 0, count );
         countReadSize += count;
         progressBar.setProgress( countReadSize * 100 / fileSize );
       }
