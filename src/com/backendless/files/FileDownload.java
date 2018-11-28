@@ -72,49 +72,23 @@ class FileDownload {
 
   private File download( String localFilePathName, String fileURL )
   {
-    InputStream in = null;
     File file = new File( localFilePathName );
-    BufferedOutputStream out = null;
-    try {
-      URL url = new URL( fileURL );
 
-      in = new BufferedInputStream( url.openStream() );
-      out = new BufferedOutputStream(new FileOutputStream( file ));
-
-      int count;
-      while (( count = in.read( DEFAULT_CHUNK_SIZE )) > 0 ) {
-          out.write( DEFAULT_CHUNK_SIZE, 0, count );
-      }
-    }
-    catch( MalformedURLException e )
+    BufferedOutputStream out;
+    try
     {
-      throw new IllegalArgumentException( FILE_DOWNLOAD_ERROR, e );
+      out = new BufferedOutputStream( new FileOutputStream( file ));
     }
-    catch( IOException e )
+    catch ( FileNotFoundException e )
     {
       throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
     }
-    finally {
-      if (in != null) {
-        try {
-          in.close();
-        } catch ( IOException e ) {
-          throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
-        }
-      }
-      if (out != null) {
-        try {
-          out.close();
-        } catch (IOException e) {
-          throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
-        }
-      }
-    }
+    download( out, fileURL );
 
     return file;
   }
 
-  private void download(OutputStream out, String fileURL)
+  private void download( OutputStream out, String fileURL )
   {
     InputStream in = null;
     try {
@@ -153,7 +127,7 @@ class FileDownload {
     }
   }
 
-  private byte[] download(String fileURL)
+  private byte[] download( String fileURL )
   {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     InputStream in;
