@@ -9,7 +9,6 @@ import android.content.pm.ServiceInfo;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import com.backendless.Backendless;
-import com.backendless.ContextHandler;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
@@ -245,15 +244,13 @@ public class FCMRegistration
         }
         catch( ClassNotFoundException e )
         {
-          String errorMsg = "An FCM service class is registered in AndroidManifest.xml but it cannot be found in your app. The class name is " + srvInfo.name;
-          Log.e( TAG, errorMsg, e );
-          throw new IllegalStateException( errorMsg, e );
+          Log.e( TAG, "An FCM service class is registered in AndroidManifest.xml but it cannot be found in your app. The class name is " + srvInfo.name, e );
         }
       }
 
       if( !flag )
       {
-        String errorMsg = "Class FirebaseMessagingService cannot be found. FCM is not properly configured in your app.";
+        String errorMsg = "Unable to register device. Make sure com.backendless.push.BackendlessFCMService or it's inheritor is registered in the Android manifest.";
         Log.i( TAG, errorMsg );
         throw new IllegalStateException( errorMsg );
       }
