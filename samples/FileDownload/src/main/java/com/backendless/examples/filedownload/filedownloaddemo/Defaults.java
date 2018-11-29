@@ -1,6 +1,7 @@
 package com.backendless.examples.filedownload.filedownloaddemo;
 
-class Defaults {
+class Defaults
+{
 
   static final String APPLICATION_ID = "";
   static final String API_KEY = "";
