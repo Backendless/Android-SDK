@@ -1,79 +1,110 @@
 package com.backendless.examples.filedownload.filedownloaddemo;
 
-import com.backendless.async.callback.AsyncCallback;
-import com.backendless.exceptions.BackendlessFault;
-
 import java.io.*;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 class Downloader
 {
 
-  FutureTask<Void> downloadWithLocalPath( Person person )
+  void downloadMethods( Person person ) throws ExecutionException, InterruptedException
   {
-    return person.image.download( Defaults.LOCAL_FILE_PATH, new AsyncCallback<File>()
-    {
-      @Override
-      public void handleResponse( File file )
-      {
-        System.out.println( file.toString() );
-      }
+    downloadWithLocalPath( person );
 
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        new BackendlessFault( fault );
-      }
-    } );
+    downloadOutputStream( person );
+
+    downloadByteArray( person );
   }
 
-  FutureTask<Void> downloadWithOutputStream( Person person )
+  void downloadMethodsWithCancel( Person person ) throws ExecutionException, InterruptedException
+  {
+    downloadWithLocalPathAndCancel( person );
+
+    downloadOutputStreamAndCancel( person );
+
+    downloadByteArrayAndCancel( person );
+  }
+
+  private void downloadWithLocalPath( Person person ) throws InterruptedException, ExecutionException
+  {
+    Future<File> futureDownloadWithLocalPath = person.image.download( Defaults.LOCAL_FILE_PATH );
+    File fileWithLocalPath = futureDownloadWithLocalPath.get();
+    System.out.println( fileWithLocalPath.toString() );
+  }
+
+  private void downloadOutputStream( Person person ) throws InterruptedException, ExecutionException
+  {
+    OutputStream[] out = downloadOutputStream();
+    Future<Void> futureDownloadWithOutputStream = person.image.download( out[ 0 ] );
+    futureDownloadWithOutputStream.get();
+    System.out.println( "file downloaded" );
+  }
+
+  private void downloadByteArray( Person person ) throws InterruptedException, ExecutionException
+  {
+    Future<byte[]> futureDownloadByteArray = person.image.download();
+    File fileFromByteArray = writeFileFromByteArray( futureDownloadByteArray.get() );
+    System.out.println( fileFromByteArray.toString() );
+  }
+
+  private void downloadWithLocalPathAndCancel( Person person ) throws InterruptedException, ExecutionException
+  {
+    Future<File> futureDownloadWithLocalPath = person.image.download( Defaults.LOCAL_FILE_PATH );
+    if( !futureDownloadWithLocalPath.isDone() )
+    {
+      futureDownloadWithLocalPath.cancel( true );
+      System.out.println( "Downloading cancel" );
+    }
+    else
+    {
+      System.out.println( futureDownloadWithLocalPath.get().toString() );
+    }
+  }
+
+  private void downloadOutputStreamAndCancel( Person person ) throws InterruptedException, ExecutionException
+  {
+    OutputStream[] out = downloadOutputStream();
+    Future<Void> futureDownloadWithOutputStream = person.image.download( out[ 0 ] );
+    if( !futureDownloadWithOutputStream.isDone() )
+    {
+      futureDownloadWithOutputStream.cancel( true );
+      System.out.println( "Downloading cancel" );
+    }
+    else
+    {
+      futureDownloadWithOutputStream.get();
+      System.out.println( "file downloaded" );
+    }
+  }
+
+  private void downloadByteArrayAndCancel( Person person ) throws InterruptedException, ExecutionException
+  {
+    Future<byte[]> futureDownloadByteArray = person.image.download();
+    if( !futureDownloadByteArray.isDone() )
+    {
+      futureDownloadByteArray.cancel( true );
+      System.out.println( "Downloading cancel" );
+    }
+    else
+    {
+      System.out.println( writeFileFromByteArray( futureDownloadByteArray.get() ).toString() );
+    }
+  }
+
+  private OutputStream[] downloadOutputStream()
   {
     File file = new File( Defaults.LOCAL_FILE_PATH );
     final OutputStream[] out = { null };
     try
     {
       out[ 0 ] = new FileOutputStream( file );
-      System.out.println( file.toString() );
     }
     catch( FileNotFoundException e )
     {
       e.printStackTrace();
     }
 
-    return person.image.download( out[ 0 ], new AsyncCallback<Void>()
-    {
-      @Override
-      public void handleResponse( Void response )
-      {
-        System.out.println( "File downloaded" );
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        new BackendlessFault( fault );
-      }
-    } );
-  }
-
-  FutureTask<Void> downloadByteArray( Person person )
-  {
-    return person.image.download( new AsyncCallback<byte[]>()
-    {
-      @Override
-      public void handleResponse( byte[] response )
-      {
-        File file = writeFileFromByteArray( response );
-        System.out.println( file.toString() );
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        new BackendlessFault( fault );
-      }
-    } );
+    return out;
   }
 
   private File writeFileFromByteArray( byte[] bytes )
@@ -93,7 +124,10 @@ class Downloader
     {
       try
       {
-        stream.write( bytes );
+        if( stream != null )
+        {
+          stream.write( bytes );
+        }
       }
       catch( IOException e )
       {
@@ -104,7 +138,10 @@ class Downloader
     {
       try
       {
-        stream.close();
+        if( stream != null )
+        {
+          stream.close();
+        }
       }
       catch( IOException e )
       {
