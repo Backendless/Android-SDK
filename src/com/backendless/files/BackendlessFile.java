@@ -24,7 +24,7 @@ import com.backendless.exceptions.BackendlessException;
 
 import java.io.File;
 import java.io.OutputStream;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.Future;
 
 public class BackendlessFile
 {
@@ -55,19 +55,19 @@ public class BackendlessFile
     Backendless.Files.remove( fileURL, responder );
   }
 
-  public FutureTask<Void> download( String localFilePathName, AsyncCallback<File> callback )
+  public Future<File> download( String localFilePathName )
   {
-    return new FileDownload().download( fileURL, localFilePathName, callback );
+    return new FileDownload().download( fileURL, localFilePathName );
   }
 
-  public FutureTask<Void> download( OutputStream stream, AsyncCallback<Void> callback )
+  public Future<Void> download( OutputStream stream )
   {
-    return new FileDownload().download( fileURL, stream, callback );
+    return new FileDownload().download( fileURL, stream );
   }
 
-  public FutureTask<Void> download( AsyncCallback<byte[]> callback )
+  public Future<byte[]> download()
   {
-    return new FileDownload().download( fileURL, callback );
+    return new FileDownload().download( fileURL );
   }
 
 }

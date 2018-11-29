@@ -1,37 +1,42 @@
 package com.backendless.files;
 
-import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
-import com.backendless.exceptions.BackendlessFault;
 
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.*;
 
 class FileDownload
 {
 
   private final static String FILE_DOWNLOAD_ERROR = "Could not download a file";
 
-  FutureTask<Void> download( final String fileURL, final String localFilePathName, final AsyncCallback<File> callback )
+  Future<File> download( final String fileURL, final String localFilePathName )
+  {
+    FutureTask<File> downloadTask = new FutureTask<>( new Callable<File>()
+    {
+      @Override
+      public File call()
+      {
+        return downloading( fileURL, localFilePathName );
+      }
+    } );
+    ExecutorService downloadWithLocalPathExecutor = Executors.newSingleThreadExecutor();
+    downloadWithLocalPathExecutor.execute( downloadTask );
+    downloadWithLocalPathExecutor.shutdown();
+
+    return downloadTask;
+  }
+
+  Future<Void> download( final String fileURL, final OutputStream stream )
   {
     FutureTask<Void> downloadTask = new FutureTask<>( new Callable<Void>()
     {
       @Override
       public Void call()
       {
-        try
-        {
-          callback.handleResponse( download( localFilePathName, fileURL ) );
-        }
-        catch( Exception e )
-        {
-          callback.handleFault( new BackendlessFault( e ) );
-        }
+        downloading( fileURL, stream );
         return null;
       }
     } );
@@ -42,23 +47,14 @@ class FileDownload
     return downloadTask;
   }
 
-  FutureTask<Void> download( final String fileURL, final OutputStream stream, final AsyncCallback<Void> callback )
+  Future<byte[]> download( final String fileURL )
   {
-    FutureTask<Void> downloadTask = new FutureTask<>( new Callable<Void>()
+    FutureTask<byte[]> downloadTask = new FutureTask<>( new Callable<byte[]>()
     {
       @Override
-      public Void call()
+      public byte[] call()
       {
-        try
-        {
-          download( stream, fileURL );
-          callback.handleResponse( null );
-        }
-        catch( Exception e )
-        {
-          callback.handleFault( new BackendlessFault( e ) );
-        }
-        return null;
+        return downloading( fileURL );
       }
     } );
     ExecutorService downloadWithLocalPathExecutor = Executors.newSingleThreadExecutor();
@@ -68,41 +64,16 @@ class FileDownload
     return downloadTask;
   }
 
-  FutureTask<Void> download( final String fileURL, final AsyncCallback<byte[]> callback )
-  {
-    FutureTask<Void> downloadTask = new FutureTask<>( new Callable<Void>()
-    {
-      @Override
-      public Void call()
-      {
-        try
-        {
-          callback.handleResponse( download( fileURL ) );
-        }
-        catch( Exception e )
-        {
-          callback.handleFault( new BackendlessFault( e ) );
-        }
-        return null;
-      }
-    } );
-    ExecutorService downloadWithLocalPathExecutor = Executors.newSingleThreadExecutor();
-    downloadWithLocalPathExecutor.execute( downloadTask );
-    downloadWithLocalPathExecutor.shutdown();
-
-    return downloadTask;
-  }
-
-  private byte[] download( String fileURL )
+  private byte[] downloading( String fileURL )
   {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-    download( out, fileURL );
+    downloading( fileURL, out );
 
     return out.toByteArray();
   }
 
-  private File download( String localFilePathName, String fileURL )
+  private File downloading( String fileURL, String localFilePathName )
   {
     File file = new File( localFilePathName );
 
@@ -115,12 +86,12 @@ class FileDownload
     {
       throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
     }
-    download( out, fileURL );
+    downloading( fileURL, out );
 
     return file;
   }
 
-  private void download( OutputStream out, String fileURL )
+  private void downloading( String fileURL, OutputStream out )
   {
     InputStream in = null;
     try
