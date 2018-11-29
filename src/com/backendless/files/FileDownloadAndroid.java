@@ -10,64 +10,69 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class FileDownloadAndroid {
+public class FileDownloadAndroid
+{
 
   private final static String FILE_DOWNLOAD_ERROR = "Could not download a file";
 
-  void download(final String fileURL, final String localFilePathName,
-                final ProgressBar progressBar, final AsyncCallback<File> callback)
+  void download( final String fileURL, final String localFilePathName, final ProgressBar progressBar,
+                 final AsyncCallback<File> callback )
   {
-    ThreadPoolService.getPoolExecutor().execute(new Runnable()
+    ThreadPoolService.getPoolExecutor().execute( new Runnable()
     {
       @Override
       public void run()
       {
-        try {
+        try
+        {
           callback.handleResponse( download( localFilePathName, progressBar, fileURL ) );
         }
-        catch (Exception e) {
-          callback.handleFault( new BackendlessFault( e ));
+        catch( Exception e )
+        {
+          callback.handleFault( new BackendlessFault( e ) );
         }
       }
-    });
+    } );
   }
 
-  void download( final String fileURL, final OutputStream stream,
-                final ProgressBar progressBar, final AsyncCallback<Void> callback )
+  void download( final String fileURL, final OutputStream stream, final ProgressBar progressBar,
+                 final AsyncCallback<Void> callback )
   {
-    ThreadPoolService.getPoolExecutor().execute(new Runnable()
+    ThreadPoolService.getPoolExecutor().execute( new Runnable()
     {
       @Override
       public void run()
       {
-        try {
+        try
+        {
           download( stream, progressBar, fileURL );
           callback.handleResponse( null );
         }
-        catch (Exception e)
+        catch( Exception e )
         {
-          callback.handleFault( new BackendlessFault( e ));
+          callback.handleFault( new BackendlessFault( e ) );
         }
       }
-    });
+    } );
   }
 
-  void download( final String fileURL, final ProgressBar progressBar,
-                final AsyncCallback<byte[]> callback )
+  void download( final String fileURL, final ProgressBar progressBar, final AsyncCallback<byte[]> callback )
   {
-    ThreadPoolService.getPoolExecutor().execute(new Runnable()
+    ThreadPoolService.getPoolExecutor().execute( new Runnable()
     {
       @Override
       public void run()
       {
-        try {
-          callback.handleResponse( download( progressBar, fileURL ));
+        try
+        {
+          callback.handleResponse( download( progressBar, fileURL ) );
         }
-        catch (Exception e) {
-          callback.handleFault( new BackendlessFault( e ));
+        catch( Exception e )
+        {
+          callback.handleFault( new BackendlessFault( e ) );
         }
       }
-    });
+    } );
   }
 
   private byte[] download( ProgressBar progressBar, String fileURL )
@@ -84,9 +89,12 @@ public class FileDownloadAndroid {
     final File file = new File( localFilePathName );
 
     BufferedOutputStream out;
-    try {
-      out = new BufferedOutputStream(new FileOutputStream( file ));
-    } catch (FileNotFoundException e) {
+    try
+    {
+      out = new BufferedOutputStream( new FileOutputStream( file ) );
+    }
+    catch( FileNotFoundException e )
+    {
       throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
     }
 
@@ -97,7 +105,8 @@ public class FileDownloadAndroid {
   private void download( OutputStream out, ProgressBar progressBar, String fileURL )
   {
     InputStream in = null;
-    try {
+    try
+    {
       URL url = new URL( fileURL );
       in = url.openStream();
 
@@ -106,7 +115,8 @@ public class FileDownloadAndroid {
       progressBar.setProgress( 0 );
       int count;
       byte[] buffer = new byte[ 4096 ];
-      while (( count = in.read( buffer )) > 0 ) {
+      while( ( count = in.read( buffer ) ) > 0 )
+      {
         out.write( buffer, 0, count );
         countReadSize += count;
         progressBar.setProgress( countReadSize * 100 / fileSize );
@@ -120,18 +130,27 @@ public class FileDownloadAndroid {
     {
       throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
     }
-    finally {
-      if ( in != null ) {
-        try {
+    finally
+    {
+      if( in != null )
+      {
+        try
+        {
           in.close();
-        } catch (IOException e) {
+        }
+        catch( IOException e )
+        {
           throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
         }
       }
-      if (out != null) {
-        try {
+      if( out != null )
+      {
+        try
+        {
           out.close();
-        } catch (IOException e) {
+        }
+        catch( IOException e )
+        {
           throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
         }
       }

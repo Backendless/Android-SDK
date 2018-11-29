@@ -55,7 +55,7 @@ public class BackendlessFile
     Backendless.Files.remove( fileURL, responder );
   }
 
-  public FutureTask<Void> download(String localFilePathName, AsyncCallback<File> callback )
+  public FutureTask<Void> download( String localFilePathName, AsyncCallback<File> callback )
   {
     return new FileDownload().download( fileURL, localFilePathName, callback );
   }
