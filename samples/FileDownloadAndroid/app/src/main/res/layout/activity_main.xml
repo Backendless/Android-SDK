@@ -7,69 +7,124 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-    <LinearLayout
-            android:id="@+id/linearLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="30dp"
-            android:orientation="vertical">
-        <TextView
-                android:id="@+id/out"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"
-                android:text="TextView">
-        </TextView>
-        <Button
-                android:id="@+id/Download1"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Download with local path">
-        </Button>
-        <Button
-                android:id="@+id/Download2"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Download with OutputStream">
-        </Button>
-        <Button
-                android:id="@+id/Download3"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Download file in ByteArray">
-        </Button>
-        <Button
-                android:id="@+id/Download4"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Download with local path and ProgressBar">
-        </Button>
-        <Button
-                android:id="@+id/Download5"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Download file in ByteArray with ProgressBar">
-        </Button>
-        <Button
-                android:id="@+id/Download6"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Download file in ByteArray with ProgressBar">
-        </Button>
-        <ProgressBar
-                android:id="@+id/determinateBar"
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:layout_width="314dp"
-                android:layout_height="wrap_content"
-                android:progress="25"/>
+    <TableLayout
+            android:layout_width="400dp"
+            android:layout_height="600dp">
 
-    </LinearLayout>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
+            <TextView
+                    android:id="@+id/out"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:text="TextView">
+            </TextView>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
+            <Button
+                    android:id="@+id/Download1"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Download with local path">
+            </Button>
+            <Button
+                    android:id="@+id/Cancel1"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Cancel download">
+            </Button>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
+            <Button
+                    android:id="@+id/Download2"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Download with OutputStream">
+            </Button>
+            <Button
+                    android:id="@+id/Cancel2"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Cancel download">
+            </Button>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
+            <Button
+                    android:id="@+id/Download3"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Download file in ByteArray">
+            </Button>
+            <Button
+                    android:id="@+id/Cancel3"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Cancel download">
+            </Button>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
+            <Button
+                    android:id="@+id/Download4"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Download with local path and ProgressBar">
+            </Button>
+            <Button
+                    android:id="@+id/Cancel4"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Cancel download">
+            </Button>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
+            <Button
+                    android:id="@+id/Download5"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Download file in ByteArray with ProgressBar">
+            </Button>
+            <Button
+                    android:id="@+id/Cancel5"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Cancel download">
+            </Button>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
+            <Button
+                    android:id="@+id/Download6"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Download file in ByteArray with ProgressBar">
+            </Button>
+            <Button
+                    android:id="@+id/Cancel6"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Cancel download">
+            </Button>
+        </TableRow>
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
+            <ProgressBar
+                    android:id="@+id/determinateBar"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:progress="10"/>
+        </TableRow>
+    </TableLayout>
 
 </android.support.constraint.ConstraintLayout>
