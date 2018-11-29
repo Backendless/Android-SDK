@@ -5,7 +5,7 @@ import com.backendless.Backendless;
 public class Main
 {
 
-  public static void main(String[] args)
+  public static void main( String[] args )
   {
     Backendless.initApp( Defaults.APPLICATION_ID, Defaults.API_KEY );
 
@@ -15,10 +15,11 @@ public class Main
     new DownloadWithoutCancel().downloadMethods( person );
 
     int cancelDownloadAfter = 10;
-    try {
+    try
+    {
       new DownloadWithCancel().downloadMethods( person, cancelDownloadAfter );
     }
-    catch (InterruptedException e)
+    catch( InterruptedException e )
     {
       e.printStackTrace();
     }

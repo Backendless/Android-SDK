@@ -20,28 +20,28 @@ class Downloader
       }
 
       @Override
-      public void handleFault(BackendlessFault fault)
+      public void handleFault( BackendlessFault fault )
       {
         new BackendlessFault( fault );
       }
-    });
+    } );
   }
 
-  FutureTask<Void>  downloadWithOutputStream( Person person )
+  FutureTask<Void> downloadWithOutputStream( Person person )
   {
     File file = new File( Defaults.LOCAL_FILE_PATH );
     final OutputStream[] out = { null };
     try
     {
-      out[0] = new FileOutputStream( file );
+      out[ 0 ] = new FileOutputStream( file );
       System.out.println( file.toString() );
     }
-    catch (FileNotFoundException e)
+    catch( FileNotFoundException e )
     {
       e.printStackTrace();
     }
 
-    return person.image.download(out[0], new AsyncCallback<Void>()
+    return person.image.download( out[ 0 ], new AsyncCallback<Void>()
     {
       @Override
       public void handleResponse( Void response )
@@ -50,16 +50,16 @@ class Downloader
       }
 
       @Override
-      public void handleFault(BackendlessFault fault)
+      public void handleFault( BackendlessFault fault )
       {
         new BackendlessFault( fault );
       }
-    });
+    } );
   }
 
-  FutureTask<Void>  downloadByteArray( Person person )
+  FutureTask<Void> downloadByteArray( Person person )
   {
-    return person.image.download(new AsyncCallback<byte[]>()
+    return person.image.download( new AsyncCallback<byte[]>()
     {
       @Override
       public void handleResponse( byte[] response )
@@ -73,10 +73,10 @@ class Downloader
       {
         new BackendlessFault( fault );
       }
-    });
+    } );
   }
 
-  private File writeFileFromByteArray(byte[] bytes)
+  private File writeFileFromByteArray( byte[] bytes )
   {
     File file = new File( Defaults.LOCAL_FILE_PATH );
 
@@ -85,7 +85,7 @@ class Downloader
     {
       stream = new FileOutputStream( file );
     }
-    catch( FileNotFoundException e)
+    catch( FileNotFoundException e )
     {
       e.printStackTrace();
     }
