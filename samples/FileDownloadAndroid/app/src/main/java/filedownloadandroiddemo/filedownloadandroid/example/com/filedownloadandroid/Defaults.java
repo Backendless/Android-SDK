@@ -1,6 +1,7 @@
 package filedownloadandroiddemo.filedownloadandroid.example.com.filedownloadandroid;
 
-public class Defaults {
+public class Defaults
+{
 
   static final String APPLICATION_ID = "";
   static final String API_KEY = "";

@@ -3,7 +3,8 @@ package filedownloadandroiddemo.filedownloadandroid.example.com.filedownloadandr
 import com.backendless.files.BackendlessFile;
 import com.backendless.files.BackendlessFileAndroid;
 
-public class Person {
+public class Person
+{
 
   public BackendlessFile image;
   public String name;
