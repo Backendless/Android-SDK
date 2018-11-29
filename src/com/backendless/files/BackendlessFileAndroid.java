@@ -6,6 +6,7 @@ import com.backendless.async.callback.AsyncCallback;
 
 import java.io.File;
 import java.io.OutputStream;
+import java.util.concurrent.FutureTask;
 
 /**********************************************************************************************************************
  * BACKENDLESS.COM CONFIDENTIAL
@@ -36,19 +37,19 @@ public class BackendlessFileAndroid extends BackendlessFile
     return new DownloadTask( getFileURL(), localDirectoryPath );
   }
 
-  public void download( String localFilePathName, ProgressBar progressBar, AsyncCallback<File> callback )
+  public FutureTask<Void> download( String localFilePathName, ProgressBar progressBar, AsyncCallback<File> callback )
   {
-    new FileDownloadAndroid().download( getFileURL(), localFilePathName, progressBar, callback );
+    return new FileDownloadAndroid().download( getFileURL(), localFilePathName, progressBar, callback );
   }
 
-  public void download( OutputStream stream, ProgressBar progressBar, AsyncCallback<Void> callback )
+  public FutureTask<Void> download( OutputStream stream, ProgressBar progressBar, AsyncCallback<Void> callback )
   {
-    new FileDownloadAndroid().download( getFileURL(), stream, progressBar, callback );
+    return new FileDownloadAndroid().download( getFileURL(), stream, progressBar, callback );
   }
 
-  public void download( ProgressBar progressBar, AsyncCallback<byte[]> callback )
+  public FutureTask<Void> download( ProgressBar progressBar, AsyncCallback<byte[]> callback )
   {
-    new FileDownloadAndroid().download( getFileURL(), progressBar, callback );
+    return new FileDownloadAndroid().download( getFileURL(), progressBar, callback );
   }
 
 }

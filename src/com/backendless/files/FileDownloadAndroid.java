@@ -1,7 +1,6 @@
 package com.backendless.files;
 
 import android.widget.ProgressBar;
-import com.backendless.ThreadPoolService;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
@@ -9,19 +8,23 @@ import com.backendless.exceptions.BackendlessFault;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 public class FileDownloadAndroid
 {
 
   private final static String FILE_DOWNLOAD_ERROR = "Could not download a file";
 
-  void download( final String fileURL, final String localFilePathName, final ProgressBar progressBar,
-                 final AsyncCallback<File> callback )
+  FutureTask<Void> download( final String fileURL, final String localFilePathName, final ProgressBar progressBar,
+                             final AsyncCallback<File> callback )
   {
-    ThreadPoolService.getPoolExecutor().execute( new Runnable()
+    FutureTask<Void> downloadTask = new FutureTask<>( new Callable<Void>()
     {
       @Override
-      public void run()
+      public Void call()
       {
         try
         {
@@ -31,17 +34,23 @@ public class FileDownloadAndroid
         {
           callback.handleFault( new BackendlessFault( e ) );
         }
+        return null;
       }
     } );
+    ExecutorService downloadWithLocalPathExecutor = Executors.newSingleThreadExecutor();
+    downloadWithLocalPathExecutor.execute( downloadTask );
+    downloadWithLocalPathExecutor.shutdown();
+
+    return downloadTask;
   }
 
-  void download( final String fileURL, final OutputStream stream, final ProgressBar progressBar,
-                 final AsyncCallback<Void> callback )
+  FutureTask<Void> download( final String fileURL, final OutputStream stream, final ProgressBar progressBar,
+                             final AsyncCallback<Void> callback )
   {
-    ThreadPoolService.getPoolExecutor().execute( new Runnable()
+    FutureTask<Void> downloadTask = new FutureTask<>( new Callable<Void>()
     {
       @Override
-      public void run()
+      public Void call()
       {
         try
         {
@@ -52,16 +61,22 @@ public class FileDownloadAndroid
         {
           callback.handleFault( new BackendlessFault( e ) );
         }
+        return null;
       }
     } );
+    ExecutorService downloadWithLocalPathExecutor = Executors.newSingleThreadExecutor();
+    downloadWithLocalPathExecutor.execute( downloadTask );
+    downloadWithLocalPathExecutor.shutdown();
+
+    return downloadTask;
   }
 
-  void download( final String fileURL, final ProgressBar progressBar, final AsyncCallback<byte[]> callback )
+  FutureTask<Void> download( final String fileURL, final ProgressBar progressBar, final AsyncCallback<byte[]> callback )
   {
-    ThreadPoolService.getPoolExecutor().execute( new Runnable()
+    FutureTask<Void> downloadTask = new FutureTask<>( new Callable<Void>()
     {
       @Override
-      public void run()
+      public Void call()
       {
         try
         {
@@ -71,8 +86,14 @@ public class FileDownloadAndroid
         {
           callback.handleFault( new BackendlessFault( e ) );
         }
+        return null;
       }
     } );
+    ExecutorService downloadWithLocalPathExecutor = Executors.newSingleThreadExecutor();
+    downloadWithLocalPathExecutor.execute( downloadTask );
+    downloadWithLocalPathExecutor.shutdown();
+
+    return downloadTask;
   }
 
   private byte[] download( ProgressBar progressBar, String fileURL )
