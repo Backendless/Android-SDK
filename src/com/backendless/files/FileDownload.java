@@ -8,36 +8,46 @@ import com.backendless.exceptions.BackendlessFault;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 class FileDownload {
 
   private final static String FILE_DOWNLOAD_ERROR = "Could not download a file";
 
-  void download(final String fileURL, final String localFilePathName, final AsyncCallback<File> callback)
+  FutureTask<Void> download(final String fileURL, final String localFilePathName, final AsyncCallback<File> callback)
   {
-    ThreadPoolService.getPoolExecutor().execute(new Runnable()
+    FutureTask<Void> downloadTask = new FutureTask<>(new Callable<Void>()
     {
       @Override
-      public void run()
+      public Void call()
       {
         try
         {
           callback.handleResponse( download( localFilePathName, fileURL ));
         }
-        catch ( Exception e )
+        catch( Exception e )
         {
           callback.handleFault( new BackendlessFault( e ));
         }
+        return null;
       }
     });
+    ExecutorService downloadWithLocalPathExecutor = Executors.newSingleThreadExecutor();
+    downloadWithLocalPathExecutor.execute(downloadTask);
+    downloadWithLocalPathExecutor.shutdown();
+
+    return downloadTask;
   }
 
-  void download(final String fileURL, final OutputStream stream, final AsyncCallback<Void> callback)
+  FutureTask<Void> download(final String fileURL, final OutputStream stream, final AsyncCallback<Void> callback)
   {
-    ThreadPoolService.getPoolExecutor().execute(new Runnable()
+    FutureTask<Void> downloadTask = new FutureTask<>(new Callable<Void>()
     {
       @Override
-      public void run()
+      public Void call()
       {
         try {
           download( stream, fileURL );
@@ -47,16 +57,22 @@ class FileDownload {
         {
           callback.handleFault( new BackendlessFault( e ));
         }
+        return null;
       }
     });
+    ExecutorService downloadWithLocalPathExecutor = Executors.newSingleThreadExecutor();
+    downloadWithLocalPathExecutor.execute(downloadTask);
+    downloadWithLocalPathExecutor.shutdown();
+
+    return downloadTask;
   }
 
-  void download( final String fileURL, final AsyncCallback<byte[]> callback )
+  FutureTask<Void> download( final String fileURL, final AsyncCallback<byte[]> callback )
   {
-    ThreadPoolService.getPoolExecutor().execute(new Runnable()
+    FutureTask<Void> downloadTask = new FutureTask<>(new Callable<Void>()
     {
       @Override
-      public void run()
+      public Void call()
       {
         try {
           callback.handleResponse( download( fileURL ));
@@ -64,8 +80,14 @@ class FileDownload {
         catch (Exception e) {
           callback.handleFault( new BackendlessFault( e ));
         }
+        return null;
       }
     });
+    ExecutorService downloadWithLocalPathExecutor = Executors.newSingleThreadExecutor();
+    downloadWithLocalPathExecutor.execute(downloadTask);
+    downloadWithLocalPathExecutor.shutdown();
+
+    return downloadTask;
   }
 
   private byte[] download( String fileURL )
