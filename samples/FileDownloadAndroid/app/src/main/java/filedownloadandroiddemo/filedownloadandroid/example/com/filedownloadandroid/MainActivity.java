@@ -9,13 +9,12 @@ import android.widget.TextView;
 
 import com.backendless.Backendless;
 import com.backendless.ThreadPoolService;
-import com.backendless.async.callback.AsyncCallback;
-import com.backendless.exceptions.BackendlessFault;
 import com.backendless.files.BackendlessFileAndroid;
 
 import java.io.*;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -57,7 +56,7 @@ public class MainActivity extends AppCompatActivity
     Cancel5 = findViewById( R.id.Cancel5 );
     Cancel6 = findViewById( R.id.Cancel6 );
 
-    final Future<Void>[] downloadTask1 = new Future[]{ null };
+    final Future<File>[] downloadTask1 = new Future[]{ null };
     View.OnClickListener ButtonDownload1 = new View.OnClickListener()
     {
       @Override
@@ -69,6 +68,16 @@ public class MainActivity extends AppCompatActivity
           public void run()
           {
             downloadTask1[ 0 ] = downloadWithLocalPath();
+            File fileWithLocalPath = null;
+            try
+            {
+              fileWithLocalPath = downloadTask1[ 0 ].get();
+              System.out.println( fileWithLocalPath.toString() );
+            }
+            catch( CancellationException | ExecutionException | InterruptedException e )
+            {
+              e.printStackTrace();
+            }
           }
         } );
         out.setText( "File downloading with local path" );
@@ -80,7 +89,7 @@ public class MainActivity extends AppCompatActivity
       @Override
       public void onClick( View v )
       {
-        cancelDownloading( downloadTask1[ 0 ] );
+        cancelDownloadingFile( downloadTask1[ 0 ] );
       }
     };
     Cancel1.setOnClickListener( ButtonCancel1 );
@@ -97,6 +106,15 @@ public class MainActivity extends AppCompatActivity
           public void run()
           {
             downloadTask2[ 0 ] = downloadWithOutputStream();
+            try
+            {
+              downloadTask2[ 0 ].get();
+              System.out.println( "file downloaded" );
+            }
+            catch( CancellationException | ExecutionException | InterruptedException e )
+            {
+              e.printStackTrace();
+            }
           }
         } );
         out.setText( "File downloading with OutputStream" );
@@ -108,12 +126,12 @@ public class MainActivity extends AppCompatActivity
       @Override
       public void onClick( View v )
       {
-        cancelDownloading( downloadTask2[ 0 ] );
+        cancelDownloadingVoid( downloadTask2[ 0 ] );
       }
     };
     Cancel2.setOnClickListener( ButtonCancel2 );
 
-    final Future<Void>[] downloadTask3 = new Future[]{ null };
+    final Future<byte[]>[] downloadTask3 = new Future[]{ null };
     View.OnClickListener ButtonDownload3 = new View.OnClickListener()
     {
       @Override
@@ -125,6 +143,16 @@ public class MainActivity extends AppCompatActivity
           public void run()
           {
             downloadTask3[ 0 ] = downloadFileInArray();
+            File fileFromByteArray = null;
+            try
+            {
+              fileFromByteArray = writeByteArray( downloadTask3[ 0 ].get() );
+              System.out.println( fileFromByteArray.toString() );
+            }
+            catch( CancellationException | ExecutionException | InterruptedException e )
+            {
+              e.printStackTrace();
+            }
           }
         } );
         out.setText( "File downloading file in ByteArray" );
@@ -136,12 +164,12 @@ public class MainActivity extends AppCompatActivity
       @Override
       public void onClick( View v )
       {
-        cancelDownloading( downloadTask3[ 0 ] );
+        cancelDownloadingByteArray( downloadTask3[ 0 ] );
       }
     };
     Cancel3.setOnClickListener( ButtonCancel3 );
 
-    final Future<Void>[] downloadTask4 = new Future[]{ null };
+    final Future<File>[] downloadTask4 = new Future[]{ null };
     View.OnClickListener ButtonDownload4 = new View.OnClickListener()
     {
       @Override
@@ -153,6 +181,16 @@ public class MainActivity extends AppCompatActivity
           public void run()
           {
             downloadTask4[ 0 ] = downloadWithLocalPathAndProgressBar();
+            File fileWithLocalPath = null;
+            try
+            {
+              fileWithLocalPath = downloadTask4[ 0 ].get();
+              System.out.println( fileWithLocalPath.toString() );
+            }
+            catch( CancellationException | InterruptedException | ExecutionException e )
+            {
+              e.printStackTrace();
+            }
           }
         } );
         out.setText( "File downloading file downloading with local path and ProgressBar" );
@@ -164,7 +202,7 @@ public class MainActivity extends AppCompatActivity
       @Override
       public void onClick( View v )
       {
-        cancelDownloading( downloadTask4[ 0 ] );
+        cancelDownloadingFile( downloadTask4[ 0 ] );
       }
     };
     Cancel4.setOnClickListener( ButtonCancel4 );
@@ -181,6 +219,15 @@ public class MainActivity extends AppCompatActivity
           public void run()
           {
             downloadTask5[ 0 ] = downloadWithOutputStreamAndProgressBar();
+            try
+            {
+              downloadTask5[ 0 ].get();
+              System.out.println( "file downloaded" );
+            }
+            catch( CancellationException | ExecutionException | InterruptedException e )
+            {
+              e.printStackTrace();
+            }
           }
         } );
         out.setText( "File downloading with OutputStream and ProgressBar" );
@@ -192,12 +239,12 @@ public class MainActivity extends AppCompatActivity
       @Override
       public void onClick( View v )
       {
-        cancelDownloading( downloadTask5[ 0 ] );
+        cancelDownloadingVoid( downloadTask5[ 0 ] );
       }
     };
     Cancel5.setOnClickListener( ButtonCancel5 );
 
-    final Future<Void>[] downloadTask6 = new Future[]{ null };
+    final Future<byte[]>[] downloadTask6 = new Future[]{ null };
     View.OnClickListener ButtonDownload6 = new View.OnClickListener()
     {
       @Override
@@ -209,6 +256,16 @@ public class MainActivity extends AppCompatActivity
           public void run()
           {
             downloadTask6[ 0 ] = downloadFileInByteArrayWithProgressBar();
+            File fileFromByteArray = null;
+            try
+            {
+              fileFromByteArray = writeByteArray( downloadTask6[ 0 ].get() );
+              System.out.println( fileFromByteArray.toString() );
+            }
+            catch( CancellationException | ExecutionException | InterruptedException e )
+            {
+              e.printStackTrace();
+            }
           }
         } );
         out.setText( "File downloading file in ByteArray with ProgressBar" );
@@ -220,17 +277,17 @@ public class MainActivity extends AppCompatActivity
       @Override
       public void onClick( View v )
       {
-        cancelDownloading( downloadTask6[ 0 ] );
+        cancelDownloadingByteArray( downloadTask6[ 0 ] );
       }
     };
     Cancel6.setOnClickListener( ButtonCancel6 );
   }
 
-  private void cancelDownloading( Future<Void> voidFuture )
+  private void cancelDownloadingFile( Future<File> future )
   {
-    if( voidFuture != null )
+    if( future != null )
     {
-      voidFuture.cancel( true );
+      future.cancel( true );
       out.setText( "Cancel downloading" );
     }
     else
@@ -239,26 +296,39 @@ public class MainActivity extends AppCompatActivity
     }
   }
 
-  private Future<Void> downloadWithLocalPath()
+  private void cancelDownloadingVoid( Future<Void> future )
+  {
+    if( future != null )
+    {
+      future.cancel( true );
+      out.setText( "Cancel downloading" );
+    }
+    else
+    {
+      out.setText( "Downloading do not start yet" );
+    }
+  }
+
+  private void cancelDownloadingByteArray( Future<byte[]> future )
+  {
+    if( future != null )
+    {
+      future.cancel( true );
+      out.setText( "Cancel downloading" );
+    }
+    else
+    {
+      out.setText( "Downloading do not start yet" );
+    }
+  }
+
+  private Future<File> downloadWithLocalPath()
   {
     Person person = Backendless.Data.of( Person.class ).findById( Defaults.ID_PERSON );
 
     File file = new File( getFilesDir(), Defaults.FILE_NAME );
     String localFilePathName = file.toString();
-    return person.image.download( localFilePathName, new AsyncCallback<File>()
-    {
-      @Override
-      public void handleResponse( File response )
-      {
-        System.out.println( response.getName() );
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        new BackendlessFault( fault );
-      }
-    } );
+    return person.image.download( localFilePathName );
   }
 
   private Future<Void> downloadWithOutputStream()
@@ -276,43 +346,17 @@ public class MainActivity extends AppCompatActivity
       e.printStackTrace();
     }
 
-    return person.image.download( out[ 0 ], new AsyncCallback<Void>()
-    {
-      @Override
-      public void handleResponse( Void response )
-      {
-        System.out.println( "Downloading complete" );
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        new BackendlessFault( fault );
-      }
-    } );
+    return person.image.download( out[ 0 ] );
   }
 
-  private Future<Void> downloadFileInArray()
+  private Future<byte[]> downloadFileInArray()
   {
     Person person = Backendless.Data.of( Person.class ).findById( Defaults.ID_PERSON );
 
-    return person.image.download( new AsyncCallback<byte[]>()
-    {
-      @Override
-      public void handleResponse( byte[] response )
-      {
-        writeByteArray( response );
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        new BackendlessFault( fault );
-      }
-    } );
+    return person.image.download();
   }
 
-  private Future<Void> downloadWithLocalPathAndProgressBar()
+  private Future<File> downloadWithLocalPathAndProgressBar()
   {
     Person person = Backendless.Data.of( Person.class ).findById( Defaults.ID_PERSON );
     ProgressBar bar = findViewById( R.id.determinateBar );
@@ -321,21 +365,7 @@ public class MainActivity extends AppCompatActivity
     String localFilePathName = file.toString();
 
     BackendlessFileAndroid android = (BackendlessFileAndroid) person.image;
-    return android.download( localFilePathName, bar, new AsyncCallback<File>()
-    {
-      @Override
-      public void handleResponse( File response )
-      {
-        System.out.println( response.toString() );
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        new BackendlessFault( fault );
-      }
-    } );
-
+    return android.download( localFilePathName, bar );
   }
 
   private Future<Void> downloadWithOutputStreamAndProgressBar()
@@ -355,45 +385,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     BackendlessFileAndroid android = (BackendlessFileAndroid) person.image;
-    return android.download( out[ 0 ], bar, new AsyncCallback<Void>()
-    {
-      @Override
-      public void handleResponse( Void response )
-      {
-        System.out.println( "Downloading complete" );
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        new BackendlessFault( fault );
-      }
-    } );
+    return android.download( out[ 0 ], bar );
   }
 
-  private Future<Void> downloadFileInByteArrayWithProgressBar()
+  private Future<byte[]> downloadFileInByteArrayWithProgressBar()
   {
     Person person = Backendless.Data.of( Person.class ).findById( Defaults.ID_PERSON );
     ProgressBar bar = findViewById( R.id.determinateBar );
 
     BackendlessFileAndroid android = (BackendlessFileAndroid) person.image;
-    return android.download( bar, new AsyncCallback<byte[]>()
-    {
-      @Override
-      public void handleResponse( byte[] response )
-      {
-        writeByteArray( response );
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        new BackendlessFault( fault );
-      }
-    } );
+    return android.download( bar );
   }
 
-  private void writeByteArray( byte[] bytes )
+  private File writeByteArray( byte[] bytes )
   {
     File file = new File( getFilesDir(), Defaults.FILE_NAME );
     FileOutputStream stream = null;
@@ -420,8 +424,7 @@ public class MainActivity extends AppCompatActivity
         e.printStackTrace();
       }
     }
+    return file;
   }
 
 }
-
-
