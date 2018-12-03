@@ -4,9 +4,9 @@ import com.backendless.ThreadPoolService;
 import com.backendless.exceptions.BackendlessException;
 
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 
 class FileDownload
 {
@@ -55,89 +55,54 @@ class FileDownload
 
   private byte[] downloading( String fileURL )
   {
-    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    byte[] byteArray;
+    try( ByteArrayOutputStream out = new ByteArrayOutputStream() )
+    {
+      downloading( fileURL, out );
+      byteArray = out.toByteArray();
+    }
+    catch( IOException e )
+    {
+      throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
+    }
 
-    downloading( fileURL, out );
-
-    return out.toByteArray();
+    return byteArray;
   }
 
   private File downloading( String fileURL, String localFilePathName )
   {
     File file = new File( localFilePathName );
 
-    BufferedOutputStream out;
-    try
+    try( BufferedOutputStream out = new BufferedOutputStream( new FileOutputStream( file ) ) )
     {
-      out = new BufferedOutputStream( new FileOutputStream( file ) );
+      downloading( fileURL, out );
     }
-    catch( FileNotFoundException e )
+    catch( IOException e )
     {
       throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
     }
-    downloading( fileURL, out );
 
     return file;
   }
 
   private void downloading( String fileURL, OutputStream out )
   {
-    InputStream in = null;
-    try
+    try( InputStream in = new BufferedInputStream( new URL( fileURL ).openStream() ) )
     {
-      URL url = new URL( fileURL );
-
-      in = new BufferedInputStream( url.openStream() );
-
       int count;
       byte[] buffer = new byte[ 4096 ];
       while( ( count = in.read( buffer ) ) > 0 )
       {
         if( Thread.currentThread().isInterrupted() )
         {
-          closeInOut( out, in );
           break;
         }
         out.write( buffer, 0, count );
       }
     }
-    catch( MalformedURLException e )
-    {
-      throw new IllegalArgumentException( FILE_DOWNLOAD_ERROR, e );
-    }
     catch( IOException e )
     {
       throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
-    }
-    finally
-    {
-      closeInOut( out, in );
-    }
-  }
-
-  private void closeInOut( OutputStream out, InputStream in )
-  {
-    if( in != null )
-    {
-      try
-      {
-        in.close();
-      }
-      catch( IOException e )
-      {
-        throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
-      }
-    }
-    if( out != null )
-    {
-      try
-      {
-        out.close();
-      }
-      catch( IOException e )
-      {
-        throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
-      }
     }
   }
 

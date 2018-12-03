@@ -7,7 +7,9 @@ import com.backendless.exceptions.BackendlessException;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
+
 
 public class FileDownloadAndroid
 {
@@ -56,39 +58,50 @@ public class FileDownloadAndroid
 
   private byte[] download( ProgressBar progressBar, String fileURL )
   {
-    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    byte[] byteArray;
+    try( ByteArrayOutputStream out = new ByteArrayOutputStream() )
+    {
+      download( out, progressBar, fileURL );
+      byteArray = out.toByteArray();
+    }
+    catch( IOException e )
+    {
+      throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
+    }
 
-    download( out, progressBar, fileURL );
 
-    return out.toByteArray();
+    return byteArray;
   }
 
   private File download( String localFilePathName, ProgressBar progressBar, String fileURL )
   {
     final File file = new File( localFilePathName );
 
-    BufferedOutputStream out;
-    try
+    try( BufferedOutputStream out = new BufferedOutputStream( new FileOutputStream( file ) ) )
     {
-      out = new BufferedOutputStream( new FileOutputStream( file ) );
+      download( out, progressBar, fileURL );
     }
-    catch( FileNotFoundException e )
+    catch( IOException e )
     {
       throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
     }
 
-    download( out, progressBar, fileURL );
     return file;
   }
 
   private void download( OutputStream out, ProgressBar progressBar, String fileURL )
   {
-    InputStream in = null;
+    URL url;
     try
     {
-      URL url = new URL( fileURL );
-      in = url.openStream();
-
+      url = new URL( fileURL );
+    }
+    catch( MalformedURLException e )
+    {
+      throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
+    }
+    try( InputStream in = url.openStream() )
+    {
       int fileSize = url.openConnection().getContentLength();
       int countReadSize = 0;
       progressBar.setProgress( 0 );
@@ -98,7 +111,6 @@ public class FileDownloadAndroid
       {
         if( Thread.currentThread().isInterrupted() )
         {
-          closeInOut( out, in );
           break;
         }
         out.write( buffer, 0, count );
@@ -106,43 +118,9 @@ public class FileDownloadAndroid
         progressBar.setProgress( countReadSize * 100 / fileSize );
       }
     }
-    catch( MalformedURLException e )
-    {
-      throw new IllegalArgumentException( FILE_DOWNLOAD_ERROR, e );
-    }
     catch( IOException e )
     {
       throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
-    }
-    finally
-    {
-      closeInOut( out, in );
-    }
-  }
-
-  private void closeInOut( OutputStream out, InputStream in )
-  {
-    if( in != null )
-    {
-      try
-      {
-        in.close();
-      }
-      catch( IOException e )
-      {
-        throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
-      }
-    }
-    if( out != null )
-    {
-      try
-      {
-        out.close();
-      }
-      catch( IOException e )
-      {
-        throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
-      }
     }
   }
 
