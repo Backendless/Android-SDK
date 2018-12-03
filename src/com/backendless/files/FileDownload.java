@@ -1,5 +1,6 @@
 package com.backendless.files;
 
+import com.backendless.ThreadPoolService;
 import com.backendless.exceptions.BackendlessException;
 
 import java.io.*;
@@ -14,54 +15,24 @@ class FileDownload
 
   Future<File> download( final String fileURL, final String localFilePathName )
   {
-    FutureTask<File> downloadTask = new FutureTask<>( new Callable<File>()
-    {
-      @Override
-      public File call()
-      {
-        return downloading( fileURL, localFilePathName );
-      }
-    } );
-    ExecutorService downloadWithLocalPathExecutor = Executors.newSingleThreadExecutor();
-    downloadWithLocalPathExecutor.execute( downloadTask );
-    downloadWithLocalPathExecutor.shutdown();
-
-    return downloadTask;
+    Callable<File> downloadTask = () -> downloading( fileURL, localFilePathName );
+    return ThreadPoolService.getPoolExecutor().submit( downloadTask );
   }
 
   Future<Void> download( final String fileURL, final OutputStream stream )
   {
-    FutureTask<Void> downloadTask = new FutureTask<>( new Callable<Void>()
+    Callable<Void> downloadTask = () ->
     {
-      @Override
-      public Void call()
-      {
-        downloading( fileURL, stream );
-        return null;
-      }
-    } );
-    ExecutorService downloadWithLocalPathExecutor = Executors.newSingleThreadExecutor();
-    downloadWithLocalPathExecutor.execute( downloadTask );
-    downloadWithLocalPathExecutor.shutdown();
-
-    return downloadTask;
+      downloading( fileURL, stream );
+      return null;
+    };
+    return ThreadPoolService.getPoolExecutor().submit( downloadTask );
   }
 
   Future<byte[]> download( final String fileURL )
   {
-    FutureTask<byte[]> downloadTask = new FutureTask<>( new Callable<byte[]>()
-    {
-      @Override
-      public byte[] call()
-      {
-        return downloading( fileURL );
-      }
-    } );
-    ExecutorService downloadWithLocalPathExecutor = Executors.newSingleThreadExecutor();
-    downloadWithLocalPathExecutor.execute( downloadTask );
-    downloadWithLocalPathExecutor.shutdown();
-
-    return downloadTask;
+    Callable<byte[]> downloadTask = () -> downloading( fileURL );
+    return ThreadPoolService.getPoolExecutor().submit( downloadTask );
   }
 
   private byte[] downloading( String fileURL )

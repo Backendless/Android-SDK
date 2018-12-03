@@ -1,6 +1,7 @@
 package com.backendless.files;
 
 import android.widget.ProgressBar;
+import com.backendless.ThreadPoolService;
 import com.backendless.exceptions.BackendlessException;
 
 import java.io.*;
@@ -15,54 +16,24 @@ public class FileDownloadAndroid
 
   Future<File> download( final String fileURL, final String localFilePathName, final ProgressBar progressBar )
   {
-    FutureTask<File> downloadTask = new FutureTask<>( new Callable<File>()
-    {
-      @Override
-      public File call()
-      {
-        return download( localFilePathName, progressBar, fileURL );
-      }
-    } );
-    ExecutorService downloadWithLocalPathExecutor = Executors.newSingleThreadExecutor();
-    downloadWithLocalPathExecutor.execute( downloadTask );
-    downloadWithLocalPathExecutor.shutdown();
-
-    return downloadTask;
+    Callable<File> downloadTask = () -> download( localFilePathName, progressBar, fileURL );
+    return ThreadPoolService.getPoolExecutor().submit( downloadTask );
   }
 
   Future<Void> download( final String fileURL, final OutputStream stream, final ProgressBar progressBar )
   {
-    FutureTask<Void> downloadTask = new FutureTask<>( new Callable<Void>()
+    Callable<Void> downloadTask = () ->
     {
-      @Override
-      public Void call()
-      {
-        download( stream, progressBar, fileURL );
-        return null;
-      }
-    } );
-    ExecutorService downloadWithLocalPathExecutor = Executors.newSingleThreadExecutor();
-    downloadWithLocalPathExecutor.execute( downloadTask );
-    downloadWithLocalPathExecutor.shutdown();
-
-    return downloadTask;
+      download( stream, progressBar, fileURL );
+      return null;
+    };
+    return ThreadPoolService.getPoolExecutor().submit( downloadTask );
   }
 
   Future<byte[]> download( final String fileURL, final ProgressBar progressBar )
   {
-    FutureTask<byte[]> downloadTask = new FutureTask<>( new Callable<byte[]>()
-    {
-      @Override
-      public byte[] call()
-      {
-        return download( progressBar, fileURL );
-      }
-    } );
-    ExecutorService downloadWithLocalPathExecutor = Executors.newSingleThreadExecutor();
-    downloadWithLocalPathExecutor.execute( downloadTask );
-    downloadWithLocalPathExecutor.shutdown();
-
-    return downloadTask;
+    Callable<byte[]> downloadTask = () -> download( progressBar, fileURL );
+    return ThreadPoolService.getPoolExecutor().submit( downloadTask );
   }
 
   private byte[] download( ProgressBar progressBar, String fileURL )
