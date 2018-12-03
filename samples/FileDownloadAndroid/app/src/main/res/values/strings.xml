@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">File Download Sample</string>
+    <string name="button_download_to_internal_files_storage_with_same_name">
+        Download to Internal Files Storage with same name as in FileService
+    </string>
+    <string name="button_download_to_internal_cache_storage_with_same_name">
+        Download to Internal Cache Storage with same name as in FileService
+    </string>
+    <string name="download_to_internal_files_storage_with_same_name_using_outputstream">
+        Download to Internal Files Storage with same name as in File Service using OutputStream
+    </string>
 </resources>
