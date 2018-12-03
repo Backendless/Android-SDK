@@ -11,16 +11,29 @@ import java.util.concurrent.Future;
 class FileDownload
 {
 
-  private final static String FILE_DOWNLOAD_ERROR = "Could not download a file";
+  private final static String FILE_DOWNLOAD_ERROR = "Could not downloading a file";
 
-  Future<File> download( final String fileURL, final String localFilePathName )
+  Future<File> download( final String fileURL, final String destinationPath )
   {
     Callable<File> downloadTask = new Callable<File>()
     {
       @Override
       public File call()
       {
-        return FileDownload.this.downloading( fileURL, localFilePathName );
+        return FileDownload.this.downloading( fileURL, destinationPath );
+      }
+    };
+    return ThreadPoolService.getPoolExecutor().submit( downloadTask );
+  }
+
+  Future<File> download( final String fileURL, final String destinationPath, final String fileName )
+  {
+    Callable<File> downloadTask = new Callable<File>()
+    {
+      @Override
+      public File call()
+      {
+        return FileDownload.this.downloading( fileURL, destinationPath, fileName );
       }
     };
     return ThreadPoolService.getPoolExecutor().submit( downloadTask );
@@ -69,8 +82,15 @@ class FileDownload
     return byteArray;
   }
 
-  private File downloading( String fileURL, String localFilePathName )
+  private File downloading( String fileURL, String destinationPath )
   {
+    String fileName = fileURL.substring( fileURL.lastIndexOf( '/' ) + 1 );
+    return downloading( fileURL, destinationPath, fileName );
+  }
+
+  private File downloading( String fileURL, String destinationPath, String fileName )
+  {
+    String localFilePathName = destinationPath + fileName;
     File file = new File( localFilePathName );
 
     try( BufferedOutputStream out = new BufferedOutputStream( new FileOutputStream( file ) ) )

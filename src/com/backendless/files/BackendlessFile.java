@@ -55,9 +55,14 @@ public class BackendlessFile
     Backendless.Files.remove( fileURL, responder );
   }
 
-  public Future<File> download( String localFilePathName )
+  public Future<File> download( String destinationPath )
   {
-    return new FileDownload().download( fileURL, localFilePathName );
+    return new FileDownload().download( fileURL, destinationPath );
+  }
+
+  public Future<File> download( String destinationPath, String fileName )
+  {
+    return new FileDownload().download( fileURL, destinationPath, fileName );
   }
 
   public Future<Void> download( OutputStream stream )

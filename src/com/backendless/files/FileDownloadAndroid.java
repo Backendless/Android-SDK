@@ -14,16 +14,30 @@ import java.util.concurrent.Future;
 public class FileDownloadAndroid
 {
 
-  private final static String FILE_DOWNLOAD_ERROR = "Could not download a file";
+  private final static String FILE_DOWNLOAD_ERROR = "Could not downloading a file";
 
-  Future<File> download( final String fileURL, final String localFilePathName, final ProgressBar progressBar )
+  Future<File> download( final String fileURL, final String destinationPath, final ProgressBar progressBar )
   {
     Callable<File> downloadTask = new Callable<File>()
     {
       @Override
       public File call()
       {
-        return FileDownloadAndroid.this.download( localFilePathName, progressBar, fileURL );
+        return FileDownloadAndroid.this.downloading( fileURL, destinationPath, progressBar );
+      }
+    };
+    return ThreadPoolService.getPoolExecutor().submit( downloadTask );
+  }
+
+  Future<File> download( final String fileURL, final String destinationPath, final String fileName,
+                         final ProgressBar progressBar )
+  {
+    Callable<File> downloadTask = new Callable<File>()
+    {
+      @Override
+      public File call()
+      {
+        return FileDownloadAndroid.this.downloading( fileURL, destinationPath, fileName, progressBar );
       }
     };
     return ThreadPoolService.getPoolExecutor().submit( downloadTask );
@@ -36,7 +50,7 @@ public class FileDownloadAndroid
       @Override
       public Void call()
       {
-        FileDownloadAndroid.this.download( stream, progressBar, fileURL );
+        FileDownloadAndroid.this.downloading( fileURL, stream, progressBar );
         return null;
       }
     };
@@ -50,18 +64,18 @@ public class FileDownloadAndroid
       @Override
       public byte[] call()
       {
-        return FileDownloadAndroid.this.download( progressBar, fileURL );
+        return FileDownloadAndroid.this.downloading( fileURL, progressBar );
       }
     };
     return ThreadPoolService.getPoolExecutor().submit( downloadTask );
   }
 
-  private byte[] download( ProgressBar progressBar, String fileURL )
+  private byte[] downloading( String fileURL, ProgressBar progressBar )
   {
     byte[] byteArray;
     try( ByteArrayOutputStream out = new ByteArrayOutputStream() )
     {
-      download( out, progressBar, fileURL );
+      downloading( fileURL, out, progressBar );
       byteArray = out.toByteArray();
     }
     catch( IOException e )
@@ -69,17 +83,23 @@ public class FileDownloadAndroid
       throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
     }
 
-
     return byteArray;
   }
 
-  private File download( String localFilePathName, ProgressBar progressBar, String fileURL )
+  private File downloading( String fileURL, String destinationPath, ProgressBar progressBar )
   {
+    String fileName = fileURL.substring( fileURL.lastIndexOf( '/' ) + 1 );
+    return downloading( fileURL, destinationPath, fileName, progressBar );
+  }
+
+  private File downloading( String fileURL, String destinationPath, String fileName, ProgressBar progressBar )
+  {
+    String localFilePathName = destinationPath + fileName;
     final File file = new File( localFilePathName );
 
     try( BufferedOutputStream out = new BufferedOutputStream( new FileOutputStream( file ) ) )
     {
-      download( out, progressBar, fileURL );
+      downloading( fileURL, out, progressBar );
     }
     catch( IOException e )
     {
@@ -89,7 +109,7 @@ public class FileDownloadAndroid
     return file;
   }
 
-  private void download( OutputStream out, ProgressBar progressBar, String fileURL )
+  private void downloading( String fileURL, OutputStream out, ProgressBar progressBar )
   {
     URL url;
     try

@@ -36,9 +36,14 @@ public class BackendlessFileAndroid extends BackendlessFile
     return new DownloadTask( getFileURL(), localDirectoryPath );
   }
 
-  public Future<File> download( String localFilePathName, ProgressBar progressBar )
+  public Future<File> download( String destinationPath, ProgressBar progressBar )
   {
-    return new FileDownloadAndroid().download( getFileURL(), localFilePathName, progressBar );
+    return new FileDownloadAndroid().download( getFileURL(), destinationPath, progressBar );
+  }
+
+  public Future<File> download( String destinationPath, String fileName, ProgressBar progressBar )
+  {
+    return new FileDownloadAndroid().download( getFileURL(), destinationPath, fileName, progressBar );
   }
 
   public Future<Void> download( OutputStream stream, ProgressBar progressBar )
