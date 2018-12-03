@@ -15,23 +15,41 @@ class FileDownload
 
   Future<File> download( final String fileURL, final String localFilePathName )
   {
-    Callable<File> downloadTask = () -> downloading( fileURL, localFilePathName );
+    Callable<File> downloadTask = new Callable<File>()
+    {
+      @Override
+      public File call()
+      {
+        return FileDownload.this.downloading( fileURL, localFilePathName );
+      }
+    };
     return ThreadPoolService.getPoolExecutor().submit( downloadTask );
   }
 
   Future<Void> download( final String fileURL, final OutputStream stream )
   {
-    Callable<Void> downloadTask = () ->
+    Callable<Void> downloadTask = new Callable<Void>()
     {
-      downloading( fileURL, stream );
-      return null;
+      @Override
+      public Void call()
+      {
+        FileDownload.this.downloading( fileURL, stream );
+        return null;
+      }
     };
     return ThreadPoolService.getPoolExecutor().submit( downloadTask );
   }
 
   Future<byte[]> download( final String fileURL )
   {
-    Callable<byte[]> downloadTask = () -> downloading( fileURL );
+    Callable<byte[]> downloadTask = new Callable<byte[]>()
+    {
+      @Override
+      public byte[] call()
+      {
+        return FileDownload.this.downloading( fileURL );
+      }
+    };
     return ThreadPoolService.getPoolExecutor().submit( downloadTask );
   }
 
@@ -75,6 +93,11 @@ class FileDownload
       byte[] buffer = new byte[ 4096 ];
       while( ( count = in.read( buffer ) ) > 0 )
       {
+        if( Thread.currentThread().isInterrupted() )
+        {
+          closeInOut( out, in );
+          break;
+        }
         out.write( buffer, 0, count );
       }
     }
@@ -88,27 +111,32 @@ class FileDownload
     }
     finally
     {
-      if( in != null )
+      closeInOut( out, in );
+    }
+  }
+
+  private void closeInOut( OutputStream out, InputStream in )
+  {
+    if( in != null )
+    {
+      try
       {
-        try
-        {
-          in.close();
-        }
-        catch( IOException e )
-        {
-          throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
-        }
+        in.close();
       }
-      if( out != null )
+      catch( IOException e )
       {
-        try
-        {
-          out.close();
-        }
-        catch( IOException e )
-        {
-          throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
-        }
+        throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
+      }
+    }
+    if( out != null )
+    {
+      try
+      {
+        out.close();
+      }
+      catch( IOException e )
+      {
+        throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
       }
     }
   }

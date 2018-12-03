@@ -16,23 +16,41 @@ public class FileDownloadAndroid
 
   Future<File> download( final String fileURL, final String localFilePathName, final ProgressBar progressBar )
   {
-    Callable<File> downloadTask = () -> download( localFilePathName, progressBar, fileURL );
+    Callable<File> downloadTask = new Callable<File>()
+    {
+      @Override
+      public File call()
+      {
+        return FileDownloadAndroid.this.download( localFilePathName, progressBar, fileURL );
+      }
+    };
     return ThreadPoolService.getPoolExecutor().submit( downloadTask );
   }
 
   Future<Void> download( final String fileURL, final OutputStream stream, final ProgressBar progressBar )
   {
-    Callable<Void> downloadTask = () ->
+    Callable<Void> downloadTask = new Callable<Void>()
     {
-      download( stream, progressBar, fileURL );
-      return null;
+      @Override
+      public Void call()
+      {
+        FileDownloadAndroid.this.download( stream, progressBar, fileURL );
+        return null;
+      }
     };
     return ThreadPoolService.getPoolExecutor().submit( downloadTask );
   }
 
   Future<byte[]> download( final String fileURL, final ProgressBar progressBar )
   {
-    Callable<byte[]> downloadTask = () -> download( progressBar, fileURL );
+    Callable<byte[]> downloadTask = new Callable<byte[]>()
+    {
+      @Override
+      public byte[] call()
+      {
+        return FileDownloadAndroid.this.download( progressBar, fileURL );
+      }
+    };
     return ThreadPoolService.getPoolExecutor().submit( downloadTask );
   }
 
@@ -78,6 +96,11 @@ public class FileDownloadAndroid
       byte[] buffer = new byte[ 4096 ];
       while( ( count = in.read( buffer ) ) > 0 )
       {
+        if( Thread.currentThread().isInterrupted() )
+        {
+          closeInOut( out, in );
+          break;
+        }
         out.write( buffer, 0, count );
         countReadSize += count;
         progressBar.setProgress( countReadSize * 100 / fileSize );
@@ -93,27 +116,32 @@ public class FileDownloadAndroid
     }
     finally
     {
-      if( in != null )
+      closeInOut( out, in );
+    }
+  }
+
+  private void closeInOut( OutputStream out, InputStream in )
+  {
+    if( in != null )
+    {
+      try
       {
-        try
-        {
-          in.close();
-        }
-        catch( IOException e )
-        {
-          throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
-        }
+        in.close();
       }
-      if( out != null )
+      catch( IOException e )
       {
-        try
-        {
-          out.close();
-        }
-        catch( IOException e )
-        {
-          throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
-        }
+        throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
+      }
+    }
+    if( out != null )
+    {
+      try
+      {
+        out.close();
+      }
+      catch( IOException e )
+      {
+        throw new BackendlessException( FILE_DOWNLOAD_ERROR, e.getMessage() );
       }
     }
   }
