@@ -11,6 +11,8 @@ class Downloader
   {
     downloadWithLocalPath( person );
 
+    donloadWithLocalPathAndName( person );
+
     downloadOutputStream( person );
 
     downloadByteArray( person );
@@ -20,6 +22,8 @@ class Downloader
   {
     downloadWithLocalPathAndCancel( person );
 
+    donloadWithLocalPathAndNameAndCancel( person );
+
     downloadOutputStreamAndCancel( person );
 
     downloadByteArrayAndCancel( person );
@@ -28,6 +32,13 @@ class Downloader
   private void downloadWithLocalPath( Person person ) throws InterruptedException, ExecutionException
   {
     Future<File> futureDownloadWithLocalPath = person.image.download( Defaults.LOCAL_FILE_PATH );
+    File fileWithLocalPath = futureDownloadWithLocalPath.get();
+    System.out.println( fileWithLocalPath.toString() );
+  }
+
+  private void donloadWithLocalPathAndName( Person person ) throws InterruptedException, ExecutionException
+  {
+    Future<File> futureDownloadWithLocalPath = person.image.download( Defaults.LOCAL_FILE_PATH, Defaults.LOCAL_FILE_NAME );
     File fileWithLocalPath = futureDownloadWithLocalPath.get();
     System.out.println( fileWithLocalPath.toString() );
   }
@@ -50,6 +61,20 @@ class Downloader
   private void downloadWithLocalPathAndCancel( Person person ) throws InterruptedException, ExecutionException
   {
     Future<File> futureDownloadWithLocalPath = person.image.download( Defaults.LOCAL_FILE_PATH );
+    if( !futureDownloadWithLocalPath.isDone() )
+    {
+      futureDownloadWithLocalPath.cancel( true );
+      System.out.println( "Downloading cancel" );
+    }
+    else
+    {
+      System.out.println( futureDownloadWithLocalPath.get().toString() );
+    }
+  }
+
+  private void donloadWithLocalPathAndNameAndCancel( Person person ) throws InterruptedException, ExecutionException
+  {
+    Future<File> futureDownloadWithLocalPath = person.image.download( Defaults.LOCAL_FILE_PATH, Defaults.LOCAL_FILE_NAME );
     if( !futureDownloadWithLocalPath.isDone() )
     {
       futureDownloadWithLocalPath.cancel( true );
@@ -93,7 +118,7 @@ class Downloader
 
   private OutputStream[] downloadOutputStream()
   {
-    File file = new File( Defaults.LOCAL_FILE_PATH );
+    File file = new File( Defaults.LOCAL_FILE_PATH_AND_NAME );
     final OutputStream[] out = { null };
     try
     {
@@ -109,12 +134,12 @@ class Downloader
 
   private File writeFileFromByteArray( byte[] bytes )
   {
-    File file = new File( Defaults.LOCAL_FILE_PATH );
+    File file = new File( Defaults.LOCAL_FILE_PATH_AND_NAME );
 
-    FileOutputStream stream = null;
+    FileOutputStream out = null;
     try
     {
-      stream = new FileOutputStream( file );
+      out = new FileOutputStream( file );
     }
     catch( FileNotFoundException e )
     {
@@ -124,9 +149,9 @@ class Downloader
     {
       try
       {
-        if( stream != null )
+        if( out != null )
         {
-          stream.write( bytes );
+          out.write( bytes );
         }
       }
       catch( IOException e )
@@ -138,9 +163,9 @@ class Downloader
     {
       try
       {
-        if( stream != null )
+        if( out != null )
         {
-          stream.close();
+          out.close();
         }
       }
       catch( IOException e )
