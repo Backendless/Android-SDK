@@ -107,7 +107,7 @@ public class BackendlessFCMService extends FirebaseMessagingService
             androidPushTemplate.setName( BackendlessFCMService.IMMEDIATE_MESSAGE );
         }
 
-        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, intent.getExtras().deepCopy(), notificationId );
+        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, intent.getExtras(), notificationId );
         PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), notificationId );
         return;
       }
@@ -121,8 +121,7 @@ public class BackendlessFCMService extends FirebaseMessagingService
           if( androidPushTemplate.getContentAvailable() != null && androidPushTemplate.getContentAvailable() == 1 )
             return;
 
-          Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, intent.getExtras().deepCopy(), notificationId );
-          intent.getExtras().deepCopy();
+          Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, intent.getExtras(), notificationId );
           PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), notificationId );
         }
         return;
