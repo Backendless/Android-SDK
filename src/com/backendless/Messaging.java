@@ -65,11 +65,11 @@ import java.util.UUID;
 public final class Messaging
 {
   private final static String MESSAGING_MANAGER_SERVER_ALIAS = "com.backendless.services.messaging.MessagingService";
-  private final static String DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS = "com.backendless.services.messaging.DeviceRegistrationService";
+  public final static String DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS = "com.backendless.services.messaging.DeviceRegistrationService";
   private final static String EMAIL_MANAGER_SERVER_ALIAS = "com.backendless.services.mail.CustomersEmailService";
   private final static String DEFAULT_CHANNEL_NAME = "default";
-  private final static String OS;
-  private final static String OS_VERSION;
+  public final static String OS;
+  public final static String OS_VERSION;
   private static final Messaging instance = new Messaging();
   private static final ChannelFactory chanelFactory = new ChannelFactory();
 
@@ -191,64 +191,6 @@ public final class Messaging
       throw new IllegalArgumentException( ExceptionMessage.NULL_CHANNEL_NAME );
   }
 
-  public String registerDeviceOnServer( String deviceToken, final List<String> channels, final long expiration )
-  {
-    if( deviceToken == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_DEVICE_TOKEN );
-
-    DeviceRegistration deviceRegistration = new DeviceRegistration();
-    deviceRegistration.setDeviceId( getDeviceId() );
-    deviceRegistration.setOs( OS );
-    deviceRegistration.setOsVersion( OS_VERSION );
-    deviceRegistration.setDeviceToken( deviceToken );
-    deviceRegistration.setChannels( channels );
-    if( expiration != 0 )
-      deviceRegistration.setExpiration( new Date( expiration ) );
-
-    return Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "registerDevice", new Object[] { deviceRegistration } );
-  }
-
-  public void registerDeviceOnServer( String deviceToken, final List<String> channels, final long expiration,
-                                      final AsyncCallback<String> responder )
-  {
-    try
-    {
-      if( deviceToken == null )
-        throw new IllegalArgumentException( ExceptionMessage.NULL_DEVICE_TOKEN );
-
-      DeviceRegistration deviceRegistration = new DeviceRegistration();
-      deviceRegistration.setDeviceId( getDeviceId() );
-      deviceRegistration.setOs( OS );
-      deviceRegistration.setOsVersion( OS_VERSION );
-      deviceRegistration.setDeviceToken( deviceToken );
-      deviceRegistration.setChannels( channels );
-      if( expiration != 0 )
-        deviceRegistration.setExpiration( new Date( expiration ) );
-
-      Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "registerDevice", new Object[] { deviceRegistration }, new AsyncCallback<String>()
-      {
-        @Override
-        public void handleResponse( String response )
-        {
-          if( responder != null )
-            responder.handleResponse( response );
-        }
-
-        @Override
-        public void handleFault( BackendlessFault fault )
-        {
-          if( responder != null )
-            responder.handleFault( fault );
-        }
-      } );
-    }
-    catch( Throwable e )
-    {
-      if( responder != null )
-        responder.handleFault( new BackendlessFault( e ) );
-    }
-  }
-
   public void unregisterDevice()
   {
     unregisterDevice( (List<String>) null );
@@ -267,26 +209,6 @@ public final class Messaging
   public void unregisterDevice( final List<String> channels, final AsyncCallback<Integer> callback )
   {
     FCMRegistration.unregisterDevice( ContextHandler.getAppContext(), channels, callback );
-  }
-
-  public boolean unregisterDeviceOnServer()
-  {
-    return (Boolean) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { getDeviceId() } );
-  }
-
-  public void unregisterDeviceOnServer( final AsyncCallback<Boolean> responder )
-  {
-    Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { getDeviceId() }, responder );
-  }
-
-  public int unregisterDeviceOnServer( List<String> channels )
-  {
-    return (int) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { getDeviceId(), channels } );
-  }
-
-  public void unregisterDeviceOnServer( List<String> channels, final AsyncCallback<Integer> responder )
-  {
-    Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { getDeviceId(), channels }, responder );
   }
 
   public boolean refreshDeviceToken( String newDeviceToken )
