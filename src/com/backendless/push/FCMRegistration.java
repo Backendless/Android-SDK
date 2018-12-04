@@ -8,7 +8,6 @@ import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
@@ -74,7 +73,7 @@ public class FCMRegistration
 
   private static void registerOnBackendless( final Context appContext, String deviceToken, List<String> channels, long expiration, final AsyncCallback<DeviceRegistrationResult> callback, final DeviceRegistrationResult devRegResult )
   {
-    Backendless.Messaging.registerDeviceOnServer( deviceToken, channels, expiration, new AsyncCallback<String>()
+    DeviceRegistrationUtil.getInstance().registerDeviceOnServer( deviceToken, channels, expiration, new AsyncCallback<String>()
     {
       @Override
       public void handleResponse( String registrationInfo )
@@ -108,7 +107,7 @@ public class FCMRegistration
   {
     FCMRegistration.checkConfiguration( appContext );
 
-    Backendless.Messaging.unregisterDeviceOnServer( channels, new AsyncCallback<Integer>()
+    DeviceRegistrationUtil.getInstance().unregisterDeviceOnServer( channels, new AsyncCallback<Integer>()
     {
       @Override
       public void handleResponse( Integer response )
