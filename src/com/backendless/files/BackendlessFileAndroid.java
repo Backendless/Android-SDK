@@ -3,9 +3,7 @@ package com.backendless.files;
 import android.os.AsyncTask;
 import android.widget.ProgressBar;
 
-import java.io.File;
 import java.io.OutputStream;
-import java.util.concurrent.Future;
 
 /**********************************************************************************************************************
  * BACKENDLESS.COM CONFIDENTIAL
@@ -36,22 +34,22 @@ public class BackendlessFileAndroid extends BackendlessFile
     return new DownloadTask( getFileURL(), localDirectoryPath );
   }
 
-  public Future<File> download( String destinationPath, ProgressBar progressBar )
+  public AsyncTask download( String destinationPath, ProgressBar progressBar )
   {
     return new FileDownloadAndroid().download( getFileURL(), destinationPath, progressBar );
   }
 
-  public Future<File> download( String destinationPath, String fileName, ProgressBar progressBar )
+  public AsyncTask download( String destinationPath, String fileName, ProgressBar progressBar )
   {
     return new FileDownloadAndroid().download( getFileURL(), destinationPath, fileName, progressBar );
   }
 
-  public Future<Void> download( OutputStream stream, ProgressBar progressBar )
+  public AsyncTask download( OutputStream stream, ProgressBar progressBar )
   {
     return new FileDownloadAndroid().download( getFileURL(), stream, progressBar );
   }
 
-  public Future<byte[]> download( ProgressBar progressBar )
+  public AsyncTask download( ProgressBar progressBar )
   {
     return new FileDownloadAndroid().download( getFileURL(), progressBar );
   }
