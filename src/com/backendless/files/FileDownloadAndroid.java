@@ -15,27 +15,26 @@ public class FileDownloadAndroid
 
   AsyncTask download( final String fileURL, final String destinationPath, final ProgressBar progressBar )
   {
-    return new AsyncTask<Void, Integer, File>()
+    return new AsyncTask<Void, Double, File>()
     {
       @Override
       protected File doInBackground( Void... voids )
       {
-        isCancelled();
         return downloading( fileURL, destinationPath, new ProgressCallback()
         {
           @Override
           public void onProgress( double percent )
           {
-            publishProgress( (int) percent );
+            publishProgress( percent );
           }
         } );
       }
 
       @Override
-      protected void onProgressUpdate( Integer... values )
+      protected void onProgressUpdate( Double... values )
       {
         super.onProgressUpdate( values );
-        progressBar.setProgress( values[ 0 ] );
+        progressBar.setProgress( values[ 0 ].intValue() );
       }
     };
   }
@@ -43,7 +42,7 @@ public class FileDownloadAndroid
   AsyncTask download( final String fileURL, final String destinationPath, final String fileName,
                       final ProgressBar progressBar )
   {
-    return new AsyncTask<Void, Integer, File>()
+    return new AsyncTask<Void, Double, File>()
     {
       @Override
       protected File doInBackground( Void... voids )
@@ -53,23 +52,23 @@ public class FileDownloadAndroid
           @Override
           public void onProgress( double percent )
           {
-            publishProgress( (int) percent );
+            publishProgress( percent );
           }
         } );
       }
 
       @Override
-      protected void onProgressUpdate( Integer... values )
+      protected void onProgressUpdate( Double... values )
       {
         super.onProgressUpdate( values );
-        progressBar.setProgress( values[ 0 ] );
+        progressBar.setProgress( values[ 0 ].intValue() );
       }
     };
   }
 
   AsyncTask download( final String fileURL, final OutputStream stream, final ProgressBar progressBar )
   {
-    return new AsyncTask<Void, Integer, Void>()
+    return new AsyncTask<Void, Double, Void>()
     {
       @Override
       protected Void doInBackground( Void... voids )
@@ -79,24 +78,24 @@ public class FileDownloadAndroid
           @Override
           public void onProgress( double percent )
           {
-            publishProgress( (int) percent );
+            publishProgress( percent );
           }
         } );
         return null;
       }
 
       @Override
-      protected void onProgressUpdate( Integer... values )
+      protected void onProgressUpdate( Double... values )
       {
         super.onProgressUpdate( values );
-        progressBar.setProgress( values[ 0 ] );
+        progressBar.setProgress( values[ 0 ].intValue() );
       }
     };
   }
 
   AsyncTask download( final String fileURL, final ProgressBar progressBar )
   {
-    return new AsyncTask<Void, Integer, byte[]>()
+    return new AsyncTask<Void, Double, byte[]>()
     {
       @Override
       protected byte[] doInBackground( Void... voids )
@@ -106,16 +105,16 @@ public class FileDownloadAndroid
           @Override
           public void onProgress( double percent )
           {
-            publishProgress( (int) percent );
+            publishProgress( percent );
           }
         } );
       }
 
       @Override
-      protected void onProgressUpdate( Integer... values )
+      protected void onProgressUpdate( Double... values )
       {
         super.onProgressUpdate( values );
-        progressBar.setProgress( values[ 0 ] );
+        progressBar.setProgress( values[ 0 ].intValue() );
       }
     };
   }
