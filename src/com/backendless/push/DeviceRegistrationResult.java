@@ -9,9 +9,7 @@ public class DeviceRegistrationResult
   private Map<String, String> channelRegistrations;
 
   /**
-   * The device token that device receives after registration on Google FCM.
-   *
-   * @return
+   * @return The device token that device receives after registration on Google FCM.
    */
   public String getDeviceToken()
   {
@@ -19,10 +17,8 @@ public class DeviceRegistrationResult
   }
 
   /**
-   * <p>The map, where <i>key</i> is a <b>channel name</b> and <i>value</i> is a <b>device registration id</b> (table DeviceRegistrations).
+   * @return The map, where <i>key</i> is a <b>channel name</b> and <i>value</i> is a <b>device registration id</b> (table DeviceRegistrations).
    * <p>It is received after successful registration on Backendless server.
-   *
-   * @return
    */
   public Map<String, String> getChannelRegistrations()
   {

@@ -1,6 +1,11 @@
 package com.backendless.push;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.content.pm.ServiceInfo;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import com.backendless.Backendless;
@@ -20,14 +25,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+
 public class FCMRegistration
 {
   private static final String DEFAULT_TOPIC = "default-topic";
   private static final String TAG = FCMRegistration.class.getSimpleName();
+  private static boolean fcmConfig = false;
 
   public static void registerDevice( final Context appContext, final List<String> channels, final long expiration,
                                      final AsyncCallback<DeviceRegistrationResult> callback )
   {
+    FCMRegistration.checkConfiguration( appContext );
+
     FirebaseMessaging.getInstance().subscribeToTopic( DEFAULT_TOPIC ).addOnCompleteListener( new OnCompleteListener<Void>()
     {
       @Override
@@ -97,6 +106,8 @@ public class FCMRegistration
 
   public static void unregisterDevice( final Context appContext, final List<String> channels, final AsyncCallback<Integer> callback )
   {
+    FCMRegistration.checkConfiguration( appContext );
+
     Backendless.Messaging.unregisterDeviceOnServer( channels, new AsyncCallback<Integer>()
     {
       @Override
@@ -143,7 +154,7 @@ public class FCMRegistration
     } );
   }
 
-  static Map<String, String> processRegistrationPayload( final Context context, final String registrationInfo )
+  private static Map<String, String> processRegistrationPayload( final Context context, final String registrationInfo )
   {
     Object[] obj;
     try
@@ -178,5 +189,91 @@ public class FCMRegistration
     }
 
     return channelRegistrations;
+  }
+
+  private static void checkConfiguration( Context appContext )
+  {
+    if( fcmConfig )
+      return;
+
+    ClassLoader clsLoader = appContext.getClassLoader();
+
+    try
+    {
+      clsLoader.loadClass( "com.google.firebase.messaging.FirebaseMessagingService" );
+    }
+    catch( ClassNotFoundException e )
+    {
+      String errorMsg = "Class FirebaseMessagingService cannot be found. FCM is not properly configured in your application.";
+      Log.e( TAG, errorMsg );
+      throw new IllegalStateException( errorMsg, e );
+    }
+
+    PackageManager packageManager = appContext.getPackageManager();
+    PackageInfo packageInfo;
+    String srvClassName = null;
+    try
+    {
+      packageInfo = packageManager.getPackageInfo( appContext.getPackageName(), PackageManager.GET_SERVICES );
+      ServiceInfo[] services = packageInfo.services;
+
+      boolean flag = false;
+
+      Class<?> fcmService;
+      try
+      {
+        fcmService = clsLoader.loadClass( "com.backendless.push.BackendlessFCMService" );
+      }
+      catch( ClassNotFoundException e )
+      {
+        String errorMsg = "Unable to load com.backendless.push.BackendlessFCMService";
+        Log.e( TAG, errorMsg, e );
+        throw new IllegalStateException( errorMsg, e );
+      }
+
+      for( ServiceInfo srvInfo : services )
+      {
+        try
+        {
+          if( fcmService.isAssignableFrom( clsLoader.loadClass( srvInfo.name ) ) )
+          {
+            flag = true;
+            srvClassName = srvInfo.name;
+            break;
+          }
+        }
+        catch( ClassNotFoundException e )
+        {
+          Log.e( TAG, "An FCM service class is registered in AndroidManifest.xml but it cannot be found in your app. The class name is " + srvInfo.name, e );
+        }
+      }
+
+      if( !flag )
+      {
+        String errorMsg = "Make sure com.backendless.push.BackendlessFCMService or it's inheritor is registered in the Android manifest.";
+        Log.i( TAG, errorMsg );
+        throw new IllegalStateException( errorMsg );
+      }
+    }
+    catch( PackageManager.NameNotFoundException e )
+    {
+      String errorMsg = "Can not load current app package.";
+      Log.e( TAG, errorMsg );
+      throw new IllegalStateException( errorMsg, e );
+    }
+
+    final String action = "com.google.firebase.MESSAGING_EVENT";
+    Intent intent = new Intent( action );
+    intent.setClassName( appContext.getPackageName(), srvClassName );
+    List<ResolveInfo> srvIntentFilters = packageManager.queryIntentServices( intent, PackageManager.GET_INTENT_FILTERS );
+
+    if( srvIntentFilters.isEmpty() )
+    {
+      String errorMsg = "Missing the intent-filter action: " + action;
+      Log.e( TAG, errorMsg );
+      throw new IllegalStateException( errorMsg );
+    }
+
+    fcmConfig = true;
   }
 }
