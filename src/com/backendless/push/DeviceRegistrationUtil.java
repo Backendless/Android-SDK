@@ -31,14 +31,14 @@ public class DeviceRegistrationUtil
 
     DeviceRegistration deviceRegistration = new DeviceRegistration();
     deviceRegistration.setDeviceId( Messaging.getDeviceId() );
-    deviceRegistration.setOs( Messaging.OS );
-    deviceRegistration.setOsVersion( Messaging.OS_VERSION );
+    deviceRegistration.setOs( Messaging.getOS() );
+    deviceRegistration.setOsVersion( Messaging.getOsVersion() );
     deviceRegistration.setDeviceToken( deviceToken );
     deviceRegistration.setChannels( channels );
     if( expiration != 0 )
       deviceRegistration.setExpiration( new Date( expiration ) );
 
-    return Invoker.invokeSync( Messaging.DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "registerDevice", new Object[] { deviceRegistration } );
+    return Invoker.invokeSync( Messaging.getDeviceRegistrationManagerServerAlias(), "registerDevice", new Object[] { deviceRegistration } );
   }
 
   public void registerDeviceOnServer( String deviceToken, final List<String> channels, final long expiration, final AsyncCallback<String> responder )
@@ -50,14 +50,14 @@ public class DeviceRegistrationUtil
 
       DeviceRegistration deviceRegistration = new DeviceRegistration();
       deviceRegistration.setDeviceId( Messaging.getDeviceId() );
-      deviceRegistration.setOs( Messaging.OS );
-      deviceRegistration.setOsVersion( Messaging.OS_VERSION );
+      deviceRegistration.setOs( Messaging.getOS() );
+      deviceRegistration.setOsVersion( Messaging.getOsVersion() );
       deviceRegistration.setDeviceToken( deviceToken );
       deviceRegistration.setChannels( channels );
       if( expiration != 0 )
         deviceRegistration.setExpiration( new Date( expiration ) );
 
-      Invoker.invokeAsync( Messaging.DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "registerDevice", new Object[] { deviceRegistration }, new AsyncCallback<String>()
+      Invoker.invokeAsync( Messaging.getDeviceRegistrationManagerServerAlias(), "registerDevice", new Object[] { deviceRegistration }, new AsyncCallback<String>()
       {
         @Override
         public void handleResponse( String response )
@@ -83,21 +83,21 @@ public class DeviceRegistrationUtil
 
   public boolean unregisterDeviceOnServer()
   {
-    return (Boolean) Invoker.invokeSync( Messaging.DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { Messaging.getDeviceId() } );
+    return (Boolean) Invoker.invokeSync( Messaging.getDeviceRegistrationManagerServerAlias(), "unregisterDevice", new Object[] { Messaging.getDeviceId() } );
   }
 
   public void unregisterDeviceOnServer( final AsyncCallback<Boolean> responder )
   {
-    Invoker.invokeAsync( Messaging.DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { Messaging.getDeviceId() }, responder );
+    Invoker.invokeAsync( Messaging.getDeviceRegistrationManagerServerAlias(), "unregisterDevice", new Object[] { Messaging.getDeviceId() }, responder );
   }
 
   public int unregisterDeviceOnServer( List<String> channels )
   {
-    return (int) Invoker.invokeSync( Messaging.DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { Messaging.getDeviceId(), channels } );
+    return (int) Invoker.invokeSync( Messaging.getDeviceRegistrationManagerServerAlias(), "unregisterDevice", new Object[] { Messaging.getDeviceId(), channels } );
   }
 
   public void unregisterDeviceOnServer( List<String> channels, final AsyncCallback<Integer> responder )
   {
-    Invoker.invokeAsync( Messaging.DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { Messaging.getDeviceId(), channels }, responder );
+    Invoker.invokeAsync( Messaging.getDeviceRegistrationManagerServerAlias(), "unregisterDevice", new Object[] { Messaging.getDeviceId(), channels }, responder );
   }
 }

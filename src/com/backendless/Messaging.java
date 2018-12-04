@@ -65,11 +65,11 @@ import java.util.UUID;
 public final class Messaging
 {
   private final static String MESSAGING_MANAGER_SERVER_ALIAS = "com.backendless.services.messaging.MessagingService";
-  public final static String DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS = "com.backendless.services.messaging.DeviceRegistrationService";
+  private final static String DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS = "com.backendless.services.messaging.DeviceRegistrationService";
   private final static String EMAIL_MANAGER_SERVER_ALIAS = "com.backendless.services.mail.CustomersEmailService";
   private final static String DEFAULT_CHANNEL_NAME = "default";
-  public final static String OS;
-  public final static String OS_VERSION;
+  private final static String OS;
+  private final static String OS_VERSION;
   private static final Messaging instance = new Messaging();
   private static final ChannelFactory chanelFactory = new ChannelFactory();
 
@@ -129,6 +129,21 @@ public final class Messaging
   public static String getDeviceId()
   {
     return DeviceIdHolder.id;
+  }
+
+  public static String getDeviceRegistrationManagerServerAlias()
+  {
+    return DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS;
+  }
+
+  public static String getOS()
+  {
+    return OS;
+  }
+
+  public static String getOsVersion()
+  {
+    return OS_VERSION;
   }
 
   static Messaging getInstance()
