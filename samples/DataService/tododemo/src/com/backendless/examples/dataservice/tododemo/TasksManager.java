@@ -2,13 +2,10 @@ package com.backendless.examples.dataservice.tododemo;
 
 import android.content.Context;
 import com.backendless.Backendless;
-import com.backendless.BackendlessCollection;
 import com.backendless.IDataStore;
 import com.backendless.Messaging;
 import com.backendless.async.callback.AsyncCallback;
-import com.backendless.exceptions.BackendlessFault;
-import com.backendless.persistence.BackendlessDataQuery;
-import com.backendless.persistence.QueryOptions;
+import com.backendless.persistence.DataQueryBuilder;
 
 import java.util.List;
 
@@ -16,12 +13,12 @@ public class TasksManager
 {
   private static final IDataStore<Task> DATA_STORE = Backendless.Persistence.of( Task.class );
   private static final String DEFAULT_WHERE_CLAUSE = "deviceId = '" + Messaging.DEVICE_ID + "'";
-  private static final BackendlessDataQuery backendlessDataQuery = new BackendlessDataQuery();
+  private static final DataQueryBuilder dataQueryBuilder = DataQueryBuilder.create();
 
   static
   {
-    backendlessDataQuery.setWhereClause( DEFAULT_WHERE_CLAUSE );
-    backendlessDataQuery.setQueryOptions( new QueryOptions( 50, 0 ) );
+    dataQueryBuilder.setWhereClause( DEFAULT_WHERE_CLAUSE );
+    dataQueryBuilder.setPageSize( 50 );
   }
 
   public static void remove( final Task entity, Context context, final InnerCallback<Long> callback )
@@ -56,21 +53,6 @@ public class TasksManager
 
   public static void findEntities( final AsyncCallback<List<Task>> callback )
   {
-    TasksManager.DATA_STORE.find( backendlessDataQuery, new AsyncCallback<Collection<Task>>()
-    {
-      @Override
-      public void handleResponse( Collection<Task> response )
-      {
-        callback.handleResponse( response.getCurrentPage() );
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        callback.handleFault( fault );
-      }
-    }
-
-    );
+    TasksManager.DATA_STORE.find( dataQueryBuilder, callback );
   }
 }

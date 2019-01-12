@@ -4,7 +4,6 @@ public class Default
 {
   public static final String APP_ID = "Your APP_ID";
   public static final String SECRET_KEY = "Your SECRET_KEY";
-  public static final String VERSION = "v1";
   public final static String EXTRA_EMAIL = "com.backendless.examples.endless.tagging.EMAIL";
   public final static String EXTRA_PASSWORD = "com.backendless.examples.endless.tagging.PASSWORD";
   public final static String SEARCH_CATEGORY_NAME = "com.backendless.examples.endless.tagging.CATEGORY";

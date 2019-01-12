@@ -45,13 +45,13 @@ public class MainActivity extends Activity implements LocationListener
     super.onCreate( savedInstanceState );
     setContentView( R.layout.main );
 
-    if( Defaults.APPLICATION_ID.equals( "" ) || Defaults.SECRET_KEY.equals( "" ) || Defaults.VERSION.equals( "" ) )
+    if( Defaults.APPLICATION_ID.equals( "" ) || Defaults.SECRET_KEY.equals( "" ) )
     {
       showAlert( this, "Missing application ID and secret key arguments. Login to Backendless Console, select your app and get the ID and key from the Manage > App Settings screen. Copy/paste the values into the Backendless.initApp call" );
       return;
     }
 
-    Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION );
+    Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.SECRET_KEY );
 
     latitudeField = (TextView) findViewById( R.id.latitudeField );
     longitudeField = (TextView) findViewById( R.id.longitudeField );
