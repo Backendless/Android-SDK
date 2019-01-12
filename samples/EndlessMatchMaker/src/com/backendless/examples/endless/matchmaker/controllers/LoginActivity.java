@@ -57,7 +57,7 @@ public class LoginActivity extends Activity
     progressDialog = UIFactory.getDefaultProgressDialog( this );
 
     //Initializing Backendless API
-    Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.APPLICATION_API_KEY, Defaults.APPLICATION_VERSION );
+    Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.APPLICATION_API_KEY );
 
     //Binding UI elements
     emailField = (EditText) findViewById( R.id.emailField );

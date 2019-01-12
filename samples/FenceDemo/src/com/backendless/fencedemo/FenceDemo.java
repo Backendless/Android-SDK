@@ -25,7 +25,6 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 import com.backendless.Backendless;
-import com.backendless.BackendlessCollection;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.geo.GeoPoint;
@@ -44,7 +43,7 @@ public class FenceDemo extends Activity
     super.onCreate( savedInstanceState );
     setContentView( R.layout.fence_demo_activity );
 
-    Backendless.initApp( getBaseContext(), Defaults.APPLICATION_ID, Defaults.API_KEY, Defaults.VERSION );
+    Backendless.initApp( getBaseContext(), Defaults.APPLICATION_ID, Defaults.API_KEY );
 
     initGeoPoint();
     initUI();

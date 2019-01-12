@@ -42,7 +42,7 @@ public class MainActivity extends Activity
       return;
     }
 
-    Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.API_KEY, Defaults.VERSION );
+    Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.API_KEY );
 
     final EditText emailField = (EditText) findViewById( R.id.emailField );
     final EditText passwordField = (EditText) findViewById( R.id.passwordField );

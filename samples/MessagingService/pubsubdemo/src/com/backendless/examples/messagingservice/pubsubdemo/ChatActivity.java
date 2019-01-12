@@ -48,7 +48,7 @@ public class ChatActivity extends Activity
     final EditText historyField = (EditText) findViewById( R.id.historyField );
     final EditText messageField = (EditText) findViewById( R.id.messageField );
 
-    Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.API_KEY, Defaults.VERSION );
+    Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.API_KEY );
     Backendless.Messaging.subscribe(
         Defaults.CHANNEL_NAME,
         new AsyncCallback<List<Message>>()

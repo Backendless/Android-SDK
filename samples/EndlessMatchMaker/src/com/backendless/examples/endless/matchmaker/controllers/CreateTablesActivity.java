@@ -26,7 +26,7 @@ public class CreateTablesActivity extends Activity
     super.onCreate( savedInstanceState );
     setContentView( R.layout.create_tables );
 
-    //Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.APPLICATION_API_KEY, Defaults.APPLICATION_VERSION );
+    //Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.APPLICATION_API_KEY );
     //create PreferencesDefaults
     saveToTableData("Food", "Asian");
     saveToTableData("Food", "Caribean");

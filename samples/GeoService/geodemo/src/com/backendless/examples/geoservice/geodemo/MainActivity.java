@@ -51,7 +51,7 @@ public class MainActivity extends Activity implements LocationListener
       return;
     }
 
-    Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.API_KEY, Defaults.VERSION );
+    Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.API_KEY );
 
     latitudeField = (TextView) findViewById( R.id.latitudeField );
     longitudeField = (TextView) findViewById( R.id.longitudeField );

@@ -55,7 +55,7 @@ public class MainActivity extends Activity
       return;
     }
 
-    Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.SECRET_KEY, Defaults.VERSION );
+    Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.SECRET_KEY );
 
     findViewById( R.id.registerButton ).setOnClickListener( new View.OnClickListener()
     {
