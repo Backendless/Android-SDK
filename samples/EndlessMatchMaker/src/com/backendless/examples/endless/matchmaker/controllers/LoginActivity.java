@@ -30,13 +30,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.backendless.Backendless;
+import com.backendless.BackendlessUser;
+import com.backendless.async.callback.AsyncCallback;
 import com.backendless.examples.endless.matchmaker.R;
 import com.backendless.examples.endless.matchmaker.controllers.shared.Lifecycle;
 import com.backendless.examples.endless.matchmaker.utils.Defaults;
 import com.backendless.examples.endless.matchmaker.views.UIFactory;
-import com.backendless.Backendless;
-import com.backendless.BackendlessUser;
-import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 
 public class LoginActivity extends Activity
@@ -57,7 +57,7 @@ public class LoginActivity extends Activity
     progressDialog = UIFactory.getDefaultProgressDialog( this );
 
     //Initializing Backendless API
-    Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.APPLICATION_SECRET_KEY, Defaults.APPLICATION_VERSION );
+    Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.APPLICATION_API_KEY, Defaults.APPLICATION_VERSION );
 
     //Binding UI elements
     emailField = (EditText) findViewById( R.id.emailField );

@@ -21,9 +21,9 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
     super();
   }
 
-  public void initPreferences( String applicationId, String secretKey )
+  public void initPreferences( String applicationId, String apiKey )
   {
-    super.initPreferences( applicationId, secretKey );
+    super.initPreferences( applicationId, apiKey );
     saveAuthKeysToPreferences( authKeys );
   }
 
@@ -50,9 +50,9 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
     return getAuthKeys().getApplicationId();
   }
 
-  public String getSecretKey()
+  public String getApiKey()
   {
-    return getAuthKeys().getSecretKey();
+    return getAuthKeys().getApiKey();
   }
 
   public void setUrl( String url )
@@ -124,11 +124,11 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
       throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
     
     String applicationId = sharedPreferences.getString( Type.APPLICATION_ID_KEY.name64(), null );
-    String secretKey = sharedPreferences.getString( Type.SECRET_KEY.name64(), null );
+    String apiKey = sharedPreferences.getString( Type.API_KEY.name64(), null );
 
-    if( applicationId != null && secretKey != null )
+    if( applicationId != null && apiKey != null )
     {
-      authKeys = new AuthKeys( applicationId, secretKey );
+      authKeys = new AuthKeys( applicationId, apiKey );
       return true;
     }
 
@@ -154,7 +154,7 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
   {
     SharedPreferences.Editor editor = sharedPreferences.edit();
     editor.putString( Type.APPLICATION_ID_KEY.name64(), authKeys.getApplicationId() );
-    editor.putString( Type.SECRET_KEY.name64(), authKeys.getSecretKey() );
+    editor.putString( Type.API_KEY.name64(), authKeys.getApiKey() );
     editor.commit();
   }
 
@@ -198,7 +198,7 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
   enum Type
   {
     APPLICATION_ID_KEY,
-    SECRET_KEY,
+    API_KEY,
     URL_KEY,
     HEADERS,
     PUSH_TEMPLATES,

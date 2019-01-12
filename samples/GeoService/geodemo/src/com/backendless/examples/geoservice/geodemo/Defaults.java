@@ -21,7 +21,7 @@ package com.backendless.examples.geoservice.geodemo;
 public class Defaults
 {
 	public static final String APPLICATION_ID = "";
-	  public static final String SECRET_KEY = "";
+	  public static final String API_KEY = "";
 	  public static final String VERSION = "v1";
 
   public static final String SAMPLE_CATEGORY = "geoservice_sample";

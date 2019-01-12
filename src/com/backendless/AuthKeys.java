@@ -21,12 +21,12 @@ package com.backendless;
 final class AuthKeys
 {
   private final String applicationId;
-  private final String secretKey;
+  private final String apiKey;
 
-  AuthKeys( String applicationId, String secretKey )
+  AuthKeys( String applicationId, String apiKey )
   {
     this.applicationId = applicationId;
-    this.secretKey = secretKey;
+    this.apiKey = apiKey;
   }
 
   String getApplicationId()
@@ -34,8 +34,8 @@ final class AuthKeys
     return applicationId;
   }
 
-  String getSecretKey()
+  String getApiKey()
   {
-    return secretKey;
+    return apiKey;
   }
 }
