@@ -35,7 +35,7 @@ public class MainActivity extends Activity
     super.onCreate( savedInstanceState );
     setContentView( R.layout.main );
 
-    if( Defaults.APPLICATION_ID.equals( "" ) || Defaults.API_KEY.equals( "" ) || Defaults.VERSION.equals( "" ) || Defaults.CHANNEL_NAME.equals( "" ) )
+    if( Defaults.APPLICATION_ID.equals( "" ) || Defaults.API_KEY.equals( "" ) || Defaults.CHANNEL_NAME.equals( "" ) )
     {
       showAlert( this, "Missing application ID and api key arguments. Login to Backendless Console, select your app and get the ID and key from the Manage > App Settings screen. Copy/paste the values into the Backendless.initApp call" );
       return;
