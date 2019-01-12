@@ -33,7 +33,7 @@ public class Main extends ListActivity
       return;
     }
 
-    Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.API_KEY, Defaults.VERSION );
+    Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.API_KEY );
 
     ListView listView = getListView();
     listView.addHeaderView( getLayoutInflater().inflate( R.layout.header, null ), null, false );
