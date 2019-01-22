@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat;
 public class Defaults
 {
   public static final String APPLICATION_ID = "C662E197-D7A9-532E-FFD4-612EC407CC00";
-  public static final String APPLICATION_SECRET_KEY = "C1568C73-6B6B-5C5E-FFDA-FE4F0A675200";
+  public static final String APPLICATION_API_KEY = "C1568C73-6B6B-5C5E-FFDA-FE4F0A675200";
   public static final String APPLICATION_VERSION = "v1";
 
   public static final String NAME_PROPERTY = "name";

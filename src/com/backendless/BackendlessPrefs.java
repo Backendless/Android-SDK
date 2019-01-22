@@ -17,9 +17,9 @@ class BackendlessPrefs
   {
   }
 
-  public void initPreferences( String applicationId, String secretKey )
+  public void initPreferences( String applicationId, String apiKey )
   {
-    this.authKeys = new AuthKeys( applicationId, secretKey );
+    this.authKeys = new AuthKeys( applicationId, apiKey );
   }
 
   public void setHeaders( Map<String, String> headers )
@@ -47,9 +47,9 @@ class BackendlessPrefs
     return getAuthKeys().getApplicationId();
   }
 
-  public String getSecretKey()
+  public String getApiKey()
   {
-    return getAuthKeys().getSecretKey();
+    return getAuthKeys().getApiKey();
   }
 
   public synchronized Map getHeaders()

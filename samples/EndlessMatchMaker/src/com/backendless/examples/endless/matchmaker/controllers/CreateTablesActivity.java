@@ -8,7 +8,6 @@ import com.backendless.async.callback.BackendlessCallback;
 import com.backendless.examples.endless.matchmaker.R;
 import com.backendless.examples.endless.matchmaker.models.persistent.PreferencesDefaults;
 import com.backendless.examples.endless.matchmaker.models.persistent.UserPreferences;
-import com.backendless.examples.endless.matchmaker.utils.Defaults;
 
 
 /**
@@ -27,7 +26,7 @@ public class CreateTablesActivity extends Activity
     super.onCreate( savedInstanceState );
     setContentView( R.layout.create_tables );
 
-    //Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.APPLICATION_SECRET_KEY, Defaults.APPLICATION_VERSION );
+    //Backendless.initApp( this, Defaults.APPLICATION_ID, Defaults.APPLICATION_API_KEY, Defaults.APPLICATION_VERSION );
     //create PreferencesDefaults
     saveToTableData("Food", "Asian");
     saveToTableData("Food", "Caribean");

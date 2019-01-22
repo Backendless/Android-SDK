@@ -125,7 +125,7 @@ public final class Files
 
     try
     {
-      String urlStr = Backendless.getUrl() + '/' + Backendless.getApplicationId() + '/' + Backendless.getSecretKey() + "/files/" + encodeURL( path ) + "/" + encodeURL( name );
+      String urlStr = Backendless.getUrl() + '/' + Backendless.getApplicationId() + '/' + Backendless.getApiKey() + "/files/" + encodeURL( path ) + "/" + encodeURL( name );
 
       if( overwrite )
         urlStr = urlStr + "?" + OVERWRITE_PARAMETER_NAME + "=" + overwrite;

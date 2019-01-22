@@ -236,7 +236,7 @@ public class PushTemplateHelper
             .setContentText( messageText );
 
     Intent notificationIntent = appContext.getPackageManager().getLaunchIntentForPackage( appContext.getPackageName() );
-    notificationIntent.putExtras( newBundle.deepCopy() );
+    notificationIntent.putExtras( newBundle );
     notificationIntent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
 
     PendingIntent contentIntent = PendingIntent.getActivity( appContext, notificationId * 3, notificationIntent, 0 );
@@ -275,7 +275,7 @@ public class PushTemplateHelper
     {
       Intent actionIntent = new Intent( a.getTitle() );
       actionIntent.setClassName( appContext, a.getId() );
-      actionIntent.putExtras( bundle.deepCopy() );
+      actionIntent.putExtras( bundle );
       actionIntent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
 
       // user should use messageId and tag(templateName) to cancel notification.

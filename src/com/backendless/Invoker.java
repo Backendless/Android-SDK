@@ -40,7 +40,7 @@ public class Invoker
 
   static void reinitialize()
   {
-    String urlEnding = Backendless.getUrl() + '/' + Backendless.getApplicationId() + '/' + Backendless.getSecretKey() + "/binary";
+    String urlEnding = Backendless.getUrl() + '/' + Backendless.getApplicationId() + '/' + Backendless.getApiKey() + "/binary";
     weborbClient = new WeborbClient( urlEnding, DEFAULT_TIMEOUT, DESTINATION );
     weborbClient.setCookiesDateFormat( "EEE, dd-MMM-yy HH:mm:ss z" );
 
