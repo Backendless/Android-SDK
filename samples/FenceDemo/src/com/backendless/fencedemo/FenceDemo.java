@@ -44,7 +44,7 @@ public class FenceDemo extends Activity
     super.onCreate( savedInstanceState );
     setContentView( R.layout.fence_demo_activity );
 
-    Backendless.initApp( getBaseContext(), Defaults.APPLICATION_ID, Defaults.API_KEY, Defaults.VERSION );
+    Backendless.initApp( getBaseContext(), Defaults.APPLICATION_ID, Defaults.API_KEY );
 
     initGeoPoint();
     initUI();
