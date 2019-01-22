@@ -26,7 +26,7 @@ public class LoginActivity extends Activity
     super.onCreate( savedInstanceState );
     setContentView( R.layout.act_login );
 
-    Backendless.initApp( LoginActivity.this, Default.APP_ID, Default.SECRET_KEY );
+    Backendless.initApp( LoginActivity.this, Default.APP_ID, Default.API_KEY );
 
     TextView textEmail = (TextView) findViewById( R.id.textEmail );
     TextView textPass = (TextView) findViewById( R.id.textPass );
