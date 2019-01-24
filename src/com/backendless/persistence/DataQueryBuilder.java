@@ -1,7 +1,6 @@
 package com.backendless.persistence;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -130,6 +129,16 @@ public class DataQueryBuilder
   public DataQueryBuilder setRelated( String... related )
   {
     return queryOptionsBuilder.setRelated( related );
+  }
+
+  public DataQueryBuilder addRelated( List<String> related )
+  {
+    return queryOptionsBuilder.addRelated( related );
+  }
+
+  public DataQueryBuilder addRelated( String related )
+  {
+    return queryOptionsBuilder.addRelated( related );
   }
 
   public Integer getRelationsDepth()
