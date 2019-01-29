@@ -131,7 +131,7 @@ public final class Backendless
     }
     catch( IllegalStateException e )
     {
-      if( !e.getMessage().equals( "Backendless application was not initialized" ) )
+      if( !ExceptionMessage.NOT_INITIALIZED.equals( e.getMessage() ) )
         throw e;
     }
   }
