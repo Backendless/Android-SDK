@@ -96,7 +96,10 @@ public final class Backendless
     Log.removeLogger( ILoggingConstants.DEFAULT_LOGGER );
     prefs = BackendlessPrefsFactory.create( isAndroid );
     if( isAndroid )
+    {
+      prefs.onCreate( ContextHandler.getAppContext() );
       Media = com.backendless.Media.getInstance();
+    }
 
     AmfV3Formatter.AddTypeWriter( QueryOptions.class, new ITypeWriter()
     {
@@ -120,6 +123,17 @@ public final class Backendless
         return false;
       }
     } );
+
+    try
+    {
+      if( !initialized && prefs.getApplicationId() != null && prefs.getApiKey() != null )
+        Backendless.initApplicationFromProperties( ContextHandler.getAppContext() );
+    }
+    catch( IllegalStateException e )
+    {
+      if( !e.getMessage().equals( "Backendless application was not initialized" ) )
+        throw e;
+    }
   }
 
   public static boolean isAndroid()
@@ -202,7 +216,7 @@ public final class Backendless
       Class realmObjectClass = Class.forName( "io.realm.RealmObject" );
       BackendlessSerializer.addSerializer( realmObjectClass, new RealmSerializer() );
     }
-    catch( Throwable t )
+    catch( Throwable ignore )
     {
 
     }
