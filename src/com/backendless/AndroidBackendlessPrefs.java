@@ -115,6 +115,9 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
     if( authKeys == null )
       restoreAuthKeysFromPreferences();
 
+    if (authKeys == null)
+      throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
+
     return authKeys;
   }
 
