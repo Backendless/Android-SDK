@@ -265,7 +265,7 @@ services:
     - bl-redis
 
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:2992/health"]
       interval: 20s
       timeout: 1s
       retries: 3
