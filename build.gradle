@@ -5,7 +5,7 @@ apply plugin: 'signing'
 
 
 group 'com.backendless'
-version '5.2.4'
+version '5.2.5'
 archivesBaseName='backendless'
 
 
@@ -230,7 +230,7 @@ dependencies {
     provided fileTree(dir: 'libs', include: 'play-services-tasks-15.0.1.jar')
     provided fileTree(dir: 'libs', include: 'FacebookSDK.jar')
     provided fileTree(dir: 'libs', include: 'maps.jar')
-    compile( group: "com.backendless", name: "commons", version: "5.2.0", changing: true) {
+    compile( group: "com.backendless", name: "commons", version: "5.2.6", changing: true) {
         exclude group: 'com.fasterxml.jackson.core'
     }
     compile( group: "weborb", name: "weborbclient", version: "5.1.0.212", changing: true)
