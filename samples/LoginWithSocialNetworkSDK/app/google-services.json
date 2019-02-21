@@ -1,2 +1,6 @@
-Pleas, use this documentation to create correct 'google-services.json' for your google application.
-https://developers.google.com/identity/sign-in/android/start-integrating
+You need to create correct 'google-services.json' for your google application.
+
+1. Sign in to Firebase and open your project. https://console.firebase.google.com
+2. Click the Settings icon and select Project settings.
+3. In the Your apps card, select the package name of the app you need a config file for from the list.
+4. Click google-services.json.

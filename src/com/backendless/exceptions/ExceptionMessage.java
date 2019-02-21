@@ -64,7 +64,7 @@ public class ExceptionMessage
   public final static String NULL_EMAIL = "Email cannot be null or empty.";
 
   public final static String NULL_APPLICATION_ID = "Application id cannot be null";
-  public final static String NULL_SECRET_KEY = "Secret key cannot be null";
+  public final static String NULL_API_KEY = "Secret key cannot be null";
   public final static String NULL_VERSION = "Version cannot be null";
   public final static String NULL_DEVICE_TOKEN = "Null device token received";
 

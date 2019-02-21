@@ -96,7 +96,10 @@ public final class Backendless
     Log.removeLogger( ILoggingConstants.DEFAULT_LOGGER );
     prefs = BackendlessPrefsFactory.create( isAndroid );
     if( isAndroid )
+    {
+      prefs.onCreate( ContextHandler.getAppContext() );
       Media = com.backendless.Media.getInstance();
+    }
 
     AmfV3Formatter.AddTypeWriter( QueryOptions.class, new ITypeWriter()
     {
@@ -120,6 +123,17 @@ public final class Backendless
         return false;
       }
     } );
+
+    try
+    {
+      if( !initialized && prefs.getApplicationId() != null && prefs.getApiKey() != null )
+        Backendless.initApplicationFromProperties( ContextHandler.getAppContext() );
+    }
+    catch( IllegalStateException e )
+    {
+      if( !ExceptionMessage.NOT_INITIALIZED.equals( e.getMessage() ) )
+        throw e;
+    }
   }
 
   public static boolean isAndroid()
@@ -134,11 +148,11 @@ public final class Backendless
    * In this case, an exception or fault, thrown by any of Backendless API methods, will contain 904 error code.
    *
    * @param applicationId a Backendless application ID, which could be retrieved at the Backendless console
-   * @param secretKey     a Backendless application secret key, which could be retrieved at the Backendless console
+   * @param apiKey     a Backendless application api key, which could be retrieved at the Backendless console
    */
-  public static void initApp( String applicationId, String secretKey )
+  public static void initApp( String applicationId, String apiKey )
   {
-    initApp( null, applicationId, secretKey );
+    initApp( null, applicationId, apiKey );
   }
 
   public static boolean isInitialized()
@@ -146,7 +160,7 @@ public final class Backendless
     return initialized;
   }
 
-  public static void initApp( Object context, final String applicationId, final String secretKey )
+  public static void initApp( Object context, final String applicationId, final String apiKey )
   {
     if( isAndroid && context == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_CONTEXT );
@@ -154,11 +168,11 @@ public final class Backendless
     if( applicationId == null || applicationId.equals( "" ) )
       throw new IllegalArgumentException( ExceptionMessage.NULL_APPLICATION_ID );
 
-    if( secretKey == null || secretKey.equals( "" ) )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_SECRET_KEY );
+    if( apiKey == null || apiKey.equals( "" ) )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_API_KEY );
 
     prefs.onCreate( context );
-    prefs.initPreferences( applicationId, secretKey );
+    prefs.initPreferences( applicationId, apiKey );
     prefs.setUrl( url );
 
     MessageWriter.addTypeWriter( BackendlessUser.class, new BackendlessUserWriter() );
@@ -204,7 +218,7 @@ public final class Backendless
       Class realmObjectClass = Class.forName( "io.realm.RealmObject" );
       BackendlessSerializer.addSerializer( realmObjectClass, new RealmSerializer() );
     }
-    catch( Throwable t )
+    catch( Throwable ignore )
     {
 
     }
@@ -236,12 +250,12 @@ public final class Backendless
     return prefs.getApplicationId();
   }
 
-  public static String getSecretKey()
+  public static String getApiKey()
   {
     if( prefs == null )
       throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
 
-    return prefs.getSecretKey();
+    return prefs.getApiKey();
   }
 
   protected static Map<String, String> getHeaders()
@@ -293,7 +307,7 @@ public final class Backendless
   {
     prefs.onCreate( context );
 
-    Backendless.initApp( context, prefs.getApplicationId(), prefs.getSecretKey() );
+    Backendless.initApp( context, prefs.getApplicationId(), prefs.getApiKey() );
     Backendless.setUrl( prefs.getUrl() );
   }
 
