@@ -69,6 +69,18 @@ class QueryOptionsBuilder<Builder>
     return builder;
   }
 
+  public Builder addRelated( List<String> related )
+  {
+    this.related.addAll( related );
+    return builder;
+  }
+
+  public Builder addRelated( String related )
+  {
+    this.related.add( related );
+    return builder;
+  }
+
   public Integer getRelationsDepth()
   {
     return relationsDepth;

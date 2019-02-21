@@ -35,7 +35,6 @@ package com.backendless;/*
  */
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.Settings;
 import com.backendless.async.callback.AsyncCallback;
@@ -49,9 +48,8 @@ import com.backendless.messaging.MessageStatus;
 import com.backendless.messaging.PublishOptions;
 import com.backendless.messaging.PublishStatusEnum;
 import com.backendless.messaging.PushBroadcastMask;
-import com.backendless.push.BackendlessPushService;
+import com.backendless.push.DeviceRegistrationResult;
 import com.backendless.push.FCMRegistration;
-import com.backendless.push.GCMRegistrar;
 import com.backendless.rt.messaging.Channel;
 import com.backendless.rt.messaging.ChannelFactory;
 import weborb.types.Types;
@@ -133,175 +131,54 @@ public final class Messaging
     return DeviceIdHolder.id;
   }
 
+  public static String getDeviceRegistrationManagerServerAlias()
+  {
+    return DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS;
+  }
+
+  public static String getOS()
+  {
+    return OS;
+  }
+
+  public static String getOsVersion()
+  {
+    return OS_VERSION;
+  }
 
   static Messaging getInstance()
   {
     return instance;
   }
 
-  /**
-   * <b>GCM support will be removed after April 2019.</b>
-   */
-  @Deprecated
-  public void registerDevice( String GCMSenderID )
-  {
-    registerDevice( GCMSenderID, (String) null );
-  }
-
-  /**
-   * <b>GCM support will be removed after April 2019.</b>
-   */
-  @Deprecated
-  public void registerDevice( String GCMSenderID, String channel )
-  {
-    registerDevice( GCMSenderID, channel, null );
-  }
-
-  /**
-   * <b>GCM support will be removed after April 2019.</b>
-   */
-  @Deprecated
-  public void registerDevice( String GCMSenderID, AsyncCallback<Void> callback )
-  {
-    registerDevice( GCMSenderID, (String) null, callback );
-  }
-
-  /**
-   * <b>GCM support will be removed after April 2019.</b>
-   */
-  @Deprecated
-  public void registerDevice( String GCMSenderID, String channel, AsyncCallback<Void> callback )
-  {
-    registerDevice( GCMSenderID, Arrays.asList( channel ), null, callback );
-  }
-
-  /**
-   * <b>GCM support will be removed after April 2019.</b>
-   */
-  @Deprecated
-  public void registerDevice( String GCMSenderID, List<String> channels, Date expiration )
-  {
-    registerDevice( GCMSenderID, channels, expiration, null );
-  }
-
-  /**
-   * <b>GCM support will be removed after April 2019.</b>
-   */
-  @Deprecated
-  public void registerDevice( final String GCMSenderID, final List<String> channels, final Date expiration, final AsyncCallback<Void> callback )
-  {
-    new AsyncTask<Void, Void, RuntimeException>()
-    {
-      @Override
-      protected RuntimeException doInBackground( Void... params )
-      {
-        try
-        {
-          registerDeviceGCMSync( ContextHandler.getAppContext(), GCMSenderID, channels, expiration );
-          return null;
-        }
-        catch( RuntimeException t )
-        {
-          return t;
-        }
-      }
-
-      @Override
-      protected void onPostExecute( RuntimeException result )
-      {
-        if( result != null )
-        {
-          if( callback == null )
-            throw result;
-
-          callback.handleFault( new BackendlessFault( result ) );
-        }
-        else
-        {
-          if( callback != null )
-            callback.handleResponse( null );
-        }
-      }
-    }.execute();
-  }
-
-  /**
-   * <b>GCM support will be removed after April 2019.</b>
-   */
-  @Deprecated
-  private synchronized void registerDeviceGCMSync( Context context, String GCMSenderID, List<String> channels,
-                                                   Date expiration )
-  {
-    if (BackendlessPushService.isFCM( ContextHandler.getAppContext() ) )
-      throw new IllegalStateException( "The method is intended only for old GCM messaging, which support will be stopped after April 2019." );
-
-    if( channels == null || channels.isEmpty() ||
-            (channels.size() == 1 && (channels.get( 0 ) == null || channels.get( 0 ).isEmpty())) )
-    {
-      channels = Collections.singletonList( DEFAULT_CHANNEL_NAME );
-    }
-
-    for( String channel : channels )
-      checkChannelName( channel );
-
-    if( expiration != null && expiration.before( Calendar.getInstance().getTime() ) )
-      throw new IllegalArgumentException( ExceptionMessage.WRONG_EXPIRATION_DATE );
-
-    GCMRegistrar.checkDevice( context );
-    GCMRegistrar.checkManifest( context );
-    GCMRegistrar.register( context, GCMSenderID, channels, expiration );
-  }
-
-  /**
-   * For FireBase messaging only.
-   */
   public void registerDevice()
   {
-    registerDevice( (AsyncCallback<String>) null );
+    registerDevice( (List<String>) null );
   }
 
-  /**
-   * For FireBase messaging only.
-   */
-  public void registerDevice( AsyncCallback<String> callback )
+  public void registerDevice( AsyncCallback<DeviceRegistrationResult> callback )
   {
-    registerDevice( Collections.singletonList( DEFAULT_CHANNEL_NAME ), callback );
+    registerDevice( (List<String>) null, callback );
   }
 
-  /**
-   * For FireBase messaging only.
-   */
   public void registerDevice( List<String> channels )
   {
-    registerDevice( Collections.singletonList( DEFAULT_CHANNEL_NAME ), (AsyncCallback<String>) null );
+    registerDevice( channels, (Date) null );
   }
 
-  /**
-   * For FireBase messaging only.
-   */
-  public void registerDevice( List<String> channels, AsyncCallback<String> callback )
+  public void registerDevice( List<String> channels, Date expiration )
+  {
+    registerDevice( channels, expiration, (AsyncCallback<DeviceRegistrationResult>) null );
+  }
+
+  public void registerDevice( List<String> channels, AsyncCallback<DeviceRegistrationResult> callback )
   {
     registerDevice( channels, (Date) null, callback );
   }
 
-  /**
-   * For FireBase messaging only.
-   */
-  public void registerDevice( List<String> channels, Date expiration )
+  public void registerDevice( List<String> channels, Date expiration, AsyncCallback<DeviceRegistrationResult> callback )
   {
-    registerDevice( channels, expiration, (AsyncCallback<String>) null );
-  }
-
-  /**
-   * For FireBase messaging only.
-   */
-  public void registerDevice( List<String> channels, Date expiration, AsyncCallback<String> callback )
-  {
-    if( !BackendlessPushService.isFCM( ContextHandler.getAppContext() ) )
-      throw new IllegalStateException( "The method is intended only for FireBase messaging." );
-
-    if( channels == null || channels.isEmpty() ||
-            (channels.size() == 1 && (channels.get( 0 ) == null || channels.get( 0 ).isEmpty())) )
+    if( channels == null || channels.isEmpty() || (channels.size() == 1 && (channels.get( 0 ) == null || channels.get( 0 ).isEmpty())) )
     {
       channels = Collections.singletonList( DEFAULT_CHANNEL_NAME );
     }
@@ -310,7 +187,7 @@ public final class Messaging
       checkChannelName( channel );
 
     long expirationMs = 0;
-    if( expiration != null)
+    if( expiration != null )
     {
       if( expiration.before( Calendar.getInstance().getTime() ) )
         throw new IllegalArgumentException( ExceptionMessage.WRONG_EXPIRATION_DATE );
@@ -329,64 +206,6 @@ public final class Messaging
       throw new IllegalArgumentException( ExceptionMessage.NULL_CHANNEL_NAME );
   }
 
-  public String registerDeviceOnServer( String deviceToken, final List<String> channels, final long expiration )
-  {
-    if( deviceToken == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_DEVICE_TOKEN );
-
-    DeviceRegistration deviceRegistration = new DeviceRegistration();
-    deviceRegistration.setDeviceId( getDeviceId() );
-    deviceRegistration.setOs( OS );
-    deviceRegistration.setOsVersion( OS_VERSION );
-    deviceRegistration.setDeviceToken( deviceToken );
-    deviceRegistration.setChannels( channels );
-    if( expiration != 0 )
-      deviceRegistration.setExpiration( new Date( expiration ) );
-
-    return Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "registerDevice", new Object[] { deviceRegistration } );
-  }
-
-  public void registerDeviceOnServer( String deviceToken, final List<String> channels, final long expiration,
-                                      final AsyncCallback<String> responder )
-  {
-    try
-    {
-      if( deviceToken == null )
-        throw new IllegalArgumentException( ExceptionMessage.NULL_DEVICE_TOKEN );
-
-      DeviceRegistration deviceRegistration = new DeviceRegistration();
-      deviceRegistration.setDeviceId( getDeviceId() );
-      deviceRegistration.setOs( OS );
-      deviceRegistration.setOsVersion( OS_VERSION );
-      deviceRegistration.setDeviceToken( deviceToken );
-      deviceRegistration.setChannels( channels );
-      if( expiration != 0 )
-        deviceRegistration.setExpiration( new Date( expiration ) );
-
-      Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "registerDevice", new Object[] { deviceRegistration }, new AsyncCallback<String>()
-      {
-        @Override
-        public void handleResponse( String response )
-        {
-          if( responder != null )
-            responder.handleResponse( response );
-        }
-
-        @Override
-        public void handleFault( BackendlessFault fault )
-        {
-          if( responder != null )
-            responder.handleFault( fault );
-        }
-      } );
-    }
-    catch( Throwable e )
-    {
-      if( responder != null )
-        responder.handleFault( new BackendlessFault( e ) );
-    }
-  }
-
   public void unregisterDevice()
   {
     unregisterDevice( (List<String>) null );
@@ -397,78 +216,14 @@ public final class Messaging
     unregisterDevice( channels, null );
   }
 
-  public void unregisterDevice( AsyncCallback<Void> callback )
+  public void unregisterDevice( AsyncCallback<Integer> callback )
   {
     unregisterDevice( null, callback );
   }
 
-  public void unregisterDevice( final List<String> channels, final AsyncCallback<Void> callback )
+  public void unregisterDevice( final List<String> channels, final AsyncCallback<Integer> callback )
   {
-    new AsyncTask<Void, Void, RuntimeException>()
-    {
-      @Override
-      protected RuntimeException doInBackground( Void... params )
-      {
-        try
-        {
-          Context context = ContextHandler.getAppContext();
-
-          if ( BackendlessPushService.isFCM( context ) )
-          {
-            FCMRegistration.unregisterDevice( context, channels );
-          }
-          else
-          {
-            if( !GCMRegistrar.isRegistered( context ) )
-              return new IllegalArgumentException( ExceptionMessage.DEVICE_NOT_REGISTERED );
-
-            GCMRegistrar.unregister( context );
-          }
-          return null;
-        }
-        catch( RuntimeException t )
-        {
-          return t;
-        }
-      }
-
-      @Override
-      protected void onPostExecute( RuntimeException result )
-      {
-        if( result != null )
-        {
-          if( callback == null )
-            throw result;
-
-          callback.handleFault( new BackendlessFault( result ) );
-        }
-        else
-        {
-          if( callback != null )
-            callback.handleResponse( null );
-        }
-      }
-    }.execute();
-  }
-
-  public boolean unregisterDeviceOnServer()
-  {
-    return (Boolean) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { getDeviceId() } );
-  }
-
-  public void unregisterDeviceOnServer( final AsyncCallback<Boolean> responder )
-  {
-    Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { getDeviceId() }, responder );
-  }
-
-  public int unregisterDeviceOnServer( List<String> channels )
-  {
-    return (int) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { getDeviceId(), channels } );
-  }
-
-  public void unregisterDeviceOnServer( List<String> channels, final AsyncCallback<Integer> responder )
-  {
-    Invoker.invokeAsync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "unregisterDevice", new Object[] { getDeviceId(), channels }, responder );
+    FCMRegistration.unregisterDevice( ContextHandler.getAppContext(), channels, callback );
   }
 
   public boolean refreshDeviceToken( String newDeviceToken )
@@ -505,10 +260,10 @@ public final class Messaging
    * Publishes message to "default" channel. The message is not a push notification, it does not have any headers and
    * does not go into any subtopics.
    *
-   * @param   message   object to publish. The object can be of any data type - a primitive value, String, Date, a
-   *                    user-defined complex type, a collection or an array of these types.
+   * @param message object to publish. The object can be of any data type - a primitive value, String, Date, a
+   *                user-defined complex type, a collection or an array of these types.
    * @return a data structure which contains ID of the published message and the status of the publish operation.
-   * @throws  BackendlessException
+   * @throws BackendlessException
    */
   public MessageStatus publish( Object message )
   {
@@ -522,13 +277,13 @@ public final class Messaging
    * Publishes message to specified channel. The message is not a push notification, it does not have any headers and
    * does not go into any subtopics.
    *
-   * @param   channelName name of a channel to publish the message to. If the channel does not exist, Backendless
-   *                      automatically creates it.
-   * @param   message     object to publish. The object can be of any data type - a primitive value, String, Date, a
-   *                      user-defined complex type, a collection or an array of these types.
+   * @param channelName name of a channel to publish the message to. If the channel does not exist, Backendless
+   *                    automatically creates it.
+   * @param message     object to publish. The object can be of any data type - a primitive value, String, Date, a
+   *                    user-defined complex type, a collection or an array of these types.
    * @return ${@link com.backendless.messaging.MessageStatus} - a data structure which contains ID of the published
-   *         message and the status of the publish operation.
-   * @throws  BackendlessException
+   * message and the status of the publish operation.
+   * @throws BackendlessException
    */
   public MessageStatus publish( String channelName, Object message )
   {
@@ -539,18 +294,16 @@ public final class Messaging
    * Publishes message to specified channel. The message is not a push notification, it may have headers and/or subtopic
    * defined in the publishOptions argument.
    *
-   * @param   channelName name of a channel to publish the message to. If the channel does not exist, Backendless
-   *                      automatically creates it.
-   * @param   message     object to publish. The object can be of any data type - a primitive value, String, Date, a
-   *                      user-defined complex type, a collection or an array of these types.
-   * @param   publishOptions
-   *                      an instance of ${@link com.backendless.messaging.PublishOptions}. When provided may contain
-   *                      publisher ID (an arbitrary, application-specific string value identifying the publisher),
-   *                      subtopic value and/or a collection of headers.
+   * @param channelName    name of a channel to publish the message to. If the channel does not exist, Backendless
+   *                       automatically creates it.
+   * @param message        object to publish. The object can be of any data type - a primitive value, String, Date, a
+   *                       user-defined complex type, a collection or an array of these types.
+   * @param publishOptions an instance of ${@link com.backendless.messaging.PublishOptions}. When provided may contain
+   *                       publisher ID (an arbitrary, application-specific string value identifying the publisher),
+   *                       subtopic value and/or a collection of headers.
    * @return a data structure which contains ID of the published message and the status of the publish operation.
    */
-  public MessageStatus publish( String channelName, Object message,
-                                PublishOptions publishOptions )
+  public MessageStatus publish( String channelName, Object message, PublishOptions publishOptions )
   {
     return publish( channelName, message, publishOptions, new DeliveryOptions() );
   }
@@ -559,23 +312,20 @@ public final class Messaging
    * Publishes message to specified channel.The message may be configured as a push notification. It may have headers
    * and/or subtopic defined in the publishOptions argument.
    *
-   * @param   channelName name of a channel to publish the message to. If the channel does not exist, Backendless
-   *                      automatically creates it.
-   * @param   message     object to publish. The object can be of any data type - a primitive value, String, Date, a
-   *                      user-defined complex type, a collection or an array of these types.
-   * @param   publishOptions
-   *                      an instance of ${@link com.backendless.messaging.PublishOptions}. When provided may contain
-   *                      publisher ID (an arbitrary, application-specific string value identifying the publisher),
-   *                      subtopic value and/or a collection of headers.
-   * @param   deliveryOptions
-   *                      an instance of ${@link com.backendless.messaging.DeliveryOptions}. When provided may specify
-   *                      options for message delivery such as: deliver as a push notification, deliver to specific
-   *                      devices (or a group of devices grouped by the operating system), delayed delivery or repeated
-   *                      delivery.
+   * @param channelName     name of a channel to publish the message to. If the channel does not exist, Backendless
+   *                        automatically creates it.
+   * @param message         object to publish. The object can be of any data type - a primitive value, String, Date, a
+   *                        user-defined complex type, a collection or an array of these types.
+   * @param publishOptions  an instance of ${@link com.backendless.messaging.PublishOptions}. When provided may contain
+   *                        publisher ID (an arbitrary, application-specific string value identifying the publisher),
+   *                        subtopic value and/or a collection of headers.
+   * @param deliveryOptions an instance of ${@link com.backendless.messaging.DeliveryOptions}. When provided may specify
+   *                        options for message delivery such as: deliver as a push notification, deliver to specific
+   *                        devices (or a group of devices grouped by the operating system), delayed delivery or repeated
+   *                        delivery.
    * @return a data structure which contains ID of the published message and the status of the publish operation.
    */
-  public MessageStatus publish( String channelName, Object message, PublishOptions publishOptions,
-                                DeliveryOptions deliveryOptions )
+  public MessageStatus publish( String channelName, Object message, PublishOptions publishOptions, DeliveryOptions deliveryOptions )
   {
     channelName = getCheckedChannelName( channelName );
 
@@ -605,14 +355,13 @@ public final class Messaging
    * Publishes message to "default" channel. The message is not a push notification, it does not have any headers and
    * does not go into any subtopics.
    *
-   * @param   message   object to publish. The object can be of any data type - a primitive value, String, Date, a
-   *                    user-defined complex type, a collection or an array of these types.
-   * @param   publishOptions
-   *                      an instance of ${@link com.backendless.messaging.PublishOptions}. When provided may contain
-   *                      publisher ID (an arbitrary, application-specific string value identifying the publisher),
-   *                      subtopic value and/or a collection of headers.
+   * @param message        object to publish. The object can be of any data type - a primitive value, String, Date, a
+   *                       user-defined complex type, a collection or an array of these types.
+   * @param publishOptions an instance of ${@link com.backendless.messaging.PublishOptions}. When provided may contain
+   *                       publisher ID (an arbitrary, application-specific string value identifying the publisher),
+   *                       subtopic value and/or a collection of headers.
    * @return a data structure which contains ID of the published message and the status of the publish operation.
-   * @throws  BackendlessException
+   * @throws BackendlessException
    */
   public MessageStatus publish( Object message, PublishOptions publishOptions )
   {
@@ -623,21 +372,18 @@ public final class Messaging
    * Publishes message to "default" channel.The message may be configured as a push notification. It may have headers
    * and/or subtopic defined in the publishOptions argument.
    *
-   * @param   message     object to publish. The object can be of any data type - a primitive value, String, Date, a
-   *                      user-defined complex type, a collection or an array of these types.
-   * @param   publishOptions
-   *                      an instance of ${@link com.backendless.messaging.PublishOptions}. When provided may contain
-   *                      publisher ID (an arbitrary, application-specific string value identifying the publisher),
-   *                      subtopic value and/or a collection of headers.
-   * @param   deliveryOptions
-   *                      an instance of ${@link com.backendless.messaging.DeliveryOptions}. When provided may specify
-   *                      options for message delivery such as: deliver as a push notification, deliver to specific
-   *                      devices (or a group of devices grouped by the operating system), delayed delivery or repeated
-   *                      delivery.
+   * @param message         object to publish. The object can be of any data type - a primitive value, String, Date, a
+   *                        user-defined complex type, a collection or an array of these types.
+   * @param publishOptions  an instance of ${@link com.backendless.messaging.PublishOptions}. When provided may contain
+   *                        publisher ID (an arbitrary, application-specific string value identifying the publisher),
+   *                        subtopic value and/or a collection of headers.
+   * @param deliveryOptions an instance of ${@link com.backendless.messaging.DeliveryOptions}. When provided may specify
+   *                        options for message delivery such as: deliver as a push notification, deliver to specific
+   *                        devices (or a group of devices grouped by the operating system), delayed delivery or repeated
+   *                        delivery.
    * @return a data structure which contains ID of the published message and the status of the publish operation.
    */
-  public MessageStatus publish( Object message, PublishOptions publishOptions,
-                                DeliveryOptions deliveryOptions )
+  public MessageStatus publish( Object message, PublishOptions publishOptions, DeliveryOptions deliveryOptions )
   {
     return publish( null, message, publishOptions, deliveryOptions );
   }
@@ -652,14 +398,13 @@ public final class Messaging
     publish( channelName, message, new PublishOptions(), responder );
   }
 
-  public void publish( String channelName, Object message, PublishOptions publishOptions,
-                       final AsyncCallback<MessageStatus> responder )
+  public void publish( String channelName, Object message, PublishOptions publishOptions, final AsyncCallback<MessageStatus> responder )
   {
     publish( channelName, message, publishOptions, new DeliveryOptions(), responder );
   }
 
-  public void publish( String channelName, Object message, PublishOptions publishOptions,
-                       DeliveryOptions deliveryOptions, final AsyncCallback<MessageStatus> responder )
+  public void publish( String channelName, Object message, PublishOptions publishOptions, DeliveryOptions deliveryOptions,
+                       final AsyncCallback<MessageStatus> responder )
   {
     try
     {
@@ -708,8 +453,7 @@ public final class Messaging
   {
     if( messageId == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_MESSAGE_ID );
-    MessageStatus messageStatus = Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "getMessageStatus", new Object[]
-            { messageId } );
+    MessageStatus messageStatus = Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "getMessageStatus", new Object[] { messageId } );
 
     return messageStatus;
   }
@@ -755,9 +499,9 @@ public final class Messaging
     }
   }
 
-  public Channel subscribe( )
+  public Channel subscribe()
   {
-      return subscribe( DEFAULT_CHANNEL_NAME );
+    return subscribe( DEFAULT_CHANNEL_NAME );
   }
 
   public Channel subscribe( String channelName )
@@ -867,8 +611,7 @@ public final class Messaging
     sendEmail( subject, new BodyParts( messageBody, null ), Arrays.asList( recipient ), new ArrayList<String>(), responder );
   }
 
-  public void sendHTMLEmail( String subject, String messageBody, List<String> recipients,
-                             final AsyncCallback<MessageStatus> responder )
+  public void sendHTMLEmail( String subject, String messageBody, List<String> recipients, final AsyncCallback<MessageStatus> responder )
   {
     sendEmail( subject, new BodyParts( null, messageBody ), recipients, new ArrayList<String>(), responder );
   }

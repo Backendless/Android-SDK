@@ -2,7 +2,6 @@ package com.backendless.rt;
 
 import com.backendless.Backendless;
 import com.backendless.HeadersManager;
-import com.backendless.Messaging;
 import com.backendless.async.callback.Result;
 import com.backendless.utils.timeout.TimeOutManager;
 import com.backendless.utils.timeout.TimeOutManagerImpl;
@@ -62,7 +61,7 @@ abstract class SocketIOConnectionManager
 
       opts.path = "/" + Backendless.getApplicationId();
 
-      opts.query = "apiKey=" + Backendless.getSecretKey()
+      opts.query = "apiKey=" + Backendless.getApiKey()
               + "&clientId=" + Backendless.Messaging.getDeviceId()
               + "&binary=true";
 
