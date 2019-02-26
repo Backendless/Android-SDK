@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -39,10 +40,9 @@ class DelayedPersistence
     resumeSaving();
   }
 
-  static synchronized void queueSave( final Object objectToSave )
+  static synchronized void queueOperation( Runnable operation )
   {
-    // put entity to the save queue
-    pendingOperations.offer( new SaveOperation( objectToSave ) );
+    pendingOperations.offer( operation );
     savePendingOperationsToStorage( pendingOperations );
 
     resumeSaving();
@@ -275,6 +275,76 @@ class DelayedPersistence
       {
         Backendless.Data.save( getObjectToSave() );
       }
+    }
+  }
+
+  public static class UpdateOperation implements Runnable
+  {
+    private Class<?> aClass;
+    private String whereClause;
+    private Map<String, Object> changes;
+
+    /**
+     * @deprecated to be used by WebORB serializer only; use {@link #UpdateOperation(Class, String, Map)} instead
+     */
+    @Deprecated
+    public UpdateOperation()
+    {
+    }
+
+    public UpdateOperation( Class<?> aClass, String whereClause, Map<String, Object> changes )
+    {
+      this.aClass = aClass;
+      this.whereClause = whereClause;
+      this.changes = changes;
+    }
+
+    public Class<?> getaClass()
+    {
+      return aClass;
+    }
+
+    public String getWhereClause()
+    {
+      return whereClause;
+    }
+
+    public Map<String, Object> getChanges()
+    {
+      return changes;
+    }
+
+    /**
+     * @deprecated to be used by WebORB serializer only; use {@link #UpdateOperation(Class, String, Map)} instead
+     */
+    @Deprecated
+    public void setaClass( Class<?> aClass )
+    {
+      this.aClass = aClass;
+    }
+
+    /**
+     * @deprecated to be used by WebORB serializer only; use {@link #UpdateOperation(Class, String, Map)} instead
+     */
+    @Deprecated
+    public void setWhereClause( String whereClause )
+    {
+      this.whereClause = whereClause;
+    }
+
+    /**
+     * @deprecated to be used by WebORB serializer only; use {@link #UpdateOperation(Class, String, Map)} instead
+     */
+    @Deprecated
+    public void setChanges( Map<String, Object> changes )
+    {
+      this.changes = changes;
+    }
+
+    @Override
+    public void run()
+    {
+      Backendless.Data.of( getaClass() ).update( getWhereClause(), getChanges() );
     }
   }
 }

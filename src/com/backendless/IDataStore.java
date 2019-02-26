@@ -50,6 +50,8 @@ public interface IDataStore<E>
 
   void update( String whereClause, Map<String, Object> changes, AsyncCallback<Integer> responder ) throws BackendlessException;
 
+  void updateWhenPossible( String whereClause, Map<String, Object> changes );
+
   E findFirst() throws BackendlessException;
 
   E findFirst( Integer relationsDepth ) throws BackendlessException;

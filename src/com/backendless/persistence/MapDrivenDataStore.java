@@ -192,6 +192,12 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
+  public void updateWhenPossible( String whereClause, Map<String, Object> changes )
+  {
+    throw new UnsupportedOperationException( "Offline update for Maps is not yet supported" );
+  }
+
+  @Override
   public Map findFirst() throws BackendlessException
   {
     Object[] args = new Object[] { tableName };

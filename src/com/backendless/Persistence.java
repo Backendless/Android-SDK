@@ -258,7 +258,7 @@ public final class Persistence
 
   public void saveWhenPossible( final Object entity )
   {
-    DelayedPersistence.queueSave( entity );
+    DelayedPersistence.queueOperation( new DelayedPersistence.SaveOperation( entity ) );
   }
 
   public <E> E create( Class<E> aClass, Map entity ) throws BackendlessException
