@@ -106,7 +106,8 @@ class DataStoreFactory
       @Override
       public void updateWhenPossible( String whereClause, Map<String, Object> changes )
       {
-        DelayedPersistence.queueOperation( new DelayedPersistence.UpdateOperation( entityClass, whereClause, changes ) );
+        DelayedPersistence.queueOperation(
+                new DelayedPersistence.UpdateOperation( entityClass.getName(), whereClause, changes ) );
       }
 
       @Override

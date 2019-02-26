@@ -280,7 +280,7 @@ class DelayedPersistence
 
   public static class UpdateOperation implements Runnable
   {
-    private Class<?> aClass;
+    private String className;
     private String whereClause;
     private Map<String, Object> changes;
 
@@ -292,16 +292,16 @@ class DelayedPersistence
     {
     }
 
-    public UpdateOperation( Class<?> aClass, String whereClause, Map<String, Object> changes )
+    public UpdateOperation( String className, String whereClause, Map<String, Object> changes )
     {
-      this.aClass = aClass;
+      this.className = className;
       this.whereClause = whereClause;
       this.changes = changes;
     }
 
-    public Class<?> getaClass()
+    public String getClassName()
     {
-      return aClass;
+      return className;
     }
 
     public String getWhereClause()
@@ -315,16 +315,16 @@ class DelayedPersistence
     }
 
     /**
-     * @deprecated to be used by WebORB serializer only; use {@link #UpdateOperation(Class, String, Map)} instead
+     * @deprecated to be used by WebORB serializer only; use {@link #UpdateOperation(String, String, Map)} instead
      */
     @Deprecated
-    public void setaClass( Class<?> aClass )
+    public void setClassName( String className )
     {
-      this.aClass = aClass;
+      this.className = className;
     }
 
     /**
-     * @deprecated to be used by WebORB serializer only; use {@link #UpdateOperation(Class, String, Map)} instead
+     * @deprecated to be used by WebORB serializer only; use {@link #UpdateOperation(String, String, Map)} instead
      */
     @Deprecated
     public void setWhereClause( String whereClause )
@@ -333,7 +333,7 @@ class DelayedPersistence
     }
 
     /**
-     * @deprecated to be used by WebORB serializer only; use {@link #UpdateOperation(Class, String, Map)} instead
+     * @deprecated to be used by WebORB serializer only; use {@link #UpdateOperation(String, String, Map)} instead
      */
     @Deprecated
     public void setChanges( Map<String, Object> changes )
@@ -344,7 +344,13 @@ class DelayedPersistence
     @Override
     public void run()
     {
-      Backendless.Data.of( getaClass() ).update( getWhereClause(), getChanges() );
+      try
+      {
+        Backendless.Data.of( Class.forName( className ) ).update( getWhereClause(), getChanges() );
+      }
+      catch( ClassNotFoundException ignored )
+      {
+      }
     }
   }
 }
