@@ -46,6 +46,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -969,12 +970,12 @@ public final class Persistence
   {
     Object[] args = new Object[] { spName, arguments };
 
-    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredProcedure", args );
+    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredProcedure", args, ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
   }
 
   public void callStoredProcedure( String procedureName, Map<String, Object> arguments, AsyncCallback<Map> responder )
   {
     Object[] args = new Object[] { procedureName, arguments };
-    Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredProcedure", args, responder );
+    Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredProcedure", args, responder, ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
   }
 }
