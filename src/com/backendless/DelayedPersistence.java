@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 class DelayedPersistence
 {
-  private static final Queue<Object> entitiesToSave;
+  private static final Queue<Runnable> pendingOperations;
   private static final ScheduledExecutorService savingExecutor =
           Executors.newSingleThreadScheduledExecutor( new DefaultDaemonThreadFactory() );
   private static Future<?> savingTask = null;
@@ -35,15 +35,15 @@ class DelayedPersistence
 
   static
   {
-    entitiesToSave = loadQueueFromStorage();
+    pendingOperations = loadPendingOperationsFromStorage();
     resumeSaving();
   }
 
-  static synchronized void queueSave( final Object entity )
+  static synchronized void queueSave( final Object objectToSave )
   {
     // put entity to the save queue
-    entitiesToSave.offer( entity );
-    saveQueueToStorage( entitiesToSave );
+    pendingOperations.offer( new SaveOperation( objectToSave ) );
+    savePendingOperationsToStorage( pendingOperations );
 
     resumeSaving();
   }
@@ -61,15 +61,15 @@ class DelayedPersistence
           try
           {
             // try to save all queued entities
-            while( !entitiesToSave.isEmpty() )
+            while( !pendingOperations.isEmpty() )
             {
               // peek first, poll only after the entity is saved, because save may fail
-              final Object entity = entitiesToSave.peek();
-              if( entity != null )
+              final Runnable operation = pendingOperations.peek();
+              if( operation != null )
               {
-                Backendless.Data.save( entity );
-                entitiesToSave.poll();
-                saveQueueToStorage( entitiesToSave );
+                operation.run();
+                pendingOperations.poll();
+                savePendingOperationsToStorage( pendingOperations );
 
                 // reset backoff on any successful save
                 BACKOFF = INITIAL_BACKOFF;
@@ -89,13 +89,13 @@ class DelayedPersistence
     }
   }
 
-  private static void saveQueueToStorage( Queue<Object> queue )
+  private static void savePendingOperationsToStorage( Queue<Runnable> pendingOperations )
   {
     FileOutputStream storage = null;
     try
     {
       storage = openQueueStorageOutput();
-      storage.write( Serializer.toBytes( queue, ISerializer.JSON ) );
+      storage.write( Serializer.toBytes( pendingOperations, ISerializer.JSON ) );
     }
     catch( Exception ignored )
     {
@@ -115,7 +115,7 @@ class DelayedPersistence
     }
   }
 
-  private static Queue<Object> loadQueueFromStorage()
+  private static Queue<Runnable> loadPendingOperationsFromStorage()
   {
     FileInputStream storage = null;
     try
@@ -136,7 +136,7 @@ class DelayedPersistence
 
       final byte[] serializedQueue = buffer.toByteArray();
 
-      return new ArrayDeque<>( Arrays.asList( (Object[]) Serializer.fromBytes( serializedQueue, ISerializer.JSON, false ) ) );
+      return new ArrayDeque<>( Arrays.asList( (Runnable[]) Serializer.fromBytes( serializedQueue, ISerializer.JSON, false ) ) );
     }
     catch( Exception ignored )
     {
@@ -234,6 +234,47 @@ class DelayedPersistence
         t.setPriority( Thread.NORM_PRIORITY );
 
       return t;
+    }
+  }
+
+  public static class SaveOperation implements Runnable
+  {
+    private Object objectToSave;
+
+    /**
+     * @deprecated to be used by WebORB serializer only; use {@link #SaveOperation(Object)} instead
+     */
+    @Deprecated()
+    public SaveOperation()
+    {
+    }
+
+    SaveOperation( Object objectToSave )
+    {
+      this.objectToSave = objectToSave;
+    }
+
+    public Object getObjectToSave()
+    {
+      return objectToSave;
+    }
+
+    /**
+     * @deprecated to be used by WebORB serializer only; use {@link #SaveOperation(Object)} instead
+     */
+    @Deprecated
+    public void setObjectToSave( Object objectToSave )
+    {
+      this.objectToSave = objectToSave;
+    }
+
+    @Override
+    public void run()
+    {
+      if( getObjectToSave() != null )
+      {
+        Backendless.Data.save( getObjectToSave() );
+      }
     }
   }
 }
