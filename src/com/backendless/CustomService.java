@@ -22,6 +22,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 import com.backendless.core.responder.policy.UniversalAdaptingPolicy;
+import com.backendless.servercode.ExecutionType;
 
 public class CustomService
 {
@@ -46,9 +47,21 @@ public class CustomService
     return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args );
   }
 
+  public <T> T invoke( String serviceName, String method, Object[] arguments, ExecutionType executionType )
+  {
+    Object[] args =  new Object[] { serviceName, method, arguments, executionType };
+    return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args );
+  }
+
    public <T> T invoke( String serviceName, String method, Object[] arguments, Class<?> clazz )
   {
     Object[] args = new Object[] { serviceName, method, arguments };
+    return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, new AdaptingResponder( clazz, new UniversalAdaptingPolicy() ) );
+  }
+
+  public <T> T invoke( String serviceName, String method, Object[] arguments, ExecutionType executionType, Class<?> clazz )
+  {
+    Object[] args = new Object[] { serviceName, method, arguments, executionType };
     return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, new AdaptingResponder( clazz, new UniversalAdaptingPolicy() ) );
   }
 
@@ -58,9 +71,21 @@ public class CustomService
     Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, callback );
   }
 
+  public <E> void invoke( String serviceName, String method, Object[] arguments, ExecutionType executionType, AsyncCallback<E> callback )
+  {
+    Object[] args = new Object[] { serviceName, method, arguments, executionType };
+    Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, callback );
+  }
+
   public <E> void invoke( String serviceName, String method, Object[] arguments, Class<?> clazz, AsyncCallback<E> callback )
   {
     Object[] args = new Object[] { serviceName, method, arguments };
+    Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, callback, new AdaptingResponder( clazz, new UniversalAdaptingPolicy() ) );
+  }
+
+  public <E> void invoke( String serviceName, String method, Object[] arguments, ExecutionType executionType, Class<?> clazz, AsyncCallback<E> callback )
+  {
+    Object[] args = new Object[] { serviceName, method, arguments, executionType };
     Invoker.invokeAsync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, callback, new AdaptingResponder( clazz, new UniversalAdaptingPolicy() ) );
   }
 }
