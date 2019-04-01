@@ -5,7 +5,7 @@ apply plugin: 'signing'
 
 
 group 'com.backendless'
-version '5.2.5'
+version '5.2.6'
 archivesBaseName='backendless'
 
 
@@ -176,9 +176,37 @@ configurations {
     compile.extendsFrom provided
 }
 
+def libsToPackage() {
+
+        def artifactsToPackage =
+                [
+                    ["com.backendless", "commons"],
+                    ["weborb", "weborbclient"]
+                ]
+
+        def libsToPackage = ["mediaLib.jar"]
+
+        return configurations.compileOnly.files { pkg ->
+            def count = artifactsToPackage.stream()
+                .filter( { ar ->
+                    if (pkg.group.equals( ar[ 0 ] ) && pkg.name.equals( ar[ 1 ] ) )
+                        return true
+
+                    if (pkg.group == null && pkg.version == null)
+                    {
+                        def fileName = pkg.resolve().iterator().next().name
+                        return libsToPackage.contains( fileName )
+                    }
+                    return false
+                } )
+                .count()
+            return count > 0
+        }
+}
+
 jar {
     from {
-        (configurations.runtime - configurations.provided).collect {
+        libsToPackage().collect {
             it.isDirectory() ? it : zipTree( it )
         }
     }
@@ -219,7 +247,6 @@ configurations.all {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: 'mediaLib.jar')
     provided fileTree(dir: 'libs', include: 'android-26.jar')
     provided fileTree(dir: 'libs', include: 'support-compat-26.1.0.jar')
     provided fileTree(dir: 'libs', include: 'support-fragment-26.1.0.jar')
@@ -230,10 +257,11 @@ dependencies {
     provided fileTree(dir: 'libs', include: 'play-services-tasks-15.0.1.jar')
     provided fileTree(dir: 'libs', include: 'FacebookSDK.jar')
     provided fileTree(dir: 'libs', include: 'maps.jar')
-    compile( group: "com.backendless", name: "commons", version: "5.2.13", changing: true) {
+    compileOnly fileTree(dir: 'libs', include: 'mediaLib.jar')
+    compileOnly( group: "com.backendless", name: "commons", version: "5.2.9", changing: true, ) {
         exclude group: 'com.fasterxml.jackson.core'
     }
-    compile( group: "weborb", name: "weborbclient", version: "5.1.0.212", changing: true)
+    compileOnly( group: "weborb", name: "weborbclient", version: "5.1.0.212", changing: true)
 
     compileOnly ('io.socket:socket.io-client:1.0.0') {
 //       excluding org.json which is provided by Android
