@@ -44,7 +44,16 @@ public class AtomicCallback<T> implements AsyncCallback<Object>
     else
       realCallback.handleFault( new BackendlessFault( "Result is not a number. Expecting either Integer or Double, but received " + response.getClass() ) );
 
-    Class counterType = (Class) ReflectionUtil.getCallbackGenericType( realCallback );
+    Class<?> counterType;
+    try
+    {
+      counterType = ReflectionUtil.getCallbackGenericType( realCallback );
+    }
+    catch( Exception e )
+    {
+      realCallback.handleFault( new BackendlessFault( e.getMessage() ) );
+      return;
+    }
 
     Number result = Counters.convertToType( numberResult, counterType );
     realCallback.handleResponse( (T) result );

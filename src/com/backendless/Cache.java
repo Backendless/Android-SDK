@@ -90,7 +90,7 @@ public class Cache
 
   public <T> void get( final String key, final AsyncCallback<T> callback )
   {
-    final Type asyncCallbackType = ReflectionUtil.getCallbackGenericType( callback );
+    final Class<?> asyncCallbackType = ReflectionUtil.getCallbackGenericType( callback );
 
     ThreadPoolService.getPoolExecutor().execute( new Runnable()
     {
@@ -99,10 +99,14 @@ public class Cache
       {
         try
         {
-          T result = (T) get( key, (Class) asyncCallbackType );
+          T result = (T) get( key, asyncCallbackType );
           ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<T>( result, callback ) );
         }
         catch( BackendlessException e )
+        {
+          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<T>( new BackendlessFault( e ), callback ) );
+        }
+        catch( Exception e )
         {
           ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<T>( new BackendlessFault( e ), callback ) );
         }
