@@ -108,7 +108,7 @@ public class Cache
         }
         catch( Exception e )
         {
-          callback.handleFault( new BackendlessFault( e.getMessage() ) );
+          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<T>( new BackendlessFault( e ), callback ) );
         }
       }
     } );
