@@ -24,12 +24,7 @@ import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
-import com.backendless.persistence.BackendlessDataQuery;
-import com.backendless.persistence.BackendlessSerializer;
-import com.backendless.persistence.DataQueryBuilder;
-import com.backendless.persistence.LoadRelationsQueryBuilder;
-import com.backendless.persistence.MapDrivenDataStore;
-import com.backendless.persistence.QueryOptions;
+import com.backendless.persistence.*;
 import com.backendless.property.ObjectProperty;
 import com.backendless.utils.MapEntityUtil;
 import com.backendless.utils.ReflectionUtil;
@@ -565,10 +560,8 @@ public final class Persistence
 
     BackendlessDataQuery dataQuery = queryBuilder.build();
     String relationName = dataQuery.getQueryOptions().getRelated().iterator().next();
-    int pageSize = dataQuery.getPageSize();
-    int offset = dataQuery.getOffset();
 
-    Object[] args = new Object[] { parentType, objectId, relationName, pageSize, offset };
+    Object[] args = new Object[] { parentType, objectId, relationName, dataQuery };
     return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args,
                                ResponderHelper.getCollectionAdaptingResponder( relatedType ) );
   }

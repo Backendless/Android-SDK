@@ -4,7 +4,9 @@ import com.backendless.IDataStore;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.utils.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,11 +41,15 @@ public final class LoadRelationsQueryBuilder<R>
   private String relationName;
   private Class<R> relationType;
   private PagedQueryBuilder<LoadRelationsQueryBuilder<R>> pagedQueryBuilder;
+  private List<String> properties;
+  private List<String> sortBy;
 
   private LoadRelationsQueryBuilder( Class<R> relationType )
   {
     pagedQueryBuilder = new PagedQueryBuilder<>( this );
     this.relationType = relationType;
+    this.properties = new ArrayList<>();
+    this.sortBy = new ArrayList<>();
   }
 
   public static LoadRelationsQueryBuilder<Map<String, Object>> ofMap()
@@ -64,7 +70,9 @@ public final class LoadRelationsQueryBuilder<R>
     BackendlessDataQuery dataQuery = pagedQueryBuilder.build();
     QueryOptions queryOptions = new QueryOptions();
     queryOptions.setRelated( Collections.singletonList( relationName ) );
+    queryOptions.setSortBy( sortBy );
     dataQuery.setQueryOptions( queryOptions );
+    dataQuery.setProperties( properties );
 
     return dataQuery;
   }
@@ -99,4 +107,51 @@ public final class LoadRelationsQueryBuilder<R>
   {
     return relationType;
   }
+
+  public List<String> getProperties()
+  {
+    return properties;
+  }
+
+  public LoadRelationsQueryBuilder<R> setProperties( List<String> properties )
+  {
+    this.properties = properties;
+    return this;
+  }
+
+  public LoadRelationsQueryBuilder<R> setProperties( String... properties )
+  {
+    Collections.addAll( this.properties, properties );
+    return this;
+  }
+
+  public LoadRelationsQueryBuilder<R> addProperty( String property )
+  {
+    this.properties.add( property );
+    return this;
+  }
+
+  public List<String> getSortBy()
+  {
+    return sortBy;
+  }
+
+  public LoadRelationsQueryBuilder<R> setSortBy( List<String> sortBy )
+  {
+    this.sortBy = sortBy;
+    return this;
+  }
+
+  public LoadRelationsQueryBuilder<R> setSortBy( String... sortBy )
+  {
+    Collections.addAll( this.sortBy, sortBy );
+    return this;
+  }
+
+  public LoadRelationsQueryBuilder<R> addSortBy( String sortBy )
+  {
+    this.sortBy.add( sortBy );
+    return this;
+  }
+
 }
