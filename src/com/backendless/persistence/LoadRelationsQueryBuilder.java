@@ -121,6 +121,19 @@ public final class LoadRelationsQueryBuilder<R>
 
   public LoadRelationsQueryBuilder<R> setProperties( String... properties )
   {
+    this.properties = new ArrayList<>();
+    Collections.addAll( this.properties, properties );
+    return this;
+  }
+
+  public LoadRelationsQueryBuilder<R> addProperty( List<String> properties )
+  {
+    this.properties.addAll( properties );
+    return this;
+  }
+
+  public LoadRelationsQueryBuilder<R> addProperty( String... properties )
+  {
     Collections.addAll( this.properties, properties );
     return this;
   }
@@ -144,6 +157,19 @@ public final class LoadRelationsQueryBuilder<R>
 
   public LoadRelationsQueryBuilder<R> setSortBy( String... sortBy )
   {
+    this.sortBy = new ArrayList<>();
+    Collections.addAll( this.sortBy, sortBy );
+    return this;
+  }
+
+  public LoadRelationsQueryBuilder<R> addSortBy( List<String> sortBy )
+  {
+    this.sortBy.addAll( sortBy );
+    return this;
+  }
+
+  public LoadRelationsQueryBuilder<R> addSortBy( String... sortBy )
+  {
     Collections.addAll( this.sortBy, sortBy );
     return this;
   }
@@ -153,5 +179,4 @@ public final class LoadRelationsQueryBuilder<R>
     this.sortBy.add( sortBy );
     return this;
   }
-
 }
