@@ -566,10 +566,8 @@ public final class Persistence
 
     BackendlessDataQuery dataQuery = queryBuilder.build();
     String relationName = dataQuery.getQueryOptions().getRelated().iterator().next();
-    int pageSize = dataQuery.getPageSize();
-    int offset = dataQuery.getOffset();
 
-    Object[] args = new Object[] { parentType, objectId, relationName, pageSize, offset };
+    Object[] args = new Object[] { parentType, objectId, relationName, dataQuery };
     return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args,
                                ResponderHelper.getCollectionAdaptingResponder( relatedType ) );
   }
