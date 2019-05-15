@@ -86,9 +86,16 @@ public abstract class BackendlessSerializer
     Map<String, Object> serializedEntity = new HashMap<String, Object>();
 
     if( entity.getClass() == BackendlessUser.class )
+    {
       serializedEntity = ((BackendlessUser) entity).getProperties();
+    }
     else
+    { //Ticket #BKNDLSS-18404
+      // in weborb.util.ObjectInspector.FieldsInspector#inspect create serialVersionUID field
+      //we set serialVersionUID to cache to not add it to serialized object
+      weborb.util.CacheUtils.cacheStaticField( entity.getClass().getName(), "serialVersionUID" );
       weborb.util.ObjectInspector.getObjectProperties( entity.getClass(), entity, (HashMap) serializedEntity, new ArrayList(), true, shouldTraverse() );
+    }
 
     serializedCache.put( entity, serializedEntity );
 
