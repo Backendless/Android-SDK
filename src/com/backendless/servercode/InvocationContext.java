@@ -41,6 +41,10 @@ public class InvocationContext extends AbstractContext
     return threadLocal.get();
   }
 
+  private String httpPath;
+  private Map<String, String> httpPathParams;
+  private Map<String, String> httpQueryParams;
+
   private InvocationContext( String appId, String userId, String userToken, List<String> userRoles,
                             String deviceType, Map<String, String> httpHeaders )
   {
@@ -126,5 +130,35 @@ public class InvocationContext extends AbstractContext
   public static void setHttpHeaders( Map<String, String> httpHeaders )
   {
     getCurrentContext().httpHeaders = httpHeaders;
+  }
+
+  public static String getHttpPath()
+  {
+    return getCurrentContext().httpPath;
+  }
+
+  public static void setHttpPath( String httpPath )
+  {
+    getCurrentContext().httpPath = httpPath;
+  }
+
+  public static Map<String, String> getHttpPathParams()
+  {
+    return getCurrentContext().httpPathParams;
+  }
+
+  public static void setHttpPathParams( Map<String, String> httpPathParams )
+  {
+    getCurrentContext().httpPathParams = httpPathParams;
+  }
+
+  public static Map<String, String> getHttpQueryParams()
+  {
+    return getCurrentContext().httpQueryParams;
+  }
+
+  public static void setHttpQueryParams( Map<String, String> httpQueryParams )
+  {
+    getCurrentContext().httpQueryParams = httpQueryParams;
   }
 }
