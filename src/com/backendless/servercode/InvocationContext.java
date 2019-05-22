@@ -46,7 +46,8 @@ public class InvocationContext extends AbstractContext
   private Map<String, String> httpQueryParams;
 
   private InvocationContext( String appId, String userId, String userToken, List<String> userRoles,
-                            String deviceType, Map<String, String> httpHeaders )
+                             String deviceType, String httpPath, Map<String, String> httpHeaders,
+                             Map<String, String> httpPathParams, Map<String, String> httpQueryParams)
   {
     this.appId = appId;
     this.userId = userId;
@@ -54,6 +55,9 @@ public class InvocationContext extends AbstractContext
     this.userRoles = userRoles;
     this.deviceType = DeviceType.valueOf( deviceType );
     this.httpHeaders = httpHeaders;
+    this.httpPath = httpPath;
+    this.httpPathParams = httpPathParams;
+    this.httpQueryParams = httpQueryParams;
   }
 
   private InvocationContext( ) {}
