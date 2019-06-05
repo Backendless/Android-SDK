@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
@@ -132,7 +133,7 @@ public class BackendlessFCMService extends FirebaseMessagingService
       final String contentTitle = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TITLE_TAG );
       final String summarySubText = intent.getStringExtra( PublishOptions.ANDROID_SUMMARY_SUBTEXT_TAG );
       String soundResource = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_SOUND_TAG );
-      fallBackMode( context, message, contentTitle, summarySubText, soundResource, notificationId );
+      fallBackMode( context, message, contentTitle, summarySubText, soundResource, intent.getExtras(), notificationId );
     }
     catch ( Throwable throwable )
     {
@@ -140,10 +141,13 @@ public class BackendlessFCMService extends FirebaseMessagingService
     }
   }
 
-  private void fallBackMode( Context context, String message, String contentTitle, String summarySubText, String soundResource, final int notificationId )
+  private void fallBackMode( Context context, String message, String contentTitle, String summarySubText, String soundResource, Bundle bundle, final int notificationId )
   {
     final String channelName = "Fallback";
     final NotificationCompat.Builder notificationBuilder;
+    Bundle newBundle = new Bundle();
+    newBundle.putAll( bundle );
+    newBundle.putInt( PublishOptions.NOTIFICATION_ID, notificationId );
 
     // android.os.Build.VERSION_CODES.O == 26
     if( android.os.Build.VERSION.SDK_INT > 25 )
@@ -179,6 +183,7 @@ public class BackendlessFCMService extends FirebaseMessagingService
       appIcon = android.R.drawable.sym_def_app_icon;
 
     Intent notificationIntent = context.getPackageManager().getLaunchIntentForPackage( context.getApplicationInfo().packageName );
+    notificationIntent.putExtras( newBundle );
     PendingIntent contentIntent = PendingIntent.getActivity( context, 0, notificationIntent, 0 );
 
     notificationBuilder.setContentIntent( contentIntent )
