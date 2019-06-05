@@ -758,6 +758,59 @@ public final class UserService
     Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getTwitterServiceAuthorizationUrlLink", new Object[] { HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME ), twitterFieldsMapping }, responder );
   }
 
+  public BackendlessUser loginAsGuest()
+  {
+    return loginAsGuest( false );
+  }
+
+  public BackendlessUser loginAsGuest( boolean stayLoggedIn )
+  {
+    synchronized( currentUserLock )
+    {
+      handleUserLogin( Invoker.<BackendlessUser>invokeSync( USER_MANAGER_SERVER_ALIAS, "loginAsGuest", new Object[] {  }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) ), stayLoggedIn );
+
+      return currentUser;
+    }
+  }
+
+  public void loginAsGuest( final AsyncCallback<BackendlessUser> responder )
+  {
+    loginAsGuest( false );
+  }
+
+  public void loginAsGuest( final AsyncCallback<BackendlessUser> responder, final boolean stayLoggedIn )
+  {
+    if( !currentUser.getProperties().isEmpty() )
+      logout( new AsyncCallback<Void>()
+      {
+        @Override
+        public void handleResponse( Void response )
+        {
+          loginAsGuest( responder, stayLoggedIn );
+        }
+
+        @Override
+        public void handleFault( BackendlessFault fault )
+        {
+          if( responder != null )
+            responder.handleFault( fault );
+        }
+      } );
+    else
+      try
+      {
+        synchronized( currentUserLock )
+        {
+          Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "loginAsGuest", new Object[] { }, getUserLoginAsyncHandler( responder, stayLoggedIn ) , new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
+        }
+      }
+      catch( Throwable e )
+      {
+        if( responder != null )
+          responder.handleFault( new BackendlessFault( e ) );
+      }
+  }
+
   public void getGooglePlusServiceAuthorizationUrlLink( Map<String, String> googlePlusFieldsMappings,
                                                       List<String> permissions,
                                                       AsyncCallback<String> responder ) throws BackendlessException
