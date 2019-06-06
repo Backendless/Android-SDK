@@ -48,6 +48,9 @@ import com.backendless.messaging.MessageStatus;
 import com.backendless.messaging.PublishOptions;
 import com.backendless.messaging.PublishStatusEnum;
 import com.backendless.messaging.PushBroadcastMask;
+import com.backendless.messaging.templates.EmailEnvelopeWithQuery;
+import com.backendless.messaging.templates.EmailEnvelopeWithRecipients;
+import com.backendless.messaging.templates.IEmailEnvelope;
 import com.backendless.push.DeviceRegistrationResult;
 import com.backendless.push.FCMRegistration;
 import com.backendless.rt.messaging.Channel;
@@ -60,6 +63,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public final class Messaging
@@ -67,6 +71,7 @@ public final class Messaging
   private final static String MESSAGING_MANAGER_SERVER_ALIAS = "com.backendless.services.messaging.MessagingService";
   private final static String DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS = "com.backendless.services.messaging.DeviceRegistrationService";
   private final static String EMAIL_MANAGER_SERVER_ALIAS = "com.backendless.services.mail.CustomersEmailService";
+  private final static String EMAIL_TEMPLATE_SENDER_SERVER_ALIAS = "com.backendless.services.mail.EmailTemplateSender";
   private final static String DEFAULT_CHANNEL_NAME = "default";
   private final static String OS;
   private final static String OS_VERSION;
@@ -657,4 +662,59 @@ public final class Messaging
         responder.handleFault( new BackendlessFault( e ) );
     }
   }
+
+  public MessageStatus sendEmail (String templateName, IEmailEnvelope envelope) {
+    return sendEmail(templateName, null, envelope);
+  }
+
+  public MessageStatus sendEmail (String templateName, Map<String, String> templateValues, IEmailEnvelope envelope) {
+    if (templateName == null || templateName.isEmpty())
+      throw new IllegalArgumentException(ExceptionMessage.NULL_EMPTY_TEMPLATE_NAME);
+
+    List<String> cc = envelope.getCc();
+    List<String> bcc = envelope.getBcc();
+
+    if (envelope instanceof EmailEnvelopeWithRecipients) {
+      EmailEnvelopeWithRecipients envelopeWithRecipients = (EmailEnvelopeWithRecipients) envelope;
+      List<String> to = envelopeWithRecipients.getTo();
+      return Invoker.invokeSync( EMAIL_TEMPLATE_SENDER_SERVER_ALIAS, "sendEmailsByAddresses", new Object[] { templateName, to, templateValues, cc, bcc } );
+    } else if (envelope instanceof EmailEnvelopeWithQuery) {
+      EmailEnvelopeWithQuery envelopeWithQuery = (EmailEnvelopeWithQuery) envelope;
+      String query = envelopeWithQuery.getRecipientsQuery();
+      return Invoker.invokeSync( EMAIL_TEMPLATE_SENDER_SERVER_ALIAS, "sendEmailsByQuery", new Object[] { templateName, query, templateValues, cc, bcc } );
+    }
+
+    return null;
+  }
+
+  public void sendEmail (String templateName, IEmailEnvelope envelope, AsyncCallback<MessageStatus> responder) {
+    sendEmail(templateName, null, envelope, responder);
+  }
+
+  public void sendEmail (String templateName, Map<String, String> templateValues, IEmailEnvelope envelope, AsyncCallback<MessageStatus> responder) {
+    try
+    {
+      if (templateName == null || templateName.isEmpty())
+        throw new IllegalArgumentException(ExceptionMessage.NULL_EMPTY_TEMPLATE_NAME);
+
+      List<String> cc = envelope.getCc();
+      List<String> bcc = envelope.getBcc();
+
+      if (envelope instanceof EmailEnvelopeWithRecipients) {
+        EmailEnvelopeWithRecipients envelopeWithRecipients = (EmailEnvelopeWithRecipients) envelope;
+        List<String> to = envelopeWithRecipients.getTo();
+        Invoker.invokeAsync( EMAIL_TEMPLATE_SENDER_SERVER_ALIAS, "sendEmailsByAddresses", new Object[] { templateName, to, templateValues, cc, bcc }, responder );
+      } else if (envelope instanceof EmailEnvelopeWithQuery) {
+        EmailEnvelopeWithQuery envelopeWithQuery = (EmailEnvelopeWithQuery) envelope;
+        String query = envelopeWithQuery.getRecipientsQuery();
+        Invoker.invokeAsync( EMAIL_TEMPLATE_SENDER_SERVER_ALIAS, "sendEmailsByQuery", new Object[] { templateName, query, templateValues, cc, bcc }, responder );
+      }
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
 }
