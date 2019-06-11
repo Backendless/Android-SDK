@@ -806,9 +806,6 @@ public final class Persistence
 
   public IDataStore<Map> of( String tableName )
   {
-    if( tableName.equalsIgnoreCase( "users" ) )
-      throw new IllegalArgumentException( "Table 'Users' is not accessible through this signature. Use Backendless.Data.of( BackendlessUser.class ) instead" );
-
     return new MapDrivenDataStore( tableName );
   }
 
