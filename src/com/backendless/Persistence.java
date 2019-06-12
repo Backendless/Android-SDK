@@ -46,6 +46,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -565,10 +566,8 @@ public final class Persistence
 
     BackendlessDataQuery dataQuery = queryBuilder.build();
     String relationName = dataQuery.getQueryOptions().getRelated().iterator().next();
-    int pageSize = dataQuery.getPageSize();
-    int offset = dataQuery.getOffset();
 
-    Object[] args = new Object[] { parentType, objectId, relationName, pageSize, offset };
+    Object[] args = new Object[] { parentType, objectId, relationName, dataQuery };
     return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "loadRelations", args,
                                ResponderHelper.getCollectionAdaptingResponder( relatedType ) );
   }
@@ -807,9 +806,6 @@ public final class Persistence
 
   public IDataStore<Map> of( String tableName )
   {
-    if( tableName.equalsIgnoreCase( "users" ) )
-      throw new IllegalArgumentException( "Table 'Users' is not accessible through this signature. Use Backendless.Data.of( BackendlessUser.class ) instead" );
-
     return new MapDrivenDataStore( tableName );
   }
 
@@ -969,12 +965,12 @@ public final class Persistence
   {
     Object[] args = new Object[] { spName, arguments };
 
-    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredProcedure", args );
+    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredProcedure", args, ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
   }
 
   public void callStoredProcedure( String procedureName, Map<String, Object> arguments, AsyncCallback<Map> responder )
   {
     Object[] args = new Object[] { procedureName, arguments };
-    Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredProcedure", args, responder );
+    Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredProcedure", args, responder, ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
   }
 }

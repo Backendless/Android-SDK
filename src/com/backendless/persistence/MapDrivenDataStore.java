@@ -195,7 +195,8 @@ public class MapDrivenDataStore implements IDataStore<Map>
   public Map findFirst() throws BackendlessException
   {
     Object[] args = new Object[] { tableName };
-    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args );
+    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args,
+                                     new MapDrivenResponder() );
   }
 
   @Override
@@ -213,47 +214,50 @@ public class MapDrivenDataStore implements IDataStore<Map>
   private Map findFirst( List<String> relations, int relationsDepth ) throws BackendlessException
   {
     Object[] args = new Object[] { tableName, relations, relationsDepth };
-    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args );
+    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args,
+                                     new MapDrivenResponder() );
   }
 
   @Override
-  public void findFirst( AsyncCallback<Map> responder )
+  public void findFirst( AsyncCallback<Map> callback )
   {
     try
     {
       Object[] args = new Object[] { tableName };
-      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args, responder );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args, callback,
+                           new MapDrivenResponder() );
     }
     catch( Throwable e )
     {
-      if( responder != null )
-        responder.handleFault( new BackendlessFault( e ) );
+      if( callback != null )
+        callback.handleFault( new BackendlessFault( e ) );
     }
   }
 
   @Override
-  public void findFirst( Integer relationsDepth, AsyncCallback<Map> responder )
+  public void findFirst( Integer relationsDepth, AsyncCallback<Map> callback )
   {
-    findFirst( emptyRelations, relationsDepth, responder );
+    findFirst( emptyRelations, relationsDepth, callback );
   }
 
   @Override
-  public void findFirst( List<String> relations, AsyncCallback<Map> responder )
+  public void findFirst( List<String> relations, AsyncCallback<Map> callback )
   {
-    findFirst( relations, null, responder );
+    findFirst( relations, null, callback );
   }
 
-  private void findFirst( List<String> relations, Integer relationsDepth, AsyncCallback<Map> responder )
+  private void findFirst( List<String> relations, Integer relationsDepth, AsyncCallback<Map> callback )
   {
     try
     {
       Object[] args = new Object[] { tableName, relations, relationsDepth };
-      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args, responder );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args, callback,
+                           new MapDrivenResponder() );
     }
     catch( Throwable e )
     {
-      if( responder != null )
-        responder.handleFault( new BackendlessFault( e ) );
+      if( callback != null )
+        callback.handleFault( new BackendlessFault( e ) );
     }
   }
 
@@ -261,7 +265,8 @@ public class MapDrivenDataStore implements IDataStore<Map>
   public Map findLast() throws BackendlessException
   {
     Object[] args = new Object[] { tableName };
-    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args );
+    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args,
+                                     new MapDrivenResponder() );
   }
 
   @Override
@@ -279,47 +284,50 @@ public class MapDrivenDataStore implements IDataStore<Map>
   private Map findLast( List<String> relations, Integer relationsDepth ) throws BackendlessException
   {
     Object[] args = new Object[] { tableName, relations, relationsDepth };
-    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args );
+    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args,
+                                     new MapDrivenResponder() );
   }
 
   @Override
-  public void findLast( AsyncCallback<Map> responder )
+  public void findLast( AsyncCallback<Map> callback )
   {
     try
     {
       Object[] args = new Object[] { tableName };
-      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args, responder );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args, callback,
+                           new MapDrivenResponder() );
     }
     catch( Throwable e )
     {
-      if( responder != null )
-        responder.handleFault( new BackendlessFault( e ) );
+      if( callback != null )
+        callback.handleFault( new BackendlessFault( e ) );
     }
   }
 
   @Override
-  public void findLast( Integer relationsDepth, AsyncCallback<Map> responder )
+  public void findLast( Integer relationsDepth, AsyncCallback<Map> callback )
   {
-    findLast( emptyRelations, relationsDepth, responder );
+    findLast( emptyRelations, relationsDepth, callback );
   }
 
   @Override
-  public void findLast( List<String> relations, AsyncCallback<Map> responder )
+  public void findLast( List<String> relations, AsyncCallback<Map> callback )
   {
-    findLast( relations, null, responder );
+    findLast( relations, null, callback );
   }
 
-  private void findLast( List<String> relations, Integer relationsDepth, AsyncCallback<Map> responder )
+  private void findLast( List<String> relations, Integer relationsDepth, AsyncCallback<Map> callback )
   {
     try
     {
       Object[] args = new Object[] { tableName, relations, relationsDepth };
-      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args, responder );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args, callback,
+                           new MapDrivenResponder() );
     }
     catch( Throwable e )
     {
-      if( responder != null )
-        responder.handleFault( new BackendlessFault( e ) );
+      if( callback != null )
+        callback.handleFault( new BackendlessFault( e ) );
     }
   }
 
@@ -334,27 +342,29 @@ public class MapDrivenDataStore implements IDataStore<Map>
   {
     Object[] args = new Object[] { tableName, dataQuery.build() };
 
-    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args,
+                               ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
   }
 
   @Override
-  public void find( AsyncCallback<List<Map>> responder )
+  public void find( AsyncCallback<List<Map>> callback )
   {
-    find( DataQueryBuilder.create(), responder );
+    find( DataQueryBuilder.create(), callback );
   }
 
   @Override
-  public void find( final DataQueryBuilder dataQuery, final AsyncCallback<List<Map>> responder )
+  public void find( final DataQueryBuilder dataQuery, final AsyncCallback<List<Map>> callback )
   {
     try
     {
       Object[] args = new Object[] { tableName, dataQuery.build() };
-      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, responder, ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, callback,
+                           ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
     }
     catch( Throwable e )
     {
-      if( responder != null )
-        responder.handleFault( new BackendlessFault( e ) );
+      if( callback != null )
+        callback.handleFault( new BackendlessFault( e ) );
     }
   }
 
@@ -371,7 +381,8 @@ public class MapDrivenDataStore implements IDataStore<Map>
       throw new IllegalArgumentException( ExceptionMessage.NULL_ID );
 
     Object[] args = new Object[] { tableName, id, relations };
-    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args );
+    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args,
+                                     new MapDrivenResponder() );
   }
 
   @Override
@@ -387,7 +398,8 @@ public class MapDrivenDataStore implements IDataStore<Map>
       throw new IllegalArgumentException( ExceptionMessage.NULL_ID );
 
     Object[] args = new Object[] { tableName, id, relations, relationsDepth };
-    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args );
+    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args,
+                                     new MapDrivenResponder() );
   }
 
   @Override
@@ -412,29 +424,30 @@ public class MapDrivenDataStore implements IDataStore<Map>
   public Map findById( Map entity, List<String> relations, Integer relationsDepth ) throws BackendlessException
   {
     Object[] args = new Object[] { tableName, entity, relations, relationsDepth };
-    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args );
+    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args,
+                                     new MapDrivenResponder() );
   }
 
   @Override
-  public void findById( String id, AsyncCallback<Map> responder )
+  public void findById( String id, AsyncCallback<Map> callback )
   {
-    findById( id, emptyRelations, responder );
+    findById( id, emptyRelations, callback );
   }
 
   @Override
-  public void findById( String id, List<String> relations, AsyncCallback<Map> responder )
+  public void findById( String id, List<String> relations, AsyncCallback<Map> callback )
   {
-    findById( id, relations, null, responder );
+    findById( id, relations, null, callback );
   }
 
   @Override
-  public void findById( String id, Integer relationsDepth, AsyncCallback<Map> responder )
+  public void findById( String id, Integer relationsDepth, AsyncCallback<Map> callback )
   {
-    findById( id, emptyRelations, relationsDepth, responder );
+    findById( id, emptyRelations, relationsDepth, callback );
   }
 
   @Override
-  public void findById( String id, List<String> relations, Integer relationsDepth, AsyncCallback<Map> responder )
+  public void findById( String id, List<String> relations, Integer relationsDepth, AsyncCallback<Map> callback )
   {
     try
     {
@@ -442,35 +455,36 @@ public class MapDrivenDataStore implements IDataStore<Map>
         throw new IllegalArgumentException( ExceptionMessage.NULL_ID );
 
       Object[] args = new Object[] { tableName, id, relations, relationsDepth };
-      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args, responder );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args, callback,
+                           new MapDrivenResponder() );
     }
     catch( Throwable e )
     {
-      if( responder != null )
-        responder.handleFault( new BackendlessFault( e ) );
+      if( callback != null )
+        callback.handleFault( new BackendlessFault( e ) );
     }
   }
 
   @Override
-  public void findById( Map entity, AsyncCallback<Map> responder )
+  public void findById( Map entity, AsyncCallback<Map> callback )
   {
-    findById( entity, emptyRelations, responder );
+    findById( entity, emptyRelations, callback );
   }
 
   @Override
-  public void findById( Map entity, List<String> relations, AsyncCallback<Map> responder )
+  public void findById( Map entity, List<String> relations, AsyncCallback<Map> callback )
   {
-    findById( entity, relations, null, responder );
+    findById( entity, relations, null, callback );
   }
 
   @Override
-  public void findById( Map entity, Integer relationsDepth, AsyncCallback<Map> responder )
+  public void findById( Map entity, Integer relationsDepth, AsyncCallback<Map> callback )
   {
-    findById( entity, emptyRelations, relationsDepth, responder );
+    findById( entity, emptyRelations, relationsDepth, callback );
   }
 
   @Override
-  public void findById( Map entity, List<String> relations, Integer relationsDepth, AsyncCallback<Map> responder )
+  public void findById( Map entity, List<String> relations, Integer relationsDepth, AsyncCallback<Map> callback )
   {
     try
     {
@@ -478,12 +492,13 @@ public class MapDrivenDataStore implements IDataStore<Map>
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
       Object[] args = new Object[] { tableName, entity, relations, relationsDepth };
-      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args, responder );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args, callback,
+                           new MapDrivenResponder() );
     }
     catch( Throwable e )
     {
-      if( responder != null )
-        responder.handleFault( new BackendlessFault( e ) );
+      if( callback != null )
+        callback.handleFault( new BackendlessFault( e ) );
     }
   }
 
@@ -491,43 +506,47 @@ public class MapDrivenDataStore implements IDataStore<Map>
   public Map findById( String id, DataQueryBuilder queryBuilder ) throws BackendlessException
   {
     Object[] args = new Object[] { tableName, id, queryBuilder.build() };
-    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args );
+    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args,
+                                     new MapDrivenResponder() );
   }
 
   @Override
   public Map findById( Map entity, DataQueryBuilder queryBuilder ) throws BackendlessException
   {
     Object[] args = new Object[] { tableName, entity, queryBuilder.build() };
-    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args );
+    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args,
+                                     new MapDrivenResponder() );
   }
 
   @Override
-  public void findById( String id, DataQueryBuilder queryBuilder, AsyncCallback<Map> responder )
+  public void findById( String id, DataQueryBuilder queryBuilder, AsyncCallback<Map> callback )
   {
     try
     {
       Object[] args = new Object[] { tableName, id, queryBuilder.build() };
-      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args, responder );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args, callback,
+                           new MapDrivenResponder() );
     }
     catch( Throwable e )
     {
-      if( responder != null )
-        responder.handleFault( new BackendlessFault( e ) );
+      if( callback != null )
+        callback.handleFault( new BackendlessFault( e ) );
     }
   }
 
   @Override
-  public void findById( Map entity, DataQueryBuilder queryBuilder, AsyncCallback<Map> responder )
+  public void findById( Map entity, DataQueryBuilder queryBuilder, AsyncCallback<Map> callback )
   {
     try
     {
       Object[] args = new Object[] { tableName, entity, queryBuilder.build() };
-      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args, responder );
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args, callback,
+                           new MapDrivenResponder() );
     }
     catch( Throwable e )
     {
-      if( responder != null )
-        responder.handleFault( new BackendlessFault( e ) );
+      if( callback != null )
+        callback.handleFault( new BackendlessFault( e ) );
     }
   }
 
@@ -538,9 +557,10 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public <R> void loadRelations( String objectId, LoadRelationsQueryBuilder<R> queryBuilder, AsyncCallback<List<R>> responder )
+  public <R> void loadRelations( String objectId, LoadRelationsQueryBuilder<R> queryBuilder,
+                                 AsyncCallback<List<R>> callback )
   {
-    Backendless.Data.loadRelations( tableName, objectId, queryBuilder, queryBuilder.getRelationType(), responder );
+    Backendless.Data.loadRelations( tableName, objectId, queryBuilder, queryBuilder.getRelationType(), callback );
   }
 
   @Override

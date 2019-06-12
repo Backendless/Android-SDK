@@ -19,19 +19,19 @@
 package com.backendless.utils;
 
 import com.backendless.async.callback.AsyncCallback;
-import com.backendless.exceptions.BackendlessException;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+
 public class ReflectionUtil
 {
   /**
    * Retrieves the value of the field with given name from the given object.
    *
-   * @param object    object containing the field
+   * @param object   object containing the field
    * @param lowerKey name of the field starting with lower case letter
    * @param upperKey name of the field starting with the upper case letter
    * @return Object, which is the value of the given field in the given object; null, if for some reason setAccessible(true) didn't work
@@ -60,36 +60,36 @@ public class ReflectionUtil
       }
       catch( Throwable t )
       {
-          // ignore, see if can get it from the field
+        // ignore, see if can get it from the field
       }
 
     try
-     {
-       Field field = getField( object.getClass(), lowerKey );
-       field.setAccessible( true );
-       return field.get( object );
-     }
-     catch( IllegalAccessException e )
-     {
-       // shouldn't ever be thrown, because setAccessible(true) was called before
-       return null;
-     }
-     catch( NoSuchFieldException e1 )
-     {
-       try
-       {
-         Field field = getField( object.getClass(), upperKey );
-         field.setAccessible( true );
-         return field.get( object );
-       }
-       catch( Throwable throwable )
-       {
-         // ignore, the rest of the method will do other checks
-       }
+    {
+      Field field = getField( object.getClass(), lowerKey );
+      field.setAccessible( true );
+      return field.get( object );
+    }
+    catch( IllegalAccessException e )
+    {
+      // shouldn't ever be thrown, because setAccessible(true) was called before
+      return null;
+    }
+    catch( NoSuchFieldException e1 )
+    {
+      try
+      {
+        Field field = getField( object.getClass(), upperKey );
+        field.setAccessible( true );
+        return field.get( object );
+      }
+      catch( Throwable throwable )
+      {
+        // ignore, the rest of the method will do other checks
+      }
 
-       //throw new BackendlessException( "Unable to retrieve value for field/property '" + lowerKey );
-       return null;
-     }
+      //throw new BackendlessException( "Unable to retrieve value for field/property '" + lowerKey );
+      return null;
+    }
   }
 
   private static Method getMethod( Object object, String methodName )
@@ -159,7 +159,7 @@ public class ReflectionUtil
     }
   }
 
-  public static <T> Type getCallbackGenericType( AsyncCallback<T> callback )
+  public static <T> Class getCallbackGenericType( AsyncCallback<T> callback )
   {
     Type[] genericInterfaces = callback.getClass().getGenericInterfaces();
     Type asyncCallbackInterface = null;
@@ -177,6 +177,14 @@ public class ReflectionUtil
       }
     }
 
-    return ((ParameterizedType) asyncCallbackInterface).getActualTypeArguments()[ 0 ];
+    if( asyncCallbackInterface == null )
+      return Object.class;
+
+    Type type = ((ParameterizedType) asyncCallbackInterface).getActualTypeArguments()[ 0 ];
+
+    if( type instanceof Class )
+      return (Class) type;
+    else
+      return Object.class; // in case when type is java.lang.reflect.TypeVariable
   }
 }

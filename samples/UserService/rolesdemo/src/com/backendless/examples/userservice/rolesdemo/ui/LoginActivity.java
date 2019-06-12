@@ -17,7 +17,7 @@ public class LoginActivity extends FragmentActivity
     super.onCreate( savedInstanceState );
     setContentView( R.layout.activity_login );
 
-    Backendless.initApp( this, Defaults.APP_ID, Defaults.SECRET_KEY, Defaults.VERSION );
+    Backendless.initApp( this, Defaults.APP_ID, Defaults.API_KEY );
 
     Bundle readBundle = new Bundle(  );
     readBundle.putString( Defaults.ROLE_TAG, Defaults.READ_ROLE );
