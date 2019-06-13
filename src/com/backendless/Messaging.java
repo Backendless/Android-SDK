@@ -663,22 +663,27 @@ public final class Messaging
     }
   }
 
-  public MessageStatus sendEmail (String templateName, IEmailEnvelope envelope) {
-    return sendEmail(templateName, null, envelope);
+  public MessageStatus sendEmail( String templateName, IEmailEnvelope envelope )
+  {
+    return sendEmail( templateName, null, envelope );
   }
 
-  public MessageStatus sendEmail (String templateName, Map<String, String> templateValues, IEmailEnvelope envelope) {
-    if (templateName == null || templateName.isEmpty())
-      throw new IllegalArgumentException(ExceptionMessage.NULL_EMPTY_TEMPLATE_NAME);
+  public MessageStatus sendEmail( String templateName, Map<String, String> templateValues, IEmailEnvelope envelope )
+  {
+    if( templateName == null || templateName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_TEMPLATE_NAME );
 
     List<String> cc = envelope.getCc();
     List<String> bcc = envelope.getBcc();
 
-    if (envelope instanceof EmailEnvelopeWithRecipients) {
+    if( envelope instanceof EmailEnvelopeWithRecipients )
+    {
       EmailEnvelopeWithRecipients envelopeWithRecipients = (EmailEnvelopeWithRecipients) envelope;
       List<String> to = envelopeWithRecipients.getTo();
       return Invoker.invokeSync( EMAIL_TEMPLATE_SENDER_SERVER_ALIAS, "sendEmailsByAddresses", new Object[] { templateName, to, templateValues, cc, bcc } );
-    } else if (envelope instanceof EmailEnvelopeWithQuery) {
+    }
+    else if( envelope instanceof EmailEnvelopeWithQuery )
+    {
       EmailEnvelopeWithQuery envelopeWithQuery = (EmailEnvelopeWithQuery) envelope;
       String query = envelopeWithQuery.getRecipientsQuery();
       return Invoker.invokeSync( EMAIL_TEMPLATE_SENDER_SERVER_ALIAS, "sendEmailsByQuery", new Object[] { templateName, query, templateValues, cc, bcc } );
@@ -687,24 +692,29 @@ public final class Messaging
     return null;
   }
 
-  public void sendEmail (String templateName, IEmailEnvelope envelope, AsyncCallback<MessageStatus> responder) {
-    sendEmail(templateName, null, envelope, responder);
+  public void sendEmail( String templateName, IEmailEnvelope envelope, AsyncCallback<MessageStatus> responder )
+  {
+    sendEmail( templateName, null, envelope, responder );
   }
 
-  public void sendEmail (String templateName, Map<String, String> templateValues, IEmailEnvelope envelope, AsyncCallback<MessageStatus> responder) {
+  public void sendEmail( String templateName, Map<String, String> templateValues, IEmailEnvelope envelope, AsyncCallback<MessageStatus> responder )
+  {
     try
     {
-      if (templateName == null || templateName.isEmpty())
-        throw new IllegalArgumentException(ExceptionMessage.NULL_EMPTY_TEMPLATE_NAME);
+      if( templateName == null || templateName.isEmpty() )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_TEMPLATE_NAME );
 
       List<String> cc = envelope.getCc();
       List<String> bcc = envelope.getBcc();
 
-      if (envelope instanceof EmailEnvelopeWithRecipients) {
+      if( envelope instanceof EmailEnvelopeWithRecipients )
+      {
         EmailEnvelopeWithRecipients envelopeWithRecipients = (EmailEnvelopeWithRecipients) envelope;
         List<String> to = envelopeWithRecipients.getTo();
         Invoker.invokeAsync( EMAIL_TEMPLATE_SENDER_SERVER_ALIAS, "sendEmailsByAddresses", new Object[] { templateName, to, templateValues, cc, bcc }, responder );
-      } else if (envelope instanceof EmailEnvelopeWithQuery) {
+      }
+      else if( envelope instanceof EmailEnvelopeWithQuery )
+      {
         EmailEnvelopeWithQuery envelopeWithQuery = (EmailEnvelopeWithQuery) envelope;
         String query = envelopeWithQuery.getRecipientsQuery();
         Invoker.invokeAsync( EMAIL_TEMPLATE_SENDER_SERVER_ALIAS, "sendEmailsByQuery", new Object[] { templateName, query, templateValues, cc, bcc }, responder );
@@ -716,5 +726,4 @@ public final class Messaging
         responder.handleFault( new BackendlessFault( e ) );
     }
   }
-
 }

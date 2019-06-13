@@ -2,17 +2,18 @@ package com.backendless.messaging.templates;
 
 import java.util.List;
 
-public interface IEmailEnvelope {
+public interface IEmailEnvelope
+{
 
-    IEmailEnvelope addCc(List<String> ccAddresses);
+  IEmailEnvelope addCc( List<String> ccAddresses );
 
-    IEmailEnvelope setCc(List<String> ccAddresses);
+  IEmailEnvelope setCc( List<String> ccAddresses );
 
-    List<String> getCc();
+  List<String> getCc();
 
-    IEmailEnvelope addBcc(List<String> bccAddresses);
+  IEmailEnvelope addBcc( List<String> bccAddresses );
 
-    IEmailEnvelope setBcc(List<String> bccAddresses);
+  IEmailEnvelope setBcc( List<String> bccAddresses );
 
-    List<String> getBcc();
+  List<String> getBcc();
 }

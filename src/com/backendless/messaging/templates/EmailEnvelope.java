@@ -1,14 +1,15 @@
 package com.backendless.messaging.templates;
 
-public class EmailEnvelope {
+public class EmailEnvelope
+{
 
-    public static EmailEnvelopeWithRecipients withRecipients()
-    {
-        return new EmailEnvelopeWithRecipients();
-    }
+  public static EmailEnvelopeWithRecipients withRecipients()
+  {
+    return new EmailEnvelopeWithRecipients();
+  }
 
-    public static EmailEnvelopeWithQuery withQuery()
-    {
-        return new EmailEnvelopeWithQuery();
-    }
+  public static EmailEnvelopeWithQuery withQuery()
+  {
+    return new EmailEnvelopeWithQuery();
+  }
 }
