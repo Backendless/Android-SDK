@@ -95,21 +95,5 @@ public abstract class MessagingExtender
   public void afterGetMessageStatus( RunnerContext context, String messageId, ExecutionResult<MessageStatus> msgStatus ) throws Exception
   {
   }
-
-  public void beforeSendEmailByAddressesWithTemplate ( RunnerContext context, String templateName, Set<String> addresses, Map<String, String> templateValues, Set<String> ccAddresses, Set<String> bccAddresses ) throws Exception
-  {
-  }
-
-  public void afterSendEmailByAddressesWithTemplate ( RunnerContext context, String templateName, Set<String> addresses, Map<String, String> templateValues, Set<String> ccAddresses, Set<String> bccAddresses ) throws Exception
-  {
-  }
-
-  public void beforeSendEmailByQueryWithTemplate ( RunnerContext context, String templateName, String segmentQuery, Map<String, String> templateValues, Set<String> ccAddresses, Set<String> bccAddresses ) throws Exception
-  {
-  }
-
-  public void afterSendEmailByQueryWithTemplate ( RunnerContext context, String templateName, Set<String> addresses, Map<String, String> templateValues, Set<String> ccAddresses, Set<String> bccAddresses ) throws Exception
-  {
-  }
 }
 
