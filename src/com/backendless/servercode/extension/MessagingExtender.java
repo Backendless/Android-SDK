@@ -100,7 +100,7 @@ public abstract class MessagingExtender
   {
   }
 
-  public void afterSendEmailByAddressesWithTemplate ( RunnerContext context, String templateName, Set<String> addresses, Map<String, String> templateValues, Set<String> ccAddresses, Set<String> bccAddresses ) throws Exception
+  public void afterSendEmailByAddressesWithTemplate ( RunnerContext context, String templateName, Set<String> addresses, Map<String, String> templateValues, Set<String> ccAddresses, Set<String> bccAddresses, ExecutionResult<MessageStatus> status ) throws Exception
   {
   }
 
@@ -108,7 +108,7 @@ public abstract class MessagingExtender
   {
   }
 
-  public void afterSendEmailByQueryWithTemplate ( RunnerContext context, String templateName, Set<String> addresses, Map<String, String> templateValues, Set<String> ccAddresses, Set<String> bccAddresses ) throws Exception
+  public void afterSendEmailByQueryWithTemplate ( RunnerContext context, String templateName, Set<String> addresses, Map<String, String> templateValues, Set<String> ccAddresses, Set<String> bccAddresses, ExecutionResult<MessageStatus> status ) throws Exception
   {
   }
 }
