@@ -3,6 +3,7 @@ package com.backendless.servercode.extension;
 import com.backendless.DeviceRegistration;
 import com.backendless.messaging.BodyParts;
 import com.backendless.messaging.DeliveryOptions;
+import com.backendless.messaging.EmailEnvelope;
 import com.backendless.messaging.Message;
 import com.backendless.messaging.MessageStatus;
 import com.backendless.messaging.PublishOptions;
@@ -11,6 +12,7 @@ import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
 
 import java.util.List;
+import java.util.Map;
 
 
 public abstract class MessagingExtender
@@ -84,6 +86,14 @@ public abstract class MessagingExtender
   }
 
   public void afterSendEmail( RunnerContext context, String subject, BodyParts bodyParts, List<String> recipients, List<String> attachments, ExecutionResult<MessageStatus> msgStatus ) throws Exception
+  {
+  }
+
+  public void beforeSendEmailsWithTemplate( RunnerContext context, EmailEnvelope envelope, Map<String, String> templateValues )
+  {
+  }
+
+  public void beforeSendEmailsWithTemplate( RunnerContext context, EmailEnvelope envelope, Map<String, String> templateValues, ExecutionResult<MessageStatus> status )
   {
   }
 
