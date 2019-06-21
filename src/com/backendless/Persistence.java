@@ -103,12 +103,34 @@ public final class Persistence
       return new ArrayList<>();
     
     String tableName =  BackendlessSerializer.getSimpleName( objects.get( 0 ).getClass() );
-    Object[] args = new Object[] { tableName , objects };
+
+    List<Map<String, Object>> serializedEntities = new ArrayList<>();
+    for ( final Object entity : objects)
+    {
+      final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
+      serializedEntities.add(serializedEntity);
+      MapEntityUtil.removeNullsAndRelations( serializedEntity);
+
+      MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
+      {
+        @Override
+        public Object substitute( Object o )
+        {
+          if( o == entity )
+            return serializedEntity;
+          else
+            return o;
+        }
+      } );
+
+    }
+
+    Object[] args = new Object[] { tableName , serializedEntities };
 
     if( async )
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args, responder, ResponderHelper.getCollectionAdaptingResponder( String.class ) );
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args, responder, ResponderHelper.getCollectionAdaptingResponder( objects.get( 0 ).getClass() ) );
     else
-      return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args, ResponderHelper.getCollectionAdaptingResponder( String.class ) );
+      return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args, ResponderHelper.getCollectionAdaptingResponder( objects.get( 0 ).getClass() ) );
 
     return null;
   }
@@ -248,7 +270,7 @@ public final class Persistence
               serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) != null )
         method = "save";
 
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, method, new Object[] { BackendlessSerializer.getSimpleName( entity.getClass() ), entity }, callbackOverrider, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, method, new Object[] { BackendlessSerializer.getSimpleName( entity.getClass() ), serializedEntity }, callbackOverrider, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
     }
     catch( Throwable e )
     {
