@@ -663,7 +663,7 @@ public final class Messaging
 
   public MessageStatus sendEmailFromTemplate( String templateName, EmailEnvelope envelope )
   {
-    return sendEmailFromTemplate( templateName, envelope, null );
+    return sendEmailFromTemplate( templateName, envelope, (Map<String, String>) null );
   }
 
   public MessageStatus sendEmailFromTemplate( String templateName, EmailEnvelope envelope, Map<String, String> templateValues )
@@ -674,7 +674,7 @@ public final class Messaging
     return Invoker.invokeSync( EMAIL_TEMPLATE_SENDER_SERVER_ALIAS, "sendEmails", new Object[] { templateName, envelope, templateValues } );
   }
 
-  public void sendEmails( String templateName, EmailEnvelope envelope, AsyncCallback<MessageStatus> responder )
+  public void sendEmailFromTemplate( String templateName, EmailEnvelope envelope, AsyncCallback<MessageStatus> responder )
   {
     sendEmailFromTemplate( templateName, envelope, null, responder );
   }
