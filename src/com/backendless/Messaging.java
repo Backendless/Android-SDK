@@ -679,8 +679,7 @@ public final class Messaging
     sendEmailFromTemplate( templateName, envelope, null, responder );
   }
 
-  public void sendEmailFromTemplate( String templateName, EmailEnvelope envelope, Map<String, String> templateValues,
-                                     AsyncCallback<MessageStatus> responder )
+  public void sendEmailFromTemplate( String templateName, EmailEnvelope envelope, Map<String, String> templateValues, AsyncCallback<MessageStatus> responder )
   {
     try
     {
