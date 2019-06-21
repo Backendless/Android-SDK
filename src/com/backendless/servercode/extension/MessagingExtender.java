@@ -89,11 +89,11 @@ public abstract class MessagingExtender
   {
   }
 
-  public void beforeSendEmailFromTemplate( RunnerContext context, EmailEnvelope envelope, Map<String, String> templateValues )
+  public void beforeSendEmailFromTemplate( RunnerContext context, String templateName, EmailEnvelope envelope, Map<String, String> templateValues )
   {
   }
 
-  public void afterSendEmailFromTemplate( RunnerContext context, EmailEnvelope envelope, Map<String, String> templateValues, ExecutionResult<MessageStatus> status )
+  public void afterSendEmailFromTemplate( RunnerContext context, String templateName, EmailEnvelope envelope, Map<String, String> templateValues, ExecutionResult<MessageStatus> status )
   {
   }
 
