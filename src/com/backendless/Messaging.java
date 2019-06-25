@@ -43,6 +43,7 @@ import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.messaging.BodyParts;
 import com.backendless.messaging.DeliveryOptions;
+import com.backendless.messaging.EmailEnvelope;
 import com.backendless.messaging.Message;
 import com.backendless.messaging.MessageStatus;
 import com.backendless.messaging.PublishOptions;
@@ -60,6 +61,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public final class Messaging
@@ -67,6 +69,7 @@ public final class Messaging
   private final static String MESSAGING_MANAGER_SERVER_ALIAS = "com.backendless.services.messaging.MessagingService";
   private final static String DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS = "com.backendless.services.messaging.DeviceRegistrationService";
   private final static String EMAIL_MANAGER_SERVER_ALIAS = "com.backendless.services.mail.CustomersEmailService";
+  private final static String EMAIL_TEMPLATE_SENDER_SERVER_ALIAS = "com.backendless.services.mail.EmailTemplateSender";
   private final static String DEFAULT_CHANNEL_NAME = "default";
   private final static String OS;
   private final static String OS_VERSION;
@@ -650,6 +653,40 @@ public final class Messaging
         throw new IllegalArgumentException( ExceptionMessage.NULL_ATTACHMENTS );
 
       Invoker.invokeAsync( EMAIL_MANAGER_SERVER_ALIAS, "send", new Object[] { subject, bodyParts, recipients, attachments }, responder );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
+  public MessageStatus sendEmailFromTemplate( String templateName, EmailEnvelope envelope )
+  {
+    return sendEmailFromTemplate( templateName, envelope, (Map<String, String>) null );
+  }
+
+  public MessageStatus sendEmailFromTemplate( String templateName, EmailEnvelope envelope, Map<String, String> templateValues )
+  {
+    if( templateName == null || templateName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_TEMPLATE_NAME );
+
+    return Invoker.invokeSync( EMAIL_TEMPLATE_SENDER_SERVER_ALIAS, "sendEmails", new Object[] { templateName, envelope, templateValues } );
+  }
+
+  public void sendEmailFromTemplate( String templateName, EmailEnvelope envelope, AsyncCallback<MessageStatus> responder )
+  {
+    sendEmailFromTemplate( templateName, envelope, null, responder );
+  }
+
+  public void sendEmailFromTemplate( String templateName, EmailEnvelope envelope, Map<String, String> templateValues, AsyncCallback<MessageStatus> responder )
+  {
+    try
+    {
+      if( templateName == null || templateName.isEmpty() )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_TEMPLATE_NAME );
+
+      Invoker.invokeAsync( EMAIL_TEMPLATE_SENDER_SERVER_ALIAS, "sendEmails", new Object[] { templateName, envelope, templateValues }, responder );
     }
     catch( Throwable e )
     {
