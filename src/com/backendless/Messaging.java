@@ -671,6 +671,9 @@ public final class Messaging
     if( templateName == null || templateName.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_TEMPLATE_NAME );
 
+    if( envelope == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMAIL_ENVELOPE );
+
     return Invoker.invokeSync( EMAIL_TEMPLATE_SENDER_SERVER_ALIAS, "sendEmails", new Object[] { templateName, envelope, templateValues } );
   }
 
@@ -685,6 +688,9 @@ public final class Messaging
     {
       if( templateName == null || templateName.isEmpty() )
         throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_TEMPLATE_NAME );
+
+      if( envelope == null )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_EMAIL_ENVELOPE );
 
       Invoker.invokeAsync( EMAIL_TEMPLATE_SENDER_SERVER_ALIAS, "sendEmails", new Object[] { templateName, envelope, templateValues }, responder );
     }
