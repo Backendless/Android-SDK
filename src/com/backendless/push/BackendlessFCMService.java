@@ -184,7 +184,7 @@ public class BackendlessFCMService extends FirebaseMessagingService
 
     Intent notificationIntent = context.getPackageManager().getLaunchIntentForPackage( context.getApplicationInfo().packageName );
     notificationIntent.putExtras( newBundle );
-    PendingIntent contentIntent = PendingIntent.getActivity( context, 0, notificationIntent, 0 );
+    PendingIntent contentIntent = PendingIntent.getActivity( context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT );
 
     notificationBuilder.setContentIntent( contentIntent )
             .setSmallIcon( appIcon )
