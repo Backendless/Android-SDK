@@ -9,9 +9,7 @@ echo
 
 cd `dirname "$0"`;
 
-cd ../
 mounts=$(pwd)"/mounts"
-cd scripts/
 
 version=${1:-"latest"}
 type=${2:-"backendless"} # local|private|backendless
