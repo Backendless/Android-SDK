@@ -1,0 +1,44 @@
+version: '3.6'
+
+services:
+
+  bl-coderunner-js:
+    image: "${REGISTRY}/bl-coderunner-js:${VERSION}"
+    #stop_signal: SIGINT
+    hostname: bl-coderunner-js
+    #command: []
+
+    env_file:
+    - ports.env
+
+    environment:
+    - BL_CONSUL_HOST=bl-consul
+    - BL_CONSUL_PORT=8500
+    - BL_MANAGEMENT_HTTP_PORT=2400
+    - BL_JS_CODE_RUNNER_MODE=pro # can be only "cloud" or "pro"
+
+    #ports:
+    #- "2400:2400"
+    volumes:
+    #- nfsRepo:/opt/backendless/repo
+    - ${MOUNTS}/repo:/opt/backendless/repo
+    - ${MOUNTS}/coderunner-js/logs:/opt/backendless/logs
+    networks:
+    - bkndls-net
+
+    depends_on:
+    - bl-consul
+    - bl-server
+    - bl-redis
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:2400/health"]
+      interval: 20s
+      timeout: 1s
+      retries: 3
+      start_period: 10s
+
+
+networks:
+  bkndls-net:
+

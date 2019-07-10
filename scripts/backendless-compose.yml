@@ -3,7 +3,7 @@ version: '3.6'
 services:
 
   bl-upgrade:
-    image: "${REGISTRY}bl-upgrade:${VERSION}"
+    image: "${REGISTRY}/bl-upgrade:${VERSION}"
     #stop_signal: SIGINT
     hostname: bl-upgrade
     #command: []
@@ -17,10 +17,10 @@ services:
 
         # will try to perform all steps of upgrader process without paying attention to code version
       - forceUpgrade=false
-        # checks the versions of all app databases (and upgrades it if necessary) independently from the version in 'main_backendless.Version' (use in case if the db upgrade was failed during work, and some dbs have staied nonupdated)
+        # checks the versions of all app databases (and upgrades it if necessary) independently from the version in 'main_backendless.Version' (use in case if the db upgrade was failed during work, and some dbs have stayed nonupdated)
       - dbRepeatedUpgrade=false
-      - mainDBTargetVersion=6
-      - appDBTargetVersion=47
+      #- mainDBTargetVersion=6
+      #- appDBTargetVersion=47
       - updateDBThreadNumber=2
       - applicationsToBeUpdatedFirst=main_application
         # parameter for skipping WaiterService
@@ -39,7 +39,7 @@ services:
     - bl-consul
 
   bl-hazelcast:
-    image: "${REGISTRY}bl-hazelcast:${VERSION}"
+    image: "${REGISTRY}/bl-hazelcast:${VERSION}"
     hostname: bl-hazelcast
 
     env_file:
@@ -64,7 +64,7 @@ services:
     - bl-consul
 
   bl-server:
-    image: "${REGISTRY}bl-server:${VERSION}"
+    image: "${REGISTRY}/bl-server:${VERSION}"
     #stop_signal: SIGINT
     hostname: bl-server
     command: ["play"]
@@ -86,6 +86,7 @@ services:
     #- nfsRepo:/opt/backendless/repo
     - ${MOUNTS}/repo:/opt/backendless/repo
     - ${MOUNTS}/server/logs:/opt/backendless/server/play-logs
+    - ${MOUNTS}/configs/libnss:/opt/backendless/libnss_config
     networks:
     - bkndls-net
 
@@ -103,7 +104,7 @@ services:
       start_period: 180s
 
   bl-taskman:
-    image: "${REGISTRY}bl-server:${VERSION}"
+    image: "${REGISTRY}/bl-server:${VERSION}"
     #stop_signal: SIGINT
     hostname: bl-taskman
     command: ["taskman"]
@@ -120,6 +121,7 @@ services:
     #- nfsRepo:/opt/backendless/repo
     - ${MOUNTS}/repo:/opt/backendless/repo
     - ${MOUNTS}/taskman/logs:/opt/backendless/server/play-logs
+    - ${MOUNTS}/configs/libnss:/opt/backendless/libnss_config
     networks:
     - bkndls-net
 
@@ -131,7 +133,7 @@ services:
 
 
   bl-coderunner-java:
-    image: "${REGISTRY}bl-coderunner-java:${VERSION}"
+    image: "${REGISTRY}/bl-coderunner-java:${VERSION}"
     #stop_signal: SIGINT
     hostname: bl-coderunner-java
     #command: []
@@ -167,44 +169,8 @@ services:
       start_period: 180s
 
 
-  bl-coderunner-js:
-    image: "${REGISTRY}bl-coderunner-js:${VERSION}"
-    #stop_signal: SIGINT
-    hostname: bl-coderunner-js
-    #command: []
-
-    env_file:
-    - ports.env
-
-    environment:
-    - BL_CONSUL_HOST=bl-consul
-    - BL_CONSUL_PORT=8500
-    - BL_MANAGEMENT_HTTP_PORT=2992
-    - BL_JS_CODE_RUNNER_MODE=pro # can be only "cloud" or "pro"
-
-    #ports:
-    #- "2992:2992"
-    volumes:
-    #- nfsRepo:/opt/backendless/repo
-    - ${MOUNTS}/repo:/opt/backendless/repo
-    - ${MOUNTS}/coderunner-js/logs:/opt/backendless/logs
-    networks:
-    - bkndls-net
-
-    depends_on:
-    - bl-consul
-    - bl-server
-    - bl-redis
-
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:2992/health"]
-      interval: 20s
-      timeout: 1s
-      retries: 3
-      start_period: 10s
-
   bl-web-console:
-    image: "${REGISTRY}bl-web-console:${VERSION}"
+    image: "${REGISTRY}/bl-web-console:${VERSION}"
     #stop_signal: SIGINT
     hostname: bl-web-console
     #command: []
@@ -239,7 +205,7 @@ services:
       start_period: 10s
 
   bl-rt-server:
-    image: "${REGISTRY}bl-rt-server:${VERSION}"
+    image: "${REGISTRY}/bl-rt-server:${VERSION}"
     #stop_signal: SIGINT
     hostname: bl-rt-server
     #command: []
@@ -250,6 +216,7 @@ services:
     environment:
     - BL_CONSUL_HOST=bl-consul
     - BL_CONSUL_PORT=8500
+    - BL_MANAGEMENT_HTTP_PORT=2400
     #- NODE_CONFIG={"socket-server": {"connection-host":"localhost","host":"bl-consul","port":5000,"connection-port":${BL_PROPERTY_config_rt_server_socketServer_connection_port}}}
 
     ports:
@@ -265,7 +232,7 @@ services:
     - bl-redis
 
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:2400/health"]
       interval: 20s
       timeout: 1s
       retries: 3

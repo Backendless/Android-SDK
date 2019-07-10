@@ -1,6 +1,6 @@
 USE `main_backendless`;
 
-INSERT INTO `Version` (`main`, `application`) values (7, 47);
+INSERT INTO `Version` (`main`, `application`) values (13, 50);
 
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('1', 'ACTIVE');
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('2', 'SUSPENDED');
@@ -17,76 +17,121 @@ INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('8', 'CHANGE_CORS_DOMAIN
 INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('9', 'CHANGE_CUSTOM_DOMAIN');
 INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('10', 'ENABLE_DISABLE_GIT');
 INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('11', 'DELETE_APPLICATION');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('12', 'CHANGE_LOG_CONFIG');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('13', 'DELETE_LOG_FILES');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('14', 'CHANGE_LOG_INTEGRATIONS');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('15', 'ADD_UPDATE_CREDIT_CARD');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('16', 'CHANGE_BILLING_PLAN');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('17', 'MARKETPLACE_PURCHASE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('18', 'MARKETPLACE_DELETE_PURCHASE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('19', 'EXPORT_APP');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('20', 'IMPORT_ARCHIVE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('21', 'IMPORT_FILE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('22', 'MODIFY_LANDING_PAGE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('23', 'PUBLISH_LANDING_PAGE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('24', 'CHANGE_USER_REGISTRATION_PROPS');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('25', 'CHANGE_LOGIN_PROPS');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('26', 'MODIFY_EMAIL_TEMPLATE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('27', 'CREATE_EMAIL_TEMPLATE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('28', 'ADD_DELETE_ROLE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('29', 'MODIFY_ROLE_PERMISSIONS');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('30', 'ASSIGN_ROLE_PERMISSIONS');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('31', 'CREATE_TABLE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('32', 'RENAME_DELETE_TABLE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('33', 'CREATE_TABLE_COLUMN');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('34', 'RENAME_DELETE_TABLE_COLUMN');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('35', 'CHANGE_USERS_IDENTITY');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('36', 'CHANGE_TABLE_COLUMN_CONSTRAINTS');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('37', 'CHANGE_TABLE_COLUMN_VALIDATOR');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('38', 'CHANGE_TABLE_COLUMN_DEFAULT_VALUE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('39', 'CHANGE_TABLE_PERMISSIONS');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('40', 'CHANGE_OBJECT_ACL_PERMISSIONS');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('41', 'CREATE_DELETE_UPDATE_OBJECTS');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('42', 'CHANGE_DYNAMIC_SCHEMA_DEFINITION');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('43', 'CREATE_DIRECTORY');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('44', 'RENAME_DELETE_DIRECTORY');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('45', 'UPLOAD_CREATE_FILES');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('46', 'RENAME_DELETE_FILES');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('47', 'CHANGE_FILE_PERMISSIONS');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('48', 'ZIP_DIRECTORY');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('49', 'UNZIP_FILE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('50', 'CREATE_MESSAGING_CHANNEL');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('51', 'RENAME_DELETE_MESSAGING_CHANNEL');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('52', 'SEND_MESSAGE_TO_CHANNEL');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('53', 'CHANGE_MESSAGING_CHANNEL_PERMISSIONS');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('54', 'CREATE_PUSH_TEMPLATE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('55', 'CHANGE_DELETE_PUSH_TEMPLATE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('56', 'CREATE_PUSH_BUTTON_OPTIONS');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('57', 'CHANGE_DELETE_PUSH_BUTTON_OPTIONS');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('58', 'CREATE_MESSAGING_CHANNEL_OPTIONS');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('59', 'CHANGE_DELETE_MESSAGING_CHANNEL_OPTIONS');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('60', 'SEND_PUSH_BY_TEMPLATE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('61', 'CREATE_GEO_CATEGORY');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('62', 'RENAME_DELETE_GEO_CATEGORY');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('63', 'SETUP_SAMPLE_GEO_DATA');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('64', 'CHANGE_GEO_CATEGORY_PERMISSIONS');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('65', 'MODIFY_GEO_POINT_METADATA');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('66', 'CREATE_GEOFENCE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('67', 'MODIFY_DELETE_GEOFENCE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('68', 'CREATE_API_SERVICE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('69', 'DELETE_API_SERVICE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('70', 'ADD_METHOD_CODELESS_JS_API_SERVICE');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('71', 'CHANGE_API_SERVICE_PERMISSIONS');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('72', 'CREATE_EVENT_HANDLER');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('73', 'CHANGE_DELETE_EVENT_HANDLER');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('74', 'ENABLE_DISABLE_TIMER');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('75', 'CREATE_TIMER');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('76', 'CHANGE_DELETE_TIMER');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('77', 'ADD_FILE_IN_CODING');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('78', 'DELETE_FILE_IN_CODING');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('79', 'CHANGE_DEPLOYMENT_MODEL_CHAIN');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('80', 'PUBLISH_DEPLOYMENT_MODEL');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('81', 'PUBLISH_TO_MARKETPLACE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('12', 'SET_GOOGLE_KEY');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('13', 'ADD_APPLICATION');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('14', 'APP_RESET');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('15', 'CHANGE_LIMIT_NOTIFICATION');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('16', 'INSTALL_LICENSE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('17', 'CREATE_REPOSITORY');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('18', 'CHANGE_LOG_CONFIG');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('19', 'DELETE_LOGGERS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('20', 'CHANGE_LOG_INTEGRATIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('21', 'ADD_UPDATE_CREDIT_CARD');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('22', 'CHANGE_BILLING_PLAN');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('23', 'MARKETPLACE_PURCHASE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('24', 'MARKETPLACE_DELETE_PURCHASE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('25', 'EXPORT_APP');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('26', 'IMPORT_ARCHIVE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('27', 'IMPORT_FILE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('28', 'CLONE_APP');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('29', 'IMPORT_FROM_3X');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('30', 'MODIFY_LANDING_PAGE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('31', 'PUBLISH_LANDING_PAGE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('32', 'CHANGE_USER_REGISTRATION_PROPS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('33', 'CHANGE_LOGIN_PROPS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('34', 'MODIFY_EMAIL_TEMPLATE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('35', 'CREATE_EMAIL_TEMPLATE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('36', 'SEND_TEST_EMAIL');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('37', 'DELETE_EMAIL_TEMPLATE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('38', 'ADD_DELETE_ROLE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('39', 'MODIFY_ROLE_PERMISSIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('40', 'ASSIGN_ROLE_PERMISSIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('41', 'CREATE_TABLE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('42', 'RENAME_DELETE_TABLE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('43', 'CREATE_TABLE_COLUMN');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('44', 'CHANGE_DELETE_TABLE_COLUMN');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('45', 'CHANGE_TABLE_PERMISSIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('46', 'CHANGE_OBJECT_ACL_PERMISSIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('47', 'CREATE_DELETE_UPDATE_OBJECTS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('48', 'CHANGE_DYNAMIC_SCHEMA_DEFINITION');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('49', 'CHANGE_DATA_RELATIONSHIP');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('50', 'CHANGE_GEO_RELATIONSHIP');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('51', 'CREATE_DATA_RELATIONSHIP');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('52', 'CREATE_GEO_RELATIONSHIP');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('53', 'DELETE_TABLE_PERMISSIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('54', 'DELETE_OBJECT_ACL_PERMISSIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('55', 'CHANGE_GLOBAL_OWNER_PERMISSIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('56', 'CHANGE_OWNER_PERMISSIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('57', 'DELETE_OWNER_PERMISSIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('58', 'CREATE_DIRECTORY');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('59', 'RENAME_DELETE_DIRECTORY');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('60', 'UPLOAD_CREATE_FILES');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('61', 'RENAME_DELETE_FILES');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('62', 'CHANGE_FILE_PERMISSIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('63', 'ZIP_DIRECTORY');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('64', 'UNZIP_FILE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('65', 'EDIT_FILE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('66', 'MOVE_FILE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('67', 'COPY_FILE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('68', 'DELETE_FILE_PERMISSIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('69', 'CREATE_MESSAGING_CHANNEL');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('70', 'RENAME_DELETE_MESSAGING_CHANNEL');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('71', 'SEND_MESSAGE_TO_CHANNEL');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('72', 'CHANGE_MESSAGING_CHANNEL_PERMISSIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('73', 'CREATE_PUSH_TEMPLATE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('74', 'CHANGE_DELETE_PUSH_TEMPLATE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('75', 'CREATE_PUSH_BUTTON_OPTIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('76', 'CHANGE_DELETE_PUSH_BUTTON_OPTIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('77', 'CREATE_MESSAGING_CHANNEL_OPTIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('78', 'CHANGE_DELETE_MESSAGING_CHANNEL_OPTIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('79', 'SEND_PUSH_BY_TEMPLATE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('80', 'DELETE_DEVICES');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('81', 'DELETE_MESSAGING_CHANNEL_PERMISSIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('82', 'CREATE_GEO_CATEGORY');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('83', 'RENAME_DELETE_GEO_CATEGORY');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('84', 'SETUP_SAMPLE_GEO_DATA');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('85', 'CHANGE_GEO_CATEGORY_PERMISSIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('86', 'MODIFY_GEO_POINT_METADATA');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('87', 'CREATE_GEOFENCE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('88', 'MODIFY_DELETE_GEOFENCE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('89', 'ADD_CATEGORY');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('90', 'REMOVE_GEO_POINTS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('91', 'COPY_GEO_POINTS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('92', 'REMOVE_ALL_GEO_POINTS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('93', 'IMPORT_GEO_POINTS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('94', 'DELETE_GEO_CATEGORY_PERMISSIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('95', 'CREATE_API_SERVICE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('96', 'DELETE_API_SERVICE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('97', 'ADD_METHOD_CODELESS_JS_API_SERVICE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('98', 'CHANGE_API_SERVICE_PERMISSIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('99', 'CREATE_EVENT_HANDLER');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('100', 'CHANGE_DELETE_EVENT_HANDLER');
+
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('101', 'CREATE_TIMER');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('102', 'CHANGE_TIMER');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('103', 'DELETE_TIMER');
+
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('104', 'ADD_FILE_IN_CODING');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('105', 'DELETE_FILE_IN_CODING');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('106', 'CHANGE_DEPLOYMENT_MODEL_CHAIN');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('107', 'PUBLISH_TO_MARKETPLACE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('108', 'CHANGE_IMPORTED_SERVICE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('109', 'TEST_API_SERVICE_CONFIGURATION');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('110', 'CRATE_API_SERVICE_CONFIGURATION');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('111', 'CREATE_MARKETPLACE_CONFIGURATION');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('112', 'DELETE_API_SERVICE_PERMISSIONS');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('113', 'CREATE_CODE_FILES');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('114', 'DEPLOY_DRAFT');
+
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('115', 'RUN_TIMER');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('116', 'INVOKE_EVENT_WITH_MODEL');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('117', 'DELETE_FROM_MARKETPLACE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('118', 'ACTIVATE_DATACONNECTOR');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('119', 'CHANGE_DATACONNECTOR');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('120', 'DELETE_DATACONNECTOR');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('121', 'STORED_PROCEDURE');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('122', 'ADD_CHANGE_KEY');
+INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('123', 'DELETE_KEY');
 
 
 -- MySQL Script generated by MySQL Workbench
@@ -710,8 +755,8 @@ CREATE TABLE IF NOT EXISTS `UserDataTableColumn` (
   CONSTRAINT `fk_UserDataTableColumn_UserDataTable1`
     FOREIGN KEY (`userDataTableId`)
     REFERENCES `UserDataTable` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
 ENGINE = InnoDB;
 
 CREATE INDEX `fk_UserDataTable_UserDataColumnTypes1_idx` ON `UserDataTableColumn` (`dataColumnTypeId` ASC);
@@ -977,10 +1022,17 @@ CREATE TABLE IF NOT EXISTS `UserDataTableRelation` (
     FOREIGN KEY (`foreignUserDataTableId`)
     REFERENCES `UserDataTable` (`id`)
     ON DELETE CASCADE
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_UserDataTableRelation_UserDataTableColumn1`
+    FOREIGN KEY (`userDataTableColumnId`)
+    REFERENCES `UserDataTableColumn` (`id`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT )
 ENGINE = InnoDB;
 
 CREATE INDEX `fk_UserDataTableRelation_UserDataTable1_idx` ON `UserDataTableRelation` (`foreignUserDataTableId` ASC);
+
+CREATE INDEX `fk_UserDataTableRelation_UserDataTableColumn1_idx` ON `UserDataTableRelation` (`userDataTableColumnId` ASC);
 
 
 -- -----------------------------------------------------
@@ -1962,6 +2014,7 @@ DELIMITER $$
 
 
 CREATE FUNCTION `dist`(f1 Double,l1 Double,f2 Double,l2 Double) RETURNS double
+  DETERMINISTIC
 BEGIN
 RETURN 6378000 * acos( sin(RADIANS(f1)) * sin(RADIANS(f2)) + cos(RADIANS(f1)) * cos(RADIANS(f2) ) * cos(RADIANS(l1 - l2)) );
 END$$
@@ -1975,6 +2028,7 @@ DROP function IF EXISTS `getTotalEventHandlers`;
 
 DELIMITER $$
 CREATE FUNCTION `getTotalEventHandlers` (runnerMode INT) RETURNS int(11)
+  READS SQL DATA
     BEGIN
       DECLARE total_count INT;
       DECLARE cur CURSOR FOR
@@ -1998,6 +2052,7 @@ DROP function IF EXISTS `isPointInRectangular`;
 
 DELIMITER $$
 CREATE FUNCTION `isPointInRectangular`( nwlat Double, nwlon Double, selat Double, selon Double, lat Double, lon Double ) RETURNS boolean
+  DETERMINISTIC
 BEGIN
 if( selat <= lat AND lat <= nwlat ) then
   if( nwlon - selon <= 0 AND nwlon < lon AND lon < selon ) then
@@ -2019,6 +2074,7 @@ DROP function IF EXISTS `isPointInCircle`;
 
 DELIMITER $$
 CREATE FUNCTION `isPointInCircle`(clat Double,clon Double,r Double,lat Double,lon Double) RETURNS boolean
+  DETERMINISTIC
 BEGIN
   return dist(clat, clon, lat, lon) <= r;
 END$$
@@ -2028,8 +2084,8 @@ DELIMITER ;
 -- -----------------------------------------------------
 -- View `DefaultUser`
 -- -----------------------------------------------------
-DROP VIEW IF EXISTS `DefaultUser` ;
 DROP TABLE IF EXISTS `DefaultUser`;
+DROP VIEW IF EXISTS `DefaultUser` ;
 CREATE  OR REPLACE VIEW `DefaultUser` AS
 SELECT u.*
   FROM User as u
@@ -2061,8 +2117,3 @@ DELIMITER ;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
--- -----------------------------------------------------
-
-
-SET @APP_VER = (SELECT ver.application FROM `main_backendless`.`Version` AS ver);
-INSERT INTO `main_backendless`.`Application` (`id`, `name`, `created`, `version`, `dbVersion`) VALUES ('main_application', 'main_application', '0001-01-01T00:00:01', '0.0.1', @APP_VER);

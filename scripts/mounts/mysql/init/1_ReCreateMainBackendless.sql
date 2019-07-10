@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS `main_backendless`.`Application` ;
 
 CREATE TABLE IF NOT EXISTS `main_backendless`.`Application` (
   `id` VARCHAR(100) NOT NULL,
+  `linuxUserId` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `created` DATETIME NULL,
   `subscriptionId` VARCHAR(100) NULL,
@@ -23,8 +24,11 @@ CREATE TABLE IF NOT EXISTS `main_backendless`.`Application` (
   `gitSupport` TINYINT(1) NULL DEFAULT 0,
   `version` VARCHAR(45) NOT NULL,
   `dbVersion` INT NOT NULL,
+  `lastDayOfUse` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `fpSubscriptionId_UNIQUE` (`fpSubscriptionId` ASC))
+  UNIQUE INDEX `fpSubscriptionId_UNIQUE` (`fpSubscriptionId` ASC),
+  UNIQUE INDEX `customerDomain_UNIQUE` (`customerDomain` ASC),
+  UNIQUE INDEX `linuxUserId_UNQIDX` (`linuxUserId` ASC))
 ENGINE = InnoDB;
 
 
@@ -104,25 +108,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `main_backendless`.`DeveloperSession`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `main_backendless`.`DeveloperSession` ;
-
-CREATE TABLE IF NOT EXISTS `main_backendless`.`DeveloperSession` (
-  `sessionId` VARCHAR(100) NOT NULL,
-  `lastAccessTime` DATETIME NULL,
-  `developerId` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`sessionId`),
-  INDEX `fk_Session_Developer1_idx` (`developerId` ASC),
-  CONSTRAINT `fk_Session_Developer10`
-    FOREIGN KEY (`developerId`)
-    REFERENCES `main_backendless`.`Developer` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `main_backendless`.`MailAction`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `main_backendless`.`MailAction` ;
@@ -198,8 +183,8 @@ CREATE TABLE IF NOT EXISTS `main_backendless`.`DeveloperPermission` (
   CONSTRAINT `fk_Developer_has_DeveloperOperation_DeveloperOperation1`
     FOREIGN KEY (`developerOperationId`)
     REFERENCES `main_backendless`.`DeveloperOperation` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_DeveloperPermission_Application1`
     FOREIGN KEY (`applicationId`)
     REFERENCES `main_backendless`.`Application` (`id`)

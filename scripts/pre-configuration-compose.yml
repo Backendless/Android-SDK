@@ -3,7 +3,7 @@ version: '3.6'
 services:
 
   bl-config-loader:
-    image: "${REGISTRY}bl-config-loader:${VERSION}"
+    image: "${REGISTRY}/bl-config-loader:${VERSION}"
 
     env_file:
       - ports.env
