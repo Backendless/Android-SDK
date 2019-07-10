@@ -1,10 +1,9 @@
 #!/bin/bash
 
 echo Usage:
-echo "`basename "$0"`  <version>  <type>  <mode>"
-echo "<version> -- version from the docker registry"
-echo "<type> -- [local|private|backendless] -- default=backendless"
-echo "<mode> -- [cloud|managed|pro] -- default=pro"
+echo "`basename "$0"`  <version>"
+echo "<version> -- version from the docker registry -- default='latest'"
+
 echo 
 
 cd `dirname "$0"`;
