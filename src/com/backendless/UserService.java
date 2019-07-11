@@ -775,7 +775,7 @@ public final class UserService
 
   public void loginAsGuest( final AsyncCallback<BackendlessUser> responder )
   {
-    loginAsGuest( false );
+    loginAsGuest( responder,false );
   }
 
   public void loginAsGuest( final AsyncCallback<BackendlessUser> responder, final boolean stayLoggedIn )
