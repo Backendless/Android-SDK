@@ -12,5 +12,6 @@ public enum DateTypeEnum
   COLLECTION,
   RELATION_LIST,
   STRING_ID,
-  TEXT;
+  TEXT,
+  FILE_REF;
 }
