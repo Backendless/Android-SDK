@@ -72,10 +72,7 @@ public class BackendlessFCMService extends FirebaseMessagingService
     Intent msgIntent = remoteMessage.toIntent();
     Context appContext = ContextHandler.getAppContext();
 
-    boolean showPushNotification = this.onMessage( appContext, msgIntent );
-
-    if( showPushNotification )
-      this.handleMessage( appContext, msgIntent );
+    this.handleMessage( appContext, msgIntent );
   }
 
   @Override
@@ -91,43 +88,26 @@ public class BackendlessFCMService extends FirebaseMessagingService
 
     try
     {
+      AndroidPushTemplate androidPushTemplate = null;
+
       String immediatePush = intent.getStringExtra( PublishOptions.ANDROID_IMMEDIATE_PUSH );
       if( immediatePush != null )
       {
-        AndroidPushTemplate androidPushTemplate = (AndroidPushTemplate) weborb.util.io.Serializer.fromBytes( immediatePush.getBytes(), weborb.util.io.Serializer.JSON, false );
-
-        if( androidPushTemplate.getContentAvailable() != null && androidPushTemplate.getContentAvailable() == 1 )
-          return;
-
-        if( androidPushTemplate.getName() == null || androidPushTemplate.getName().isEmpty() )
-          androidPushTemplate.setName( BackendlessFCMService.IMMEDIATE_MESSAGE );
-
-        if( android.os.Build.VERSION.SDK_INT > 25 )
-        {
-          if( PushTemplateHelper.getNotificationChannel( context, androidPushTemplate.getName() ) == null )
-            androidPushTemplate.setName( BackendlessFCMService.IMMEDIATE_MESSAGE );
-        }
-
-        Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, intent.getExtras(), notificationId );
-        PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), notificationId );
-        return;
+        androidPushTemplate = (AndroidPushTemplate) weborb.util.io.Serializer.fromBytes( immediatePush.getBytes(), weborb.util.io.Serializer.JSON, false );
+        androidPushTemplate.setName( BackendlessFCMService.IMMEDIATE_MESSAGE );
       }
 
       final String templateName = intent.getStringExtra( PublishOptions.TEMPLATE_NAME );
-      if( templateName != null )
+      if( immediatePush == null && templateName != null )
       {
-        AndroidPushTemplate androidPushTemplate = PushTemplateHelper.getPushNotificationTemplates().get( templateName );
-        if( androidPushTemplate != null )
-        {
-          if( androidPushTemplate.getContentAvailable() != null && androidPushTemplate.getContentAvailable() == 1 )
-            return;
-
-          Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, intent.getExtras(), notificationId );
-          PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), notificationId );
-        }
-        return;
+        androidPushTemplate = PushTemplateHelper.getPushNotificationTemplates().get( templateName );
       }
 
+      if( androidPushTemplate != null )
+      {
+        handleMessageWithTemplate( context, intent, androidPushTemplate, notificationId );
+        return;
+      }
 
       final String message = intent.getStringExtra( PublishOptions.MESSAGE_TAG );
       final String contentTitle = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TITLE_TAG );
@@ -135,10 +115,27 @@ public class BackendlessFCMService extends FirebaseMessagingService
       String soundResource = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_SOUND_TAG );
       fallBackMode( context, message, contentTitle, summarySubText, soundResource, intent.getExtras(), notificationId );
     }
-    catch ( Throwable throwable )
+    catch( Throwable throwable )
     {
       Log.e( TAG, "Error processing push notification", throwable );
     }
+  }
+
+  private void handleMessageWithTemplate( final Context context, Intent intent, AndroidPushTemplate androidPushTemplate, final int notificationId )
+  {
+    Bundle newBundle = PushTemplateHelper.prepareMessageBundle( intent.getExtras(), androidPushTemplate, notificationId );
+
+    Intent newMsgIntent = new Intent( context, null );
+    newMsgIntent.putExtras( newBundle );
+
+    if( !this.onMessage( context, newMsgIntent ) )
+      return;
+
+    if( androidPushTemplate.getContentAvailable() != null && androidPushTemplate.getContentAvailable() == 1 )
+      return;
+
+    Notification notification = PushTemplateHelper.convertFromTemplate( context, androidPushTemplate, newBundle, notificationId );
+    PushTemplateHelper.showNotification( context, notification, androidPushTemplate.getName(), notificationId );
   }
 
   private void fallBackMode( Context context, String message, String contentTitle, String summarySubText, String soundResource, Bundle bundle, final int notificationId )
