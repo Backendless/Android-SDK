@@ -438,18 +438,28 @@ public final class Messaging
 
   public MessageStatus pushWithTemplate( String templateName )
   {
-    if( templateName == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_TEMPLATE_NAME );
-
-    return (MessageStatus) Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "pushWithTemplate", new Object[] { templateName } );
+    return this.pushWithTemplate( templateName, (Map<String, String>) null );
   }
 
-  public void pushWithTemplate( String templateName, final AsyncCallback<MessageStatus> responder )
+  public MessageStatus pushWithTemplate( String templateName, Map<String, String> templateValues )
   {
     if( templateName == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_TEMPLATE_NAME );
 
-    Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "pushWithTemplate", new Object[] { templateName }, responder );
+    return (MessageStatus) Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "pushWithTemplate", new Object[] { templateName, templateValues } );
+  }
+
+  public void pushWithTemplate( String templateName, final AsyncCallback<MessageStatus> responder )
+  {
+    this.pushWithTemplate( templateName, null, responder );
+  }
+
+  public void pushWithTemplate( String templateName, Map<String, String> templateValues, final AsyncCallback<MessageStatus> responder )
+  {
+    if( templateName == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_TEMPLATE_NAME );
+
+    Invoker.invokeAsync( MESSAGING_MANAGER_SERVER_ALIAS, "pushWithTemplate", new Object[] { templateName, templateValues }, responder );
   }
 
   public MessageStatus getMessageStatus( String messageId )
