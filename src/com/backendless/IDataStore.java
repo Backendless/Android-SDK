@@ -171,5 +171,29 @@ public interface IDataStore<E>
 
   void deleteRelation( E parent, String relationColumnName, String whereClause, AsyncCallback<Integer> callback );
 
+  <R> int addRelation( String parentObjectId, String relationColumnName, Collection<String> childrenObjectIds );
+
+  <R> void addRelation( String parentObjectId, String relationColumnName, Collection<String> childrenObjectIds, AsyncCallback<Integer> callback );
+
+  int addRelation( String parentObjectId, String relationColumnName, String whereClause );
+
+  void addRelation( String parentObjectId, String relationColumnName, String whereClause, AsyncCallback<Integer> callback );
+
+  <R> int setRelation( String parentObjectId, String relationColumnName, Collection<String> childrenObjectIds );
+
+  <R> void setRelation( String parentObjectId, String relationColumnName, Collection<String> childrenObjectIds, AsyncCallback<Integer> callback );
+
+  int setRelation( String parentObjectId, String relationColumnName, String whereClause );
+
+  void setRelation( String parentObjectId, String relationColumnName, String whereClause, AsyncCallback<Integer> callback );
+
+  <R> int deleteRelation( String parentObjectId, String relationColumnName, Collection<String> childrenObjectIds );
+
+  <R> void deleteRelation( String parentObjectId, String relationColumnName, Collection<String> childrenObjectIds, AsyncCallback<Integer> callback );
+
+  int deleteRelation( String parentObjectId, String relationColumnName, String whereClause );
+
+  void deleteRelation( String parentObjectId, String relationColumnName, String whereClause, AsyncCallback<Integer> callback );
+
   EventHandler<E> rt();
 }
