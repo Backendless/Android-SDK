@@ -587,7 +587,7 @@ class DataStoreFactory
 
 
         Object[] args = new Object[] { parentTableName, relationColumnName, parentObjectId, whereClause };
-        Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args, callback );
+        Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args, callback );
       }
 
       @Override
