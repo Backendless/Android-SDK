@@ -387,6 +387,30 @@ public final class UserService
     getUserServiceAndroidExtra().loginWithTwitter( context, webView, twitterFieldsMappings, getUserLoginAsyncHandler( responder, stayLoggedIn ) );
   }
 
+  public void loginWithTwitterSdk( String authToken, String authTokenSecret, AsyncCallback<BackendlessUser> responder )
+  {
+    loginWithTwitterSdk( authToken, authTokenSecret, null, responder, false );
+  }
+
+  public void loginWithTwitterSdk( String authToken, String authTokenSecret, AsyncCallback<BackendlessUser> responder,
+                                   boolean stayLoggedIn )
+  {
+    loginWithTwitterSdk( authToken, authTokenSecret, null, responder, stayLoggedIn );
+  }
+
+  public void loginWithTwitterSdk( String authToken, String authTokenSecret, Map<String, String> fieldsMappings,
+                                   AsyncCallback<BackendlessUser> responder )
+  {
+    loginWithTwitterSdk( authToken, authTokenSecret, fieldsMappings, responder, false );
+  }
+
+  public void loginWithTwitterSdk( String authToken, String authTokenSecret, Map<String, String> fieldsMappings,
+                                   AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  {
+    AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler( responder, stayLoggedIn );
+    getUserServiceAndroidExtra().loginWithTwitterSdk( authToken, authTokenSecret, fieldsMappings, internalResponder );
+  }
+
   @Deprecated
   public void loginWithGooglePlus( android.app.Activity context, final AsyncCallback<BackendlessUser> responder )
   {
