@@ -44,11 +44,11 @@ public class InvocationContext extends AbstractContext
   private String httpPath;
   private Map<String, String> httpPathParams;
   private Map<String, String> httpQueryParams;
-  private Map<String, String> httpCustomHeaders;
+  private Map<String, String> httpResponseHeaders;
 
   private InvocationContext( String appId, String userId, String userToken, List<String> userRoles,
                              String deviceType, String httpPath, Map<String, String> httpHeaders,
-                             Map<String, String> httpPathParams, Map<String, String> httpQueryParams, Map<String, String> httpCustomHeaders)
+                             Map<String, String> httpPathParams, Map<String, String> httpQueryParams, Map<String, String> httpResponseHeaders )
   {
     this.appId = appId;
     this.userId = userId;
@@ -59,7 +59,7 @@ public class InvocationContext extends AbstractContext
     this.httpPath = httpPath;
     this.httpPathParams = httpPathParams;
     this.httpQueryParams = httpQueryParams;
-    this.httpCustomHeaders = httpCustomHeaders;
+    this.httpResponseHeaders = httpResponseHeaders;
   }
 
   private InvocationContext( ) {}
@@ -168,13 +168,13 @@ public class InvocationContext extends AbstractContext
     getCurrentContext().httpQueryParams = httpQueryParams;
   }
 
-  public static Map<String, String> getHttpCustomHeaders()
+  public Map<String, String> getHttpResponseHeaders()
   {
-    return getCurrentContext().httpCustomHeaders;
+    return httpResponseHeaders;
   }
 
-  public static void setHttpCustomHeaders( Map<String, String> httpCustomHeaders )
+  public void setHttpResponseHeaders( Map<String, String> httpResponseHeaders )
   {
-    getCurrentContext().httpCustomHeaders = httpCustomHeaders;
+    this.httpResponseHeaders = httpResponseHeaders;
   }
 }
