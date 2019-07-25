@@ -31,9 +31,11 @@ public class BackendlessUser implements Serializable
   public static final String PASSWORD_KEY = "password";
   public static final String EMAIL_KEY = "email";
   public static final String ID_KEY = "objectId";
+  public static final String LOCALE = "blUserLocale";
 
   public BackendlessUser()
   {
+    properties.put( LOCALE, System.getProperty("user.language") );
   }
 
   /**
