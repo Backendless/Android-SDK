@@ -168,13 +168,13 @@ public class InvocationContext extends AbstractContext
     getCurrentContext().httpQueryParams = httpQueryParams;
   }
 
-  public Map<String, String> getHttpResponseHeaders()
+  public static Map<String, String> getHttpResponseHeaders()
   {
-    return httpResponseHeaders;
+    return getCurrentContext().httpResponseHeaders;
   }
 
-  public void setHttpResponseHeaders( Map<String, String> httpResponseHeaders )
+  public static void setHttpResponseHeaders( Map<String, String> httpResponseHeaders )
   {
-    this.httpResponseHeaders = httpResponseHeaders;
+    getCurrentContext().httpResponseHeaders = httpResponseHeaders;
   }
 }
