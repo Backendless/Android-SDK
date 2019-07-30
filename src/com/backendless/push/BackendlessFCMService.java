@@ -109,6 +109,9 @@ public class BackendlessFCMService extends FirebaseMessagingService
         return;
       }
 
+      if( !this.onMessage( context, intent ) )
+        return;
+
       final String message = intent.getStringExtra( PublishOptions.MESSAGE_TAG );
       final String contentTitle = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TITLE_TAG );
       final String summarySubText = intent.getStringExtra( PublishOptions.ANDROID_SUMMARY_SUBTEXT_TAG );
