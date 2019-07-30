@@ -5,15 +5,11 @@ docker swarm init &> /dev/null
 echo Usage:
 echo "`basename "$0"`  <version>  <type>  <mode>"
 echo "<version> -- version from the docker registry"
-echo "<type> -- [local|private|backendless] -- default=backendless"
-echo "<mode> -- [cloud|managed|pro] -- default=pro"
 echo 
 
 cd `dirname "$0"`;
 
-cd ../
 mounts=$(pwd)"/mounts"
-cd scripts/
 
 version=${1:-"latest"}
 type=${2:-"backendless"} # local|private|backendless

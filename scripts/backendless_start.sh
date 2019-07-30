@@ -1,9 +1,8 @@
 #!/bin/bash
 
 echo Usage:
-echo "`basename "$0"`  <version>"
-echo "<version> -- version from the docker registry -- default='latest'"
-
+echo "`basename "$0"`  <version>  <type>  <mode>"
+echo "<version> -- version from the docker registry"
 echo 
 
 cd `dirname "$0"`;

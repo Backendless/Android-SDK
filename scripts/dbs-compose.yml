@@ -29,7 +29,7 @@ services:
 
     environment:
     - MYSQL_ROOT_PASSWORD=rootpassword
-    command: --lower_case_table_names=0
+    command: --lower_case_table_names=0 --sql-mode=""
 
     ports:
     - "${BL_MYSQL_PORT}:3306"
