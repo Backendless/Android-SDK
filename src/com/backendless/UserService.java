@@ -780,7 +780,7 @@ public final class UserService
 
   public void loginAsGuest( final AsyncCallback<BackendlessUser> responder, final boolean stayLoggedIn )
   {
-    if( !currentUser.getProperties().isEmpty() )
+    if( currentUser != null && !currentUser.getProperties().isEmpty() )
       logout( new AsyncCallback<Void>()
       {
         @Override
