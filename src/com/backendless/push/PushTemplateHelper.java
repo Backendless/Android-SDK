@@ -68,11 +68,8 @@ public class PushTemplateHelper
     }
   }
 
-  static Notification convertFromTemplate( final Context context, final AndroidPushTemplate template, final Bundle bundle, int notificationId )
+  static Bundle prepareMessageBundle(final Bundle rawMessageBundle, final AndroidPushTemplate template, final int notificationId )
   {
-    Context appContext = context.getApplicationContext();
-    // Notification channel ID is ignored for Android 7.1.1 (API level 25) and lower.
-
     Bundle newBundle = new Bundle( );
 
     if( template.getCustomHeaders() != null && !template.getCustomHeaders().isEmpty() )
@@ -81,11 +78,10 @@ public class PushTemplateHelper
         newBundle.putString( header.getKey(), header.getValue() );
     }
 
-    newBundle.putAll( bundle );
+    newBundle.putAll( rawMessageBundle );
 
-    String messageText = bundle.getString( PublishOptions.MESSAGE_TAG );
-    String contentTitle = bundle.getString( PublishOptions.ANDROID_CONTENT_TITLE_TAG );
-    String summarySubText = bundle.getString( PublishOptions.ANDROID_SUMMARY_SUBTEXT_TAG );
+    String contentTitle = rawMessageBundle.getString( PublishOptions.ANDROID_CONTENT_TITLE_TAG );
+    String summarySubText = rawMessageBundle.getString( PublishOptions.ANDROID_SUMMARY_SUBTEXT_TAG );
 
     contentTitle = contentTitle != null ? contentTitle : template.getContentTitle();
     summarySubText = summarySubText != null ? summarySubText : template.getSummarySubText();
@@ -95,6 +91,17 @@ public class PushTemplateHelper
     newBundle.putInt( PublishOptions.NOTIFICATION_ID, notificationId );
     newBundle.putString( PublishOptions.TEMPLATE_NAME, template.getName() );
 
+    return newBundle;
+  }
+
+  static Notification convertFromTemplate( final Context context, final AndroidPushTemplate template, final Bundle newBundle, int notificationId )
+  {
+    Context appContext = context.getApplicationContext();
+    // Notification channel ID is ignored for Android 7.1.1 (API level 25) and lower.
+
+    String messageText = newBundle.getString( PublishOptions.MESSAGE_TAG );
+    String contentTitle = newBundle.getString( PublishOptions.ANDROID_CONTENT_TITLE_TAG );
+    String summarySubText = newBundle.getString( PublishOptions.ANDROID_SUMMARY_SUBTEXT_TAG );
 
     NotificationCompat.Builder notificationBuilder;
     // android.os.Build.VERSION_CODES.O == 26
