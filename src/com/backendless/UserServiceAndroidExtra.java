@@ -121,6 +121,30 @@ class UserServiceAndroidExtra
     new AbstractSocialLoginStrategy.Builder( context, webView, SocialType.TWITTER, twitterFieldsMappings, null, getSocialDialogResponder( responder ) ).build().run();
   }
 
+  void loginWithTwitterSdk( String authToken, String authTokenSecret, Map<String, String> fieldsMappings,
+                            final AsyncCallback<BackendlessUser> responder )
+  {
+    if( fieldsMappings == null )
+      fieldsMappings = new HashMap<>();
+
+    Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithTwitter", new Object[] { authToken, authTokenSecret, fieldsMappings }, new AsyncCallback<BackendlessUser>()
+    {
+      @Override
+      public void handleResponse( BackendlessUser response )
+      {
+        if( responder != null )
+          responder.handleResponse( response );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        if( responder != null )
+          responder.handleFault( fault );
+      }
+    } );
+  }
+
   void loginWithGooglePlusSdk(  String accessToken, Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder )
   {
     if (fieldsMappings == null)
