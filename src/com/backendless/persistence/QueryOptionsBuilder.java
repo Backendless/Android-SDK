@@ -1,7 +1,7 @@
 package com.backendless.persistence;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 class QueryOptionsBuilder<Builder>
@@ -42,7 +42,7 @@ class QueryOptionsBuilder<Builder>
 
   public Builder setSortBy( String... sortBy )
   {
-    Collections.addAll( this.sortBy, sortBy );
+    this.sortBy = new ArrayList<>( Arrays.asList( sortBy ) );
     return builder;
   }
 
@@ -65,7 +65,7 @@ class QueryOptionsBuilder<Builder>
 
   public Builder setRelated( String... related )
   {
-    Collections.addAll( this.related, related );
+    this.related = new ArrayList<>( Arrays.asList( related ) );
     return builder;
   }
 

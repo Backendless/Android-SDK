@@ -14,7 +14,6 @@ import com.backendless.servercode.RunnerContext;
 import java.util.List;
 import java.util.Map;
 
-
 public abstract class MessagingExtender
 {
   public MessagingExtender()

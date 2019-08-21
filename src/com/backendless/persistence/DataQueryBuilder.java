@@ -1,6 +1,7 @@
 package com.backendless.persistence;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -75,7 +76,7 @@ public class DataQueryBuilder
 
   public DataQueryBuilder setProperties( String... properties )
   {
-    Collections.addAll( this.properties, properties );
+    this.properties = new ArrayList<>( Arrays.asList( properties ) );
     return this;
   }
 
@@ -153,8 +154,7 @@ public class DataQueryBuilder
 
   public DataQueryBuilder setGroupBy( String... groupBy )
   {
-    this.groupBy = new ArrayList<>();
-    Collections.addAll( this.groupBy, groupBy );
+    this.groupBy = new ArrayList<>( Arrays.asList( groupBy ) );
     return this;
   }
 
