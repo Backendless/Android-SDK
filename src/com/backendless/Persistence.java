@@ -107,22 +107,7 @@ public final class Persistence
     List<Map<String, Object>> serializedEntities = new ArrayList<>();
     for ( final Object entity : objects)
     {
-      final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
-      serializedEntities.add(serializedEntity);
-      MapEntityUtil.removeNullsAndRelations( serializedEntity);
-
-      MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
-      {
-        @Override
-        public Object substitute( Object o )
-        {
-          if( o == entity )
-            return serializedEntity;
-          else
-            return o;
-        }
-      } );
-
+      serializedEntities.add( serializeEntityBeforeCreate( entity ) );
     }
 
     Object[] args = new Object[] { tableName , serializedEntities };
@@ -137,24 +122,7 @@ public final class Persistence
 
   public <E> E save( final E entity ) throws BackendlessException
   {
-    if( entity == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
-
-    checkDeclaredType( entity.getClass() );
-    final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
-    MapEntityUtil.removeNullsAndRelations( serializedEntity);
-
-    MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
-    {
-      @Override
-      public Object substitute( Object o )
-      {
-        if( o == entity )
-          return serializedEntity;
-        else
-          return o;
-      }
-    } );
+    final Map<String, Object> serializedEntity = serializeEntityBeforeCreate( entity );
 
     try
     {
@@ -192,24 +160,7 @@ public final class Persistence
   {
     try
     {
-      if( entity == null )
-        throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
-
-      checkDeclaredType( entity.getClass() );
-      final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
-      MapEntityUtil.removeNullsAndRelations( serializedEntity );
-
-      MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
-      {
-        @Override
-        public Object substitute( Object o )
-        {
-          if( o == entity )
-            return serializedEntity;
-          else
-            return o;
-        }
-      } );
+      final Map<String, Object> serializedEntity = serializeEntityBeforeCreate( entity );
 
       AsyncCallback<E> callbackOverrider;
       if( serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) == null )
@@ -994,5 +945,29 @@ public final class Persistence
   {
     Object[] args = new Object[] { procedureName, arguments };
     Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredProcedure", args, responder, ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
+  }
+
+  private <E> Map<String, Object> serializeEntityBeforeCreate( final E entity )
+  {
+    if( entity == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
+
+    checkDeclaredType( entity.getClass() );
+    final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
+    MapEntityUtil.removeNullsAndRelations( serializedEntity);
+
+    MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
+    {
+      @Override
+      public Object substitute( Object o )
+      {
+        if( o == entity )
+          return serializedEntity;
+        else
+          return o;
+      }
+    } );
+
+    return serializedEntity;
   }
 }
