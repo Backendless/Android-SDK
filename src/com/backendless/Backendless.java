@@ -70,7 +70,6 @@ public final class Backendless
   public static final CustomService CustomService = com.backendless.CustomService.getInstance();
   public static final Logging Logging = com.backendless.Logging.getInstance();
   public static final RTService RT = new RTServiceImpl();
-  public static Media Media;
   private static boolean initialized;
 
   private Backendless()
@@ -98,7 +97,6 @@ public final class Backendless
     if( isAndroid )
     {
       prefs.onCreate( ContextHandler.getAppContext() );
-      Media = com.backendless.Media.getInstance();
     }
 
     AmfV3Formatter.AddTypeWriter( QueryOptions.class, new ITypeWriter()
