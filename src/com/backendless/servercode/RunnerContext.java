@@ -12,6 +12,7 @@ public class RunnerContext extends AbstractContext
   private Object prematureResult;
   private String eventContext;
   private Map<String, Object> crossHandlerData = new HashMap<>();
+  private Map<String, String> httpResponseHeaders = new HashMap<>(  );
 
   public String getAppId()
   {
@@ -134,6 +135,19 @@ public class RunnerContext extends AbstractContext
   public void addCrossHandlerData( String key, Object value )
   {
     this.crossHandlerData.put( key, value );
+  }
+
+  public Map<String, String> getHttpResponseHeaders()
+  {
+    return httpResponseHeaders;
+  }
+
+  public void setHttpResponseHeaders( Map<String, String> httpResponseHeaders )
+  {
+    if( httpResponseHeaders == null )
+      this.httpResponseHeaders = new HashMap<>();
+    else
+      this.httpResponseHeaders = httpResponseHeaders;
   }
 
   @Override
