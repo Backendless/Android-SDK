@@ -128,7 +128,7 @@ public class BackendlessFCMService extends FirebaseMessagingService
   {
     Bundle newBundle = PushTemplateHelper.prepareMessageBundle( intent.getExtras(), androidPushTemplate, notificationId );
 
-    Intent newMsgIntent = new Intent( context, null );
+    Intent newMsgIntent = new Intent();
     newMsgIntent.putExtras( newBundle );
 
     if( !this.onMessage( context, newMsgIntent ) )
