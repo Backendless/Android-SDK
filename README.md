@@ -40,7 +40,7 @@ To get started:
     ````
 1. Now you can open Backendless Console by navigating to `http://localhost:80` (if you specified a different port for `the web console server`, make sure to use it in the URL). If this is the first time you run Backendless Pro, you will see the following screen:</br>
 ![Backendless Licensing Popup](images/licensing-popup.jpg)
-1. To proceed further, you need to request an evaluation license for Backendless Pro. To do this, either use the link in the popup or open the [Backendless Pro License Request page](https://backendless.com/products/pro/license-request/), fill out and submit the form - you will receive your license key via email right away.
+1. To proceed further, you need to request an evaluation license for Backendless Pro. To do this, either use the link in the popup or open the [Backendless Pro License Request page](http://backendless.com/backendless-pro-license-request/), fill out and submit the form - you will receive your license key via email right away.
 1. Paste the license key from the email into the `License Key` text area and click the **SAVE LICENSE KEY** button.
 1. You will see the Backendless Console login screen:
 ![Backendless Login](images/backendless-login.jpg)
