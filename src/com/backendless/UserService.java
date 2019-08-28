@@ -65,7 +65,7 @@ public final class UserService
 
   public BackendlessUser CurrentUser()
   {
-    if( currentUser != null && currentUser.getProperties().isEmpty() )
+    if( currentUser != null && currentUser.isEmpty() )
       return null;
 
     return currentUser;
@@ -193,7 +193,7 @@ public final class UserService
   {
     synchronized( currentUserLock )
     {
-      if( !currentUser.getProperties().isEmpty() )
+      if( currentUser != null && !currentUser.isEmpty() )
         logout();
 
       if( login == null || login.equals( "" ) )
@@ -216,7 +216,7 @@ public final class UserService
   public void login( final String login, final String password, final AsyncCallback<BackendlessUser> responder,
                      final boolean stayLoggedIn )
   {
-    if( !currentUser.getProperties().isEmpty() )
+    if( currentUser != null && !currentUser.isEmpty() )
       logout( new AsyncCallback<Void>()
       {
         @Override
@@ -804,7 +804,7 @@ public final class UserService
 
   public void loginAsGuest( final AsyncCallback<BackendlessUser> responder, final boolean stayLoggedIn )
   {
-    if( currentUser != null && !currentUser.getProperties().isEmpty() )
+    if( currentUser != null && !currentUser.isEmpty() )
       logout( new AsyncCallback<Void>()
       {
         @Override

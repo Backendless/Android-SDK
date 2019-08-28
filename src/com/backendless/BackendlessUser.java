@@ -134,6 +134,12 @@ public class BackendlessUser implements Serializable
     return properties.remove( key );
   }
 
+  public boolean isEmpty()
+  {
+    // Second condition mean that only property that User has is default locale
+    return properties.isEmpty() || (properties.size() == 1 && properties.containsKey( LOCALE ));
+  }
+
   @Override
   public boolean equals( Object o )
   {
