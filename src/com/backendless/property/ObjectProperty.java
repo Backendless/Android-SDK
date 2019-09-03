@@ -41,7 +41,7 @@ public class ObjectProperty extends AbstractProperty
 
   public String getRelatedTable()
   {
-    return new String( relatedTable );
+    return relatedTable;
   }
 
   public void setRelatedTable( String relatedTable )
