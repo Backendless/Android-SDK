@@ -51,7 +51,7 @@ DROP TABLE IF EXISTS `main_backendless`.`Developer` ;
 
 CREATE TABLE IF NOT EXISTS `main_backendless`.`Developer` (
   `id` VARCHAR(100) NOT NULL,
-  `name` VARCHAR(45) NULL,
+  `name` VARCHAR(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `email` VARCHAR(45) NOT NULL,
   `password` VARCHAR(60) NULL,
   `developerStatusId` VARCHAR(100) NOT NULL,
