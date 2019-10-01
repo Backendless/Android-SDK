@@ -190,6 +190,10 @@ public abstract class BackendlessSerializer
 
         entityEntry.setValue( newCollection );
       }
+      else if( entityEntryValue instanceof Geometry )
+      {
+        continue;
+      }
       else //not collection
       {
         if( !isBelongsJdk( entityEntryValue.getClass() ) )
