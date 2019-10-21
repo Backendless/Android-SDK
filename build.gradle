@@ -70,7 +70,9 @@ uploadArchives {
 
             pom.whenConfigured {
                 p -> p.dependencies = p.dependencies.findAll {
-                    dep -> ( dep.artifactId != "commons" && dep.artifactId != "weborbclient" )
+                    dep -> ( dep.artifactId != "commons" &&
+                            dep.artifactId != "weborbclient" &&
+                            dep.artifactId != "antlr4-runtime" )
                 }
             }
 
@@ -181,7 +183,8 @@ def libsToPackage() {
         def artifactsToPackage =
                 [
                     ["com.backendless", "commons"],
-                    ["weborb", "weborbclient"]
+                    ["weborb", "weborbclient"],
+                    ["org.antlr", "antlr4-runtime"]
                 ]
 
         def libsToPackage = ["mediaLib.jar"]
@@ -263,10 +266,13 @@ dependencies {
     }
     compileOnly( group: "weborb", name: "weborbclient", version: "5.1.0.212", changing: true)
 
+    compileOnly( group: 'org.antlr', name: 'antlr4-runtime', version: '4.7.2', changing: true)
+
     compileOnly ('io.socket:socket.io-client:1.0.0') {
 //       excluding org.json which is provided by Android
       exclude group: 'org.json', module: 'json'
     }
+
 }
 
 apply plugin: 'java'

@@ -30,6 +30,12 @@ import com.backendless.persistence.DataQueryBuilder;
 import com.backendless.persistence.LoadRelationsQueryBuilder;
 import com.backendless.persistence.MapDrivenDataStore;
 import com.backendless.persistence.QueryOptions;
+import com.backendless.persistence.offline.DataRetrievalPolicy;
+import com.backendless.persistence.offline.DatabaseManager;
+import com.backendless.persistence.offline.LocalStoragePolicy;
+import com.backendless.persistence.offline.SQLiteDatabaseManager;
+import com.backendless.persistence.offline.SyncCompletionCallback;
+import com.backendless.persistence.offline.SyncManager;
 import com.backendless.property.ObjectProperty;
 import com.backendless.utils.MapEntityUtil;
 import com.backendless.utils.ReflectionUtil;
@@ -50,6 +56,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.backendless.persistence.offline.DataRetrievalPolicy.*;
+import static com.backendless.persistence.offline.LocalStoragePolicy.DONOTSTOREANY;
+
 public final class Persistence
 {
   public final static String PERSISTENCE_MANAGER_SERVER_ALIAS = "com.backendless.services.persistence.PersistenceService";
@@ -67,6 +76,18 @@ public final class Persistence
 
   private static final Persistence instance = new Persistence();
 
+
+  /*
+    TODO: OFFLINE SECTION
+   */
+
+  private final DatabaseManager databaseManager;
+  private final SyncManager syncManager;
+
+  public DataRetrievalPolicy RetrievalPolicy = ONLINEONLY;
+  public LocalStoragePolicy LocalStoragePolicy = DONOTSTOREANY;
+
+
   static Persistence getInstance()
   {
     return instance;
@@ -77,6 +98,10 @@ public final class Persistence
     Types.addClientClassMapping( "com.backendless.services.persistence.BackendlessDataQuery", BackendlessDataQuery.class );
     Types.addClientClassMapping( "com.backendless.services.persistence.ObjectProperty", ObjectProperty.class );
     Types.addClientClassMapping( "com.backendless.services.persistence.QueryOptions", QueryOptions.class );
+
+    databaseManager = SQLiteDatabaseManager.getInstance();
+    syncManager = SyncManager.getInstance();
+    syncManager.startAutoSynchronization();
   }
 
   public void mapTableToClass( String tableName, Class clazz )
@@ -947,7 +972,7 @@ public final class Persistence
     Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredProcedure", args, responder, ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
   }
 
-  private <E> Map<String, Object> serializeEntityBeforeCreate( final E entity )
+  <E> Map<String, Object> serializeEntityBeforeCreate( final E entity )
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
@@ -969,5 +994,29 @@ public final class Persistence
     } );
 
     return serializedEntity;
+  }
+
+  /*
+    TODO: OFFLINE SECTION
+   */
+
+  public void clearLocalDatabase() {
+    databaseManager.resetDatabase();
+  }
+
+  public void enableAutoSync() {
+    syncManager.enableAutoSync();
+  }
+
+  public void disableAutoSync() {
+    syncManager.disableAutoSync();
+  }
+
+  public boolean isAutoSyncEnabled() {
+    return syncManager.isAutoSyncEnabled();
+  }
+
+  public void startOfflineSync(SyncCompletionCallback callback) {
+    syncManager.startSemiAutoSynchronization(callback);
   }
 }

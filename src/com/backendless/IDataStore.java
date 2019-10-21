@@ -18,10 +18,14 @@
 
 package com.backendless;
 
+import android.support.annotation.Nullable;
+
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.persistence.DataQueryBuilder;
 import com.backendless.persistence.LoadRelationsQueryBuilder;
+import com.backendless.persistence.offline.OfflineAwareCallback;
+import com.backendless.persistence.offline.SyncCompletionCallback;
 import com.backendless.rt.data.EventHandler;
 
 import java.util.Collection;
@@ -172,4 +176,27 @@ public interface IDataStore<E>
   void deleteRelation( E parent, String relationColumnName, String whereClause, AsyncCallback<Integer> callback );
 
   EventHandler<E> rt();
+
+  /*
+    TODO: OFFLINE SECTION
+   */
+
+  void initLocalDatabase(@Nullable String whereClause, AsyncCallback<Integer> responder);
+
+  void clearLocalDatabase();
+
+  void saveEventually(E entity);
+  void saveEventually(E entity, OfflineAwareCallback<E> responder );
+
+  void removeEventually(E entity);
+  void removeEventually(E entity, OfflineAwareCallback<E> responder );
+
+  void onSave(AsyncCallback<E> responder);
+  void onRemove(AsyncCallback<E> responder);
+
+  void enableAutoSync();
+  void disableAutoSync();
+  boolean isAutoSyncEnabled();
+
+  void startOfflineSync(SyncCompletionCallback responder);
 }
