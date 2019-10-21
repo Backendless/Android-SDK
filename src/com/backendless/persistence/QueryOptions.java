@@ -26,6 +26,7 @@ public class QueryOptions
   private List<String> sortBy = new ArrayList<String>();
   private List<String> related  = new ArrayList<String>();
   private Integer relationsDepth;
+  private Integer relationPageSize;
 
   public QueryOptions()
   {
@@ -84,12 +85,23 @@ public class QueryOptions
     return new ArrayList<String>( related );
   }
 
+  public Integer getRelationPageSize()
+  {
+    return relationPageSize;
+  }
+
+  public void setRelationPageSize( Integer relationPageSize )
+  {
+    this.relationPageSize = relationPageSize;
+  }
+
   public QueryOptions newInstance()
   {
     QueryOptions result = new QueryOptions();
     result.setSortBy( sortBy );
     result.setRelated( related );
     result.setRelationsDepth( relationsDepth );
+    result.setRelationPageSize( relationPageSize );
 
     return result;
   }
