@@ -202,18 +202,19 @@ public class MapDrivenDataStore implements IDataStore<Map>
   @Override
   public Map findFirst( Integer relationsDepth ) throws BackendlessException
   {
-    return findFirst( emptyRelations, relationsDepth );
+    return findFirst( emptyRelations, relationsDepth, (Integer) null );
   }
 
   @Override
   public Map findFirst( List<String> relations ) throws BackendlessException
   {
-    return findFirst( relations, (Integer) null );
+    return findFirst( relations, (Integer) null, (Integer) null );
   }
 
-  private Map findFirst( List<String> relations, int relationsDepth ) throws BackendlessException
+  @Override
+  public Map findFirst( List<String> relations, Integer relationsDepth, Integer relationPageSize ) throws BackendlessException
   {
-    Object[] args = new Object[] { tableName, relations, relationsDepth };
+    Object[] args = new Object[] { tableName, relations, relationsDepth, relationPageSize };
     return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args,
                                      new MapDrivenResponder() );
   }
@@ -237,20 +238,21 @@ public class MapDrivenDataStore implements IDataStore<Map>
   @Override
   public void findFirst( Integer relationsDepth, AsyncCallback<Map> callback )
   {
-    findFirst( emptyRelations, relationsDepth, callback );
+    findFirst( emptyRelations, relationsDepth, null, callback );
   }
 
   @Override
   public void findFirst( List<String> relations, AsyncCallback<Map> callback )
   {
-    findFirst( relations, null, callback );
+    findFirst( relations, null, null, callback );
   }
 
-  private void findFirst( List<String> relations, Integer relationsDepth, AsyncCallback<Map> callback )
+  @Override
+  public void findFirst( List<String> relations, Integer relationsDepth, Integer relationPageSize, AsyncCallback<Map> callback )
   {
     try
     {
-      Object[] args = new Object[] { tableName, relations, relationsDepth };
+      Object[] args = new Object[] { tableName, relations, relationsDepth, relationPageSize };
       Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args, callback,
                            new MapDrivenResponder() );
     }
@@ -272,18 +274,19 @@ public class MapDrivenDataStore implements IDataStore<Map>
   @Override
   public Map findLast( Integer relationsDepth ) throws BackendlessException
   {
-    return findLast( emptyRelations, relationsDepth );
+    return findLast( emptyRelations, relationsDepth, (Integer) null );
   }
 
   @Override
   public Map findLast( List<String> relations ) throws BackendlessException
   {
-    return findLast( relations, (Integer) null );
+    return findLast( relations, (Integer) null, (Integer) null );
   }
 
-  private Map findLast( List<String> relations, Integer relationsDepth ) throws BackendlessException
+  @Override
+  public Map findLast( List<String> relations, Integer relationsDepth, Integer relationPageSize ) throws BackendlessException
   {
-    Object[] args = new Object[] { tableName, relations, relationsDepth };
+    Object[] args = new Object[] { tableName, relations, relationsDepth, relationPageSize };
     return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args,
                                      new MapDrivenResponder() );
   }
@@ -314,6 +317,13 @@ public class MapDrivenDataStore implements IDataStore<Map>
   public void findLast( List<String> relations, AsyncCallback<Map> callback )
   {
     findLast( relations, null, callback );
+  }
+
+  @Override
+  public void findLast( List<String> relations, Integer relationsDepth, Integer relationPageSize,
+                        AsyncCallback<Map> responder )
+  {
+
   }
 
   private void findLast( List<String> relations, Integer relationsDepth, AsyncCallback<Map> callback )
