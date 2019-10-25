@@ -29,13 +29,10 @@ import com.backendless.geo.LocationTracker;
 import com.backendless.io.BackendlessUserFactory;
 import com.backendless.io.BackendlessUserWriter;
 import com.backendless.io.DoubleWriter;
-import com.backendless.persistence.Area;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.persistence.Geometry;
 import com.backendless.persistence.GeometryDTO;
 import com.backendless.persistence.LineString;
-import com.backendless.persistence.Location;
-import com.backendless.persistence.Path;
 import com.backendless.persistence.Point;
 import com.backendless.persistence.Polygon;
 import com.backendless.persistence.QueryOptions;
@@ -195,9 +192,6 @@ public final class Backendless
     MessageWriter.addTypeWriter( Point.class, new BackendlessGeometryWriter() );
     MessageWriter.addTypeWriter( LineString.class, new BackendlessGeometryWriter() );
     MessageWriter.addTypeWriter( Polygon.class, new BackendlessGeometryWriter() );
-    MessageWriter.addTypeWriter( Location.class, new BackendlessGeometryWriter() );
-    MessageWriter.addTypeWriter( Path.class, new BackendlessGeometryWriter() );
-    MessageWriter.addTypeWriter( Area.class, new BackendlessGeometryWriter() );
     ObjectFactories.addArgumentObjectFactory( BackendlessUser.class.getName(), new BackendlessUserFactory() );
     ObjectFactories.addArgumentObjectFactory( BackendlessFile.class.getName(), new BackendlessFileFactory() );
     ObjectFactories.addArgumentObjectFactory( GeometryDTO.class.getName(), new BackendlessGeometryFactory() );
@@ -205,9 +199,6 @@ public final class Backendless
     ObjectFactories.addArgumentObjectFactory( Point.class.getName(), new BackendlessGeometryFactory() );
     ObjectFactories.addArgumentObjectFactory( LineString.class.getName(), new BackendlessGeometryFactory() );
     ObjectFactories.addArgumentObjectFactory( Polygon.class.getName(), new BackendlessGeometryFactory() );
-    ObjectFactories.addArgumentObjectFactory( Location.class.getName(), new BackendlessGeometryFactory() );
-    ObjectFactories.addArgumentObjectFactory( Path.class.getName(), new BackendlessGeometryFactory() );
-    ObjectFactories.addArgumentObjectFactory( Area.class.getName(), new BackendlessGeometryFactory() );
     ContextHandler.setContext( context );
 
     HeadersManager.cleanHeaders();
