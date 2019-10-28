@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `main_backendless`.`Application` (
   `version` VARCHAR(45) NOT NULL,
   `dbVersion` INT NOT NULL,
   `lastDayOfUse` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ownerDeveloperId` VARCHAR(36) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `fpSubscriptionId_UNIQUE` (`fpSubscriptionId` ASC),
   UNIQUE INDEX `customerDomain_UNIQUE` (`customerDomain` ASC),
