@@ -212,9 +212,9 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public Map findFirst( List<String> relations, Integer relationsDepth, Integer relationPageSize ) throws BackendlessException
+  public Map findFirst( List<String> relations, Integer relationsDepth, Integer relationsPageSize ) throws BackendlessException
   {
-    Object[] args = new Object[] { tableName, relations, relationsDepth, relationPageSize };
+    Object[] args = new Object[] { tableName, relations, relationsDepth, relationsPageSize };
     return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args,
                                      new MapDrivenResponder() );
   }
@@ -248,11 +248,11 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public void findFirst( List<String> relations, Integer relationsDepth, Integer relationPageSize, AsyncCallback<Map> callback )
+  public void findFirst( List<String> relations, Integer relationsDepth, Integer relationsPageSize, AsyncCallback<Map> callback )
   {
     try
     {
-      Object[] args = new Object[] { tableName, relations, relationsDepth, relationPageSize };
+      Object[] args = new Object[] { tableName, relations, relationsDepth, relationsPageSize };
       Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args, callback,
                            new MapDrivenResponder() );
     }
@@ -284,9 +284,9 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public Map findLast( List<String> relations, Integer relationsDepth, Integer relationPageSize ) throws BackendlessException
+  public Map findLast( List<String> relations, Integer relationsDepth, Integer relationsPageSize ) throws BackendlessException
   {
-    Object[] args = new Object[] { tableName, relations, relationsDepth, relationPageSize };
+    Object[] args = new Object[] { tableName, relations, relationsDepth, relationsPageSize };
     return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args,
                                      new MapDrivenResponder() );
   }
@@ -310,23 +310,17 @@ public class MapDrivenDataStore implements IDataStore<Map>
   @Override
   public void findLast( Integer relationsDepth, AsyncCallback<Map> callback )
   {
-    findLast( emptyRelations, relationsDepth, callback );
+    findLast( emptyRelations, relationsDepth, null, callback );
   }
 
   @Override
   public void findLast( List<String> relations, AsyncCallback<Map> callback )
   {
-    findLast( relations, null, callback );
+    findLast( relations, null, null, callback );
   }
 
   @Override
-  public void findLast( List<String> relations, Integer relationsDepth, Integer relationPageSize,
-                        AsyncCallback<Map> responder )
-  {
-
-  }
-
-  private void findLast( List<String> relations, Integer relationsDepth, AsyncCallback<Map> callback )
+  public void findLast( List<String> relations, Integer relationsDepth, Integer relationPageSize, AsyncCallback<Map> callback )
   {
     try
     {

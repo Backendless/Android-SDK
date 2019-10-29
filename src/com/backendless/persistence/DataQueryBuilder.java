@@ -171,13 +171,13 @@ public class DataQueryBuilder
     return this;
   }
 
-  public DataQueryBuilder setRelationPageSize( Integer relationPageSize )
+  public DataQueryBuilder setRelationsPageSize( Integer relationsPageSize )
   {
-    return queryOptionsBuilder.setRelationPageSize( relationPageSize );
+    return queryOptionsBuilder.setRelationsPageSize( relationsPageSize );
   }
 
   public Integer getRelationPageSize()
   {
-    return queryOptionsBuilder.getRelationPageSize();
+    return queryOptionsBuilder.getRelationsPageSize();
   }
 }

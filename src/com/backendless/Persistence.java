@@ -688,14 +688,14 @@ public final class Persistence
   }
 
   protected <E> E first( final Class<E> entity, final List<String> relations,
-                         final Integer relationsDepth, final Integer relationPageSize ) throws BackendlessException
+                         final Integer relationsDepth, final Integer relationsPageSize ) throws BackendlessException
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
     return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "first",
                                    new Object[] { BackendlessSerializer.getSimpleName( entity ), relations, relationsDepth,
-                                           new ArrayList<String>(), relationPageSize },
+                                           new ArrayList<String>(), relationsPageSize },
                                    ResponderHelper.getPOJOAdaptingResponder( entity ) );
   }
 
@@ -715,7 +715,7 @@ public final class Persistence
     }
   }
 
-  protected <E> void first( final Class<E> entity, final List<String> relations, final Integer relationsDepth, final Integer relationPageSize,
+  protected <E> void first( final Class<E> entity, final List<String> relations, final Integer relationsDepth, final Integer relationsPageSize,
                             final AsyncCallback<E> responder )
   {
     try
@@ -725,7 +725,7 @@ public final class Persistence
 
       Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "first",
                            new Object[] { BackendlessSerializer.getSimpleName( entity ), relations, relationsDepth,
-                                   new ArrayList<String>(), relationPageSize }, responder,
+                                   new ArrayList<String>(), relationsPageSize }, responder,
                            ResponderHelper.getPOJOAdaptingResponder( entity ) );
     }
     catch( Throwable e )
@@ -746,14 +746,14 @@ public final class Persistence
   }
 
   protected <E> E last( final Class<E> entity, final List<String> relations,
-                        final Integer relationsDepth, final Integer relationPageSize ) throws BackendlessException
+                        final Integer relationsDepth, final Integer relationsPageSize ) throws BackendlessException
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
     return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "last",
                                    new Object[] { BackendlessSerializer.getSimpleName( entity ), relations,
-                                           relationsDepth, new ArrayList<String>(), relationPageSize },
+                                           relationsDepth, new ArrayList<String>(), relationsPageSize },
                                    ResponderHelper.getPOJOAdaptingResponder( entity ) );
   }
 
@@ -775,7 +775,7 @@ public final class Persistence
     }
   }
 
-  protected <E> void last( final Class<E> entity, final List<String> relations, final Integer relationsDepth, final Integer relationPageSize,
+  protected <E> void last( final Class<E> entity, final List<String> relations, final Integer relationsDepth, final Integer relationsPageSize,
                            final AsyncCallback<E> responder )
   {
     try
@@ -785,7 +785,7 @@ public final class Persistence
 
       Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "last",
                            new Object[] { BackendlessSerializer.getSimpleName( entity ), relations, relationsDepth,
-                                   new ArrayList<String>(), relationPageSize }, responder,
+                                   new ArrayList<String>(), relationsPageSize }, responder,
                            ResponderHelper.getPOJOAdaptingResponder( entity ) );
     }
     catch( Throwable e )

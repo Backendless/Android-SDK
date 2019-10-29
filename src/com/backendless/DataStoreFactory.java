@@ -122,9 +122,9 @@ class DataStoreFactory
       }
 
       @Override
-      public E findFirst( List<String> relations, Integer relationsDepth, Integer relationPageSize ) throws BackendlessException
+      public E findFirst( List<String> relations, Integer relationsDepth, Integer relationsPageSize ) throws BackendlessException
       {
-        return Backendless.Persistence.first( entityClass, relations, relationsDepth, relationPageSize );
+        return Backendless.Persistence.first( entityClass, relations, relationsDepth, relationsPageSize );
       }
 
       @Override
@@ -157,9 +157,9 @@ class DataStoreFactory
       }
 
       @Override
-      public void findFirst( List<String> relations, Integer relationsDepth, Integer relationPageSize, final AsyncCallback<E> responder )
+      public void findFirst( List<String> relations, Integer relationsDepth, Integer relationsPageSize, final AsyncCallback<E> responder )
       {
-        Backendless.Persistence.first( entityClass, relations, relationsDepth, relationPageSize, responder );
+        Backendless.Persistence.first( entityClass, relations, relationsDepth, relationsPageSize, responder );
       }
 
       @Override
@@ -181,9 +181,9 @@ class DataStoreFactory
       }
 
       @Override
-      public E findLast( List<String> relations, Integer relationsDepth, Integer relationPageSize ) throws BackendlessException
+      public E findLast( List<String> relations, Integer relationsDepth, Integer relationsPageSize ) throws BackendlessException
       {
-        return Backendless.Persistence.last( entityClass, relations, relationsDepth, relationPageSize );
+        return Backendless.Persistence.last( entityClass, relations, relationsDepth, relationsPageSize );
       }
 
       @Override
@@ -205,9 +205,9 @@ class DataStoreFactory
       }
 
       @Override
-      public void findLast( List<String> relations, Integer relationsDepth, Integer relationPageSize, final AsyncCallback<E> responder )
+      public void findLast( List<String> relations, Integer relationsDepth, Integer relationsPageSize, final AsyncCallback<E> responder )
       {
-        Backendless.Persistence.last( entityClass, relations, relationsDepth, relationPageSize, responder );
+        Backendless.Persistence.last( entityClass, relations, relationsDepth, relationsPageSize, responder );
       }
 
       @Override

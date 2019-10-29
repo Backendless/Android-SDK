@@ -56,7 +56,7 @@ public interface IDataStore<E>
 
   E findFirst( List<String> relations ) throws BackendlessException;
 
-  E findFirst( List<String> relations, Integer relationsDepth, Integer relationPageSize ) throws BackendlessException;
+  E findFirst( List<String> relations, Integer relationsDepth, Integer relationsPageSize ) throws BackendlessException;
 
   void findFirst( AsyncCallback<E> responder );
 
@@ -64,7 +64,7 @@ public interface IDataStore<E>
 
   void findFirst( List<String> relations, AsyncCallback<E> responder );
 
-  void findFirst( List<String> relations, Integer relationsDepth, Integer relationPageSize, final AsyncCallback<E> responder );
+  void findFirst( List<String> relations, Integer relationsDepth, Integer relationsPageSize, final AsyncCallback<E> responder );
 
   E findLast() throws BackendlessException;
 
@@ -72,7 +72,7 @@ public interface IDataStore<E>
 
   E findLast( List<String> relations ) throws BackendlessException;
 
-  E findLast( List<String> relations, Integer relationsDepth, Integer relationPageSize ) throws BackendlessException;
+  E findLast( List<String> relations, Integer relationsDepth, Integer relationsPageSize ) throws BackendlessException;
 
   void findLast( AsyncCallback<E> responder );
 
@@ -80,7 +80,7 @@ public interface IDataStore<E>
 
   void findLast( List<String> relations, AsyncCallback<E> responder );
 
-  void findLast( List<String> relations, Integer relationsDepth, Integer relationPageSize, final AsyncCallback<E> responder );
+  void findLast( List<String> relations, Integer relationsDepth, Integer relationsPageSize, final AsyncCallback<E> responder );
 
   List<E> find() throws BackendlessException;
 
