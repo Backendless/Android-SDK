@@ -9,6 +9,7 @@ class QueryOptionsBuilder<Builder>
   private List<String> sortBy;
   private List<String> related;
   private Integer relationsDepth;
+  private Integer relationsPageSize;
   private Builder builder;
 
   QueryOptionsBuilder( Builder builder )
@@ -24,6 +25,7 @@ class QueryOptionsBuilder<Builder>
     queryOptions.setRelated( related );
     queryOptions.setRelationsDepth( relationsDepth );
     queryOptions.setSortBy( sortBy );
+    queryOptions.setRelationsPageSize( relationsPageSize );
     return queryOptions;
   }
   
@@ -89,6 +91,17 @@ class QueryOptionsBuilder<Builder>
   public Builder setRelationsDepth( Integer relationsDepth )
   {
     this.relationsDepth = relationsDepth;
+    return builder;
+  }
+
+  public Integer getRelationsPageSize()
+  {
+    return relationsPageSize;
+  }
+
+  public Builder setRelationsPageSize( Integer relationPageSize )
+  {
+    this.relationsPageSize = relationPageSize;
     return builder;
   }
 }

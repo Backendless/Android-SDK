@@ -170,4 +170,14 @@ public class DataQueryBuilder
     this.havingClause = havingClause;
     return this;
   }
+
+  public DataQueryBuilder setRelationsPageSize( Integer relationsPageSize )
+  {
+    return queryOptionsBuilder.setRelationsPageSize( relationsPageSize );
+  }
+
+  public Integer getRelationPageSize()
+  {
+    return queryOptionsBuilder.getRelationsPageSize();
+  }
 }
