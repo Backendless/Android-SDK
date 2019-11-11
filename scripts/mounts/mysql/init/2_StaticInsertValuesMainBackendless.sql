@@ -1,6 +1,6 @@
 USE `main_backendless`;
 
-INSERT INTO `Version` (`main`, `application`) values (19, 57);
+INSERT INTO `Version` (`main`, `application`) values (20, 57);
 
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('1', 'ACTIVE');
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('2', 'SUSPENDED');
@@ -20,7 +20,6 @@ INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('11', 'DELETE_APPLICATIO
 INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('12', 'SET_GOOGLE_KEY');
 INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('13', 'APP_RESET');
 INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('14', 'CHANGE_LIMIT_NOTIFICATION');
-INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('15', 'INSTALL_LICENSE');
 INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('16', 'CREATE_REPOSITORY');
 INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('17', 'CHANGE_LOG_CONFIG');
 INSERT INTO `DeveloperOperation` (`id`, `name`) VALUES ('18', 'DELETE_LOGGERS');
