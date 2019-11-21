@@ -54,6 +54,16 @@ public class RunnerContext extends AbstractContext
     this.userRoles = userRoles;
   }
 
+  public String getUserLocale()
+  {
+    return userLocale;
+  }
+
+  public void setUserLocale( String userLocale )
+  {
+    this.userLocale = userLocale;
+  }
+
   public DeviceType getDeviceType()
   {
     return deviceType;
