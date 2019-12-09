@@ -153,4 +153,6 @@ public class ExceptionMessage
   {
     return field + " cannot be null or empty.";
   }
+
+  public final static String NULL_EMPTY_BULK = "Object array for bulk operations in transaction cannot be null or empty";
 }

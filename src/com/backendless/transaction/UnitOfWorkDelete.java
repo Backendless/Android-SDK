@@ -5,9 +5,9 @@ import java.util.Map;
 
 public interface UnitOfWorkDelete
 {
-  OpResult delete( String tableName, Map<String, Object> objectMap );
-
   <E> OpResult delete( E instance );
+
+  OpResult delete( String tableName, Map<String, Object> objectMap );
 
   OpResult delete( String tableName, OpResult result );
 

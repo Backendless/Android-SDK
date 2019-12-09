@@ -1,20 +1,19 @@
 package com.backendless.transaction;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public interface UnitOFWorkUpdate
 {
-  OpResult update( String tableName, Map<String, Object> objectMap );
-
   <E> OpResult update( E instance );
 
-  OpResult update( String tableName, String query, Map<String, Object> objectMap );
-
-  OpResult update( String tableName, List<HashMap<String, Object>> arrayOfHashMaps );
+  OpResult update( String tableName, Map<String, Object> objectMap );
 
   <E> OpResult update( List<E> instances );
 
-  <E> OpResult bulkUpdate( String query, E instances );
+  OpResult update( String tableName, List<Map<String, Object>> arrayOfHashMaps );
+
+  <E> OpResult bulkUpdate( String whereClause, List<E> instances );
+
+  OpResult bulkUpdate( String tableName, String whereClause, Map<String, Object> changes );
 }

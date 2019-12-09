@@ -1,31 +1,82 @@
 package com.backendless.transaction;
 
+import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.persistence.BackendlessSerializer;
+import com.backendless.transaction.operations.Operation;
+import com.backendless.transaction.operations.OperationCreate;
+import com.backendless.transaction.operations.OperationCreateBulk;
+import com.backendless.utils.MapEntityUtil;
+
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
-class UnitOfWorkCreateImpl implements UnitOfWorkCreate
+public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
 {
-  @Override
-  public OpResult create( String tableName, Map<String, Object> objectMap )
+  AtomicInteger countCreate = new AtomicInteger( 1 );
+
+  private final List<Operation> operations;
+
+  public UnitOfWorkCreateImpl( List<Operation> operations )
   {
-    return null;
+    this.operations = operations;
   }
 
   @Override
   public <E> OpResult create( E instance )
   {
-    return null;
+    Map<String, Object> entityMap = SerializationHelper.serializeEntityToMap( instance );
+    String tableName = BackendlessSerializer.getSimpleName( instance.getClass() );
+
+    return create( tableName, entityMap );
   }
 
   @Override
-  public OpResult create( String tableName, List<Map<String, Object>> arrayOfObjectMaps )
+  public OpResult create( String tableName, Map<String, Object> objectMap )
   {
-    return null;
+    String operationResultId = OperationType.CREATE + "_" + countCreate.getAndIncrement();
+    OperationCreate operationCreate = new OperationCreate( OperationType.CREATE, tableName, operationResultId, objectMap );
+
+    operations.add( operationCreate );
+
+    Map<String, Object> reference = new HashMap<>();
+    reference.put( UnitOfWork.REFERENCE_MARKER, true );
+    reference.put( UnitOfWork.OP_RESULT_ID, operationResultId );
+    return new OpResult( reference );
   }
 
   @Override
   public <E> OpResult create( List<E> instances )
   {
-    return null;
+    if( instances == null || instances.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
+
+    String tableName =  BackendlessSerializer.getSimpleName( instances.get( 0 ).getClass() );
+
+    List<Map<String, Object>> serializedEntities = new ArrayList<>();
+    for ( final Object entity : instances )
+    {
+      serializedEntities.add( SerializationHelper.serializeEntityToMap( entity ) );
+    }
+
+    return create( tableName, serializedEntities );
+  }
+
+  @Override
+  public OpResult create( String tableName, List<Map<String, Object>> arrayOfObjectMaps )
+  {
+    String operationResultId = OperationType.CREATE_BULK + "_" + countCreate.getAndIncrement();
+    OperationCreateBulk operationCreateBulk = new OperationCreateBulk( OperationType.CREATE_BULK, tableName,
+                                                                       operationResultId, arrayOfObjectMaps );
+
+    operations.add( operationCreateBulk );
+
+    Map<String, Object> reference = new HashMap<>();
+    reference.put( UnitOfWork.REFERENCE_MARKER, true );
+    reference.put( UnitOfWork.OP_RESULT_ID, operationResultId );
+    return new OpResult( reference );
   }
 }

@@ -5,11 +5,11 @@ import java.util.Map;
 
 public interface UnitOfWorkCreate
 {
-  OpResult create( String tableName, Map<String, Object> objectMap );
-
   <E> OpResult create( E instance );
 
-  OpResult create( String tableName, List<Map<String, Object>> arrayOfObjectMaps );
+  OpResult create( String tableName, Map<String, Object> objectMap );
 
   <E> OpResult create( List<E> instances );
+
+  OpResult create( String tableName, List<Map<String, Object>> arrayOfObjectMaps );
 }
