@@ -1,6 +1,6 @@
 package com.backendless.transaction;
 
-public interface IUnitOfWork extends UnitOfWorkCreate, UnitOfWorkDelete, UnitOFWorkUpdate
+public interface IUnitOfWork extends UnitOfWorkCreate, UnitOfWorkDelete, UnitOfWorkUpdate
 {
   UnitOfWorkStatus execute();
 }

@@ -2,7 +2,7 @@ package com.backendless;
 
 import com.backendless.transaction.IUnitOfWork;
 import com.backendless.transaction.OpResult;
-import com.backendless.transaction.UnitOFWorkUpdate;
+import com.backendless.transaction.UnitOfWorkUpdate;
 import com.backendless.transaction.UnitOfWorkCreate;
 import com.backendless.transaction.UnitOfWorkCreateImpl;
 import com.backendless.transaction.UnitOfWorkDelete;
@@ -19,7 +19,7 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   public final static String TRANSACTION_MANAGER_SERVER_ALIAS = "com.backendless.services.transaction.TransactionService";
 
   private final UnitOfWorkCreate unitOfWorkCreate;
-  private final UnitOFWorkUpdate unitOFWorkUpdate;
+  private final UnitOfWorkUpdate unitOFWorkUpdate;
   private final UnitOfWorkDelete unitOfWorkDelete;
 
   public UnitOfWork()
@@ -122,20 +122,26 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
+  public <E> OpResult bulkDelete( List<E> instances )
+  {
+    return unitOfWorkDelete.bulkDelete( instances );
+  }
+
+  @Override
   public OpResult bulkDelete( String tableName, List<Map<String, Object>> arrayOfObjectMaps )
   {
     return unitOfWorkDelete.bulkDelete( tableName, arrayOfObjectMaps );
   }
 
   @Override
-  public <E> OpResult bulkDelete( List<E> instances )
+  public OpResult bulkDelete( String tableName, String whereClause )
   {
-    return unitOfWorkDelete.delete( instances );
+    return unitOfWorkDelete.bulkDelete( tableName, whereClause );
   }
 
   @Override
-  public OpResult bulkDelete( String tableName, String query, OpResult result )
+  public OpResult bulkDelete( String tableName, OpResult result, String propName )
   {
-    return unitOfWorkDelete.bulkDelete( tableName, query, result );
+    return unitOfWorkDelete.bulkDelete( tableName, result, propName );
   }
 }
