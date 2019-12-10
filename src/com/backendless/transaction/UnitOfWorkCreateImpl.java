@@ -6,7 +6,6 @@ import com.backendless.transaction.operations.Operation;
 import com.backendless.transaction.operations.OperationCreate;
 import com.backendless.transaction.operations.OperationCreateBulk;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -49,14 +48,7 @@ public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
   @Override
   public <E> OpResult bulkCreate( List<E> instances )
   {
-    if( instances == null || instances.isEmpty() )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
-
-    List<Map<String, Object>> serializedEntities = new ArrayList<>();
-    for ( final Object entity : instances )
-    {
-      serializedEntities.add( SerializationHelper.serializeEntityToMap( entity ) );
-    }
+    List<Map<String, Object>> serializedEntities = TransactionHelper.getConvertInstancesToMaps( instances );
 
     String tableName =  BackendlessSerializer.getSimpleName( instances.get( 0 ).getClass() );
 
