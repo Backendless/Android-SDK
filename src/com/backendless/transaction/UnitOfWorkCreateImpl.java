@@ -17,6 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
 {
   AtomicInteger countCreate = new AtomicInteger( 1 );
+  AtomicInteger countCreateBulk = new AtomicInteger( 1 );
 
   private final List<Operation> operations;
 
@@ -37,6 +38,9 @@ public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
   @Override
   public OpResult create( String tableName, Map<String, Object> objectMap )
   {
+    if( objectMap == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_MAP );
+
     String operationResultId = OperationType.CREATE + "_" + countCreate.getAndIncrement();
     OperationCreate operationCreate = new OperationCreate( OperationType.CREATE, tableName, operationResultId, objectMap );
 
@@ -54,21 +58,24 @@ public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
     if( instances == null || instances.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
-    String tableName =  BackendlessSerializer.getSimpleName( instances.get( 0 ).getClass() );
-
     List<Map<String, Object>> serializedEntities = new ArrayList<>();
     for ( final Object entity : instances )
     {
       serializedEntities.add( SerializationHelper.serializeEntityToMap( entity ) );
     }
 
-    return create( tableName, serializedEntities );
+    String tableName =  BackendlessSerializer.getSimpleName( instances.get( 0 ).getClass() );
+
+    return bulkCreate( tableName, serializedEntities );
   }
 
   @Override
   public OpResult bulkCreate( String tableName, List<Map<String, Object>> arrayOfObjectMaps )
   {
-    String operationResultId = OperationType.CREATE_BULK + "_" + countCreate.getAndIncrement();
+    if( arrayOfObjectMaps == null || arrayOfObjectMaps.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
+
+    String operationResultId = OperationType.CREATE_BULK + "_" + countCreateBulk.getAndIncrement();
     OperationCreateBulk operationCreateBulk = new OperationCreateBulk( OperationType.CREATE_BULK, tableName,
                                                                        operationResultId, arrayOfObjectMaps );
 

@@ -9,7 +9,7 @@ public interface UnitOfWorkCreate
 
   OpResult create( String tableName, Map<String, Object> objectMap );
 
-  OpResult bulkCreate( String tableName, List<Map<String, Object>> arrayOfObjectMaps );
-
   <E> OpResult bulkCreate( List<E> instances );
+
+  OpResult bulkCreate( String tableName, List<Map<String, Object>> arrayOfObjectMaps );
 }
