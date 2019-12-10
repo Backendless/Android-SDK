@@ -13,9 +13,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class UnitOfWorkUpdateImpl implements UnitOFWorkUpdate
+public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
 {
   AtomicInteger countUpdate = new AtomicInteger( 1 );
+  AtomicInteger countUpdateBulk = new AtomicInteger( 1 );
 
   private final List<Operation> operations;
 
@@ -36,6 +37,9 @@ public class UnitOfWorkUpdateImpl implements UnitOFWorkUpdate
   @Override
   public OpResult update( String tableName, Map<String, Object> objectMap )
   {
+    if( objectMap == null || objectMap.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_MAP );
+
     String operationResultId = OperationType.UPDATE + "_" + countUpdate.getAndIncrement();
     OperationUpdate operationUpdate = new OperationUpdate( OperationType.UPDATE, tableName, operationResultId, objectMap );
 
@@ -50,14 +54,25 @@ public class UnitOfWorkUpdateImpl implements UnitOFWorkUpdate
   @Override
   public <E> OpResult bulkUpdate( List<E> instances )
   {
-    return null;
+    if( instances == null || instances.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
+
+    List<Map<String, Object>> serializedEntities = new ArrayList<>();
+    for ( final Object entity : instances )
+    {
+      serializedEntities.add( SerializationHelper.serializeEntityToMap( entity ) );
+    }
+
+    String tableName =  BackendlessSerializer.getSimpleName( instances.get( 0 ).getClass() );
+
+    return bulkUpdate( tableName, serializedEntities );
   }
 
   @Override
-  public OpResult bulkUpdate( String tableName, List<Map<String, Object>> arrayOfHashMaps )
+  public OpResult bulkUpdate( String tableName, List<Map<String, Object>> arrayOfHashMaps )//TODO ??? delete method or implement in server
   {
-    String operationResultId = OperationType.UPDATE_BULK + "_" + countUpdate.getAndIncrement();
-    UpdateBulkPayload updateBulkPayload = new UpdateBulkPayload( null, arrayOfHashMaps, null );//TODO ???
+    String operationResultId = OperationType.UPDATE_BULK + "_" + countUpdateBulk.getAndIncrement();
+    UpdateBulkPayload updateBulkPayload = new UpdateBulkPayload( null, arrayOfHashMaps, null );
     OperationUpdateBulk operationUpdateBulk = new OperationUpdateBulk( OperationType.UPDATE_BULK, tableName,
                                                                        operationResultId, updateBulkPayload );
 
@@ -72,14 +87,19 @@ public class UnitOfWorkUpdateImpl implements UnitOFWorkUpdate
   @Override
   public <E> OpResult bulkUpdate( String whereClause, E changes )
   {
-    //TODO implement
-    return null;
+    Map<String, Object> changesMap = SerializationHelper.serializeEntityToMap( changes );
+    String tableName = BackendlessSerializer.getSimpleName( changes.getClass() );
+
+    return bulkUpdate( tableName, whereClause, changesMap );
   }
 
   @Override
   public OpResult bulkUpdate( String tableName, String whereClause, Map<String, Object> changes )
   {
-    String operationResultId = OperationType.UPDATE_BULK + "_" + countUpdate.getAndIncrement();
+    if( changes == null || changes.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_MAP );
+
+    String operationResultId = OperationType.UPDATE_BULK + "_" + countUpdateBulk.getAndIncrement();
     UpdateBulkPayload updateBulkPayload = new UpdateBulkPayload( whereClause, null, changes );
     OperationUpdateBulk operationUpdateBulk = new OperationUpdateBulk( OperationType.UPDATE_BULK, tableName,
                                                                        operationResultId, updateBulkPayload );

@@ -3,7 +3,7 @@ package com.backendless.transaction;
 import java.util.List;
 import java.util.Map;
 
-public interface UnitOFWorkUpdate
+public interface UnitOfWorkUpdate
 {
   <E> OpResult update( E instance );
 
