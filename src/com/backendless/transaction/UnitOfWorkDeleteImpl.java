@@ -62,10 +62,8 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   public OpResult delete( String tableName, OpResult result, int opResultIndex )//TODO ??? delete or change server
   {
     String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
-    Map<String, Object> referenceMap = result.getReference();//TODO cloning
-    referenceMap.put( UnitOfWork.RESULT_INDEX, opResultIndex );
     OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, tableName, operationResultId,
-                                                           referenceMap );
+                                                           result.viaIndex( opResultIndex ) );
 
     operations.add( operationDelete );
 
@@ -115,8 +113,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   public OpResult bulkDelete( String tableName, OpResult result, String propName )
   {
     String operationResultId = OperationType.DELETE_BULK + "_" + countDeleteBulk.getAndIncrement();
-    Map<String, Object> whereClause = result.getReference();//TODO clone
-    whereClause.put( com.backendless.UnitOfWork.PROP_NAME, propName );
+    Map<String, Object> whereClause = result.viaPropName( propName );
     DeleteBulkPayload deleteBulkPayload = new DeleteBulkPayload( whereClause, null );
     OperationDeleteBulk operationDeleteBulk = new OperationDeleteBulk( OperationType.DELETE_BULK, tableName,
                                                                        operationResultId, deleteBulkPayload );
