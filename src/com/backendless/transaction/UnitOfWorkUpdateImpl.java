@@ -48,13 +48,13 @@ public class UnitOfWorkUpdateImpl implements UnitOFWorkUpdate
   }
 
   @Override
-  public <E> OpResult update( List<E> instances )
+  public <E> OpResult bulkUpdate( List<E> instances )
   {
     return null;
   }
 
   @Override
-  public OpResult update( String tableName, List<Map<String, Object>> arrayOfHashMaps )
+  public OpResult bulkUpdate( String tableName, List<Map<String, Object>> arrayOfHashMaps )
   {
     String operationResultId = OperationType.UPDATE_BULK + "_" + countUpdate.getAndIncrement();
     UpdateBulkPayload updateBulkPayload = new UpdateBulkPayload( null, arrayOfHashMaps, null );//TODO ???
@@ -70,14 +70,10 @@ public class UnitOfWorkUpdateImpl implements UnitOFWorkUpdate
   }
 
   @Override
-  public <E> OpResult bulkUpdate( String whereClause, List<E> instances )
+  public <E> OpResult bulkUpdate( String whereClause, E changes )
   {
-    if( instances == null || instances.isEmpty() )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
-
-    String tableName =  BackendlessSerializer.getSimpleName( instances.get( 0 ).getClass() );
-
-    return bulkUpdate(  tableName, whereClause, null );//TODO ???
+    //TODO implement
+    return null;
   }
 
   @Override

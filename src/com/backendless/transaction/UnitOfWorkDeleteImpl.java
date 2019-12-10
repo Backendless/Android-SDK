@@ -77,13 +77,13 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   }
 
   @Override
-  public OpResult delete( String tableName, List<Map<String, Object>> arrayOfObjectMaps )
+  public OpResult bulkDelete( String tableName, List<Map<String, Object>> arrayOfObjectMaps )
   {
     return null;
   }
 
   @Override
-  public <E> OpResult delete( List<E> instances )
+  public <E> OpResult bulkDelete( List<E> instances )
   {
     return null;
   }

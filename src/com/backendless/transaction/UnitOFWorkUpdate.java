@@ -9,11 +9,11 @@ public interface UnitOFWorkUpdate
 
   OpResult update( String tableName, Map<String, Object> objectMap );
 
-  <E> OpResult update( List<E> instances );
+  <E> OpResult bulkUpdate( List<E> instances );
 
-  OpResult update( String tableName, List<Map<String, Object>> arrayOfHashMaps );
+  OpResult bulkUpdate( String tableName, List<Map<String, Object>> arrayOfHashMaps );
 
-  <E> OpResult bulkUpdate( String whereClause, List<E> instances );
+  <E> OpResult bulkUpdate( String whereClause, E changes );
 
   OpResult bulkUpdate( String tableName, String whereClause, Map<String, Object> changes );
 }

@@ -49,7 +49,7 @@ public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
   }
 
   @Override
-  public <E> OpResult create( List<E> instances )
+  public <E> OpResult bulkCreate( List<E> instances )
   {
     if( instances == null || instances.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
@@ -66,7 +66,7 @@ public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
   }
 
   @Override
-  public OpResult create( String tableName, List<Map<String, Object>> arrayOfObjectMaps )
+  public OpResult bulkCreate( String tableName, List<Map<String, Object>> arrayOfObjectMaps )
   {
     String operationResultId = OperationType.CREATE_BULK + "_" + countCreate.getAndIncrement();
     OperationCreateBulk operationCreateBulk = new OperationCreateBulk( OperationType.CREATE_BULK, tableName,

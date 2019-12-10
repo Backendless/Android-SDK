@@ -50,15 +50,15 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
-  public <E> OpResult create( List<E> instances )
+  public <E> OpResult bulkCreate( List<E> instances )
   {
-    return unitOfWorkCreate.create( instances );
+    return unitOfWorkCreate.bulkCreate( instances );
   }
 
   @Override
-  public OpResult create( String tableName, List<Map<String, Object>> arrayOfObjectMaps )
+  public OpResult bulkCreate( String tableName, List<Map<String, Object>> arrayOfObjectMaps )
   {
-    return unitOfWorkCreate.create( tableName, arrayOfObjectMaps );
+    return unitOfWorkCreate.bulkCreate( tableName, arrayOfObjectMaps );
   }
 
   @Override
@@ -74,21 +74,21 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
-  public <E> OpResult update( List<E> instances )
+  public <E> OpResult bulkUpdate( List<E> instances )
   {
-    return unitOFWorkUpdate.update( instances );
+    return unitOFWorkUpdate.bulkUpdate( instances );
   }
 
   @Override
-  public OpResult update( String tableName, List<Map<String, Object>> arrayOfHashMaps )
+  public OpResult bulkUpdate( String tableName, List<Map<String, Object>> arrayOfHashMaps )
   {
-    return unitOFWorkUpdate.update( tableName, arrayOfHashMaps );
+    return unitOFWorkUpdate.bulkUpdate( tableName, arrayOfHashMaps );
   }
 
   @Override
-  public <E> OpResult bulkUpdate( String whereClause, List<E> instances )
+  public <E> OpResult bulkUpdate( String whereClause, E changes )
   {
-    return unitOFWorkUpdate.bulkUpdate( whereClause, instances );
+    return unitOFWorkUpdate.bulkUpdate( whereClause, changes );
   }
 
   @Override
@@ -122,13 +122,13 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
-  public OpResult delete( String tableName, List<Map<String, Object>> arrayOfObjectMaps )
+  public OpResult bulkDelete( String tableName, List<Map<String, Object>> arrayOfObjectMaps )
   {
-    return unitOfWorkDelete.delete( tableName, arrayOfObjectMaps );
+    return unitOfWorkDelete.bulkDelete( tableName, arrayOfObjectMaps );
   }
 
   @Override
-  public <E> OpResult delete( List<E> instances )
+  public <E> OpResult bulkDelete( List<E> instances )
   {
     return unitOfWorkDelete.delete( instances );
   }
