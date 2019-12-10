@@ -8,7 +8,6 @@ import com.backendless.transaction.operations.OperationDeleteBulk;
 import com.backendless.transaction.payload.DeleteBulkPayload;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -45,10 +44,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
     operations.add( operationDelete );
 
-    Map<String, Object> reference = new HashMap<>();
-    reference.put( UnitOfWork.REFERENCE_MARKER, true );
-    reference.put( UnitOfWork.OP_RESULT_ID, operationResultId );
-    return new OpResult( reference );
+    return TransactionHelper.makeOpResult( operationResultId );
   }
 
   @Override
@@ -60,10 +56,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
     operations.add( operationDelete );
 
-    Map<String, Object> reference = new HashMap<>();
-    reference.put( UnitOfWork.REFERENCE_MARKER, true );
-    reference.put( UnitOfWork.OP_RESULT_ID, operationResultId );
-    return new OpResult( reference );
+    return TransactionHelper.makeOpResult( operationResultId );
   }
 
   @Override
@@ -77,10 +70,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
     operations.add( operationDelete );
 
-    Map<String, Object> reference = new HashMap<>();
-    reference.put( UnitOfWork.REFERENCE_MARKER, true );
-    reference.put( UnitOfWork.OP_RESULT_ID, operationResultId );
-    return new OpResult( reference );
+    return TransactionHelper.makeOpResult( operationResultId );
   }
 
   @Override
@@ -113,10 +103,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
     operations.add( operationDeleteBulk );
 
-    Map<String, Object> reference = new HashMap<>();
-    reference.put( UnitOfWork.REFERENCE_MARKER, true );
-    reference.put( UnitOfWork.OP_RESULT_ID, operationResultId );
-    return new OpResult( reference );
+    return TransactionHelper.makeOpResult( operationResultId );
   }
 
   @Override
@@ -129,10 +116,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
     operations.add( operationDeleteBulk );
 
-    Map<String, Object> reference = new HashMap<>();
-    reference.put( UnitOfWork.REFERENCE_MARKER, true );
-    reference.put( UnitOfWork.OP_RESULT_ID, operationResultId );
-    return new OpResult( reference );
+    return TransactionHelper.makeOpResult( operationResultId );
   }
 
   @Override
@@ -147,9 +131,6 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
     operations.add( operationDeleteBulk );
 
-    Map<String, Object> reference = new HashMap<>();
-    reference.put( UnitOfWork.REFERENCE_MARKER, true );
-    reference.put( UnitOfWork.OP_RESULT_ID, operationResultId );
-    return new OpResult( reference );
+    return TransactionHelper.makeOpResult( operationResultId );
   }
 }

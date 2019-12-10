@@ -8,7 +8,6 @@ import com.backendless.transaction.operations.OperationUpdateBulk;
 import com.backendless.transaction.payload.UpdateBulkPayload;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -45,10 +44,7 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
 
     operations.add( operationUpdate );
 
-    Map<String, Object> reference = new HashMap<>();
-    reference.put( UnitOfWork.REFERENCE_MARKER, true );
-    reference.put( UnitOfWork.OP_RESULT_ID, operationResultId );
-    return new OpResult( reference );
+    return TransactionHelper.makeOpResult( operationResultId );
   }
 
   @Override
@@ -78,10 +74,7 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
 
     operations.add( operationUpdateBulk );
 
-    Map<String, Object> reference = new HashMap<>();
-    reference.put( UnitOfWork.REFERENCE_MARKER, true );
-    reference.put( UnitOfWork.OP_RESULT_ID, operationResultId );
-    return new OpResult( reference );
+    return TransactionHelper.makeOpResult( operationResultId );
   }
 
   @Override
@@ -106,9 +99,6 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
 
     operations.add( operationUpdateBulk );
 
-    Map<String, Object> reference = new HashMap<>();
-    reference.put( UnitOfWork.REFERENCE_MARKER, true );
-    reference.put( UnitOfWork.OP_RESULT_ID, operationResultId );
-    return new OpResult( reference );
+    return TransactionHelper.makeOpResult( operationResultId );
   }
 }

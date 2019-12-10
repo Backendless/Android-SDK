@@ -5,11 +5,8 @@ import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.transaction.operations.Operation;
 import com.backendless.transaction.operations.OperationCreate;
 import com.backendless.transaction.operations.OperationCreateBulk;
-import com.backendless.utils.MapEntityUtil;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -46,10 +43,7 @@ public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
 
     operations.add( operationCreate );
 
-    Map<String, Object> reference = new HashMap<>();
-    reference.put( UnitOfWork.REFERENCE_MARKER, true );
-    reference.put( UnitOfWork.OP_RESULT_ID, operationResultId );
-    return new OpResult( reference );
+    return TransactionHelper.makeOpResult( operationResultId );
   }
 
   @Override
@@ -81,9 +75,6 @@ public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
 
     operations.add( operationCreateBulk );
 
-    Map<String, Object> reference = new HashMap<>();
-    reference.put( UnitOfWork.REFERENCE_MARKER, true );
-    reference.put( UnitOfWork.OP_RESULT_ID, operationResultId );
-    return new OpResult( reference );
+    return TransactionHelper.makeOpResult( operationResultId );
   }
 }
