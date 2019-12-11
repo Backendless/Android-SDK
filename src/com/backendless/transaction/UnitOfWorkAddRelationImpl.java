@@ -1,5 +1,6 @@
 package com.backendless.transaction;
 
+import com.backendless.Persistence;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.transaction.operations.Operation;
@@ -24,12 +25,12 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
   @Override
   public <E, U> OpResult addToRelation( E parentObject, String columnName, List<U> children )
   {
-    Map<String, Object> parentObjectMap = SerializationHelper.serializeEntityToMap( parentObject );
+    String parentObjectId = Persistence.getEntityId( parentObject );
     String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
 
     List<Map<String, Object>> childrenMaps = TransactionHelper.convertInstancesToMaps( children );
 
-    return addToRelation( parentTable, parentObjectMap, columnName, childrenMaps );
+    return addToRelation( parentTable, parentObjectId, columnName, null, childrenMaps );
   }
 
   @Override
@@ -39,7 +40,8 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
     if( children == null || children.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
-    return addToRelation( parentTable, parentObject, columnName, null, children );
+    String parentObjectId = (String) parentObject.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+    return addToRelation( parentTable, parentObjectId, columnName, null, children );
   }
 
   @Override
@@ -57,23 +59,23 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
     if( OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return addToRelation( parentTable, parentObject.getReference(), columnName, null, childrenMaps );
+    return addToRelation( parentTable, parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ), columnName, null, childrenMaps );
   }
 
   @Override
   public <E> OpResult addToRelation( E parentObject, String columnName, String whereClauseForChildren )
   {
-    Map<String, Object> parentObjectMap = SerializationHelper.serializeEntityToMap( parentObject );
+    String parentObjectId = Persistence.getEntityId( parentObject );
     String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
-
-    return addToRelation( parentTable, parentObjectMap, columnName, whereClauseForChildren, null );
+    return addToRelation( parentTable, parentObjectId, columnName, whereClauseForChildren, null );
   }
 
   @Override
   public OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName,
                                  String whereClauseForChildren )
   {
-    return addToRelation( parentTable, parentObject, columnName, whereClauseForChildren, null );
+    String parentObjectId = (String) parentObject.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+    return addToRelation( parentTable, parentObjectId, columnName, whereClauseForChildren, null );
   }
 
   @Override
@@ -83,15 +85,12 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
     if( OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return addToRelation( parentTable, parentObject.getReference(), columnName, whereClauseForChildren, null );
+    return addToRelation( parentTable, parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ), columnName, whereClauseForChildren, null );
   }
 
-  private OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName,      //TODO parentObject change to String objectId or change server
+  private OpResult addToRelation( String parentTable, Object parentObject, String columnName,
                                   String whereClauseForChildren, List<Map<String, Object>> children )
   {
-    if( parentObject.isEmpty() )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_MAP );
-
     String operationResultId = OperationType.ADD_RELATION + "_" + countAddRelation.getAndIncrement();
 
     Relation relation = new Relation();
