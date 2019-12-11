@@ -42,13 +42,13 @@ public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
 
     operations.add( operationCreate );
 
-    return TransactionHelper.makeOpResult( operationResultId );
+    return TransactionHelper.makeOpResult( operationResultId, OperationType.CREATE );
   }
 
   @Override
   public <E> OpResult bulkCreate( List<E> instances )
   {
-    List<Map<String, Object>> serializedEntities = TransactionHelper.getConvertInstancesToMaps( instances );
+    List<Map<String, Object>> serializedEntities = TransactionHelper.convertInstancesToMaps( instances );
 
     String tableName =  BackendlessSerializer.getSimpleName( instances.get( 0 ).getClass() );
 
@@ -67,6 +67,6 @@ public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
 
     operations.add( operationCreateBulk );
 
-    return TransactionHelper.makeOpResult( operationResultId );
+    return TransactionHelper.makeOpResult( operationResultId, OperationType.CREATE_BULK );
   }
 }

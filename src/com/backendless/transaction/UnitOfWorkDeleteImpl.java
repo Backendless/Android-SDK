@@ -43,7 +43,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
     operations.add( operationDelete );
 
-    return TransactionHelper.makeOpResult( operationResultId );
+    return TransactionHelper.makeOpResult( operationResultId, OperationType.DELETE );
   }
 
   @Override
@@ -55,7 +55,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
     operations.add( operationDelete );
 
-    return TransactionHelper.makeOpResult( operationResultId );
+    return TransactionHelper.makeOpResult( operationResultId, OperationType.DELETE );
   }
 
   @Override
@@ -63,17 +63,17 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   {
     String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
     OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, tableName, operationResultId,
-                                                           result.viaIndex( opResultIndex ) );
+                                                           result.resolveTo( opResultIndex ) );
 
     operations.add( operationDelete );
 
-    return TransactionHelper.makeOpResult( operationResultId );
+    return TransactionHelper.makeOpResult( operationResultId, OperationType.DELETE );
   }
 
   @Override
   public <E> OpResult bulkDelete( List<E> instances )
   {
-    List<Map<String, Object>> serializedEntities = TransactionHelper.getConvertInstancesToMaps( instances );
+    List<Map<String, Object>> serializedEntities = TransactionHelper.convertInstancesToMaps( instances );
 
     String tableName =  BackendlessSerializer.getSimpleName( instances.get( 0 ).getClass() );
 
@@ -93,7 +93,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
     operations.add( operationDeleteBulk );
 
-    return TransactionHelper.makeOpResult( operationResultId );
+    return TransactionHelper.makeOpResult( operationResultId, OperationType.DELETE_BULK );
   }
 
   @Override
@@ -106,20 +106,20 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
     operations.add( operationDeleteBulk );
 
-    return TransactionHelper.makeOpResult( operationResultId );
+    return TransactionHelper.makeOpResult( operationResultId, OperationType.DELETE_BULK );
   }
 
   @Override
   public OpResult bulkDelete( String tableName, OpResult result, String propName )
   {
     String operationResultId = OperationType.DELETE_BULK + "_" + countDeleteBulk.getAndIncrement();
-    Map<String, Object> whereClause = result.viaPropName( propName );
+    Map<String, Object> whereClause = result.resolveTo( propName );
     DeleteBulkPayload deleteBulkPayload = new DeleteBulkPayload( whereClause, null );
     OperationDeleteBulk operationDeleteBulk = new OperationDeleteBulk( OperationType.DELETE_BULK, tableName,
                                                                        operationResultId, deleteBulkPayload );
 
     operations.add( operationDeleteBulk );
 
-    return TransactionHelper.makeOpResult( operationResultId );
+    return TransactionHelper.makeOpResult( operationResultId, OperationType.DELETE_BULK );
   }
 }

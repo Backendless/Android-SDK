@@ -9,15 +9,15 @@ import java.util.Map;
 
 public class TransactionHelper
 {
-  public static OpResult makeOpResult( String operationResultId )
+  public static OpResult makeOpResult( String operationResultId, OperationType operationType )
   {
     Map<String, Object> reference = new HashMap<>();
     reference.put( UnitOfWork.REFERENCE_MARKER, true );
     reference.put( UnitOfWork.OP_RESULT_ID, operationResultId );
-    return new OpResult( reference );
+    return new OpResult( reference, operationType );
   }
 
-  static  <E> List<Map<String, Object>> getConvertInstancesToMaps( List<E> instances )
+  static  <E> List<Map<String, Object>> convertInstancesToMaps( List<E> instances )
   {
     if( instances == null || instances.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );

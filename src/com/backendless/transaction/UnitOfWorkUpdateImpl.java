@@ -43,13 +43,13 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
 
     operations.add( operationUpdate );
 
-    return TransactionHelper.makeOpResult( operationResultId );
+    return TransactionHelper.makeOpResult( operationResultId, OperationType.UPDATE );
   }
 
   @Override
   public <E> OpResult bulkUpdate( List<E> instances )
   {
-    List<Map<String, Object>> serializedEntities = TransactionHelper.getConvertInstancesToMaps( instances );
+    List<Map<String, Object>> serializedEntities = TransactionHelper.convertInstancesToMaps( instances );
 
     String tableName =  BackendlessSerializer.getSimpleName( instances.get( 0 ).getClass() );
 
@@ -66,7 +66,7 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
 
     operations.add( operationUpdateBulk );
 
-    return TransactionHelper.makeOpResult( operationResultId );
+    return TransactionHelper.makeOpResult( operationResultId, OperationType.UPDATE_BULK );
   }
 
   @Override
@@ -91,6 +91,6 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
 
     operations.add( operationUpdateBulk );
 
-    return TransactionHelper.makeOpResult( operationResultId );
+    return TransactionHelper.makeOpResult( operationResultId, OperationType.UPDATE_BULK );
   }
 }

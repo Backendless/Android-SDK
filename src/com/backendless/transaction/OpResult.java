@@ -6,10 +6,12 @@ import java.util.Map;
 public class OpResult
 {
   private Map<String, Object> reference;
+  private OperationType operationType;
 
-  public OpResult( Map<String, Object> reference )
+  public OpResult( Map<String, Object> reference, OperationType operationType )
   {
     this.reference = reference;
+    this.operationType = operationType;
   }
 
   public Map<String, Object> getReference()
@@ -17,14 +19,19 @@ public class OpResult
     return reference;
   }
 
-  public Map<String, Object> viaPropName( String propName )
+  public OperationType getOperationType()
+  {
+    return operationType;
+  }
+
+  public Map<String, Object> resolveTo( String propName )
   {
     Map<String, Object> referencePropName = new HashMap<>( reference );
     referencePropName.put( UnitOfWork.PROP_NAME, propName );
     return referencePropName;
   }
 
-  public Map<String, Object> viaIndex( int opResultIndex )
+  public Map<String, Object> resolveTo( int opResultIndex )
   {
     Map<String, Object> referenceIndex = new HashMap<>( reference );
     referenceIndex.put( UnitOfWork.RESULT_INDEX, opResultIndex );
