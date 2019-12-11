@@ -154,7 +154,8 @@ public class ExceptionMessage
     return field + " cannot be null or empty.";
   }
 
-  public final static String NULL_EMPTY_BULK = "Array of objects/maps for bulk operations in transaction cannot be null or empty";
+  public final static String NULL_EMPTY_BULK = "Array of objects/maps cannot be null or empty";
   public final static String NULL_MAP = "Entity map cannot be null";
   public final static String NULL_EMPTY_MAP = "Map cannot be null or empty";
+  public final static String REF_TYPE_NOT_SUPPORT = "This operation result not supported in this operation";
 }
