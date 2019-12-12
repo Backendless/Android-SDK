@@ -23,6 +23,44 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
   }
 
   @Override
+  public <E> OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName,
+                                     List<E> children )
+  {
+    if( children == null || children.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
+
+    String parentObjectId = (String) parentObject.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+
+    List<Map<String, Object>> childrenMaps;
+    if( !children.get( 0 ).getClass().isAssignableFrom( Map.class ) )
+      childrenMaps = TransactionHelper.convertInstancesToMaps( children );
+    else
+      childrenMaps = (List<Map<String, Object>>) children;
+
+    return addToRelation( parentTable, parentObjectId, columnName, null, childrenMaps );
+  }
+
+  @Override
+  public OpResult addToRelation( String parentTable, Map<String, Object> parentObject,
+                                 String columnName, OpResult children )
+  {
+    String parentObjectId = (String) parentObject.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+
+    if( OperationType.supportEntityDescriptionResultType.contains( children.getOperationType() ) )
+      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+
+    return addToRelation( parentTable, parentObjectId, columnName, null, children.getReference() ); //TODO server - change unconditional from List<Map<String, Object>> to Object
+  }
+
+  @Override
+  public OpResult addToRelation( String parentTable, Map<String, Object> parentObject,
+                                 String columnName, String whereClauseForChildren )
+  {
+    String parentObjectId = (String) parentObject.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+    return addToRelation( parentTable, parentObjectId, columnName, whereClauseForChildren, null );
+  }
+
+  @Override
   public <E, U> OpResult addToRelation( E parentObject, String columnName, List<U> children )
   {
     String parentObjectId = Persistence.getEntityId( parentObject );
@@ -34,14 +72,24 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
   }
 
   @Override
-  public OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName,
-                                 List<Map<String, Object>> children )
+  public <E> OpResult addToRelation( E parentObject, String columnName, OpResult children )
   {
-    if( children == null || children.isEmpty() )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
+    String parentObjectId = Persistence.getEntityId( parentObject );
+    String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
 
-    String parentObjectId = (String) parentObject.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
-    return addToRelation( parentTable, parentObjectId, columnName, null, children );
+    if( OperationType.supportEntityDescriptionResultType.contains( children.getOperationType() ) )
+      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+
+    return addToRelation( parentTable, parentObjectId, columnName, null, children.getReference() );
+  }
+
+  @Override
+  public <E> OpResult addToRelation( E parentObject, String columnName, String whereClauseForChildren )
+  {
+    String parentObjectId = Persistence.getEntityId( parentObject );
+    String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
+
+    return addToRelation( parentTable, parentObjectId, columnName, whereClauseForChildren, null );
   }
 
   @Override
@@ -59,33 +107,28 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
     if( OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return addToRelation( parentTable, parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ), columnName, null, childrenMaps );
+    return addToRelation( parentTable, parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ),
+                          columnName, null, childrenMaps );
   }
 
   @Override
-  public <E> OpResult addToRelation( E parentObject, String columnName, String whereClauseForChildren )
-  {
-    String parentObjectId = Persistence.getEntityId( parentObject );
-    String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
-    return addToRelation( parentTable, parentObjectId, columnName, whereClauseForChildren, null );
-  }
-
-  @Override
-  public OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName,
-                                 String whereClauseForChildren )
-  {
-    String parentObjectId = (String) parentObject.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
-    return addToRelation( parentTable, parentObjectId, columnName, whereClauseForChildren, null );
-  }
-
-  @Override
-  public OpResult addToRelation( String parentTable, OpResult parentObject, String columnName,
-                                 String whereClauseForChildren )
+  public OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, OpResult children )
   {
     if( OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return addToRelation( parentTable, parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ), columnName, whereClauseForChildren, null );
+    return addToRelation( parentTable, parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ),
+                          null, columnName, children.getReference() );
+  }
+
+  @Override
+  public OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, String whereClauseForChildren )
+  {
+    if( OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
+      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+
+    return addToRelation( parentTable, parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ),
+                          columnName, whereClauseForChildren, null );
   }
 
   private OpResult addToRelation( String parentTable, Object parentObject, String columnName,
