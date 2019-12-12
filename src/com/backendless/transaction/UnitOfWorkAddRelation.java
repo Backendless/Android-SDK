@@ -5,17 +5,36 @@ import java.util.Map;
 
 public interface UnitOfWorkAddRelation
 {
-  <E, U> OpResult addToRelation( E parentObject, String columnName, List<U> children );
+  // HashMap + List of hashmaps
+  // HashMap + List of custom classes
+  <E> OpResult addToRelation( String parentTable, Map<String, Object> parentObject,
+                              String columnName, List<E> children );
 
+  // HashMap + OpResult
   OpResult addToRelation( String parentTable, Map<String, Object> parentObject,
-                          String columnName, List<Map<String, Object>> children );
+                          String columnName, OpResult children );
 
-  <E> OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, List<E> children );
-
-  <E> OpResult addToRelation( E parentObject, String columnName, String whereClauseForChildren );
-
+  // HashMap + whereClause
   OpResult addToRelation( String parentTable, Map<String, Object> parentObject,
                           String columnName, String whereClauseForChildren );
 
+  // Custom class + List of hashmaps
+  // Custom class + List of custom classes
+  <E, U> OpResult addToRelation( E parentObject, String columnName, List<U> children );
+
+  // Custom class + OpResult
+  <E> OpResult addToRelation( E parentObject, String columnName, OpResult children );
+
+  // Custom class + whereClause
+  <E> OpResult addToRelation( E parentObject, String columnName, String whereClauseForChildren );
+
+  // OpResult + List of hashmaps
+  // OpResult + List of custom classes
+  <E> OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, List<E> children );
+
+  // OpResult + OpResult
+  OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, OpResult children );
+
+  // OpResult + where clause
   OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, String whereClauseForChildren );
 }

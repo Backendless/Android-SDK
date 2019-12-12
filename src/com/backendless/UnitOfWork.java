@@ -150,22 +150,36 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
+  public <E> OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName,
+                                     List<E> children )
+  {
+    return unitOfWorkAddRelation.addToRelation( parentTable, parentObject, columnName, children );
+  }
+
+  @Override
+  public OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName,
+                                 OpResult children )
+  {
+    return unitOfWorkAddRelation.addToRelation( parentTable, parentObject, columnName, children );
+  }
+
+  @Override
+  public OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName,
+                                 String whereClauseForChildren )
+  {
+    return unitOfWorkAddRelation.addToRelation( parentTable, parentObject, columnName, whereClauseForChildren );
+  }
+
+  @Override
   public <E, U> OpResult addToRelation( E parentObject, String columnName, List<U> children )
   {
     return unitOfWorkAddRelation.addToRelation( parentObject, columnName, children );
   }
 
   @Override
-  public OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName,
-                                 List<Map<String, Object>> children )
+  public <E> OpResult addToRelation( E parentObject, String columnName, OpResult children )
   {
-    return unitOfWorkAddRelation.addToRelation( parentTable, parentObject, columnName, children );
-  }
-
-  @Override
-  public <E> OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, List<E> children )
-  {
-    return unitOfWorkAddRelation.addToRelation( parentTable, parentObject, columnName, children );
+    return unitOfWorkAddRelation.addToRelation( parentObject, columnName, children );
   }
 
   @Override
@@ -175,10 +189,15 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
-  public OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName,
-                                 String whereClauseForChildren )
+  public <E> OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, List<E> children )
   {
-    return unitOfWorkAddRelation.addToRelation( parentTable, parentObject, columnName, whereClauseForChildren );
+    return unitOfWorkAddRelation.addToRelation( parentTable, parentObject, columnName, children );
+  }
+
+  @Override
+  public OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, OpResult children )
+  {
+    return unitOfWorkAddRelation.addToRelation( parentTable, parentObject, columnName, children );
   }
 
   @Override
