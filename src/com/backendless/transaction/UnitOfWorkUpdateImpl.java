@@ -47,29 +47,6 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
   }
 
   @Override
-  public <E> OpResult bulkUpdate( List<E> instances )
-  {
-    List<Map<String, Object>> serializedEntities = TransactionHelper.convertInstancesToMaps( instances );
-
-    String tableName =  BackendlessSerializer.getSimpleName( instances.get( 0 ).getClass() );
-
-    return bulkUpdate( tableName, serializedEntities );
-  }
-
-  @Override
-  public OpResult bulkUpdate( String tableName, List<Map<String, Object>> arrayOfHashMaps )//TODO ??? delete method or implement in server
-  {
-    String operationResultId = OperationType.UPDATE_BULK + "_" + countUpdateBulk.getAndIncrement();
-    UpdateBulkPayload updateBulkPayload = new UpdateBulkPayload( null, arrayOfHashMaps, null );
-    OperationUpdateBulk operationUpdateBulk = new OperationUpdateBulk( OperationType.UPDATE_BULK, tableName,
-                                                                       operationResultId, updateBulkPayload );
-
-    operations.add( operationUpdateBulk );
-
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.UPDATE_BULK );
-  }
-
-  @Override
   public <E> OpResult bulkUpdate( String whereClause, E changes )
   {
     Map<String, Object> changesMap = SerializationHelper.serializeEntityToMap( changes );
@@ -81,11 +58,32 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
   @Override
   public OpResult bulkUpdate( String tableName, String whereClause, Map<String, Object> changes )
   {
+    return bulkUpdate( tableName, whereClause, null, changes );
+  }
+
+  @Override
+  public OpResult bulkUpdate( String tableName, List<Map<String, Object>> objectsForChanges, Map<String, Object> changes )
+  {
+    return bulkUpdate( tableName, null, objectsForChanges, changes );
+  }
+
+  @Override
+  public OpResult bulkUpdate( String tableName, OpResult objectsForChanges, Map<String, Object> changes )
+  {
+    if( OperationType.CREATE_BULK.equals( objectsForChanges.getOperationType() ) )
+      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+
+    return bulkUpdate( tableName, null, objectsForChanges, changes );
+  }
+
+  private OpResult bulkUpdate( String tableName, String whereClause, Object objectsForChanges,
+                               Map<String, Object> changes )
+  {
     if( changes == null || changes.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_MAP );
 
     String operationResultId = OperationType.UPDATE_BULK + "_" + countUpdateBulk.getAndIncrement();
-    UpdateBulkPayload updateBulkPayload = new UpdateBulkPayload( whereClause, null, changes );
+    UpdateBulkPayload updateBulkPayload = new UpdateBulkPayload( whereClause, objectsForChanges, changes );
     OperationUpdateBulk operationUpdateBulk = new OperationUpdateBulk( OperationType.UPDATE_BULK, tableName,
                                                                        operationResultId, updateBulkPayload );
 

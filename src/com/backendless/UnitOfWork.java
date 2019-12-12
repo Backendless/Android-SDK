@@ -78,18 +78,6 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
-  public <E> OpResult bulkUpdate( List<E> instances )
-  {
-    return unitOFWorkUpdate.bulkUpdate( instances );
-  }
-
-  @Override
-  public OpResult bulkUpdate( String tableName, List<Map<String, Object>> arrayOfHashMaps )
-  {
-    return unitOFWorkUpdate.bulkUpdate( tableName, arrayOfHashMaps );
-  }
-
-  @Override
   public <E> OpResult bulkUpdate( String whereClause, E changes )
   {
     return unitOFWorkUpdate.bulkUpdate( whereClause, changes );
@@ -99,6 +87,18 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   public OpResult bulkUpdate( String tableName, String whereClause, Map<String, Object> changes )
   {
     return unitOFWorkUpdate.bulkUpdate( tableName, whereClause, changes );
+  }
+
+  @Override
+  public OpResult bulkUpdate( String tableName, List<Map<String, Object>> objectsForChanges, Map<String, Object> changes )
+  {
+    return unitOFWorkUpdate.bulkUpdate( tableName, objectsForChanges, changes );
+  }
+
+  @Override
+  public OpResult bulkUpdate( String tableName, OpResult objectsForChanges, Map<String, Object> changes )
+  {
+    return unitOFWorkUpdate.bulkUpdate( tableName, objectsForChanges, changes );
   }
 
   @Override
