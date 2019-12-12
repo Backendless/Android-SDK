@@ -49,7 +49,7 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
     if( OperationType.supportEntityDescriptionResultType.contains( children.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return addToRelation( parentTable, parentObjectId, columnName, null, children.getReference() ); //TODO server - change unconditional from List<Map<String, Object>> to Object
+    return addToRelation( parentTable, parentObjectId, columnName, null, children.getReference() );
   }
 
   @Override
@@ -132,7 +132,7 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
   }
 
   private OpResult addToRelation( String parentTable, Object parentObject, String columnName,
-                                  String whereClauseForChildren, List<Map<String, Object>> children )
+                                  String whereClauseForChildren, Object children )
   {
     String operationResultId = OperationType.ADD_RELATION + "_" + countAddRelation.getAndIncrement();
 
