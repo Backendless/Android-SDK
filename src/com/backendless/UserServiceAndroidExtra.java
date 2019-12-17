@@ -51,11 +51,11 @@ class UserServiceAndroidExtra
 
   void loginWithFacebookSdk( final android.app.Activity context, CallbackManager callbackManager, final AsyncCallback<BackendlessUser> responder )
   {
-    List<String> permissions = new ArrayList<String>();
+    List<String> permissions = new ArrayList<>();
     permissions.add( "email" );
     permissions.add( "public_profile" );
 
-    Map<String, String> facebookFieldsMappings = new HashMap<String, String>(  );
+    Map<String, String> facebookFieldsMappings = new HashMap<>(  );
     facebookFieldsMappings.put( "email", "email" );
 
     loginWithFacebookSdk( context, facebookFieldsMappings, permissions, callbackManager, responder );
@@ -121,74 +121,90 @@ class UserServiceAndroidExtra
     new AbstractSocialLoginStrategy.Builder( context, webView, SocialType.TWITTER, twitterFieldsMappings, null, getSocialDialogResponder( responder ) ).build().run();
   }
 
-  void loginWithTwitterSdk( String authToken, String authTokenSecret, Map<String, String> fieldsMappings,
+  void loginWithTwitterSdk( String authToken, BackendlessUser guestUser, String authTokenSecret, Map<String, String> fieldsMappings,
                             final AsyncCallback<BackendlessUser> responder )
   {
     if( fieldsMappings == null )
       fieldsMappings = new HashMap<>();
 
-    Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithTwitter", new Object[] { authToken, authTokenSecret, fieldsMappings }, new AsyncCallback<BackendlessUser>()
-    {
-      @Override
-      public void handleResponse( BackendlessUser response )
-      {
-        if( responder != null )
-          responder.handleResponse( response );
-      }
+    Invoker.invokeAsync(
+            UserService.USER_MANAGER_SERVER_ALIAS,
+            "loginWithTwitter",
+            new Object[] { authToken, authTokenSecret, fieldsMappings, guestUser == null ? null : guestUser.getProperties() },
+            new AsyncCallback<BackendlessUser>()
+            {
+              @Override
+              public void handleResponse( BackendlessUser response )
+              {
+                if( responder != null )
+                  responder.handleResponse( response );
+              }
 
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        if( responder != null )
-          responder.handleFault( fault );
-      }
-    } );
+              @Override
+              public void handleFault( BackendlessFault fault )
+              {
+                if( responder != null )
+                  responder.handleFault( fault );
+              }
+            }
+    );
   }
 
-  void loginWithGooglePlusSdk(  String accessToken, Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder )
+  void loginWithGooglePlusSdk(  String accessToken, BackendlessUser guestUser, Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder )
   {
     if (fieldsMappings == null)
       fieldsMappings = new HashMap<>();
 
-    Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithGooglePlus", new Object[] { null, accessToken, null, fieldsMappings }, new AsyncCallback<BackendlessUser>()
-    {
-      @Override
-      public void handleResponse( BackendlessUser response )
-      {
-        if( responder != null )
-          responder.handleResponse( response );
-      }
+    Invoker.invokeAsync(
+            UserService.USER_MANAGER_SERVER_ALIAS,
+            "loginWithGooglePlus",
+            new Object[] { accessToken, fieldsMappings, guestUser == null ? null : guestUser.getProperties() },
+            new AsyncCallback<BackendlessUser>()
+            {
+              @Override
+              public void handleResponse( BackendlessUser response )
+              {
+                if( responder != null )
+                  responder.handleResponse( response );
+              }
 
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        if( responder != null )
-          responder.handleFault( fault );
-      }
-    } );
+              @Override
+              public void handleFault( BackendlessFault fault )
+              {
+                if( responder != null )
+                  responder.handleFault( fault );
+              }
+            }
+    );
   }
 
-  void loginWithFacebookSdk(  String accessToken, Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder )
+  void loginWithFacebookSdk(  String accessToken, BackendlessUser guestUser, Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder )
   {
     if (fieldsMappings == null)
       fieldsMappings = new HashMap<>();
 
-    Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithFacebook", new Object[] { null, accessToken, null, null, fieldsMappings }, new AsyncCallback<BackendlessUser>()
-    {
-      @Override
-      public void handleResponse( BackendlessUser response )
-      {
-        if( responder != null )
-          responder.handleResponse( response );
-      }
+    Invoker.invokeAsync(
+            UserService.USER_MANAGER_SERVER_ALIAS,
+            "loginWithFacebook",
+            new Object[] { accessToken, fieldsMappings, guestUser == null ? null : guestUser.getProperties() },
+            new AsyncCallback<BackendlessUser>()
+            {
+              @Override
+              public void handleResponse( BackendlessUser response )
+              {
+                if( responder != null )
+                  responder.handleResponse( response );
+              }
 
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        if( responder != null )
-          responder.handleFault( fault );
-      }
-    }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
+              @Override
+              public void handleFault( BackendlessFault fault )
+              {
+                if( responder != null )
+                  responder.handleFault( fault );
+              }
+            },
+            new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() )
+    );
   }
 
   void loginWithGooglePlus( android.app.Activity context, android.webkit.WebView webView,
