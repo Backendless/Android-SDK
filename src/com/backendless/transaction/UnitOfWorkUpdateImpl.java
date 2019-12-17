@@ -47,6 +47,21 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
   }
 
   @Override
+  public OpResult update( String tableName, OpResult objectMap )
+  {
+    if( OperationType.CREATE.equals( objectMap.getOperationType() ) )
+      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+
+    String operationResultId = OperationType.UPDATE + "_" + countUpdate.getAndIncrement();
+    OperationUpdate operationUpdate = new OperationUpdate( OperationType.UPDATE, tableName,
+                                                           operationResultId, objectMap.getReference() );
+
+    operations.add( operationUpdate );
+
+    return TransactionHelper.makeOpResult( operationResultId, OperationType.UPDATE );
+  }
+
+  @Override
   public <E> OpResult bulkUpdate( String whereClause, E changes )
   {
     Map<String, Object> changesMap = SerializationHelper.serializeEntityToMap( changes );
