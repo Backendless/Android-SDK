@@ -1,5 +1,6 @@
 package com.backendless.transaction;
 
+import com.backendless.Persistence;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.transaction.operations.Operation;
@@ -47,11 +48,10 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   }
 
   @Override
-  public OpResult delete( String tableName, OpResult result )
+  public OpResult delete( String tableName, String objectId )
   {
     String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
-    OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, tableName, operationResultId,
-                                                           result.getReference() );
+    OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, tableName, operationResultId, objectId );
 
     operations.add( operationDelete );
 
@@ -59,11 +59,29 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   }
 
   @Override
-  public OpResult delete( String tableName, OpResult result, int opResultIndex )//TODO ??? delete or change server
+  public OpResult delete( String tableName, OpResult result )
   {
+    if( !OperationType.supportPropNameType.contains( result.getOperationType() ) )
+      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+
     String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
     OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, tableName, operationResultId,
-                                                           result.resolveTo( opResultIndex ) );
+                                                           result.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ) );
+
+    operations.add( operationDelete );
+
+    return TransactionHelper.makeOpResult( operationResultId, OperationType.DELETE );
+  }
+
+  @Override
+  public OpResult delete( String tableName, OpResultIndex resultIndex )
+  {
+    if( !OperationType.supportResultIndexType.contains( resultIndex.getOperationType() ) )
+      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+
+    String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
+    OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, tableName, operationResultId,
+                                                           resultIndex.getReference() );
 
     operations.add( operationDelete );
 

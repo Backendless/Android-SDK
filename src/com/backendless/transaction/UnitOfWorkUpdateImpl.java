@@ -85,7 +85,7 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
   @Override
   public OpResult bulkUpdate( String tableName, OpResult objectIdsForChanges, Map<String, Object> changes )
   {
-    if( OperationType.CREATE_BULK.equals( objectIdsForChanges.getOperationType() ) )
+    if( !OperationType.supportResultIndexType.contains( objectIdsForChanges.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return bulkUpdate( tableName, null, objectIdsForChanges, changes );

@@ -31,10 +31,10 @@ public class OpResult
     return referencePropName;
   }
 
-  public Map<String, Object> resolveTo( int opResultIndex )
+  public OpResultIndex resolveTo( int opResultIndex )
   {
     Map<String, Object> referenceIndex = new HashMap<>( reference );
     referenceIndex.put( UnitOfWork.RESULT_INDEX, opResultIndex );
-    return referenceIndex;
+    return new OpResultIndex( referenceIndex, operationType );
   }
 }

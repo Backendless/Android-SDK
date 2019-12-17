@@ -2,6 +2,7 @@ package com.backendless;
 
 import com.backendless.transaction.IUnitOfWork;
 import com.backendless.transaction.OpResult;
+import com.backendless.transaction.OpResultIndex;
 import com.backendless.transaction.UnitOfWorkAddRelation;
 import com.backendless.transaction.UnitOfWorkAddRelationImpl;
 import com.backendless.transaction.UnitOfWorkUpdate;
@@ -120,15 +121,21 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
+  public OpResult delete( String tableName, String objectId )
+  {
+    return unitOfWorkDelete.delete( tableName, objectId );
+  }
+
+  @Override
   public OpResult delete( String tableName, OpResult result )
   {
     return unitOfWorkDelete.delete( tableName, result );
   }
 
   @Override
-  public OpResult delete( String tableName, OpResult result, int opResultIndex )
+  public OpResult delete( String tableName, OpResultIndex opResultIndex )
   {
-    return unitOfWorkDelete.delete( tableName, result, opResultIndex );
+    return unitOfWorkDelete.delete( tableName, opResultIndex );
   }
 
   @Override
