@@ -99,19 +99,20 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   }
 
   @Override
-  public OpResult bulkDelete( String tableName, List<Map<String, Object>> arrayOfObjectMaps )
+  public <E> OpResult bulkDelete( String tableName, List<E> arrayOfObjects )
   {
-    if( arrayOfObjectMaps == null || arrayOfObjectMaps.isEmpty() )
+    if( arrayOfObjects == null || arrayOfObjects.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
-    String operationResultId = OperationType.DELETE_BULK + "_" + countDeleteBulk.getAndIncrement();
-    DeleteBulkPayload deleteBulkPayload = new DeleteBulkPayload( null, arrayOfObjectMaps );
-    OperationDeleteBulk operationDeleteBulk = new OperationDeleteBulk( OperationType.DELETE_BULK, tableName,
-                                                                       operationResultId, deleteBulkPayload );
+    List<String> objectIds;
+    if( arrayOfObjects.get( 0 ) instanceof Map )
+      objectIds = TransactionHelper.convertMapToObjectIds( (List<Map<String, Object>>) arrayOfObjects );
+    else if( arrayOfObjects.get( 0 ) instanceof String )
+      objectIds = (List<String>) arrayOfObjects;
+    else
+      throw new IllegalArgumentException( ExceptionMessage.LIST_MAP_OR_STRING );
 
-    operations.add( operationDeleteBulk );
-
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.DELETE_BULK );
+    return bulkDelete( tableName, null, objectIds );
   }
 
   @Override
@@ -128,11 +129,20 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   }
 
   @Override
-  public OpResult bulkDelete( String tableName, OpResult result, String propName )
+  public OpResult bulkDelete( String tableName, OpResult result )
   {
+    if( !OperationType.supportResultIndexType.contains( result.getOperationType() ) )
+      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+
+    return bulkDelete( tableName, result.getReference(), null );
+  }
+
+  private OpResult bulkDelete( String tableName, Map<String, Object> reference, List<String> objectIds )
+  {
+    Object unconditional = reference != null ? reference : objectIds;
+
     String operationResultId = OperationType.DELETE_BULK + "_" + countDeleteBulk.getAndIncrement();
-    Map<String, Object> whereClause = result.resolveTo( propName );
-    DeleteBulkPayload deleteBulkPayload = new DeleteBulkPayload( whereClause, null );
+    DeleteBulkPayload deleteBulkPayload = new DeleteBulkPayload( null, unconditional );
     OperationDeleteBulk operationDeleteBulk = new OperationDeleteBulk( OperationType.DELETE_BULK, tableName,
                                                                        operationResultId, deleteBulkPayload );
 

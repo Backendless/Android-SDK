@@ -158,4 +158,5 @@ public class ExceptionMessage
   public final static String NULL_MAP = "Entity map cannot be null";
   public final static String NULL_EMPTY_MAP = "Map cannot be null or empty";
   public final static String REF_TYPE_NOT_SUPPORT = "This operation result not supported in this operation";
+  public final static String LIST_MAP_OR_STRING = "List can be only of objects map or objectIds";
 }

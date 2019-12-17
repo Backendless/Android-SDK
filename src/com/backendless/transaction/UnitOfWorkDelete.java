@@ -17,9 +17,9 @@ public interface UnitOfWorkDelete
 
   <E> OpResult bulkDelete( List<E> instances );
 
-  OpResult bulkDelete( String tableName, List<Map<String, Object>> arrayOfObjectMaps );
+  <E> OpResult bulkDelete( String tableName, List<E> arrayOfObjects );
 
   OpResult bulkDelete( String tableName, String whereClause );
 
-  OpResult bulkDelete( String tableName, OpResult result, String propName );
+  OpResult bulkDelete( String tableName, OpResult result );
 }

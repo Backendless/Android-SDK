@@ -1,5 +1,6 @@
 package com.backendless.transaction;
 
+import com.backendless.Persistence;
 import com.backendless.exceptions.ExceptionMessage;
 
 import java.util.ArrayList;
@@ -28,5 +29,15 @@ public class TransactionHelper
       serializedEntities.add( SerializationHelper.serializeEntityToMap( entity ) );
     }
     return serializedEntities;
+  }
+
+  static List<String> convertMapToObjectIds( List<Map<String, Object>> objectsMaps )
+  {
+    List<String> objectIds = new ArrayList<>();
+    for( Map<String, Object> map : objectsMaps )
+    {
+      objectIds.add( (String) map.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) );
+    }
+    return objectIds;
   }
 }

@@ -145,9 +145,9 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
-  public OpResult bulkDelete( String tableName, List<Map<String, Object>> arrayOfObjectMaps )
+  public <E> OpResult bulkDelete( String tableName, List<E> arrayOfObjects )
   {
-    return unitOfWorkDelete.bulkDelete( tableName, arrayOfObjectMaps );
+    return unitOfWorkDelete.bulkDelete( tableName, arrayOfObjects );
   }
 
   @Override
@@ -157,9 +157,9 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
-  public OpResult bulkDelete( String tableName, OpResult result, String propName )
+  public OpResult bulkDelete( String tableName, OpResult result )
   {
-    return unitOfWorkDelete.bulkDelete( tableName, result, propName );
+    return unitOfWorkDelete.bulkDelete( tableName, result );
   }
 
   @Override
