@@ -96,15 +96,15 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
-  public OpResult bulkUpdate( String tableName, List<Map<String, Object>> objectsForChanges, Map<String, Object> changes )
+  public OpResult bulkUpdate( String tableName, List<String> objectsForChanges, Map<String, Object> changes )
   {
     return unitOFWorkUpdate.bulkUpdate( tableName, objectsForChanges, changes );
   }
 
   @Override
-  public OpResult bulkUpdate( String tableName, OpResult objectsForChanges, Map<String, Object> changes )
+  public OpResult bulkUpdate( String tableName, OpResult objectIdsForChanges, Map<String, Object> changes )
   {
-    return unitOFWorkUpdate.bulkUpdate( tableName, objectsForChanges, changes );
+    return unitOFWorkUpdate.bulkUpdate( tableName, objectIdsForChanges, changes );
   }
 
   @Override
