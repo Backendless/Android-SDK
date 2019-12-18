@@ -7,10 +7,11 @@ public interface UnitOfWorkAddRelation
 {
   // HashMap + List of hashmaps
   // HashMap + List of custom classes
+  // HashMap + list of objectIds
   <E> OpResult addToRelation( String parentTable, Map<String, Object> parentObject,
                               String columnName, List<E> children );
 
-  // HashMap + OpResult
+  // HashMap + OpResult=CREATE_BULK
   OpResult addToRelation( String parentTable, Map<String, Object> parentObject,
                           String columnName, OpResult children );
 
@@ -20,21 +21,23 @@ public interface UnitOfWorkAddRelation
 
   // Custom class + List of hashmaps
   // Custom class + List of custom classes
+  // Custom class + list of objectIds
   <E, U> OpResult addToRelation( E parentObject, String columnName, List<U> children );
 
-  // Custom class + OpResult
+  // Custom class + OpResult=CREATE_BULK
   <E> OpResult addToRelation( E parentObject, String columnName, OpResult children );
 
   // Custom class + whereClause
   <E> OpResult addToRelation( E parentObject, String columnName, String whereClauseForChildren );
 
-  // OpResult + List of hashmaps
-  // OpResult + List of custom classes
+  // OpResult=CREATE/UPDATE(getObjectId) + List of hashmaps
+  // OpResult=CREATE/UPDATE(getObjectId) + List of custom classes
+  // OpResult=CREATE/UPDATE(getObjectId) + List of objectIds
   <E> OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, List<E> children );
 
-  // OpResult + OpResult
+  // OpResult=CREATE/UPDATE(getObjectId) + OpResult=CREATE_BULK
   OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, OpResult children );
 
-  // OpResult + where clause
+  // OpResult=CREATE/UPDATE(getObjectId) + where clause
   OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, String whereClauseForChildren );
 }

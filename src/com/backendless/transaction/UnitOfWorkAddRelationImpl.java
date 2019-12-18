@@ -31,13 +31,9 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
 
     String parentObjectId = (String) parentObject.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
-    List<Map<String, Object>> childrenMaps;
-    if( !children.get( 0 ).getClass().isAssignableFrom( Map.class ) )
-      childrenMaps = TransactionHelper.convertInstancesToMaps( children );
-    else
-      childrenMaps = (List<Map<String, Object>>) children;
+    List<String> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
 
-    return addToRelation( parentTable, parentObjectId, columnName, null, childrenMaps );
+    return addToRelation( parentTable, parentObjectId, columnName, null, childrenIds );
   }
 
   @Override
@@ -46,7 +42,7 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
   {
     String parentObjectId = (String) parentObject.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
 
-    if( OperationType.supportEntityDescriptionResultType.contains( children.getOperationType() ) )
+    if( !OperationType.supportResultIndexType.contains( children.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return addToRelation( parentTable, parentObjectId, columnName, null, children.getReference() );
@@ -66,9 +62,9 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
     String parentObjectId = Persistence.getEntityId( parentObject );
     String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
 
-    List<Map<String, Object>> childrenMaps = TransactionHelper.convertInstancesToMaps( children );
+    List<String> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
 
-    return addToRelation( parentTable, parentObjectId, columnName, null, childrenMaps );
+    return addToRelation( parentTable, parentObjectId, columnName, null, childrenIds );
   }
 
   @Override
@@ -77,7 +73,7 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
     String parentObjectId = Persistence.getEntityId( parentObject );
     String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
 
-    if( OperationType.supportEntityDescriptionResultType.contains( children.getOperationType() ) )
+    if( !OperationType.supportResultIndexType.contains( children.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return addToRelation( parentTable, parentObjectId, columnName, null, children.getReference() );
@@ -98,23 +94,22 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
     if( children == null || children.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
-    List<Map<String, Object>> childrenMaps;
-    if( !children.get( 0 ).getClass().isAssignableFrom( Map.class ) )
-      childrenMaps = TransactionHelper.convertInstancesToMaps( children );
-    else
-      childrenMaps = (List<Map<String, Object>>) children;
+    List<String> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
 
-    if( OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
+    if( !OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return addToRelation( parentTable, parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ),
-                          columnName, null, childrenMaps );
+                          columnName, null, childrenIds );
   }
 
   @Override
   public OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, OpResult children )
   {
-    if( OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
+    if( !OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
+      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+
+    if( !OperationType.supportResultIndexType.contains( children.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return addToRelation( parentTable, parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ),
@@ -124,7 +119,7 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
   @Override
   public OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, String whereClauseForChildren )
   {
-    if( OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
+    if( !OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return addToRelation( parentTable, parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ),

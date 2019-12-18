@@ -40,4 +40,18 @@ public class TransactionHelper
     }
     return objectIds;
   }
+
+  static <E> List<String> getObjectIdsFromUnknownList( List<E> children )
+  {
+    List<String> childrenMaps;
+    if( children.get( 0 ).getClass().isAssignableFrom( Map.class ) )
+      childrenMaps = TransactionHelper.convertMapToObjectIds( (List<Map<String, Object>>) children );
+    else if( children.get( 0 ).getClass().isAssignableFrom( String.class ) )
+      childrenMaps = (List<String>) children;
+    else if( !( children.get( 0 ).getClass().isArray() || children.get( 0 ).getClass().isAssignableFrom( Iterable.class ) ) )
+      childrenMaps = TransactionHelper.convertMapToObjectIds( TransactionHelper.convertInstancesToMaps( children ) );
+    else
+      throw new IllegalArgumentException( ExceptionMessage.LIST_MAP_OR_STRING_OR_INSTANCES );
+    return childrenMaps;
+  }
 }
