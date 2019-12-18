@@ -1,5 +1,6 @@
 package com.backendless;
 
+import com.backendless.async.callback.AsyncCallback;
 import com.backendless.transaction.IUnitOfWork;
 import com.backendless.transaction.OpResult;
 import com.backendless.transaction.OpResultIndex;
@@ -9,6 +10,8 @@ import com.backendless.transaction.UnitOfWorkAddRelation;
 import com.backendless.transaction.UnitOfWorkAddRelationImpl;
 import com.backendless.transaction.UnitOfWorkDeleteRelation;
 import com.backendless.transaction.UnitOfWorkDeleteRelationImpl;
+import com.backendless.transaction.UnitOfWorkExecutor;
+import com.backendless.transaction.UnitOfWorkExecutorImpl;
 import com.backendless.transaction.UnitOfWorkSetRelation;
 import com.backendless.transaction.UnitOfWorkSetRelationImpl;
 import com.backendless.transaction.UnitOfWorkUpdate;
@@ -19,15 +22,12 @@ import com.backendless.transaction.UnitOfWorkDeleteImpl;
 import com.backendless.transaction.UnitOfWorkStatus;
 import com.backendless.transaction.UnitOfWorkUpdateImpl;
 import com.backendless.transaction.operations.Operation;
-import com.backendless.utils.ResponderHelper;
 
 import java.util.List;
 import java.util.Map;
 
 public class UnitOfWork extends com.backendless.transaction.UnitOfWork implements IUnitOfWork
 {
-  public final static String TRANSACTION_MANAGER_SERVER_ALIAS = "com.backendless.services.transaction.TransactionService";
-
   private final List<Operation> operations;
 
   private final UnitOfWorkCreate unitOfWorkCreate;
@@ -37,7 +37,7 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   private final UnitOfWorkAddRelation unitOfWorkAddRelation;
   private final UnitOfWorkSetRelation unitOfWorkSetRelation;
   private final UnitOfWorkDeleteRelation unitOfWorkDeleteRelation;
-
+  private final UnitOfWorkExecutor unitOfWorkExecutor;
 
   public UnitOfWork()
   {
@@ -50,13 +50,18 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
     unitOfWorkAddRelation = new UnitOfWorkAddRelationImpl( relationOperation );
     unitOfWorkSetRelation = new UnitOfWorkSetRelationImpl( relationOperation );
     unitOfWorkDeleteRelation = new UnitOfWorkDeleteRelationImpl( relationOperation );
+    unitOfWorkExecutor = new UnitOfWorkExecutorImpl( this );
   }
 
   @Override
   public UnitOfWorkStatus execute()
   {
-    Object[] args = new Object[]{ this };
-    return Invoker.invokeSync( TRANSACTION_MANAGER_SERVER_ALIAS, "execute", args, ResponderHelper.getPOJOAdaptingResponder( UnitOfWorkStatus.class ) );
+    return unitOfWorkExecutor.execute();
+  }
+
+  public void execute( AsyncCallback<UnitOfWorkStatus> responder )
+  {
+    unitOfWorkExecutor.execute( responder );
   }
 
   @Override
