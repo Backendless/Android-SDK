@@ -26,14 +26,8 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
   public <E> OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName,
                                      List<E> children )
   {
-    if( children == null || children.isEmpty() )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
-
     String parentObjectId = (String) parentObject.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
-
-    List<String> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
-
-    return addToRelation( parentTable, parentObjectId, columnName, null, childrenIds );
+    return addToRelation( parentTable, parentObjectId, columnName, children );
   }
 
   @Override
@@ -41,11 +35,7 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
                                  String columnName, OpResult children )
   {
     String parentObjectId = (String) parentObject.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
-
-    if( !OperationType.supportResultIndexType.contains( children.getOperationType() ) )
-      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
-
-    return addToRelation( parentTable, parentObjectId, columnName, null, children.getReference() );
+    return addToRelation( parentTable, parentObjectId, columnName, children );
   }
 
   @Override
@@ -53,6 +43,32 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
                                  String columnName, String whereClauseForChildren )
   {
     String parentObjectId = (String) parentObject.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+    return addToRelation( parentTable, parentObjectId, columnName, whereClauseForChildren );
+  }
+
+  @Override
+  public <E> OpResult addToRelation( String parentTable, String parentObjectId, String columnName, List<E> children )
+  {
+    if( children == null || children.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
+
+    List<String> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
+
+    return addToRelation( parentTable, parentObjectId, columnName, null, childrenIds );
+  }
+
+  @Override
+  public OpResult addToRelation( String parentTable, String parentObjectId, String columnName, OpResult children )
+  {
+    if( !OperationType.supportResultIndexType.contains( children.getOperationType() ) )
+      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+
+    return addToRelation( parentTable, parentObjectId, columnName, null, children.getReference() );
+  }
+
+  @Override
+  public OpResult addToRelation( String parentTable, String parentObjectId, String columnName, String whereClauseForChildren )
+  {
     return addToRelation( parentTable, parentObjectId, columnName, whereClauseForChildren, null );
   }
 

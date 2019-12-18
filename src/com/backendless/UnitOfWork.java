@@ -184,6 +184,24 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
+  public <E> OpResult addToRelation( String parentTable, String parentObjectId, String columnName, List<E> children )
+  {
+    return unitOfWorkAddRelation.addToRelation( parentTable, parentObjectId, columnName, children );
+  }
+
+  @Override
+  public OpResult addToRelation( String parentTable, String parentObjectId, String columnName, OpResult children )
+  {
+    return unitOfWorkAddRelation.addToRelation( parentTable, parentObjectId, columnName, children );
+  }
+
+  @Override
+  public OpResult addToRelation( String parentTable, String parentObjectId, String columnName, String whereClauseForChildren )
+  {
+    return unitOfWorkAddRelation.addToRelation( parentTable, parentObjectId, columnName, whereClauseForChildren );
+  }
+
+  @Override
   public <E, U> OpResult addToRelation( E parentObject, String columnName, List<U> children )
   {
     return unitOfWorkAddRelation.addToRelation( parentObject, columnName, children );

@@ -19,6 +19,17 @@ public interface UnitOfWorkAddRelation
   OpResult addToRelation( String parentTable, Map<String, Object> parentObject,
                           String columnName, String whereClauseForChildren );
 
+  // String + List of hashmaps
+  // String + List of custom classes
+  // String + list of objectIds
+  <E> OpResult addToRelation( String parentTable, String parentObjectId, String columnName, List<E> children );
+
+  // String + OpResult=CREATE_BULK
+  OpResult addToRelation( String parentTable, String parentObjectId, String columnName, OpResult children );
+
+  // String + whereClause
+  OpResult addToRelation( String parentTable, String parentObjectId, String columnName, String whereClauseForChildren );
+
   // Custom class + List of hashmaps
   // Custom class + List of custom classes
   // Custom class + list of objectIds
