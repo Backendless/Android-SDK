@@ -3,6 +3,8 @@ package com.backendless;
 import com.backendless.transaction.IUnitOfWork;
 import com.backendless.transaction.OpResult;
 import com.backendless.transaction.OpResultIndex;
+import com.backendless.transaction.RelationOperation;
+import com.backendless.transaction.RelationOperationImpl;
 import com.backendless.transaction.UnitOfWorkAddRelation;
 import com.backendless.transaction.UnitOfWorkAddRelationImpl;
 import com.backendless.transaction.UnitOfWorkUpdate;
@@ -12,6 +14,7 @@ import com.backendless.transaction.UnitOfWorkDelete;
 import com.backendless.transaction.UnitOfWorkDeleteImpl;
 import com.backendless.transaction.UnitOfWorkStatus;
 import com.backendless.transaction.UnitOfWorkUpdateImpl;
+import com.backendless.transaction.operations.Operation;
 import com.backendless.utils.ResponderHelper;
 
 import java.util.List;
@@ -29,10 +32,12 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   public UnitOfWork()
   {
     super();
-    unitOfWorkCreate = new UnitOfWorkCreateImpl( super.getOperations() );
-    unitOFWorkUpdate = new UnitOfWorkUpdateImpl( super.getOperations() );
-    unitOfWorkDelete = new UnitOfWorkDeleteImpl( super.getOperations() );
-    unitOfWorkAddRelation = new UnitOfWorkAddRelationImpl( super.getOperations() );
+    operations = super.getOperations();
+    unitOfWorkCreate = new UnitOfWorkCreateImpl( operations );
+    unitOFWorkUpdate = new UnitOfWorkUpdateImpl( operations );
+    unitOfWorkDelete = new UnitOfWorkDeleteImpl( operations );
+    relationOperation = new RelationOperationImpl( operations );
+    unitOfWorkAddRelation = new UnitOfWorkAddRelationImpl( relationOperation );
   }
 
   @Override
