@@ -105,9 +105,9 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
     List<String> objectIds;
-    if( arrayOfObjects.get( 0 ) instanceof Map )
+    if( arrayOfObjects.get( 0 ).getClass().isAssignableFrom( Map.class ) )
       objectIds = TransactionHelper.convertMapToObjectIds( (List<Map<String, Object>>) arrayOfObjects );
-    else if( arrayOfObjects.get( 0 ) instanceof String )
+    else if( arrayOfObjects.get( 0 ).getClass().isAssignableFrom( String.class ) )
       objectIds = (List<String>) arrayOfObjects;
     else
       throw new IllegalArgumentException( ExceptionMessage.LIST_MAP_OR_STRING );
