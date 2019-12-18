@@ -7,6 +7,8 @@ import com.backendless.transaction.RelationOperation;
 import com.backendless.transaction.RelationOperationImpl;
 import com.backendless.transaction.UnitOfWorkAddRelation;
 import com.backendless.transaction.UnitOfWorkAddRelationImpl;
+import com.backendless.transaction.UnitOfWorkSetRelation;
+import com.backendless.transaction.UnitOfWorkSetRelationImpl;
 import com.backendless.transaction.UnitOfWorkUpdate;
 import com.backendless.transaction.UnitOfWorkCreate;
 import com.backendless.transaction.UnitOfWorkCreateImpl;
@@ -24,10 +26,14 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
 {
   public final static String TRANSACTION_MANAGER_SERVER_ALIAS = "com.backendless.services.transaction.TransactionService";
 
+  private final List<Operation> operations;
+
   private final UnitOfWorkCreate unitOfWorkCreate;
   private final UnitOfWorkUpdate unitOFWorkUpdate;
   private final UnitOfWorkDelete unitOfWorkDelete;
   private final UnitOfWorkAddRelation unitOfWorkAddRelation;
+  private final UnitOfWorkSetRelation unitOfWorkSetRelation;
+  private final RelationOperation relationOperation;
 
   public UnitOfWork()
   {
@@ -38,6 +44,7 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
     unitOfWorkDelete = new UnitOfWorkDeleteImpl( operations );
     relationOperation = new RelationOperationImpl( operations );
     unitOfWorkAddRelation = new UnitOfWorkAddRelationImpl( relationOperation );
+    unitOfWorkSetRelation = new UnitOfWorkSetRelationImpl( relationOperation );
   }
 
   @Override
@@ -259,5 +266,99 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   public OpResult addToRelation( String parentTable, OpResultIndex parentObject, String columnName, String whereClauseForChildren )
   {
     return unitOfWorkAddRelation.addToRelation( parentTable, parentObject, columnName, whereClauseForChildren );
+  }
+
+  @Override
+  public <E> OpResult setToRelation( String parentTable, Map<String, Object> parentObject, String columnName,
+                                     List<E> children )
+  {
+    return unitOfWorkSetRelation.setToRelation( parentTable, parentObject, columnName, children );
+  }
+
+  @Override
+  public OpResult setToRelation( String parentTable, Map<String, Object> parentObject, String columnName,
+                                 OpResult children )
+  {
+    return unitOfWorkSetRelation.setToRelation( parentTable, parentObject, columnName, children );
+  }
+
+  @Override
+  public OpResult setToRelation( String parentTable, Map<String, Object> parentObject, String columnName,
+                                 String whereClauseForChildren )
+  {
+    return unitOfWorkSetRelation.setToRelation( parentTable, parentObject, columnName, whereClauseForChildren );
+  }
+
+  @Override
+  public <E> OpResult setToRelation( String parentTable, String parentObjectId, String columnName, List<E> children )
+  {
+    return unitOfWorkSetRelation.setToRelation( parentTable, parentObjectId, columnName, children );
+  }
+
+  @Override
+  public OpResult setToRelation( String parentTable, String parentObjectId, String columnName, OpResult children )
+  {
+    return unitOfWorkSetRelation.setToRelation( parentTable, parentObjectId, columnName, children );
+  }
+
+  @Override
+  public OpResult setToRelation( String parentTable, String parentObjectId, String columnName, String whereClauseForChildren )
+  {
+    return unitOfWorkSetRelation.setToRelation( parentTable, parentObjectId, columnName, whereClauseForChildren );
+  }
+
+  @Override
+  public <E, U> OpResult setToRelation( E parentObject, String columnName, List<U> children )
+  {
+    return unitOfWorkSetRelation.setToRelation( parentObject, columnName, children );
+  }
+
+  @Override
+  public <E> OpResult setToRelation( E parentObject, String columnName, OpResult children )
+  {
+    return unitOfWorkSetRelation.setToRelation( parentObject, columnName, children );
+  }
+
+  @Override
+  public <E> OpResult setToRelation( E parentObject, String columnName, String whereClauseForChildren )
+  {
+    return unitOfWorkSetRelation.setToRelation( parentObject, columnName, whereClauseForChildren );
+  }
+
+  @Override
+  public <E> OpResult setToRelation( String parentTable, OpResult parentObject, String columnName, List<E> children )
+  {
+    return unitOfWorkSetRelation.setToRelation( parentTable, parentObject, columnName, children );
+  }
+
+  @Override
+  public OpResult setToRelation( String parentTable, OpResult parentObject, String columnName, OpResult children )
+  {
+    return unitOfWorkSetRelation.setToRelation( parentTable, parentObject, columnName, children );
+  }
+
+  @Override
+  public OpResult setToRelation( String parentTable, OpResult parentObject, String columnName,
+                                 String whereClauseForChildren )
+  {
+    return unitOfWorkSetRelation.setToRelation( parentTable, parentObject, columnName, whereClauseForChildren );
+  }
+
+  @Override
+  public <E> OpResult setToRelation( String parentTable, OpResultIndex parentObject, String columnName, List<E> children )
+  {
+    return unitOfWorkSetRelation.setToRelation( parentTable, parentObject, columnName, children );
+  }
+
+  @Override
+  public OpResult setToRelation( String parentTable, OpResultIndex parentObject, String columnName, OpResult children )
+  {
+    return unitOfWorkSetRelation.setToRelation( parentTable, parentObject, columnName, children );
+  }
+
+  @Override
+  public OpResult setToRelation( String parentTable, OpResultIndex parentObject, String columnName, String whereClauseForChildren )
+  {
+    return unitOfWorkSetRelation.setToRelation( parentTable, parentObject, columnName, whereClauseForChildren );
   }
 }
