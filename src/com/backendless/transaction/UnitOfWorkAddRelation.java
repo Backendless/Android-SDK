@@ -8,12 +8,10 @@ public interface UnitOfWorkAddRelation
   // HashMap + List of hashmaps
   // HashMap + List of custom classes
   // HashMap + list of objectIds
-  <E> OpResult addToRelation( String parentTable, Map<String, Object> parentObject,
-                              String columnName, List<E> children );
+  <E> OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName, List<E> children );
 
   // HashMap + OpResult=CREATE_BULK
-  OpResult addToRelation( String parentTable, Map<String, Object> parentObject,
-                          String columnName, OpResult children );
+  OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName, OpResult children );
 
   // HashMap + whereClause
   OpResult addToRelation( String parentTable, Map<String, Object> parentObject,
@@ -51,4 +49,15 @@ public interface UnitOfWorkAddRelation
 
   // OpResult=CREATE/UPDATE(getObjectId) + where clause
   OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, String whereClauseForChildren );
+
+  // OpResult=CREATE_BULK(resultIndex) + List of hashmaps
+  // OpResult=CREATE_BULK(resultIndex) + List of custom classes
+  // OpResult=CREATE_BULK(resultIndex) + List of objectIds
+  <E> OpResult addToRelation( String parentTable, OpResultIndex parentObject, String columnName, List<E> children );
+
+  // OpResult=CREATE_BULK(resultIndex) + OpResult=CREATE_BULK
+  OpResult addToRelation( String parentTable, OpResultIndex parentObject, String columnName, OpResult children );
+
+  // OpResult=CREATE_BULK(resultIndex) + where clause
+  OpResult addToRelation( String parentTable, OpResultIndex parentObject, String columnName, String whereClauseForChildren );
 }

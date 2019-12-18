@@ -142,6 +142,41 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
                           columnName, whereClauseForChildren, null );
   }
 
+  @Override
+  public <E> OpResult addToRelation( String parentTable, OpResultIndex parentObject, String columnName, List<E> children )
+  {
+    if( children == null || children.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
+
+    List<String> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
+
+    if( !OperationType.supportResultIndexType.contains( parentObject.getOperationType() ) )
+      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+
+    return addToRelation( parentTable, parentObject, columnName, null, childrenIds );
+  }
+
+  @Override
+  public OpResult addToRelation( String parentTable, OpResultIndex parentObject, String columnName, OpResult children )
+  {
+    if( !OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
+      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+
+    if( !OperationType.supportResultIndexType.contains( children.getOperationType() ) )
+      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+
+    return addToRelation( parentTable, parentObject, null, columnName, children.getReference() );
+  }
+
+  @Override
+  public OpResult addToRelation( String parentTable, OpResultIndex parentObject, String columnName, String whereClauseForChildren )
+  {
+    if( !OperationType.supportResultIndexType.contains( parentObject.getOperationType() ) )
+      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+
+    return addToRelation( parentTable, parentObject, columnName, whereClauseForChildren, null );
+  }
+
   private OpResult addToRelation( String parentTable, Object parentObject, String columnName,
                                   String whereClauseForChildren, Object children )
   {
