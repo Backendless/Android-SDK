@@ -61,6 +61,10 @@ public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
     if( arrayOfObjectMaps == null || arrayOfObjectMaps.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
+    for( Map<String, Object> mapObject : arrayOfObjectMaps )
+      if( mapObject == null )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_MAP );
+
     String operationResultId = OperationType.CREATE_BULK + "_" + countCreateBulk.getAndIncrement();
     OperationCreateBulk operationCreateBulk = new OperationCreateBulk( OperationType.CREATE_BULK, tableName,
                                                                        operationResultId, arrayOfObjectMaps );
