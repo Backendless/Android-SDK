@@ -33,7 +33,7 @@ public class UnitOfWorkExecutorImpl implements UnitOfWorkExecutor
     if( unitOfWork.getOperations() == null || unitOfWork.getOperations().isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.LIST_OPERATIONS_NULL_EMPTY );
 
-    Object[] args = new Object[]{ this };
+    Object[] args = new Object[]{ unitOfWork };
 
     if( async )
       Invoker.invokeAsync( TRANSACTION_MANAGER_SERVER_ALIAS, "execute", args, responder, ResponderHelper.getPOJOAdaptingResponder( UnitOfWorkStatus.class ) );
