@@ -49,7 +49,7 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
   @Override
   public OpResult update( String tableName, OpResult objectMap )
   {
-    if( OperationType.CREATE.equals( objectMap.getOperationType() ) )
+    if( !OperationType.CREATE.equals( objectMap.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     String operationResultId = OperationType.UPDATE + "_" + countUpdate.getAndIncrement();
