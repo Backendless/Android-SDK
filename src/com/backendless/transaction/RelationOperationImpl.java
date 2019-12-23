@@ -67,6 +67,9 @@ public class RelationOperationImpl implements RelationOperation
   public OpResult addOperation( OperationType operationType, String parentTable, String parentObjectId,
                                 String columnName, OpResult children )
   {
+    if( children == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
     if( !OperationType.supportResultIndexType.contains( children.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
@@ -99,6 +102,9 @@ public class RelationOperationImpl implements RelationOperation
   public <E> OpResult addOperation( OperationType operationType, E parentObject, String columnName,
                                     OpResult children )
   {
+    if( children == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
     String parentObjectId = Persistence.getEntityId( parentObject );
     String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
 
@@ -124,6 +130,9 @@ public class RelationOperationImpl implements RelationOperation
   public <E> OpResult addOperation( OperationType operationType, String parentTable, OpResult parentObject,
                                     String columnName, List<E> children )
   {
+    if( parentObject == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
     if( children == null || children.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
@@ -140,6 +149,9 @@ public class RelationOperationImpl implements RelationOperation
   public OpResult addOperation( OperationType operationType, String parentTable, OpResult parentObject,
                                 String columnName, OpResult children )
   {
+    if( parentObject == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
     if( !OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
@@ -154,6 +166,9 @@ public class RelationOperationImpl implements RelationOperation
   public OpResult addOperation( OperationType operationType, String parentTable, OpResult parentObject,
                                 String columnName, String whereClauseForChildren )
   {
+    if( parentObject == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
     if( !OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
@@ -165,6 +180,9 @@ public class RelationOperationImpl implements RelationOperation
   public <E> OpResult addOperation( OperationType operationType, String parentTable, OpResultIndex parentObject,
                                     String columnName, List<E> children )
   {
+    if( parentObject == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
     if( children == null || children.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
@@ -181,6 +199,9 @@ public class RelationOperationImpl implements RelationOperation
   public OpResult addOperation( OperationType operationType, String parentTable, OpResultIndex parentObject,
                                 String columnName, OpResult children )
   {
+    if( parentObject == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
     if( !OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
@@ -195,6 +216,9 @@ public class RelationOperationImpl implements RelationOperation
   public OpResult addOperation( OperationType operationType, String parentTable, OpResultIndex parentObject,
                                 String columnName, String whereClauseForChildren )
   {
+    if( parentObject == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
     if( !OperationType.supportResultIndexType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 

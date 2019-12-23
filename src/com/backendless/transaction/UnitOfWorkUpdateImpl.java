@@ -49,6 +49,9 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
   @Override
   public OpResult update( String tableName, OpResult objectMap )
   {
+    if( objectMap == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
     if( !OperationType.CREATE.equals( objectMap.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
@@ -85,6 +88,9 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
   @Override
   public OpResult bulkUpdate( String tableName, OpResult objectIdsForChanges, Map<String, Object> changes )
   {
+    if( objectIdsForChanges == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
     if( !OperationType.supportResultIndexType.contains( objectIdsForChanges.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
