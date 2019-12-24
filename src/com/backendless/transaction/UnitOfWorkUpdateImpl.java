@@ -103,6 +103,8 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
     if( changes == null || changes.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_MAP );
 
+    TransactionHelper.removeSystemField( changes );
+
     String operationResultId = OperationType.UPDATE_BULK + "_" + countUpdateBulk.getAndIncrement();
     UpdateBulkPayload updateBulkPayload = new UpdateBulkPayload( whereClause, objectsForChanges, changes );
     OperationUpdateBulk operationUpdateBulk = new OperationUpdateBulk( OperationType.UPDATE_BULK, tableName,
