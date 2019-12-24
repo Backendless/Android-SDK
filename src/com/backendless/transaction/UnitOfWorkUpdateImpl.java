@@ -47,7 +47,7 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
   }
 
   @Override
-  public OpResult update( String tableName, OpResult objectMap )
+  public OpResult update( OpResult objectMap )
   {
     if( objectMap == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
@@ -56,12 +56,12 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     String operationResultId = OperationType.UPDATE + "_" + countUpdate.getAndIncrement();
-    OperationUpdate operationUpdate = new OperationUpdate( OperationType.UPDATE, tableName,
+    OperationUpdate operationUpdate = new OperationUpdate( OperationType.UPDATE, objectMap.getTableName(),
                                                            operationResultId, objectMap.getReference() );
 
     operations.add( operationUpdate );
 
-    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.UPDATE );
+    return TransactionHelper.makeOpResult( objectMap.getTableName(), operationResultId, OperationType.UPDATE );
   }
 
   @Override

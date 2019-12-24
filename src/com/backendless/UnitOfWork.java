@@ -101,9 +101,9 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
-  public OpResult update( String tableName, OpResult objectMap )
+  public OpResult update( OpResult objectMap )
   {
-    return unitOFWorkUpdate.update( tableName, objectMap );
+    return unitOFWorkUpdate.update( objectMap );
   }
 
   @Override

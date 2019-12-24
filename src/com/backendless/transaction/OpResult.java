@@ -26,6 +26,11 @@ public class OpResult
     return operationType;
   }
 
+  public String getTableName()
+  {
+    return tableName;
+  }
+
   public Map<String, Object> resolveTo( String propName )
   {
     Map<String, Object> referencePropName = new HashMap<>( reference );

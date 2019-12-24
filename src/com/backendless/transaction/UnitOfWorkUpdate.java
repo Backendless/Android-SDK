@@ -9,7 +9,7 @@ public interface UnitOfWorkUpdate
 
   OpResult update( String tableName, Map<String, Object> objectMap );
 
-  OpResult update( String tableName, OpResult objectMap );
+  OpResult update( OpResult objectMap );
 
   <E> OpResult bulkUpdate( String whereClause, E changes );
 
