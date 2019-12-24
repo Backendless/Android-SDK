@@ -44,7 +44,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
     operations.add( operationDelete );
 
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.DELETE );
+    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.DELETE );
   }
 
   @Override
@@ -55,7 +55,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
     operations.add( operationDelete );
 
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.DELETE );
+    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.DELETE );
   }
 
   @Override
@@ -73,7 +73,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
     operations.add( operationDelete );
 
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.DELETE );
+    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.DELETE );
   }
 
   @Override
@@ -91,7 +91,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
     operations.add( operationDelete );
 
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.DELETE );
+    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.DELETE );
   }
 
   @Override
@@ -131,7 +131,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
     operations.add( operationDeleteBulk );
 
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.DELETE_BULK );
+    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.DELETE_BULK );
   }
 
   @Override
@@ -157,6 +157,6 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
     operations.add( operationDeleteBulk );
 
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.DELETE_BULK );
+    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.DELETE_BULK );
   }
 }

@@ -252,6 +252,6 @@ public class RelationOperationImpl implements RelationOperation
         break;
     }
 
-    return TransactionHelper.makeOpResult( operationResultId, operationType );
+    return TransactionHelper.makeOpResult( parentTable, operationResultId, operationType );
   }
 }

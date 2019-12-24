@@ -26,12 +26,12 @@ public class TransactionHelper
     changes.remove( Persistence.DEFAULT_UPDATED_FIELD );
   }
 
-  public static OpResult makeOpResult( String operationResultId, OperationType operationType )
+  public static OpResult makeOpResult( String tableName, String operationResultId, OperationType operationType )
   {
     Map<String, Object> reference = new HashMap<>();
     reference.put( UnitOfWork.REFERENCE_MARKER, true );
     reference.put( UnitOfWork.OP_RESULT_ID, operationResultId );
-    return new OpResult( reference, operationType );
+    return new OpResult( tableName, reference, operationType );
   }
 
   static  <E> List<Map<String, Object>> convertInstancesToMaps( List<E> instances )

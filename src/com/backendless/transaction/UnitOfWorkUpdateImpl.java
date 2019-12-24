@@ -43,7 +43,7 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
 
     operations.add( operationUpdate );
 
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.UPDATE );
+    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.UPDATE );
   }
 
   @Override
@@ -61,7 +61,7 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
 
     operations.add( operationUpdate );
 
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.UPDATE );
+    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.UPDATE );
   }
 
   @Override
@@ -112,6 +112,6 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
 
     operations.add( operationUpdateBulk );
 
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.UPDATE_BULK );
+    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.UPDATE_BULK );
   }
 }
