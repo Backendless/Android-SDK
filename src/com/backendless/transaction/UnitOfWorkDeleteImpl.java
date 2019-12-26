@@ -39,12 +39,11 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
     if( objectMap == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_MAP );
 
-    String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
-    OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, tableName, operationResultId, objectMap );
+    String objectId = (String) objectMap.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+    if( objectId == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OBJECT_ID_IN_OBJECT_MAP );
 
-    operations.add( operationDelete );
-
-    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.DELETE );
+    return delete( tableName, objectId );
   }
 
   @Override
