@@ -96,7 +96,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   @Override
   public <E> OpResult bulkDelete( List<E> instances )
   {
-    List<String> serializedEntities = TransactionHelper.convertInstancesToObjectIds( instances );
+    List<Map<String, Object>> serializedEntities = TransactionHelper.convertInstancesToMaps( instances );
 
     String tableName =  BackendlessSerializer.getSimpleName( instances.get( 0 ).getClass() );
 
@@ -110,9 +110,9 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
     List<String> objectIds;
-    if( arrayOfObjects.get( 0 ).getClass().isAssignableFrom( Map.class ) )
+    if( arrayOfObjects.get( 0 ) instanceof Map )
       objectIds = TransactionHelper.convertMapToObjectIds( (List<Map<String, Object>>) arrayOfObjects );
-    else if( arrayOfObjects.get( 0 ).getClass().isAssignableFrom( String.class ) )
+    else if( arrayOfObjects.get( 0 ) instanceof String )
       objectIds = (List<String>) arrayOfObjects;
     else
       throw new IllegalArgumentException( ExceptionMessage.LIST_MAP_OR_STRING );

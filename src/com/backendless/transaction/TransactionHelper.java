@@ -34,21 +34,6 @@ public class TransactionHelper
     return new OpResult( tableName, reference, operationType );
   }
 
-  static <E> List<String> convertInstancesToObjectIds( List<E> instances )
-  {
-    List<Map<String, Object>> objectMaps = convertInstancesToMaps( instances );
-    List<String> objectIds = new ArrayList<>();
-    for( Map<String, Object> map : objectMaps )
-    {
-      String objectId = (String) map.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
-      if( objectId == null )
-        throw new IllegalArgumentException( ExceptionMessage.NULL_OBJECT_ID_IN_OBJECT_MAP );
-
-      objectIds.add( objectId );
-    }
-    return objectIds;
-  }
-
   static <E> List<Map<String, Object>> convertInstancesToMaps( List<E> instances )
   {
     if( instances == null || instances.isEmpty() )
@@ -67,7 +52,11 @@ public class TransactionHelper
     List<String> objectIds = new ArrayList<>();
     for( Map<String, Object> map : objectsMaps )
     {
-      objectIds.add( (String) map.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) );
+      String objectId = (String) map.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+      if( objectId == null )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_OBJECT_ID_IN_OBJECT_MAP );
+
+      objectIds.add( objectId );
     }
     return objectIds;
   }
@@ -75,9 +64,9 @@ public class TransactionHelper
   static <E> List<String> getObjectIdsFromUnknownList( List<E> children )
   {
     List<String> childrenMaps;
-    if( children.get( 0 ).getClass().isAssignableFrom( Map.class ) )
+    if( children.get( 0 ) instanceof Map )
       childrenMaps = TransactionHelper.convertMapToObjectIds( (List<Map<String, Object>>) children );
-    else if( children.get( 0 ).getClass().isAssignableFrom( String.class ) )
+    else if( children.get( 0 ) instanceof String )
       childrenMaps = (List<String>) children;
     else if( !( children.get( 0 ).getClass().isArray() || children.get( 0 ).getClass().isAssignableFrom( Iterable.class ) ) )
       childrenMaps = TransactionHelper.convertMapToObjectIds( TransactionHelper.convertInstancesToMaps( children ) );
