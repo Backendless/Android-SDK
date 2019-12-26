@@ -164,4 +164,5 @@ public class ExceptionMessage
   public final static String NULL_OP_RESULT = "OpResult can not be null";
   public final static String NULL_OP_RESULT_INDEX = "OpResultIndex can not be null";
   public final static String NULL_OBJECT_ID_IN_OBJECT_MAP = "Object mup must contain objectId and objectId can not be null";
+  public final static String NULL_WHERE_CLAUSE = "WhereClause can not be null";
 }

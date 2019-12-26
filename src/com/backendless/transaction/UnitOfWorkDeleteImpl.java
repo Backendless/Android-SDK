@@ -123,6 +123,9 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   @Override
   public OpResult bulkDelete( String tableName, String whereClause )
   {
+    if( whereClause == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_WHERE_CLAUSE );
+
     String operationResultId = OperationType.DELETE_BULK + "_" + countDeleteBulk.getAndIncrement();
     DeleteBulkPayload deleteBulkPayload = new DeleteBulkPayload( whereClause, null );
     OperationDeleteBulk operationDeleteBulk = new OperationDeleteBulk( OperationType.DELETE_BULK, tableName,
