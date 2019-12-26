@@ -96,7 +96,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   @Override
   public <E> OpResult bulkDelete( List<E> instances )
   {
-    List<Map<String, Object>> serializedEntities = TransactionHelper.convertInstancesToMaps( instances );
+    List<String> serializedEntities = TransactionHelper.convertInstancesToObjectIds( instances );
 
     String tableName =  BackendlessSerializer.getSimpleName( instances.get( 0 ).getClass() );
 

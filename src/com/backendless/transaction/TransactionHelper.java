@@ -34,7 +34,22 @@ public class TransactionHelper
     return new OpResult( tableName, reference, operationType );
   }
 
-  static  <E> List<Map<String, Object>> convertInstancesToMaps( List<E> instances )
+  static <E> List<String> convertInstancesToObjectIds( List<E> instances )
+  {
+    List<Map<String, Object>> objectMaps = convertInstancesToMaps( instances );
+    List<String> objectIds = new ArrayList<>();
+    for( Map<String, Object> map : objectMaps )
+    {
+      String objectId = (String) map.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+      if( objectId == null )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_OBJECT_ID_IN_OBJECT_MAP );
+
+      objectIds.add( objectId );
+    }
+    return objectIds;
+  }
+
+  static <E> List<Map<String, Object>> convertInstancesToMaps( List<E> instances )
   {
     if( instances == null || instances.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
