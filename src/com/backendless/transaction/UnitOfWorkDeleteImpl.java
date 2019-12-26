@@ -126,14 +126,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
     if( whereClause == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_WHERE_CLAUSE );
 
-    String operationResultId = OperationType.DELETE_BULK + "_" + countDeleteBulk.getAndIncrement();
-    DeleteBulkPayload deleteBulkPayload = new DeleteBulkPayload( whereClause, null );
-    OperationDeleteBulk operationDeleteBulk = new OperationDeleteBulk( OperationType.DELETE_BULK, tableName,
-                                                                       operationResultId, deleteBulkPayload );
-
-    operations.add( operationDeleteBulk );
-
-    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.DELETE_BULK );
+    return bulkDelete( tableName, whereClause, null );
   }
 
   @Override
@@ -145,15 +138,13 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
     if( !OperationType.supportResultIndexType.contains( result.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return bulkDelete( tableName, result.getReference(), null );
+    return bulkDelete( tableName, null, result.getReference() );
   }
 
-  private OpResult bulkDelete( String tableName, Map<String, Object> reference, List<String> objectIds )
+  private OpResult bulkDelete( String tableName, String whereClause, Object unconditional )
   {
-    Object unconditional = reference != null ? reference : objectIds;
-
     String operationResultId = OperationType.DELETE_BULK + "_" + countDeleteBulk.getAndIncrement();
-    DeleteBulkPayload deleteBulkPayload = new DeleteBulkPayload( null, unconditional );
+    DeleteBulkPayload deleteBulkPayload = new DeleteBulkPayload( whereClause, unconditional );
     OperationDeleteBulk operationDeleteBulk = new OperationDeleteBulk( OperationType.DELETE_BULK, tableName,
                                                                        operationResultId, deleteBulkPayload );
 
