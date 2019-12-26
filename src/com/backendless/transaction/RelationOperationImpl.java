@@ -181,7 +181,7 @@ public class RelationOperationImpl implements RelationOperation
                                     String columnName, List<E> children )
   {
     if( parentObject == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_INDEX );
 
     if( children == null || children.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
@@ -200,7 +200,7 @@ public class RelationOperationImpl implements RelationOperation
                                 String columnName, OpResult children )
   {
     if( parentObject == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_INDEX );
 
     if( !OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
@@ -217,7 +217,7 @@ public class RelationOperationImpl implements RelationOperation
                                 String columnName, String whereClauseForChildren )
   {
     if( parentObject == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_INDEX );
 
     if( !OperationType.supportResultIndexType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );

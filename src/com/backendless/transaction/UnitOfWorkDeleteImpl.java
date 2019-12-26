@@ -79,7 +79,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   public OpResult delete( String tableName, OpResultIndex resultIndex )
   {
     if( resultIndex == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_INDEX );
 
     if( !OperationType.supportResultIndexType.contains( resultIndex.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
