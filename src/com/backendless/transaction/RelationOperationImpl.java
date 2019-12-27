@@ -191,7 +191,7 @@ public class RelationOperationImpl implements RelationOperation
     if( !OperationType.supportResultIndexType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return addOperation( operationType, parentTable, parentObject, columnName,
+    return addOperation( operationType, parentTable, parentObject.getReference(), columnName,
                          null, childrenIds );
   }
 
