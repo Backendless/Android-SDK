@@ -92,6 +92,8 @@ public class RelationOperationImpl implements RelationOperation
     if( parentObject == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
     String parentObjectId = Persistence.getEntityId( parentObject );
+    if( parentObjectId == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OBJECT_ID_IN_INSTANCE );
     String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
 
     List<String> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
@@ -107,6 +109,8 @@ public class RelationOperationImpl implements RelationOperation
     if( parentObject == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
     String parentObjectId = Persistence.getEntityId( parentObject );
+    if( parentObjectId == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OBJECT_ID_IN_INSTANCE );
     String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
 
     if( children == null )
@@ -126,6 +130,8 @@ public class RelationOperationImpl implements RelationOperation
     if( parentObject == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
     String parentObjectId = Persistence.getEntityId( parentObject );
+    if( parentObjectId == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OBJECT_ID_IN_INSTANCE );
     String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
 
     return addOperation( operationType, parentTable, parentObjectId, columnName,
@@ -236,7 +242,7 @@ public class RelationOperationImpl implements RelationOperation
                                  String columnName, String whereClauseForChildren, Object children )
   {
     if( parentTable == null || parentTable.equals( "" ) )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_PARENT_TABLE_NAME_NAME );
+      throw new IllegalArgumentException( ExceptionMessage.NULL_PARENT_TABLE_NAME );
 
     if( columnName == null || columnName.equals( "" ) )
       throw new IllegalArgumentException( ExceptionMessage.NULL_RELATION_COLUMN_NAME );
