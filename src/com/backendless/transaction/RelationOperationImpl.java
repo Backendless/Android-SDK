@@ -202,14 +202,14 @@ public class RelationOperationImpl implements RelationOperation
     if( parentObject == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_INDEX );
 
-    if( !OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
+    if( !OperationType.supportResultIndexType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     if( !OperationType.supportResultIndexType.contains( children.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return addOperation( operationType, parentTable, parentObject, null,
-                         columnName, children.getReference() );
+    return addOperation( operationType, parentTable, parentObject.getReference(), columnName,
+                         null, children.getReference() );
   }
 
   @Override
