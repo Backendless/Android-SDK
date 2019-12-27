@@ -47,29 +47,38 @@ public class TransactionHelper
     return serializedEntities;
   }
 
-  static List<String> convertMapToObjectIds( List<Map<String, Object>> objectsMaps )
+  static List<String> convertMapsToObjectIds( List<Map<String, Object>> objectsMaps )
   {
     List<String> objectIds = new ArrayList<>();
     for( Map<String, Object> map : objectsMaps )
     {
-      String objectId = (String) map.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
-      if( objectId == null )
-        throw new IllegalArgumentException( ExceptionMessage.NULL_OBJECT_ID_IN_OBJECT_MAP );
-
+      String objectId = convertObjectMapToObjectId( map );
       objectIds.add( objectId );
     }
     return objectIds;
+  }
+
+  static String convertObjectMapToObjectId( Map<String, Object> objectMap )
+  {
+    if( objectMap == null || objectMap.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_MAP );
+
+    Object maybeObjectId = objectMap.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+    if( !( maybeObjectId instanceof String ) )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OBJECT_ID_IN_OBJECT_MAP );
+
+    return (String) maybeObjectId;
   }
 
   static <E> List<String> getObjectIdsFromUnknownList( List<E> children )
   {
     List<String> childrenMaps;
     if( children.get( 0 ) instanceof Map )
-      childrenMaps = TransactionHelper.convertMapToObjectIds( (List<Map<String, Object>>) children );
+      childrenMaps = TransactionHelper.convertMapsToObjectIds( (List<Map<String, Object>>) children );
     else if( children.get( 0 ) instanceof String )
       childrenMaps = (List<String>) children;
     else if( !( children.get( 0 ).getClass().isArray() || children.get( 0 ).getClass().isAssignableFrom( Iterable.class ) ) )
-      childrenMaps = TransactionHelper.convertMapToObjectIds( TransactionHelper.convertInstancesToMaps( children ) );
+      childrenMaps = TransactionHelper.convertMapsToObjectIds( TransactionHelper.convertInstancesToMaps( children ) );
     else
       throw new IllegalArgumentException( ExceptionMessage.LIST_MAP_OR_STRING_OR_INSTANCES );
     return childrenMaps;

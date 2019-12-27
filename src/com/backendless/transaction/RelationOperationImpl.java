@@ -30,7 +30,7 @@ public class RelationOperationImpl implements RelationOperation
   public <E> OpResult addOperation( OperationType operationType, String parentTable,
                                     Map<String, Object> parentObject, String columnName, List<E> children )
   {
-    String parentObjectId = (String) parentObject.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+    String parentObjectId = TransactionHelper.convertObjectMapToObjectId( parentObject );
     return addOperation( operationType, parentTable, parentObjectId, columnName, children );
   }
 
@@ -38,7 +38,7 @@ public class RelationOperationImpl implements RelationOperation
   public OpResult addOperation( OperationType operationType, String parentTable,
                                 Map<String, Object> parentObject, String columnName, OpResult children )
   {
-    String parentObjectId = (String) parentObject.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+    String parentObjectId = TransactionHelper.convertObjectMapToObjectId( parentObject );
     return addOperation( operationType, parentTable, parentObjectId, columnName, children );
   }
 
@@ -46,7 +46,7 @@ public class RelationOperationImpl implements RelationOperation
   public OpResult addOperation( OperationType operationType, String parentTable, Map<String, Object> parentObject,
                                 String columnName, String whereClauseForChildren )
   {
-    String parentObjectId = (String) parentObject.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+    String parentObjectId = TransactionHelper.convertObjectMapToObjectId( parentObject );
     return addOperation( operationType, parentTable, parentObjectId, columnName, whereClauseForChildren );
   }
 

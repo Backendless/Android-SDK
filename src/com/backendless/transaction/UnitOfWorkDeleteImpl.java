@@ -36,13 +36,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   @Override
   public OpResult delete( String tableName, Map<String, Object> objectMap )
   {
-    if( objectMap == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_MAP );
-
-    String objectId = (String) objectMap.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
-    if( objectId == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_OBJECT_ID_IN_OBJECT_MAP );
-
+    String objectId = TransactionHelper.convertObjectMapToObjectId( objectMap );
     return delete( tableName, objectId );
   }
 
@@ -111,7 +105,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
     List<String> objectIds;
     if( arrayOfObjects.get( 0 ) instanceof Map )
-      objectIds = TransactionHelper.convertMapToObjectIds( (List<Map<String, Object>>) arrayOfObjects );
+      objectIds = TransactionHelper.convertMapsToObjectIds( (List<Map<String, Object>>) arrayOfObjects );
     else if( arrayOfObjects.get( 0 ) instanceof String )
       objectIds = (List<String>) arrayOfObjects;
     else
