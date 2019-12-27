@@ -159,7 +159,7 @@ public class RelationOperationImpl implements RelationOperation
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return addOperation( operationType, parentTable, parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ),
-                         null, columnName, children.getReference() );
+                         columnName, null, children.getReference() );
   }
 
   @Override
