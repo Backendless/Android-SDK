@@ -161,6 +161,8 @@ public class ExceptionMessage
   public final static String NULL_OP_RESULT_INDEX = "OpResultIndex can not be null";
   public final static String NULL_OBJECT_ID_IN_OBJECT_MAP = "Object map must contain string objectId and objectId can not be null";
   public final static String NULL_WHERE_CLAUSE = "WhereClause can not be null";
+  public final static String NULL_RELATION_COLUMN_NAME = "Relation column name can not be null or empty";
+  public final static String NULL_PARENT_TABLE_NAME_NAME = "Parent table name can not be null or empty";
   public final static String LIST_MAP_OR_STRING = "List can be only of objects map or objectIds";
   public final static String LIST_MAP_OR_STRING_OR_INSTANCES = "List can be only of objects map or objectIds or instances";
   public final static String LIST_OPERATIONS_NULL_EMPTY = "List of operations in unitOfWork can not be null or empty";

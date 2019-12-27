@@ -89,6 +89,8 @@ public class RelationOperationImpl implements RelationOperation
   public <E, U> OpResult addOperation( OperationType operationType, E parentObject, String columnName,
                                        List<U> children )
   {
+    if( parentObject == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
     String parentObjectId = Persistence.getEntityId( parentObject );
     String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
 
@@ -102,11 +104,13 @@ public class RelationOperationImpl implements RelationOperation
   public <E> OpResult addOperation( OperationType operationType, E parentObject, String columnName,
                                     OpResult children )
   {
-    if( children == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
-
+    if( parentObject == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
     String parentObjectId = Persistence.getEntityId( parentObject );
     String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
+
+    if( children == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
 
     if( !OperationType.supportResultIndexType.contains( children.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
@@ -119,6 +123,8 @@ public class RelationOperationImpl implements RelationOperation
   public <E> OpResult addOperation( OperationType operationType, E parentObject, String columnName,
                                     String whereClauseForChildren )
   {
+    if( parentObject == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
     String parentObjectId = Persistence.getEntityId( parentObject );
     String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
 
@@ -229,6 +235,12 @@ public class RelationOperationImpl implements RelationOperation
   private OpResult addOperation( OperationType operationType, String parentTable, Object parentObject,
                                  String columnName, String whereClauseForChildren, Object children )
   {
+    if( parentTable == null || parentTable.equals( "" ) )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_PARENT_TABLE_NAME_NAME );
+
+    if( columnName == null || columnName.equals( "" ) )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_RELATION_COLUMN_NAME );
+
     String operationResultId = null;
 
     Relation relation = new Relation();
