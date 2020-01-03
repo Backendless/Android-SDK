@@ -42,22 +42,22 @@ public interface UnitOfWorkDeleteRelation
   // OpResult=CREATE/UPDATE(getObjectId) + List of hashmaps
   // OpResult=CREATE/UPDATE(getObjectId) + List of custom classes
   // OpResult=CREATE/UPDATE(getObjectId) + List of objectIds
-  <E> OpResult deleteRelation( String parentTable, OpResult parentObject, String columnName, List<E> children );
+  <E> OpResult deleteRelation( OpResult parentObject, String columnName, List<E> children );
 
   // OpResult=CREATE/UPDATE(getObjectId) + OpResult=CREATE_BULK
-  OpResult deleteRelation( String parentTable, OpResult parentObject, String columnName, OpResult children );
+  OpResult deleteRelation( OpResult parentObject, String columnName, OpResult children );
 
   // OpResult=CREATE/UPDATE(getObjectId) + where clause
-  OpResult deleteRelation( String parentTable, OpResult parentObject, String columnName, String whereClauseForChildren );
+  OpResult deleteRelation( OpResult parentObject, String columnName, String whereClauseForChildren );
 
   // OpResult=CREATE_BULK(resultIndex) + List of hashmaps
   // OpResult=CREATE_BULK(resultIndex) + List of custom classes
   // OpResult=CREATE_BULK(resultIndex) + List of objectIds
-  <E> OpResult deleteRelation( String parentTable, OpResultIndex parentObject, String columnName, List<E> children );
+  <E> OpResult deleteRelation( OpResultIndex parentObject, String columnName, List<E> children );
 
   // OpResult=CREATE_BULK(resultIndex) + OpResult=CREATE_BULK
-  OpResult deleteRelation( String parentTable, OpResultIndex parentObject, String columnName, OpResult children );
+  OpResult deleteRelation( OpResultIndex parentObject, String columnName, OpResult children );
 
   // OpResult=CREATE_BULK(resultIndex) + where clause
-  OpResult deleteRelation( String parentTable, OpResultIndex parentObject, String columnName, String whereClauseForChildren );
+  OpResult deleteRelation( OpResultIndex parentObject, String columnName, String whereClauseForChildren );
 }

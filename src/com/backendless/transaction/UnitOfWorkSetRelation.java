@@ -42,22 +42,22 @@ public interface UnitOfWorkSetRelation
   // OpResult=CREATE/UPDATE(getObjectId) + List of hashmaps
   // OpResult=CREATE/UPDATE(getObjectId) + List of custom classes
   // OpResult=CREATE/UPDATE(getObjectId) + List of objectIds
-  <E> OpResult setToRelation( String parentTable, OpResult parentObject, String columnName, List<E> children );
+  <E> OpResult setToRelation( OpResult parentObject, String columnName, List<E> children );
 
   // OpResult=CREATE/UPDATE(getObjectId) + OpResult=CREATE_BULK
-  OpResult setToRelation( String parentTable, OpResult parentObject, String columnName, OpResult children );
+  OpResult setToRelation( OpResult parentObject, String columnName, OpResult children );
 
   // OpResult=CREATE/UPDATE(getObjectId) + where clause
-  OpResult setToRelation( String parentTable, OpResult parentObject, String columnName, String whereClauseForChildren );
+  OpResult setToRelation( OpResult parentObject, String columnName, String whereClauseForChildren );
 
   // OpResult=CREATE_BULK(resultIndex) + List of hashmaps
   // OpResult=CREATE_BULK(resultIndex) + List of custom classes
   // OpResult=CREATE_BULK(resultIndex) + List of objectIds
-  <E> OpResult setToRelation( String parentTable, OpResultIndex parentObject, String columnName, List<E> children );
+  <E> OpResult setToRelation( OpResultIndex parentObject, String columnName, List<E> children );
 
   // OpResult=CREATE_BULK(resultIndex) + OpResult=CREATE_BULK
-  OpResult setToRelation( String parentTable, OpResultIndex parentObject, String columnName, OpResult children );
+  OpResult setToRelation( OpResultIndex parentObject, String columnName, OpResult children );
 
   // OpResult=CREATE_BULK(resultIndex) + where clause
-  OpResult setToRelation( String parentTable, OpResultIndex parentObject, String columnName, String whereClauseForChildren );
+  OpResult setToRelation( OpResultIndex parentObject, String columnName, String whereClauseForChildren );
 }

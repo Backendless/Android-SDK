@@ -48,28 +48,28 @@ public interface RelationOperation
   // OpResult=CREATE/UPDATE(getObjectId) + List of hashmaps
   // OpResult=CREATE/UPDATE(getObjectId) + List of custom classes
   // OpResult=CREATE/UPDATE(getObjectId) + List of objectIds
-  <E> OpResult addOperation( OperationType operationType, String parentTable, OpResult parentObject,
+  <E> OpResult addOperation( OperationType operationType, OpResult parentObject,
                              String columnName, List<E> children );
 
   // OpResult=CREATE/UPDATE(getObjectId) + OpResult=CREATE_BULK
-  OpResult addOperation( OperationType operationType, String parentTable, OpResult parentObject,
+  OpResult addOperation( OperationType operationType, OpResult parentObject,
                          String columnName, OpResult children );
 
   // OpResult=CREATE/UPDATE(getObjectId) + where clause
-  OpResult addOperation( OperationType operationType, String parentTable, OpResult parentObject,
+  OpResult addOperation( OperationType operationType, OpResult parentObject,
                          String columnName, String whereClauseForChildren );
 
   // OpResult=CREATE_BULK(resultIndex) + List of hashmaps
   // OpResult=CREATE_BULK(resultIndex) + List of custom classes
   // OpResult=CREATE_BULK(resultIndex) + List of objectIds
-  <E> OpResult addOperation( OperationType operationType, String parentTable, OpResultIndex parentObject,
+  <E> OpResult addOperation( OperationType operationType, OpResultIndex parentObject,
                              String columnName, List<E> children );
 
   // OpResult=CREATE_BULK(resultIndex) + OpResult=CREATE_BULK
-  OpResult addOperation( OperationType operationType, String parentTable, OpResultIndex parentObject,
+  OpResult addOperation( OperationType operationType, OpResultIndex parentObject,
                          String columnName, OpResult children );
 
   // OpResult=CREATE_BULK(resultIndex) + where clause
-  OpResult addOperation( OperationType operationType, String parentTable, OpResultIndex parentObject,
+  OpResult addOperation( OperationType operationType, OpResultIndex parentObject,
                          String columnName, String whereClauseForChildren );
 }

@@ -242,40 +242,39 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
-  public <E> OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, List<E> children )
+  public <E> OpResult addToRelation( OpResult parentObject, String columnName, List<E> children )
   {
-    return unitOfWorkAddRelation.addToRelation( parentTable, parentObject, columnName, children );
+    return unitOfWorkAddRelation.addToRelation( parentObject, columnName, children );
   }
 
   @Override
-  public OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, OpResult children )
+  public OpResult addToRelation( OpResult parentObject, String columnName, OpResult children )
   {
-    return unitOfWorkAddRelation.addToRelation( parentTable, parentObject, columnName, children );
+    return unitOfWorkAddRelation.addToRelation( parentObject, columnName, children );
   }
 
   @Override
-  public OpResult addToRelation( String parentTable, OpResult parentObject, String columnName,
-                                 String whereClauseForChildren )
+  public OpResult addToRelation( OpResult parentObject, String columnName, String whereClauseForChildren )
   {
-    return unitOfWorkAddRelation.addToRelation( parentTable, parentObject, columnName, whereClauseForChildren );
+    return unitOfWorkAddRelation.addToRelation( parentObject, columnName, whereClauseForChildren );
   }
 
   @Override
-  public <E> OpResult addToRelation( String parentTable, OpResultIndex parentObject, String columnName, List<E> children )
+  public <E> OpResult addToRelation( OpResultIndex parentObject, String columnName, List<E> children )
   {
-    return unitOfWorkAddRelation.addToRelation( parentTable, parentObject, columnName, children );
+    return unitOfWorkAddRelation.addToRelation( parentObject, columnName, children );
   }
 
   @Override
-  public OpResult addToRelation( String parentTable, OpResultIndex parentObject, String columnName, OpResult children )
+  public OpResult addToRelation( OpResultIndex parentObject, String columnName, OpResult children )
   {
-    return unitOfWorkAddRelation.addToRelation( parentTable, parentObject, columnName, children );
+    return unitOfWorkAddRelation.addToRelation( parentObject, columnName, children );
   }
 
   @Override
-  public OpResult addToRelation( String parentTable, OpResultIndex parentObject, String columnName, String whereClauseForChildren )
+  public OpResult addToRelation( OpResultIndex parentObject, String columnName, String whereClauseForChildren )
   {
-    return unitOfWorkAddRelation.addToRelation( parentTable, parentObject, columnName, whereClauseForChildren );
+    return unitOfWorkAddRelation.addToRelation( parentObject, columnName, whereClauseForChildren );
   }
 
   @Override
@@ -336,40 +335,39 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
-  public <E> OpResult setToRelation( String parentTable, OpResult parentObject, String columnName, List<E> children )
+  public <E> OpResult setToRelation( OpResult parentObject, String columnName, List<E> children )
   {
-    return unitOfWorkSetRelation.setToRelation( parentTable, parentObject, columnName, children );
+    return unitOfWorkSetRelation.setToRelation( parentObject, columnName, children );
   }
 
   @Override
-  public OpResult setToRelation( String parentTable, OpResult parentObject, String columnName, OpResult children )
+  public OpResult setToRelation( OpResult parentObject, String columnName, OpResult children )
   {
-    return unitOfWorkSetRelation.setToRelation( parentTable, parentObject, columnName, children );
+    return unitOfWorkSetRelation.setToRelation( parentObject, columnName, children );
   }
 
   @Override
-  public OpResult setToRelation( String parentTable, OpResult parentObject, String columnName,
-                                 String whereClauseForChildren )
+  public OpResult setToRelation( OpResult parentObject, String columnName, String whereClauseForChildren )
   {
-    return unitOfWorkSetRelation.setToRelation( parentTable, parentObject, columnName, whereClauseForChildren );
+    return unitOfWorkSetRelation.setToRelation( parentObject, columnName, whereClauseForChildren );
   }
 
   @Override
-  public <E> OpResult setToRelation( String parentTable, OpResultIndex parentObject, String columnName, List<E> children )
+  public <E> OpResult setToRelation( OpResultIndex parentObject, String columnName, List<E> children )
   {
-    return unitOfWorkSetRelation.setToRelation( parentTable, parentObject, columnName, children );
+    return unitOfWorkSetRelation.setToRelation( parentObject, columnName, children );
   }
 
   @Override
-  public OpResult setToRelation( String parentTable, OpResultIndex parentObject, String columnName, OpResult children )
+  public OpResult setToRelation( OpResultIndex parentObject, String columnName, OpResult children )
   {
-    return unitOfWorkSetRelation.setToRelation( parentTable, parentObject, columnName, children );
+    return unitOfWorkSetRelation.setToRelation( parentObject, columnName, children );
   }
 
   @Override
-  public OpResult setToRelation( String parentTable, OpResultIndex parentObject, String columnName, String whereClauseForChildren )
+  public OpResult setToRelation( OpResultIndex parentObject, String columnName, String whereClauseForChildren )
   {
-    return unitOfWorkSetRelation.setToRelation( parentTable, parentObject, columnName, whereClauseForChildren );
+    return unitOfWorkSetRelation.setToRelation( parentObject, columnName, whereClauseForChildren );
   }
 
   @Override
@@ -431,41 +429,38 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
-  public <E> OpResult deleteRelation( String parentTable, OpResult parentObject, String columnName, List<E> children )
+  public <E> OpResult deleteRelation( OpResult parentObject, String columnName, List<E> children )
   {
-    return unitOfWorkDeleteRelation.deleteRelation( parentTable, parentObject, columnName, children );
+    return unitOfWorkDeleteRelation.deleteRelation( parentObject, columnName, children );
   }
 
   @Override
-  public OpResult deleteRelation( String parentTable, OpResult parentObject, String columnName, OpResult children )
+  public OpResult deleteRelation( OpResult parentObject, String columnName, OpResult children )
   {
-    return unitOfWorkDeleteRelation.deleteRelation( parentTable, parentObject, columnName, children );
+    return unitOfWorkDeleteRelation.deleteRelation( parentObject, columnName, children );
   }
 
   @Override
-  public OpResult deleteRelation( String parentTable, OpResult parentObject, String columnName,
-                                  String whereClauseForChildren )
+  public OpResult deleteRelation( OpResult parentObject, String columnName, String whereClauseForChildren )
   {
-    return unitOfWorkDeleteRelation.deleteRelation( parentTable, parentObject, columnName, whereClauseForChildren );
+    return unitOfWorkDeleteRelation.deleteRelation( parentObject, columnName, whereClauseForChildren );
   }
 
   @Override
-  public <E> OpResult deleteRelation( String parentTable, OpResultIndex parentObject, String columnName,
-                                      List<E> children )
+  public <E> OpResult deleteRelation( OpResultIndex parentObject, String columnName, List<E> children )
   {
-    return unitOfWorkDeleteRelation.deleteRelation( parentTable, parentObject, columnName, children );
+    return unitOfWorkDeleteRelation.deleteRelation( parentObject, columnName, children );
   }
 
   @Override
-  public OpResult deleteRelation( String parentTable, OpResultIndex parentObject, String columnName, OpResult children )
+  public OpResult deleteRelation( OpResultIndex parentObject, String columnName, OpResult children )
   {
-    return unitOfWorkDeleteRelation.deleteRelation( parentTable, parentObject, columnName, children );
+    return unitOfWorkDeleteRelation.deleteRelation( parentObject, columnName, children );
   }
 
   @Override
-  public OpResult deleteRelation( String parentTable, OpResultIndex parentObject, String columnName,
-                                  String whereClauseForChildren )
+  public OpResult deleteRelation( OpResultIndex parentObject, String columnName, String whereClauseForChildren )
   {
-    return unitOfWorkDeleteRelation.deleteRelation( parentTable, parentObject, columnName, whereClauseForChildren );
+    return unitOfWorkDeleteRelation.deleteRelation( parentObject, columnName, whereClauseForChildren );
   }
 }

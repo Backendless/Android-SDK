@@ -139,7 +139,7 @@ public class RelationOperationImpl implements RelationOperation
   }
 
   @Override
-  public <E> OpResult addOperation( OperationType operationType, String parentTable, OpResult parentObject,
+  public <E> OpResult addOperation( OperationType operationType, OpResult parentObject,
                                     String columnName, List<E> children )
   {
     if( parentObject == null )
@@ -153,12 +153,13 @@ public class RelationOperationImpl implements RelationOperation
     if( !OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return addOperation( operationType, parentTable, parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ),
+    return addOperation( operationType, parentObject.getTableName(),
+                         parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ),
                          columnName, null, childrenIds );
   }
 
   @Override
-  public OpResult addOperation( OperationType operationType, String parentTable, OpResult parentObject,
+  public OpResult addOperation( OperationType operationType, OpResult parentObject,
                                 String columnName, OpResult children )
   {
     if( parentObject == null )
@@ -170,12 +171,13 @@ public class RelationOperationImpl implements RelationOperation
     if( !OperationType.supportResultIndexType.contains( children.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return addOperation( operationType, parentTable, parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ),
+    return addOperation( operationType, parentObject.getTableName(),
+                         parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ),
                          columnName, null, children.getReference() );
   }
 
   @Override
-  public OpResult addOperation( OperationType operationType, String parentTable, OpResult parentObject,
+  public OpResult addOperation( OperationType operationType, OpResult parentObject,
                                 String columnName, String whereClauseForChildren )
   {
     if( parentObject == null )
@@ -184,12 +186,13 @@ public class RelationOperationImpl implements RelationOperation
     if( !OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return addOperation( operationType, parentTable, parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ),
+    return addOperation( operationType, parentObject.getTableName(),
+                         parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ),
                          columnName, whereClauseForChildren, null );
   }
 
   @Override
-  public <E> OpResult addOperation( OperationType operationType, String parentTable, OpResultIndex parentObject,
+  public <E> OpResult addOperation( OperationType operationType, OpResultIndex parentObject,
                                     String columnName, List<E> children )
   {
     if( parentObject == null )
@@ -203,12 +206,12 @@ public class RelationOperationImpl implements RelationOperation
     if( !OperationType.supportResultIndexType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return addOperation( operationType, parentTable, parentObject.getReference(), columnName,
+    return addOperation( operationType, parentObject.getTableName(), parentObject.getReference(), columnName,
                          null, childrenIds );
   }
 
   @Override
-  public OpResult addOperation( OperationType operationType, String parentTable, OpResultIndex parentObject,
+  public OpResult addOperation( OperationType operationType, OpResultIndex parentObject,
                                 String columnName, OpResult children )
   {
     if( parentObject == null )
@@ -220,12 +223,12 @@ public class RelationOperationImpl implements RelationOperation
     if( !OperationType.supportResultIndexType.contains( children.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return addOperation( operationType, parentTable, parentObject.getReference(), columnName,
+    return addOperation( operationType, parentObject.getTableName(), parentObject.getReference(), columnName,
                          null, children.getReference() );
   }
 
   @Override
-  public OpResult addOperation( OperationType operationType, String parentTable, OpResultIndex parentObject,
+  public OpResult addOperation( OperationType operationType, OpResultIndex parentObject,
                                 String columnName, String whereClauseForChildren )
   {
     if( parentObject == null )
@@ -234,7 +237,7 @@ public class RelationOperationImpl implements RelationOperation
     if( !OperationType.supportResultIndexType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return addOperation( operationType, parentTable, parentObject.getReference(), columnName,
+    return addOperation( operationType, parentObject.getTableName(), parentObject.getReference(), columnName,
                          whereClauseForChildren, null );
   }
 
