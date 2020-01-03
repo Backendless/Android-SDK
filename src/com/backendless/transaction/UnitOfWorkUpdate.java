@@ -17,5 +17,5 @@ public interface UnitOfWorkUpdate
 
   OpResult bulkUpdate( String tableName, List<String> objectsForChanges, Map<String, Object> changes );
 
-  OpResult bulkUpdate( String tableName, OpResult objectIdsForChanges, Map<String, Object> changes );
+  OpResult bulkUpdate( OpResult objectIdsForChanges, Map<String, Object> changes );
 }
