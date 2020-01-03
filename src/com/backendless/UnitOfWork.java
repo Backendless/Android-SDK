@@ -149,15 +149,15 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
-  public OpResult delete( String tableName, OpResult result )
+  public OpResult delete( OpResult result )
   {
-    return unitOfWorkDelete.delete( tableName, result );
+    return unitOfWorkDelete.delete( result );
   }
 
   @Override
-  public OpResult delete( String tableName, OpResultIndex opResultIndex )
+  public OpResult delete( OpResultIndex opResultIndex )
   {
-    return unitOfWorkDelete.delete( tableName, opResultIndex );
+    return unitOfWorkDelete.delete( opResultIndex );
   }
 
   @Override

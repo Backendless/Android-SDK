@@ -52,7 +52,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   }
 
   @Override
-  public OpResult delete( String tableName, OpResult result )
+  public OpResult delete( OpResult result )
   {
     if( result == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
@@ -61,16 +61,16 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
-    OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, tableName, operationResultId,
+    OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, result.getTableName(), operationResultId,
                                                            result.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ) );
 
     operations.add( operationDelete );
 
-    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.DELETE );
+    return TransactionHelper.makeOpResult( result.getTableName(), operationResultId, OperationType.DELETE );
   }
 
   @Override
-  public OpResult delete( String tableName, OpResultIndex resultIndex )
+  public OpResult delete( OpResultIndex resultIndex )
   {
     if( resultIndex == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_INDEX );
@@ -79,12 +79,12 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
-    OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, tableName, operationResultId,
-                                                           resultIndex.getReference() );
+    OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, resultIndex.getTableName(),
+                                                           operationResultId, resultIndex.getReference() );
 
     operations.add( operationDelete );
 
-    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.DELETE );
+    return TransactionHelper.makeOpResult( resultIndex.getTableName(), operationResultId, OperationType.DELETE );
   }
 
   @Override
