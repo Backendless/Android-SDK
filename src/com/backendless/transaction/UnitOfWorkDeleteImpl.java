@@ -124,7 +124,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   }
 
   @Override
-  public OpResult bulkDelete( String tableName, OpResult result )
+  public OpResult bulkDelete( OpResult result )
   {
     if( result == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
@@ -132,7 +132,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
     if( !OperationType.supportResultIndexType.contains( result.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return bulkDelete( tableName, null, result.getReference() );
+    return bulkDelete( result.getTableName(), null, result.getReference() );
   }
 
   private OpResult bulkDelete( String tableName, String whereClause, Object unconditional )

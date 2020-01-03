@@ -21,5 +21,5 @@ public interface UnitOfWorkDelete
 
   OpResult bulkDelete( String tableName, String whereClause );
 
-  OpResult bulkDelete( String tableName, OpResult result );
+  OpResult bulkDelete( OpResult result );
 }

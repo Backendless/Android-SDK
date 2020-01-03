@@ -179,9 +179,9 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
-  public OpResult bulkDelete( String tableName, OpResult result )
+  public OpResult bulkDelete( OpResult result )
   {
-    return unitOfWorkDelete.bulkDelete( tableName, result );
+    return unitOfWorkDelete.bulkDelete( result );
   }
 
   @Override
