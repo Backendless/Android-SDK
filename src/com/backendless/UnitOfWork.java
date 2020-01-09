@@ -21,14 +21,14 @@ import com.backendless.transaction.UnitOfWorkDelete;
 import com.backendless.transaction.UnitOfWorkDeleteImpl;
 import com.backendless.transaction.UnitOfWorkStatus;
 import com.backendless.transaction.UnitOfWorkUpdateImpl;
-import com.backendless.transaction.operations.Operation;
+import com.backendless.persistence.operations.Operation;
 
 import java.util.List;
 import java.util.Map;
 
 public class UnitOfWork extends com.backendless.transaction.UnitOfWork implements IUnitOfWork
 {
-  private final List<Operation> operations;
+  private final List<Operation<?>> operations;
 
   private final UnitOfWorkCreate unitOfWorkCreate;
   private final UnitOfWorkUpdate unitOFWorkUpdate;

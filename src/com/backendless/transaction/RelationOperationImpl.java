@@ -3,10 +3,10 @@ package com.backendless.transaction;
 import com.backendless.Persistence;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.persistence.BackendlessSerializer;
-import com.backendless.transaction.operations.Operation;
-import com.backendless.transaction.operations.OperationAddRelation;
-import com.backendless.transaction.operations.OperationDeleteRelation;
-import com.backendless.transaction.operations.OperationSetRelation;
+import com.backendless.persistence.operations.Operation;
+import com.backendless.persistence.operations.OperationAddRelation;
+import com.backendless.persistence.operations.OperationDeleteRelation;
+import com.backendless.persistence.operations.OperationSetRelation;
 import com.backendless.transaction.payload.Relation;
 
 import java.util.List;
@@ -19,9 +19,9 @@ public class RelationOperationImpl implements RelationOperation
   AtomicInteger countSetRelation = new AtomicInteger( 1 );
   AtomicInteger countDeleteRelation = new AtomicInteger( 1 );
 
-  private final List<Operation> operations;
+  private final List<Operation<?>> operations;
 
-  public RelationOperationImpl( List<Operation> operations )
+  public RelationOperationImpl( List<Operation<?>> operations )
   {
     this.operations = operations;
   }

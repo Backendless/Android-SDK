@@ -2,9 +2,9 @@ package com.backendless.transaction;
 
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.persistence.BackendlessSerializer;
-import com.backendless.transaction.operations.Operation;
-import com.backendless.transaction.operations.OperationCreate;
-import com.backendless.transaction.operations.OperationCreateBulk;
+import com.backendless.persistence.operations.Operation;
+import com.backendless.persistence.operations.OperationCreate;
+import com.backendless.persistence.operations.OperationCreateBulk;
 
 import java.util.List;
 import java.util.Map;
@@ -15,9 +15,9 @@ public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
   AtomicInteger countCreate = new AtomicInteger( 1 );
   AtomicInteger countCreateBulk = new AtomicInteger( 1 );
 
-  private final List<Operation> operations;
+  private final List<Operation<?>> operations;
 
-  public UnitOfWorkCreateImpl( List<Operation> operations )
+  public UnitOfWorkCreateImpl( List<Operation<?>> operations )
   {
     this.operations = operations;
   }

@@ -3,9 +3,9 @@ package com.backendless.transaction;
 import com.backendless.Persistence;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.persistence.BackendlessSerializer;
-import com.backendless.transaction.operations.Operation;
-import com.backendless.transaction.operations.OperationDelete;
-import com.backendless.transaction.operations.OperationDeleteBulk;
+import com.backendless.persistence.operations.Operation;
+import com.backendless.persistence.operations.OperationDelete;
+import com.backendless.persistence.operations.OperationDeleteBulk;
 import com.backendless.transaction.payload.DeleteBulkPayload;
 
 import java.util.List;
@@ -17,9 +17,9 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   AtomicInteger countDelete = new AtomicInteger( 1 );
   AtomicInteger countDeleteBulk = new AtomicInteger( 1 );
 
-  private final List<Operation> operations;
+  private final List<Operation<?>> operations;
 
-  public UnitOfWorkDeleteImpl( List<Operation> operations )
+  public UnitOfWorkDeleteImpl( List<Operation<?>> operations )
   {
     this.operations = operations;
   }
