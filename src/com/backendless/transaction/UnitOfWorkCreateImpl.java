@@ -15,9 +15,9 @@ public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
   AtomicInteger countCreate = new AtomicInteger( 1 );
   AtomicInteger countCreateBulk = new AtomicInteger( 1 );
 
-  private final List<Operation> operations;
+  private final List<Operation<?>> operations;
 
-  public UnitOfWorkCreateImpl( List<Operation> operations )
+  public UnitOfWorkCreateImpl( List<Operation<?>> operations )
   {
     this.operations = operations;
   }

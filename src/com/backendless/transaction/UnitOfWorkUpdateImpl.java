@@ -16,9 +16,9 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
   AtomicInteger countUpdate = new AtomicInteger( 1 );
   AtomicInteger countUpdateBulk = new AtomicInteger( 1 );
 
-  private final List<Operation> operations;
+  private final List<Operation<?>> operations;
 
-  public UnitOfWorkUpdateImpl( List<Operation> operations )
+  public UnitOfWorkUpdateImpl( List<Operation<?>> operations )
   {
     this.operations = operations;
   }

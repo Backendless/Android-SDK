@@ -17,9 +17,9 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   AtomicInteger countDelete = new AtomicInteger( 1 );
   AtomicInteger countDeleteBulk = new AtomicInteger( 1 );
 
-  private final List<Operation> operations;
+  private final List<Operation<?>> operations;
 
-  public UnitOfWorkDeleteImpl( List<Operation> operations )
+  public UnitOfWorkDeleteImpl( List<Operation<?>> operations )
   {
     this.operations = operations;
   }

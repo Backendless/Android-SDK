@@ -28,7 +28,7 @@ import java.util.Map;
 
 public class UnitOfWork extends com.backendless.transaction.UnitOfWork implements IUnitOfWork
 {
-  private final List<Operation> operations;
+  private final List<Operation<?>> operations;
 
   private final UnitOfWorkCreate unitOfWorkCreate;
   private final UnitOfWorkUpdate unitOFWorkUpdate;

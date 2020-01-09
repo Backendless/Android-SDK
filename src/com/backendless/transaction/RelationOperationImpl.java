@@ -19,9 +19,9 @@ public class RelationOperationImpl implements RelationOperation
   AtomicInteger countSetRelation = new AtomicInteger( 1 );
   AtomicInteger countDeleteRelation = new AtomicInteger( 1 );
 
-  private final List<Operation> operations;
+  private final List<Operation<?>> operations;
 
-  public RelationOperationImpl( List<Operation> operations )
+  public RelationOperationImpl( List<Operation<?>> operations )
   {
     this.operations = operations;
   }
