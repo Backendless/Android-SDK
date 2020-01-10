@@ -43,22 +43,25 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
 
     operations.add( operationUpdate );
 
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.UPDATE );
+    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.UPDATE );
   }
 
   @Override
-  public OpResult update( String tableName, OpResult objectMap )
+  public OpResult update( OpResult objectMap )
   {
+    if( objectMap == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
     if( !OperationType.CREATE.equals( objectMap.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     String operationResultId = OperationType.UPDATE + "_" + countUpdate.getAndIncrement();
-    OperationUpdate operationUpdate = new OperationUpdate( OperationType.UPDATE, tableName,
+    OperationUpdate operationUpdate = new OperationUpdate( OperationType.UPDATE, objectMap.getTableName(),
                                                            operationResultId, objectMap.getReference() );
 
     operations.add( operationUpdate );
 
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.UPDATE );
+    return TransactionHelper.makeOpResult( objectMap.getTableName(), operationResultId, OperationType.UPDATE );
   }
 
   @Override
@@ -83,12 +86,15 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
   }
 
   @Override
-  public OpResult bulkUpdate( String tableName, OpResult objectIdsForChanges, Map<String, Object> changes )
+  public OpResult bulkUpdate( OpResult objectIdsForChanges, Map<String, Object> changes )
   {
+    if( objectIdsForChanges == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
     if( !OperationType.supportResultIndexType.contains( objectIdsForChanges.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return bulkUpdate( tableName, null, objectIdsForChanges, changes );
+    return bulkUpdate( objectIdsForChanges.getTableName(), null, objectIdsForChanges.getReference(), changes );
   }
 
   private OpResult bulkUpdate( String tableName, String whereClause, Object objectsForChanges,
@@ -97,6 +103,8 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
     if( changes == null || changes.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_MAP );
 
+    TransactionHelper.removeSystemField( changes );
+
     String operationResultId = OperationType.UPDATE_BULK + "_" + countUpdateBulk.getAndIncrement();
     UpdateBulkPayload updateBulkPayload = new UpdateBulkPayload( whereClause, objectsForChanges, changes );
     OperationUpdateBulk operationUpdateBulk = new OperationUpdateBulk( OperationType.UPDATE_BULK, tableName,
@@ -104,6 +112,6 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
 
     operations.add( operationUpdateBulk );
 
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.UPDATE_BULK );
+    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.UPDATE_BULK );
   }
 }

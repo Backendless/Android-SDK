@@ -42,7 +42,7 @@ public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
 
     operations.add( operationCreate );
 
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.CREATE );
+    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.CREATE );
   }
 
   @Override
@@ -71,6 +71,6 @@ public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
 
     operations.add( operationCreateBulk );
 
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.CREATE_BULK );
+    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.CREATE_BULK );
   }
 }

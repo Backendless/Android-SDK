@@ -78,47 +78,39 @@ public class UnitOfWorkDeleteRelationImpl implements UnitOfWorkDeleteRelation
   }
 
   @Override
-  public <E> OpResult deleteRelation( String parentTable, OpResult parentObject, String columnName, List<E> children )
+  public <E> OpResult deleteRelation( OpResult parentObject, String columnName, List<E> children )
   {
-    return relationOperation.addOperation( OperationType.DELETE_RELATION, parentTable,
-                                           parentObject, columnName, children );
+    return relationOperation.addOperation( OperationType.DELETE_RELATION, parentObject, columnName, children );
   }
 
   @Override
-  public OpResult deleteRelation( String parentTable, OpResult parentObject, String columnName, OpResult children )
+  public OpResult deleteRelation( OpResult parentObject, String columnName, OpResult children )
   {
-    return relationOperation.addOperation( OperationType.DELETE_RELATION, parentTable,
-                                           parentObject, columnName, children );
+    return relationOperation.addOperation( OperationType.DELETE_RELATION, parentObject, columnName, children );
   }
 
   @Override
-  public OpResult deleteRelation( String parentTable, OpResult parentObject, String columnName,
+  public OpResult deleteRelation( OpResult parentObject, String columnName,
                                   String whereClauseForChildren )
   {
-    return relationOperation.addOperation( OperationType.DELETE_RELATION, parentTable, parentObject,
-                                           columnName, whereClauseForChildren );
+    return relationOperation.addOperation( OperationType.DELETE_RELATION, parentObject, columnName, whereClauseForChildren );
   }
 
   @Override
-  public <E> OpResult deleteRelation( String parentTable, OpResultIndex parentObject, String columnName,
-                                      List<E> children )
+  public <E> OpResult deleteRelation( OpResultIndex parentObject, String columnName, List<E> children )
   {
-    return relationOperation.addOperation( OperationType.DELETE_RELATION, parentTable,
-                                           parentObject, columnName, children );
+    return relationOperation.addOperation( OperationType.DELETE_RELATION, parentObject, columnName, children );
   }
 
   @Override
-  public OpResult deleteRelation( String parentTable, OpResultIndex parentObject, String columnName, OpResult children )
+  public OpResult deleteRelation( OpResultIndex parentObject, String columnName, OpResult children )
   {
-    return relationOperation.addOperation( OperationType.DELETE_RELATION, parentTable,
-                                           parentObject, columnName, children );
+    return relationOperation.addOperation( OperationType.DELETE_RELATION, parentObject, columnName, children );
   }
 
   @Override
-  public OpResult deleteRelation( String parentTable, OpResultIndex parentObject, String columnName,
-                                  String whereClauseForChildren )
+  public OpResult deleteRelation( OpResultIndex parentObject, String columnName, String whereClauseForChildren )
   {
-    return relationOperation.addOperation( OperationType.DELETE_RELATION, parentTable, parentObject,
-                                           columnName, whereClauseForChildren );
+    return relationOperation.addOperation( OperationType.DELETE_RELATION, parentObject, columnName, whereClauseForChildren );
   }
 }

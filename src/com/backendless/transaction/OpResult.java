@@ -5,11 +5,13 @@ import java.util.Map;
 
 public class OpResult
 {
+  private String tableName;
   private Map<String, Object> reference;
   private OperationType operationType;
 
-  public OpResult( Map<String, Object> reference, OperationType operationType )
+  public OpResult( String tableName, Map<String, Object> reference, OperationType operationType )
   {
+    this.tableName = tableName;
     this.reference = reference;
     this.operationType = operationType;
   }
@@ -22,6 +24,11 @@ public class OpResult
   public OperationType getOperationType()
   {
     return operationType;
+  }
+
+  public String getTableName()
+  {
+    return tableName;
   }
 
   public Map<String, Object> resolveTo( String propName )
@@ -42,6 +49,6 @@ public class OpResult
   {
     Map<String, Object> referenceIndex = new HashMap<>( reference );
     referenceIndex.put( UnitOfWork.RESULT_INDEX, opResultIndex );
-    return new OpResultIndex( referenceIndex, operationType );
+    return new OpResultIndex( tableName, referenceIndex, operationType );
   }
 }

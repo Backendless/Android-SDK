@@ -4,8 +4,8 @@ import java.util.Map;
 
 public class OpResultIndex extends OpResult
 {
-  public OpResultIndex( Map<String, Object> reference, OperationType operationType )
+  public OpResultIndex( String tableName, Map<String, Object> reference, OperationType operationType )
   {
-    super( reference, operationType );
+    super( tableName, reference, operationType );
   }
 }

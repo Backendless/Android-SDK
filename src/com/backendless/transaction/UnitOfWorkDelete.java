@@ -11,9 +11,9 @@ public interface UnitOfWorkDelete
 
   OpResult delete( String tableName, String objectId );
 
-  OpResult delete( String tableName, OpResult result );
+  OpResult delete( OpResult result );
 
-  OpResult delete( String tableName, OpResultIndex resultIndex );
+  OpResult delete( OpResultIndex resultIndex );
 
   <E> OpResult bulkDelete( List<E> instances );
 
@@ -21,5 +21,5 @@ public interface UnitOfWorkDelete
 
   OpResult bulkDelete( String tableName, String whereClause );
 
-  OpResult bulkDelete( String tableName, OpResult result );
+  OpResult bulkDelete( OpResult result );
 }
