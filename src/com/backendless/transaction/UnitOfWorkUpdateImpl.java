@@ -1,5 +1,6 @@
 package com.backendless.transaction;
 
+import com.backendless.Persistence;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.transaction.operations.Operation;
@@ -7,6 +8,7 @@ import com.backendless.transaction.operations.OperationUpdate;
 import com.backendless.transaction.operations.OperationUpdateBulk;
 import com.backendless.transaction.payload.UpdateBulkPayload;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -33,6 +35,29 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
   }
 
   @Override
+  public OpResult update( OpResult result, String propertyName, Object propertyValue )
+  {
+    Map<String, Object> changes = new HashMap<>();
+    changes.put( propertyName, propertyValue );
+
+    return update( result, changes );
+  }
+
+  @Override
+  public OpResult update( OpResult result, Map<String, Object> changes )
+  {
+    if( result == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
+    if( !OperationType.CREATE.equals( result.getOperationType() ) )
+      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+
+    changes.put( Persistence.DEFAULT_OBJECT_ID_FIELD, result.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ) );
+
+    return update( result.getTableName(), changes );
+  }
+
+  @Override
   public OpResult update( String tableName, Map<String, Object> objectMap )
   {
     if( objectMap == null || objectMap.isEmpty() )
@@ -44,24 +69,6 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
     operations.add( operationUpdate );
 
     return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.UPDATE );
-  }
-
-  @Override
-  public OpResult update( OpResult objectMap )
-  {
-    if( objectMap == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
-
-    if( !OperationType.CREATE.equals( objectMap.getOperationType() ) )
-      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
-
-    String operationResultId = OperationType.UPDATE + "_" + countUpdate.getAndIncrement();
-    OperationUpdate operationUpdate = new OperationUpdate( OperationType.UPDATE, objectMap.getTableName(),
-                                                           operationResultId, objectMap.getReference() );
-
-    operations.add( operationUpdate );
-
-    return TransactionHelper.makeOpResult( objectMap.getTableName(), operationResultId, OperationType.UPDATE );
   }
 
   @Override
