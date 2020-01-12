@@ -26,6 +26,8 @@ CREATE TABLE IF NOT EXISTS `main_backendless`.`Application` (
   `dbVersion` INT NOT NULL,
   `lastDayOfUse` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ownerDeveloperId` VARCHAR(36) NOT NULL,
+  `dbReadonly` BOOLEAN NOT NULL DEFAULT false,
+  `shardName` VARCHAR(100) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `fpSubscriptionId_UNIQUE` (`fpSubscriptionId` ASC),
   UNIQUE INDEX `customerDomain_UNIQUE` (`customerDomain` ASC),
@@ -172,6 +174,7 @@ CREATE TABLE IF NOT EXISTS `main_backendless`.`DeveloperPermission` (
   `developerOperationId` VARCHAR(100) NOT NULL,
   `applicationId` VARCHAR(100) NOT NULL,
   `permissionTypeId` VARCHAR(100) NOT NULL,
+  `visible` TINYINT(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`developerId`, `developerOperationId`, `applicationId`),
   INDEX `fk_Developer_has_DeveloperOperation_DeveloperOperation1` (`developerOperationId` ASC),
   INDEX `fk_Developer_has_DeveloperOperation_Developer1` (`developerId` ASC),
@@ -192,6 +195,33 @@ CREATE TABLE IF NOT EXISTS `main_backendless`.`DeveloperPermission` (
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `main_backendless`.`VisibilityGroupToDeveloper`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `main_backendless`.`VisibilityGroupToDeveloper` ;
+
+CREATE TABLE IF NOT EXISTS `main_backendless`.`VisibilityGroupToDeveloper` (
+  `developerId` VARCHAR(100) NOT NULL,
+  `groupName` VARCHAR(45) NOT NULL,
+  `applicationId` VARCHAR(100) NOT NULL,
+  `visible` tinyint(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`groupName`, `developerId`, `applicationId`),
+  CONSTRAINT `fk_developerId_developer1`
+      FOREIGN KEY (`developerId`)
+      REFERENCES `main_backendless`.`AppToDeveloper` (`developerId`)
+      ON DELETE CASCADE
+      ON UPDATE NO ACTION,
+  CONSTRAINT `fk_applicationId_application1`
+      FOREIGN KEY (`applicationId`)
+      REFERENCES `main_backendless`.`AppToDeveloper` (`applicationId`)
+      ON DELETE CASCADE
+      ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE UNIQUE INDEX `visibilityGroup_UNIQUE` ON `main_backendless`.`VisibilityGroupToDeveloper` (`groupName`, `developerId`, `applicationId`);
+
 
 
 -- -----------------------------------------------------

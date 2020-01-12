@@ -36,6 +36,7 @@ services:
     volumes:
     - ${MOUNTS}/mysql/data:/var/lib/mysql
     - ${MOUNTS}/mysql/init:/docker-entrypoint-initdb.d
+    - ${MOUNTS}/mysql/mysql.conf.d:/etc/mysql/mysql.conf.d
     networks:
     - bkndls-net
 
