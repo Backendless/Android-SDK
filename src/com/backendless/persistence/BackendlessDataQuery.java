@@ -21,12 +21,13 @@ package com.backendless.persistence;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class BackendlessDataQuery extends AbstractBackendlessQuery
 {
   public static final int DEFAULT_PAGE_SIZE = 10;
   public static final int DEFAULT_OFFSET = 0;
 
-  private List<String> properties;
+  private List<String> properties = new ArrayList<>();
   private String whereClause;
   private QueryOptions queryOptions;
   private List<String> groupBy = new ArrayList<>();
@@ -38,7 +39,7 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
 
   public BackendlessDataQuery( List<String> properties )
   {
-    this.properties = properties;
+    this.properties.addAll( properties );
   }
 
   public BackendlessDataQuery( String whereClause )
@@ -54,35 +55,35 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
   public BackendlessDataQuery( List<String> properties, String whereClause, QueryOptions queryOptions,
                                List<String> groupBy, String havingClause )
   {
-    this.properties = properties;
+    this.setProperties( properties );
     this.whereClause = whereClause;
     this.queryOptions = queryOptions;
-    this.groupBy = groupBy;
+    this.setGroupBy( groupBy );
     this.havingClause = havingClause;
   }
 
   public List<String> getProperties()
   {
-    if( properties == null )
-      return properties = new ArrayList<>();
-
-    return new ArrayList<>( properties );
+    return new ArrayList<>( this.properties );
   }
 
   public void setProperties( List<String> properties )
   {
-    this.properties = properties;
+    this.properties.clear();
+    for( String prop: properties )
+      this.addProperty( prop );
+  }
+
+  public void addProperties( String... properties )
+  {
+    for( String prop: properties )
+      this.addProperty( prop );
   }
 
   public void addProperty( String property )
   {
-    if( property == null || property.equals( "" ) )
-      return;
-
-    if( properties == null )
-      properties = new ArrayList<>();
-
-    properties.add( property );
+    if( property != null && !property.equals( "" ) )
+      properties.add( property );
   }
 
   public String getWhereClause()
@@ -110,12 +111,18 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
 
   public List<String> getGroupBy()
   {
-    return groupBy;
+    return new ArrayList<>( this.groupBy );
   }
 
   public void setGroupBy( List<String> groupBy )
   {
-    this.groupBy = groupBy;
+    this.groupBy.clear();
+
+    for( String grb : groupBy )
+    {
+      if( grb != null && !grb.equals( "" ) )
+        this.groupBy.add( grb );
+    }
   }
 
   public String getHavingClause()
