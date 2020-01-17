@@ -57,7 +57,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
     if( result == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
 
-    if( !OperationType.supportPropNameType.contains( result.getOperationType() ) )
+    if( !OperationType.supportEntityDescriptionResultType.contains( result.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
@@ -75,12 +75,17 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
     if( resultIndex == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_INDEX );
 
-    if( !OperationType.supportResultIndexType.contains( resultIndex.getOperationType() ) )
+    Map<String, Object> referenceToObjectId;
+    if( OperationType.supportCollectionEntityDescriptionType.contains( resultIndex.getOperationType() ) )
+      referenceToObjectId = resultIndex.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD );
+    else if( OperationType.supportListIdsResultType.contains( resultIndex.getOperationType() ) )
+      referenceToObjectId = resultIndex.getReference();
+    else
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
     OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, resultIndex.getTableName(),
-                                                           operationResultId, resultIndex.getReference() );
+                                                           operationResultId, referenceToObjectId );
 
     operations.add( operationDelete );
 
@@ -129,7 +134,8 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
     if( result == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
 
-    if( !OperationType.supportResultIndexType.contains( result.getOperationType() ) )
+    if( ! ( OperationType.supportCollectionEntityDescriptionType.contains( result.getOperationType() )
+            || OperationType.supportListIdsResultType.contains( result.getOperationType() ) ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return bulkDelete( result.getTableName(), null, result.getReference() );
