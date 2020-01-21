@@ -206,13 +206,7 @@ public class RelationOperationImpl implements RelationOperation
 
     List<String> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
 
-    Map<String, Object> referenceToObjectId;
-    if( OperationType.supportCollectionEntityDescriptionType.contains( parentObject.getOperationType() ) )
-      referenceToObjectId = parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD );
-    else if( OperationType.supportListIdsResultType.contains( parentObject.getOperationType() ) )
-      referenceToObjectId = parentObject.getReference();
-    else
-      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+    Map<String, Object> referenceToObjectId = TransactionHelper.convertCreateBulkOrFindResultIndexToObjectId( parentObject );
 
     return addOperation( operationType, parentObject.getTableName(), referenceToObjectId, columnName,
                          null, childrenIds );
@@ -225,13 +219,7 @@ public class RelationOperationImpl implements RelationOperation
     if( parentObject == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_INDEX );
 
-    Map<String, Object> referenceToObjectId;
-    if( OperationType.supportCollectionEntityDescriptionType.contains( parentObject.getOperationType() ) )
-      referenceToObjectId = parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD );
-    else if( OperationType.supportListIdsResultType.contains( parentObject.getOperationType() ) )
-      referenceToObjectId = parentObject.getReference();
-    else
-      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+    Map<String, Object> referenceToObjectId = TransactionHelper.convertCreateBulkOrFindResultIndexToObjectId( parentObject );
 
     if( ! ( OperationType.supportCollectionEntityDescriptionType.contains( children.getOperationType() )
             || OperationType.supportListIdsResultType.contains( children.getOperationType() ) ) )
@@ -248,13 +236,7 @@ public class RelationOperationImpl implements RelationOperation
     if( parentObject == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_INDEX );
 
-    Map<String, Object> referenceToObjectId;
-    if( OperationType.supportCollectionEntityDescriptionType.contains( parentObject.getOperationType() ) )
-      referenceToObjectId = parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD );
-    else if( OperationType.supportListIdsResultType.contains( parentObject.getOperationType() ) )
-      referenceToObjectId = parentObject.getReference();
-    else
-      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+    Map<String, Object> referenceToObjectId = TransactionHelper.convertCreateBulkOrFindResultIndexToObjectId( parentObject );
 
     return addOperation( operationType, parentObject.getTableName(), referenceToObjectId, columnName,
                          whereClauseForChildren, null );

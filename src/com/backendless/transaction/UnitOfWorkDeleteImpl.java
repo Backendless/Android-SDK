@@ -75,13 +75,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
     if( resultIndex == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_INDEX );
 
-    Map<String, Object> referenceToObjectId;
-    if( OperationType.supportCollectionEntityDescriptionType.contains( resultIndex.getOperationType() ) )
-      referenceToObjectId = resultIndex.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD );
-    else if( OperationType.supportListIdsResultType.contains( resultIndex.getOperationType() ) )
-      referenceToObjectId = resultIndex.getReference();
-    else
-      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+    Map<String, Object> referenceToObjectId = TransactionHelper.convertCreateBulkOrFindResultIndexToObjectId( resultIndex );
 
     String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
     OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, resultIndex.getTableName(),

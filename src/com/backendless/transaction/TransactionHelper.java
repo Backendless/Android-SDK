@@ -83,4 +83,16 @@ public class TransactionHelper
       throw new IllegalArgumentException( ExceptionMessage.LIST_MAP_OR_STRING_OR_INSTANCES );
     return childrenMaps;
   }
+
+  static Map<String, Object> convertCreateBulkOrFindResultIndexToObjectId( OpResultIndex parentObject )
+  {
+    Map<String, Object> referenceToObjectId;
+    if( OperationType.supportCollectionEntityDescriptionType.contains( parentObject.getOperationType() ) )
+      referenceToObjectId = parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD );
+    else if( OperationType.supportListIdsResultType.contains( parentObject.getOperationType() ) )
+      referenceToObjectId = parentObject.getReference();
+    else
+      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+    return referenceToObjectId;
+  }
 }
