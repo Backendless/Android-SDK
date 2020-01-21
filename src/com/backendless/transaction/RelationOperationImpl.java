@@ -70,7 +70,8 @@ public class RelationOperationImpl implements RelationOperation
     if( children == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
 
-    if( !OperationType.supportResultIndexType.contains( children.getOperationType() ) )
+    if( ! ( OperationType.supportCollectionEntityDescriptionType.contains( children.getOperationType() )
+            || OperationType.supportListIdsResultType.contains( children.getOperationType() ) ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return addOperation( operationType, parentTable, parentObjectId, columnName,
@@ -116,7 +117,8 @@ public class RelationOperationImpl implements RelationOperation
     if( children == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
 
-    if( !OperationType.supportResultIndexType.contains( children.getOperationType() ) )
+    if( ! ( OperationType.supportCollectionEntityDescriptionType.contains( children.getOperationType() )
+            || OperationType.supportListIdsResultType.contains( children.getOperationType() ) ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return addOperation( operationType, parentTable, parentObjectId, columnName,
@@ -168,7 +170,8 @@ public class RelationOperationImpl implements RelationOperation
     if( !OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    if( !OperationType.supportResultIndexType.contains( children.getOperationType() ) )
+    if( ! ( OperationType.supportCollectionEntityDescriptionType.contains( children.getOperationType() )
+            || OperationType.supportListIdsResultType.contains( children.getOperationType() ) ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return addOperation( operationType, parentObject.getTableName(),
@@ -203,10 +206,15 @@ public class RelationOperationImpl implements RelationOperation
 
     List<String> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
 
-    if( !OperationType.supportResultIndexType.contains( parentObject.getOperationType() ) )
+    Map<String, Object> referenceToObjectId;
+    if( OperationType.supportCollectionEntityDescriptionType.contains( parentObject.getOperationType() ) )
+      referenceToObjectId = parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD );
+    else if( OperationType.supportListIdsResultType.contains( parentObject.getOperationType() ) )
+      referenceToObjectId = parentObject.getReference();
+    else
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return addOperation( operationType, parentObject.getTableName(), parentObject.getReference(), columnName,
+    return addOperation( operationType, parentObject.getTableName(), referenceToObjectId, columnName,
                          null, childrenIds );
   }
 
@@ -217,13 +225,19 @@ public class RelationOperationImpl implements RelationOperation
     if( parentObject == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_INDEX );
 
-    if( !OperationType.supportResultIndexType.contains( parentObject.getOperationType() ) )
+    Map<String, Object> referenceToObjectId;
+    if( OperationType.supportCollectionEntityDescriptionType.contains( parentObject.getOperationType() ) )
+      referenceToObjectId = parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD );
+    else if( OperationType.supportListIdsResultType.contains( parentObject.getOperationType() ) )
+      referenceToObjectId = parentObject.getReference();
+    else
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    if( !OperationType.supportResultIndexType.contains( children.getOperationType() ) )
+    if( ! ( OperationType.supportCollectionEntityDescriptionType.contains( children.getOperationType() )
+            || OperationType.supportListIdsResultType.contains( children.getOperationType() ) ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return addOperation( operationType, parentObject.getTableName(), parentObject.getReference(), columnName,
+    return addOperation( operationType, parentObject.getTableName(), referenceToObjectId, columnName,
                          null, children.getReference() );
   }
 
@@ -234,10 +248,15 @@ public class RelationOperationImpl implements RelationOperation
     if( parentObject == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_INDEX );
 
-    if( !OperationType.supportResultIndexType.contains( parentObject.getOperationType() ) )
+    Map<String, Object> referenceToObjectId;
+    if( OperationType.supportCollectionEntityDescriptionType.contains( parentObject.getOperationType() ) )
+      referenceToObjectId = parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD );
+    else if( OperationType.supportListIdsResultType.contains( parentObject.getOperationType() ) )
+      referenceToObjectId = parentObject.getReference();
+    else
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return addOperation( operationType, parentObject.getTableName(), parentObject.getReference(), columnName,
+    return addOperation( operationType, parentObject.getTableName(), referenceToObjectId, columnName,
                          whereClauseForChildren, null );
   }
 

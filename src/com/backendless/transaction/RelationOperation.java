@@ -11,7 +11,7 @@ public interface RelationOperation
   <E> OpResult addOperation( OperationType operationType, String parentTable, Map<String, Object> parentObject,
                              String columnName, List<E> children );
 
-  // HashMap + OpResult=CREATE_BULK
+  // HashMap + OpResult=CREATE_BULK or FIND
   OpResult addOperation( OperationType operationType, String parentTable, Map<String, Object> parentObject,
                          String columnName, OpResult children );
 
@@ -25,7 +25,7 @@ public interface RelationOperation
   <E> OpResult addOperation( OperationType operationType, String parentTable, String parentObjectId,
                              String columnName, List<E> children );
 
-  // String + OpResult=CREATE_BULK
+  // String + OpResult=CREATE_BULK or FIND
   OpResult addOperation( OperationType operationType, String parentTable, String parentObjectId,
                          String columnName, OpResult children );
 
@@ -38,7 +38,7 @@ public interface RelationOperation
   // Custom class + list of objectIds
   <E, U> OpResult addOperation( OperationType operationType, E parentObject, String columnName, List<U> children );
 
-  // Custom class + OpResult=CREATE_BULK
+  // Custom class + OpResult=CREATE_BULK or FIND
   <E> OpResult addOperation( OperationType operationType, E parentObject, String columnName, OpResult children );
 
   // Custom class + whereClause
@@ -51,7 +51,7 @@ public interface RelationOperation
   <E> OpResult addOperation( OperationType operationType, OpResult parentObject,
                              String columnName, List<E> children );
 
-  // OpResult=CREATE/UPDATE(getObjectId) + OpResult=CREATE_BULK
+  // OpResult=CREATE/UPDATE(getObjectId) + OpResult=CREATE_BULK or FIND
   OpResult addOperation( OperationType operationType, OpResult parentObject,
                          String columnName, OpResult children );
 
@@ -59,17 +59,17 @@ public interface RelationOperation
   OpResult addOperation( OperationType operationType, OpResult parentObject,
                          String columnName, String whereClauseForChildren );
 
-  // OpResult=CREATE_BULK(resultIndex) + List of hashmaps
-  // OpResult=CREATE_BULK(resultIndex) + List of custom classes
-  // OpResult=CREATE_BULK(resultIndex) + List of objectIds
+  // OpResultIndex=CREATE_BULK/FIND(getObjectId) + List of hashmaps
+  // OpResultIndex=CREATE_BULK/FIND(getObjectId)+ List of custom classes
+  // OpResultIndex=CREATE_BULK/FIND(getObjectId) + List of objectIds
   <E> OpResult addOperation( OperationType operationType, OpResultIndex parentObject,
                              String columnName, List<E> children );
 
-  // OpResult=CREATE_BULK(resultIndex) + OpResult=CREATE_BULK
+  // OpResultIndex=CREATE_BULK/FIND(getObjectId) + OpResult=CREATE_BULK or FIND
   OpResult addOperation( OperationType operationType, OpResultIndex parentObject,
                          String columnName, OpResult children );
 
-  // OpResult=CREATE_BULK(resultIndex) + where clause
+  // OpResultIndex=CREATE_BULK/FIND(getObjectId) + where clause
   OpResult addOperation( OperationType operationType, OpResultIndex parentObject,
                          String columnName, String whereClauseForChildren );
 }
