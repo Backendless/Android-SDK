@@ -22,7 +22,7 @@ import com.backendless.transaction.UnitOfWorkCreate;
 import com.backendless.transaction.UnitOfWorkCreateImpl;
 import com.backendless.transaction.UnitOfWorkDelete;
 import com.backendless.transaction.UnitOfWorkDeleteImpl;
-import com.backendless.transaction.UnitOfWorkStatus;
+import com.backendless.transaction.UnitOfWorkResult;
 import com.backendless.transaction.UnitOfWorkUpdateImpl;
 import com.backendless.transaction.operations.Operation;
 
@@ -59,12 +59,12 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
-  public UnitOfWorkStatus execute()
+  public UnitOfWorkResult execute()
   {
     return unitOfWorkExecutor.execute();
   }
 
-  public void execute( AsyncCallback<UnitOfWorkStatus> responder )
+  public void execute( AsyncCallback<UnitOfWorkResult> responder )
   {
     unitOfWorkExecutor.execute( responder );
   }

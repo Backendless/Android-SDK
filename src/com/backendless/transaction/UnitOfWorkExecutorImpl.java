@@ -18,17 +18,17 @@ public class UnitOfWorkExecutorImpl implements UnitOfWorkExecutor
   }
 
   @Override
-  public UnitOfWorkStatus execute()
+  public UnitOfWorkResult execute()
   {
     return execute( null, false );
   }
 
-  public void execute( AsyncCallback<UnitOfWorkStatus> responder )
+  public void execute( AsyncCallback<UnitOfWorkResult> responder )
   {
     execute( responder, true );
   }
 
-  private UnitOfWorkStatus execute( AsyncCallback<UnitOfWorkStatus> responder, boolean async )
+  private UnitOfWorkResult execute( AsyncCallback<UnitOfWorkResult> responder, boolean async )
   {
     if( unitOfWork.getOperations() == null || unitOfWork.getOperations().isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.LIST_OPERATIONS_NULL_EMPTY );
@@ -36,9 +36,9 @@ public class UnitOfWorkExecutorImpl implements UnitOfWorkExecutor
     Object[] args = new Object[]{ unitOfWork };
 
     if( async )
-      Invoker.invokeAsync( TRANSACTION_MANAGER_SERVER_ALIAS, "execute", args, responder, ResponderHelper.getPOJOAdaptingResponder( UnitOfWorkStatus.class ) );
+      Invoker.invokeAsync( TRANSACTION_MANAGER_SERVER_ALIAS, "execute", args, responder, ResponderHelper.getPOJOAdaptingResponder( UnitOfWorkResult.class ) );
     else
-      return Invoker.invokeSync( TRANSACTION_MANAGER_SERVER_ALIAS, "execute", args, ResponderHelper.getPOJOAdaptingResponder( UnitOfWorkStatus.class ) );
+      return Invoker.invokeSync( TRANSACTION_MANAGER_SERVER_ALIAS, "execute", args, ResponderHelper.getPOJOAdaptingResponder( UnitOfWorkResult.class ) );
 
     return null;
   }
