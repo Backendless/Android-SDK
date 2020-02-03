@@ -45,6 +45,14 @@ public class OpResult
     return referenceIndex;
   }
 
+  public Map<String, Object> resolveTo( int opResultIndex, String propName )
+  {
+    Map<String, Object> referenceIndexPropName = new HashMap<>( reference );
+    referenceIndexPropName.put( UnitOfWork.RESULT_INDEX, opResultIndex );
+    referenceIndexPropName.put( UnitOfWork.PROP_NAME, propName );
+    return referenceIndexPropName;
+  }
+
   public OpResultIndex resolveToIndex( int opResultIndex )
   {
     Map<String, Object> referenceIndex = new HashMap<>( reference );

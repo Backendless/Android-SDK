@@ -1,6 +1,7 @@
 package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.persistence.DataQueryBuilder;
 import com.backendless.transaction.IUnitOfWork;
 import com.backendless.transaction.OpResult;
 import com.backendless.transaction.OpResultIndex;
@@ -12,6 +13,8 @@ import com.backendless.transaction.UnitOfWorkDeleteRelation;
 import com.backendless.transaction.UnitOfWorkDeleteRelationImpl;
 import com.backendless.transaction.UnitOfWorkExecutor;
 import com.backendless.transaction.UnitOfWorkExecutorImpl;
+import com.backendless.transaction.UnitOfWorkFind;
+import com.backendless.transaction.UnitOfWorkFindImpl;
 import com.backendless.transaction.UnitOfWorkSetRelation;
 import com.backendless.transaction.UnitOfWorkSetRelationImpl;
 import com.backendless.transaction.UnitOfWorkUpdate;
@@ -19,7 +22,7 @@ import com.backendless.transaction.UnitOfWorkCreate;
 import com.backendless.transaction.UnitOfWorkCreateImpl;
 import com.backendless.transaction.UnitOfWorkDelete;
 import com.backendless.transaction.UnitOfWorkDeleteImpl;
-import com.backendless.transaction.UnitOfWorkStatus;
+import com.backendless.transaction.UnitOfWorkResult;
 import com.backendless.transaction.UnitOfWorkUpdateImpl;
 import com.backendless.transaction.operations.Operation;
 
@@ -33,6 +36,7 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   private final UnitOfWorkCreate unitOfWorkCreate;
   private final UnitOfWorkUpdate unitOFWorkUpdate;
   private final UnitOfWorkDelete unitOfWorkDelete;
+  private final UnitOfWorkFind unitOfWorkFind;
   private final RelationOperation relationOperation;
   private final UnitOfWorkAddRelation unitOfWorkAddRelation;
   private final UnitOfWorkSetRelation unitOfWorkSetRelation;
@@ -46,6 +50,7 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
     unitOfWorkCreate = new UnitOfWorkCreateImpl( operations );
     unitOFWorkUpdate = new UnitOfWorkUpdateImpl( operations );
     unitOfWorkDelete = new UnitOfWorkDeleteImpl( operations );
+    unitOfWorkFind = new UnitOfWorkFindImpl( operations );
     relationOperation = new RelationOperationImpl( operations );
     unitOfWorkAddRelation = new UnitOfWorkAddRelationImpl( relationOperation );
     unitOfWorkSetRelation = new UnitOfWorkSetRelationImpl( relationOperation );
@@ -54,12 +59,12 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
-  public UnitOfWorkStatus execute()
+  public UnitOfWorkResult execute()
   {
     return unitOfWorkExecutor.execute();
   }
 
-  public void execute( AsyncCallback<UnitOfWorkStatus> responder )
+  public void execute( AsyncCallback<UnitOfWorkResult> responder )
   {
     unitOfWorkExecutor.execute( responder );
   }
@@ -108,6 +113,18 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
 
   @Override
   public OpResult update( OpResult result, String propertyName, Object propertyValue )
+  {
+    return unitOFWorkUpdate.update( result, propertyName, propertyValue );
+  }
+
+  @Override
+  public OpResult update( OpResultIndex result, Map<String, Object> changes )
+  {
+    return unitOFWorkUpdate.update( result, changes );
+  }
+
+  @Override
+  public OpResult update( OpResultIndex result, String propertyName, Object propertyValue )
   {
     return unitOFWorkUpdate.update( result, propertyName, propertyValue );
   }
@@ -188,6 +205,12 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   public OpResult bulkDelete( OpResult result )
   {
     return unitOfWorkDelete.bulkDelete( result );
+  }
+
+  @Override
+  public OpResult find( String tableName, DataQueryBuilder queryBuilder )
+  {
+    return unitOfWorkFind.find( tableName, queryBuilder );
   }
 
   @Override

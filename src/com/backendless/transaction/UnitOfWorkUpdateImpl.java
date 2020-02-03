@@ -49,10 +49,35 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
     if( result == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
 
-    if( !OperationType.CREATE.equals( result.getOperationType() ) )
+    if( !OperationType.supportEntityDescriptionResultType.contains( result.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     changes.put( Persistence.DEFAULT_OBJECT_ID_FIELD, result.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ) );
+
+    return update( result.getTableName(), changes );
+  }
+
+  @Override
+  public OpResult update( OpResultIndex result, String propertyName, Object propertyValue )
+  {
+    Map<String, Object> changes = new HashMap<>();
+    changes.put( propertyName, propertyValue );
+
+    return update( result, changes );
+  }
+
+  @Override
+  public OpResult update( OpResultIndex result, Map<String, Object> changes )
+  {
+    if( result == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
+    if( OperationType.supportCollectionEntityDescriptionType.contains( result.getOperationType() ) )
+      changes.put( Persistence.DEFAULT_OBJECT_ID_FIELD, result.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ) );
+    else if( OperationType.supportListIdsResultType.contains( result.getOperationType() ) )
+      changes.put( Persistence.DEFAULT_OBJECT_ID_FIELD, result.getReference() );
+    else
+      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return update( result.getTableName(), changes );
   }
@@ -98,7 +123,8 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
     if( objectIdsForChanges == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
 
-    if( !OperationType.supportResultIndexType.contains( objectIdsForChanges.getOperationType() ) )
+    if( ! ( OperationType.supportCollectionEntityDescriptionType.contains( objectIdsForChanges.getOperationType() )
+            || OperationType.supportListIdsResultType.contains( objectIdsForChanges.getOperationType() ) ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return bulkUpdate( objectIdsForChanges.getTableName(), null, objectIdsForChanges.getReference(), changes );

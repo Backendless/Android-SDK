@@ -57,7 +57,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
     if( result == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
 
-    if( !OperationType.supportPropNameType.contains( result.getOperationType() ) )
+    if( !OperationType.supportEntityDescriptionResultType.contains( result.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
@@ -75,12 +75,11 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
     if( resultIndex == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_INDEX );
 
-    if( !OperationType.supportResultIndexType.contains( resultIndex.getOperationType() ) )
-      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+    Map<String, Object> referenceToObjectId = TransactionHelper.convertCreateBulkOrFindResultIndexToObjectId( resultIndex );
 
     String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
     OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, resultIndex.getTableName(),
-                                                           operationResultId, resultIndex.getReference() );
+                                                           operationResultId, referenceToObjectId );
 
     operations.add( operationDelete );
 
@@ -129,7 +128,8 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
     if( result == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
 
-    if( !OperationType.supportResultIndexType.contains( result.getOperationType() ) )
+    if( ! ( OperationType.supportCollectionEntityDescriptionType.contains( result.getOperationType() )
+            || OperationType.supportListIdsResultType.contains( result.getOperationType() ) ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return bulkDelete( result.getTableName(), null, result.getReference() );
