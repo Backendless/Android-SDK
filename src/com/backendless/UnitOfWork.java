@@ -27,6 +27,8 @@ import com.backendless.transaction.UnitOfWorkResult;
 import com.backendless.transaction.UnitOfWorkUpdateImpl;
 import com.backendless.transaction.operations.Operation;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,11 +48,16 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
 
   private final OpResultIdGenerator opResultIdGenerator;
 
+  private List<String> opResultIdStrings;
+  private Map<String, Integer> opResultIdMaps;
+
   public UnitOfWork()
   {
     super();
     operations = super.getOperations();
-    opResultIdGenerator = new OpResultIdGenerator();
+    opResultIdStrings = new ArrayList<>();
+    opResultIdMaps = new HashMap<>();
+    opResultIdGenerator = new OpResultIdGenerator( opResultIdStrings, opResultIdMaps );
     unitOfWorkCreate = new UnitOfWorkCreateImpl( operations, opResultIdGenerator );
     unitOFWorkUpdate = new UnitOfWorkUpdateImpl( operations, opResultIdGenerator );
     unitOfWorkDelete = new UnitOfWorkDeleteImpl( operations, opResultIdGenerator );
@@ -60,6 +67,11 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
     unitOfWorkSetRelation = new UnitOfWorkSetRelationImpl( relationOperation );
     unitOfWorkDeleteRelation = new UnitOfWorkDeleteRelationImpl( relationOperation );
     unitOfWorkExecutor = new UnitOfWorkExecutorImpl( this );
+  }
+
+  public List<String> getOpResultIdStrings()
+  {
+    return opResultIdStrings;
   }
 
   @Override

@@ -1,14 +1,18 @@
 package com.backendless.transaction;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class OpResultIdGenerator
 {
-  private final List<String> opResultIdStrings = new ArrayList<>();
-  private final Map<String, Integer> opResultIdMaps = new HashMap<>();
+  private List<String> opResultIdStrings;
+  private Map<String, Integer> opResultIdMaps;
+
+  public OpResultIdGenerator( List<String> opResultIdStrings, Map<String, Integer> opResultIdMaps )
+  {
+    this.opResultIdStrings = opResultIdStrings;
+    this.opResultIdMaps = opResultIdMaps;
+  }
 
   String generateOpResultId( OperationType operationType, String tableName )
   {
