@@ -59,17 +59,17 @@ public interface RelationOperation
   OpResult addOperation( OperationType operationType, OpResult parentObject,
                          String columnName, String whereClauseForChildren );
 
-  // OpResultIndex=CREATE_BULK/FIND(getObjectId) + List of hashmaps
-  // OpResultIndex=CREATE_BULK/FIND(getObjectId)+ List of custom classes
-  // OpResultIndex=CREATE_BULK/FIND(getObjectId) + List of objectIds
-  <E> OpResult addOperation( OperationType operationType, OpResultIndex parentObject,
+  // OpResultValueReference=CREATE_BULK/FIND(getObjectId) + List of hashmaps
+  // OpResultValueReference=CREATE_BULK/FIND(getObjectId)+ List of custom classes
+  // OpResultValueReference=CREATE_BULK/FIND(getObjectId) + List of objectIds
+  <E> OpResult addOperation( OperationType operationType, OpResultValueReference parentObject,
                              String columnName, List<E> children );
 
-  // OpResultIndex=CREATE_BULK/FIND(getObjectId) + OpResult=CREATE_BULK or FIND
-  OpResult addOperation( OperationType operationType, OpResultIndex parentObject,
+  // OpResultValueReference=CREATE_BULK/FIND(getObjectId) + OpResult=CREATE_BULK or FIND
+  OpResult addOperation( OperationType operationType, OpResultValueReference parentObject,
                          String columnName, OpResult children );
 
-  // OpResultIndex=CREATE_BULK/FIND(getObjectId) + where clause
-  OpResult addOperation( OperationType operationType, OpResultIndex parentObject,
+  // OpResultValueReference=CREATE_BULK/FIND(getObjectId) + where clause
+  OpResult addOperation( OperationType operationType, OpResultValueReference parentObject,
                          String columnName, String whereClauseForChildren );
 }

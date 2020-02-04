@@ -58,7 +58,7 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
   }
 
   @Override
-  public OpResult update( OpResultIndex result, String propertyName, Object propertyValue )
+  public OpResult update( OpResultValueReference result, String propertyName, Object propertyValue )
   {
     Map<String, Object> changes = new HashMap<>();
     changes.put( propertyName, propertyValue );
@@ -67,15 +67,18 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
   }
 
   @Override
-  public OpResult update( OpResultIndex result, Map<String, Object> changes )
+  public OpResult update( OpResultValueReference result, Map<String, Object> changes )
   {
     if( result == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
 
+    if( result.getResultIndex() == null || result.getPropName() != null )
+      throw new IllegalArgumentException( ExceptionMessage.OP_RESULT_INDEX_YES_PROP_NAME_NOT );
+
     if( OperationType.supportCollectionEntityDescriptionType.contains( result.getOperationType() ) )
       changes.put( Persistence.DEFAULT_OBJECT_ID_FIELD, result.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ) );
     else if( OperationType.supportListIdsResultType.contains( result.getOperationType() ) )
-      changes.put( Persistence.DEFAULT_OBJECT_ID_FIELD, result.getReference() );
+      changes.put( Persistence.DEFAULT_OBJECT_ID_FIELD, result.makeReference() );
     else
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
@@ -127,7 +130,7 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
             || OperationType.supportListIdsResultType.contains( objectIdsForChanges.getOperationType() ) ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return bulkUpdate( objectIdsForChanges.getTableName(), null, objectIdsForChanges.getReference(), changes );
+    return bulkUpdate( objectIdsForChanges.getTableName(), null, objectIdsForChanges.makeReference(), changes );
   }
 
   private OpResult bulkUpdate( String tableName, String whereClause, Object objectsForChanges,

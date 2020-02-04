@@ -75,7 +75,7 @@ public class RelationOperationImpl implements RelationOperation
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return addOperation( operationType, parentTable, parentObjectId, columnName,
-                         null, children.getReference() );
+                         null, children.makeReference() );
   }
 
   @Override
@@ -122,7 +122,7 @@ public class RelationOperationImpl implements RelationOperation
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return addOperation( operationType, parentTable, parentObjectId, columnName,
-                         null, children.getReference() );
+                         null, children.makeReference() );
   }
 
   @Override
@@ -176,7 +176,7 @@ public class RelationOperationImpl implements RelationOperation
 
     return addOperation( operationType, parentObject.getTableName(),
                          parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ),
-                         columnName, null, children.getReference() );
+                         columnName, null, children.makeReference() );
   }
 
   @Override
@@ -195,11 +195,14 @@ public class RelationOperationImpl implements RelationOperation
   }
 
   @Override
-  public <E> OpResult addOperation( OperationType operationType, OpResultIndex parentObject,
+  public <E> OpResult addOperation( OperationType operationType, OpResultValueReference parentObject,
                                     String columnName, List<E> children )
   {
     if( parentObject == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_INDEX );
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_VALUE_REFERENCE );
+
+    if( parentObject.getResultIndex() == null || parentObject.getPropName() != null )
+      throw new IllegalArgumentException( ExceptionMessage.OP_RESULT_INDEX_YES_PROP_NAME_NOT );
 
     if( children == null || children.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
@@ -213,11 +216,14 @@ public class RelationOperationImpl implements RelationOperation
   }
 
   @Override
-  public OpResult addOperation( OperationType operationType, OpResultIndex parentObject,
+  public OpResult addOperation( OperationType operationType, OpResultValueReference parentObject,
                                 String columnName, OpResult children )
   {
     if( parentObject == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_INDEX );
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_VALUE_REFERENCE );
+
+    if( parentObject.getResultIndex() == null || parentObject.getPropName() != null )
+      throw new IllegalArgumentException( ExceptionMessage.OP_RESULT_INDEX_YES_PROP_NAME_NOT );
 
     Map<String, Object> referenceToObjectId = TransactionHelper.convertCreateBulkOrFindResultIndexToObjectId( parentObject );
 
@@ -226,15 +232,18 @@ public class RelationOperationImpl implements RelationOperation
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return addOperation( operationType, parentObject.getTableName(), referenceToObjectId, columnName,
-                         null, children.getReference() );
+                         null, children.makeReference() );
   }
 
   @Override
-  public OpResult addOperation( OperationType operationType, OpResultIndex parentObject,
+  public OpResult addOperation( OperationType operationType, OpResultValueReference parentObject,
                                 String columnName, String whereClauseForChildren )
   {
     if( parentObject == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_INDEX );
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_VALUE_REFERENCE );
+
+    if( parentObject.getResultIndex() == null || parentObject.getPropName() != null )
+      throw new IllegalArgumentException( ExceptionMessage.OP_RESULT_INDEX_YES_PROP_NAME_NOT );
 
     Map<String, Object> referenceToObjectId = TransactionHelper.convertCreateBulkOrFindResultIndexToObjectId( parentObject );
 

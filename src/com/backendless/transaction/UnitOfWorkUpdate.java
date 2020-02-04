@@ -15,13 +15,13 @@ public interface UnitOfWorkUpdate
   // OpResult from CREATE/UPDATE = identification object what will update (get object id)
   OpResult update( OpResult result, String propertyName, Object propertyValue );
 
-  // OpResultIndex from FIND = identification object what will update (get object id)
-  // OpResultIndex from CREATE_BULK = already an object identifier
-  OpResult update( OpResultIndex result, Map<String, Object> changes );
+  // OpResultValueReference from FIND = identification object what will update (get object id)
+  // OpResultValueReference from CREATE_BULK = already an object identifier
+  OpResult update( OpResultValueReference result, Map<String, Object> changes );
 
-  // OpResultIndex from FIND = identification object what will update (get object id)
-  // OpResultIndex from CREATE_BULK = already an object identifier
-  OpResult update( OpResultIndex result, String propertyName, Object propertyValue );
+  // OpResultValueReference from FIND = identification object what will update (get object id)
+  // OpResultValueReference from CREATE_BULK = already an object identifier
+  OpResult update( OpResultValueReference result, String propertyName, Object propertyValue );
 
   <E> OpResult bulkUpdate( String whereClause, E changes );
 

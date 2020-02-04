@@ -70,10 +70,13 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   }
 
   @Override
-  public OpResult delete( OpResultIndex resultIndex )
+  public OpResult delete( OpResultValueReference resultIndex )
   {
     if( resultIndex == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_INDEX );
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_VALUE_REFERENCE );
+
+    if( resultIndex.getResultIndex() == null || resultIndex.getPropName() != null )
+      throw new IllegalArgumentException( ExceptionMessage.OP_RESULT_INDEX_YES_PROP_NAME_NOT );
 
     Map<String, Object> referenceToObjectId = TransactionHelper.convertCreateBulkOrFindResultIndexToObjectId( resultIndex );
 
@@ -132,7 +135,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
             || OperationType.supportListIdsResultType.contains( result.getOperationType() ) ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return bulkDelete( result.getTableName(), null, result.getReference() );
+    return bulkDelete( result.getTableName(), null, result.makeReference() );
   }
 
   private OpResult bulkDelete( String tableName, String whereClause, Object unconditional )
