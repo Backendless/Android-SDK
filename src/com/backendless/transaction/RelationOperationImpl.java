@@ -11,19 +11,16 @@ import com.backendless.transaction.payload.Relation;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class RelationOperationImpl implements RelationOperation
 {
-  AtomicInteger countAddRelation = new AtomicInteger( 1 );
-  AtomicInteger countSetRelation = new AtomicInteger( 1 );
-  AtomicInteger countDeleteRelation = new AtomicInteger( 1 );
-
   private final List<Operation<?>> operations;
+  private final OpResultIdGenerator opResultIdGenerator;
 
-  public RelationOperationImpl( List<Operation<?>> operations )
+  public RelationOperationImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator )
   {
     this.operations = operations;
+    this.opResultIdGenerator = opResultIdGenerator;
   }
 
   @Override
@@ -251,7 +248,7 @@ public class RelationOperationImpl implements RelationOperation
     if( columnName == null || columnName.equals( "" ) )
       throw new IllegalArgumentException( ExceptionMessage.NULL_RELATION_COLUMN_NAME );
 
-    String operationResultId = null;
+    String operationResultId = opResultIdGenerator.generateOpResultId( operationType, parentTable );
 
     Relation relation = new Relation();
     relation.setParentObject( parentObject );
@@ -261,15 +258,12 @@ public class RelationOperationImpl implements RelationOperation
     switch( operationType )
     {
       case ADD_RELATION:
-        operationResultId = operationType + "_" + countAddRelation.getAndIncrement();
         operations.add( new OperationAddRelation( operationType, parentTable, operationResultId, relation ) );
         break;
       case SET_RELATION:
-        operationResultId = operationType + "_" + countSetRelation.getAndIncrement();
         operations.add( new OperationSetRelation( operationType, parentTable, operationResultId, relation ) );
         break;
       case DELETE_RELATION:
-        operationResultId = operationType + "_" + countDeleteRelation.getAndIncrement();
         operations.add( new OperationDeleteRelation( operationType, parentTable, operationResultId, relation ) );
         break;
     }
