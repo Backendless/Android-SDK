@@ -1,53 +1,37 @@
 package com.backendless.transaction;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class OpResultValueReference
 {
-  private final String tableName;
-  private final OperationType operationType;
-  private final boolean ___ref = true;
-  private final String opResultId;
+  private final OpResult opResult;
   private final Integer resultIndex;
   private final String propName;
 
-  public OpResultValueReference( String tableName, OperationType operationType, String opResultId,
-                                 Integer resultIndex, String propName )
+  OpResultValueReference( OpResult opResult, Integer resultIndex, String propName )
   {
-    this.tableName = tableName;
-    this.operationType = operationType;
-    this.opResultId = opResultId;
+    this.opResult = opResult;
     this.resultIndex = resultIndex;
     this.propName = propName;
   }
 
-  public OpResultValueReference( String tableName, OperationType operationType, String opResultId, Integer resultIndex )
+  OpResultValueReference( OpResult opResult, Integer resultIndex )
   {
-    this.tableName = tableName;
-    this.operationType = operationType;
-    this.opResultId = opResultId;
+    this.opResult = opResult;
     this.resultIndex = resultIndex;
     this.propName = null;
   }
 
-  public OpResultValueReference( String tableName, OperationType operationType, String opResultId, String propName )
+  OpResultValueReference( OpResult opResult, String propName )
   {
-    this.tableName = tableName;
-    this.operationType = operationType;
-    this.opResultId = opResultId;
+    this.opResult = opResult;
     this.resultIndex = null;
     this.propName = propName;
   }
 
-  public String getTableName()
+  public OpResult getOpResult()
   {
-    return tableName;
-  }
-
-  public OperationType getOperationType()
-  {
-    return operationType;
+    return opResult;
   }
 
   public Integer getResultIndex()
@@ -62,14 +46,12 @@ public class OpResultValueReference
 
   public OpResultValueReference resolveTo( String propName )
   {
-    return new OpResultValueReference( tableName, operationType, opResultId, resultIndex, propName );
+    return new OpResultValueReference( opResult, resultIndex, propName );
   }
 
   public Map<String, Object> makeReference()
   {
-    Map<String, Object> referenceMap = new HashMap<>();
-    referenceMap.put( UnitOfWork.REFERENCE_MARKER, ___ref );
-    referenceMap.put( UnitOfWork.OP_RESULT_ID, opResultId );
+    Map<String, Object> referenceMap = opResult.makeReference();
 
     if( resultIndex != null )
       referenceMap.put( UnitOfWork.RESULT_INDEX, resultIndex );

@@ -83,9 +83,9 @@ public class TransactionHelper
   static Map<String, Object> convertCreateBulkOrFindResultIndexToObjectId( OpResultValueReference parentObject )
   {
     Map<String, Object> referenceToObjectId;
-    if( OperationType.supportCollectionEntityDescriptionType.contains( parentObject.getOperationType() ) )
+    if( OperationType.supportCollectionEntityDescriptionType.contains( parentObject.getOpResult().getOperationType() ) )
       referenceToObjectId = parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ).makeReference();
-    else if( OperationType.supportListIdsResultType.contains( parentObject.getOperationType() ) )
+    else if( OperationType.supportListIdsResultType.contains( parentObject.getOpResult().getOperationType() ) )
       referenceToObjectId = parentObject.makeReference();
     else
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );

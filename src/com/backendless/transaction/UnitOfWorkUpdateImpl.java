@@ -75,14 +75,14 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
     if( result.getResultIndex() == null || result.getPropName() != null )
       throw new IllegalArgumentException( ExceptionMessage.OP_RESULT_INDEX_YES_PROP_NAME_NOT );
 
-    if( OperationType.supportCollectionEntityDescriptionType.contains( result.getOperationType() ) )
+    if( OperationType.supportCollectionEntityDescriptionType.contains( result.getOpResult().getOperationType() ) )
       changes.put( Persistence.DEFAULT_OBJECT_ID_FIELD, result.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ) );
-    else if( OperationType.supportListIdsResultType.contains( result.getOperationType() ) )
+    else if( OperationType.supportListIdsResultType.contains( result.getOpResult().getOperationType() ) )
       changes.put( Persistence.DEFAULT_OBJECT_ID_FIELD, result.makeReference() );
     else
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return update( result.getTableName(), changes );
+    return update( result.getOpResult().getTableName(), changes );
   }
 
   @Override

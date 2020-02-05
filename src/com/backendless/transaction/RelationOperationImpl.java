@@ -211,7 +211,7 @@ public class RelationOperationImpl implements RelationOperation
 
     Map<String, Object> referenceToObjectId = TransactionHelper.convertCreateBulkOrFindResultIndexToObjectId( parentObject );
 
-    return addOperation( operationType, parentObject.getTableName(), referenceToObjectId, columnName,
+    return addOperation( operationType, parentObject.getOpResult().getTableName(), referenceToObjectId, columnName,
                          null, childrenIds );
   }
 
@@ -231,7 +231,7 @@ public class RelationOperationImpl implements RelationOperation
             || OperationType.supportListIdsResultType.contains( children.getOperationType() ) ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return addOperation( operationType, parentObject.getTableName(), referenceToObjectId, columnName,
+    return addOperation( operationType, parentObject.getOpResult().getTableName(), referenceToObjectId, columnName,
                          null, children.makeReference() );
   }
 
@@ -247,7 +247,7 @@ public class RelationOperationImpl implements RelationOperation
 
     Map<String, Object> referenceToObjectId = TransactionHelper.convertCreateBulkOrFindResultIndexToObjectId( parentObject );
 
-    return addOperation( operationType, parentObject.getTableName(), referenceToObjectId, columnName,
+    return addOperation( operationType, parentObject.getOpResult().getTableName(), referenceToObjectId, columnName,
                          whereClauseForChildren, null );
   }
 

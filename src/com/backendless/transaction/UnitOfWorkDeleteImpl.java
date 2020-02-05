@@ -81,12 +81,12 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
     Map<String, Object> referenceToObjectId = TransactionHelper.convertCreateBulkOrFindResultIndexToObjectId( resultIndex );
 
     String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
-    OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, resultIndex.getTableName(),
+    OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, resultIndex.getOpResult().getTableName(),
                                                            operationResultId, referenceToObjectId );
 
     operations.add( operationDelete );
 
-    return TransactionHelper.makeOpResult( resultIndex.getTableName(), operationResultId, OperationType.DELETE );
+    return TransactionHelper.makeOpResult( resultIndex.getOpResult().getTableName(), operationResultId, OperationType.DELETE );
   }
 
   @Override
