@@ -16,12 +16,12 @@ public class OpResult
     this.opResultId = opResultId;
   }
 
-  OperationType getOperationType()
+  public OperationType getOperationType()
   {
     return operationType;
   }
 
-  String getTableName()
+  public String getTableName()
   {
     return tableName;
   }

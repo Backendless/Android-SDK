@@ -156,7 +156,7 @@ public class RelationOperationImpl implements RelationOperation
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return addOperation( operationType, parentObject.getTableName(),
-                         parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ),
+                         parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ).makeReference(),
                          columnName, null, childrenIds );
   }
 
@@ -175,7 +175,7 @@ public class RelationOperationImpl implements RelationOperation
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return addOperation( operationType, parentObject.getTableName(),
-                         parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ),
+                         parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ).makeReference(),
                          columnName, null, children.makeReference() );
   }
 
@@ -190,7 +190,7 @@ public class RelationOperationImpl implements RelationOperation
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return addOperation( operationType, parentObject.getTableName(),
-                         parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ),
+                         parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ).makeReference(),
                          columnName, whereClauseForChildren, null );
   }
 
