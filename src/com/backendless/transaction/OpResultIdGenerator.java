@@ -17,7 +17,7 @@ public class OpResultIdGenerator
   String generateOpResultId( OperationType operationType, String tableName )
   {
     String opResultIdGenerated;
-    final String key = operationType.name().toLowerCase() + tableName;
+    final String key = operationType.getOperationName() + tableName;
     if( opResultIdMaps.containsKey( key ) )
     {
       int count = opResultIdMaps.get( key );
