@@ -62,7 +62,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
     String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
     OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, result.getTableName(), operationResultId,
-                                                           result.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ) );
+                                                           result.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ).makeReference() );
 
     operations.add( operationDelete );
 
