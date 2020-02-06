@@ -96,19 +96,19 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
   }
 
   @Override
-  public <E> OpResult addToRelation( OpResultIndex parentObject, String columnName, List<E> children )
+  public <E> OpResult addToRelation( OpResultValueReference parentObject, String columnName, List<E> children )
   {
     return relationOperation.addOperation( OperationType.ADD_RELATION, parentObject, columnName, children );
   }
 
   @Override
-  public OpResult addToRelation( OpResultIndex parentObject, String columnName, OpResult children )
+  public OpResult addToRelation( OpResultValueReference parentObject, String columnName, OpResult children )
   {
     return relationOperation.addOperation( OperationType.ADD_RELATION, parentObject, columnName, children );
   }
 
   @Override
-  public OpResult addToRelation( OpResultIndex parentObject, String columnName, String whereClauseForChildren )
+  public OpResult addToRelation( OpResultValueReference parentObject, String columnName, String whereClauseForChildren )
   {
     return relationOperation.addOperation( OperationType.ADD_RELATION, parentObject, columnName, whereClauseForChildren );
   }

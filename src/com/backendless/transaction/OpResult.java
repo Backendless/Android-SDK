@@ -9,20 +9,15 @@ import java.util.Map;
 
 public class OpResult
 {
-  private String tableName;
-  private Map<String, Object> reference;
-  private OperationType operationType;
+  private final String tableName;
+  private final OperationType operationType;
+  private final String opResultId;
 
-  public OpResult( String tableName, Map<String, Object> reference, OperationType operationType )
+  OpResult( String tableName, OperationType operationType, String opResultId )
   {
     this.tableName = tableName;
-    this.reference = reference;
     this.operationType = operationType;
-  }
-
-  public Map<String, Object> getReference()
-  {
-    return reference;
+    this.opResultId = opResultId;
   }
 
   public OperationType getOperationType()
@@ -35,33 +30,27 @@ public class OpResult
     return tableName;
   }
 
-  public Map<String, Object> resolveTo( String propName )
+  public OpResultValueReference resolveTo( int resultIndex, String propName )
   {
-    Map<String, Object> referencePropName = new HashMap<>( reference );
-    referencePropName.put( UnitOfWork.PROP_NAME, propName );
-    return referencePropName;
+    return new OpResultValueReference( this, resultIndex, propName );
   }
 
-  public Map<String, Object> resolveTo( int opResultIndex )
+  public OpResultValueReference resolveTo( int resultIndex )
   {
-    Map<String, Object> referenceIndex = new HashMap<>( reference );
-    referenceIndex.put( UnitOfWork.RESULT_INDEX, opResultIndex );
-    return referenceIndex;
+    return new OpResultValueReference( this, resultIndex );
   }
 
-  public Map<String, Object> resolveTo( int opResultIndex, String propName )
+  public OpResultValueReference resolveTo( String propName )
   {
-    Map<String, Object> referenceIndexPropName = new HashMap<>( reference );
-    referenceIndexPropName.put( UnitOfWork.RESULT_INDEX, opResultIndex );
-    referenceIndexPropName.put( UnitOfWork.PROP_NAME, propName );
-    return referenceIndexPropName;
+    return new OpResultValueReference( this, propName );
   }
 
-  public OpResultIndex resolveToIndex( int opResultIndex )
+  public Map<String, Object> makeReference()
   {
-    Map<String, Object> referenceIndex = new HashMap<>( reference );
-    referenceIndex.put( UnitOfWork.RESULT_INDEX, opResultIndex );
-    return new OpResultIndex( tableName, referenceIndex, operationType );
+    Map<String, Object> referenceMap = new HashMap<>();
+    referenceMap.put( UnitOfWork.REFERENCE_MARKER, true );
+    referenceMap.put( UnitOfWork.OP_RESULT_ID, opResultId );
+    return referenceMap;
   }
 
   public void setOpResultId( UnitOfWork unitOfWork, String newOpResultId )

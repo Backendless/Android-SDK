@@ -53,11 +53,11 @@ public interface UnitOfWorkDeleteRelation
   // OpResult=CREATE_BULK(resultIndex) + List of hashmaps
   // OpResult=CREATE_BULK(resultIndex) + List of custom classes
   // OpResult=CREATE_BULK(resultIndex) + List of objectIds
-  <E> OpResult deleteRelation( OpResultIndex parentObject, String columnName, List<E> children );
+  <E> OpResult deleteRelation( OpResultValueReference parentObject, String columnName, List<E> children );
 
   // OpResult=CREATE_BULK(resultIndex) + OpResult=CREATE_BULK
-  OpResult deleteRelation( OpResultIndex parentObject, String columnName, OpResult children );
+  OpResult deleteRelation( OpResultValueReference parentObject, String columnName, OpResult children );
 
   // OpResult=CREATE_BULK(resultIndex) + where clause
-  OpResult deleteRelation( OpResultIndex parentObject, String columnName, String whereClauseForChildren );
+  OpResult deleteRelation( OpResultValueReference parentObject, String columnName, String whereClauseForChildren );
 }
