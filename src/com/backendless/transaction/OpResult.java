@@ -11,7 +11,7 @@ public class OpResult
 {
   private final String tableName;
   private final OperationType operationType;
-  private final String opResultId;
+  private String opResultId;
 
   OpResult( String tableName, OperationType operationType, String opResultId )
   {
@@ -58,14 +58,13 @@ public class OpResult
     if( unitOfWork.getOpResultIdStrings().contains( newOpResultId ) )
       throw new IllegalArgumentException( ExceptionMessage.OP_RESULT_ID_ALREADY_PRESENT );
 
-    String oldOpResultId = (String) this.reference.get( UnitOfWork.OP_RESULT_ID );
-    this.reference.put( UnitOfWork.OP_RESULT_ID, newOpResultId );
-
     for( Operation<?> operation : unitOfWork.getOperations() )
-      if( operation.getOpResultId().equals( oldOpResultId ) )
+      if( operation.getOpResultId().equals( opResultId ) )
       {
         operation.setOpResultId( newOpResultId );
         break;
       }
+
+    opResultId = newOpResultId;
   }
 }
