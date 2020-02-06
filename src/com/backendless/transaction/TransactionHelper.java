@@ -4,7 +4,6 @@ import com.backendless.Persistence;
 import com.backendless.exceptions.ExceptionMessage;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,10 +27,7 @@ public class TransactionHelper
 
   public static OpResult makeOpResult( String tableName, String operationResultId, OperationType operationType )
   {
-    Map<String, Object> reference = new HashMap<>();
-    reference.put( UnitOfWork.REFERENCE_MARKER, true );
-    reference.put( UnitOfWork.OP_RESULT_ID, operationResultId );
-    return new OpResult( tableName, reference, operationType );
+    return new OpResult( tableName, operationType, operationResultId );
   }
 
   static <E> List<Map<String, Object>> convertInstancesToMaps( List<E> instances )
@@ -84,13 +80,13 @@ public class TransactionHelper
     return childrenMaps;
   }
 
-  static Map<String, Object> convertCreateBulkOrFindResultIndexToObjectId( OpResultIndex parentObject )
+  static Map<String, Object> convertCreateBulkOrFindResultIndexToObjectId( OpResultValueReference parentObject )
   {
     Map<String, Object> referenceToObjectId;
-    if( OperationType.supportCollectionEntityDescriptionType.contains( parentObject.getOperationType() ) )
-      referenceToObjectId = parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD );
-    else if( OperationType.supportListIdsResultType.contains( parentObject.getOperationType() ) )
-      referenceToObjectId = parentObject.getReference();
+    if( OperationType.supportCollectionEntityDescriptionType.contains( parentObject.getOpResult().getOperationType() ) )
+      referenceToObjectId = parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ).makeReference();
+    else if( OperationType.supportListIdsResultType.contains( parentObject.getOpResult().getOperationType() ) )
+      referenceToObjectId = parentObject.makeReference();
     else
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
     return referenceToObjectId;

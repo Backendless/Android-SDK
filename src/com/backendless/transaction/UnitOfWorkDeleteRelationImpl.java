@@ -97,19 +97,19 @@ public class UnitOfWorkDeleteRelationImpl implements UnitOfWorkDeleteRelation
   }
 
   @Override
-  public <E> OpResult deleteRelation( OpResultIndex parentObject, String columnName, List<E> children )
+  public <E> OpResult deleteRelation( OpResultValueReference parentObject, String columnName, List<E> children )
   {
     return relationOperation.addOperation( OperationType.DELETE_RELATION, parentObject, columnName, children );
   }
 
   @Override
-  public OpResult deleteRelation( OpResultIndex parentObject, String columnName, OpResult children )
+  public OpResult deleteRelation( OpResultValueReference parentObject, String columnName, OpResult children )
   {
     return relationOperation.addOperation( OperationType.DELETE_RELATION, parentObject, columnName, children );
   }
 
   @Override
-  public OpResult deleteRelation( OpResultIndex parentObject, String columnName, String whereClauseForChildren )
+  public OpResult deleteRelation( OpResultValueReference parentObject, String columnName, String whereClauseForChildren )
   {
     return relationOperation.addOperation( OperationType.DELETE_RELATION, parentObject, columnName, whereClauseForChildren );
   }

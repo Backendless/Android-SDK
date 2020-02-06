@@ -14,9 +14,9 @@ public interface UnitOfWorkDelete
   // OpResult from CREAT/UPDATE = identification object what will update (get object id)
   OpResult delete( OpResult result );
 
-  // OpResultIndex from FIND = identification object what will update (get object id)
-  // OpResultIndex from CREATE_BULK = already an object identifier
-  OpResult delete( OpResultIndex resultIndex );
+  // OpResultValueReference from FIND = identification object what will update (get object id)
+  // OpResultValueReference from CREATE_BULK = already an object identifier
+  OpResult delete( OpResultValueReference resultIndex );
 
   <E> OpResult bulkDelete( List<E> instances );
 

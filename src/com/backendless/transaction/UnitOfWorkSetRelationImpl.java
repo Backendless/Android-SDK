@@ -93,19 +93,19 @@ public class UnitOfWorkSetRelationImpl implements UnitOfWorkSetRelation
   }
 
   @Override
-  public <E> OpResult setToRelation( OpResultIndex parentObject, String columnName, List<E> children )
+  public <E> OpResult setToRelation( OpResultValueReference parentObject, String columnName, List<E> children )
   {
     return relationOperation.addOperation( OperationType.SET_RELATION, parentObject, columnName, children );
   }
 
   @Override
-  public OpResult setToRelation( OpResultIndex parentObject, String columnName, OpResult children )
+  public OpResult setToRelation( OpResultValueReference parentObject, String columnName, OpResult children )
   {
     return relationOperation.addOperation( OperationType.SET_RELATION, parentObject, columnName, children );
   }
 
   @Override
-  public OpResult setToRelation( OpResultIndex parentObject, String columnName, String whereClauseForChildren )
+  public OpResult setToRelation( OpResultValueReference parentObject, String columnName, String whereClauseForChildren )
   {
     return relationOperation.addOperation( OperationType.SET_RELATION, parentObject, columnName, whereClauseForChildren );
   }

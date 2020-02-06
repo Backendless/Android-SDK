@@ -52,13 +52,13 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
     if( !OperationType.supportEntityDescriptionResultType.contains( result.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    changes.put( Persistence.DEFAULT_OBJECT_ID_FIELD, result.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ) );
+    changes.put( Persistence.DEFAULT_OBJECT_ID_FIELD, result.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ).makeReference() );
 
     return update( result.getTableName(), changes );
   }
 
   @Override
-  public OpResult update( OpResultIndex result, String propertyName, Object propertyValue )
+  public OpResult update( OpResultValueReference result, String propertyName, Object propertyValue )
   {
     Map<String, Object> changes = new HashMap<>();
     changes.put( propertyName, propertyValue );
@@ -67,19 +67,22 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
   }
 
   @Override
-  public OpResult update( OpResultIndex result, Map<String, Object> changes )
+  public OpResult update( OpResultValueReference result, Map<String, Object> changes )
   {
     if( result == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
 
-    if( OperationType.supportCollectionEntityDescriptionType.contains( result.getOperationType() ) )
-      changes.put( Persistence.DEFAULT_OBJECT_ID_FIELD, result.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ) );
-    else if( OperationType.supportListIdsResultType.contains( result.getOperationType() ) )
-      changes.put( Persistence.DEFAULT_OBJECT_ID_FIELD, result.getReference() );
+    if( result.getResultIndex() == null || result.getPropName() != null )
+      throw new IllegalArgumentException( ExceptionMessage.OP_RESULT_INDEX_YES_PROP_NAME_NOT );
+
+    if( OperationType.supportCollectionEntityDescriptionType.contains( result.getOpResult().getOperationType() ) )
+      changes.put( Persistence.DEFAULT_OBJECT_ID_FIELD, result.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ).makeReference() );
+    else if( OperationType.supportListIdsResultType.contains( result.getOpResult().getOperationType() ) )
+      changes.put( Persistence.DEFAULT_OBJECT_ID_FIELD, result.makeReference() );
     else
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return update( result.getTableName(), changes );
+    return update( result.getOpResult().getTableName(), changes );
   }
 
   @Override
@@ -127,7 +130,7 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
             || OperationType.supportListIdsResultType.contains( objectIdsForChanges.getOperationType() ) ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return bulkUpdate( objectIdsForChanges.getTableName(), null, objectIdsForChanges.getReference(), changes );
+    return bulkUpdate( objectIdsForChanges.getTableName(), null, objectIdsForChanges.makeReference(), changes );
   }
 
   private OpResult bulkUpdate( String tableName, String whereClause, Object objectsForChanges,

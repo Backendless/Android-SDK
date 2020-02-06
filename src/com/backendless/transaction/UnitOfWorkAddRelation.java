@@ -53,11 +53,11 @@ public interface UnitOfWorkAddRelation
   // OpResult=CREATE_BULK(resultIndex) + List of hashmaps
   // OpResult=CREATE_BULK(resultIndex) + List of custom classes
   // OpResult=CREATE_BULK(resultIndex) + List of objectIds
-  <E> OpResult addToRelation( OpResultIndex parentObject, String columnName, List<E> children );
+  <E> OpResult addToRelation( OpResultValueReference parentObject, String columnName, List<E> children );
 
   // OpResult=CREATE_BULK(resultIndex) + OpResult=CREATE_BULK
-  OpResult addToRelation( OpResultIndex parentObject, String columnName, OpResult children );
+  OpResult addToRelation( OpResultValueReference parentObject, String columnName, OpResult children );
 
   // OpResult=CREATE_BULK(resultIndex) + where clause
-  OpResult addToRelation( OpResultIndex parentObject, String columnName, String whereClauseForChildren );
+  OpResult addToRelation( OpResultValueReference parentObject, String columnName, String whereClauseForChildren );
 }
