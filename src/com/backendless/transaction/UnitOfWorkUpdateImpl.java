@@ -11,18 +11,16 @@ import com.backendless.transaction.payload.UpdateBulkPayload;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
 {
-  AtomicInteger countUpdate = new AtomicInteger( 1 );
-  AtomicInteger countUpdateBulk = new AtomicInteger( 1 );
-
   private final List<Operation<?>> operations;
+  private final OpResultIdGenerator opResultIdGenerator;
 
-  public UnitOfWorkUpdateImpl( List<Operation<?>> operations )
+  public UnitOfWorkUpdateImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator )
   {
     this.operations = operations;
+    this.opResultIdGenerator = opResultIdGenerator;
   }
 
   @Override
@@ -91,7 +89,7 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
     if( objectMap == null || objectMap.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_MAP );
 
-    String operationResultId = OperationType.UPDATE + "_" + countUpdate.getAndIncrement();
+    String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.UPDATE, tableName );
     OperationUpdate operationUpdate = new OperationUpdate( OperationType.UPDATE, tableName, operationResultId, objectMap );
 
     operations.add( operationUpdate );
@@ -141,7 +139,7 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
 
     TransactionHelper.removeSystemField( changes );
 
-    String operationResultId = OperationType.UPDATE_BULK + "_" + countUpdateBulk.getAndIncrement();
+    String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.UPDATE_BULK, tableName );
     UpdateBulkPayload updateBulkPayload = new UpdateBulkPayload( whereClause, objectsForChanges, changes );
     OperationUpdateBulk operationUpdateBulk = new OperationUpdateBulk( OperationType.UPDATE_BULK, tableName,
                                                                        operationResultId, updateBulkPayload );

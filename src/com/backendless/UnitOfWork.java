@@ -5,6 +5,7 @@ import com.backendless.persistence.DataQueryBuilder;
 import com.backendless.transaction.IUnitOfWork;
 import com.backendless.transaction.OpResult;
 import com.backendless.transaction.OpResultValueReference;
+import com.backendless.transaction.OpResultIdGenerator;
 import com.backendless.transaction.RelationOperation;
 import com.backendless.transaction.RelationOperationImpl;
 import com.backendless.transaction.UnitOfWorkAddRelation;
@@ -26,6 +27,8 @@ import com.backendless.transaction.UnitOfWorkResult;
 import com.backendless.transaction.UnitOfWorkUpdateImpl;
 import com.backendless.transaction.operations.Operation;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,19 +46,32 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   private final UnitOfWorkDeleteRelation unitOfWorkDeleteRelation;
   private final UnitOfWorkExecutor unitOfWorkExecutor;
 
+  private final OpResultIdGenerator opResultIdGenerator;
+
+  private List<String> opResultIdStrings;
+  private Map<String, Integer> opResultIdMaps;
+
   public UnitOfWork()
   {
     super();
     operations = super.getOperations();
-    unitOfWorkCreate = new UnitOfWorkCreateImpl( operations );
-    unitOFWorkUpdate = new UnitOfWorkUpdateImpl( operations );
-    unitOfWorkDelete = new UnitOfWorkDeleteImpl( operations );
-    unitOfWorkFind = new UnitOfWorkFindImpl( operations );
-    relationOperation = new RelationOperationImpl( operations );
+    opResultIdStrings = new ArrayList<>();
+    opResultIdMaps = new HashMap<>();
+    opResultIdGenerator = new OpResultIdGenerator( opResultIdStrings, opResultIdMaps );
+    unitOfWorkCreate = new UnitOfWorkCreateImpl( operations, opResultIdGenerator );
+    unitOFWorkUpdate = new UnitOfWorkUpdateImpl( operations, opResultIdGenerator );
+    unitOfWorkDelete = new UnitOfWorkDeleteImpl( operations, opResultIdGenerator );
+    unitOfWorkFind = new UnitOfWorkFindImpl( operations, opResultIdGenerator );
+    relationOperation = new RelationOperationImpl( operations, opResultIdGenerator );
     unitOfWorkAddRelation = new UnitOfWorkAddRelationImpl( relationOperation );
     unitOfWorkSetRelation = new UnitOfWorkSetRelationImpl( relationOperation );
     unitOfWorkDeleteRelation = new UnitOfWorkDeleteRelationImpl( relationOperation );
     unitOfWorkExecutor = new UnitOfWorkExecutorImpl( this );
+  }
+
+  public List<String> getOpResultIdStrings()
+  {
+    return opResultIdStrings;
   }
 
   @Override

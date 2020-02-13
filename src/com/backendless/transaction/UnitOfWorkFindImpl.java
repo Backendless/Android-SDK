@@ -6,17 +6,16 @@ import com.backendless.transaction.operations.Operation;
 import com.backendless.transaction.operations.OperationFind;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class UnitOfWorkFindImpl implements UnitOfWorkFind
 {
-  AtomicInteger countFind = new AtomicInteger( 1 );
-
   private final List<Operation<?>> operations;
+  private final OpResultIdGenerator opResultIdGenerator;
 
-  public UnitOfWorkFindImpl( List<Operation<?>> operations )
+  public UnitOfWorkFindImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator )
   {
     this.operations = operations;
+    this.opResultIdGenerator = opResultIdGenerator;
   }
 
   @Override
@@ -24,7 +23,7 @@ public class UnitOfWorkFindImpl implements UnitOfWorkFind
   {
     BackendlessDataQuery query = queryBuilder.build();
 
-    String operationResultId = OperationType.FIND + "_" + countFind.getAndIncrement();
+    String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.FIND, tableName );
 
     OperationFind<?> operationFind = new OperationFind<>( OperationType.FIND, tableName, operationResultId, query );
 

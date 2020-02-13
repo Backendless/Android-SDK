@@ -10,18 +10,16 @@ import com.backendless.transaction.payload.DeleteBulkPayload;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 {
-  AtomicInteger countDelete = new AtomicInteger( 1 );
-  AtomicInteger countDeleteBulk = new AtomicInteger( 1 );
-
   private final List<Operation<?>> operations;
+  private final OpResultIdGenerator opResultIdGenerator;
 
-  public UnitOfWorkDeleteImpl( List<Operation<?>> operations )
+  public UnitOfWorkDeleteImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator )
   {
     this.operations = operations;
+    this.opResultIdGenerator = opResultIdGenerator;
   }
 
   @Override
@@ -43,7 +41,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   @Override
   public OpResult delete( String tableName, String objectId )
   {
-    String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
+    String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.DELETE, tableName );
     OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, tableName, operationResultId, objectId );
 
     operations.add( operationDelete );
@@ -60,7 +58,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
     if( !OperationType.supportEntityDescriptionResultType.contains( result.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
+    String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.DELETE, result.getTableName() );
     OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, result.getTableName(), operationResultId,
                                                            result.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ).makeReference() );
 
@@ -80,7 +78,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
     Map<String, Object> referenceToObjectId = TransactionHelper.convertCreateBulkOrFindResultIndexToObjectId( resultIndex );
 
-    String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
+    String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.DELETE, resultIndex.getTableName() );
     OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, resultIndex.getOpResult().getTableName(),
                                                            operationResultId, referenceToObjectId );
 
@@ -140,7 +138,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
   private OpResult bulkDelete( String tableName, String whereClause, Object unconditional )
   {
-    String operationResultId = OperationType.DELETE_BULK + "_" + countDeleteBulk.getAndIncrement();
+    String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.DELETE_BULK, tableName );
     DeleteBulkPayload deleteBulkPayload = new DeleteBulkPayload( whereClause, unconditional );
     OperationDeleteBulk operationDeleteBulk = new OperationDeleteBulk( OperationType.DELETE_BULK, tableName,
                                                                        operationResultId, deleteBulkPayload );
