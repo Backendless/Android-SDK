@@ -78,7 +78,7 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 
     Map<String, Object> referenceToObjectId = TransactionHelper.convertCreateBulkOrFindResultIndexToObjectId( resultIndex );
 
-    String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.DELETE, resultIndex.getTableName() );
+    String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.DELETE, resultIndex.getOpResult().getTableName() );
     OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, resultIndex.getOpResult().getTableName(),
                                                            operationResultId, referenceToObjectId );
 
