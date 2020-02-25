@@ -146,12 +146,6 @@ public class UnitOfWork extends com.backendless.transaction.UnitOfWork implement
   }
 
   @Override
-  public <E> OpResult bulkUpdate( String whereClause, E changes )
-  {
-    return unitOFWorkUpdate.bulkUpdate( whereClause, changes );
-  }
-
-  @Override
   public OpResult bulkUpdate( String tableName, String whereClause, Map<String, Object> changes )
   {
     return unitOFWorkUpdate.bulkUpdate( tableName, whereClause, changes );

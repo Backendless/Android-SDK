@@ -23,8 +23,6 @@ public interface UnitOfWorkUpdate
   // OpResultValueReference from CREATE_BULK = already an object identifier
   OpResult update( OpResultValueReference result, String propertyName, Object propertyValue );
 
-  <E> OpResult bulkUpdate( String whereClause, E changes );
-
   OpResult bulkUpdate( String tableName, String whereClause, Map<String, Object> changes );
 
   OpResult bulkUpdate( String tableName, List<String> objectsForChanges, Map<String, Object> changes );
