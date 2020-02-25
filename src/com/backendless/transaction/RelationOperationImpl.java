@@ -54,7 +54,7 @@ public class RelationOperationImpl implements RelationOperation
     if( children == null || children.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
-    List<String> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
+    List<Object> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
 
     return addOperation( operationType, parentTable, parentObjectId, columnName,
                          null, childrenIds );
@@ -94,7 +94,7 @@ public class RelationOperationImpl implements RelationOperation
       throw new IllegalArgumentException( ExceptionMessage.NULL_OBJECT_ID_IN_INSTANCE );
     String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
 
-    List<String> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
+    List<Object> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
 
     return addOperation( operationType, parentTable, parentObjectId, columnName,
                          null, childrenIds );
@@ -147,7 +147,7 @@ public class RelationOperationImpl implements RelationOperation
     if( children == null || children.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
-    List<String> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
+    List<Object> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
 
     if( !OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
@@ -204,7 +204,7 @@ public class RelationOperationImpl implements RelationOperation
     if( children == null || children.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
-    List<String> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
+    List<Object> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
 
     Map<String, Object> referenceToObjectId = TransactionHelper.convertCreateBulkOrFindResultIndexToObjectId( parentObject );
 

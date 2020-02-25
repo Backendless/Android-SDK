@@ -8,6 +8,7 @@ import com.backendless.transaction.operations.OperationDelete;
 import com.backendless.transaction.operations.OperationDeleteBulk;
 import com.backendless.transaction.payload.DeleteBulkPayload;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -103,13 +104,16 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
     if( arrayOfObjects == null || arrayOfObjects.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
-    List<String> objectIds;
-    if( arrayOfObjects.get( 0 ) instanceof Map )
-      objectIds = TransactionHelper.convertMapsToObjectIds( (List<Map<String, Object>>) arrayOfObjects );
-    else if( arrayOfObjects.get( 0 ) instanceof String )
-      objectIds = (List<String>) arrayOfObjects;
-    else
-      throw new IllegalArgumentException( ExceptionMessage.LIST_MAP_OR_STRING );
+    List<Object> objectIds = new ArrayList<>();
+    for( E object : arrayOfObjects )
+    {
+      if( object instanceof Map )
+        objectIds.add( TransactionHelper.convertObjectMapToObjectIdOrLeaveReference( (Map<String, Object>) object ) );
+      else if( object instanceof String )
+        objectIds.add( object );
+      else
+        throw new IllegalArgumentException( ExceptionMessage.LIST_MAP_OR_STRING );
+    }
 
     return bulkDelete( tableName, null, objectIds );
   }
