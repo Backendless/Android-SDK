@@ -1,7 +1,6 @@
 package com.backendless.transaction;
 
 import com.backendless.Persistence;
-import com.backendless.UnitOfWork;
 import com.backendless.exceptions.ExceptionMessage;
 
 import java.util.ArrayList;

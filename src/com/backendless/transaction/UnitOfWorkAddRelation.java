@@ -3,7 +3,7 @@ package com.backendless.transaction;
 import java.util.List;
 import java.util.Map;
 
-public interface UnitOfWorkAddRelation
+interface UnitOfWorkAddRelation
 {
   // HashMap + List of hashmaps
   // HashMap + List of custom classes

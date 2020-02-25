@@ -2,7 +2,6 @@ package com.backendless.transaction;
 
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.transaction.operations.Operation;
-import com.backendless.UnitOfWork;
 
 import java.util.HashMap;
 import java.util.Map;
