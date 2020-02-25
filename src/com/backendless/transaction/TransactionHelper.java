@@ -37,9 +37,8 @@ public class TransactionHelper
 
     List<Map<String, Object>> serializedEntities = new ArrayList<>();
     for ( final Object entity : instances )
-    {
       serializedEntities.add( SerializationHelper.serializeEntityToMap( entity ) );
-    }
+
     return serializedEntities;
   }
 
