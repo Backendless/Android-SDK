@@ -100,15 +100,6 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
   }
 
   @Override
-  public <E> OpResult bulkUpdate( String whereClause, E changes )
-  {
-    Map<String, Object> changesMap = SerializationHelper.serializeEntityToMap( changes );
-    String tableName = BackendlessSerializer.getSimpleName( changes.getClass() );
-
-    return bulkUpdate( tableName, whereClause, changesMap );
-  }
-
-  @Override
   public OpResult bulkUpdate( String tableName, String whereClause, Map<String, Object> changes )
   {
     return bulkUpdate( tableName, whereClause, null, changes );
