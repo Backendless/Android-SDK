@@ -27,7 +27,7 @@ public interface UnitOfWorkUpdate
 
   OpResult bulkUpdate( String tableName, String whereClause, Map<String, Object> changes );
 
-  OpResult bulkUpdate( String tableName, List<String> objectsForChanges, Map<String, Object> changes );
+  <E> OpResult bulkUpdate( String tableName, List<E> objectsForChanges, Map<String, Object> changes );
 
   // OpResult from FIND or CREATE_BULK
   OpResult bulkUpdate( OpResult objectIdsForChanges, Map<String, Object> changes );

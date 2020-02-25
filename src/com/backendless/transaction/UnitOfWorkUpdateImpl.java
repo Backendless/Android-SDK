@@ -89,6 +89,8 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
     if( objectMap == null || objectMap.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_MAP );
 
+    TransactionHelper.makeReferenceToValueFromOpResult( objectMap );
+
     String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.UPDATE, tableName );
     OperationUpdate operationUpdate = new OperationUpdate( OperationType.UPDATE, tableName, operationResultId, objectMap );
 
@@ -113,8 +115,14 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
   }
 
   @Override
-  public OpResult bulkUpdate( String tableName, List<String> objectsForChanges, Map<String, Object> changes )
+  public <E> OpResult bulkUpdate( String tableName, List<E> objectsForChanges, Map<String, Object> changes )
   {
+    if( objectsForChanges == null || objectsForChanges.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
+
+    if( ! ( objectsForChanges.get( 0 ) instanceof String ) )
+      TransactionHelper.makeReferenceToObjectIdFromOpResult( (List<Object>) objectsForChanges );
+
     return bulkUpdate( tableName, null, objectsForChanges, changes );
   }
 
@@ -138,6 +146,8 @@ public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_MAP );
 
     TransactionHelper.removeSystemField( changes );
+
+    TransactionHelper.makeReferenceToValueFromOpResult( changes );
 
     String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.UPDATE_BULK, tableName );
     UpdateBulkPayload updateBulkPayload = new UpdateBulkPayload( whereClause, objectsForChanges, changes );
