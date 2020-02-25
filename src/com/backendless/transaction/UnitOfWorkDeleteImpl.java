@@ -104,6 +104,8 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
     if( arrayOfObjects == null || arrayOfObjects.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
+    TransactionHelper.makeReferenceToObjectIdFromOpResult( (List<Object>) arrayOfObjects );
+
     List<Object> objectIds = new ArrayList<>();
     for( E object : arrayOfObjects )
     {
