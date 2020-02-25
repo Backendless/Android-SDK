@@ -1,6 +1,7 @@
 package com.backendless.transaction;
 
 import com.backendless.Persistence;
+import com.backendless.UnitOfWork;
 import com.backendless.exceptions.ExceptionMessage;
 
 import java.util.ArrayList;
@@ -43,14 +44,12 @@ public class TransactionHelper
     return serializedEntities;
   }
 
-  static List<String> convertMapsToObjectIds( List<Map<String, Object>> objectsMaps )
+  static List<Object> convertMapsToObjectIds( List<Map<String, Object>> objectsMaps )
   {
-    List<String> objectIds = new ArrayList<>();
-    for( Map<String, Object> map : objectsMaps )
-    {
-      String objectId = convertObjectMapToObjectId( map );
-      objectIds.add( objectId );
-    }
+    List<Object> objectIds = new ArrayList<>();
+    for( Map<String, Object> objectMap : objectsMaps )
+      objectIds.add( convertObjectMapToObjectIdOrLeaveReference( objectMap ) );
+
     return objectIds;
   }
 
@@ -66,13 +65,31 @@ public class TransactionHelper
     return (String) maybeObjectId;
   }
 
-  static <E> List<String> getObjectIdsFromUnknownList( List<E> children )
+  static Object convertObjectMapToObjectIdOrLeaveReference( Map<String, Object> objectMap )
   {
-    List<String> childrenMaps;
+    if( objectMap == null || objectMap.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_MAP );
+
+    if( objectMap.containsKey( UnitOfWork.REFERENCE_MARKER ) )
+    {
+      objectMap.put( UnitOfWork.PROP_NAME, Persistence.DEFAULT_OBJECT_ID_FIELD );
+      return objectMap;
+    }
+
+    Object maybeObjectId = objectMap.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+    if( !( maybeObjectId instanceof String ) )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OBJECT_ID_IN_OBJECT_MAP );
+
+    return maybeObjectId;
+  }
+
+  static <E> List<Object> getObjectIdsFromUnknownList( List<E> children )
+  {
+    List<Object> childrenMaps;
     if( children.get( 0 ) instanceof Map )
       childrenMaps = TransactionHelper.convertMapsToObjectIds( (List<Map<String, Object>>) children );
     else if( children.get( 0 ) instanceof String )
-      childrenMaps = (List<String>) children;
+      childrenMaps = (List<Object>) children;
     else if( !( children.get( 0 ).getClass().isArray() || children.get( 0 ).getClass().isAssignableFrom( Iterable.class ) ) )
       childrenMaps = TransactionHelper.convertMapsToObjectIds( TransactionHelper.convertInstancesToMaps( children ) );
     else
