@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
+class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
 {
   private final List<Operation<?>> operations;
   private final OpResultIdGenerator opResultIdGenerator;

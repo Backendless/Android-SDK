@@ -29,6 +29,11 @@ public class OpResult
     return tableName;
   }
 
+  public String getOpResultId()
+  {
+    return opResultId;
+  }
+
   public OpResultValueReference resolveTo( int resultIndex, String propName )
   {
     return new OpResultValueReference( this, resultIndex, propName );
