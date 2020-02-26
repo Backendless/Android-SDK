@@ -2,7 +2,7 @@ package com.backendless.transaction;
 
 import com.backendless.async.callback.AsyncCallback;
 
-public interface UnitOfWorkExecutor
+interface UnitOfWorkExecutor
 {
   UnitOfWorkResult execute();
 

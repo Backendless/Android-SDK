@@ -1,7 +1,6 @@
 package com.backendless.transaction;
 
 import com.backendless.Invoker;
-import com.backendless.UnitOfWork;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.utils.ResponderHelper;
