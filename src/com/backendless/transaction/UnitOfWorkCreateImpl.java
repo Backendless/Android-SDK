@@ -55,8 +55,6 @@ class UnitOfWorkCreateImpl implements UnitOfWorkCreate
 
     String tableName = BackendlessSerializer.getSimpleName( instances.get( 0 ).getClass() );
 
-    clazzes.put( tableName, instances.get( 0 ).getClass() );
-
     return bulkCreate( tableName, serializedEntities );
   }
 
