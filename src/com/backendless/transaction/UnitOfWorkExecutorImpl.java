@@ -5,7 +5,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.utils.ResponderHelper;
 
-public class UnitOfWorkExecutorImpl implements UnitOfWorkExecutor
+class UnitOfWorkExecutorImpl implements UnitOfWorkExecutor
 {
   private final static String TRANSACTION_MANAGER_SERVER_ALIAS = "com.backendless.services.transaction.TransactionService";
 

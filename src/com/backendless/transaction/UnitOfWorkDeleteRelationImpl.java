@@ -3,7 +3,7 @@ package com.backendless.transaction;
 import java.util.List;
 import java.util.Map;
 
-public class UnitOfWorkDeleteRelationImpl implements UnitOfWorkDeleteRelation
+class UnitOfWorkDeleteRelationImpl implements UnitOfWorkDeleteRelation
 {
   private final RelationOperation relationOperation;
 

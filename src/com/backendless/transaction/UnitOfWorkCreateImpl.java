@@ -9,7 +9,7 @@ import com.backendless.transaction.operations.OperationCreateBulk;
 import java.util.List;
 import java.util.Map;
 
-public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
+class UnitOfWorkCreateImpl implements UnitOfWorkCreate
 {
   private final List<Operation<?>> operations;
   private final OpResultIdGenerator opResultIdGenerator;
