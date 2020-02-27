@@ -17,7 +17,7 @@ class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
   private final List<Operation<?>> operations;
   private final OpResultIdGenerator opResultIdGenerator;
 
-  public UnitOfWorkUpdateImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator )
+  UnitOfWorkUpdateImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator )
   {
     this.operations = operations;
     this.opResultIdGenerator = opResultIdGenerator;

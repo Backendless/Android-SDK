@@ -7,7 +7,7 @@ class UnitOfWorkDeleteRelationImpl implements UnitOfWorkDeleteRelation
 {
   private final RelationOperation relationOperation;
 
-  public UnitOfWorkDeleteRelationImpl( RelationOperation relationOperation )
+  UnitOfWorkDeleteRelationImpl( RelationOperation relationOperation )
   {
     this.relationOperation = relationOperation;
   }

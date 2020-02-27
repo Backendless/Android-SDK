@@ -11,7 +11,7 @@ class UnitOfWorkExecutorImpl implements UnitOfWorkExecutor
 
   private final UnitOfWork unitOfWork;
 
-  public UnitOfWorkExecutorImpl( UnitOfWork unitOfWork )
+  UnitOfWorkExecutorImpl( UnitOfWork unitOfWork )
   {
     this.unitOfWork = unitOfWork;
   }
@@ -22,6 +22,7 @@ class UnitOfWorkExecutorImpl implements UnitOfWorkExecutor
     return execute( null, false );
   }
 
+  @Override
   public void execute( AsyncCallback<UnitOfWorkResult> responder )
   {
     execute( responder, true );

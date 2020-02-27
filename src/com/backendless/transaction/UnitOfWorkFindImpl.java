@@ -12,7 +12,7 @@ class UnitOfWorkFindImpl implements UnitOfWorkFind
   private final List<Operation<?>> operations;
   private final OpResultIdGenerator opResultIdGenerator;
 
-  public UnitOfWorkFindImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator )
+  UnitOfWorkFindImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator )
   {
     this.operations = operations;
     this.opResultIdGenerator = opResultIdGenerator;

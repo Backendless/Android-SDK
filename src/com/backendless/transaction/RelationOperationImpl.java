@@ -12,7 +12,7 @@ import com.backendless.transaction.payload.Relation;
 import java.util.List;
 import java.util.Map;
 
-public class RelationOperationImpl implements RelationOperation
+class RelationOperationImpl implements RelationOperation
 {
   private final List<Operation<?>> operations;
   private final OpResultIdGenerator opResultIdGenerator;
