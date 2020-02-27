@@ -7,7 +7,7 @@ import com.backendless.transaction.operations.OperationFind;
 
 import java.util.List;
 
-public class UnitOfWorkFindImpl implements UnitOfWorkFind
+class UnitOfWorkFindImpl implements UnitOfWorkFind
 {
   private final List<Operation<?>> operations;
   private final OpResultIdGenerator opResultIdGenerator;

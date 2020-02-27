@@ -3,7 +3,7 @@ package com.backendless.transaction;
 import java.util.List;
 import java.util.Map;
 
-public interface UnitOfWorkDelete
+interface UnitOfWorkDelete
 {
   <E> OpResult delete( E instance );
 

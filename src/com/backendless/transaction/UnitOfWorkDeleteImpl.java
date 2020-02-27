@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
+class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 {
   private final List<Operation<?>> operations;
   private final OpResultIdGenerator opResultIdGenerator;

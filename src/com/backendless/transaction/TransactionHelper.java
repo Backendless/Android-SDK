@@ -1,7 +1,6 @@
 package com.backendless.transaction;
 
 import com.backendless.Persistence;
-import com.backendless.UnitOfWork;
 import com.backendless.exceptions.ExceptionMessage;
 
 import java.util.ArrayList;
@@ -39,9 +38,8 @@ public class TransactionHelper
 
     List<Map<String, Object>> serializedEntities = new ArrayList<>();
     for ( final Object entity : instances )
-    {
       serializedEntities.add( SerializationHelper.serializeEntityToMap( entity ) );
-    }
+
     return serializedEntities;
   }
 
