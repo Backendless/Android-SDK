@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-class TransactionHelper
+public class TransactionHelper
 {
   private static final String LAST_LOGIN_COLUMN_NAME = "lastLogin";
   private static final String PASSWORD_KEY = "password";
@@ -25,7 +25,7 @@ class TransactionHelper
     changes.remove( Persistence.DEFAULT_UPDATED_FIELD );
   }
 
-  static OpResult makeOpResult( String tableName, String operationResultId, OperationType operationType )
+  public static OpResult makeOpResult( String tableName, String operationResultId, OperationType operationType )
   {
     return new OpResult( tableName, operationType, operationResultId );
   }
