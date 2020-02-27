@@ -12,14 +12,11 @@ class UnitOfWorkFindImpl implements UnitOfWorkFind
 {
   private final List<Operation<?>> operations;
   private final OpResultIdGenerator opResultIdGenerator;
-  private final Map<String, Class> clazzes;
 
-  public UnitOfWorkFindImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator,
-                             Map<String, Class> clazzes )
+  public UnitOfWorkFindImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator )
   {
     this.operations = operations;
     this.opResultIdGenerator = opResultIdGenerator;
-    this.clazzes = clazzes;
   }
 
   @Override

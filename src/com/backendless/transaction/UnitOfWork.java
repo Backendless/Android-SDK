@@ -38,9 +38,9 @@ public class UnitOfWork implements IUnitOfWork
     OpResultIdGenerator opResultIdGenerator = new OpResultIdGenerator( opResultIdStrings );
     unitOfWorkCreate = new UnitOfWorkCreateImpl( operations, opResultIdGenerator, clazzes );
     unitOFWorkUpdate = new UnitOfWorkUpdateImpl( operations, opResultIdGenerator, clazzes );
-    unitOfWorkDelete = new UnitOfWorkDeleteImpl( operations, opResultIdGenerator, clazzes );
-    unitOfWorkFind = new UnitOfWorkFindImpl( operations, opResultIdGenerator, clazzes );
-    RelationOperation relationOperation = new RelationOperationImpl( operations, opResultIdGenerator, clazzes );
+    unitOfWorkDelete = new UnitOfWorkDeleteImpl( operations, opResultIdGenerator );
+    unitOfWorkFind = new UnitOfWorkFindImpl( operations, opResultIdGenerator );
+    RelationOperation relationOperation = new RelationOperationImpl( operations, opResultIdGenerator );
     unitOfWorkAddRelation = new UnitOfWorkAddRelationImpl( relationOperation );
     unitOfWorkSetRelation = new UnitOfWorkSetRelationImpl( relationOperation );
     unitOfWorkDeleteRelation = new UnitOfWorkDeleteRelationImpl( relationOperation );
