@@ -37,10 +37,10 @@ public class UnitOfWork implements IUnitOfWork
     opResultIdStrings = new ArrayList<>();
     OpResultIdGenerator opResultIdGenerator = new OpResultIdGenerator( opResultIdStrings );
     unitOfWorkCreate = new UnitOfWorkCreateImpl( operations, opResultIdGenerator, clazzes );
-    unitOFWorkUpdate = new UnitOfWorkUpdateImpl( operations, opResultIdGenerator );
-    unitOfWorkDelete = new UnitOfWorkDeleteImpl( operations, opResultIdGenerator );
-    unitOfWorkFind = new UnitOfWorkFindImpl( operations, opResultIdGenerator );
-    RelationOperation relationOperation = new RelationOperationImpl( operations, opResultIdGenerator );
+    unitOFWorkUpdate = new UnitOfWorkUpdateImpl( operations, opResultIdGenerator, clazzes );
+    unitOfWorkDelete = new UnitOfWorkDeleteImpl( operations, opResultIdGenerator, clazzes );
+    unitOfWorkFind = new UnitOfWorkFindImpl( operations, opResultIdGenerator, clazzes );
+    RelationOperation relationOperation = new RelationOperationImpl( operations, opResultIdGenerator, clazzes );
     unitOfWorkAddRelation = new UnitOfWorkAddRelationImpl( relationOperation );
     unitOfWorkSetRelation = new UnitOfWorkSetRelationImpl( relationOperation );
     unitOfWorkDeleteRelation = new UnitOfWorkDeleteRelationImpl( relationOperation );

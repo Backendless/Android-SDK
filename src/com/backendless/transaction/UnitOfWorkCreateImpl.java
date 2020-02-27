@@ -15,7 +15,8 @@ class UnitOfWorkCreateImpl implements UnitOfWorkCreate
   private final OpResultIdGenerator opResultIdGenerator;
   private final Map<String, Class> clazzes;
 
-  public UnitOfWorkCreateImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator, Map<String, Class> clazzes )
+  public UnitOfWorkCreateImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator,
+                               Map<String, Class> clazzes )
   {
     this.operations = operations;
     this.opResultIdGenerator = opResultIdGenerator;
@@ -53,6 +54,8 @@ class UnitOfWorkCreateImpl implements UnitOfWorkCreate
     List<Map<String, Object>> serializedEntities = TransactionHelper.convertInstancesToMaps( instances );
 
     String tableName = BackendlessSerializer.getSimpleName( instances.get( 0 ).getClass() );
+
+    clazzes.put( tableName, instances.get( 0 ).getClass() );
 
     return bulkCreate( tableName, serializedEntities );
   }

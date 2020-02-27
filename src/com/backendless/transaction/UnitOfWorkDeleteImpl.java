@@ -16,11 +16,14 @@ class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 {
   private final List<Operation<?>> operations;
   private final OpResultIdGenerator opResultIdGenerator;
+  private final Map<String, Class> clazzes;
 
-  public UnitOfWorkDeleteImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator )
+  public UnitOfWorkDeleteImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator,
+                               Map<String, Class> clazzes )
   {
     this.operations = operations;
     this.opResultIdGenerator = opResultIdGenerator;
+    this.clazzes = clazzes;
   }
 
   @Override
@@ -28,6 +31,8 @@ class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   {
     Map<String, Object> entityMap = SerializationHelper.serializeEntityToMap( instance );
     String tableName = BackendlessSerializer.getSimpleName( instance.getClass() );
+
+    clazzes.put( tableName, instance.getClass() );
 
     return delete( tableName, entityMap );
   }
