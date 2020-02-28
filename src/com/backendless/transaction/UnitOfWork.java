@@ -143,7 +143,7 @@ public class UnitOfWork implements IUnitOfWork
   }
 
   @Override
-  public OpResult bulkUpdate( String tableName, List<String> objectsForChanges, Map<String, Object> changes )
+  public <E> OpResult bulkUpdate( String tableName, List<E> objectsForChanges, Map<String, Object> changes )
   {
     return unitOFWorkUpdate.bulkUpdate( tableName, objectsForChanges, changes );
   }
