@@ -40,6 +40,8 @@ class UnitOfWorkCreateImpl implements UnitOfWorkCreate
     if( objectMap == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_MAP );
 
+    TransactionHelper.makeReferenceToValueFromOpResult( objectMap );
+
     String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.CREATE, tableName );
     OperationCreate operationCreate = new OperationCreate( OperationType.CREATE, tableName, operationResultId, objectMap );
 
@@ -65,7 +67,9 @@ class UnitOfWorkCreateImpl implements UnitOfWorkCreate
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
     for( Map<String, Object> mapObject : arrayOfObjectMaps )
-      if( mapObject == null )
+      if( mapObject != null )
+        TransactionHelper.makeReferenceToValueFromOpResult( mapObject );
+      else
         throw new IllegalArgumentException( ExceptionMessage.NULL_MAP );
 
     String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.CREATE_BULK, tableName );

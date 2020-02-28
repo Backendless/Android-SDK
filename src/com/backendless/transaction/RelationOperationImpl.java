@@ -54,6 +54,8 @@ public class RelationOperationImpl implements RelationOperation
     if( children == null || children.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
+    TransactionHelper.makeReferenceToObjectIdFromOpResult( (List<Object>) children );
+
     List<Object> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
 
     return addOperation( operationType, parentTable, parentObjectId, columnName,
@@ -93,6 +95,11 @@ public class RelationOperationImpl implements RelationOperation
     if( parentObjectId == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OBJECT_ID_IN_INSTANCE );
     String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
+
+    if( children == null || children.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
+
+    TransactionHelper.makeReferenceToObjectIdFromOpResult( (List<Object>) children );
 
     List<Object> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
 
@@ -146,6 +153,8 @@ public class RelationOperationImpl implements RelationOperation
 
     if( children == null || children.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
+
+    TransactionHelper.makeReferenceToObjectIdFromOpResult( (List<Object>) children );
 
     List<Object> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
 
@@ -203,6 +212,8 @@ public class RelationOperationImpl implements RelationOperation
 
     if( children == null || children.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
+
+    TransactionHelper.makeReferenceToObjectIdFromOpResult( (List<Object>) children );
 
     List<Object> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
 
