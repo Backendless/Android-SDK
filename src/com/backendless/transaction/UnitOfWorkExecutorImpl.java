@@ -28,6 +28,7 @@ class UnitOfWorkExecutorImpl implements UnitOfWorkExecutor
     return execute( null, false );
   }
 
+  @Override
   public void execute( AsyncCallback<UnitOfWorkResult> responder )
   {
     execute( responder, true );
