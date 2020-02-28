@@ -213,7 +213,7 @@ public final class Geo
   public List<GeoPoint> getPoints( final GeoCluster geoCluster )
   {
     CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
-    List<GeoPoint> result = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "loadGeoPoints", new Object[] { geoCluster.getObjectId(), geoCluster.getGeoQuery() }, new AdaptingResponder<GeoPoint>( GeoPoint.class, adaptingPolicy ) );
+    List<GeoPoint> result = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "loadClusterGeoPoints", new Object[] { geoCluster.getObjectId(), geoCluster.getGeoQuery() }, new AdaptingResponder<GeoPoint>( GeoPoint.class, adaptingPolicy ) );
 
     return result;
   }
@@ -224,7 +224,7 @@ public final class Geo
     {
       CollectionAdaptingPolicy<GeoPoint> adaptingPolicy = new CollectionAdaptingPolicy<GeoPoint>();
 
-      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadGeoPoints", new Object[] { geoCluster.getObjectId(), geoCluster.getGeoQuery() }, new AsyncCallback<List<GeoPoint>>()
+      Invoker.invokeAsync( GEO_MANAGER_SERVER_ALIAS, "loadClusterGeoPoints", new Object[] { geoCluster.getObjectId(), geoCluster.getGeoQuery() }, new AsyncCallback<List<GeoPoint>>()
       {
         @Override
         public void handleResponse( List<GeoPoint> response )
@@ -257,7 +257,9 @@ public final class Geo
       throw new IllegalArgumentException( ExceptionMessage.INCONSISTENT_GEO_RELATIVE );
 
     CollectionAdaptingPolicy<SearchMatchesResult> adaptingPolicy = new CollectionAdaptingPolicy<>();
-    List<SearchMatchesResult> result = Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "relativeFind", new Object[] { geoQuery }, new AdaptingResponder<>( SearchMatchesResult.class, adaptingPolicy ) );
+    List<SearchMatchesResult> result =
+            Invoker.invokeSync( GEO_MANAGER_SERVER_ALIAS, "relativeFind", new Object[] { geoQuery },
+                                new AdaptingResponder<>( SearchMatchesResult.class, adaptingPolicy ) );
 
     return result;
   }
