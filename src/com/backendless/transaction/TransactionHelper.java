@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
-public class TransactionHelper
+class TransactionHelper
 {
   private static final String LAST_LOGIN_COLUMN_NAME = "lastLogin";
   private static final String PASSWORD_KEY = "password";
   private static final String SOCIAL_ACCOUNT_COLUMN_NAME = "socialAccount";
   private static final String USER_STATUS_COLUMN_NAME = "userStatus";
 
-  public static void removeSystemField( Map<String, Object> changes )
+  static void removeSystemField( Map<String, Object> changes )
   {
     changes.remove( LAST_LOGIN_COLUMN_NAME );
     changes.remove( PASSWORD_KEY );
@@ -26,7 +26,7 @@ public class TransactionHelper
     changes.remove( Persistence.DEFAULT_UPDATED_FIELD );
   }
 
-  public static OpResult makeOpResult( String tableName, String operationResultId, OperationType operationType )
+  static OpResult makeOpResult( String tableName, String operationResultId, OperationType operationType )
   {
     return new OpResult( tableName, operationType, operationResultId );
   }
