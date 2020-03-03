@@ -5,6 +5,7 @@ import com.backendless.persistence.DataQueryBuilder;
 import com.backendless.transaction.operations.Operation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -31,18 +32,19 @@ public class UnitOfWork implements IUnitOfWork
 
   public UnitOfWork()
   {
+    Map<String, Class> clazzes = new HashMap<>();
     operations = new LinkedList<>();
     opResultIdStrings = new ArrayList<>();
     OpResultIdGenerator opResultIdGenerator = new OpResultIdGenerator( opResultIdStrings );
-    unitOfWorkCreate = new UnitOfWorkCreateImpl( operations, opResultIdGenerator );
-    unitOFWorkUpdate = new UnitOfWorkUpdateImpl( operations, opResultIdGenerator );
+    unitOfWorkCreate = new UnitOfWorkCreateImpl( operations, opResultIdGenerator, clazzes );
+    unitOFWorkUpdate = new UnitOfWorkUpdateImpl( operations, opResultIdGenerator, clazzes );
     unitOfWorkDelete = new UnitOfWorkDeleteImpl( operations, opResultIdGenerator );
     unitOfWorkFind = new UnitOfWorkFindImpl( operations, opResultIdGenerator );
     RelationOperation relationOperation = new RelationOperationImpl( operations, opResultIdGenerator );
     unitOfWorkAddRelation = new UnitOfWorkAddRelationImpl( relationOperation );
     unitOfWorkSetRelation = new UnitOfWorkSetRelationImpl( relationOperation );
     unitOfWorkDeleteRelation = new UnitOfWorkDeleteRelationImpl( relationOperation );
-    unitOfWorkExecutor = new UnitOfWorkExecutorImpl( this );
+    unitOfWorkExecutor = new UnitOfWorkExecutorImpl( this, clazzes );
   }
 
   public IsolationLevelEnum getTransactionIsolation()
@@ -309,21 +311,21 @@ public class UnitOfWork implements IUnitOfWork
 
   @Override
   public <E> OpResult setRelation( String parentTable, Map<String, Object> parentObject, String columnName,
-                                     List<E> children )
+                                   List<E> children )
   {
     return unitOfWorkSetRelation.setRelation( parentTable, parentObject, columnName, children );
   }
 
   @Override
   public OpResult setRelation( String parentTable, Map<String, Object> parentObject, String columnName,
-                                 OpResult children )
+                               OpResult children )
   {
     return unitOfWorkSetRelation.setRelation( parentTable, parentObject, columnName, children );
   }
 
   @Override
   public OpResult setRelation( String parentTable, Map<String, Object> parentObject, String columnName,
-                                 String whereClauseForChildren )
+                               String whereClauseForChildren )
   {
     return unitOfWorkSetRelation.setRelation( parentTable, parentObject, columnName, whereClauseForChildren );
   }

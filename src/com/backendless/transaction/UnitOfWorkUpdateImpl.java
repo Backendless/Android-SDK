@@ -16,11 +16,14 @@ class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
 {
   private final List<Operation<?>> operations;
   private final OpResultIdGenerator opResultIdGenerator;
+  private final Map<String, Class> clazzes;
 
-  public UnitOfWorkUpdateImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator )
+  UnitOfWorkUpdateImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator,
+                        Map<String, Class> clazzes )
   {
     this.operations = operations;
     this.opResultIdGenerator = opResultIdGenerator;
+    this.clazzes = clazzes;
   }
 
   @Override
@@ -28,6 +31,8 @@ class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
   {
     Map<String, Object> entityMap = SerializationHelper.serializeEntityToMap( instance );
     String tableName = BackendlessSerializer.getSimpleName( instance.getClass() );
+
+    clazzes.put( tableName, instance.getClass() );
 
     return update( tableName, entityMap );
   }
