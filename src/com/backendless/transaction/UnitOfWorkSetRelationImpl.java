@@ -7,7 +7,7 @@ class UnitOfWorkSetRelationImpl implements UnitOfWorkSetRelation
 {
   private final RelationOperation relationOperation;
 
-  public UnitOfWorkSetRelationImpl( RelationOperation relationOperation )
+  UnitOfWorkSetRelationImpl( RelationOperation relationOperation )
   {
     this.relationOperation = relationOperation;
   }

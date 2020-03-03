@@ -15,8 +15,8 @@ class UnitOfWorkCreateImpl implements UnitOfWorkCreate
   private final OpResultIdGenerator opResultIdGenerator;
   private final Map<String, Class> clazzes;
 
-  public UnitOfWorkCreateImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator,
-                               Map<String, Class> clazzes )
+  UnitOfWorkCreateImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator,
+                        Map<String, Class> clazzes )
   {
     this.operations = operations;
     this.opResultIdGenerator = opResultIdGenerator;

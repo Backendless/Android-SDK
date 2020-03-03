@@ -18,8 +18,8 @@ class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
   private final OpResultIdGenerator opResultIdGenerator;
   private final Map<String, Class> clazzes;
 
-  public UnitOfWorkUpdateImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator,
-                               Map<String, Class> clazzes )
+  UnitOfWorkUpdateImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator,
+                        Map<String, Class> clazzes )
   {
     this.operations = operations;
     this.opResultIdGenerator = opResultIdGenerator;

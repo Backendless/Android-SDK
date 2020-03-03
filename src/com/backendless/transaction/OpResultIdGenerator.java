@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OpResultIdGenerator
+class OpResultIdGenerator
 {
   private List<String> opResultIdStrings;
   private final Map<String, Integer> opResultIdMaps = new HashMap<>();
 
-  public OpResultIdGenerator( List<String> opResultIdStrings )
+  OpResultIdGenerator( List<String> opResultIdStrings )
   {
     this.opResultIdStrings = opResultIdStrings;
   }

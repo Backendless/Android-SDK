@@ -16,7 +16,7 @@ class UnitOfWorkExecutorImpl implements UnitOfWorkExecutor
   private final UnitOfWork unitOfWork;
   private final Map<String, Class> clazzes;
 
-  public UnitOfWorkExecutorImpl( UnitOfWork unitOfWork, Map<String, Class> clazzes )
+  UnitOfWorkExecutorImpl( UnitOfWork unitOfWork, Map<String, Class> clazzes )
   {
     this.unitOfWork = unitOfWork;
     this.clazzes = clazzes;
