@@ -170,4 +170,5 @@ public class ExceptionMessage
   public final static String REF_TYPE_NOT_SUPPORT = "This operation result not supported in this operation";
   public final static String OP_RESULT_ID_ALREADY_PRESENT = "This opResultId already present. OpResultId must be unique";
   public final static String OP_RESULT_INDEX_YES_PROP_NAME_NOT = "This operation result in this operation must resolved only to resultIndex";
+  public final static String OP_RESULT_FROM_THIS_OPERATION_NOT_SUPPORT_IN_THIS_PLACE = "OpResult/OpResultValueReference from this operation in this place not supported";
 }

@@ -13,11 +13,14 @@ class UnitOfWorkCreateImpl implements UnitOfWorkCreate
 {
   private final List<Operation<?>> operations;
   private final OpResultIdGenerator opResultIdGenerator;
+  private final Map<String, Class> clazzes;
 
-  UnitOfWorkCreateImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator )
+  UnitOfWorkCreateImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator,
+                        Map<String, Class> clazzes )
   {
     this.operations = operations;
     this.opResultIdGenerator = opResultIdGenerator;
+    this.clazzes = clazzes;
   }
 
   @Override
@@ -25,6 +28,8 @@ class UnitOfWorkCreateImpl implements UnitOfWorkCreate
   {
     Map<String, Object> entityMap = SerializationHelper.serializeEntityToMap( instance );
     String tableName = BackendlessSerializer.getSimpleName( instance.getClass() );
+
+    clazzes.put( tableName, instance.getClass() );
 
     return create( tableName, entityMap );
   }
@@ -34,6 +39,8 @@ class UnitOfWorkCreateImpl implements UnitOfWorkCreate
   {
     if( objectMap == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_MAP );
+
+    TransactionHelper.makeReferenceToValueFromOpResult( objectMap );
 
     String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.CREATE, tableName );
     OperationCreate operationCreate = new OperationCreate( OperationType.CREATE, tableName, operationResultId, objectMap );
@@ -48,7 +55,7 @@ class UnitOfWorkCreateImpl implements UnitOfWorkCreate
   {
     List<Map<String, Object>> serializedEntities = TransactionHelper.convertInstancesToMaps( instances );
 
-    String tableName =  BackendlessSerializer.getSimpleName( instances.get( 0 ).getClass() );
+    String tableName = BackendlessSerializer.getSimpleName( instances.get( 0 ).getClass() );
 
     return bulkCreate( tableName, serializedEntities );
   }
@@ -60,7 +67,9 @@ class UnitOfWorkCreateImpl implements UnitOfWorkCreate
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
     for( Map<String, Object> mapObject : arrayOfObjectMaps )
-      if( mapObject == null )
+      if( mapObject != null )
+        TransactionHelper.makeReferenceToValueFromOpResult( mapObject );
+      else
         throw new IllegalArgumentException( ExceptionMessage.NULL_MAP );
 
     String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.CREATE_BULK, tableName );
