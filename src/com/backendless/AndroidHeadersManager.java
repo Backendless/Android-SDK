@@ -81,6 +81,15 @@ class AndroidHeadersManager implements IHeadersManager
     }
   }
 
+  @Override
+  public void removeHeader(String headerKey)
+  {
+    synchronized( headersLock )
+    {
+      headers.remove( headerKey );
+    }
+  }
+
   public Hashtable<String, String> getHeaders() throws BackendlessException
   {
     synchronized( headersLock )
