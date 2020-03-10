@@ -3,7 +3,7 @@ package com.backendless.transaction;
 import java.util.List;
 import java.util.Map;
 
-public interface UnitOfWorkDelete
+interface UnitOfWorkDelete
 {
   <E> OpResult delete( E instance );
 
@@ -11,9 +11,12 @@ public interface UnitOfWorkDelete
 
   OpResult delete( String tableName, String objectId );
 
-  OpResult delete( String tableName, OpResult result );
+  // OpResult from CREAT/UPDATE = identification object what will update (get object id)
+  OpResult delete( OpResult result );
 
-  OpResult delete( String tableName, OpResultIndex resultIndex );
+  // OpResultValueReference from FIND = identification object what will update (get object id)
+  // OpResultValueReference from CREATE_BULK = already an object identifier
+  OpResult delete( OpResultValueReference resultIndex );
 
   <E> OpResult bulkDelete( List<E> instances );
 
@@ -21,5 +24,6 @@ public interface UnitOfWorkDelete
 
   OpResult bulkDelete( String tableName, String whereClause );
 
-  OpResult bulkDelete( String tableName, OpResult result );
+  // OpResult from FIND or CREATE_BULK
+  OpResult bulkDelete( OpResult result );
 }

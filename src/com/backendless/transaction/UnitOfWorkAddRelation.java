@@ -3,7 +3,7 @@ package com.backendless.transaction;
 import java.util.List;
 import java.util.Map;
 
-public interface UnitOfWorkAddRelation
+interface UnitOfWorkAddRelation
 {
   // HashMap + List of hashmaps
   // HashMap + List of custom classes
@@ -42,22 +42,22 @@ public interface UnitOfWorkAddRelation
   // OpResult=CREATE/UPDATE(getObjectId) + List of hashmaps
   // OpResult=CREATE/UPDATE(getObjectId) + List of custom classes
   // OpResult=CREATE/UPDATE(getObjectId) + List of objectIds
-  <E> OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, List<E> children );
+  <E> OpResult addToRelation( OpResult parentObject, String columnName, List<E> children );
 
   // OpResult=CREATE/UPDATE(getObjectId) + OpResult=CREATE_BULK
-  OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, OpResult children );
+  OpResult addToRelation( OpResult parentObject, String columnName, OpResult children );
 
   // OpResult=CREATE/UPDATE(getObjectId) + where clause
-  OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, String whereClauseForChildren );
+  OpResult addToRelation( OpResult parentObject, String columnName, String whereClauseForChildren );
 
   // OpResult=CREATE_BULK(resultIndex) + List of hashmaps
   // OpResult=CREATE_BULK(resultIndex) + List of custom classes
   // OpResult=CREATE_BULK(resultIndex) + List of objectIds
-  <E> OpResult addToRelation( String parentTable, OpResultIndex parentObject, String columnName, List<E> children );
+  <E> OpResult addToRelation( OpResultValueReference parentObject, String columnName, List<E> children );
 
   // OpResult=CREATE_BULK(resultIndex) + OpResult=CREATE_BULK
-  OpResult addToRelation( String parentTable, OpResultIndex parentObject, String columnName, OpResult children );
+  OpResult addToRelation( OpResultValueReference parentObject, String columnName, OpResult children );
 
   // OpResult=CREATE_BULK(resultIndex) + where clause
-  OpResult addToRelation( String parentTable, OpResultIndex parentObject, String columnName, String whereClauseForChildren );
+  OpResult addToRelation( OpResultValueReference parentObject, String columnName, String whereClauseForChildren );
 }

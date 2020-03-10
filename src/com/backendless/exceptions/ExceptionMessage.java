@@ -157,8 +157,18 @@ public class ExceptionMessage
   public final static String NULL_EMPTY_BULK = "Array of objects/maps cannot be null or empty";
   public final static String NULL_MAP = "Entity map cannot be null";
   public final static String NULL_EMPTY_MAP = "Map cannot be null or empty";
-  public final static String REF_TYPE_NOT_SUPPORT = "This operation result not supported in this operation";
+  public final static String NULL_OP_RESULT = "OpResult can not be null";
+  public final static String NULL_OP_RESULT_VALUE_REFERENCE = "OpResultValueReference can not be null";
+  public final static String NULL_OBJECT_ID_IN_OBJECT_MAP = "Object map must contain string objectId and objectId can not be null";
+  public final static String NULL_OBJECT_ID_IN_INSTANCE = "Instance must contain objectId and objectId can not be null";
+  public final static String NULL_WHERE_CLAUSE = "WhereClause can not be null";
+  public final static String NULL_RELATION_COLUMN_NAME = "Relation column name can not be null or empty";
+  public final static String NULL_PARENT_TABLE_NAME = "Parent table name can not be null or empty";
   public final static String LIST_MAP_OR_STRING = "List can be only of objects map or objectIds";
   public final static String LIST_MAP_OR_STRING_OR_INSTANCES = "List can be only of objects map or objectIds or instances";
   public final static String LIST_OPERATIONS_NULL_EMPTY = "List of operations in unitOfWork can not be null or empty";
+  public final static String REF_TYPE_NOT_SUPPORT = "This operation result not supported in this operation";
+  public final static String OP_RESULT_ID_ALREADY_PRESENT = "This opResultId already present. OpResultId must be unique";
+  public final static String OP_RESULT_INDEX_YES_PROP_NAME_NOT = "This operation result in this operation must resolved only to resultIndex";
+  public final static String OP_RESULT_FROM_THIS_OPERATION_NOT_SUPPORT_IN_THIS_PLACE = "OpResult/OpResultValueReference from this operation in this place not supported";
 }

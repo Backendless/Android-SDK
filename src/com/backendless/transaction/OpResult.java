@@ -1,22 +1,22 @@
 package com.backendless.transaction;
 
+import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.transaction.operations.Operation;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class OpResult
 {
-  private Map<String, Object> reference;
-  private OperationType operationType;
+  private final String tableName;
+  private final OperationType operationType;
+  private String opResultId;
 
-  public OpResult( Map<String, Object> reference, OperationType operationType )
+  OpResult( String tableName, OperationType operationType, String opResultId )
   {
-    this.reference = reference;
+    this.tableName = tableName;
     this.operationType = operationType;
-  }
-
-  public Map<String, Object> getReference()
-  {
-    return reference;
+    this.opResultId = opResultId;
   }
 
   public OperationType getOperationType()
@@ -24,24 +24,51 @@ public class OpResult
     return operationType;
   }
 
-  public Map<String, Object> resolveTo( String propName )
+  public String getTableName()
   {
-    Map<String, Object> referencePropName = new HashMap<>( reference );
-    referencePropName.put( UnitOfWork.PROP_NAME, propName );
-    return referencePropName;
+    return tableName;
   }
 
-  public Map<String, Object> resolveTo( int opResultIndex )
+  public String getOpResultId()
   {
-    Map<String, Object> referenceIndex = new HashMap<>( reference );
-    referenceIndex.put( UnitOfWork.RESULT_INDEX, opResultIndex );
-    return referenceIndex;
+    return opResultId;
   }
 
-  public OpResultIndex resolveToIndex( int opResultIndex )
+  public OpResultValueReference resolveTo( int resultIndex, String propName )
   {
-    Map<String, Object> referenceIndex = new HashMap<>( reference );
-    referenceIndex.put( UnitOfWork.RESULT_INDEX, opResultIndex );
-    return new OpResultIndex( referenceIndex, operationType );
+    return new OpResultValueReference( this, resultIndex, propName );
+  }
+
+  public OpResultValueReference resolveTo( int resultIndex )
+  {
+    return new OpResultValueReference( this, resultIndex );
+  }
+
+  public OpResultValueReference resolveTo( String propName )
+  {
+    return new OpResultValueReference( this, propName );
+  }
+
+  public Map<String, Object> makeReference()
+  {
+    Map<String, Object> referenceMap = new HashMap<>();
+    referenceMap.put( UnitOfWork.REFERENCE_MARKER, true );
+    referenceMap.put( UnitOfWork.OP_RESULT_ID, opResultId );
+    return referenceMap;
+  }
+
+  public void setOpResultId( UnitOfWork unitOfWork, String newOpResultId )
+  {
+    if( unitOfWork.getOpResultIdStrings().contains( newOpResultId ) )
+      throw new IllegalArgumentException( ExceptionMessage.OP_RESULT_ID_ALREADY_PRESENT );
+
+    for( Operation<?> operation : unitOfWork.getOperations() )
+      if( operation.getOpResultId().equals( opResultId ) )
+      {
+        operation.setOpResultId( newOpResultId );
+        break;
+      }
+
+    opResultId = newOpResultId;
   }
 }

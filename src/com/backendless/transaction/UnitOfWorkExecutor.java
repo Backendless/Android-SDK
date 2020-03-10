@@ -2,9 +2,9 @@ package com.backendless.transaction;
 
 import com.backendless.async.callback.AsyncCallback;
 
-public interface UnitOfWorkExecutor
+interface UnitOfWorkExecutor
 {
-  UnitOfWorkStatus execute();
+  UnitOfWorkResult execute();
 
-  void execute( AsyncCallback<UnitOfWorkStatus> responder );
+  void execute( AsyncCallback<UnitOfWorkResult> responder );
 }

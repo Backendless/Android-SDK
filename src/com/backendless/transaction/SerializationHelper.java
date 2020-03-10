@@ -7,9 +7,9 @@ import com.backendless.utils.MapEntityUtil;
 import java.lang.reflect.Constructor;
 import java.util.Map;
 
-public class SerializationHelper
+class SerializationHelper
 {
-  public static <E> Map<String, Object> serializeEntityToMap( final E entity )
+  static <E> Map<String, Object> serializeEntityToMap( final E entity )
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );

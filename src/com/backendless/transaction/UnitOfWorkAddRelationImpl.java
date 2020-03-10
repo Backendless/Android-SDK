@@ -3,11 +3,11 @@ package com.backendless.transaction;
 import java.util.List;
 import java.util.Map;
 
-public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
+class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
 {
   private final RelationOperation relationOperation;
 
-  public UnitOfWorkAddRelationImpl( RelationOperation relationOperation )
+  UnitOfWorkAddRelationImpl( RelationOperation relationOperation )
   {
     this.relationOperation = relationOperation;
   }
@@ -78,44 +78,38 @@ public class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
   }
 
   @Override
-  public <E> OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, List<E> children )
+  public <E> OpResult addToRelation( OpResult parentObject, String columnName, List<E> children )
   {
-    return relationOperation.addOperation( OperationType.ADD_RELATION, parentTable,
-                                           parentObject, columnName, children );
+    return relationOperation.addOperation( OperationType.ADD_RELATION, parentObject, columnName, children );
   }
 
   @Override
-  public OpResult addToRelation( String parentTable, OpResult parentObject, String columnName, OpResult children )
+  public OpResult addToRelation( OpResult parentObject, String columnName, OpResult children )
   {
-    return relationOperation.addOperation( OperationType.ADD_RELATION, parentTable,
-                                           parentObject, columnName, children );
+    return relationOperation.addOperation( OperationType.ADD_RELATION, parentObject, columnName, children );
   }
 
   @Override
-  public OpResult addToRelation( String parentTable, OpResult parentObject,
-                                 String columnName, String whereClauseForChildren )
+  public OpResult addToRelation( OpResult parentObject, String columnName, String whereClauseForChildren )
   {
-    return relationOperation.addOperation( OperationType.ADD_RELATION, parentTable, parentObject,
-                                           columnName, whereClauseForChildren );
+    return relationOperation.addOperation( OperationType.ADD_RELATION, parentObject, columnName, whereClauseForChildren );
   }
 
   @Override
-  public <E> OpResult addToRelation( String parentTable, OpResultIndex parentObject, String columnName, List<E> children )
+  public <E> OpResult addToRelation( OpResultValueReference parentObject, String columnName, List<E> children )
   {
-    return relationOperation.addOperation( OperationType.ADD_RELATION, parentTable, parentObject, columnName, children );
+    return relationOperation.addOperation( OperationType.ADD_RELATION, parentObject, columnName, children );
   }
 
   @Override
-  public OpResult addToRelation( String parentTable, OpResultIndex parentObject, String columnName, OpResult children )
+  public OpResult addToRelation( OpResultValueReference parentObject, String columnName, OpResult children )
   {
-    return relationOperation.addOperation( OperationType.ADD_RELATION, parentTable, parentObject, columnName, children );
+    return relationOperation.addOperation( OperationType.ADD_RELATION, parentObject, columnName, children );
   }
 
   @Override
-  public OpResult addToRelation( String parentTable, OpResultIndex parentObject,
-                                 String columnName, String whereClauseForChildren )
+  public OpResult addToRelation( OpResultValueReference parentObject, String columnName, String whereClauseForChildren )
   {
-    return relationOperation.addOperation( OperationType.ADD_RELATION, parentTable,
-                                           parentObject, columnName, whereClauseForChildren );
+    return relationOperation.addOperation( OperationType.ADD_RELATION, parentObject, columnName, whereClauseForChildren );
   }
 }

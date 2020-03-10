@@ -15,6 +15,8 @@ interface IHeadersManager
 
   void removeHeader( HeadersManager.HeadersEnum headersEnum );
 
+  void removeHeader( String headerKey );
+
   Hashtable<String, String> getHeaders() throws BackendlessException;
 
   void setHeaders( Map<String, String> headers );

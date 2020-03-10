@@ -8,20 +8,19 @@ import com.backendless.transaction.operations.OperationDelete;
 import com.backendless.transaction.operations.OperationDeleteBulk;
 import com.backendless.transaction.payload.DeleteBulkPayload;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
+class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 {
-  AtomicInteger countDelete = new AtomicInteger( 1 );
-  AtomicInteger countDeleteBulk = new AtomicInteger( 1 );
-
   private final List<Operation<?>> operations;
+  private final OpResultIdGenerator opResultIdGenerator;
 
-  public UnitOfWorkDeleteImpl( List<Operation<?>> operations )
+  UnitOfWorkDeleteImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator )
   {
     this.operations = operations;
+    this.opResultIdGenerator = opResultIdGenerator;
   }
 
   @Override
@@ -36,56 +35,57 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   @Override
   public OpResult delete( String tableName, Map<String, Object> objectMap )
   {
-    if( objectMap == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_MAP );
-
-    String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
-    OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, tableName, operationResultId, objectMap );
-
-    operations.add( operationDelete );
-
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.DELETE );
+    String objectId = TransactionHelper.convertObjectMapToObjectId( objectMap );
+    return delete( tableName, objectId );
   }
 
   @Override
   public OpResult delete( String tableName, String objectId )
   {
-    String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
+    String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.DELETE, tableName );
     OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, tableName, operationResultId, objectId );
 
     operations.add( operationDelete );
 
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.DELETE );
+    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.DELETE );
   }
 
   @Override
-  public OpResult delete( String tableName, OpResult result )
+  public OpResult delete( OpResult result )
   {
-    if( !OperationType.supportPropNameType.contains( result.getOperationType() ) )
+    if( result == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
+    if( !OperationType.supportEntityDescriptionResultType.contains( result.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
-    OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, tableName, operationResultId,
-                                                           result.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ) );
+    String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.DELETE, result.getTableName() );
+    OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, result.getTableName(), operationResultId,
+                                                           result.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ).makeReference() );
 
     operations.add( operationDelete );
 
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.DELETE );
+    return TransactionHelper.makeOpResult( result.getTableName(), operationResultId, OperationType.DELETE );
   }
 
   @Override
-  public OpResult delete( String tableName, OpResultIndex resultIndex )
+  public OpResult delete( OpResultValueReference resultIndex )
   {
-    if( !OperationType.supportResultIndexType.contains( resultIndex.getOperationType() ) )
-      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+    if( resultIndex == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_VALUE_REFERENCE );
 
-    String operationResultId = OperationType.DELETE + "_" + countDelete.getAndIncrement();
-    OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, tableName, operationResultId,
-                                                           resultIndex.getReference() );
+    if( resultIndex.getResultIndex() == null || resultIndex.getPropName() != null )
+      throw new IllegalArgumentException( ExceptionMessage.OP_RESULT_INDEX_YES_PROP_NAME_NOT );
+
+    Map<String, Object> referenceToObjectId = TransactionHelper.convertCreateBulkOrFindResultIndexToObjectId( resultIndex );
+
+    String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.DELETE, resultIndex.getOpResult().getTableName() );
+    OperationDelete operationDelete = new OperationDelete( OperationType.DELETE, resultIndex.getOpResult().getTableName(),
+                                                           operationResultId, referenceToObjectId );
 
     operations.add( operationDelete );
 
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.DELETE );
+    return TransactionHelper.makeOpResult( resultIndex.getOpResult().getTableName(), operationResultId, OperationType.DELETE );
   }
 
   @Override
@@ -104,13 +104,18 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
     if( arrayOfObjects == null || arrayOfObjects.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
-    List<String> objectIds;
-    if( arrayOfObjects.get( 0 ).getClass().isAssignableFrom( Map.class ) )
-      objectIds = TransactionHelper.convertMapToObjectIds( (List<Map<String, Object>>) arrayOfObjects );
-    else if( arrayOfObjects.get( 0 ).getClass().isAssignableFrom( String.class ) )
-      objectIds = (List<String>) arrayOfObjects;
-    else
-      throw new IllegalArgumentException( ExceptionMessage.LIST_MAP_OR_STRING );
+    TransactionHelper.makeReferenceToObjectIdFromOpResult( (List<Object>) arrayOfObjects );
+
+    List<Object> objectIds = new ArrayList<>();
+    for( E object : arrayOfObjects )
+    {
+      if( object instanceof Map )
+        objectIds.add( TransactionHelper.convertObjectMapToObjectIdOrLeaveReference( (Map<String, Object>) object ) );
+      else if( object instanceof String )
+        objectIds.add( object );
+      else
+        throw new IllegalArgumentException( ExceptionMessage.LIST_MAP_OR_STRING );
+    }
 
     return bulkDelete( tableName, null, objectIds );
   }
@@ -118,36 +123,34 @@ public class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
   @Override
   public OpResult bulkDelete( String tableName, String whereClause )
   {
-    String operationResultId = OperationType.DELETE_BULK + "_" + countDeleteBulk.getAndIncrement();
-    DeleteBulkPayload deleteBulkPayload = new DeleteBulkPayload( whereClause, null );
-    OperationDeleteBulk operationDeleteBulk = new OperationDeleteBulk( OperationType.DELETE_BULK, tableName,
-                                                                       operationResultId, deleteBulkPayload );
+    if( whereClause == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_WHERE_CLAUSE );
 
-    operations.add( operationDeleteBulk );
-
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.DELETE_BULK );
+    return bulkDelete( tableName, whereClause, null );
   }
 
   @Override
-  public OpResult bulkDelete( String tableName, OpResult result )
+  public OpResult bulkDelete( OpResult result )
   {
-    if( !OperationType.supportResultIndexType.contains( result.getOperationType() ) )
+    if( result == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
+    if( ! ( OperationType.supportCollectionEntityDescriptionType.contains( result.getOperationType() )
+            || OperationType.supportListIdsResultType.contains( result.getOperationType() ) ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return bulkDelete( tableName, result.getReference(), null );
+    return bulkDelete( result.getTableName(), null, result.makeReference() );
   }
 
-  private OpResult bulkDelete( String tableName, Map<String, Object> reference, List<String> objectIds )
+  private OpResult bulkDelete( String tableName, String whereClause, Object unconditional )
   {
-    Object unconditional = reference != null ? reference : objectIds;
-
-    String operationResultId = OperationType.DELETE_BULK + "_" + countDeleteBulk.getAndIncrement();
-    DeleteBulkPayload deleteBulkPayload = new DeleteBulkPayload( null, unconditional );
+    String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.DELETE_BULK, tableName );
+    DeleteBulkPayload deleteBulkPayload = new DeleteBulkPayload( whereClause, unconditional );
     OperationDeleteBulk operationDeleteBulk = new OperationDeleteBulk( OperationType.DELETE_BULK, tableName,
                                                                        operationResultId, deleteBulkPayload );
 
     operations.add( operationDeleteBulk );
 
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.DELETE_BULK );
+    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.DELETE_BULK );
   }
 }

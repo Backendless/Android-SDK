@@ -11,26 +11,23 @@ import com.backendless.transaction.payload.Relation;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class RelationOperationImpl implements RelationOperation
+class RelationOperationImpl implements RelationOperation
 {
-  AtomicInteger countAddRelation = new AtomicInteger( 1 );
-  AtomicInteger countSetRelation = new AtomicInteger( 1 );
-  AtomicInteger countDeleteRelation = new AtomicInteger( 1 );
-
   private final List<Operation<?>> operations;
+  private final OpResultIdGenerator opResultIdGenerator;
 
-  public RelationOperationImpl( List<Operation<?>> operations )
+  public RelationOperationImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator )
   {
     this.operations = operations;
+    this.opResultIdGenerator = opResultIdGenerator;
   }
 
   @Override
   public <E> OpResult addOperation( OperationType operationType, String parentTable,
                                     Map<String, Object> parentObject, String columnName, List<E> children )
   {
-    String parentObjectId = (String) parentObject.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+    String parentObjectId = TransactionHelper.convertObjectMapToObjectId( parentObject );
     return addOperation( operationType, parentTable, parentObjectId, columnName, children );
   }
 
@@ -38,7 +35,7 @@ public class RelationOperationImpl implements RelationOperation
   public OpResult addOperation( OperationType operationType, String parentTable,
                                 Map<String, Object> parentObject, String columnName, OpResult children )
   {
-    String parentObjectId = (String) parentObject.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+    String parentObjectId = TransactionHelper.convertObjectMapToObjectId( parentObject );
     return addOperation( operationType, parentTable, parentObjectId, columnName, children );
   }
 
@@ -46,7 +43,7 @@ public class RelationOperationImpl implements RelationOperation
   public OpResult addOperation( OperationType operationType, String parentTable, Map<String, Object> parentObject,
                                 String columnName, String whereClauseForChildren )
   {
-    String parentObjectId = (String) parentObject.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
+    String parentObjectId = TransactionHelper.convertObjectMapToObjectId( parentObject );
     return addOperation( operationType, parentTable, parentObjectId, columnName, whereClauseForChildren );
   }
 
@@ -57,7 +54,9 @@ public class RelationOperationImpl implements RelationOperation
     if( children == null || children.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
-    List<String> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
+    TransactionHelper.makeReferenceToObjectIdFromOpResult( (List<Object>) children );
+
+    List<Object> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
 
     return addOperation( operationType, parentTable, parentObjectId, columnName,
                          null, childrenIds );
@@ -67,11 +66,15 @@ public class RelationOperationImpl implements RelationOperation
   public OpResult addOperation( OperationType operationType, String parentTable, String parentObjectId,
                                 String columnName, OpResult children )
   {
-    if( !OperationType.supportResultIndexType.contains( children.getOperationType() ) )
+    if( children == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
+    if( ! ( OperationType.supportCollectionEntityDescriptionType.contains( children.getOperationType() )
+            || OperationType.supportListIdsResultType.contains( children.getOperationType() ) ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return addOperation( operationType, parentTable, parentObjectId, columnName,
-                         null, children.getReference() );
+                         null, children.makeReference() );
   }
 
   @Override
@@ -86,10 +89,19 @@ public class RelationOperationImpl implements RelationOperation
   public <E, U> OpResult addOperation( OperationType operationType, E parentObject, String columnName,
                                        List<U> children )
   {
+    if( parentObject == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
     String parentObjectId = Persistence.getEntityId( parentObject );
+    if( parentObjectId == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OBJECT_ID_IN_INSTANCE );
     String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
 
-    List<String> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
+    if( children == null || children.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
+
+    TransactionHelper.makeReferenceToObjectIdFromOpResult( (List<Object>) children );
+
+    List<Object> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
 
     return addOperation( operationType, parentTable, parentObjectId, columnName,
                          null, childrenIds );
@@ -99,21 +111,33 @@ public class RelationOperationImpl implements RelationOperation
   public <E> OpResult addOperation( OperationType operationType, E parentObject, String columnName,
                                     OpResult children )
   {
+    if( parentObject == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
     String parentObjectId = Persistence.getEntityId( parentObject );
+    if( parentObjectId == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OBJECT_ID_IN_INSTANCE );
     String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
 
-    if( !OperationType.supportResultIndexType.contains( children.getOperationType() ) )
+    if( children == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
+    if( ! ( OperationType.supportCollectionEntityDescriptionType.contains( children.getOperationType() )
+            || OperationType.supportListIdsResultType.contains( children.getOperationType() ) ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
     return addOperation( operationType, parentTable, parentObjectId, columnName,
-                         null, children.getReference() );
+                         null, children.makeReference() );
   }
 
   @Override
   public <E> OpResult addOperation( OperationType operationType, E parentObject, String columnName,
                                     String whereClauseForChildren )
   {
+    if( parentObject == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
     String parentObjectId = Persistence.getEntityId( parentObject );
+    if( parentObjectId == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OBJECT_ID_IN_INSTANCE );
     String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
 
     return addOperation( operationType, parentTable, parentObjectId, columnName,
@@ -121,91 +145,130 @@ public class RelationOperationImpl implements RelationOperation
   }
 
   @Override
-  public <E> OpResult addOperation( OperationType operationType, String parentTable, OpResult parentObject,
+  public <E> OpResult addOperation( OperationType operationType, OpResult parentObject,
                                     String columnName, List<E> children )
   {
+    if( parentObject == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
     if( children == null || children.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
-    List<String> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
+    TransactionHelper.makeReferenceToObjectIdFromOpResult( (List<Object>) children );
+
+    List<Object> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
 
     if( !OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return addOperation( operationType, parentTable, parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ),
+    return addOperation( operationType, parentObject.getTableName(),
+                         parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ).makeReference(),
                          columnName, null, childrenIds );
   }
 
   @Override
-  public OpResult addOperation( OperationType operationType, String parentTable, OpResult parentObject,
+  public OpResult addOperation( OperationType operationType, OpResult parentObject,
                                 String columnName, OpResult children )
   {
+    if( parentObject == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
     if( !OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    if( !OperationType.supportResultIndexType.contains( children.getOperationType() ) )
+    if( ! ( OperationType.supportCollectionEntityDescriptionType.contains( children.getOperationType() )
+            || OperationType.supportListIdsResultType.contains( children.getOperationType() ) ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return addOperation( operationType, parentTable, parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ),
-                         null, columnName, children.getReference() );
+    return addOperation( operationType, parentObject.getTableName(),
+                         parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ).makeReference(),
+                         columnName, null, children.makeReference() );
   }
 
   @Override
-  public OpResult addOperation( OperationType operationType, String parentTable, OpResult parentObject,
+  public OpResult addOperation( OperationType operationType, OpResult parentObject,
                                 String columnName, String whereClauseForChildren )
   {
+    if( parentObject == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
+
     if( !OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    return addOperation( operationType, parentTable, parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ),
+    return addOperation( operationType, parentObject.getTableName(),
+                         parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ).makeReference(),
                          columnName, whereClauseForChildren, null );
   }
 
   @Override
-  public <E> OpResult addOperation( OperationType operationType, String parentTable, OpResultIndex parentObject,
+  public <E> OpResult addOperation( OperationType operationType, OpResultValueReference parentObject,
                                     String columnName, List<E> children )
   {
+    if( parentObject == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_VALUE_REFERENCE );
+
+    if( parentObject.getResultIndex() == null || parentObject.getPropName() != null )
+      throw new IllegalArgumentException( ExceptionMessage.OP_RESULT_INDEX_YES_PROP_NAME_NOT );
+
     if( children == null || children.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
-    List<String> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
+    TransactionHelper.makeReferenceToObjectIdFromOpResult( (List<Object>) children );
 
-    if( !OperationType.supportResultIndexType.contains( parentObject.getOperationType() ) )
-      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+    List<Object> childrenIds = TransactionHelper.getObjectIdsFromUnknownList( children );
 
-    return addOperation( operationType, parentTable, parentObject, columnName,
+    Map<String, Object> referenceToObjectId = TransactionHelper.convertCreateBulkOrFindResultIndexToObjectId( parentObject );
+
+    return addOperation( operationType, parentObject.getOpResult().getTableName(), referenceToObjectId, columnName,
                          null, childrenIds );
   }
 
   @Override
-  public OpResult addOperation( OperationType operationType, String parentTable, OpResultIndex parentObject,
+  public OpResult addOperation( OperationType operationType, OpResultValueReference parentObject,
                                 String columnName, OpResult children )
   {
-    if( !OperationType.supportEntityDescriptionResultType.contains( parentObject.getOperationType() ) )
+    if( parentObject == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_VALUE_REFERENCE );
+
+    if( parentObject.getResultIndex() == null || parentObject.getPropName() != null )
+      throw new IllegalArgumentException( ExceptionMessage.OP_RESULT_INDEX_YES_PROP_NAME_NOT );
+
+    Map<String, Object> referenceToObjectId = TransactionHelper.convertCreateBulkOrFindResultIndexToObjectId( parentObject );
+
+    if( ! ( OperationType.supportCollectionEntityDescriptionType.contains( children.getOperationType() )
+            || OperationType.supportListIdsResultType.contains( children.getOperationType() ) ) )
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
 
-    if( !OperationType.supportResultIndexType.contains( children.getOperationType() ) )
-      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
-
-    return addOperation( operationType, parentTable, parentObject, null,
-                         columnName, children.getReference() );
+    return addOperation( operationType, parentObject.getOpResult().getTableName(), referenceToObjectId, columnName,
+                         null, children.makeReference() );
   }
 
   @Override
-  public OpResult addOperation( OperationType operationType, String parentTable, OpResultIndex parentObject,
+  public OpResult addOperation( OperationType operationType, OpResultValueReference parentObject,
                                 String columnName, String whereClauseForChildren )
   {
-    if( !OperationType.supportResultIndexType.contains( parentObject.getOperationType() ) )
-      throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+    if( parentObject == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT_VALUE_REFERENCE );
 
-    return addOperation( operationType, parentTable, parentObject, columnName,
+    if( parentObject.getResultIndex() == null || parentObject.getPropName() != null )
+      throw new IllegalArgumentException( ExceptionMessage.OP_RESULT_INDEX_YES_PROP_NAME_NOT );
+
+    Map<String, Object> referenceToObjectId = TransactionHelper.convertCreateBulkOrFindResultIndexToObjectId( parentObject );
+
+    return addOperation( operationType, parentObject.getOpResult().getTableName(), referenceToObjectId, columnName,
                          whereClauseForChildren, null );
   }
 
   private OpResult addOperation( OperationType operationType, String parentTable, Object parentObject,
                                  String columnName, String whereClauseForChildren, Object children )
   {
-    String operationResultId = null;
+    if( parentTable == null || parentTable.equals( "" ) )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_PARENT_TABLE_NAME );
+
+    if( columnName == null || columnName.equals( "" ) )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_RELATION_COLUMN_NAME );
+
+    String operationResultId = opResultIdGenerator.generateOpResultId( operationType, parentTable );
 
     Relation relation = new Relation();
     relation.setParentObject( parentObject );
@@ -215,19 +278,16 @@ public class RelationOperationImpl implements RelationOperation
     switch( operationType )
     {
       case ADD_RELATION:
-        operationResultId = operationType + "_" + countAddRelation.getAndIncrement();
         operations.add( new OperationAddRelation( operationType, parentTable, operationResultId, relation ) );
         break;
       case SET_RELATION:
-        operationResultId = operationType + "_" + countSetRelation.getAndIncrement();
         operations.add( new OperationSetRelation( operationType, parentTable, operationResultId, relation ) );
         break;
       case DELETE_RELATION:
-        operationResultId = operationType + "_" + countDeleteRelation.getAndIncrement();
         operations.add( new OperationDeleteRelation( operationType, parentTable, operationResultId, relation ) );
         break;
     }
 
-    return TransactionHelper.makeOpResult( operationResultId, operationType );
+    return TransactionHelper.makeOpResult( parentTable, operationResultId, operationType );
   }
 }

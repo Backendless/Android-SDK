@@ -8,18 +8,19 @@ import com.backendless.transaction.operations.OperationCreateBulk;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
+class UnitOfWorkCreateImpl implements UnitOfWorkCreate
 {
-  AtomicInteger countCreate = new AtomicInteger( 1 );
-  AtomicInteger countCreateBulk = new AtomicInteger( 1 );
-
   private final List<Operation<?>> operations;
+  private final OpResultIdGenerator opResultIdGenerator;
+  private final Map<String, Class> clazzes;
 
-  public UnitOfWorkCreateImpl( List<Operation<?>> operations )
+  UnitOfWorkCreateImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator,
+                        Map<String, Class> clazzes )
   {
     this.operations = operations;
+    this.opResultIdGenerator = opResultIdGenerator;
+    this.clazzes = clazzes;
   }
 
   @Override
@@ -27,6 +28,8 @@ public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
   {
     Map<String, Object> entityMap = SerializationHelper.serializeEntityToMap( instance );
     String tableName = BackendlessSerializer.getSimpleName( instance.getClass() );
+
+    clazzes.put( tableName, instance.getClass() );
 
     return create( tableName, entityMap );
   }
@@ -37,12 +40,14 @@ public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
     if( objectMap == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_MAP );
 
-    String operationResultId = OperationType.CREATE + "_" + countCreate.getAndIncrement();
+    TransactionHelper.makeReferenceToValueFromOpResult( objectMap );
+
+    String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.CREATE, tableName );
     OperationCreate operationCreate = new OperationCreate( OperationType.CREATE, tableName, operationResultId, objectMap );
 
     operations.add( operationCreate );
 
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.CREATE );
+    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.CREATE );
   }
 
   @Override
@@ -50,7 +55,7 @@ public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
   {
     List<Map<String, Object>> serializedEntities = TransactionHelper.convertInstancesToMaps( instances );
 
-    String tableName =  BackendlessSerializer.getSimpleName( instances.get( 0 ).getClass() );
+    String tableName = BackendlessSerializer.getSimpleName( instances.get( 0 ).getClass() );
 
     return bulkCreate( tableName, serializedEntities );
   }
@@ -62,15 +67,17 @@ public class UnitOfWorkCreateImpl implements UnitOfWorkCreate
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
     for( Map<String, Object> mapObject : arrayOfObjectMaps )
-      if( mapObject == null )
+      if( mapObject != null )
+        TransactionHelper.makeReferenceToValueFromOpResult( mapObject );
+      else
         throw new IllegalArgumentException( ExceptionMessage.NULL_MAP );
 
-    String operationResultId = OperationType.CREATE_BULK + "_" + countCreateBulk.getAndIncrement();
+    String operationResultId = opResultIdGenerator.generateOpResultId( OperationType.CREATE_BULK, tableName );
     OperationCreateBulk operationCreateBulk = new OperationCreateBulk( OperationType.CREATE_BULK, tableName,
                                                                        operationResultId, arrayOfObjectMaps );
 
     operations.add( operationCreateBulk );
 
-    return TransactionHelper.makeOpResult( operationResultId, OperationType.CREATE_BULK );
+    return TransactionHelper.makeOpResult( tableName, operationResultId, OperationType.CREATE_BULK );
   }
 }
