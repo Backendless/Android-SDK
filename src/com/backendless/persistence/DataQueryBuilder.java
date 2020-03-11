@@ -1,9 +1,8 @@
 package com.backendless.persistence;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+
 
 public class DataQueryBuilder
 {
@@ -65,24 +64,39 @@ public class DataQueryBuilder
 
   public List<String> getProperties()
   {
-    return properties;
+    return new ArrayList<>( this.properties );
   }
 
   public DataQueryBuilder setProperties( List<String> properties )
   {
-    this.properties = properties;
+    this.properties.clear();
+
+    for( String prop: properties )
+      this.addProperty( prop );
+
     return this;
   }
 
   public DataQueryBuilder setProperties( String... properties )
   {
-    this.properties = new ArrayList<>( Arrays.asList( properties ) );
+    this.properties.clear();
+    this.addProperties( properties );
+    return this;
+  }
+
+  public DataQueryBuilder addProperties( String... properties )
+  {
+    for( String prop: properties )
+      this.addProperty( prop );
+
     return this;
   }
 
   public DataQueryBuilder addProperty( String property )
   {
-    this.properties.add( property );
+    if( property != null && !property.equals( "" ) )
+      properties.add( property );
+
     return this;
   }
 
@@ -152,17 +166,32 @@ public class DataQueryBuilder
     return queryOptionsBuilder.setRelationsDepth( relationsDepth );
   }
 
+  public List<String> getGroupBy()
+  {
+    return new ArrayList<>( this.groupBy );
+  }
+
   public DataQueryBuilder setGroupBy( String... groupBy )
   {
-    this.groupBy = new ArrayList<>( Arrays.asList( groupBy ) );
+    this.groupBy.clear();
+    this.addGroupBy( groupBy );
     return this;
   }
 
   public DataQueryBuilder addGroupBy( String... groupBy )
   {
-    this.groupBy = this.groupBy != null ? this.groupBy : new ArrayList<String>();
-    Collections.addAll( this.groupBy, groupBy );
+    for( String grb : groupBy )
+    {
+      if( grb != null && !grb.equals( "" ) )
+        this.groupBy.add( grb );
+    }
+
     return this;
+  }
+
+  public String getHavingClause()
+  {
+    return havingClause;
   }
 
   public DataQueryBuilder setHavingClause( String havingClause )
