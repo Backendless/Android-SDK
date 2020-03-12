@@ -5,6 +5,7 @@ echo "`basename "$0"`  <version>  <type>  <mode>"
 echo "<version> -- version from the docker registry"
 echo 
 
+
 cd `dirname "$0"`;
 
 mounts=$(pwd)"/mounts"
@@ -28,6 +29,8 @@ if [[ "$type" == "backendless"  ]]; then
 fi
 
 env_file=`cat ./ports.env`
+
+set -e
 
 echo "starting dbs..."
 env $env_file REGISTRY="${registry}" VERSION="${version}" MOUNTS="${mounts}" docker stack deploy -c ./dbs-compose.yml bl-swarm

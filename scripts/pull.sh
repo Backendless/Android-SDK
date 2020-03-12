@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# exit when any command fails
+set -e
+
 echo "Usage: \"`basename "$0"` <container_version>\""
 
 cd `dirname "$0"`;

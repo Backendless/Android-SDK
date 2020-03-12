@@ -19,7 +19,7 @@ do
       echo "*************************************************************"
       echo "******************** Backendless started ********************"
       echo "*************************************************************"
-      echo "console is available on 'http://localhost:${BL_PROPERTY_config_console_port}'"
+      echo "Web-Console is available on 'http://backendless.local:${BL_PROPERTY_config_console_port}'"
       on_exit
    fi
    sleep 2
