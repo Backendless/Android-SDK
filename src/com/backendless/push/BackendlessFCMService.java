@@ -52,13 +52,6 @@ public class BackendlessFCMService extends FirebaseMessagingService
   }
 
   @Override
-  public final void onDestroy()
-  {
-    super.onDestroy();
-    Backendless.saveNotificationIdGeneratorState( BackendlessFCMService.notificationIdGenerator.get() );
-  }
-
-  @Override
   public final void onNewToken( String token )
   {
     super.onNewToken( token );
@@ -85,6 +78,7 @@ public class BackendlessFCMService extends FirebaseMessagingService
   private void handleMessage( final Context context, Intent intent )
   {
     int notificationId = BackendlessFCMService.notificationIdGenerator.getAndIncrement();
+    Backendless.saveNotificationIdGeneratorState( BackendlessFCMService.notificationIdGenerator.get() );
 
     try
     {
