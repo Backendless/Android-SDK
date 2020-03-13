@@ -116,7 +116,7 @@ public class ExceptionMessage
   public static final String NOT_ANDROID = "Operation may be performed only from an Android environment";
   public static final String NULL_GEO_QUERY = "Geo query should not be null";
   public static final String INCONSISTENT_GEO_RELATIVE = "Geo query should contain relative metadata and a threshold for a relative search";
-  public static final String ASSIGN_ROLE = "Assigning/unassigning a role can be done only from server code";
+  public static final String ASSIGN_ROLE = "Assigning/Unassigning/Creation/Deletion a role can be done only from server code";
   public static final String NULL_BODYPARTS = "BodyParts cannot be null";
   public static final String NULL_SUBJECT = "Subject cannot be null";
   public static final String NULL_RECIPIENTS = "Recipients cannot be empty";

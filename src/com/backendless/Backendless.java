@@ -122,6 +122,8 @@ public final class Backendless
         queryOptionsMap.put( "related", queryOptions.getRelated() );
         if( queryOptions.getRelationsDepth() != null )
           queryOptionsMap.put( "relationsDepth", queryOptions.getRelationsDepth() );
+        if( queryOptions.getRelationsPageSize() != null )
+          queryOptionsMap.put( "relationsPageSize", queryOptions.getRelationsPageSize() );
 
         MessageWriter.writeObject( queryOptionsMap, iProtocolFormatter );
       }
