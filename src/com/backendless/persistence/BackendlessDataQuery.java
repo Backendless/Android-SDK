@@ -27,7 +27,8 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
   public static final int DEFAULT_PAGE_SIZE = 10;
   public static final int DEFAULT_OFFSET = 0;
 
-  private List<String> properties = new ArrayList<>();
+  private ArrayList<String> properties = new ArrayList<>();
+  private ArrayList<String> excludeProps = new ArrayList<>();
   private String whereClause;
   private QueryOptions queryOptions;
   private List<String> groupBy = new ArrayList<>();
@@ -64,26 +65,49 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
 
   public List<String> getProperties()
   {
-    return new ArrayList<>( this.properties );
+    return (List<String>) this.properties.clone();
   }
 
   public void setProperties( List<String> properties )
   {
     this.properties.clear();
-    for( String prop: properties )
-      this.addProperty( prop );
+
+    if (properties != null)
+      for( String prop: properties )
+        this.addProperty( prop );
   }
 
   public void addProperties( String... properties )
   {
-    for( String prop: properties )
-      this.addProperty( prop );
+    if( properties != null )
+      for( String prop : properties )
+        this.addProperty( prop );
   }
 
   public void addProperty( String property )
   {
     if( property != null && !property.equals( "" ) )
       properties.add( property );
+  }
+
+  public ArrayList<String> getExcludeProps()
+  {
+    return (ArrayList<String>) excludeProps.clone();
+  }
+
+  public void setExcludeProps( ArrayList<String> excludeProps )
+  {
+    this.excludeProps.clear();
+
+    if( excludeProps != null )
+      for( String exclProp: excludeProps )
+        this.addExcludeProperty( exclProp );
+  }
+
+  public void addExcludeProperty( String exclProperty )
+  {
+    if( exclProperty != null && !exclProperty.isEmpty() )
+      excludeProps.add( exclProperty );
   }
 
   public String getWhereClause()
