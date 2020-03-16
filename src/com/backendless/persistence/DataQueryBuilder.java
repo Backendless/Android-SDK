@@ -35,7 +35,7 @@ public class DataQueryBuilder
 
     dataQuery.setQueryOptions( queryOptionsBuilder.build() );
     dataQuery.setProperties( properties );
-    dataQuery.setExcludeProps( excludeProps );
+    dataQuery.setExcludeProperties( excludeProps );
     dataQuery.setWhereClause( whereClause );
     dataQuery.setGroupBy( groupBy );
     dataQuery.setHavingClause( havingClause );
@@ -105,12 +105,12 @@ public class DataQueryBuilder
     return this;
   }
 
-  public ArrayList<String> getExcludeProps()
+  public ArrayList<String> getExcludeProperties()
   {
     return (ArrayList<String>) excludeProps.clone();
   }
 
-  public DataQueryBuilder setExcludeProps( ArrayList<String> excludeProps )
+  public DataQueryBuilder setExcludeProperties( ArrayList<String> excludeProps )
   {
     this.excludeProps.clear();
 
