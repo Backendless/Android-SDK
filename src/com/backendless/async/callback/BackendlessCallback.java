@@ -25,6 +25,7 @@ public abstract class BackendlessCallback<T> implements AsyncCallback<T>
   @Override
   public void handleFault( BackendlessFault fault )
   {
+    int x = 2+2;
     throw new RuntimeException( fault.getMessage() );
   }
 }
