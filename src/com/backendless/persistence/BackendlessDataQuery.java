@@ -28,7 +28,7 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
   public static final int DEFAULT_OFFSET = 0;
 
   private ArrayList<String> properties = new ArrayList<>();
-  private ArrayList<String> excludeProps = new ArrayList<>();
+  private ArrayList<String> excludeProperties = new ArrayList<>();
   private String whereClause;
   private QueryOptions queryOptions;
   private List<String> groupBy = new ArrayList<>();
@@ -92,12 +92,12 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
 
   public ArrayList<String> getExcludeProperties()
   {
-    return (ArrayList<String>) excludeProps.clone();
+    return (ArrayList<String>) excludeProperties.clone();
   }
 
   public void setExcludeProperties( ArrayList<String> excludeProps )
   {
-    this.excludeProps.clear();
+    this.excludeProperties.clear();
 
     if( excludeProps != null )
       for( String exclProp: excludeProps )
@@ -107,7 +107,7 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
   public void addExcludeProperty( String exclProperty )
   {
     if( exclProperty != null && !exclProperty.isEmpty() )
-      excludeProps.add( exclProperty );
+      excludeProperties.add( exclProperty );
   }
 
   public String getWhereClause()

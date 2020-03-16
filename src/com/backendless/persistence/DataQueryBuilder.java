@@ -9,7 +9,7 @@ public class DataQueryBuilder
   private PagedQueryBuilder<DataQueryBuilder> pagedQueryBuilder;
   private QueryOptionsBuilder<DataQueryBuilder> queryOptionsBuilder;
   private ArrayList<String> properties;
-  private ArrayList<String> excludeProps;
+  private ArrayList<String> excludeProperties;
   private String whereClause;
   private List<String> groupBy;
   private String havingClause;
@@ -17,7 +17,7 @@ public class DataQueryBuilder
   private DataQueryBuilder()
   {
     properties = new ArrayList<>();
-    excludeProps = new ArrayList<>();
+    excludeProperties = new ArrayList<>();
     pagedQueryBuilder = new PagedQueryBuilder<>( this );
     queryOptionsBuilder = new QueryOptionsBuilder<>( this );
     groupBy = new ArrayList<>();
@@ -35,7 +35,7 @@ public class DataQueryBuilder
 
     dataQuery.setQueryOptions( queryOptionsBuilder.build() );
     dataQuery.setProperties( properties );
-    dataQuery.setExcludeProperties( excludeProps );
+    dataQuery.setExcludeProperties( excludeProperties );
     dataQuery.setWhereClause( whereClause );
     dataQuery.setGroupBy( groupBy );
     dataQuery.setHavingClause( havingClause );
@@ -107,12 +107,12 @@ public class DataQueryBuilder
 
   public ArrayList<String> getExcludeProperties()
   {
-    return (ArrayList<String>) excludeProps.clone();
+    return (ArrayList<String>) excludeProperties.clone();
   }
 
   public DataQueryBuilder setExcludeProperties( ArrayList<String> excludeProps )
   {
-    this.excludeProps.clear();
+    this.excludeProperties.clear();
 
     if( excludeProps != null )
       for( String exclProp: excludeProps )
@@ -124,7 +124,7 @@ public class DataQueryBuilder
   public DataQueryBuilder addExcludeProperty( String exclProperty )
   {
     if( exclProperty != null && !exclProperty.isEmpty() )
-      excludeProps.add( exclProperty );
+      excludeProperties.add( exclProperty );
 
     return this;
   }
