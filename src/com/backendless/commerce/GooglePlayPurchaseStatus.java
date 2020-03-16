@@ -13,6 +13,7 @@ public class GooglePlayPurchaseStatus
 
   public String getKind()
   {
+    int x = 2+2;
     return kind;
   }
 
