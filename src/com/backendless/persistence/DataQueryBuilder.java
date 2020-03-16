@@ -8,7 +8,8 @@ public class DataQueryBuilder
 {
   private PagedQueryBuilder<DataQueryBuilder> pagedQueryBuilder;
   private QueryOptionsBuilder<DataQueryBuilder> queryOptionsBuilder;
-  private List<String> properties;
+  private ArrayList<String> properties;
+  private ArrayList<String> excludeProperties;
   private String whereClause;
   private List<String> groupBy;
   private String havingClause;
@@ -16,6 +17,7 @@ public class DataQueryBuilder
   private DataQueryBuilder()
   {
     properties = new ArrayList<>();
+    excludeProperties = new ArrayList<>();
     pagedQueryBuilder = new PagedQueryBuilder<>( this );
     queryOptionsBuilder = new QueryOptionsBuilder<>( this );
     groupBy = new ArrayList<>();
@@ -33,6 +35,7 @@ public class DataQueryBuilder
 
     dataQuery.setQueryOptions( queryOptionsBuilder.build() );
     dataQuery.setProperties( properties );
+    dataQuery.setExcludeProperties( excludeProperties );
     dataQuery.setWhereClause( whereClause );
     dataQuery.setGroupBy( groupBy );
     dataQuery.setHavingClause( havingClause );
@@ -64,15 +67,16 @@ public class DataQueryBuilder
 
   public List<String> getProperties()
   {
-    return new ArrayList<>( this.properties );
+    return (List<String>) this.properties.clone();
   }
 
   public DataQueryBuilder setProperties( List<String> properties )
   {
     this.properties.clear();
 
-    for( String prop: properties )
-      this.addProperty( prop );
+    if (properties != null)
+      for( String prop: properties )
+        this.addProperty( prop );
 
     return this;
   }
@@ -86,8 +90,9 @@ public class DataQueryBuilder
 
   public DataQueryBuilder addProperties( String... properties )
   {
-    for( String prop: properties )
-      this.addProperty( prop );
+    if( properties != null )
+      for( String prop : properties )
+        this.addProperty( prop );
 
     return this;
   }
@@ -96,6 +101,30 @@ public class DataQueryBuilder
   {
     if( property != null && !property.equals( "" ) )
       properties.add( property );
+
+    return this;
+  }
+
+  public ArrayList<String> getExcludeProperties()
+  {
+    return (ArrayList<String>) excludeProperties.clone();
+  }
+
+  public DataQueryBuilder setExcludeProperties( ArrayList<String> excludeProps )
+  {
+    this.excludeProperties.clear();
+
+    if( excludeProps != null )
+      for( String exclProp: excludeProps )
+        this.addExcludeProperty( exclProp );
+
+    return this;
+  }
+
+  public DataQueryBuilder addExcludeProperty( String exclProperty )
+  {
+    if( exclProperty != null && !exclProperty.isEmpty() )
+      excludeProperties.add( exclProperty );
 
     return this;
   }
