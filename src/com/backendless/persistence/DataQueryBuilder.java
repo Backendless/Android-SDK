@@ -121,10 +121,10 @@ public class DataQueryBuilder
     return this;
   }
 
-  public DataQueryBuilder addExcludeProperty( String excludeProperties )
+  public DataQueryBuilder addExcludeProperty( String excludeProperty )
   {
-    if( excludeProperties != null && !excludeProperties.isEmpty() )
-      this.excludeProperties.add( excludeProperties );
+    if( excludeProperty != null && !excludeProperty.isEmpty() )
+      this.excludeProperties.add( excludeProperty );
 
     return this;
   }
