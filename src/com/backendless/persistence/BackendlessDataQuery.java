@@ -90,24 +90,33 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
       properties.add( property );
   }
 
-  public ArrayList<String> getExcludeProperties()
+  public ArrayList<String> getExcludedProperties()
   {
     return (ArrayList<String>) excludeProperties.clone();
   }
 
-  public void setExcludeProperties( ArrayList<String> excludeProps )
+  public void excludeProperties( ArrayList<String> excludeProperties )
   {
     this.excludeProperties.clear();
 
-    if( excludeProps != null )
-      for( String exclProp: excludeProps )
-        this.addExcludeProperty( exclProp );
+    if( excludeProperties != null )
+      for( String exclProp: excludeProperties )
+        this.excludeProperty( exclProp );
   }
 
-  public void addExcludeProperty( String exclProperty )
+  public void excludeProperties( String... excludeProperties )
   {
-    if( exclProperty != null && !exclProperty.isEmpty() )
-      excludeProperties.add( exclProperty );
+    this.excludeProperties.clear();
+
+    if( excludeProperties != null )
+      for( String exclProp: excludeProperties )
+        this.excludeProperty( exclProp );
+  }
+
+  public void excludeProperty( String excludeProperty )
+  {
+    if( excludeProperty != null && !excludeProperty.isEmpty() )
+      excludeProperties.add( excludeProperty );
   }
 
   public String getWhereClause()
