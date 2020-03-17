@@ -105,6 +105,12 @@ public class DataQueryBuilder
     return this;
   }
 
+  public DataQueryBuilder addAllProperties()
+  {
+    this.addProperty( "*" );
+    return this;
+  }
+
   public ArrayList<String> getExcludeProperties()
   {
     return (ArrayList<String>) excludeProperties.clone();
