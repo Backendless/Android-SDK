@@ -110,21 +110,21 @@ public class DataQueryBuilder
     return (ArrayList<String>) excludeProperties.clone();
   }
 
-  public DataQueryBuilder setExcludeProperties( ArrayList<String> excludeProps )
+  public DataQueryBuilder setExcludeProperties( ArrayList<String> excludeProperties )
   {
     this.excludeProperties.clear();
 
-    if( excludeProps != null )
-      for( String exclProp: excludeProps )
+    if( excludeProperties != null )
+      for( String exclProp: excludeProperties )
         this.addExcludeProperty( exclProp );
 
     return this;
   }
 
-  public DataQueryBuilder addExcludeProperty( String exclProperty )
+  public DataQueryBuilder addExcludeProperty( String excludeProperty )
   {
-    if( exclProperty != null && !exclProperty.isEmpty() )
-      excludeProperties.add( exclProperty );
+    if( excludeProperty != null && !excludeProperty.isEmpty() )
+      excludeProperties.add( excludeProperty );
 
     return this;
   }
