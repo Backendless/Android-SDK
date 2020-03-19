@@ -35,7 +35,7 @@ public class DataQueryBuilder
 
     dataQuery.setQueryOptions( queryOptionsBuilder.build() );
     dataQuery.setProperties( properties );
-    dataQuery.excludeProperties( excludeProperties );
+    dataQuery.setExcludeProperties( excludeProperties );
     dataQuery.setWhereClause( whereClause );
     dataQuery.setGroupBy( groupBy );
     dataQuery.setHavingClause( havingClause );
