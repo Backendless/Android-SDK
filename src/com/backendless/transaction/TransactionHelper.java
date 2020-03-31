@@ -86,7 +86,7 @@ class TransactionHelper
   {
     List<Object> childrenMaps;
     if( children.get( 0 ) instanceof Map )
-      childrenMaps = TransactionHelper.convertMapsToObjectIds( (List<Map<String, Object>>) children );
+      childrenMaps = TransactionHelper.convertMapsToObjectIds( (List<Map<String, Object>>) children );//TODO EXCEPTION
     else if( children.get( 0 ) instanceof String )
       childrenMaps = (List<Object>) children;
     else if( !( children.get( 0 ).getClass().isArray() || children.get( 0 ).getClass().isAssignableFrom( Iterable.class ) ) )

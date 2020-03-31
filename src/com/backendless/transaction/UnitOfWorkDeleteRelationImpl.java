@@ -13,6 +13,14 @@ class UnitOfWorkDeleteRelationImpl implements UnitOfWorkDeleteRelation
   }
 
   @Override
+  public OpResult deleteRelation( String parentTable, Map<String, Object> parentObject, String columnName,
+                                  String[] childrenObjectIds )
+  {
+    return relationOperation.addOperation( OperationType.DELETE_RELATION, parentTable,
+                                           parentObject, columnName, childrenObjectIds );
+  }
+
+  @Override
   public <E> OpResult deleteRelation( String parentTable, Map<String, Object> parentObject, String columnName,
                                       List<E> children )
   {
@@ -25,7 +33,7 @@ class UnitOfWorkDeleteRelationImpl implements UnitOfWorkDeleteRelation
                                   OpResult children )
   {
     return relationOperation.addOperation( OperationType.DELETE_RELATION, parentTable,
-                                           parentObject, columnName, children);
+                                           parentObject, columnName, children );
   }
 
   @Override
@@ -33,14 +41,22 @@ class UnitOfWorkDeleteRelationImpl implements UnitOfWorkDeleteRelation
                                   String whereClauseForChildren )
   {
     return relationOperation.addOperation( OperationType.DELETE_RELATION, parentTable, parentObject,
-                                           columnName, whereClauseForChildren);
+                                           columnName, whereClauseForChildren );
+  }
+
+  @Override
+  public OpResult deleteRelation( String parentTable, String parentObjectId, String columnName,
+                                  String[] childrenObjectIds )
+  {
+    return relationOperation.addOperation( OperationType.DELETE_RELATION, parentTable,
+                                           parentObjectId, columnName, childrenObjectIds );
   }
 
   @Override
   public <E> OpResult deleteRelation( String parentTable, String parentObjectId, String columnName, List<E> children )
   {
     return relationOperation.addOperation( OperationType.DELETE_RELATION, parentTable,
-                                           parentObjectId, columnName, children);
+                                           parentObjectId, columnName, children );
   }
 
   @Override
@@ -56,6 +72,12 @@ class UnitOfWorkDeleteRelationImpl implements UnitOfWorkDeleteRelation
   {
     return relationOperation.addOperation( OperationType.DELETE_RELATION, parentTable,
                                            parentObjectId, columnName, whereClauseForChildren);
+  }
+
+  @Override
+  public <E> OpResult deleteRelation( E parentObject, String columnName, String[] childrenObjectIds )
+  {
+    return relationOperation.addOperation( OperationType.DELETE_RELATION, parentObject, columnName, childrenObjectIds );
   }
 
   @Override
@@ -78,6 +100,12 @@ class UnitOfWorkDeleteRelationImpl implements UnitOfWorkDeleteRelation
   }
 
   @Override
+  public OpResult deleteRelation( OpResult parentObject, String columnName, String[] childrenObjectIds )
+  {
+    return relationOperation.addOperation( OperationType.DELETE_RELATION, parentObject, columnName, childrenObjectIds );
+  }
+
+  @Override
   public <E> OpResult deleteRelation( OpResult parentObject, String columnName, List<E> children )
   {
     return relationOperation.addOperation( OperationType.DELETE_RELATION, parentObject, columnName, children );
@@ -94,6 +122,12 @@ class UnitOfWorkDeleteRelationImpl implements UnitOfWorkDeleteRelation
                                   String whereClauseForChildren )
   {
     return relationOperation.addOperation( OperationType.DELETE_RELATION, parentObject, columnName, whereClauseForChildren );
+  }
+
+  @Override
+  public OpResult deleteRelation( OpResultValueReference parentObject, String columnName, String[] childrenObjectIds )
+  {
+    return relationOperation.addOperation( OperationType.DELETE_RELATION, parentObject, columnName, childrenObjectIds );
   }
 
   @Override
