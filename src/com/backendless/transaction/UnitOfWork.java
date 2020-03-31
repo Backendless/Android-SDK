@@ -193,7 +193,13 @@ public class UnitOfWork implements IUnitOfWork
   }
 
   @Override
-  public <E> OpResult bulkDelete( String tableName, List<E> arrayOfObjects )
+  public OpResult bulkDelete( String tableName, String[] objectIdValues )
+  {
+    return unitOfWorkDelete.bulkDelete( tableName, objectIdValues );
+  }
+
+  @Override
+  public OpResult bulkDelete( String tableName, List<Map<String, Object>> arrayOfObjects )
   {
     return unitOfWorkDelete.bulkDelete( tableName, arrayOfObjects );
   }
