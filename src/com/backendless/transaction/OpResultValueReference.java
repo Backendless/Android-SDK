@@ -49,7 +49,7 @@ public class OpResultValueReference
     return new OpResultValueReference( opResult, resultIndex, propName );
   }
 
-  public Map<String, Object> makeReference()
+  Map<String, Object> makeReference()
   {
     Map<String, Object> referenceMap = opResult.makeReference();
 
