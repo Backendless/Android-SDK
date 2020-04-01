@@ -37,10 +37,18 @@ class RelationOperationImpl implements RelationOperation
 
   @Override
   public <E> OpResult addOperation( OperationType operationType, String parentTable,
-                                    Map<String, Object> parentObject, String columnName, List<E> children )
+                                    Map<String, Object> parentObject, String columnName, E[] childrenInstance )
   {
     String parentObjectId = TransactionHelper.convertObjectMapToObjectId( parentObject );
-    return addOperation( operationType, parentTable, parentObjectId, columnName, children );
+    return addOperation( operationType, parentTable, parentObjectId, columnName, childrenInstance );
+  }
+
+  @Override
+  public OpResult addOperation( OperationType operationType, String parentTable,
+                                Map<String, Object> parentObject, String columnName, List<Map<String, Object>> childrenMaps )
+  {
+    String parentObjectId = TransactionHelper.convertObjectMapToObjectId( parentObject );
+    return addOperation( operationType, parentTable, parentObjectId, columnName, childrenMaps );
   }
 
   @Override
@@ -71,9 +79,19 @@ class RelationOperationImpl implements RelationOperation
 
   @Override
   public <E> OpResult addOperation( OperationType operationType, String parentTable, String parentObjectId,
-                                    String columnName, List<E> children )
+                                    String columnName, E[] childrenInstances )
   {
-    List<Object> childrenIds = getChildrenFromList( children );
+    List<String> childrenIds = getChildrenFromArrayInstances( childrenInstances );
+
+    return addOperation( operationType, parentTable, parentObjectId, columnName,
+                         null, childrenIds );
+  }
+
+  @Override
+  public OpResult addOperation( OperationType operationType, String parentTable, String parentObjectId,
+                                    String columnName, List<Map<String, Object>> childrenMaps )
+  {
+    List<Object> childrenIds = getChildrenFromListMap( childrenMaps );
 
     return addOperation( operationType, parentTable, parentObjectId, columnName,
                          null, childrenIds );
@@ -111,13 +129,23 @@ class RelationOperationImpl implements RelationOperation
   }
 
   @Override
-  public <E, U> OpResult addOperation( OperationType operationType, E parentObject, String columnName,
-                                       List<U> children )
+  public <E, U> OpResult addOperation( OperationType operationType, E parentObject, String columnName, U[] childrenInstances )
   {
     String parentObjectId = getParentObjectIdFromInstance( parentObject );
     String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
 
-    List<Object> childrenIds = getChildrenFromList( children );
+    List<String> childrenIds = getChildrenFromArrayInstances( childrenInstances );
+
+    return addOperation( operationType, parentTable, parentObjectId, columnName, null, childrenIds );
+  }
+
+  @Override
+  public <E> OpResult addOperation( OperationType operationType, E parentObject, String columnName, List<Map<String, Object>> childrenMaps )
+  {
+    String parentObjectId = getParentObjectIdFromInstance( parentObject );
+    String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
+
+    List<Object> childrenIds = getChildrenFromListMap( childrenMaps );
 
     return addOperation( operationType, parentTable, parentObjectId, columnName, null, childrenIds );
   }
@@ -158,12 +186,24 @@ class RelationOperationImpl implements RelationOperation
   }
 
   @Override
-  public <E> OpResult addOperation( OperationType operationType, OpResult parentObject,
-                                    String columnName, List<E> children )
+  public <E> OpResult addOperation( OperationType operationType, OpResult parentObject, String columnName, E[] childrenInstances )
   {
     checkOpResultFoParent( parentObject );
 
-    List<Object> childrenIds = getChildrenFromList( children );
+    List<String> childrenIds = getChildrenFromArrayInstances( childrenInstances );
+
+    return addOperation( operationType, parentObject.getTableName(),
+                         parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ).makeReference(),
+                         columnName, null, childrenIds );
+  }
+
+  @Override
+  public OpResult addOperation( OperationType operationType, OpResult parentObject,
+                                String columnName, List<Map<String, Object>> childrenMaps )
+  {
+    checkOpResultFoParent( parentObject );
+
+    List<Object> childrenIds = getChildrenFromListMap( childrenMaps );
 
     return addOperation( operationType, parentObject.getTableName(),
                          parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ).makeReference(),
@@ -209,11 +249,23 @@ class RelationOperationImpl implements RelationOperation
 
   @Override
   public <E> OpResult addOperation( OperationType operationType, OpResultValueReference parentObject,
-                                    String columnName, List<E> children )
+                                    String columnName, E[] childrenInstances )
   {
     Map<String, Object> referenceToObjectId = getReferenceToParentFromOpResultValue( parentObject );
 
-    List<Object> childrenIds = getChildrenFromList( children );
+    List<String> childrenIds = getChildrenFromArrayInstances( childrenInstances );
+
+    return addOperation( operationType, parentObject.getOpResult().getTableName(), referenceToObjectId, columnName,
+                         null, childrenIds );
+  }
+
+  @Override
+  public OpResult addOperation( OperationType operationType, OpResultValueReference parentObject,
+                                String columnName, List<Map<String, Object>> childrenMaps )
+  {
+    Map<String, Object> referenceToObjectId = getReferenceToParentFromOpResultValue( parentObject );
+
+    List<Object> childrenIds = getChildrenFromListMap( childrenMaps );
 
     return addOperation( operationType, parentObject.getOpResult().getTableName(), referenceToObjectId, columnName,
                          null, childrenIds );
@@ -313,14 +365,19 @@ class RelationOperationImpl implements RelationOperation
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
   }
 
-  private <E> List<Object> getChildrenFromList( List<E> children )
+  private List<Object> getChildrenFromListMap( List<Map<String, Object>> childrenMaps )
   {
-
-    if( children == null || children.isEmpty() )
+    if( childrenMaps == null || childrenMaps.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
 
-    TransactionHelper.makeReferenceToObjectIdFromOpResult( (List<Object>) children );
+    return TransactionHelper.convertMapsToObjectIds( childrenMaps );
+  }
 
-    return TransactionHelper.getObjectIdsFromUnknownList( children );
+  private <E> List<String> getChildrenFromArrayInstances( E[] children )
+  {
+    if( children == null || children.length == 0 )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
+
+    return TransactionHelper.getObjectIdsFromListInstances( children );
   }
 }
