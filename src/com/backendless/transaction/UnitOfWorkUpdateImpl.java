@@ -111,13 +111,10 @@ class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
   }
 
   @Override
-  public <E> OpResult bulkUpdate( String tableName, List<E> objectsForChanges, Map<String, Object> changes )
+  public OpResult bulkUpdate( String tableName, List<String> objectsForChanges, Map<String, Object> changes )
   {
     if( objectsForChanges == null || objectsForChanges.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
-
-    if( ! ( objectsForChanges.get( 0 ) instanceof String ) )
-      TransactionHelper.makeReferenceToObjectIdFromOpResult( (List<Object>) objectsForChanges );
 
     return bulkUpdate( tableName, null, objectsForChanges, changes );
   }
