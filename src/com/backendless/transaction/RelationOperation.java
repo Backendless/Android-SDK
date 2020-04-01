@@ -5,9 +5,12 @@ import java.util.Map;
 
 interface RelationOperation
 {
+  // HashMap + array of objectIds
+  OpResult addOperation( OperationType operationType, String parentTable, Map<String, Object> parentObject,
+                             String columnName, String[] childrenObjectIds );
+
   // HashMap + List of hashmaps
   // HashMap + List of custom classes
-  // HashMap + list of objectIds
   <E> OpResult addOperation( OperationType operationType, String parentTable, Map<String, Object> parentObject,
                              String columnName, List<E> children );
 
@@ -19,9 +22,12 @@ interface RelationOperation
   OpResult addOperation( OperationType operationType, String parentTable, Map<String, Object> parentObject,
                          String columnName, String whereClauseForChildren );
 
+  // String + array of objectIds
+  OpResult addOperation( OperationType operationType, String parentTable, String parentObjectId,
+                         String columnName, String[] childrenObjectIds );
+
   // String + List of hashmaps
   // String + List of custom classes
-  // String + list of objectIds
   <E> OpResult addOperation( OperationType operationType, String parentTable, String parentObjectId,
                              String columnName, List<E> children );
 
@@ -33,9 +39,11 @@ interface RelationOperation
   OpResult addOperation( OperationType operationType, String parentTable, String parentObjectId,
                          String columnName, String whereClauseForChildren );
 
+  // Custom class + array of objectIds
+  <E> OpResult addOperation( OperationType operationType, E parentObject, String columnName, String[] childrenObjectIds );
+
   // Custom class + List of hashmaps
   // Custom class + List of custom classes
-  // Custom class + list of objectIds
   <E, U> OpResult addOperation( OperationType operationType, E parentObject, String columnName, List<U> children );
 
   // Custom class + OpResult=CREATE_BULK or FIND
@@ -45,9 +53,11 @@ interface RelationOperation
   <E> OpResult addOperation( OperationType operationType, E parentObject, String columnName,
                              String whereClauseForChildren );
 
+  // OpResult=CREATE/UPDATE(getObjectId) + array of objectIds
+  OpResult addOperation( OperationType operationType, OpResult parentObject, String columnName, String[] childrenObjectIds );
+
   // OpResult=CREATE/UPDATE(getObjectId) + List of hashmaps
   // OpResult=CREATE/UPDATE(getObjectId) + List of custom classes
-  // OpResult=CREATE/UPDATE(getObjectId) + List of objectIds
   <E> OpResult addOperation( OperationType operationType, OpResult parentObject,
                              String columnName, List<E> children );
 
@@ -59,9 +69,12 @@ interface RelationOperation
   OpResult addOperation( OperationType operationType, OpResult parentObject,
                          String columnName, String whereClauseForChildren );
 
+  // OpResultValueReference=CREATE_BULK/FIND(getObjectId) + array of objectIds
+  OpResult addOperation( OperationType operationType, OpResultValueReference parentObject,
+                         String columnName, String[] childrenObjectIds );
+
   // OpResultValueReference=CREATE_BULK/FIND(getObjectId) + List of hashmaps
   // OpResultValueReference=CREATE_BULK/FIND(getObjectId)+ List of custom classes
-  // OpResultValueReference=CREATE_BULK/FIND(getObjectId) + List of objectIds
   <E> OpResult addOperation( OperationType operationType, OpResultValueReference parentObject,
                              String columnName, List<E> children );
 
