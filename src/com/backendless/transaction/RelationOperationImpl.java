@@ -37,10 +37,19 @@ class RelationOperationImpl implements RelationOperation
 
   @Override
   public <E> OpResult addOperation( OperationType operationType, String parentTable,
-                                    Map<String, Object> parentObject, String columnName, E[] childrenInstance )
+                                    Map<String, Object> parentObject, String columnName, E[] childrenInstances )
   {
+    if( childrenInstances == null || childrenInstances.length == 0 )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
+
+    if( childrenInstances[ 0 ] instanceof String )
+    {
+      String[] childrenObjectIds = (String[]) childrenInstances;
+      return addOperation( operationType, parentTable, parentObject, columnName, childrenObjectIds );
+    }
+
     String parentObjectId = TransactionHelper.convertObjectMapToObjectId( parentObject );
-    return addOperation( operationType, parentTable, parentObjectId, columnName, childrenInstance );
+    return addOperation( operationType, parentTable, parentObjectId, columnName, childrenInstances );
   }
 
   @Override
@@ -81,6 +90,15 @@ class RelationOperationImpl implements RelationOperation
   public <E> OpResult addOperation( OperationType operationType, String parentTable, String parentObjectId,
                                     String columnName, E[] childrenInstances )
   {
+    if( childrenInstances == null || childrenInstances.length == 0 )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
+
+    if( childrenInstances[ 0 ] instanceof String )
+    {
+      String[] childrenObjectIds = (String[]) childrenInstances;
+      return addOperation( operationType, parentTable, parentObjectId, columnName, childrenObjectIds );
+    }
+
     List<String> childrenIds = getChildrenFromArrayInstances( childrenInstances );
 
     return addOperation( operationType, parentTable, parentObjectId, columnName,
@@ -131,6 +149,15 @@ class RelationOperationImpl implements RelationOperation
   @Override
   public <E, U> OpResult addOperation( OperationType operationType, E parentObject, String columnName, U[] childrenInstances )
   {
+    if( childrenInstances == null || childrenInstances.length == 0 )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
+
+    if( childrenInstances[ 0 ] instanceof String )
+    {
+      String[] childrenObjectIds = (String[]) childrenInstances;
+      return addOperation( operationType, parentObject, columnName, childrenObjectIds );
+    }
+
     String parentObjectId = getParentObjectIdFromInstance( parentObject );
     String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
 
@@ -188,6 +215,15 @@ class RelationOperationImpl implements RelationOperation
   @Override
   public <E> OpResult addOperation( OperationType operationType, OpResult parentObject, String columnName, E[] childrenInstances )
   {
+    if( childrenInstances == null || childrenInstances.length == 0 )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
+
+    if( childrenInstances[ 0 ] instanceof String )
+    {
+      String[] childrenObjectIds = (String[]) childrenInstances;
+      return addOperation( operationType, parentObject, columnName, childrenObjectIds );
+    }
+
     checkOpResultFoParent( parentObject );
 
     List<String> childrenIds = getChildrenFromArrayInstances( childrenInstances );
@@ -251,6 +287,15 @@ class RelationOperationImpl implements RelationOperation
   public <E> OpResult addOperation( OperationType operationType, OpResultValueReference parentObject,
                                     String columnName, E[] childrenInstances )
   {
+    if( childrenInstances == null || childrenInstances.length == 0 )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_BULK );
+
+    if( childrenInstances[ 0 ] instanceof String )
+    {
+      String[] childrenObjectIds = (String[]) childrenInstances;
+      return addOperation( operationType, parentObject, columnName, childrenObjectIds );
+    }
+
     Map<String, Object> referenceToObjectId = getReferenceToParentFromOpResultValue( parentObject );
 
     List<String> childrenIds = getChildrenFromArrayInstances( childrenInstances );

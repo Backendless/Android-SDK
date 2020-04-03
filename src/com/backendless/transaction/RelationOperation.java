@@ -11,7 +11,7 @@ interface RelationOperation
 
   // HashMap + array of custom classes
   <E> OpResult addOperation( OperationType operationType, String parentTable,
-                             Map<String, Object> parentObject, String columnName, E[] childrenInstance );
+                             Map<String, Object> parentObject, String columnName, E[] childrenInstances );
 
   // HashMap + List of hashmaps
   OpResult addOperation( OperationType operationType, String parentTable,
