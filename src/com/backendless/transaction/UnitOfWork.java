@@ -231,9 +231,16 @@ public class UnitOfWork implements IUnitOfWork
 
   @Override
   public <E> OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName,
-                                     List<E> children )
+                                     E[] childrenInstance )
   {
-    return unitOfWorkAddRelation.addToRelation( parentTable, parentObject, columnName, children );
+    return unitOfWorkAddRelation.addToRelation( parentTable, parentObject, columnName, childrenInstance );
+  }
+
+  @Override
+  public OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName,
+                                 List<Map<String, Object>> childrenMaps )
+  {
+    return unitOfWorkAddRelation.addToRelation( parentTable, parentObject, columnName, childrenMaps );
   }
 
   @Override
@@ -258,9 +265,17 @@ public class UnitOfWork implements IUnitOfWork
   }
 
   @Override
-  public <E> OpResult addToRelation( String parentTable, String parentObjectId, String columnName, List<E> children )
+  public <E> OpResult addToRelation( String parentTable, String parentObjectId, String columnName,
+                                     E[] childrenInstances )
   {
-    return unitOfWorkAddRelation.addToRelation( parentTable, parentObjectId, columnName, children );
+    return unitOfWorkAddRelation.addToRelation( parentTable, parentObjectId, columnName, childrenInstances );
+  }
+
+  @Override
+  public OpResult addToRelation( String parentTable, String parentObjectId, String columnName,
+                                 List<Map<String, Object>> childrenMaps )
+  {
+    return unitOfWorkAddRelation.addToRelation( parentTable, parentObjectId, columnName, childrenMaps );
   }
 
   @Override
@@ -282,9 +297,15 @@ public class UnitOfWork implements IUnitOfWork
   }
 
   @Override
-  public <E, U> OpResult addToRelation( E parentObject, String columnName, List<U> children )
+  public <E, U> OpResult addToRelation( E parentObject, String columnName, U[] childrenInstances )
   {
-    return unitOfWorkAddRelation.addToRelation( parentObject, columnName, children );
+    return unitOfWorkAddRelation.addToRelation( parentObject, columnName, childrenInstances );
+  }
+
+  @Override
+  public <E> OpResult addToRelation( E parentObject, String columnName, List<Map<String, Object>> childrenMaps )
+  {
+    return unitOfWorkAddRelation.addToRelation( parentObject, columnName, childrenMaps );
   }
 
   @Override
@@ -306,9 +327,15 @@ public class UnitOfWork implements IUnitOfWork
   }
 
   @Override
-  public <E> OpResult addToRelation( OpResult parentObject, String columnName, List<E> children )
+  public <E> OpResult addToRelation( OpResult parentObject, String columnName, E[] childrenInstances )
   {
-    return unitOfWorkAddRelation.addToRelation( parentObject, columnName, children );
+    return unitOfWorkAddRelation.addToRelation( parentObject, columnName, childrenInstances );
+  }
+
+  @Override
+  public OpResult addToRelation( OpResult parentObject, String columnName, List<Map<String, Object>> childrenMaps )
+  {
+    return unitOfWorkAddRelation.addToRelation( parentObject, columnName, childrenMaps );
   }
 
   @Override
@@ -330,9 +357,16 @@ public class UnitOfWork implements IUnitOfWork
   }
 
   @Override
-  public <E> OpResult addToRelation( OpResultValueReference parentObject, String columnName, List<E> children )
+  public <E> OpResult addToRelation( OpResultValueReference parentObject, String columnName, E[] childrenInstances )
   {
-    return unitOfWorkAddRelation.addToRelation( parentObject, columnName, children );
+    return unitOfWorkAddRelation.addToRelation( parentObject, columnName, childrenInstances );
+  }
+
+  @Override
+  public OpResult addToRelation( OpResultValueReference parentObject, String columnName,
+                                 List<Map<String, Object>> childrenMaps )
+  {
+    return unitOfWorkAddRelation.addToRelation( parentObject, columnName, childrenMaps );
   }
 
   @Override
@@ -356,9 +390,16 @@ public class UnitOfWork implements IUnitOfWork
 
   @Override
   public <E> OpResult setRelation( String parentTable, Map<String, Object> parentObject, String columnName,
-                                   List<E> children )
+                                   E[] childrenInstance )
   {
-    return unitOfWorkSetRelation.setRelation( parentTable, parentObject, columnName, children );
+    return unitOfWorkSetRelation.setRelation( parentTable, parentObject, columnName, childrenInstance );
+  }
+
+  @Override
+  public OpResult setRelation( String parentTable, Map<String, Object> parentObject, String columnName,
+                               List<Map<String, Object>> childrenMaps )
+  {
+    return unitOfWorkSetRelation.setRelation( parentTable, parentObject, columnName, childrenMaps );
   }
 
   @Override
@@ -383,9 +424,16 @@ public class UnitOfWork implements IUnitOfWork
   }
 
   @Override
-  public <E> OpResult setRelation( String parentTable, String parentObjectId, String columnName, List<E> children )
+  public <E> OpResult setRelation( String parentTable, String parentObjectId, String columnName, E[] childrenInstances )
   {
-    return unitOfWorkSetRelation.setRelation( parentTable, parentObjectId, columnName, children );
+    return unitOfWorkSetRelation.setRelation( parentTable, parentObjectId, columnName, childrenInstances );
+  }
+
+  @Override
+  public OpResult setRelation( String parentTable, String parentObjectId, String columnName,
+                               List<Map<String, Object>> childrenMaps )
+  {
+    return unitOfWorkSetRelation.setRelation( parentTable, parentObjectId, columnName, childrenMaps );
   }
 
   @Override
@@ -407,9 +455,15 @@ public class UnitOfWork implements IUnitOfWork
   }
 
   @Override
-  public <E, U> OpResult setRelation( E parentObject, String columnName, List<U> children )
+  public <E, U> OpResult setRelation( E parentObject, String columnName, U[] childrenInstances )
   {
-    return unitOfWorkSetRelation.setRelation( parentObject, columnName, children );
+    return unitOfWorkSetRelation.setRelation( parentObject, columnName, childrenInstances );
+  }
+
+  @Override
+  public <E> OpResult setRelation( E parentObject, String columnName, List<Map<String, Object>> childrenMaps )
+  {
+    return unitOfWorkSetRelation.setRelation( parentObject, columnName, childrenMaps );
   }
 
   @Override
@@ -431,9 +485,15 @@ public class UnitOfWork implements IUnitOfWork
   }
 
   @Override
-  public <E> OpResult setRelation( OpResult parentObject, String columnName, List<E> children )
+  public <E> OpResult setRelation( OpResult parentObject, String columnName, E[] childrenInstances )
   {
-    return unitOfWorkSetRelation.setRelation( parentObject, columnName, children );
+    return unitOfWorkSetRelation.setRelation( parentObject, columnName, childrenInstances );
+  }
+
+  @Override
+  public OpResult setRelation( OpResult parentObject, String columnName, List<Map<String, Object>> childrenMaps )
+  {
+    return unitOfWorkSetRelation.setRelation( parentObject, columnName, childrenMaps );
   }
 
   @Override
@@ -455,9 +515,16 @@ public class UnitOfWork implements IUnitOfWork
   }
 
   @Override
-  public <E> OpResult setRelation( OpResultValueReference parentObject, String columnName, List<E> children )
+  public <E> OpResult setRelation( OpResultValueReference parentObject, String columnName, E[] childrenInstances )
   {
-    return unitOfWorkSetRelation.setRelation( parentObject, columnName, children );
+    return unitOfWorkSetRelation.setRelation( parentObject, columnName, childrenInstances );
+  }
+
+  @Override
+  public OpResult setRelation( OpResultValueReference parentObject, String columnName,
+                               List<Map<String, Object>> childrenMaps )
+  {
+    return unitOfWorkSetRelation.setRelation( parentObject, columnName, childrenMaps );
   }
 
   @Override
@@ -481,9 +548,16 @@ public class UnitOfWork implements IUnitOfWork
 
   @Override
   public <E> OpResult deleteRelation( String parentTable, Map<String, Object> parentObject, String columnName,
-                                      List<E> children )
+                                      E[] childrenInstance )
   {
-    return unitOfWorkDeleteRelation.deleteRelation( parentTable, parentObject, columnName, children );
+    return unitOfWorkDeleteRelation.deleteRelation( parentTable, parentObject, columnName, childrenInstance );
+  }
+
+  @Override
+  public OpResult deleteRelation( String parentTable, Map<String, Object> parentObject, String columnName,
+                                  List<Map<String, Object>> childrenMaps )
+  {
+    return unitOfWorkDeleteRelation.deleteRelation( parentTable, parentObject, columnName, childrenMaps );
   }
 
   @Override
@@ -508,9 +582,17 @@ public class UnitOfWork implements IUnitOfWork
   }
 
   @Override
-  public <E> OpResult deleteRelation( String parentTable, String parentObjectId, String columnName, List<E> children )
+  public <E> OpResult deleteRelation( String parentTable, String parentObjectId, String columnName,
+                                      E[] childrenInstances )
   {
-    return unitOfWorkDeleteRelation.deleteRelation( parentTable, parentObjectId, columnName, children );
+    return unitOfWorkDeleteRelation.deleteRelation( parentTable, parentObjectId, columnName, childrenInstances );
+  }
+
+  @Override
+  public OpResult deleteRelation( String parentTable, String parentObjectId, String columnName,
+                                  List<Map<String, Object>> childrenMaps )
+  {
+    return unitOfWorkDeleteRelation.deleteRelation( parentTable, parentObjectId, columnName, childrenMaps );
   }
 
   @Override
@@ -533,9 +615,15 @@ public class UnitOfWork implements IUnitOfWork
   }
 
   @Override
-  public <E, U> OpResult deleteRelation( E parentObject, String columnName, List<U> children )
+  public <E, U> OpResult deleteRelation( E parentObject, String columnName, U[] childrenInstances )
   {
-    return unitOfWorkDeleteRelation.deleteRelation( parentObject, columnName, children );
+    return unitOfWorkDeleteRelation.deleteRelation( parentObject, columnName, childrenInstances );
+  }
+
+  @Override
+  public <E> OpResult deleteRelation( E parentObject, String columnName, List<Map<String, Object>> childrenMaps )
+  {
+    return unitOfWorkDeleteRelation.deleteRelation( parentObject, columnName, childrenMaps );
   }
 
   @Override
@@ -557,9 +645,15 @@ public class UnitOfWork implements IUnitOfWork
   }
 
   @Override
-  public <E> OpResult deleteRelation( OpResult parentObject, String columnName, List<E> children )
+  public <E> OpResult deleteRelation( OpResult parentObject, String columnName, E[] childrenInstances )
   {
-    return unitOfWorkDeleteRelation.deleteRelation( parentObject, columnName, children );
+    return unitOfWorkDeleteRelation.deleteRelation( parentObject, columnName, childrenInstances );
+  }
+
+  @Override
+  public OpResult deleteRelation( OpResult parentObject, String columnName, List<Map<String, Object>> childrenMaps )
+  {
+    return unitOfWorkDeleteRelation.deleteRelation( parentObject, columnName, childrenMaps );
   }
 
   @Override
@@ -581,9 +675,16 @@ public class UnitOfWork implements IUnitOfWork
   }
 
   @Override
-  public <E> OpResult deleteRelation( OpResultValueReference parentObject, String columnName, List<E> children )
+  public <E> OpResult deleteRelation( OpResultValueReference parentObject, String columnName, E[] childrenInstances )
   {
-    return unitOfWorkDeleteRelation.deleteRelation( parentObject, columnName, children );
+    return unitOfWorkDeleteRelation.deleteRelation( parentObject, columnName, childrenInstances );
+  }
+
+  @Override
+  public OpResult deleteRelation( OpResultValueReference parentObject, String columnName,
+                                  List<Map<String, Object>> childrenMaps )
+  {
+    return unitOfWorkDeleteRelation.deleteRelation( parentObject, columnName, childrenMaps );
   }
 
   @Override

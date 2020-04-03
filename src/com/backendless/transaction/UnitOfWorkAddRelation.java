@@ -8,9 +8,11 @@ interface UnitOfWorkAddRelation
   // HashMap + array of objectIds
   OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName, String[] childrenObjectIds );
 
+  // HashMap + array of custom classes
+  <E> OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName, E[] childrenInstance );
+
   // HashMap + List of hashmaps
-  // HashMap + List of custom classes
-  <E> OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName, List<E> children );
+  OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName, List<Map<String, Object>> childrenMaps );
 
   // HashMap + OpResult=CREATE_BULK
   OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName, OpResult children );
@@ -22,9 +24,11 @@ interface UnitOfWorkAddRelation
   // String + array of objectIds
   OpResult addToRelation( String parentTable, String parentObjectId, String columnName, String[] childrenObjectIds );
 
+  // String + array of custom classes
+  <E> OpResult addToRelation( String parentTable, String parentObjectId, String columnName, E[] childrenInstances );
+
   // String + List of hashmaps
-  // String + List of custom classes
-  <E> OpResult addToRelation( String parentTable, String parentObjectId, String columnName, List<E> children );
+  OpResult addToRelation( String parentTable, String parentObjectId, String columnName, List<Map<String, Object>> childrenMaps );
 
   // String + OpResult=CREATE_BULK
   OpResult addToRelation( String parentTable, String parentObjectId, String columnName, OpResult children );
@@ -35,9 +39,11 @@ interface UnitOfWorkAddRelation
   // Custom class + array of objectIds
   <E> OpResult addToRelation( E parentObject, String columnName, String[] childrenObjectIds );
 
+  // Custom class + array of custom classes
+  <E, U> OpResult addToRelation( E parentObject, String columnName, U[] childrenInstances );
+
   // Custom class + List of hashmaps
-  // Custom class + List of custom classes
-  <E, U> OpResult addToRelation( E parentObject, String columnName, List<U> children );
+  <E> OpResult addToRelation( E parentObject, String columnName, List<Map<String, Object>> childrenMaps );
 
   // Custom class + OpResult=CREATE_BULK
   <E> OpResult addToRelation( E parentObject, String columnName, OpResult children );
@@ -48,9 +54,11 @@ interface UnitOfWorkAddRelation
   // OpResult=CREATE/UPDATE(getObjectId) + array of objectIds
   OpResult addToRelation( OpResult parentObject, String columnName, String[] childrenObjectIds );
 
+  // OpResult=CREATE/UPDATE(getObjectId) + array of custom classes
+  <E> OpResult addToRelation( OpResult parentObject, String columnName, E[] childrenInstances );
+
   // OpResult=CREATE/UPDATE(getObjectId) + List of hashmaps
-  // OpResult=CREATE/UPDATE(getObjectId) + List of custom classes
-  <E> OpResult addToRelation( OpResult parentObject, String columnName, List<E> children );
+  OpResult addToRelation( OpResult parentObject, String columnName, List<Map<String, Object>> childrenMaps );
 
   // OpResult=CREATE/UPDATE(getObjectId) + OpResult=CREATE_BULK
   OpResult addToRelation( OpResult parentObject, String columnName, OpResult children );
@@ -61,9 +69,11 @@ interface UnitOfWorkAddRelation
   // OpResult=CREATE_BULK(resultIndex) + array of objectIds
   OpResult addToRelation( OpResultValueReference parentObject, String columnName, String[] childrenObjectIds );
 
-  // OpResult=CREATE_BULK(resultIndex) + List of hashmaps
-  // OpResult=CREATE_BULK(resultIndex) + List of custom classes
-  <E> OpResult addToRelation( OpResultValueReference parentObject, String columnName, List<E> children );
+  // OpResultValueReference=CREATE_BULK/FIND(getObjectId)+ array of custom classes
+  <E> OpResult addToRelation( OpResultValueReference parentObject, String columnName, E[] childrenInstances );
+
+  // OpResultValueReference=CREATE_BULK/FIND(getObjectId) + List of hashmaps
+  OpResult addToRelation( OpResultValueReference parentObject, String columnName, List<Map<String, Object>> childrenMaps );
 
   // OpResult=CREATE_BULK(resultIndex) + OpResult=CREATE_BULK
   OpResult addToRelation( OpResultValueReference parentObject, String columnName, OpResult children );
