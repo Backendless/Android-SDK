@@ -91,6 +91,7 @@ class TransactionHelper
     return maybeObjectId;
   }
 
+  // accept children not String[], it check before
   static <E> List<String> getObjectIdsFromListInstances( E[] children )
   {
     if( children[ 0 ] instanceof Map )
