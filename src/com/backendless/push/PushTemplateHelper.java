@@ -252,17 +252,22 @@ public class PushTemplateHelper
             .setContentTitle( contentTitle != null ? contentTitle : template.getContentTitle() )
             .setSubText( summarySubText != null ? summarySubText : template.getSummarySubText() )
             .setContentText( messageText );
-
-    String actionOnTap = (template.getActionOnTap() == null || template.getActionOnTap().isEmpty() )
-        ?appContext.getPackageName()
-        :template.getActionOnTap();
-    
-    Intent notificationIntent = appContext.getPackageManager().getLaunchIntentForPackage( actionOnTap );
-    notificationIntent.putExtras( newBundle );
-    notificationIntent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
-
-    PendingIntent contentIntent = PendingIntent.getActivity( appContext, notificationId * 3, notificationIntent, 0 );
-    notificationBuilder.setContentIntent( contentIntent );
+  
+    Intent notificationIntent;
+    if (template.getActionOnTap() == null || template.getActionOnTap().isEmpty())
+      notificationIntent = appContext.getPackageManager().getLaunchIntentForPackage(appContext.getPackageName());
+    else
+    {
+      notificationIntent = new Intent("ActionOnTap");
+      notificationIntent.setClassName(appContext, template.getActionOnTap());
+    }
+  
+    notificationIntent.putExtras(newBundle);
+    notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    PendingIntent contentIntent = PendingIntent.getActivity(appContext, notificationId * 3, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+  
+    // user should use messageId and tag(templateName) to cancel notification.
+    notificationBuilder.setContentIntent(contentIntent);
 
     if( template.getActions() != null )
     {
