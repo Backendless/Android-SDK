@@ -44,20 +44,23 @@ public class InvocationContext extends AbstractContext
   private String httpPath;
   private Map<String, String> httpPathParams;
   private Map<String, String> httpQueryParams;
+  private Map<String, String> httpResponseHeaders;
 
-  private InvocationContext( String appId, String userId, String userToken, List<String> userRoles,
+  private InvocationContext( String appId, String userId, String userToken, String userLocale, List<String> userRoles,
                              String deviceType, String httpPath, Map<String, String> httpHeaders,
-                             Map<String, String> httpPathParams, Map<String, String> httpQueryParams)
+                             Map<String, String> httpPathParams, Map<String, String> httpQueryParams, Map<String, String> httpResponseHeaders )
   {
     this.appId = appId;
     this.userId = userId;
     this.userToken = userToken;
+    this.userLocale = userLocale;
     this.userRoles = userRoles;
     this.deviceType = DeviceType.valueOf( deviceType );
     this.httpHeaders = httpHeaders;
     this.httpPath = httpPath;
     this.httpPathParams = httpPathParams;
     this.httpQueryParams = httpQueryParams;
+    this.httpResponseHeaders = httpResponseHeaders;
   }
 
   private InvocationContext( ) {}
@@ -116,6 +119,16 @@ public class InvocationContext extends AbstractContext
     getCurrentContext().userRoles = userRoles;
   }
 
+  public static String getUserLocale()
+  {
+    return getCurrentContext().userLocale;
+  }
+
+  public static void setUserLocale( String userLocale )
+  {
+    getCurrentContext().userLocale = userLocale;
+  }
+
   public static DeviceType getDeviceType()
   {
     return getCurrentContext().deviceType;
@@ -164,5 +177,15 @@ public class InvocationContext extends AbstractContext
   public static void setHttpQueryParams( Map<String, String> httpQueryParams )
   {
     getCurrentContext().httpQueryParams = httpQueryParams;
+  }
+
+  public static Map<String, String> getHttpResponseHeaders()
+  {
+    return getCurrentContext().httpResponseHeaders;
+  }
+
+  public static void setHttpResponseHeaders( Map<String, String> httpResponseHeaders )
+  {
+    getCurrentContext().httpResponseHeaders = httpResponseHeaders;
   }
 }

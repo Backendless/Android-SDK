@@ -112,18 +112,19 @@ class DataStoreFactory
       @Override
       public E findFirst( Integer relationsDepth ) throws BackendlessException
       {
-        return findFirst( emptyRelations, relationsDepth );
+        return findFirst( emptyRelations, relationsDepth, null );
       }
 
       @Override
       public E findFirst( List<String> relations ) throws BackendlessException
       {
-        return findFirst( relations, (Integer)null );
+        return findFirst( relations, null, null );
       }
 
-      private E findFirst( List<String> relations, Integer relationsDepth ) throws BackendlessException
+      @Override
+      public E findFirst( List<String> relations, Integer relationsDepth, Integer relationsPageSize ) throws BackendlessException
       {
-        return Backendless.Persistence.first( entityClass, relations, relationsDepth );
+        return Backendless.Persistence.first( entityClass, relations, relationsDepth, relationsPageSize );
       }
 
       @Override
@@ -146,18 +147,19 @@ class DataStoreFactory
       @Override
       public void findFirst( Integer relationsDepth, final AsyncCallback<E> responder )
       {
-        findFirst( emptyRelations, relationsDepth, responder );
+        findFirst( emptyRelations, relationsDepth, null, responder );
       }
 
       @Override
       public void findFirst( List<String> relations, AsyncCallback<E> responder )
       {
-        findFirst( relations, (Integer)null, responder );
+        findFirst( relations, null, null, responder );
       }
 
-      private void findFirst( List<String> relations, Integer relationsDepth, final AsyncCallback<E> responder )
+      @Override
+      public void findFirst( List<String> relations, Integer relationsDepth, Integer relationsPageSize, final AsyncCallback<E> responder )
       {
-        Backendless.Persistence.first( entityClass, relations, relationsDepth, responder );
+        Backendless.Persistence.first( entityClass, relations, relationsDepth, relationsPageSize, responder );
       }
 
       @Override
@@ -169,18 +171,19 @@ class DataStoreFactory
       @Override
       public E findLast( Integer relationsDepth ) throws BackendlessException
       {
-        return findLast( emptyRelations, relationsDepth );
+        return findLast( emptyRelations, relationsDepth, null );
       }
 
       @Override
       public E findLast( List<String> relations ) throws BackendlessException
       {
-        return findLast( relations, (Integer)null );
+        return findLast( relations, (Integer)null, null );
       }
 
-      private E findLast( List<String> relations, Integer relationsDepth ) throws BackendlessException
+      @Override
+      public E findLast( List<String> relations, Integer relationsDepth, Integer relationsPageSize ) throws BackendlessException
       {
-        return Backendless.Persistence.last( entityClass, relations, relationsDepth );
+        return Backendless.Persistence.last( entityClass, relations, relationsDepth, relationsPageSize );
       }
 
       @Override
@@ -192,18 +195,19 @@ class DataStoreFactory
       @Override
       public void findLast( Integer relationsDepth, final AsyncCallback<E> responder )
       {
-        findLast( emptyRelations, relationsDepth, responder );
+        findLast( emptyRelations, relationsDepth, null, responder );
       }
 
       @Override
       public void findLast( List<String> relations, AsyncCallback<E> responder )
       {
-        findLast( relations, (Integer)null, responder );
+        findLast( relations, null, null, responder );
       }
 
-      private void findLast( List<String> relations, Integer relationsDepth, final AsyncCallback<E> responder )
+      @Override
+      public void findLast( List<String> relations, Integer relationsDepth, Integer relationsPageSize, final AsyncCallback<E> responder )
       {
-        Backendless.Persistence.last( entityClass, relations, relationsDepth, responder );
+        Backendless.Persistence.last( entityClass, relations, relationsDepth, relationsPageSize, responder );
       }
 
       @Override

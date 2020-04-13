@@ -1,14 +1,15 @@
 package com.backendless.persistence;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+
 
 public class DataQueryBuilder
 {
   private PagedQueryBuilder<DataQueryBuilder> pagedQueryBuilder;
   private QueryOptionsBuilder<DataQueryBuilder> queryOptionsBuilder;
-  private List<String> properties;
+  private ArrayList<String> properties;
+  private ArrayList<String> excludeProperties;
   private String whereClause;
   private List<String> groupBy;
   private String havingClause;
@@ -16,6 +17,7 @@ public class DataQueryBuilder
   private DataQueryBuilder()
   {
     properties = new ArrayList<>();
+    excludeProperties = new ArrayList<>();
     pagedQueryBuilder = new PagedQueryBuilder<>( this );
     queryOptionsBuilder = new QueryOptionsBuilder<>( this );
     groupBy = new ArrayList<>();
@@ -33,6 +35,7 @@ public class DataQueryBuilder
 
     dataQuery.setQueryOptions( queryOptionsBuilder.build() );
     dataQuery.setProperties( properties );
+    dataQuery.setExcludeProperties( excludeProperties );
     dataQuery.setWhereClause( whereClause );
     dataQuery.setGroupBy( groupBy );
     dataQuery.setHavingClause( havingClause );
@@ -64,24 +67,82 @@ public class DataQueryBuilder
 
   public List<String> getProperties()
   {
-    return properties;
+    return (List<String>) this.properties.clone();
   }
 
   public DataQueryBuilder setProperties( List<String> properties )
   {
-    this.properties = properties;
+    this.properties.clear();
+
+    if (properties != null)
+      for( String prop: properties )
+        this.addProperty( prop );
+
     return this;
   }
 
   public DataQueryBuilder setProperties( String... properties )
   {
-    Collections.addAll( this.properties, properties );
+    this.properties.clear();
+    this.addProperties( properties );
+    return this;
+  }
+
+  public DataQueryBuilder addProperties( String... properties )
+  {
+    if( properties != null )
+      for( String prop : properties )
+        this.addProperty( prop );
+
     return this;
   }
 
   public DataQueryBuilder addProperty( String property )
   {
-    this.properties.add( property );
+    if( property != null && !property.equals( "" ) )
+      properties.add( property );
+
+    return this;
+  }
+
+  public DataQueryBuilder addAllProperties()
+  {
+    this.addProperty( "*" );
+    return this;
+  }
+
+  public ArrayList<String> getExcludedProperties()
+  {
+    return (ArrayList<String>) excludeProperties.clone();
+  }
+
+  public DataQueryBuilder excludeProperties( ArrayList<String> excludeProperties )
+  {
+    this.excludeProperties.clear();
+
+    if( excludeProperties != null )
+      for( String exclProp: excludeProperties )
+        this.excludeProperty( exclProp );
+
+    return this;
+  }
+
+  public DataQueryBuilder excludeProperties( String... excludeProperties )
+  {
+    this.excludeProperties.clear();
+
+    if( excludeProperties != null )
+      for( String exclProp: excludeProperties )
+        this.excludeProperty( exclProp );
+
+    return this;
+  }
+
+  public DataQueryBuilder excludeProperty( String excludeProperty )
+  {
+    if( excludeProperty != null && !excludeProperty.isEmpty() )
+      this.excludeProperties.add( excludeProperty );
+
     return this;
   }
 
@@ -151,23 +212,47 @@ public class DataQueryBuilder
     return queryOptionsBuilder.setRelationsDepth( relationsDepth );
   }
 
+  public List<String> getGroupBy()
+  {
+    return new ArrayList<>( this.groupBy );
+  }
+
   public DataQueryBuilder setGroupBy( String... groupBy )
   {
-    this.groupBy = new ArrayList<>();
-    Collections.addAll( this.groupBy, groupBy );
+    this.groupBy.clear();
+    this.addGroupBy( groupBy );
     return this;
   }
 
   public DataQueryBuilder addGroupBy( String... groupBy )
   {
-    this.groupBy = this.groupBy != null ? this.groupBy : new ArrayList<String>();
-    Collections.addAll( this.groupBy, groupBy );
+    for( String grb : groupBy )
+    {
+      if( grb != null && !grb.equals( "" ) )
+        this.groupBy.add( grb );
+    }
+
     return this;
+  }
+
+  public String getHavingClause()
+  {
+    return havingClause;
   }
 
   public DataQueryBuilder setHavingClause( String havingClause )
   {
     this.havingClause = havingClause;
     return this;
+  }
+
+  public DataQueryBuilder setRelationsPageSize( Integer relationsPageSize )
+  {
+    return queryOptionsBuilder.setRelationsPageSize( relationsPageSize );
+  }
+
+  public Integer getRelationPageSize()
+  {
+    return queryOptionsBuilder.getRelationsPageSize();
   }
 }

@@ -23,17 +23,26 @@ import android.content.Intent;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.files.BackendlessFile;
 import com.backendless.files.BackendlessFileFactory;
+import com.backendless.geo.BackendlessGeometryFactory;
+import com.backendless.geo.BackendlessGeometryWriter;
 import com.backendless.geo.LocationTracker;
 import com.backendless.io.BackendlessUserFactory;
 import com.backendless.io.BackendlessUserWriter;
 import com.backendless.io.DoubleWriter;
 import com.backendless.persistence.BackendlessSerializer;
+import com.backendless.persistence.Geometry;
+import com.backendless.persistence.GeometryDTO;
+import com.backendless.persistence.LineString;
+import com.backendless.persistence.Point;
+import com.backendless.persistence.Polygon;
 import com.backendless.persistence.QueryOptions;
 import com.backendless.persistence.RealmSerializer;
 import com.backendless.persistence.local.UserIdStorageFactory;
 import com.backendless.persistence.local.UserTokenStorageFactory;
 import com.backendless.rt.RTService;
 import com.backendless.rt.RTServiceImpl;
+import com.backendless.util.JSONUtil;
+import com.backendless.utils.JSONConverterWeborbImpl;
 import weborb.ORBConstants;
 import weborb.config.ORBConfig;
 import weborb.util.ObjectFactories;
@@ -70,7 +79,6 @@ public final class Backendless
   public static final CustomService CustomService = com.backendless.CustomService.getInstance();
   public static final Logging Logging = com.backendless.Logging.getInstance();
   public static final RTService RT = new RTServiceImpl();
-  public static Media Media;
   private static boolean initialized;
 
   private Backendless()
@@ -98,8 +106,9 @@ public final class Backendless
     if( isAndroid )
     {
       prefs.onCreate( ContextHandler.getAppContext() );
-      Media = com.backendless.Media.getInstance();
     }
+
+    JSONUtil.setJsonConverter( new JSONConverterWeborbImpl() );
 
     AmfV3Formatter.AddTypeWriter( QueryOptions.class, new ITypeWriter()
     {
@@ -113,6 +122,8 @@ public final class Backendless
         queryOptionsMap.put( "related", queryOptions.getRelated() );
         if( queryOptions.getRelationsDepth() != null )
           queryOptionsMap.put( "relationsDepth", queryOptions.getRelationsDepth() );
+        if( queryOptions.getRelationsPageSize() != null )
+          queryOptionsMap.put( "relationsPageSize", queryOptions.getRelationsPageSize() );
 
         MessageWriter.writeObject( queryOptionsMap, iProtocolFormatter );
       }
@@ -177,8 +188,17 @@ public final class Backendless
 
     MessageWriter.addTypeWriter( BackendlessUser.class, new BackendlessUserWriter() );
     MessageWriter.addTypeWriter( Double.class, new DoubleWriter() );
+    MessageWriter.addTypeWriter( Geometry.class, new BackendlessGeometryWriter() );
+    MessageWriter.addTypeWriter( Point.class, new BackendlessGeometryWriter() );
+    MessageWriter.addTypeWriter( LineString.class, new BackendlessGeometryWriter() );
+    MessageWriter.addTypeWriter( Polygon.class, new BackendlessGeometryWriter() );
     ObjectFactories.addArgumentObjectFactory( BackendlessUser.class.getName(), new BackendlessUserFactory() );
     ObjectFactories.addArgumentObjectFactory( BackendlessFile.class.getName(), new BackendlessFileFactory() );
+    ObjectFactories.addArgumentObjectFactory( GeometryDTO.class.getName(), new BackendlessGeometryFactory() );
+    ObjectFactories.addArgumentObjectFactory( Geometry.class.getName(), new BackendlessGeometryFactory() );
+    ObjectFactories.addArgumentObjectFactory( Point.class.getName(), new BackendlessGeometryFactory() );
+    ObjectFactories.addArgumentObjectFactory( LineString.class.getName(), new BackendlessGeometryFactory() );
+    ObjectFactories.addArgumentObjectFactory( Polygon.class.getName(), new BackendlessGeometryFactory() );
     ContextHandler.setContext( context );
 
     HeadersManager.cleanHeaders();

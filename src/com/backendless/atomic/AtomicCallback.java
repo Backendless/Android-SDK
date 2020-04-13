@@ -42,7 +42,13 @@ public class AtomicCallback<T> implements AsyncCallback<Object>
     else if( response instanceof Double )
       numberResult = Double.valueOf( response.toString() );
     else
-      realCallback.handleFault( new BackendlessFault( "Result is not a number. Expecting either Integer or Double, but received " + response.getClass() ) );
+    {
+      String errorMsg = "Result is not a number. Expecting either Integer or Double";
+      if( response != null )
+        errorMsg += ", but received " + response.getClass();
+      realCallback.handleFault(new BackendlessFault(errorMsg));
+      return;
+    }
 
     Class<?> counterType;
     try

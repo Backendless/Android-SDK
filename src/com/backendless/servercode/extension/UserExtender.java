@@ -152,4 +152,12 @@ public abstract class UserExtender
   public void beforeEmailConfirmed( RunnerContext context, String confirmationKey ) throws Exception
   {
   }
+
+  public void beforeLoginAsGuest( RunnerContext context ) throws Exception
+  {
+  }
+
+  public void afterLoginAsGuest( RunnerContext context, ExecutionResult<BackendlessUser> result ) throws Exception
+  {
+  }
 }

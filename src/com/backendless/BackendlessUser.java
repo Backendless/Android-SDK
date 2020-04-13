@@ -31,9 +31,11 @@ public class BackendlessUser implements Serializable
   public static final String PASSWORD_KEY = "password";
   public static final String EMAIL_KEY = "email";
   public static final String ID_KEY = "objectId";
+  public static final String LOCALE = "blUserLocale";
 
   public BackendlessUser()
   {
+    properties.put( LOCALE, System.getProperty("user.language") );
   }
 
   /**
@@ -130,6 +132,12 @@ public class BackendlessUser implements Serializable
   public Object removeProperty( String key )
   {
     return properties.remove( key );
+  }
+
+  public boolean isEmpty()
+  {
+    // Second condition mean that only property that User has is default locale
+    return properties.isEmpty() || (properties.size() == 1 && properties.containsKey( LOCALE ));
   }
 
   @Override

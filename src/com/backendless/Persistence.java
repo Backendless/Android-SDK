@@ -103,36 +103,26 @@ public final class Persistence
       return new ArrayList<>();
     
     String tableName =  BackendlessSerializer.getSimpleName( objects.get( 0 ).getClass() );
-    Object[] args = new Object[] { tableName , objects };
+
+    List<Map<String, Object>> serializedEntities = new ArrayList<>();
+    for ( final Object entity : objects)
+    {
+      serializedEntities.add( serializeEntityBeforeCreate( entity ) );
+    }
+
+    Object[] args = new Object[] { tableName , serializedEntities };
 
     if( async )
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args, responder, ResponderHelper.getCollectionAdaptingResponder( String.class ) );
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args, responder, ResponderHelper.getCollectionAdaptingResponder( objects.get( 0 ).getClass() ) );
     else
-      return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args, ResponderHelper.getCollectionAdaptingResponder( String.class ) );
+      return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "createBulk", args, ResponderHelper.getCollectionAdaptingResponder( objects.get( 0 ).getClass() ) );
 
     return null;
   }
 
   public <E> E save( final E entity ) throws BackendlessException
   {
-    if( entity == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
-
-    checkDeclaredType( entity.getClass() );
-    final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
-    MapEntityUtil.removeNullsAndRelations( serializedEntity);
-
-    MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
-    {
-      @Override
-      public Object substitute( Object o )
-      {
-        if( o == entity )
-          return serializedEntity;
-        else
-          return o;
-      }
-    } );
+    final Map<String, Object> serializedEntity = serializeEntityBeforeCreate( entity );
 
     try
     {
@@ -170,24 +160,7 @@ public final class Persistence
   {
     try
     {
-      if( entity == null )
-        throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
-
-      checkDeclaredType( entity.getClass() );
-      final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
-      MapEntityUtil.removeNullsAndRelations( serializedEntity );
-
-      MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
-      {
-        @Override
-        public Object substitute( Object o )
-        {
-          if( o == entity )
-            return serializedEntity;
-          else
-            return o;
-        }
-      } );
+      final Map<String, Object> serializedEntity = serializeEntityBeforeCreate( entity );
 
       AsyncCallback<E> callbackOverrider;
       if( serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) == null )
@@ -248,7 +221,7 @@ public final class Persistence
               serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) != null )
         method = "save";
 
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, method, new Object[] { BackendlessSerializer.getSimpleName( entity.getClass() ), entity }, callbackOverrider, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, method, new Object[] { BackendlessSerializer.getSimpleName( entity.getClass() ), serializedEntity }, callbackOverrider, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
     }
     catch( Throwable e )
     {
@@ -709,16 +682,21 @@ public final class Persistence
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-    return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "first", new Object[] { BackendlessSerializer.getSimpleName( entity ) }, ResponderHelper.getPOJOAdaptingResponder( entity ) );
+    return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "first",
+                                   new Object[] { BackendlessSerializer.getSimpleName( entity ) },
+                                   ResponderHelper.getPOJOAdaptingResponder( entity ) );
   }
 
   protected <E> E first( final Class<E> entity, final List<String> relations,
-                         final Integer relationsDepth ) throws BackendlessException
+                         final Integer relationsDepth, final Integer relationsPageSize ) throws BackendlessException
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-    return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "first", new Object[] { BackendlessSerializer.getSimpleName( entity ), relations, relationsDepth }, ResponderHelper.getPOJOAdaptingResponder( entity ) );
+    return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "first",
+                                   new Object[] { BackendlessSerializer.getSimpleName( entity ), relations, relationsDepth,
+                                           new ArrayList<String>(), relationsPageSize },
+                                   ResponderHelper.getPOJOAdaptingResponder( entity ) );
   }
 
   protected <E> void first( final Class<E> entity, final AsyncCallback<E> responder )
@@ -737,7 +715,7 @@ public final class Persistence
     }
   }
 
-  protected <E> void first( final Class<E> entity, final List<String> relations, final Integer relationsDepth,
+  protected <E> void first( final Class<E> entity, final List<String> relations, final Integer relationsDepth, final Integer relationsPageSize,
                             final AsyncCallback<E> responder )
   {
     try
@@ -745,7 +723,10 @@ public final class Persistence
       if( entity == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "first", new Object[] { BackendlessSerializer.getSimpleName( entity ), relations, relationsDepth }, responder, ResponderHelper.getPOJOAdaptingResponder( entity ) );
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "first",
+                           new Object[] { BackendlessSerializer.getSimpleName( entity ), relations, relationsDepth,
+                                   new ArrayList<String>(), relationsPageSize }, responder,
+                           ResponderHelper.getPOJOAdaptingResponder( entity ) );
     }
     catch( Throwable e )
     {
@@ -759,16 +740,21 @@ public final class Persistence
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-    return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "last", new Object[] { BackendlessSerializer.getSimpleName( entity ) }, ResponderHelper.getPOJOAdaptingResponder( entity ) );
+    return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "last",
+                                   new Object[] { BackendlessSerializer.getSimpleName( entity ) },
+                                   ResponderHelper.getPOJOAdaptingResponder( entity ) );
   }
 
   protected <E> E last( final Class<E> entity, final List<String> relations,
-                        final Integer relationsDepth ) throws BackendlessException
+                        final Integer relationsDepth, final Integer relationsPageSize ) throws BackendlessException
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-    return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "last", new Object[] { BackendlessSerializer.getSimpleName( entity ), relations, relationsDepth }, ResponderHelper.getPOJOAdaptingResponder( entity ) );
+    return (E) Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "last",
+                                   new Object[] { BackendlessSerializer.getSimpleName( entity ), relations,
+                                           relationsDepth, new ArrayList<String>(), relationsPageSize },
+                                   ResponderHelper.getPOJOAdaptingResponder( entity ) );
   }
 
   protected <E> void last( final Class<E> entity, final AsyncCallback<E> responder )
@@ -778,7 +764,9 @@ public final class Persistence
       if( entity == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "last", new Object[] { BackendlessSerializer.getSimpleName( entity ) }, responder, ResponderHelper.getPOJOAdaptingResponder( entity ) );
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "last",
+                           new Object[] { BackendlessSerializer.getSimpleName( entity ) }, responder,
+                           ResponderHelper.getPOJOAdaptingResponder( entity ) );
     }
     catch( Throwable e )
     {
@@ -787,7 +775,7 @@ public final class Persistence
     }
   }
 
-  protected <E> void last( final Class<E> entity, final List<String> relations, final Integer relationsDepth,
+  protected <E> void last( final Class<E> entity, final List<String> relations, final Integer relationsDepth, final Integer relationsPageSize,
                            final AsyncCallback<E> responder )
   {
     try
@@ -795,7 +783,10 @@ public final class Persistence
       if( entity == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
-      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "last", new Object[] { BackendlessSerializer.getSimpleName( entity ), relations, relationsDepth }, responder, ResponderHelper.getPOJOAdaptingResponder( entity ) );
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "last",
+                           new Object[] { BackendlessSerializer.getSimpleName( entity ), relations, relationsDepth,
+                                   new ArrayList<String>(), relationsPageSize }, responder,
+                           ResponderHelper.getPOJOAdaptingResponder( entity ) );
     }
     catch( Throwable e )
     {
@@ -972,5 +963,29 @@ public final class Persistence
   {
     Object[] args = new Object[] { procedureName, arguments };
     Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "callStoredProcedure", args, responder, ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
+  }
+
+  private <E> Map<String, Object> serializeEntityBeforeCreate( final E entity )
+  {
+    if( entity == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
+
+    checkDeclaredType( entity.getClass() );
+    final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
+    MapEntityUtil.removeNullsAndRelations( serializedEntity);
+
+    MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
+    {
+      @Override
+      public Object substitute( Object o )
+      {
+        if( o == entity )
+          return serializedEntity;
+        else
+          return o;
+      }
+    } );
+
+    return serializedEntity;
   }
 }

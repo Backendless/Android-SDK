@@ -1,7 +1,7 @@
 package com.backendless.persistence;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 class QueryOptionsBuilder<Builder>
@@ -9,6 +9,7 @@ class QueryOptionsBuilder<Builder>
   private List<String> sortBy;
   private List<String> related;
   private Integer relationsDepth;
+  private Integer relationsPageSize;
   private Builder builder;
 
   QueryOptionsBuilder( Builder builder )
@@ -24,6 +25,7 @@ class QueryOptionsBuilder<Builder>
     queryOptions.setRelated( related );
     queryOptions.setRelationsDepth( relationsDepth );
     queryOptions.setSortBy( sortBy );
+    queryOptions.setRelationsPageSize( relationsPageSize );
     return queryOptions;
   }
   
@@ -42,7 +44,7 @@ class QueryOptionsBuilder<Builder>
 
   public Builder setSortBy( String... sortBy )
   {
-    Collections.addAll( this.sortBy, sortBy );
+    this.sortBy = new ArrayList<>( Arrays.asList( sortBy ) );
     return builder;
   }
 
@@ -65,7 +67,7 @@ class QueryOptionsBuilder<Builder>
 
   public Builder setRelated( String... related )
   {
-    Collections.addAll( this.related, related );
+    this.related = new ArrayList<>( Arrays.asList( related ) );
     return builder;
   }
 
@@ -89,6 +91,17 @@ class QueryOptionsBuilder<Builder>
   public Builder setRelationsDepth( Integer relationsDepth )
   {
     this.relationsDepth = relationsDepth;
+    return builder;
+  }
+
+  public Integer getRelationsPageSize()
+  {
+    return relationsPageSize;
+  }
+
+  public Builder setRelationsPageSize( Integer relationPageSize )
+  {
+    this.relationsPageSize = relationPageSize;
     return builder;
   }
 }

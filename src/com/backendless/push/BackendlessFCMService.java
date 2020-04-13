@@ -52,13 +52,6 @@ public class BackendlessFCMService extends FirebaseMessagingService
   }
 
   @Override
-  public final void onDestroy()
-  {
-    super.onDestroy();
-    Backendless.saveNotificationIdGeneratorState( BackendlessFCMService.notificationIdGenerator.get() );
-  }
-
-  @Override
   public final void onNewToken( String token )
   {
     super.onNewToken( token );
@@ -85,6 +78,7 @@ public class BackendlessFCMService extends FirebaseMessagingService
   private void handleMessage( final Context context, Intent intent )
   {
     int notificationId = BackendlessFCMService.notificationIdGenerator.getAndIncrement();
+    Backendless.saveNotificationIdGeneratorState( BackendlessFCMService.notificationIdGenerator.get() );
 
     try
     {
@@ -109,6 +103,9 @@ public class BackendlessFCMService extends FirebaseMessagingService
         return;
       }
 
+      if( !this.onMessage( context, intent ) )
+        return;
+
       final String message = intent.getStringExtra( PublishOptions.MESSAGE_TAG );
       final String contentTitle = intent.getStringExtra( PublishOptions.ANDROID_CONTENT_TITLE_TAG );
       final String summarySubText = intent.getStringExtra( PublishOptions.ANDROID_SUMMARY_SUBTEXT_TAG );
@@ -125,7 +122,7 @@ public class BackendlessFCMService extends FirebaseMessagingService
   {
     Bundle newBundle = PushTemplateHelper.prepareMessageBundle( intent.getExtras(), androidPushTemplate, notificationId );
 
-    Intent newMsgIntent = new Intent( context, null );
+    Intent newMsgIntent = new Intent();
     newMsgIntent.putExtras( newBundle );
 
     if( !this.onMessage( context, newMsgIntent ) )
