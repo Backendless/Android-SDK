@@ -18,6 +18,8 @@
 
 package com.backendless;
 
+import android.support.annotation.NonNull;
+
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.persistence.DataQueryBuilder;
@@ -178,6 +180,30 @@ public interface IDataStore<E>
   int deleteRelation( E parent, String relationColumnName, String whereClause );
 
   void deleteRelation( E parent, String relationColumnName, String whereClause, AsyncCallback<Integer> callback );
+
+  <R> int addRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds );
+
+  <R> void addRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds, AsyncCallback<Integer> callback );
+
+  int addRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause );
+
+  void addRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause, AsyncCallback<Integer> callback );
+
+  <R> int setRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds );
+
+  <R> void setRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds, AsyncCallback<Integer> callback );
+
+  int setRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause );
+
+  void setRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause, AsyncCallback<Integer> callback );
+
+  <R> int deleteRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds );
+
+  <R> void deleteRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds, AsyncCallback<Integer> callback );
+
+  int deleteRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause );
+
+  void deleteRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause, AsyncCallback<Integer> callback );
 
   EventHandler<E> rt();
 }
