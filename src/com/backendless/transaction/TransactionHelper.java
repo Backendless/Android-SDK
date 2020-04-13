@@ -4,8 +4,8 @@ import com.backendless.Persistence;
 import com.backendless.exceptions.ExceptionMessage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 class TransactionHelper
@@ -41,6 +41,15 @@ class TransactionHelper
       serializedEntities.add( SerializationHelper.serializeEntityToMap( entity ) );
 
     return serializedEntities;
+  }
+
+  static List<String> convertInstancesMapsToObjectIds( List<Map<String, Object>> objectsMaps )
+  {
+    List<String> objectIds = new ArrayList<>();
+    for( Map<String, Object> objectMap : objectsMaps )
+      objectIds.add( convertObjectMapToObjectId( objectMap ) );
+
+    return objectIds;
   }
 
   static List<Object> convertMapsToObjectIds( List<Map<String, Object>> objectsMaps )
@@ -82,18 +91,15 @@ class TransactionHelper
     return maybeObjectId;
   }
 
-  static <E> List<Object> getObjectIdsFromUnknownList( List<E> children )
+  // accept children not String[], it check before
+  static <E> List<String> getObjectIdsFromListInstances( E[] children )
   {
-    List<Object> childrenMaps;
-    if( children.get( 0 ) instanceof Map )
-      childrenMaps = TransactionHelper.convertMapsToObjectIds( (List<Map<String, Object>>) children );//TODO EXCEPTION
-    else if( children.get( 0 ) instanceof String )
-      childrenMaps = (List<Object>) children;
-    else if( !( children.get( 0 ).getClass().isArray() || children.get( 0 ).getClass().isAssignableFrom( Iterable.class ) ) )
-      childrenMaps = TransactionHelper.convertMapsToObjectIds( TransactionHelper.convertInstancesToMaps( children ) );
+    if( children[ 0 ] instanceof Map )
+      throw new IllegalArgumentException( ExceptionMessage.RELATION_USE_LIST_OF_MAPS );
+    else if( !( children[ 0 ].getClass().isArray() || children[ 0 ].getClass().isAssignableFrom( Iterable.class ) ) )
+      return TransactionHelper.convertInstancesMapsToObjectIds( TransactionHelper.convertInstancesToMaps( Arrays.asList( children ) ) );
     else
-      throw new IllegalArgumentException( ExceptionMessage.LIST_MAP_OR_STRING_OR_INSTANCES );
-    return childrenMaps;
+      throw new IllegalArgumentException( ExceptionMessage.LIST_NOT_INSTANCES );
   }
 
   static Map<String, Object> convertCreateBulkOrFindResultIndexToObjectId( OpResultValueReference parentObject )
@@ -130,33 +136,6 @@ class TransactionHelper
     }
   }
 
-  public static void makeReferenceToObjectIdFromOpResult( List<Object> listObjectIds )
-  {
-    ListIterator<Object> iterator = listObjectIds.listIterator();
-    while (iterator.hasNext() )
-    {
-      Object object = iterator.next();
-      if( object instanceof OpResult )
-        throw new IllegalArgumentException( ExceptionMessage.OP_RESULT_FROM_THIS_OPERATION_NOT_SUPPORT_IN_THIS_PLACE );
-      if( object instanceof OpResultValueReference )
-      {
-        OpResultValueReference reference = (OpResultValueReference) object;
-        if( createUpdateObjectId( reference ) ||
-                createBulkResultIndex( reference ) ||
-                findResultIndexObjectId( reference ) )
-          iterator.set( reference.makeReference() );
-        else
-          throw new IllegalArgumentException( ExceptionMessage.OP_RESULT_FROM_THIS_OPERATION_NOT_SUPPORT_IN_THIS_PLACE );
-      }
-    }
-  }
-
-  private static boolean createUpdateObjectId( OpResultValueReference reference )
-  {
-    return createUpdatePropName( reference ) &&
-            reference.getPropName().equals( Persistence.DEFAULT_OBJECT_ID_FIELD );
-  }
-
   private static boolean createUpdatePropName( OpResultValueReference reference )
   {
     return OperationType.supportEntityDescriptionResultType.contains( reference.getOpResult().getOperationType() ) &&
@@ -169,12 +148,6 @@ class TransactionHelper
     return OperationType.CREATE_BULK.equals( reference.getOpResult().getOperationType() ) &&
             reference.getPropName() == null &&
             reference.getResultIndex() != null;
-  }
-
-  private static boolean findResultIndexObjectId( OpResultValueReference reference )
-  {
-    return findPropNameResultIndex( reference ) &&
-            reference.getPropName().equals( Persistence.DEFAULT_OBJECT_ID_FIELD );
   }
 
   private static boolean findPropNameResultIndex( OpResultValueReference reference )

@@ -22,10 +22,16 @@ class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
 
   @Override
   public <E> OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName,
-                                     List<E> children )
+                                     E[] childrenInstance )
   {
-    return relationOperation.addOperation( OperationType.ADD_RELATION, parentTable,
-                                           parentObject, columnName, children );
+    return relationOperation.addOperation( OperationType.ADD_RELATION, parentTable, parentObject, columnName, childrenInstance );
+  }
+
+  @Override
+  public OpResult addToRelation( String parentTable, Map<String, Object> parentObject, String columnName,
+                                 List<Map<String, Object>> childrenMaps )
+  {
+    return relationOperation.addOperation( OperationType.ADD_RELATION, parentTable, parentObject, columnName, childrenMaps );
   }
 
   @Override
@@ -53,10 +59,19 @@ class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
   }
 
   @Override
-  public <E> OpResult addToRelation( String parentTable, String parentObjectId, String columnName, List<E> children )
+  public <E> OpResult addToRelation( String parentTable, String parentObjectId, String columnName,
+                                    E[] childrenInstances )
   {
     return relationOperation.addOperation( OperationType.ADD_RELATION, parentTable,
-                                           parentObjectId, columnName, children );
+                                           parentObjectId, columnName, childrenInstances );
+  }
+
+  @Override
+  public OpResult addToRelation( String parentTable, String parentObjectId, String columnName,
+                                List<Map<String, Object>> childrenMaps )
+  {
+    return relationOperation.addOperation( OperationType.ADD_RELATION, parentTable,
+                                           parentObjectId, columnName, childrenMaps );
   }
 
   @Override
@@ -81,9 +96,15 @@ class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
   }
 
   @Override
-  public <E, U> OpResult addToRelation( E parentObject, String columnName, List<U> children )
+  public <E, U> OpResult addToRelation( E parentObject, String columnName, U[] childrenInstances )
   {
-    return relationOperation.addOperation( OperationType.ADD_RELATION, parentObject, columnName, children );
+    return relationOperation.addOperation( OperationType.ADD_RELATION, parentObject, columnName, childrenInstances );
+  }
+
+  @Override
+  public <E> OpResult addToRelation( E parentObject, String columnName, List<Map<String, Object>> childrenMaps )
+  {
+    return relationOperation.addOperation( OperationType.ADD_RELATION, parentObject, columnName, childrenMaps );
   }
 
   @Override
@@ -106,9 +127,15 @@ class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
   }
 
   @Override
-  public <E> OpResult addToRelation( OpResult parentObject, String columnName, List<E> children )
+  public <E> OpResult addToRelation( OpResult parentObject, String columnName, E[] childrenInstances )
   {
-    return relationOperation.addOperation( OperationType.ADD_RELATION, parentObject, columnName, children );
+    return relationOperation.addOperation( OperationType.ADD_RELATION, parentObject, columnName, childrenInstances );
+  }
+
+  @Override
+  public OpResult addToRelation( OpResult parentObject, String columnName, List<Map<String, Object>> childrenMaps )
+  {
+    return relationOperation.addOperation( OperationType.ADD_RELATION, parentObject, columnName, childrenMaps );
   }
 
   @Override
@@ -130,9 +157,16 @@ class UnitOfWorkAddRelationImpl implements UnitOfWorkAddRelation
   }
 
   @Override
-  public <E> OpResult addToRelation( OpResultValueReference parentObject, String columnName, List<E> children )
+  public <E> OpResult addToRelation( OpResultValueReference parentObject, String columnName, E[] childrenInstances )
   {
-    return relationOperation.addOperation( OperationType.ADD_RELATION, parentObject, columnName, children );
+    return relationOperation.addOperation( OperationType.ADD_RELATION, parentObject, columnName, childrenInstances );
+  }
+
+  @Override
+  public OpResult addToRelation( OpResultValueReference parentObject, String columnName,
+                                List<Map<String, Object>> childrenMaps )
+  {
+    return relationOperation.addOperation( OperationType.ADD_RELATION, parentObject, columnName, childrenMaps );
   }
 
   @Override
