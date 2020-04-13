@@ -18,6 +18,8 @@
 
 package com.backendless;
 
+import android.support.annotation.NonNull;
+
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.persistence.BackendlessSerializer;
@@ -519,7 +521,7 @@ class DataStoreFactory
       }
 
       @Override
-      public <R> int addRelation( String parentObjectId, String relationColumnName, Collection<String> childrenObjectIds )
+      public <R> int addRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( entityClass );
 
@@ -528,7 +530,7 @@ class DataStoreFactory
       }
 
       @Override
-      public <R> void addRelation( String parentObjectId, String relationColumnName, Collection<String> childrenObjectIds, AsyncCallback<Integer> callback )
+      public <R> void addRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds, AsyncCallback<Integer> callback )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( entityClass );
 
@@ -537,7 +539,7 @@ class DataStoreFactory
       }
 
       @Override
-      public int addRelation( String parentObjectId, String relationColumnName, String whereClause )
+      public int addRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( entityClass );
 
@@ -547,7 +549,7 @@ class DataStoreFactory
       }
 
       @Override
-      public void addRelation( String parentObjectId, String relationColumnName, String whereClause, AsyncCallback<Integer> callback )
+      public void addRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause, AsyncCallback<Integer> callback )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( entityClass );
 
@@ -557,7 +559,7 @@ class DataStoreFactory
       }
 
       @Override
-      public <R> int setRelation( String parentObjectId, String relationColumnName, Collection<String> childrenObjectIds )
+      public <R> int setRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( entityClass );
 
@@ -566,7 +568,7 @@ class DataStoreFactory
       }
 
       @Override
-      public <R> void setRelation( String parentObjectId, String relationColumnName, Collection<String> childrenObjectIds, AsyncCallback<Integer> callback )
+      public <R> void setRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds, AsyncCallback<Integer> callback )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( entityClass );
 
@@ -575,7 +577,7 @@ class DataStoreFactory
       }
 
       @Override
-      public int setRelation( String parentObjectId, String relationColumnName, String whereClause )
+      public int setRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( entityClass );
 
@@ -585,7 +587,7 @@ class DataStoreFactory
       }
 
       @Override
-      public void setRelation( String parentObjectId, String relationColumnName, String whereClause, AsyncCallback<Integer> callback )
+      public void setRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause, AsyncCallback<Integer> callback )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( entityClass );
 
@@ -595,7 +597,7 @@ class DataStoreFactory
       }
 
       @Override
-      public <R> int deleteRelation( String parentObjectId, String relationColumnName, Collection<String> childrenObjectIds )
+      public <R> int deleteRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( entityClass );
 
@@ -604,7 +606,7 @@ class DataStoreFactory
       }
 
       @Override
-      public <R> void deleteRelation( String parentObjectId, String relationColumnName, Collection<String> childrenObjectIds, AsyncCallback<Integer> callback )
+      public <R> void deleteRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds, AsyncCallback<Integer> callback )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( entityClass );
 
@@ -613,7 +615,7 @@ class DataStoreFactory
       }
 
       @Override
-      public int deleteRelation( String parentObjectId, String relationColumnName, String whereClause )
+      public int deleteRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( entityClass );
 
@@ -623,7 +625,7 @@ class DataStoreFactory
       }
 
       @Override
-      public void deleteRelation( String parentObjectId, String relationColumnName, String whereClause, AsyncCallback<Integer> callback )
+      public void deleteRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause, AsyncCallback<Integer> callback )
       {
         String parentTableName = BackendlessSerializer.getSimpleName( entityClass );
 

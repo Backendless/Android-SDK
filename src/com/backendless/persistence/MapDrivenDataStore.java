@@ -18,6 +18,8 @@
 
 package com.backendless.persistence;
 
+import android.support.annotation.NonNull;
+
 import com.backendless.Backendless;
 import com.backendless.IDataStore;
 import com.backendless.Invoker;
@@ -758,84 +760,84 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public <R> int addRelation( String parentObjectId, String relationColumnName, Collection<String> childrenObjectIds )
+  public <R> int addRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds )
   {
     Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, childrenObjectIds };
     return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args );
   }
 
   @Override
-  public <R> void addRelation( String parentObjectId, String relationColumnName, Collection<String> childrenObjectIds, AsyncCallback<Integer> callback )
+  public <R> void addRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds, AsyncCallback<Integer> callback )
   {
     Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, childrenObjectIds };
     Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args, callback );
   }
 
   @Override
-  public int addRelation( String parentObjectId, String relationColumnName, String whereClause )
+  public int addRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause )
   {
     Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, whereClause };
     return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args );
   }
 
   @Override
-  public void addRelation( String parentObjectId, String relationColumnName, String whereClause, AsyncCallback<Integer> callback )
+  public void addRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause, AsyncCallback<Integer> callback )
   {
     Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, whereClause };
     Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "addRelation", args, callback );
   }
 
   @Override
-  public <R> int setRelation( String parentObjectId, String relationColumnName, Collection<String> childrenObjectIds )
+  public <R> int setRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds )
   {
     Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, childrenObjectIds };
     return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args );
   }
 
   @Override
-  public <R> void setRelation( String parentObjectId, String relationColumnName, Collection<String> childrenObjectIds, AsyncCallback<Integer> callback )
+  public <R> void setRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds, AsyncCallback<Integer> callback )
   {
     Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, childrenObjectIds };
     Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args, callback );
   }
 
   @Override
-  public int setRelation( String parentObjectId, String relationColumnName, String whereClause )
+  public int setRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause )
   {
     Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, whereClause };
     return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args );
   }
 
   @Override
-  public void setRelation( String parentObjectId, String relationColumnName, String whereClause, AsyncCallback<Integer> callback )
+  public void setRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause, AsyncCallback<Integer> callback )
   {
     Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, whereClause };
     Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "setRelation", args, callback );
   }
 
   @Override
-  public <R> int deleteRelation( String parentObjectId, String relationColumnName, Collection<String> childrenObjectIds )
+  public <R> int deleteRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds )
   {
     Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, childrenObjectIds };
     return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args );
   }
 
   @Override
-  public <R> void deleteRelation( String parentObjectId, String relationColumnName, Collection<String> childrenObjectIds, AsyncCallback<Integer> callback )
+  public <R> void deleteRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds, AsyncCallback<Integer> callback )
   {
     Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, childrenObjectIds };
     Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args, callback );
   }
 
   @Override
-  public int deleteRelation( String parentObjectId, String relationColumnName, String whereClause )
+  public int deleteRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause )
   {
     Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, whereClause };
     return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args );
   }
 
   @Override
-  public void deleteRelation( String parentObjectId, String relationColumnName, String whereClause, AsyncCallback<Integer> callback )
+  public void deleteRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause, AsyncCallback<Integer> callback )
   {
     Object[] args = new Object[] { tableName, relationColumnName, parentObjectId, whereClause };
     Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deleteRelation", args, callback );
