@@ -52,6 +52,12 @@ class BLHeadersManager implements IHeadersManager
   }
 
   @Override
+  public void removeHeader(String headerKey)
+  {
+    threadLocal.get().removeHeader( headerKey );
+  }
+
+  @Override
   public Hashtable<String, String> getHeaders() throws BackendlessException
   {
     return threadLocal.get().getHeaders();

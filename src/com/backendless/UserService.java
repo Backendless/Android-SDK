@@ -256,7 +256,13 @@ public final class UserService
   public void loginWithFacebookSdk( String accessToken, final Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
   {
     AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler(responder, stayLoggedIn);
-    getUserServiceAndroidExtra().loginWithFacebookSdk(accessToken, fieldsMappings, internalResponder);
+    getUserServiceAndroidExtra().loginWithFacebookSdk(accessToken, null, fieldsMappings, internalResponder);
+  }
+
+  public void loginWithFacebookSdk( String accessToken, BackendlessUser guestUser, final Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  {
+    AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler(responder, stayLoggedIn);
+    getUserServiceAndroidExtra().loginWithFacebookSdk(accessToken, guestUser, fieldsMappings, internalResponder);
   }
 
   public void loginWithFacebookSdk( String accessToken, final Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder)
@@ -408,7 +414,14 @@ public final class UserService
                                    AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
   {
     AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler( responder, stayLoggedIn );
-    getUserServiceAndroidExtra().loginWithTwitterSdk( authToken, authTokenSecret, fieldsMappings, internalResponder );
+    getUserServiceAndroidExtra().loginWithTwitterSdk( authToken, null, authTokenSecret, fieldsMappings, internalResponder );
+  }
+
+  public void loginWithTwitterSdk( String authToken, BackendlessUser guestUser, String authTokenSecret, Map<String, String> fieldsMappings,
+                                   AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  {
+    AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler( responder, stayLoggedIn );
+    getUserServiceAndroidExtra().loginWithTwitterSdk( authToken, guestUser, authTokenSecret, fieldsMappings, internalResponder );
   }
 
   @Deprecated
@@ -471,7 +484,12 @@ public final class UserService
 
   public void loginWithGooglePlusSdk( String accessToken, final Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn) {
     AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler(responder, stayLoggedIn);
-    getUserServiceAndroidExtra().loginWithGooglePlusSdk(accessToken, fieldsMappings, internalResponder);
+    getUserServiceAndroidExtra().loginWithGooglePlusSdk(accessToken, null, fieldsMappings, internalResponder);
+  }
+
+  public void loginWithGooglePlusSdk( String accessToken, BackendlessUser guestUser, final Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn) {
+    AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler(responder, stayLoggedIn);
+    getUserServiceAndroidExtra().loginWithGooglePlusSdk(accessToken, guestUser, fieldsMappings, internalResponder);
   }
 
   public void loginWithGooglePlusSdk( String accessToken, final Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder) {
@@ -765,10 +783,10 @@ public final class UserService
                                                       AsyncCallback<String> responder ) throws BackendlessException
   {
     if( facebookFieldsMappings == null )
-      facebookFieldsMappings = new HashMap<String, String>();
+      facebookFieldsMappings = new HashMap<>();
 
     if( permissions == null )
-      permissions = new ArrayList<String>();
+      permissions = new ArrayList<>();
 
     Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getFacebookServiceAuthorizationUrlLink", new Object[] { HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME ), facebookFieldsMappings, permissions }, responder );
   }
@@ -777,7 +795,7 @@ public final class UserService
                                                      AsyncCallback<String> responder )
   {
     if( twitterFieldsMapping == null )
-      twitterFieldsMapping = new HashMap<String, String>();
+      twitterFieldsMapping = new HashMap<>();
 
     Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getTwitterServiceAuthorizationUrlLink", new Object[] { HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME ), twitterFieldsMapping }, responder );
   }
@@ -840,10 +858,10 @@ public final class UserService
                                                       AsyncCallback<String> responder ) throws BackendlessException
   {
     if( googlePlusFieldsMappings == null )
-      googlePlusFieldsMappings = new HashMap<String, String>();
+      googlePlusFieldsMappings = new HashMap<>();
 
     if( permissions == null )
-      permissions = new ArrayList<String>();
+      permissions = new ArrayList<>();
 
     Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getGooglePlusServiceAuthorizationUrlLink", new Object[] { HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME ), googlePlusFieldsMappings, permissions }, responder );
   }

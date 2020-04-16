@@ -116,7 +116,7 @@ public class ExceptionMessage
   public static final String NOT_ANDROID = "Operation may be performed only from an Android environment";
   public static final String NULL_GEO_QUERY = "Geo query should not be null";
   public static final String INCONSISTENT_GEO_RELATIVE = "Geo query should contain relative metadata and a threshold for a relative search";
-  public static final String ASSIGN_ROLE = "Assigning/unassigning a role can be done only from server code";
+  public static final String ASSIGN_ROLE = "Assigning/Unassigning/Creation/Deletion a role can be done only from server code";
   public static final String NULL_BODYPARTS = "BodyParts cannot be null";
   public static final String NULL_SUBJECT = "Subject cannot be null";
   public static final String NULL_RECIPIENTS = "Recipients cannot be empty";
@@ -153,4 +153,23 @@ public class ExceptionMessage
   {
     return field + " cannot be null or empty.";
   }
+
+  public final static String NULL_EMPTY_BULK = "Array of objects/maps cannot be null or empty";
+  public final static String NULL_MAP = "Entity map cannot be null";
+  public final static String NULL_EMPTY_MAP = "Map cannot be null or empty";
+  public final static String NULL_OP_RESULT = "OpResult can not be null";
+  public final static String NULL_OP_RESULT_VALUE_REFERENCE = "OpResultValueReference can not be null";
+  public final static String NULL_OBJECT_ID_IN_OBJECT_MAP = "Object map must contain string objectId and objectId can not be null";
+  public final static String NULL_OBJECT_ID_IN_INSTANCE = "Instance must contain objectId and objectId can not be null";
+  public final static String NULL_WHERE_CLAUSE = "WhereClause can not be null";
+  public final static String NULL_RELATION_COLUMN_NAME = "Relation column name can not be null or empty";
+  public final static String NULL_PARENT_TABLE_NAME = "Parent table name can not be null or empty";
+  public final static String LIST_NOT_INSTANCES = "Array can be only of instances";
+  public final static String LIST_OPERATIONS_NULL_EMPTY = "List of operations in unitOfWork can not be null or empty";
+  public final static String REF_TYPE_NOT_SUPPORT = "This operation result not supported in this operation";
+  public final static String OP_RESULT_ID_ALREADY_PRESENT = "This opResultId already present. OpResultId must be unique";
+  public final static String OP_RESULT_INDEX_YES_PROP_NAME_NOT = "This operation result in this operation must resolved only to resultIndex";
+  public final static String OP_RESULT_FROM_THIS_OPERATION_NOT_SUPPORT_IN_THIS_PLACE = "OpResult/OpResultValueReference from this operation in this place not supported";
+
+  public final static String RELATION_USE_LIST_OF_MAPS = "Unable to execute the relation operation. Use the relation method which accepts list of Maps child objects";
 }

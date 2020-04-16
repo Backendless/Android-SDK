@@ -26,7 +26,7 @@ public abstract class AbstractProperty
 
   public String getName()
   {
-    return new String( name );
+    return name;
   }
 
   public void setName( String name )

@@ -100,9 +100,20 @@ public class PushTemplateHelper
     // Notification channel ID is ignored for Android 7.1.1 (API level 25) and lower.
 
     String messageText = newBundle.getString( PublishOptions.MESSAGE_TAG );
+    
     String contentTitle = newBundle.getString( PublishOptions.ANDROID_CONTENT_TITLE_TAG );
+    contentTitle = contentTitle != null ? contentTitle : template.getContentTitle();
+    
     String summarySubText = newBundle.getString( PublishOptions.ANDROID_SUMMARY_SUBTEXT_TAG );
-
+    summarySubText = summarySubText != null ? summarySubText : template.getSummarySubText();
+    
+    String largeIcon = newBundle.getString( PublishOptions.ANDROID_LARGE_ICON_TAG );
+    largeIcon = largeIcon != null ? largeIcon : template.getLargeIcon();
+  
+    String attachmentUrl = newBundle.getString( PublishOptions.ANDROID_ATTACHMENT_URL_TAG );
+    attachmentUrl = attachmentUrl != null ? attachmentUrl : template.getAttachmentUrl();
+  
+  
     NotificationCompat.Builder notificationBuilder;
     // android.os.Build.VERSION_CODES.O == 26
     if( android.os.Build.VERSION.SDK_INT > 25 )
@@ -146,11 +157,11 @@ public class PushTemplateHelper
       }
     }
 
-    if( template.getAttachmentUrl() != null )
+    if( attachmentUrl != null )
     {
       try
       {
-        InputStream is = (InputStream) new URL( template.getAttachmentUrl() ).getContent();
+        InputStream is = (InputStream) new URL( attachmentUrl ).getContent();
         Bitmap bitmap = BitmapFactory.decodeStream( is );
 
         if( bitmap != null )
@@ -166,19 +177,19 @@ public class PushTemplateHelper
     else if( messageText.length() > 35 )
     {
       NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle()
-              .setBigContentTitle( contentTitle != null ? contentTitle : template.getContentTitle() )
-              .setSummaryText( summarySubText != null ? summarySubText : template.getSummarySubText() )
+              .setBigContentTitle( contentTitle )
+              .setSummaryText( summarySubText )
               .bigText( messageText );
       notificationBuilder.setStyle( bigText );
     }
 
-    if( template.getLargeIcon() != null )
+    if( largeIcon != null )
     {
-      if (template.getLargeIcon().startsWith( "http" ))
+      if (largeIcon.startsWith( "http" ))
       {
         try
         {
-          InputStream is = (InputStream) new URL( template.getLargeIcon() ).getContent();
+          InputStream is = (InputStream) new URL( largeIcon ).getContent();
           Bitmap bitmap = BitmapFactory.decodeStream( is );
 
           if( bitmap != null )
@@ -193,7 +204,7 @@ public class PushTemplateHelper
       }
       else
       {
-        int largeIconResource = appContext.getResources().getIdentifier( template.getLargeIcon(), "drawable", appContext.getPackageName() );
+        int largeIconResource = appContext.getResources().getIdentifier( largeIcon, "drawable", appContext.getPackageName() );
         if (largeIconResource != 0)
         {
           Bitmap bitmap = BitmapFactory.decodeResource(appContext.getResources(), largeIconResource);
@@ -241,13 +252,22 @@ public class PushTemplateHelper
             .setContentTitle( contentTitle != null ? contentTitle : template.getContentTitle() )
             .setSubText( summarySubText != null ? summarySubText : template.getSummarySubText() )
             .setContentText( messageText );
-
-    Intent notificationIntent = appContext.getPackageManager().getLaunchIntentForPackage( appContext.getPackageName() );
-    notificationIntent.putExtras( newBundle );
-    notificationIntent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
-
-    PendingIntent contentIntent = PendingIntent.getActivity( appContext, notificationId * 3, notificationIntent, 0 );
-    notificationBuilder.setContentIntent( contentIntent );
+  
+    Intent notificationIntent;
+    if (template.getActionOnTap() == null || template.getActionOnTap().isEmpty())
+      notificationIntent = appContext.getPackageManager().getLaunchIntentForPackage(appContext.getPackageName());
+    else
+    {
+      notificationIntent = new Intent("ActionOnTap");
+      notificationIntent.setClassName(appContext, template.getActionOnTap());
+    }
+  
+    notificationIntent.putExtras(newBundle);
+    notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    PendingIntent contentIntent = PendingIntent.getActivity(appContext, notificationId * 3, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+  
+    // user should use messageId and tag(templateName) to cancel notification.
+    notificationBuilder.setContentIntent(contentIntent);
 
     if( template.getActions() != null )
     {

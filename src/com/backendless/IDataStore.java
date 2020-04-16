@@ -18,6 +18,7 @@
 
 package com.backendless;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.backendless.async.callback.AsyncCallback;
@@ -60,11 +61,15 @@ public interface IDataStore<E>
 
   E findFirst( List<String> relations ) throws BackendlessException;
 
+  E findFirst( List<String> relations, Integer relationsDepth, Integer relationsPageSize ) throws BackendlessException;
+
   void findFirst( AsyncCallback<E> responder );
 
   void findFirst( Integer relationsDepth, AsyncCallback<E> responder );
 
   void findFirst( List<String> relations, AsyncCallback<E> responder );
+
+  void findFirst( List<String> relations, Integer relationsDepth, Integer relationsPageSize, final AsyncCallback<E> responder );
 
   E findLast() throws BackendlessException;
 
@@ -72,11 +77,15 @@ public interface IDataStore<E>
 
   E findLast( List<String> relations ) throws BackendlessException;
 
+  E findLast( List<String> relations, Integer relationsDepth, Integer relationsPageSize ) throws BackendlessException;
+
   void findLast( AsyncCallback<E> responder );
 
   void findLast( Integer relationsDepth, AsyncCallback<E> responder );
 
   void findLast( List<String> relations, AsyncCallback<E> responder );
+
+  void findLast( List<String> relations, Integer relationsDepth, Integer relationsPageSize, final AsyncCallback<E> responder );
 
   List<E> find() throws BackendlessException;
 
@@ -174,6 +183,30 @@ public interface IDataStore<E>
   int deleteRelation( E parent, String relationColumnName, String whereClause );
 
   void deleteRelation( E parent, String relationColumnName, String whereClause, AsyncCallback<Integer> callback );
+
+  <R> int addRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds );
+
+  <R> void addRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds, AsyncCallback<Integer> callback );
+
+  int addRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause );
+
+  void addRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause, AsyncCallback<Integer> callback );
+
+  <R> int setRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds );
+
+  <R> void setRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds, AsyncCallback<Integer> callback );
+
+  int setRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause );
+
+  void setRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause, AsyncCallback<Integer> callback );
+
+  <R> int deleteRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds );
+
+  <R> void deleteRelation(@NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull Collection<String> childrenObjectIds, AsyncCallback<Integer> callback );
+
+  int deleteRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause );
+
+  void deleteRelation( @NonNull String parentObjectId, @NonNull String relationColumnName, @NonNull String whereClause, AsyncCallback<Integer> callback );
 
   EventHandler<E> rt();
 
