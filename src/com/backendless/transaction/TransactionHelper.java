@@ -56,7 +56,7 @@ class TransactionHelper
   {
     List<Object> objectIds = new ArrayList<>();
     for( Map<String, Object> objectMap : objectsMaps )
-      objectIds.add( convertObjectMapToObjectIdOrLeaveReference( objectMap ) );
+      objectIds.add( convertObjectMapToObjectId( objectMap ) );
 
     return objectIds;
   }
@@ -71,24 +71,6 @@ class TransactionHelper
       throw new IllegalArgumentException( ExceptionMessage.NULL_OBJECT_ID_IN_OBJECT_MAP );
 
     return (String) maybeObjectId;
-  }
-
-  static Object convertObjectMapToObjectIdOrLeaveReference( Map<String, Object> objectMap )
-  {
-    if( objectMap == null || objectMap.isEmpty() )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_MAP );
-
-    if( objectMap.containsKey( UnitOfWork.REFERENCE_MARKER ) )
-    {
-      objectMap.put( UnitOfWork.PROP_NAME, Persistence.DEFAULT_OBJECT_ID_FIELD );
-      return objectMap;
-    }
-
-    Object maybeObjectId = objectMap.get( Persistence.DEFAULT_OBJECT_ID_FIELD );
-    if( !( maybeObjectId instanceof String ) )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_OBJECT_ID_IN_OBJECT_MAP );
-
-    return maybeObjectId;
   }
 
   // accept children not String[], it check before
