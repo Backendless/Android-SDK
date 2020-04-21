@@ -170,6 +170,9 @@ public class ExceptionMessage
   public final static String OP_RESULT_ID_ALREADY_PRESENT = "This opResultId already present. OpResultId must be unique";
   public final static String OP_RESULT_INDEX_YES_PROP_NAME_NOT = "This operation result in this operation must resolved only to resultIndex";
   public final static String OP_RESULT_FROM_THIS_OPERATION_NOT_SUPPORT_IN_THIS_PLACE = "OpResult/OpResultValueReference from this operation in this place not supported";
-
   public final static String RELATION_USE_LIST_OF_MAPS = "Unable to execute the relation operation. Use the relation method which accepts list of Maps child objects";
+  public final static String USE_ANOTHER_METHOD_WITH_TABLE_NAME_AND_LIST_IDS =
+          "Unable to execute the bulkDelete operation. Use the bulkDelete method which accepts both table name and a collection of objectId values.";
+  public final static String USE_ANOTHER_METHOD_WITH_TABLE_NAME_AND_LIST_OBJECT_MAPS =
+          "Unable to execute the bulkDelete operation. Use the bulkDelete method which accepts both table name and a collection of objects.";
 }
