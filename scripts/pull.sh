@@ -44,5 +44,8 @@ if [[ "$REGISTRY" == "registry.backendless.com:5000"  ]]; then
 
 	# bl-limit
 	docker pull $REGISTRY/bl-limit:$VERSION
+
+	# bl-game-server
+	docker pull $REGISTRY/bl-game-server:$VERSION
 fi
 
