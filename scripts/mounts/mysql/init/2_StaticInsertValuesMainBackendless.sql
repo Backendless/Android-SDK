@@ -1,6 +1,6 @@
 USE `main_backendless`;
 
-INSERT INTO `Version` (`main`, `application`) values (29, 65);
+INSERT INTO `Version` (`main`, `application`) values (29, 66);
 
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('1', 'ACTIVE');
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('2', 'SUSPENDED');
@@ -257,6 +257,7 @@ CREATE TABLE IF NOT EXISTS `LoginSettings` (
                                                `enableMultipleLogin` TINYINT(1) NOT NULL DEFAULT 0,
                                                `logoutLastUser` TINYINT(1) NOT NULL DEFAULT 1,
                                                `enableSessionExpiration` TINYINT(1) NOT NULL DEFAULT 0,
+                                               `useAuthorizationCookie` BOOLEAN NOT NULL DEFAULT false,
                                                `sessionTimeout` INT NULL,
                                                `failedLoginsLock` INT NOT NULL DEFAULT 0 COMMENT 'value of 0 indicated unlimited failed logins',
                                                `unlockWaitingTime` INT NULL,
