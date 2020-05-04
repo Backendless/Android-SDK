@@ -28,10 +28,27 @@ CREATE TABLE IF NOT EXISTS `main_backendless`.`Application` (
   `ownerDeveloperId` VARCHAR(36) NOT NULL,
   `dbReadonly` BOOLEAN NOT NULL DEFAULT false,
   `shardName` VARCHAR(100) NULL,
+  `zoneId` INT NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
+  KEY `fk_Application_ClusterZone` (`zoneId`),
+  CONSTRAINT `fk_Application_ClusterZone` FOREIGN KEY (`zoneId`) REFERENCES `ClusterZone` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   UNIQUE INDEX `fpSubscriptionId_UNIQUE` (`fpSubscriptionId` ASC),
   UNIQUE INDEX `customerDomain_UNIQUE` (`customerDomain` ASC),
   UNIQUE INDEX `linuxUserId_UNQIDX` (`linuxUserId` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `main_backendless`.`ClusterZone`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `main_backendless`.`ClusterZone`;
+
+CREATE TABLE IF NOT EXISTS `main_backendless`.`ClusterZone` (
+  `id` INT NOT NULL,
+  `code` VARCHAR(255) NOT NULL,
+  `domain` VARCHAR(255) NOT NULL,
+  `description` TEXT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
