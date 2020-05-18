@@ -25,6 +25,7 @@ import com.backendless.files.BackendlessFile;
 import com.backendless.files.BackendlessFileFactory;
 import com.backendless.geo.BackendlessGeometryFactory;
 import com.backendless.geo.BackendlessGeometryWriter;
+import com.backendless.geo.BackendlessJsonFactory;
 import com.backendless.geo.LocationTracker;
 import com.backendless.io.BackendlessUserFactory;
 import com.backendless.io.BackendlessUserWriter;
@@ -32,6 +33,7 @@ import com.backendless.io.DoubleWriter;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.persistence.Geometry;
 import com.backendless.persistence.GeometryDTO;
+import com.backendless.persistence.JsonDTO;
 import com.backendless.persistence.LineString;
 import com.backendless.persistence.Point;
 import com.backendless.persistence.Polygon;
@@ -199,6 +201,7 @@ public final class Backendless
     ObjectFactories.addArgumentObjectFactory( Point.class.getName(), new BackendlessGeometryFactory() );
     ObjectFactories.addArgumentObjectFactory( LineString.class.getName(), new BackendlessGeometryFactory() );
     ObjectFactories.addArgumentObjectFactory( Polygon.class.getName(), new BackendlessGeometryFactory() );
+    ObjectFactories.addArgumentObjectFactory( JsonDTO.class.getName(), new BackendlessJsonFactory() );
     ContextHandler.setContext( context );
 
     HeadersManager.cleanHeaders();
