@@ -15,12 +15,6 @@ services:
       - BL_CONSUL_PORT=8500
       - BL_MANAGEMENT_HTTP_PORT=2400
 
-        # will try to perform all steps of upgrader process without paying attention to code version
-      - forceUpgrade=false
-        # checks the versions of all app databases (and upgrades it if necessary) independently from the version in 'main_backendless.Version' (use in case if the db upgrade was failed during work, and some dbs have stayed nonupdated)
-      - dbRepeatedUpgrade=false
-      #- mainDBTargetVersion=6
-      #- appDBTargetVersion=47
       - updateDBThreadNumber=2
       - applicationsToBeUpdatedFirst=main_application
         # parameter for skipping WaiterService
