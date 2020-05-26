@@ -11,7 +11,7 @@ import java.util.Map;
 
 class UnitOfWorkExecutorImpl implements UnitOfWorkExecutor
 {
-  private final static String TRANSACTION_MANAGER_SERVER_ALIAS = "com.backendless.services.transaction.TransactionService";
+  private final static String TRANSACTION_MANAGER_SERVER_ALIAS = "com.backendless.transaction.TransactionService";
 
   private final UnitOfWork unitOfWork;
   private final Map<String, Class> clazzes;

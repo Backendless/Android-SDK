@@ -2,11 +2,8 @@ package com.backendless.transaction;
 
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.DataQueryBuilder;
-import com.backendless.transaction.operations.Operation;
-import com.backendless.transaction.operations.OperationFind;
 
 import java.util.List;
-import java.util.Map;
 
 class UnitOfWorkFindImpl implements UnitOfWorkFind
 {

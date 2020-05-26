@@ -2,7 +2,6 @@ package com.backendless.transaction;
 
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.persistence.DataQueryBuilder;
-import com.backendless.transaction.operations.Operation;
 
 import java.util.ArrayList;
 import java.util.HashMap;

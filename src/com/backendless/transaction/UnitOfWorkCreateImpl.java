@@ -2,9 +2,6 @@ package com.backendless.transaction;
 
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.persistence.BackendlessSerializer;
-import com.backendless.transaction.operations.Operation;
-import com.backendless.transaction.operations.OperationCreate;
-import com.backendless.transaction.operations.OperationCreateBulk;
 
 import java.util.List;
 import java.util.Map;
