@@ -46,8 +46,10 @@ DROP TABLE IF EXISTS `main_backendless`.`ClusterZone`;
 CREATE TABLE IF NOT EXISTS `main_backendless`.`ClusterZone` (
   `id` INT NOT NULL,
   `code` VARCHAR(255) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
   `domain` VARCHAR(255) NOT NULL,
   `description` TEXT NULL,
+  `iconURL` VARCHAR(500),
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
