@@ -8,11 +8,11 @@ import java.util.Map;
 
 class UnitOfWorkCreateImpl implements UnitOfWorkCreate
 {
-  private final List<Operation<?>> operations;
+  private final List<Operation> operations;
   private final OpResultIdGenerator opResultIdGenerator;
   private final Map<String, Class> clazzes;
 
-  UnitOfWorkCreateImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator,
+  UnitOfWorkCreateImpl( List<Operation> operations, OpResultIdGenerator opResultIdGenerator,
                         Map<String, Class> clazzes )
   {
     this.operations = operations;

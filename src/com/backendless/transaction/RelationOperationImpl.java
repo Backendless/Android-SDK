@@ -10,10 +10,10 @@ import java.util.Map;
 
 class RelationOperationImpl implements RelationOperation
 {
-  private final List<Operation<?>> operations;
+  private final List<Operation> operations;
   private final OpResultIdGenerator opResultIdGenerator;
 
-  public RelationOperationImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator )
+  public RelationOperationImpl( List<Operation> operations, OpResultIdGenerator opResultIdGenerator )
   {
     this.operations = operations;
     this.opResultIdGenerator = opResultIdGenerator;

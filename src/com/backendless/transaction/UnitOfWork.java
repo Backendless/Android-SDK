@@ -2,6 +2,7 @@ package com.backendless.transaction;
 
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.persistence.DataQueryBuilder;
+import weborb.util.ObjectFactories;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +17,20 @@ public class UnitOfWork implements IUnitOfWork
   public final static String RESULT_INDEX = "resultIndex";
   public final static String PROP_NAME = "propName";
 
+  static
+  {
+    ObjectFactories.addArgumentObjectFactory( OperationCreate.class.getName(), new OperationFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationCreateBulk.class.getName(), new OperationFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationUpdate.class.getName(), new OperationFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationUpdateBulk.class.getName(), new OperationFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationDelete.class.getName(), new OperationFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationDeleteBulk.class.getName(), new OperationFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationFind.class.getName(), new OperationFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationAddRelation.class.getName(), new OperationFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationSetRelation.class.getName(), new OperationFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationDeleteRelation.class.getName(), new OperationFactory() );
+  }
+
   private final UnitOfWorkCreate unitOfWorkCreate;
   private final UnitOfWorkUpdate unitOFWorkUpdate;
   private final UnitOfWorkDelete unitOfWorkDelete;
@@ -26,7 +41,7 @@ public class UnitOfWork implements IUnitOfWork
   private final UnitOfWorkExecutor unitOfWorkExecutor;
 
   private IsolationLevelEnum transactionIsolation = IsolationLevelEnum.REPEATABLE_READ;
-  private List<Operation<?>> operations;
+  private List<Operation> operations;
   private List<String> opResultIdStrings;
 
   public UnitOfWork()
@@ -56,7 +71,7 @@ public class UnitOfWork implements IUnitOfWork
     this.transactionIsolation = transactionIsolation;
   }
 
-  public List<Operation<?>> getOperations()
+  public List<Operation> getOperations()
   {
     return operations;
   }

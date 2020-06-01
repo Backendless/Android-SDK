@@ -11,11 +11,11 @@ import java.util.Map;
 
 class UnitOfWorkUpdateImpl implements UnitOfWorkUpdate
 {
-  private final List<Operation<?>> operations;
+  private final List<Operation> operations;
   private final OpResultIdGenerator opResultIdGenerator;
   private final Map<String, Class> clazzes;
 
-  UnitOfWorkUpdateImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator,
+  UnitOfWorkUpdateImpl( List<Operation> operations, OpResultIdGenerator opResultIdGenerator,
                         Map<String, Class> clazzes )
   {
     this.operations = operations;

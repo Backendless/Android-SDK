@@ -10,10 +10,10 @@ import java.util.Map;
 
 class UnitOfWorkDeleteImpl implements UnitOfWorkDelete
 {
-  private final List<Operation<?>> operations;
+  private final List<Operation> operations;
   private final OpResultIdGenerator opResultIdGenerator;
 
-  UnitOfWorkDeleteImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator )
+  UnitOfWorkDeleteImpl( List<Operation> operations, OpResultIdGenerator opResultIdGenerator )
   {
     this.operations = operations;
     this.opResultIdGenerator = opResultIdGenerator;
