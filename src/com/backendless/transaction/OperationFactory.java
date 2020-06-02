@@ -1,8 +1,5 @@
 package com.backendless.transaction;
 
-import com.backendless.transaction.payload.DeleteBulkPayload;
-import com.backendless.transaction.payload.Relation;
-import com.backendless.transaction.payload.UpdateBulkPayload;
 import weborb.reader.AnonymousObject;
 import weborb.reader.NamedObject;
 import weborb.reader.ReferenceCache;
@@ -10,10 +7,9 @@ import weborb.types.IAdaptingType;
 import weborb.util.IArgumentObjectFactory;
 
 import java.lang.reflect.Type;
-import java.util.List;
 import java.util.Map;
 
-public class OperationFactory implements IArgumentObjectFactory
+public abstract class OperationFactory<T> implements IArgumentObjectFactory
 {
   @Override
   public Object createObject( IAdaptingType adaptingType )
@@ -26,45 +22,9 @@ public class OperationFactory implements IArgumentObjectFactory
 
     ReferenceCache refCache = ReferenceCache.getInstance();
 
-    if( refCache.hasObject( adaptingType, OperationCreate.class ) )
+    if( refCache.hasObject( adaptingType, getClazz() ) )
     {
-      return refCache.getObject( adaptingType, OperationCreate.class );
-    }
-    else if( refCache.hasObject( adaptingType, OperationCreateBulk.class ) )
-    {
-      return refCache.getObject( adaptingType, OperationCreateBulk.class );
-    }
-    else if( refCache.hasObject( adaptingType, OperationUpdate.class ) )
-    {
-      return refCache.getObject( adaptingType, OperationUpdate.class );
-    }
-    else if( refCache.hasObject( adaptingType, OperationUpdateBulk.class ) )
-    {
-      return refCache.getObject( adaptingType, OperationUpdateBulk.class );
-    }
-    else if( refCache.hasObject( adaptingType, OperationDelete.class ) )
-    {
-      return refCache.getObject( adaptingType, OperationDelete.class );
-    }
-    else if( refCache.hasObject( adaptingType, OperationDeleteBulk.class ) )
-    {
-      return refCache.getObject( adaptingType, OperationDeleteBulk.class );
-    }
-    else if( refCache.hasObject( adaptingType, OperationFind.class ) )
-    {
-      return refCache.getObject( adaptingType, OperationFind.class );
-    }
-    else if( refCache.hasObject( adaptingType, OperationAddRelation.class ) )
-    {
-      return refCache.getObject( adaptingType, OperationAddRelation.class );
-    }
-    else if( refCache.hasObject( adaptingType, OperationSetRelation.class ) )
-    {
-      return refCache.getObject( adaptingType, OperationSetRelation.class );
-    }
-    else if( refCache.hasObject( adaptingType, OperationDeleteRelation.class ) )
-    {
-      return refCache.getObject( adaptingType, OperationDeleteRelation.class );
+      return refCache.getObject( adaptingType, getClazz() );
     }
     else if( adaptingType instanceof AnonymousObject )
     {
@@ -75,51 +35,8 @@ public class OperationFactory implements IArgumentObjectFactory
       String table = (String) properties.get( "table" );
       String opResultId = (String) properties.get( "opResultId" );
 
-      Operation operation = null;
-      switch( operationType )
-      {
-        case CREATE:
-          operation = new OperationCreate( operationType, table, opResultId, (Map<String, Object>) payload );
-          refCache.addObject( adaptingType, OperationCreate.class, operation );
-          break;
-        case CREATE_BULK:
-          operation = new OperationCreateBulk( operationType, table, opResultId, (List) payload );
-          refCache.addObject( adaptingType, OperationCreateBulk.class, operation );
-          break;
-        case UPDATE:
-          operation = new OperationUpdate( operationType, table, opResultId, (Map<String, Object>) payload );
-          refCache.addObject( adaptingType, OperationUpdate.class, operation );
-          break;
-        case UPDATE_BULK:
-          operation = new OperationUpdateBulk( operationType, table, opResultId, (UpdateBulkPayload) payload );
-          refCache.addObject( adaptingType, OperationUpdateBulk.class, operation );
-          break;
-        case DELETE:
-          operation = new OperationDelete( operationType, table, opResultId, payload );
-          refCache.addObject( adaptingType, OperationDelete.class, operation );
-          break;
-        case DELETE_BULK:
-          operation = new OperationDeleteBulk( operationType, table, opResultId, (DeleteBulkPayload) payload );
-          refCache.addObject( adaptingType, OperationDeleteBulk.class, operation );
-          break;
-        case FIND:
-          operation = new OperationFind( operationType, table, opResultId, payload );
-          refCache.addObject( adaptingType, OperationFind.class, operation );
-          break;
-        case ADD_RELATION:
-          operation = new OperationAddRelation( operationType, table, opResultId, (Relation) payload );
-          refCache.addObject( adaptingType, OperationAddRelation.class, operation );
-          break;
-        case SET_RELATION:
-          operation = new OperationSetRelation( operationType, table, opResultId, (Relation) payload );
-          refCache.addObject( adaptingType, OperationSetRelation.class, operation );
-          break;
-        case DELETE_RELATION:
-          operation = new OperationDeleteRelation( operationType, table, opResultId, (Relation) payload );
-          refCache.addObject( adaptingType, OperationDeleteRelation.class, operation );
-          break;
-      }
-
+      Operation operation = createOperation( operationType, table, opResultId, payload );
+      refCache.addObject( adaptingType, getClazz(), operation );
       return operation;
     }
     else
@@ -133,4 +50,8 @@ public class OperationFactory implements IArgumentObjectFactory
   {
     return false;
   }
+
+  protected abstract Class<T> getClazz();
+
+  protected abstract Operation createOperation( OperationType operationType, String table, String opResultId, Object payload );
 }

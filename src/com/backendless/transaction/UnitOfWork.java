@@ -19,16 +19,16 @@ public class UnitOfWork implements IUnitOfWork
 
   static
   {
-    ObjectFactories.addArgumentObjectFactory( OperationCreate.class.getName(), new OperationFactory() );
-    ObjectFactories.addArgumentObjectFactory( OperationCreateBulk.class.getName(), new OperationFactory() );
-    ObjectFactories.addArgumentObjectFactory( OperationUpdate.class.getName(), new OperationFactory() );
-    ObjectFactories.addArgumentObjectFactory( OperationUpdateBulk.class.getName(), new OperationFactory() );
-    ObjectFactories.addArgumentObjectFactory( OperationDelete.class.getName(), new OperationFactory() );
-    ObjectFactories.addArgumentObjectFactory( OperationDeleteBulk.class.getName(), new OperationFactory() );
-    ObjectFactories.addArgumentObjectFactory( OperationFind.class.getName(), new OperationFactory() );
-    ObjectFactories.addArgumentObjectFactory( OperationAddRelation.class.getName(), new OperationFactory() );
-    ObjectFactories.addArgumentObjectFactory( OperationSetRelation.class.getName(), new OperationFactory() );
-    ObjectFactories.addArgumentObjectFactory( OperationDeleteRelation.class.getName(), new OperationFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationCreate.class.getName(), new OperationCreateFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationCreateBulk.class.getName(), new OperationCreateBulkFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationUpdate.class.getName(), new OperationUpdateFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationUpdateBulk.class.getName(), new OperationUpdateBulkFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationDelete.class.getName(), new OperationDeleteFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationDeleteBulk.class.getName(), new OperationDeleteBulkFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationFind.class.getName(), new OperationFindFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationAddRelation.class.getName(), new OperationAddRelationFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationSetRelation.class.getName(), new OperationSetRelationFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationDeleteRelation.class.getName(), new OperationDeleteRelationFactory() );
   }
 
   private final UnitOfWorkCreate unitOfWorkCreate;
