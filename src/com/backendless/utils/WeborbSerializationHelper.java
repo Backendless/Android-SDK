@@ -30,13 +30,13 @@ public class WeborbSerializationHelper
   {
     try
     {
-      final IAdaptingType iAdaptingType = (IAdaptingType) Serializer.fromBytes( (byte[]) arg, ISerializer.JSON, true );
-      if( iAdaptingType instanceof CacheableAdaptingTypeWrapper )
+      final IAdaptingType adaptingType = (IAdaptingType) Serializer.fromBytes( (byte[]) arg, ISerializer.JSON, true );
+      if( adaptingType instanceof CacheableAdaptingTypeWrapper )
       {
-        return ((CacheableAdaptingTypeWrapper) iAdaptingType).getType();
+        return ((CacheableAdaptingTypeWrapper) adaptingType).getType();
       }
       else
-        return iAdaptingType;
+        return adaptingType;
     }
     catch( Exception e )
     {

@@ -2,20 +2,17 @@ package com.backendless.transaction;
 
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.persistence.BackendlessSerializer;
-import com.backendless.transaction.operations.Operation;
-import com.backendless.transaction.operations.OperationCreate;
-import com.backendless.transaction.operations.OperationCreateBulk;
 
 import java.util.List;
 import java.util.Map;
 
 class UnitOfWorkCreateImpl implements UnitOfWorkCreate
 {
-  private final List<Operation<?>> operations;
+  private final List<Operation> operations;
   private final OpResultIdGenerator opResultIdGenerator;
   private final Map<String, Class> clazzes;
 
-  UnitOfWorkCreateImpl( List<Operation<?>> operations, OpResultIdGenerator opResultIdGenerator,
+  UnitOfWorkCreateImpl( List<Operation> operations, OpResultIdGenerator opResultIdGenerator,
                         Map<String, Class> clazzes )
   {
     this.operations = operations;
