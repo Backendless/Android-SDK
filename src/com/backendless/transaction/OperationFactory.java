@@ -26,9 +26,45 @@ public class OperationFactory implements IArgumentObjectFactory
 
     ReferenceCache refCache = ReferenceCache.getInstance();
 
-    if( refCache.hasObject( adaptingType, OperationFind.class ) )
+    if( refCache.hasObject( adaptingType, OperationCreate.class ) )
+    {
+      return refCache.getObject( adaptingType, OperationCreate.class );
+    }
+    else if( refCache.hasObject( adaptingType, OperationCreateBulk.class ) )
+    {
+      return refCache.getObject( adaptingType, OperationCreateBulk.class );
+    }
+    else if( refCache.hasObject( adaptingType, OperationUpdate.class ) )
+    {
+      return refCache.getObject( adaptingType, OperationUpdate.class );
+    }
+    else if( refCache.hasObject( adaptingType, OperationUpdateBulk.class ) )
+    {
+      return refCache.getObject( adaptingType, OperationUpdateBulk.class );
+    }
+    else if( refCache.hasObject( adaptingType, OperationDelete.class ) )
+    {
+      return refCache.getObject( adaptingType, OperationDelete.class );
+    }
+    else if( refCache.hasObject( adaptingType, OperationDeleteBulk.class ) )
+    {
+      return refCache.getObject( adaptingType, OperationDeleteBulk.class );
+    }
+    else if( refCache.hasObject( adaptingType, OperationFind.class ) )
     {
       return refCache.getObject( adaptingType, OperationFind.class );
+    }
+    else if( refCache.hasObject( adaptingType, OperationAddRelation.class ) )
+    {
+      return refCache.getObject( adaptingType, OperationAddRelation.class );
+    }
+    else if( refCache.hasObject( adaptingType, OperationSetRelation.class ) )
+    {
+      return refCache.getObject( adaptingType, OperationSetRelation.class );
+    }
+    else if( refCache.hasObject( adaptingType, OperationDeleteRelation.class ) )
+    {
+      return refCache.getObject( adaptingType, OperationDeleteRelation.class );
     }
     else if( adaptingType instanceof AnonymousObject )
     {
@@ -38,7 +74,6 @@ public class OperationFactory implements IArgumentObjectFactory
       OperationType operationType = OperationType.valueOf( (String) properties.get( "operationType" ) );
       String table = (String) properties.get( "table" );
       String opResultId = (String) properties.get( "opResultId" );
-
 
       Operation operation = null;
       switch( operationType )
