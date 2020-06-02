@@ -19,7 +19,6 @@
 package com.backendless.io;
 
 import com.backendless.BackendlessUser;
-import weborb.reader.AnonymousObject;
 import weborb.reader.NamedObject;
 import weborb.reader.ReferenceCache;
 import weborb.types.IAdaptingType;
@@ -31,32 +30,32 @@ import java.util.HashMap;
 public class BackendlessUserFactory implements IArgumentObjectFactory
 {
   @Override
-  public Object createObject( IAdaptingType iAdaptingType )
+  public Object createObject( IAdaptingType adaptingType )
   {
-    if( iAdaptingType instanceof NamedObject )
-      iAdaptingType = ((NamedObject) iAdaptingType).getTypedObject();
+    if( adaptingType instanceof NamedObject )
+      adaptingType = ((NamedObject) adaptingType).getTypedObject();
 
-    if( iAdaptingType.getClass().getName().equals( "weborb.reader.NullType" ))
+    if( adaptingType.getClass().getName().equals( "weborb.reader.NullType" ))
       return null;
 
       ReferenceCache refCache = ReferenceCache.getInstance();
       BackendlessUser backendlessUser;
 
-      if( refCache.hasObject( iAdaptingType, BackendlessUser.class ) )
+      if( refCache.hasObject( adaptingType, BackendlessUser.class ) )
       {
-          return refCache.getObject( iAdaptingType, BackendlessUser.class );
+          return refCache.getObject( adaptingType, BackendlessUser.class );
       }
       else
       {
           backendlessUser = new BackendlessUser();
-          refCache.addObject( iAdaptingType, BackendlessUser.class, backendlessUser );
+          refCache.addObject( adaptingType, BackendlessUser.class, backendlessUser );
       }
 
     HashMap props;
 
     try
     {
-      props = (HashMap) iAdaptingType.adapt( HashMap.class );
+      props = (HashMap) adaptingType.adapt( HashMap.class );
     }
     catch( Throwable t )
     {
@@ -68,7 +67,7 @@ public class BackendlessUserFactory implements IArgumentObjectFactory
   }
 
   @Override
-  public boolean canAdapt( IAdaptingType iAdaptingType, Type type )
+  public boolean canAdapt( IAdaptingType adaptingType, Type type )
   {
     return false;
   }

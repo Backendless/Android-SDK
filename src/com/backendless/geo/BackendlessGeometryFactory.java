@@ -16,45 +16,44 @@ import java.util.Map;
 public class BackendlessGeometryFactory implements IArgumentObjectFactory
 {
   @Override
-  public Object createObject( IAdaptingType iAdaptingType )
+  public Object createObject( IAdaptingType adaptingType )
   {
-    if( iAdaptingType instanceof NamedObject )
-      iAdaptingType = ((NamedObject) iAdaptingType).getTypedObject();
+    if( adaptingType instanceof NamedObject )
+      adaptingType = ((NamedObject) adaptingType).getTypedObject();
 
-    if( iAdaptingType.getClass() == NullType.class )
+    if( adaptingType.getClass() == NullType.class )
       return null;
 
     ReferenceCache refCache = ReferenceCache.getInstance();
 
-    if( refCache.hasObject( iAdaptingType, GeometryDTO.class ) )
+    if( refCache.hasObject( adaptingType, GeometryDTO.class ) )
     {
-      return refCache.getObject( iAdaptingType, GeometryDTO.class );
+      return refCache.getObject( adaptingType, GeometryDTO.class );
+    }
+    else if( adaptingType instanceof AnonymousObject )
+    {
+      @SuppressWarnings( "unchecked" )
+      Map<String, Object> properties = (Map<String, Object>) adaptingType.defaultAdapt();
+      String geoJson = (String) properties.get( "geoJson" );
+
+      if (geoJson == null)
+        return null;
+
+      String geomClass = (String) properties.get( "geomClass" );
+      Integer srsId = (Integer) properties.get( "srsId" );
+
+      Geometry geometry = new GeometryDTO( geomClass, srsId, geoJson ).toGeometry();
+      refCache.addObject( adaptingType, GeometryDTO.class, geometry );
+      return geometry;
     }
     else
     {
-      if( iAdaptingType instanceof AnonymousObject )
-      {
-        @SuppressWarnings( "unchecked" )
-        Map<String, Object> properties = (Map<String, Object>) iAdaptingType.defaultAdapt();
-        String geoJson = (String) properties.get( "geoJson" );
-
-        if (geoJson == null)
-          return null;
-
-        String geomClass = (String) properties.get( "geomClass" );
-        Integer srsId = (Integer) properties.get( "srsId" );
-
-        Geometry geometry = new GeometryDTO( geomClass, srsId, geoJson ).toGeometry();
-        refCache.addObject( iAdaptingType, GeometryDTO.class, geometry );
-        return geometry;
-      }
-      else
-        throw new RuntimeException( "unknown type" );
+      throw new RuntimeException( "Can not create BackendlessGeometry from type " + adaptingType.getClass().getName() );
     }
   }
 
   @Override
-  public boolean canAdapt( IAdaptingType iAdaptingType, Type type )
+  public boolean canAdapt( IAdaptingType adaptingType, Type type )
   {
     return false;
   }
