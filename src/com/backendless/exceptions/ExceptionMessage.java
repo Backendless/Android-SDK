@@ -168,7 +168,7 @@ public class ExceptionMessage
   public final static String LIST_OPERATIONS_NULL_EMPTY = "List of operations in unitOfWork can not be null or empty";
   public final static String REF_TYPE_NOT_SUPPORT = "This operation result not supported in this operation";
   public final static String OP_RESULT_ID_ALREADY_PRESENT = "This opResultId already present. OpResultId must be unique";
-  public final static String OP_RESULT_INDEX_YES_PROP_NAME_NOT = "This operation result in this operation must resolved only to resultIndex";
+  public final static String OP_RESULT_INDEX_YES_PROP_NAME_NOT = "Cannot use OpResultValueReference which references a primitive value. It must point to a complete object.";
   public final static String OP_RESULT_FROM_THIS_OPERATION_NOT_SUPPORT_IN_THIS_PLACE = "OpResult/OpResultValueReference from this operation in this place not supported";
 
   public final static String RELATION_USE_LIST_OF_MAPS = "Unable to execute the relation operation. Use the relation method which accepts list of Maps child objects";
