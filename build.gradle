@@ -5,7 +5,7 @@ apply plugin: 'signing'
 
 
 group 'com.backendless'
-version '5.7.2'
+version '6.0.1'
 archivesBaseName='backendless'
 
 
@@ -51,9 +51,9 @@ artifacts {
     archives javadocJar, sourcesJar
 }
 
-//signing {
-//    sign configurations.archives
-//}
+signing {
+    sign configurations.archives
+}
 
 uploadArchives {
     repositories {
@@ -62,11 +62,11 @@ uploadArchives {
             def ossrhUsername=''
             def ossrhPassword=''
 
-//            Properties props = new Properties()
-//            props.load(new FileInputStream("/Users/ksv/dev/Android-SDK/ossrh.properties"))
-//
-//            ossrhUsername=props.getProperty( "user.name" )
-//            ossrhPassword=props.getProperty( "user.password" )
+            Properties props = new Properties()
+            props.load(new FileInputStream("/Users/ksv/dev/Android-SDK/ossrh.properties"))
+
+            ossrhUsername=props.getProperty( "user.name" )
+            ossrhPassword=props.getProperty( "user.password" )
 
             pom.whenConfigured {
                 p -> p.dependencies = p.dependencies.findAll {
@@ -258,7 +258,7 @@ dependencies {
     provided fileTree(dir: 'libs', include: 'FacebookSDK.jar')
     provided fileTree(dir: 'libs', include: 'maps.jar')
     compileOnly fileTree(dir: 'libs', include: 'mediaLib.jar')
-    compileOnly( group: "com.backendless", name: "commons", version: "5.7.3", changing: true, ) {
+    compileOnly( group: "com.backendless", name: "commons", version: "6.0.0", changing: true, ) {
         exclude group: 'com.fasterxml.jackson.core'
     }
     compileOnly( group: "weborb", name: "weborbclient", version: "5.2.0.1", changing: true)
