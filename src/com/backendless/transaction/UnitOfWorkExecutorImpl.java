@@ -42,7 +42,12 @@ class UnitOfWorkExecutorImpl implements UnitOfWorkExecutor
     Object[] args = new Object[]{ unitOfWork };
 
     for( Map.Entry<String, Class> entry : clazzes.entrySet() )
-      Types.addClientClassMapping( entry.getKey(), entry.getValue() );
+    {
+      if( Types.getMappedClientClass( entry.getKey() ) == null )
+      {
+        Types.addClientClassMapping( entry.getKey(), entry.getValue() );
+      }
+    }
 
     AdaptingResponder<UnitOfWorkResult> unitOfWorkAdaptingResponder = ResponderHelper.getPOJOAdaptingResponder( UnitOfWorkResult.class );
     if( async )
