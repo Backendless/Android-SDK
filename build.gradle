@@ -51,9 +51,9 @@ artifacts {
     archives javadocJar, sourcesJar
 }
 
-signing {
-    sign configurations.archives
-}
+//signing {
+//    sign configurations.archives
+//}
 
 uploadArchives {
     repositories {
@@ -62,11 +62,11 @@ uploadArchives {
             def ossrhUsername=''
             def ossrhPassword=''
 
-            Properties props = new Properties()
-            props.load(new FileInputStream("/Users/ksv/dev/Android-SDK/ossrh.properties"))
-
-            ossrhUsername=props.getProperty( "user.name" )
-            ossrhPassword=props.getProperty( "user.password" )
+//            Properties props = new Properties()
+//            props.load(new FileInputStream("/Users/ksv/dev/Android-SDK/ossrh.properties"))
+//
+//            ossrhUsername=props.getProperty( "user.name" )
+//            ossrhPassword=props.getProperty( "user.password" )
 
             pom.whenConfigured {
                 p -> p.dependencies = p.dependencies.findAll {
