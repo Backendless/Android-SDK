@@ -80,7 +80,6 @@ services:
     #- nfsRepo:/opt/backendless/repo
     - ${MOUNTS}/repo:/opt/backendless/repo
     - ${MOUNTS}/server/logs:/opt/backendless/server/play-logs
-    - ${MOUNTS}/configs/libnss:/opt/backendless/libnss_config
     networks:
     - bkndls-net
 
@@ -115,7 +114,6 @@ services:
     #- nfsRepo:/opt/backendless/repo
     - ${MOUNTS}/repo:/opt/backendless/repo
     - ${MOUNTS}/taskman/logs:/opt/backendless/server/play-logs
-    - ${MOUNTS}/configs/libnss:/opt/backendless/libnss_config
     networks:
     - bkndls-net
 
