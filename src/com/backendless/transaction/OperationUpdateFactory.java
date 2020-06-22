@@ -1,18 +1,17 @@
 package com.backendless.transaction;
 
-import java.util.Map;
 
-public class OperationUpdateFactory extends OperationFactory<OperationUpdate>
+public class OperationUpdateFactory extends OperationFactory<OperationUpdateReturned>
 {
   @Override
-  protected Class<OperationUpdate> getClazz()
+  protected Class<OperationUpdateReturned> getClazz()
   {
-    return OperationUpdate.class;
+    return OperationUpdateReturned.class;
   }
 
   @Override
-  protected OperationUpdate createOperation( OperationType operationType, String table, String opResultId, Object payload )
+  protected OperationUpdateReturned createOperation( OperationType operationType, String table, String opResultId, Object payload )
   {
-    return new OperationUpdate( operationType, table, opResultId, (Map<String, Object>) payload );
+    return new OperationUpdateReturned( operationType, table, opResultId, payload );
   }
 }
