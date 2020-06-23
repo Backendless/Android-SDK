@@ -36,12 +36,12 @@ To get started:
    [INFO] StartUpLogger - *************************************************************
    [INFO] StartUpLogger - ******************** Backendless started ********************
    [INFO] StartUpLogger - *************************************************************
-   Backendless server is ready
+   Web-Console is available on http://backendless.local:80
     ````
-1. Now you can open Backendless Console by navigating to `http://localhost:80` (if you specified a different port for `the web console server`, make sure to use it in the URL). If this is the first time you run Backendless Pro, you will see the following screen:</br>
+1. Now you can open Backendless Console by navigating to `http://backendless.local:80` (if you specified a different port for `the web console server`, make sure to use it in the URL). If this is the first time you run Backendless Pro, you will see the following screen:</br>
 ![Backendless Licensing Popup](images/licensing-popup.jpg)
 1. To proceed further, you need to request an evaluation license for Backendless Pro. To do this, either use the link in the popup or open the [Backendless Pro License Request page](http://backendless.com/backendless-pro-license-request/), fill out and submit the form - you will receive your license key via email right away.
 1. Paste the license key from the email into the `License Key` text area and click the **SAVE LICENSE KEY** button.
 1. You will see the Backendless Console login screen:
 ![Backendless Login](images/backendless-login.jpg)
-1. Since this is the first time you access your installation, you will need to create a developer/admin account. To do that, click the **Register** link and fill out the registration form. This will create a Backendless account for your installation. The confirmation page will say that an email is sent to your email address, ignore it and return to the login form (which is accessible at the installation's URL `http://localhost:[PORT]`) and login to your account using the registration credentials.     
+1. Since this is the first time you access your installation, you will need to create a developer/admin account. To do that, click the **Create Account** link and fill out the registration form. This will create a Backendless account for your installation. The confirmation page will say that an email is sent to your email address, ignore it and return to the login form (which is accessible at the installation's URL `http://localhost:[PORT]`) and login to your account using the registration credentials.     
