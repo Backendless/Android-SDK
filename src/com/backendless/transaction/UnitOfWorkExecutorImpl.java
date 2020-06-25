@@ -11,7 +11,7 @@ import java.util.Map;
 
 class UnitOfWorkExecutorImpl implements UnitOfWorkExecutor
 {
-  private final static String TRANSACTION_MANAGER_SERVER_ALIAS = "com.backendless.services.transaction.TransactionService";
+  private final static String TRANSACTION_MANAGER_SERVER_ALIAS = "com.backendless.transaction.TransactionService";
 
   private final UnitOfWork unitOfWork;
   private final Map<String, Class> clazzes;
@@ -42,7 +42,12 @@ class UnitOfWorkExecutorImpl implements UnitOfWorkExecutor
     Object[] args = new Object[]{ unitOfWork };
 
     for( Map.Entry<String, Class> entry : clazzes.entrySet() )
-      Types.addClientClassMapping( entry.getKey(), entry.getValue() );
+    {
+      if( Types.getMappedClientClass( entry.getKey() ) == null )
+      {
+        Types.addClientClassMapping( entry.getKey(), entry.getValue() );
+      }
+    }
 
     AdaptingResponder<UnitOfWorkResult> unitOfWorkAdaptingResponder = ResponderHelper.getPOJOAdaptingResponder( UnitOfWorkResult.class );
     if( async )

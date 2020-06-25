@@ -1,7 +1,6 @@
 package com.backendless.files;
 
 import com.backendless.Backendless;
-import com.backendless.BackendlessUser;
 import weborb.reader.NamedObject;
 import weborb.reader.ReferenceCache;
 import weborb.reader.StringType;
@@ -28,37 +27,36 @@ import java.lang.reflect.Type;
  **********************************************************************************************************************/
 public class BackendlessFileFactory implements IArgumentObjectFactory
 {
-  public Object createObject( IAdaptingType argument )
+  public Object createObject( IAdaptingType adaptingType )
   {
-    if( argument instanceof NamedObject )
-      argument = ((NamedObject) argument).getTypedObject();
+    if( adaptingType instanceof NamedObject )
+      adaptingType = ((NamedObject) adaptingType).getTypedObject();
 
-    if( argument.getClass().getName().equals( "weborb.reader.NullType" ) )
+    if( adaptingType.getClass().getName().equals( "weborb.reader.NullType" ) )
       return null;
 
     ReferenceCache refCache = ReferenceCache.getInstance();
 
-    if( refCache.hasObject( argument, BackendlessFile.class ) )
+    if( refCache.hasObject( adaptingType, BackendlessFile.class ) )
     {
-      return refCache.getObject( argument, BackendlessFile.class );
+      return refCache.getObject( adaptingType, BackendlessFile.class );
+    }
+    else if( adaptingType instanceof StringType )
+    {
+      StringType stringType = (StringType) adaptingType;
+      BackendlessFile file;
+
+      if( Backendless.isAndroid() )
+        file = new BackendlessFileAndroid( stringType.getValue() );
+      else
+        file = new BackendlessFile( stringType.getValue() );
+
+      refCache.addObject( adaptingType, BackendlessFile.class, file );
+      return file;
     }
     else
     {
-      if( argument instanceof StringType )
-      {
-        StringType stringType = (StringType) argument;
-        BackendlessFile file;
-
-        if( Backendless.isAndroid() )
-          file = new BackendlessFileAndroid( stringType.getValue() );
-        else
-          file = new BackendlessFile( stringType.getValue() );
-
-        refCache.addObject( argument, BackendlessFile.class, file );
-        return file;
-      }
-      else
-        throw new RuntimeException( "unknown type" );
+      throw new RuntimeException( "Can not create BackendlessFile from type " + adaptingType.getClass().getName() );
     }
   }
 

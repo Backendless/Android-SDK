@@ -2,7 +2,7 @@ package com.backendless.transaction;
 
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.persistence.DataQueryBuilder;
-import com.backendless.transaction.operations.Operation;
+import weborb.util.ObjectFactories;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +17,20 @@ public class UnitOfWork implements IUnitOfWork
   public final static String RESULT_INDEX = "resultIndex";
   public final static String PROP_NAME = "propName";
 
+  static
+  {
+    ObjectFactories.addArgumentObjectFactory( OperationCreate.class.getName(), new OperationCreateFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationCreateBulk.class.getName(), new OperationCreateBulkFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationUpdate.class.getName(), new OperationUpdateFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationUpdateBulk.class.getName(), new OperationUpdateBulkFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationDelete.class.getName(), new OperationDeleteFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationDeleteBulk.class.getName(), new OperationDeleteBulkFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationFind.class.getName(), new OperationFindFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationAddRelation.class.getName(), new OperationAddRelationFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationSetRelation.class.getName(), new OperationSetRelationFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationDeleteRelation.class.getName(), new OperationDeleteRelationFactory() );
+  }
+
   private final UnitOfWorkCreate unitOfWorkCreate;
   private final UnitOfWorkUpdate unitOFWorkUpdate;
   private final UnitOfWorkDelete unitOfWorkDelete;
@@ -27,7 +41,7 @@ public class UnitOfWork implements IUnitOfWork
   private final UnitOfWorkExecutor unitOfWorkExecutor;
 
   private IsolationLevelEnum transactionIsolation = IsolationLevelEnum.REPEATABLE_READ;
-  private List<Operation<?>> operations;
+  private List<Operation> operations;
   private List<String> opResultIdStrings;
 
   public UnitOfWork()
@@ -57,7 +71,7 @@ public class UnitOfWork implements IUnitOfWork
     this.transactionIsolation = transactionIsolation;
   }
 
-  public List<Operation<?>> getOperations()
+  public List<Operation> getOperations()
   {
     return operations;
   }
