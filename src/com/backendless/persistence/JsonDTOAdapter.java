@@ -98,10 +98,6 @@ public class JsonDTOAdapter implements ICacheableAdaptingType
       return null;
 
     Object result = JSONUtil.getJsonConverter().readObject( getRawJsonString(), (Class) type );
-
-    if( referenceCache != null )
-      referenceCache.addObject( this, JsonDTO.class, result );
-
     return result;
   }
 }
