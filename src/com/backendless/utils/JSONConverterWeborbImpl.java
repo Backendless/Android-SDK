@@ -1,11 +1,12 @@
 package com.backendless.utils;
 
 import com.backendless.util.JSONConverter;
+import weborb.exceptions.AdaptingException;
+import weborb.types.IAdaptingType;
 import weborb.util.io.ISerializer;
 import weborb.util.io.Serializer;
 
 import java.io.IOException;
-
 
 public class JSONConverterWeborbImpl implements JSONConverter
 {
@@ -14,11 +15,17 @@ public class JSONConverterWeborbImpl implements JSONConverter
   {
     try
     {
-      return (T) Serializer.fromBytes( jsonString.getBytes(), Serializer.JSON, false );
+      IAdaptingType adaptingType = (IAdaptingType) Serializer.fromBytes( jsonString.getBytes(), Serializer.JSON, true );
+
+      return (T) adaptingType.adapt( typeClass );
     }
     catch( IOException e )
     {
       throw new IllegalStateException( e );
+    }
+    catch( AdaptingException e )
+    {
+      throw new RuntimeException( e );
     }
   }
 
