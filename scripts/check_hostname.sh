@@ -2,7 +2,7 @@
 
 SERVER_HOST_NAME=${SERVER_HOST_NAME:-"backendless.local"}
 
-check_host_cmd="ping -c1 backendless.local 2>&1 | grep -E '(Name or service not known|Temporary failure in name resolution)' > /dev/null"
+check_host_cmd="ping -c1 backendless.local 2>&1 | grep -E '(Name or service not known|Temporary failure in name resolution|Unknown host)' > /dev/null"
 host_exists=`eval $check_host_cmd; echo $?`
 
 if [ "${host_exists}" == 0 ]
