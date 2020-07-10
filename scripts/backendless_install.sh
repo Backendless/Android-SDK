@@ -7,15 +7,10 @@ cd `dirname "$0"`;
 docker swarm init &> /dev/null
 
 version=${1:-"latest"}
-registry=${2:-"backendless"}
 
-if [[ "$registry" == "private"  ]]; then
-  ./pull.sh ${version} registry.backendless.com:5000
-fi
+echo $version > .bl-version
 
-if [[ "$registry" == "backendless"  ]]; then
-  ./pull.sh ${version} backendless
-fi
+./pull.sh ${version} backendless
 
 ./check_ports.sh
 ./check_hostname.sh

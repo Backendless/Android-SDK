@@ -3,32 +3,23 @@
 docker swarm init &> /dev/null
 
 echo Usage:
-echo "`basename "$0"`  <version>  <type>  <mode>"
+echo "`basename "$0"`  <version>  <mode>"
 echo "<version> -- version from the docker registry"
-echo "<type> -- [local|private|backendless] -- default=backendless"
 echo "<mode> -- [cloud|managed|pro] -- default=pro"
 echo 
 
 cd `dirname "$0"`;
 
-cd ../
 mounts=$(pwd)"/mounts"
-cd scripts/
 
 version=${1:-"latest"}
-type=${2:-"backendless"} # local|private|backendless
-mode=${3:-"pro"} # pro|cloud|managed
+mode=${2:-"pro"} # pro|cloud|managed
 
-registry=""
-if [[ "$type" == "private"  ]]; then
-  registry="registry.backendless.com:5000"
-fi
+echo $version > .bl-version
 
-if [[ "$type" == "backendless"  ]]; then
-  registry="backendless"
-fi
+registry="backendless"
 
-./pull.sh ${version} ${registry}
+./pull.sh ${version}
 
 env_file=`cat ./ports.env`
 mounts=$(pwd)"/mounts"
