@@ -8,6 +8,7 @@ public class DataQueryBuilder
 {
   private PagedQueryBuilder<DataQueryBuilder> pagedQueryBuilder;
   private QueryOptionsBuilder<DataQueryBuilder> queryOptionsBuilder;
+  private boolean distinct = false;
   private ArrayList<String> properties;
   private ArrayList<String> excludeProperties;
   private String whereClause;
@@ -32,7 +33,7 @@ public class DataQueryBuilder
   public BackendlessDataQuery build()
   {
     BackendlessDataQuery dataQuery = pagedQueryBuilder.build();
-
+    dataQuery.setDistinct( getDistinct() );
     dataQuery.setQueryOptions( queryOptionsBuilder.build() );
     dataQuery.setProperties( properties );
     dataQuery.setExcludeProperties( excludeProperties );
@@ -64,7 +65,18 @@ public class DataQueryBuilder
   {
     return pagedQueryBuilder.preparePreviousPage();
   }
-
+  
+  public boolean getDistinct()
+  {
+    return distinct;
+  }
+  
+  public DataQueryBuilder setDistinct(boolean distinct)
+  {
+    this.distinct = distinct;
+    return this;
+  }
+  
   public List<String> getProperties()
   {
     return (List<String>) this.properties.clone();
