@@ -27,6 +27,7 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
   public static final int DEFAULT_PAGE_SIZE = 10;
   public static final int DEFAULT_OFFSET = 0;
 
+  private boolean distinct = false;
   private ArrayList<String> properties = new ArrayList<>();
   private ArrayList<String> excludeProperties = new ArrayList<>();
   private String whereClause;
@@ -62,7 +63,18 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
     this.setGroupBy( groupBy );
     this.havingClause = havingClause;
   }
-
+  
+  public boolean getDistinct()
+  {
+    return distinct;
+  }
+  
+  public BackendlessDataQuery setDistinct(boolean distinct)
+  {
+    this.distinct = distinct;
+    return this;
+  }
+  
   public List<String> getProperties()
   {
     return (List<String>) this.properties.clone();
@@ -172,6 +184,7 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
   public BackendlessDataQuery newInstance()
   {
     BackendlessDataQuery result = new BackendlessDataQuery();
+    result.setDistinct( getDistinct() );
     result.setProperties( getProperties() );
     result.setWhereClause( whereClause );
     result.setQueryOptions( getQueryOptions() );
