@@ -1,9 +1,8 @@
 #!/bin/bash
 
 echo Usage:
-echo "`basename "$0"`  <version>  <type>  <mode>"
+echo "`basename "$0"`  <version>  <mode>"
 echo "<version> -- version from the docker registry"
-echo "<type> -- [local|private|backendless] -- default=backendless"
 echo "<mode> -- [cloud|managed|pro] -- default=pro"
 echo 
 
@@ -12,23 +11,14 @@ cd `dirname "$0"`;
 
 mounts=$(pwd)"/mounts"
 
-version=${1:-"latest"}
-type=${2:-"backendless"} # local|private|backendless
-mode=${3:-"pro"} # pro|cloud|managed
+version_from_file=`cat ./.bl-version`
 
-if [[ "$type" != "local" && "$type" != "private" && "$type" != "backendless" ]]; then
-  echo "Wrong repository type. Should be 'local', 'private' or 'backendless'."
-  exit 1
-fi
+version=${1:-$version_from_file}
+mode=${2:-"pro"} # pro|cloud|managed
 
-registry=""
-if [[ "$type" == "private"  ]]; then
-  registry="registry.backendless.com:5000"
-fi
+echo "starting backendless $version ..."
 
-if [[ "$type" == "backendless"  ]]; then
-  registry="backendless"
-fi
+registry="backendless"
 
 env_file=`cat ./ports.env`
 
