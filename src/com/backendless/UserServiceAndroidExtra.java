@@ -38,7 +38,6 @@ import java.util.*;
 class UserServiceAndroidExtra
 {
   private static final UserServiceAndroidExtra instance = new UserServiceAndroidExtra();
-  private static final String GOOGLE_ACCOUNT_TYPE = "com.google";
 
   static UserServiceAndroidExtra getInstance()
   {
@@ -98,7 +97,7 @@ class UserServiceAndroidExtra
         {
           FacebookBundle facebookBundle = new FacebookBundle( response, accessToken );
           Object[] requestData = new Object[] { null, facebookBundle.accessToken, null, null, facebookFieldsMappings };
-          Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithFacebook", requestData, responder, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
+          Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithFacebook", requestData, responder, new AdaptingResponder<>( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
         }
       } );
 
@@ -203,7 +202,36 @@ class UserServiceAndroidExtra
                   responder.handleFault( fault );
               }
             },
-            new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() )
+            new AdaptingResponder<>( BackendlessUser.class, new BackendlessUserAdaptingPolicy() )
+    );
+  }
+
+  void loginWithOAuth2( String authProviderName, String accessToken, BackendlessUser guestUser, Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder )
+  {
+    if (fieldsMappings == null)
+      fieldsMappings = new HashMap<>();
+
+    Invoker.invokeAsync(
+            UserService.USER_MANAGER_SERVER_ALIAS,
+            "loginWithOAuth2",
+            new Object[] { authProviderName, accessToken, fieldsMappings, guestUser == null ? null : guestUser.getProperties() },
+            new AsyncCallback<BackendlessUser>()
+            {
+              @Override
+              public void handleResponse( BackendlessUser response )
+              {
+                if( responder != null )
+                  responder.handleResponse( response );
+              }
+
+              @Override
+              public void handleFault( BackendlessFault fault )
+              {
+                if( responder != null )
+                  responder.handleFault( fault );
+              }
+            },
+            new AdaptingResponder<>( BackendlessUser.class, new BackendlessUserAdaptingPolicy() )
     );
   }
 
@@ -225,10 +253,10 @@ class UserServiceAndroidExtra
         {
           BackendlessUser result = new BackendlessUser();
 
-          Iterator keys = response.keys();
+          Iterator<String> keys = response.keys();
           while( keys.hasNext() )
           {
-            String key = String.valueOf( keys.next() );
+            String key = keys.next();
             result.setProperty( key, JSONObjectConverter.fromJson(response.get(key)) );
           }
 
