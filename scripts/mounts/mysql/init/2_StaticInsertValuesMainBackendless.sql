@@ -1,6 +1,6 @@
 USE `main_backendless`;
 
-INSERT INTO `Version` (`main`, `application`) values (32, 70);
+INSERT INTO `Version` (`main`, `application`) values (33, 74);
 
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('1', 'ACTIVE');
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('2', 'SUSPENDED');
@@ -210,27 +210,6 @@ CREATE TABLE IF NOT EXISTS `DataColumnType` (
                                                 `id` VARCHAR(100) NOT NULL COMMENT 'possible values:\ninteger\nstring\nboolean\ndatetime\none to many relationship\nmany to many relationsip\none to one relationship',
                                                 `columnType` VARCHAR(45) NULL,
                                                 PRIMARY KEY (`id`))
-    ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `DefaultUserProperty`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `DefaultUserProperty` ;
-
-CREATE TABLE IF NOT EXISTS `DefaultUserProperty` (
-                                                     `id` VARCHAR(100) NOT NULL,
-                                                     `name` VARCHAR(45) NOT NULL,
-                                                     `preSelected` TINYINT(1) NOT NULL DEFAULT 0,
-                                                     `required` TINYINT(1) NOT NULL DEFAULT 0,
-                                                     `identity` TINYINT(1) NOT NULL DEFAULT 0,
-                                                     `dataTypeId` VARCHAR(100) NOT NULL,
-                                                     PRIMARY KEY (`id`),
-                                                     CONSTRAINT `fk_DefaultUserProperty_DataType1`
-                                                         FOREIGN KEY (`id`)
-                                                             REFERENCES `DataColumnType` (`id`)
-                                                             ON DELETE NO ACTION
-                                                             ON UPDATE NO ACTION)
     ENGINE = InnoDB;
 
 
