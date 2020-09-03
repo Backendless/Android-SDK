@@ -1,6 +1,6 @@
 USE `main_backendless`;
 
-INSERT INTO `Version` (`main`, `application`) values (33, 75);
+INSERT INTO `Version` (`main`, `application`) values (33, 77);
 
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('1', 'ACTIVE');
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('2', 'SUSPENDED');
@@ -1009,17 +1009,15 @@ DROP TABLE IF EXISTS `OAuth2Provider`;
 
 CREATE TABLE IF NOT EXISTS `OAuth2Provider`
 (
-    `id`                  integer NOT NULL,
-    `name`                VARCHAR(100) NOT NULL,
-    `code`                VARCHAR(100) NOT NULL,
-    `authUrl`             VARCHAR(500) NOT NULL,
-    `tokenUrl`            VARCHAR(500) NOT NULL,
-    `tokenHttpMethod`     VARCHAR(6) NOT NULL,
-    `tokenScope`          VARCHAR(500) NOT NULL,
-    `clientId`            VARCHAR(500) NOT NULL,
-    `clientSecret`        VARCHAR(500) NOT NULL,
-    `active`              boolean NOT NULL,
-    `userInfoUrls`        JSON NULL,
+    `id`           integer      NOT NULL,
+    `name`         VARCHAR(100) NOT NULL,
+    `code`         VARCHAR(100) NOT NULL,
+    `authUrl`      VARCHAR(500) NOT NULL,
+    `clientId`     VARCHAR(500) NOT NULL,
+    `clientSecret` VARCHAR(500) NOT NULL,
+    `active`       boolean      NOT NULL,
+    `tokenInfo`    JSON         NOT NULL,
+    `userInfoUrls` JSON         NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `name_UNIQUE` (`name`),
     UNIQUE KEY `code_UNIQUE` (`code`)
