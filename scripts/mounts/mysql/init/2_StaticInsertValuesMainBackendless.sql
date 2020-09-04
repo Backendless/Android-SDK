@@ -1,6 +1,6 @@
 USE `main_backendless`;
 
-INSERT INTO `Version` (`main`, `application`) values (33, 74);
+INSERT INTO `Version` (`main`, `application`) values (33, 76);
 
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('1', 'ACTIVE');
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('2', 'SUSPENDED');
@@ -982,6 +982,49 @@ CREATE TABLE `ApiKey` (
 
 
 -- -----------------------------------------------------
+-- Table `OAuth2Provider`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `OAuth2Provider`;
+
+CREATE TABLE IF NOT EXISTS `OAuth2Provider`
+(
+    `id`                  integer NOT NULL,
+    `name`                VARCHAR(100) NOT NULL,
+    `code`                VARCHAR(100) NOT NULL,
+    `authUrl`             VARCHAR(500) NOT NULL,
+    `tokenUrl`            VARCHAR(500) NOT NULL,
+    `tokenHttpMethod`     VARCHAR(6) NOT NULL,
+    `tokenScope`          VARCHAR(500) NOT NULL,
+    `clientId`            VARCHAR(500) NOT NULL,
+    `clientSecret`        VARCHAR(500) NOT NULL,
+    `active`              boolean NOT NULL,
+    `userInfoUrls`        JSON NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `name_UNIQUE` (`name`),
+    UNIQUE KEY `code_UNIQUE` (`code`)
+) ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `OAuth1Provider`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `OAuth1Provider`;
+
+CREATE TABLE IF NOT EXISTS `OAuth1Provider`
+(
+    `id`           integer      NOT NULL,
+    `name`         VARCHAR(100) NOT NULL,
+    `code`         VARCHAR(100) NOT NULL,
+    `clientId`     VARCHAR(500) NOT NULL,
+    `clientSecret` VARCHAR(500) NOT NULL,
+    `active`       boolean      NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `name_UNIQUE` (`name`),
+    UNIQUE KEY `code_UNIQUE` (`code`)
+) ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `LoggedInUser`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `LoggedInUser` ;
@@ -1042,19 +1085,6 @@ CREATE TABLE IF NOT EXISTS `SocialUser` (
     ENGINE = InnoDB;
 
 CREATE INDEX `fk_SocialUser_UserType1_idx` ON `SocialUser` (`userTypeId` ASC);
-
-
--- -----------------------------------------------------
--- Table `ApplicationSocialSettings`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `ApplicationSocialSettings` ;
-
-CREATE TABLE IF NOT EXISTS `ApplicationSocialSettings` (
-                                                           `id` VARCHAR(100) NOT NULL,
-                                                           `socialParameterName` VARCHAR(100) NOT NULL,
-                                                           `socialParameterValue` VARCHAR(100) NULL,
-                                                           PRIMARY KEY (`id`))
-    ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
