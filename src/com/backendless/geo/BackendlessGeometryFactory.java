@@ -1,5 +1,6 @@
 package com.backendless.geo;
 
+import com.backendless.persistence.GeoJSONParser;
 import com.backendless.persistence.Geometry;
 import com.backendless.persistence.GeometryDTO;
 import weborb.reader.AnonymousObject;
@@ -35,9 +36,15 @@ public class BackendlessGeometryFactory implements IArgumentObjectFactory
       @SuppressWarnings( "unchecked" )
       Map<String, Object> properties = (Map<String, Object>) adaptingType.defaultAdapt();
       String geoJson = (String) properties.get( "geoJson" );
-
+      String javaType = (String) properties.get("___class");
+  
       if (geoJson == null)
-        return null;
+      {
+        if (javaType == null)
+          return null;
+        else
+          return new GeoJSONParser().read(properties);
+      }
 
       String geomClass = (String) properties.get( "geomClass" );
       Integer srsId = (Integer) properties.get( "srsId" );
