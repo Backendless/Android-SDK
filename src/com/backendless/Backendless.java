@@ -29,7 +29,16 @@ import com.backendless.geo.LocationTracker;
 import com.backendless.io.BackendlessUserFactory;
 import com.backendless.io.BackendlessUserWriter;
 import com.backendless.io.DoubleWriter;
-import com.backendless.persistence.*;
+import com.backendless.persistence.BackendlessSerializer;
+import com.backendless.persistence.Geometry;
+import com.backendless.persistence.GeometryDTO;
+import com.backendless.persistence.JsonDTO;
+import com.backendless.persistence.JsonDTOAdaptingType;
+import com.backendless.persistence.LineString;
+import com.backendless.persistence.Point;
+import com.backendless.persistence.Polygon;
+import com.backendless.persistence.QueryOptions;
+import com.backendless.persistence.RealmSerializer;
 import com.backendless.persistence.local.UserIdStorageFactory;
 import com.backendless.persistence.local.UserTokenStorageFactory;
 import com.backendless.rt.RTService;
@@ -193,7 +202,7 @@ public final class Backendless
     ObjectFactories.addArgumentObjectFactory( Point.class.getName(), new BackendlessGeometryFactory() );
     ObjectFactories.addArgumentObjectFactory( LineString.class.getName(), new BackendlessGeometryFactory() );
     ObjectFactories.addArgumentObjectFactory( Polygon.class.getName(), new BackendlessGeometryFactory() );
-    Types.addClientClassMapping( JsonDTO.class.getName(), JsonDTOAdapter.class );
+    Types.addClientClassMapping( JsonDTO.class.getName(), JsonDTOAdaptingType.class );
     //ObjectFactories.addArgumentObjectFactory( JsonDTO.class.getName(), new BackendlessJsonFactory() );
     ContextHandler.setContext( context );
 
