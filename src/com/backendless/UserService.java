@@ -276,7 +276,7 @@ public final class UserService
   }
 
   public void loginWithOAuth1(
-          String authProviderName, String authToken, BackendlessUser guestUser, String authTokenSecret, Map<String, String> fieldsMappings,
+          String authProviderName, String authToken, String authTokenSecret, BackendlessUser guestUser, Map<String, String> fieldsMappings,
           AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
   {
     AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler( responder, stayLoggedIn );
