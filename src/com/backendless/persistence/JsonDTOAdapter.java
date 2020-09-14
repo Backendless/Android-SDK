@@ -4,7 +4,9 @@ import com.backendless.util.JSONUtil;
 import weborb.exceptions.AdaptingException;
 import weborb.reader.ReferenceCache;
 import weborb.types.ICacheableAdaptingType;
+import weborb.util.reflect.TypeUtils;
 
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
@@ -97,6 +99,9 @@ public class JsonDTOAdapter implements ICacheableAdaptingType
     if( getRawJsonString() == null )
       return null;
 
+    if( type instanceof ParameterizedType )
+      type = TypeUtils.getClass( ((ParameterizedType) type).getRawType() );
+    
     Object result = JSONUtil.getJsonConverter().readObject( getRawJsonString(), (Class) type );
     return result;
   }
