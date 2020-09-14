@@ -5,7 +5,7 @@ apply plugin: 'signing'
 
 
 group 'com.backendless'
-version '6.0.2'
+version '6.1.0'
 archivesBaseName='backendless'
 
 
@@ -63,7 +63,7 @@ uploadArchives {
             def ossrhPassword=''
 
 //            Properties props = new Properties()
-//            props.load(new FileInputStream("/Users/ksv/dev/Android-SDK/ossrh.properties"))
+//            props.load(new FileInputStream("./ossrh.properties"))
 //
 //            ossrhUsername=props.getProperty( "user.name" )
 //            ossrhPassword=props.getProperty( "user.password" )
@@ -261,7 +261,7 @@ dependencies {
     compileOnly( group: "com.backendless", name: "commons", version: "6.0.0", changing: true, ) {
         exclude group: 'com.fasterxml.jackson.core'
     }
-    compileOnly( group: "weborb", name: "weborbclient", version: "5.2.0.1", changing: true)
+    compileOnly( group: "weborb", name: "weborbclient", version: "5.2.0.3", changing: true)
 
     compileOnly ('io.socket:socket.io-client:1.0.0') {
 //       excluding org.json which is provided by Android

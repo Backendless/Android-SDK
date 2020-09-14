@@ -4,25 +4,22 @@ import com.backendless.util.JSONUtil;
 import weborb.exceptions.AdaptingException;
 import weborb.reader.ReferenceCache;
 import weborb.types.ICacheableAdaptingType;
-import weborb.util.reflect.TypeUtils;
 
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 
-public class JsonDTOAdapter implements ICacheableAdaptingType
+public class JsonDTOAdaptingType implements ICacheableAdaptingType
 {
   private String rawJsonString;
 
-  public JsonDTOAdapter()
+  public JsonDTOAdaptingType()
   {
-
   }
 
-  public JsonDTOAdapter( String rawJsonString )
+  public JsonDTOAdaptingType( String rawJsonString )
   {
     this.rawJsonString = rawJsonString;
   }
@@ -46,7 +43,7 @@ public class JsonDTOAdapter implements ICacheableAdaptingType
     if( !(o instanceof JsonDTO) )
       return false;
     
-    JsonDTOAdapter jsonDTO = (JsonDTOAdapter) o;
+    JsonDTOAdaptingType jsonDTO = (JsonDTOAdaptingType) o;
     return Objects.equals( rawJsonString, jsonDTO.rawJsonString );
   }
 
@@ -99,10 +96,7 @@ public class JsonDTOAdapter implements ICacheableAdaptingType
     if( getRawJsonString() == null )
       return null;
 
-    if( type instanceof ParameterizedType )
-      type = TypeUtils.getClass( ((ParameterizedType) type).getRawType() );
-    
-    Object result = JSONUtil.getJsonConverter().readObject( getRawJsonString(), (Class) type );
+    Object result = JSONUtil.getJsonConverter().readObject( getRawJsonString(), type );
     return result;
   }
 }

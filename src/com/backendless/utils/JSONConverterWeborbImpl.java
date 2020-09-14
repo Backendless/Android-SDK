@@ -7,17 +7,18 @@ import weborb.util.io.ISerializer;
 import weborb.util.io.Serializer;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+
 
 public class JSONConverterWeborbImpl implements JSONConverter
 {
   @Override
-  public <T> T readObject( String jsonString, Class<T> typeClass )
+  public <T> T readObject( String jsonString, Type type )
   {
     try
     {
       IAdaptingType adaptingType = (IAdaptingType) Serializer.fromBytes( jsonString.getBytes(), Serializer.JSON, true );
-
-      return (T) adaptingType.adapt( typeClass );
+      return (T) adaptingType.adapt( type );
     }
     catch( IOException e )
     {
