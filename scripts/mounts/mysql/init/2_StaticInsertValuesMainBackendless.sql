@@ -214,27 +214,6 @@ CREATE TABLE IF NOT EXISTS `DataColumnType` (
 
 
 -- -----------------------------------------------------
--- Table `DefaultUserProperty`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `DefaultUserProperty` ;
-
-CREATE TABLE IF NOT EXISTS `DefaultUserProperty` (
-                                                     `id` VARCHAR(100) NOT NULL,
-                                                     `name` VARCHAR(45) NOT NULL,
-                                                     `preSelected` TINYINT(1) NOT NULL DEFAULT 0,
-                                                     `required` TINYINT(1) NOT NULL DEFAULT 0,
-                                                     `identity` TINYINT(1) NOT NULL DEFAULT 0,
-                                                     `dataTypeId` VARCHAR(100) NOT NULL,
-                                                     PRIMARY KEY (`id`),
-                                                     CONSTRAINT `fk_DefaultUserProperty_DataType1`
-                                                         FOREIGN KEY (`id`)
-                                                             REFERENCES `DataColumnType` (`id`)
-                                                             ON DELETE NO ACTION
-                                                             ON UPDATE NO ACTION)
-    ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `ExternalAuthProtocolType`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `ExternalAuthProtocolType` ;
