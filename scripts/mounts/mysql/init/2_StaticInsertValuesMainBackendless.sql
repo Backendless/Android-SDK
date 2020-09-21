@@ -1,6 +1,6 @@
 USE `main_backendless`;
 
-INSERT INTO `Version` (`main`, `application`) values (33, 73);
+INSERT INTO `Version` (`main`, `application`) values (33, 74);
 
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('1', 'ACTIVE');
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('2', 'SUSPENDED');
@@ -1001,6 +1001,47 @@ CREATE TABLE `ApiKey` (
                           CONSTRAINT `fk_ApiKey_Role` FOREIGN KEY (`roleId`) REFERENCES `Role` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `OAuth2Provider`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `OAuth2Provider` ;
+
+CREATE TABLE IF NOT EXISTS `OAuth2Provider`
+(
+    `id`                  integer NOT NULL,
+    `name`                varchar(100) NOT NULL,
+    `code`                varchar(100) NOT NULL,
+    `authUrl`             varchar(500) NOT NULL,
+    `tokenUrl`            varchar(500) NOT NULL,
+    `tokenHttpMethod`     varchar(6) NOT NULL,
+    `tokenScope`          varchar(500) NOT NULL,
+    `clientId`            varchar(500) NOT NULL,
+    `userInfoUrl`         varchar(500) NOT NULL,
+    `defaultMappings`     varchar(500) NOT NULL,
+    `clientSecret`        varchar(500) NOT NULL,
+    `active`              boolean NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `name_UNIQUE` (`name`),
+    UNIQUE KEY `code_UNIQUE` (`code`)
+) ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `OAuth1Provider`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `OAuth1Provider`
+(
+    `id`              integer      NOT NULL,
+    `name`            VARCHAR(100) NOT NULL,
+    `code`            VARCHAR(100) NOT NULL,
+    `clientId`        VARCHAR(500) NOT NULL,
+    `clientSecret`    VARCHAR(500) NOT NULL,
+    `active`          boolean NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `name_UNIQUE` (`name`),
+    UNIQUE KEY `code_UNIQUE` (`code`)
+) ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `LoggedInUser`
