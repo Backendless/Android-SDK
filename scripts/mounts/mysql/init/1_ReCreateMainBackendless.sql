@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `main_backendless`.`Application` (
   PRIMARY KEY (`id`),
   KEY `fk_Application_ClusterZone` (`zoneId`),
   CONSTRAINT `fk_Application_ClusterZone` FOREIGN KEY (`zoneId`) REFERENCES `ClusterZone` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  UNIQUE INDEX `subscriptionId_UNIQUE` (`subscriptionId` ASC),
   UNIQUE INDEX `fpSubscriptionId_UNIQUE` (`fpSubscriptionId` ASC),
   UNIQUE INDEX `customerDomain_UNIQUE` (`customerDomain` ASC),
   UNIQUE INDEX `linuxUserId_UNQIDX` (`linuxUserId` ASC))
