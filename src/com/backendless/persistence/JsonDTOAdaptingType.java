@@ -82,7 +82,7 @@ public class JsonDTOAdaptingType implements ICacheableAdaptingType
   {
     try
     {
-      return adapt( HashMap.class, referenceCache );
+      return adapt( Object.class, referenceCache );
     }
     catch( AdaptingException exception )
     {
