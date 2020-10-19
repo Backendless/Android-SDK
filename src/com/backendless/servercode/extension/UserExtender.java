@@ -61,11 +61,11 @@ public abstract class UserExtender
   {
   }
 
-  public void beforeSocialLogin( RunnerContext context, Map<String, String> userValues, String oauthProvider ) throws Exception
+  public void beforeOAuthLogin( RunnerContext context, Map<String, String> userValues, String oauthProvider ) throws Exception
   {
   }
 
-  public void afterSocialLogin( RunnerContext context, Map<String, String> userValues, String oauthProvider,
+  public void afterOAuthLogin( RunnerContext context, Map<String, String> userValues, String oauthProvider,
                                 ExecutionResult<BackendlessUser> result ) throws Exception
   {
   }
@@ -78,11 +78,11 @@ public abstract class UserExtender
   {
   }
 
-  public void beforeSocialRegister( RunnerContext context, Map<String, String> userValues, String oauthProvider ) throws Exception
+  public void beforeOAuthRegister( RunnerContext context, Map<String, String> userValues, String oauthProvider ) throws Exception
   {
   }
 
-  public void afterSocialRegister( RunnerContext context, Map<String, String> userValues, String oauthProvider,
+  public void afterOAuthRegister( RunnerContext context, Map<String, String> userValues, String oauthProvider,
                                    ExecutionResult<BackendlessUser> result ) throws Exception
   {
   }
