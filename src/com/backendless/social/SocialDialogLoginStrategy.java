@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import com.backendless.async.callback.AsyncCallback;
-import com.backendless.commons.util.SocialType;
 
 import org.json.JSONObject;
 
@@ -17,10 +16,10 @@ public class SocialDialogLoginStrategy extends AbstractSocialLoginStrategy
 {
   private Dialog dialog;
 
-  public SocialDialogLoginStrategy( Activity context, SocialType socialType, Map<String, String> fieldsMappings,
+  public SocialDialogLoginStrategy( Activity context, String oauthProvider, Map<String, String> fieldsMappings,
                                     List<String> permissions, AsyncCallback<JSONObject> responder )
   {
-    super( context, null, socialType, fieldsMappings, permissions, responder );
+    super( context, null, oauthProvider, fieldsMappings, permissions, responder );
     this.dialog = new SocialLoginDialog( context, this );
     this.dialog.show();
   }

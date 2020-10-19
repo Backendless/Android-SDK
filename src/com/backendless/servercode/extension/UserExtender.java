@@ -19,7 +19,6 @@
 package com.backendless.servercode.extension;
 
 import com.backendless.BackendlessUser;
-import com.backendless.commons.util.SocialType;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.property.UserProperty;
 import com.backendless.servercode.ExecutionResult;
@@ -62,11 +61,11 @@ public abstract class UserExtender
   {
   }
 
-  public void beforeSocialLogin( RunnerContext context, Map<String, String> userValues, SocialType socialType ) throws Exception
+  public void beforeSocialLogin( RunnerContext context, Map<String, String> userValues, String oauthProvider ) throws Exception
   {
   }
 
-  public void afterSocialLogin( RunnerContext context, Map<String, String> userValues, SocialType socialType,
+  public void afterSocialLogin( RunnerContext context, Map<String, String> userValues, String oauthProvider,
                                 ExecutionResult<BackendlessUser> result ) throws Exception
   {
   }
@@ -79,11 +78,11 @@ public abstract class UserExtender
   {
   }
 
-  public void beforeSocialRegister( RunnerContext context, Map<String, String> userValues, SocialType socialType ) throws Exception
+  public void beforeSocialRegister( RunnerContext context, Map<String, String> userValues, String oauthProvider ) throws Exception
   {
   }
 
-  public void afterSocialRegister( RunnerContext context, Map<String, String> userValues, SocialType socialType,
+  public void afterSocialRegister( RunnerContext context, Map<String, String> userValues, String oauthProvider,
                                    ExecutionResult<BackendlessUser> result ) throws Exception
   {
   }

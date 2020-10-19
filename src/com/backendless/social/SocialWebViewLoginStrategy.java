@@ -3,7 +3,6 @@ package com.backendless.social;
 import android.app.Activity;
 import android.webkit.WebView;
 import com.backendless.async.callback.AsyncCallback;
-import com.backendless.commons.util.SocialType;
 
 import org.json.JSONObject;
 
@@ -12,11 +11,11 @@ import java.util.Map;
 
 public class SocialWebViewLoginStrategy extends AbstractSocialLoginStrategy
 {
-  public SocialWebViewLoginStrategy( Activity context, WebView webView, SocialType socialType,
+  public SocialWebViewLoginStrategy( Activity context, WebView webView, String oauthProvider,
                                         Map<String, String> fieldsMappings, List<String> permissions,
                                         AsyncCallback<JSONObject> responder )
   {
-    super( context, webView, socialType, fieldsMappings, permissions, responder );
+    super( context, webView, oauthProvider, fieldsMappings, permissions, responder );
   }
 
   @Override

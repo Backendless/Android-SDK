@@ -24,7 +24,6 @@ import android.webkit.WebView;
 import com.backendless.Backendless;
 import com.backendless.SocialAsyncCallback;
 import com.backendless.async.callback.AsyncCallback;
-import com.backendless.commons.util.SocialType;
 
 import org.json.JSONObject;
 
@@ -36,19 +35,19 @@ public abstract class AbstractSocialLoginStrategy
   private android.app.ProgressDialog spinner;
   private Activity context;
   private WebView webView;
-  private SocialType socialType;
+  private String oauthProvider;
   private Map<String, String> fieldsMappings;
   private java.util.List<String> permissions;
   private com.backendless.async.callback.AsyncCallback<org.json.JSONObject> responder;
 
   protected AbstractSocialLoginStrategy( Activity context, WebView webView,
-                                         SocialType socialType,
+                                         String oauthProvider,
                                          Map<String, String> fieldsMappings, java.util.List<String> permissions,
                                          com.backendless.async.callback.AsyncCallback<org.json.JSONObject> responder )
   {
     this.context = context;
     this.webView = webView;
-    this.socialType = socialType;
+    this.oauthProvider = oauthProvider;
     this.fieldsMappings = fieldsMappings;
     this.permissions = permissions;
     this.responder = responder;
@@ -58,20 +57,7 @@ public abstract class AbstractSocialLoginStrategy
   {
     SocialAsyncCallback authorizationUrlCallback = new SocialAsyncCallback( this, responder );
 
-    switch( socialType )
-    {
-      case FACEBOOK:
-        Backendless.UserService.getFacebookServiceAuthorizationUrlLink( fieldsMappings, permissions, authorizationUrlCallback );
-        return;
-
-      case TWITTER:
-        Backendless.UserService.getTwitterServiceAuthorizationUrlLink( fieldsMappings, authorizationUrlCallback );
-        return;
-
-      case GOOGLE_PLUS:
-        Backendless.UserService.getGooglePlusServiceAuthorizationUrlLink( fieldsMappings, permissions, authorizationUrlCallback );
-        return;
-    }
+    Backendless.UserService.getAuthorizationUrlLink( oauthProvider, fieldsMappings, permissions, authorizationUrlCallback );
   }
 
   public void createSpinner()
@@ -119,13 +105,13 @@ public abstract class AbstractSocialLoginStrategy
   {
     private AbstractSocialLoginStrategy loginStrategy;
 
-    public Builder( Activity context, WebView webView, SocialType socialType, Map<String, String> fieldsMappings,
+    public Builder( Activity context, WebView webView, String oauthProvider, Map<String, String> fieldsMappings,
                     List<String> permissions, AsyncCallback<JSONObject> responder )
     {
       if( webView != null )
-        this.loginStrategy = new SocialWebViewLoginStrategy( context, webView, socialType, fieldsMappings, permissions, responder );
+        this.loginStrategy = new SocialWebViewLoginStrategy( context, webView, oauthProvider, fieldsMappings, permissions, responder );
       else
-        this.loginStrategy = new SocialDialogLoginStrategy( context, socialType, fieldsMappings, permissions, responder );
+        this.loginStrategy = new SocialDialogLoginStrategy( context, oauthProvider, fieldsMappings, permissions, responder );
     }
 
     public AbstractSocialLoginStrategy build()
