@@ -206,6 +206,29 @@ public final class UserService
     }
   }
 
+  public BackendlessUser login( final String objectId ) throws BackendlessException
+  {
+    return login( objectId, false );
+  }
+
+  public BackendlessUser login( final String objectId,
+                                boolean stayLoggedIn ) throws BackendlessException
+  {
+    synchronized( currentUserLock )
+    {
+      if( currentUser != null && !currentUser.isEmpty() )
+        logout();
+
+      if( objectId == null || objectId.equals( "" ) )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_ID);
+
+
+      handleUserLogin( Invoker.<BackendlessUser>invokeSync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { objectId }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) ), stayLoggedIn );
+
+      return currentUser;
+    }
+  }
+
   public void login( final String login, final String password, final AsyncCallback<BackendlessUser> responder )
   {
     login( login, password, responder, false );
@@ -242,6 +265,48 @@ public final class UserService
             throw new IllegalArgumentException( ExceptionMessage.NULL_PASSWORD );
           else
             Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { login, password }, getUserLoginAsyncHandler( responder, stayLoggedIn ) , new AdaptingResponder<>( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
+        }
+      }
+      catch( Throwable e )
+      {
+        if( responder != null )
+          responder.handleFault( new BackendlessFault( e ) );
+      }
+  }
+
+  public void login( final String objectId, final AsyncCallback<BackendlessUser> responder )
+  {
+    login( objectId, responder, false );
+  }
+
+  public void login( final String objectId, final AsyncCallback<BackendlessUser> responder,
+                     final boolean stayLoggedIn )
+  {
+    if( currentUser != null && !currentUser.isEmpty() )
+      logout( new AsyncCallback<Void>()
+      {
+        @Override
+        public void handleResponse( Void response )
+        {
+          login( objectId, responder, stayLoggedIn );
+        }
+
+        @Override
+        public void handleFault( BackendlessFault fault )
+        {
+          if( responder != null )
+            responder.handleFault( fault );
+        }
+      } );
+    else
+      try
+      {
+        synchronized( currentUserLock )
+        {
+          if( objectId == null || objectId.equals( "" ) )
+            throw new IllegalArgumentException( ExceptionMessage.NULL_LOGIN );
+          else
+            Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { objectId }, getUserLoginAsyncHandler( responder, stayLoggedIn ) , new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
         }
       }
       catch( Throwable e )

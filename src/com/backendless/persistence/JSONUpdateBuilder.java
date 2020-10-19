@@ -13,7 +13,22 @@ public final class JSONUpdateBuilder
 	
 	public enum Operation
 	{
-		SET, INSERT, REPLACE, REMOVE, ARRAY_APPEND, ARRAY_INSERT;
+		SET("JSON_SET"),
+		INSERT("JSON_INSERT"),
+		REPLACE("JSON_REPLACE"),
+		REMOVE("JSON_REMOVE"),
+		ARRAY_APPEND("JSON_ARRAY_APPEND"),
+		ARRAY_INSERT("JSON_ARRAY_INSERT");
+
+		private String operationName;
+
+		Operation(String operationName) {
+			this.operationName = operationName;
+		}
+
+		public String getOperationName() {
+			return operationName;
+		}
 	}
 	
 	
@@ -21,7 +36,7 @@ public final class JSONUpdateBuilder
 	
 	private JSONUpdateBuilder(Operation op)
 	{
-		jsonUpdate.put(OPERATION_FIELD_NAME, op.name());
+		jsonUpdate.put(OPERATION_FIELD_NAME, op.getOperationName());
 	}
 	
 	

@@ -22,6 +22,8 @@ import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.property.ObjectProperty;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
+import com.backendless.transaction.UnitOfWork;
+import com.backendless.transaction.UnitOfWorkResult;
 
 import java.util.HashMap;
 import java.util.List;
@@ -175,6 +177,16 @@ public abstract class PersistenceExtender<T>
   }
 
   public void afterDeleteRelation( RunnerContext context, String columnName, String parentObjectId, Object childrenArrayORWhereClause, ExecutionResult<Integer> result )
+  {
+
+  }
+
+  public void beforeTransaction( RunnerContext context, UnitOfWork unitOfWork )
+  {
+
+  }
+
+  public void afterTransaction( RunnerContext context, UnitOfWork unitOfWork, ExecutionResult<UnitOfWorkResult> result )
   {
 
   }
