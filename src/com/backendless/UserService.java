@@ -317,35 +317,35 @@ public final class UserService
   }
 
   public void loginWithOAuth2(
-          String authProviderName, String accessToken, final Map<String, String> fieldsMappings,
+          String authProviderCode, String accessToken, final Map<String, String> fieldsMappings,
           final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
   {
     AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler(responder, stayLoggedIn);
-    getUserServiceAndroidExtra().loginWithOAuth2( authProviderName, accessToken, null, fieldsMappings, internalResponder );
+    getUserServiceAndroidExtra().loginWithOAuth2( authProviderCode, accessToken, null, fieldsMappings, internalResponder );
   }
 
   public void loginWithOAuth2(
-          String authProviderName, String accessToken, BackendlessUser guestUser, final Map<String, String> fieldsMappings,
+          String authProviderCode, String accessToken, BackendlessUser guestUser, final Map<String, String> fieldsMappings,
           final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
   {
     AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler(responder, stayLoggedIn);
-    getUserServiceAndroidExtra().loginWithOAuth2( authProviderName, accessToken, guestUser, fieldsMappings, internalResponder );
+    getUserServiceAndroidExtra().loginWithOAuth2( authProviderCode, accessToken, guestUser, fieldsMappings, internalResponder );
   }
 
   public void loginWithOAuth1(
-          String authProviderName, String authToken, String authTokenSecret, Map<String, String> fieldsMappings,
+          String authProviderCode, String authToken, String authTokenSecret, Map<String, String> fieldsMappings,
           AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
   {
     AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler( responder, stayLoggedIn );
-    getUserServiceAndroidExtra().loginWithOAuth1( authProviderName, authToken, null, authTokenSecret, fieldsMappings, internalResponder );
+    getUserServiceAndroidExtra().loginWithOAuth1( authProviderCode, authToken, null, authTokenSecret, fieldsMappings, internalResponder );
   }
 
   public void loginWithOAuth1(
-          String authProviderName, String authToken, String authTokenSecret, BackendlessUser guestUser, Map<String, String> fieldsMappings,
+          String authProviderCode, String authToken, String authTokenSecret, BackendlessUser guestUser, Map<String, String> fieldsMappings,
           AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
   {
     AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler( responder, stayLoggedIn );
-    getUserServiceAndroidExtra().loginWithOAuth1( authProviderName, authToken, guestUser, authTokenSecret, fieldsMappings, internalResponder );
+    getUserServiceAndroidExtra().loginWithOAuth1( authProviderCode, authToken, guestUser, authTokenSecret, fieldsMappings, internalResponder );
   }
 
   public void logout() throws BackendlessException
@@ -675,7 +675,7 @@ public final class UserService
       }
   }
 
-  public void getAuthorizationUrlLink( String authProviderName, Map<String, String> fieldsMappings,
+  public void getAuthorizationUrlLink( String authProviderCode, Map<String, String> fieldsMappings,
                                                         List<String> scope,
                                                         AsyncCallback<String> responder ) throws BackendlessException
   {
@@ -691,7 +691,7 @@ public final class UserService
     Invoker.invokeAsync(
             USER_MANAGER_SERVER_ALIAS,
             "getAuthorizationUrlLink",
-            new Object[] { authProviderName, origin, deviceType, fieldsMappings, scope },
+            new Object[] { authProviderCode, origin, deviceType, fieldsMappings, scope },
             responder
     );
   }

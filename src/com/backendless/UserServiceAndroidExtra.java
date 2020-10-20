@@ -39,11 +39,11 @@ class UserServiceAndroidExtra
   }
 
   void loginWithOAuth1(
-          String authProviderName, String authToken, BackendlessUser guestUser, String authTokenSecret, Map<String, String> fieldsMappings,
+          String authProviderCode, String authToken, BackendlessUser guestUser, String authTokenSecret, Map<String, String> fieldsMappings,
           final AsyncCallback<BackendlessUser> responder )
   {
-    if( !authProviderName.equals( "Twitter" ) )
-      throw new IllegalArgumentException( "OAuth1 provider '" + authProviderName + "' is not supported" );
+    if( !authProviderCode.equals( "twitter" ) )
+      throw new IllegalArgumentException( "OAuth1 provider '" + authProviderCode + "' is not supported" );
 
     if( fieldsMappings == null )
       fieldsMappings = new HashMap<>();
@@ -72,7 +72,7 @@ class UserServiceAndroidExtra
   }
 
   void loginWithOAuth2(
-          String authProviderName, String accessToken, BackendlessUser guestUser, Map<String, String> fieldsMappings,
+          String authProviderCode, String accessToken, BackendlessUser guestUser, Map<String, String> fieldsMappings,
           final AsyncCallback<BackendlessUser> responder )
   {
     if (fieldsMappings == null)
@@ -81,7 +81,7 @@ class UserServiceAndroidExtra
     Invoker.invokeAsync(
             UserService.USER_MANAGER_SERVER_ALIAS,
             "loginWithOAuth2",
-            new Object[] { authProviderName, accessToken, fieldsMappings, guestUser == null ? null : guestUser.getProperties() },
+            new Object[] { authProviderCode, accessToken, fieldsMappings, guestUser == null ? null : guestUser.getProperties() },
             new AsyncCallback<BackendlessUser>()
             {
               @Override
