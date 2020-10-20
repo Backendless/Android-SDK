@@ -35,19 +35,19 @@ public abstract class AbstractSocialLoginStrategy
   private android.app.ProgressDialog spinner;
   private Activity context;
   private WebView webView;
-  private String oauthProvider;
+  private String oauthProviderCode;
   private Map<String, String> fieldsMappings;
   private java.util.List<String> permissions;
   private com.backendless.async.callback.AsyncCallback<org.json.JSONObject> responder;
 
   protected AbstractSocialLoginStrategy( Activity context, WebView webView,
-                                         String oauthProvider,
+                                         String oauthProviderCode,
                                          Map<String, String> fieldsMappings, java.util.List<String> permissions,
                                          com.backendless.async.callback.AsyncCallback<org.json.JSONObject> responder )
   {
     this.context = context;
     this.webView = webView;
-    this.oauthProvider = oauthProvider;
+    this.oauthProviderCode = oauthProviderCode;
     this.fieldsMappings = fieldsMappings;
     this.permissions = permissions;
     this.responder = responder;
@@ -57,7 +57,7 @@ public abstract class AbstractSocialLoginStrategy
   {
     SocialAsyncCallback authorizationUrlCallback = new SocialAsyncCallback( this, responder );
 
-    Backendless.UserService.getAuthorizationUrlLink( oauthProvider, fieldsMappings, permissions, authorizationUrlCallback );
+    Backendless.UserService.getAuthorizationUrlLink( oauthProviderCode, fieldsMappings, permissions, authorizationUrlCallback );
   }
 
   public void createSpinner()
@@ -105,13 +105,13 @@ public abstract class AbstractSocialLoginStrategy
   {
     private AbstractSocialLoginStrategy loginStrategy;
 
-    public Builder( Activity context, WebView webView, String oauthProvider, Map<String, String> fieldsMappings,
+    public Builder( Activity context, WebView webView, String oauthProviderCode, Map<String, String> fieldsMappings,
                     List<String> permissions, AsyncCallback<JSONObject> responder )
     {
       if( webView != null )
-        this.loginStrategy = new SocialWebViewLoginStrategy( context, webView, oauthProvider, fieldsMappings, permissions, responder );
+        this.loginStrategy = new SocialWebViewLoginStrategy( context, webView, oauthProviderCode, fieldsMappings, permissions, responder );
       else
-        this.loginStrategy = new SocialDialogLoginStrategy( context, oauthProvider, fieldsMappings, permissions, responder );
+        this.loginStrategy = new SocialDialogLoginStrategy( context, oauthProviderCode, fieldsMappings, permissions, responder );
     }
 
     public AbstractSocialLoginStrategy build()

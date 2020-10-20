@@ -11,11 +11,11 @@ import java.util.Map;
 
 public class SocialWebViewLoginStrategy extends AbstractSocialLoginStrategy
 {
-  public SocialWebViewLoginStrategy( Activity context, WebView webView, String oauthProvider,
+  public SocialWebViewLoginStrategy( Activity context, WebView webView, String oauthProviderCode,
                                         Map<String, String> fieldsMappings, List<String> permissions,
                                         AsyncCallback<JSONObject> responder )
   {
-    super( context, webView, oauthProvider, fieldsMappings, permissions, responder );
+    super( context, webView, oauthProviderCode, fieldsMappings, permissions, responder );
   }
 
   @Override

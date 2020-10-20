@@ -19,6 +19,7 @@
 package com.backendless.servercode.extension;
 
 import com.backendless.BackendlessUser;
+import com.backendless.commons.util.SocialType;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.property.UserProperty;
 import com.backendless.servercode.ExecutionResult;
@@ -61,11 +62,11 @@ public abstract class UserExtender
   {
   }
 
-  public void beforeOAuthLogin( RunnerContext context, Map<String, String> userValues, String oauthProvider ) throws Exception
+  public void beforeOAuthLogin( RunnerContext context, Map<String, String> userValues, String oauthProviderCode ) throws Exception
   {
   }
 
-  public void afterOAuthLogin( RunnerContext context, Map<String, String> userValues, String oauthProvider,
+  public void afterOAuthLogin( RunnerContext context, Map<String, String> userValues, String oauthProviderCode,
                                 ExecutionResult<BackendlessUser> result ) throws Exception
   {
   }
@@ -78,11 +79,11 @@ public abstract class UserExtender
   {
   }
 
-  public void beforeOAuthRegister( RunnerContext context, Map<String, String> userValues, String oauthProvider ) throws Exception
+  public void beforeOAuthRegister( RunnerContext context, Map<String, String> userValues, String oauthProviderCode ) throws Exception
   {
   }
 
-  public void afterOAuthRegister( RunnerContext context, Map<String, String> userValues, String oauthProvider,
+  public void afterOAuthRegister( RunnerContext context, Map<String, String> userValues, String oauthProviderCode,
                                    ExecutionResult<BackendlessUser> result ) throws Exception
   {
   }
