@@ -30,7 +30,6 @@ import com.backendless.persistence.local.UserTokenStorageFactory;
 import com.backendless.property.AbstractProperty;
 import com.backendless.property.UserProperty;
 import com.backendless.rt.RTClientFactory;
-import com.facebook.CallbackManager;
 import weborb.types.Types;
 
 import java.util.ArrayList;
@@ -42,7 +41,6 @@ import java.util.Map;
 public final class UserService
 {
   final static String USER_MANAGER_SERVER_ALIAS = "com.backendless.services.users.UserService";
-  private final static String PREFS_NAME = "backendless_pref";
 
   private static BackendlessUser currentUser = new BackendlessUser();
   private final static Object currentUserLock = new Object();
@@ -85,7 +83,7 @@ public final class UserService
 
     BackendlessSerializer.serializeUserProperties( user );
     String password = user.getPassword();
-    BackendlessUser userToReturn = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "register", new Object[] { user.getProperties() }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
+    BackendlessUser userToReturn = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "register", new Object[] { user.getProperties() }, new AdaptingResponder<>( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
     user.clearProperties();
     userToReturn.setPassword( password );
     user.putProperties( userToReturn.getProperties() );
@@ -120,7 +118,7 @@ public final class UserService
           if( responder != null )
             responder.handleFault( fault );
         }
-      }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
+      }, new AdaptingResponder<>( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
     }
     catch( BackendlessException e )
     {
@@ -138,7 +136,7 @@ public final class UserService
     if( user.getUserId() != null && user.getUserId().equals( "" ) )
       throw new IllegalArgumentException( ExceptionMessage.WRONG_USER_ID );
 
-    BackendlessUser userToReturn = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "update", new Object[] { user.getProperties() }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
+    BackendlessUser userToReturn = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "update", new Object[] { user.getProperties() }, new AdaptingResponder<>( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
     user.clearProperties();
     user.putProperties( userToReturn.getProperties() );
 
@@ -174,7 +172,7 @@ public final class UserService
           if( responder != null )
             responder.handleFault( fault );
         }
-      }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
+      }, new AdaptingResponder<>( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
     }
     catch( Throwable e )
     {
@@ -202,7 +200,7 @@ public final class UserService
       if( password == null || password.equals( "" ) )
         throw new IllegalArgumentException( ExceptionMessage.NULL_PASSWORD );
 
-      handleUserLogin( Invoker.<BackendlessUser>invokeSync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { login, password }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) ), stayLoggedIn );
+      handleUserLogin( Invoker.<BackendlessUser>invokeSync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { login, password }, new AdaptingResponder<>( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) ), stayLoggedIn );
 
       return currentUser;
     }
@@ -266,7 +264,7 @@ public final class UserService
           if( password == null || password.equals( "" ) )
             throw new IllegalArgumentException( ExceptionMessage.NULL_PASSWORD );
           else
-            Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { login, password }, getUserLoginAsyncHandler( responder, stayLoggedIn ) , new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
+            Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "login", new Object[] { login, password }, getUserLoginAsyncHandler( responder, stayLoggedIn ) , new AdaptingResponder<>( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
         }
       }
       catch( Throwable e )
@@ -318,255 +316,36 @@ public final class UserService
       }
   }
 
-  public void loginWithFacebookSdk( String accessToken, final Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  public void loginWithOAuth2(
+          String authProviderCode, String accessToken, final Map<String, String> fieldsMappings,
+          final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
   {
     AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler(responder, stayLoggedIn);
-    getUserServiceAndroidExtra().loginWithFacebookSdk(accessToken, null, fieldsMappings, internalResponder);
+    getUserServiceAndroidExtra().loginWithOAuth2( authProviderCode, accessToken, null, fieldsMappings, internalResponder );
   }
 
-  public void loginWithFacebookSdk( String accessToken, BackendlessUser guestUser, final Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  public void loginWithOAuth2(
+          String authProviderCode, String accessToken, BackendlessUser guestUser, final Map<String, String> fieldsMappings,
+          final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
   {
     AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler(responder, stayLoggedIn);
-    getUserServiceAndroidExtra().loginWithFacebookSdk(accessToken, guestUser, fieldsMappings, internalResponder);
+    getUserServiceAndroidExtra().loginWithOAuth2( authProviderCode, accessToken, guestUser, fieldsMappings, internalResponder );
   }
 
-  public void loginWithFacebookSdk( String accessToken, final Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder)
-  {
-    loginWithFacebookSdk( accessToken, fieldsMappings, responder, false );
-  }
-  public void loginWithFacebookSdk( String accessToken, final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn)
-  {
-    loginWithFacebookSdk( accessToken, null, responder, stayLoggedIn );
-  }
-  public void loginWithFacebookSdk( String accessToken, final AsyncCallback<BackendlessUser> responder)
-  {
-    loginWithFacebookSdk( accessToken, null, responder, false );
-  }
-
-  @Deprecated
-  public void loginWithFacebookSdk( android.app.Activity context, CallbackManager callbackManager, final AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithFacebookSdk(context, callbackManager, responder, false );
-  }
-
-  @Deprecated
-  public void loginWithFacebookSdk( android.app.Activity context, CallbackManager callbackManager, final
-                                    AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn  )
+  public void loginWithOAuth1(
+          String authProviderCode, String authToken, String authTokenSecret, Map<String, String> fieldsMappings,
+          AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
   {
     AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler( responder, stayLoggedIn );
-    getUserServiceAndroidExtra().loginWithFacebookSdk( context, callbackManager, internalResponder );
+    getUserServiceAndroidExtra().loginWithOAuth1( authProviderCode, authToken, null, authTokenSecret, fieldsMappings, internalResponder );
   }
 
-  @Deprecated
-  public void loginWithFacebookSdk( android.app.Activity context, final Map<String, String> facebookFieldsMappings,
-                                    final List<String> permissions, CallbackManager callbackManager, final AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithFacebookSdk( context, facebookFieldsMappings, permissions, callbackManager, responder, false );
-  }
-
-  @Deprecated
-  public void loginWithFacebookSdk( android.app.Activity context, final Map<String, String> facebookFieldsMappings,
-                             final List<String> permissions, CallbackManager callbackManager, final
-                                    AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
+  public void loginWithOAuth1(
+          String authProviderCode, String authToken, String authTokenSecret, BackendlessUser guestUser, Map<String, String> fieldsMappings,
+          AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
   {
     AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler( responder, stayLoggedIn );
-    getUserServiceAndroidExtra().loginWithFacebookSdk( context, facebookFieldsMappings, permissions, callbackManager,
-                                                       internalResponder );
-  }
-
-  @Deprecated
-  public void loginWithFacebook( android.app.Activity context, final AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithFacebook( context, null, null, null, responder );
-  }
-
-  @Deprecated
-  public void loginWithFacebook( android.app.Activity context, android.webkit.WebView webView,
-                                 final AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithFacebook( context, webView, null, null, responder );
-  }
-
-  @Deprecated
-  public void loginWithFacebook( android.app.Activity context, android.webkit.WebView webView,
-                                 final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
-  {
-    loginWithFacebook( context, webView, null, null, responder, stayLoggedIn );
-  }
-
-  @Deprecated
-  public void loginWithFacebook( android.app.Activity context, android.webkit.WebView webView,
-                                 Map<String, String> facebookFieldsMappings, List<String> permissions,
-                                 final AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithFacebook( context, webView, facebookFieldsMappings, permissions, responder, false );
-  }
-
-  @Deprecated
-  public void loginWithFacebook( android.app.Activity context, android.webkit.WebView webView,
-                                 Map<String, String> facebookFieldsMappings, List<String> permissions,
-                                 final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
-  {
-    getUserServiceAndroidExtra().loginWithFacebook( context, webView, facebookFieldsMappings, permissions, getUserLoginAsyncHandler( responder, stayLoggedIn ) );
-  }
-
-  public void loginWithTwitter( android.app.Activity context, AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithTwitter( context, null, null, responder, false );
-  }
-
-  public void loginWithTwitter( android.app.Activity context, android.webkit.WebView webView,
-                                AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithTwitter( context, webView, null, responder, false );
-  }
-
-  public void loginWithTwitter( android.app.Activity context, Map<String, String> twitterFieldsMappings,
-                                AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithTwitter( context, null, twitterFieldsMappings, responder, false );
-  }
-
-  public void loginWithTwitter( android.app.Activity context, AsyncCallback<BackendlessUser> responder,
-                                boolean stayLoggedIn )
-  {
-    loginWithTwitter( context, null, null, responder, stayLoggedIn );
-  }
-
-  public void loginWithTwitter( android.app.Activity context, android.webkit.WebView webView,
-                                Map<String, String> twitterFieldsMappings, AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithTwitter( context, webView, twitterFieldsMappings, responder, false );
-  }
-
-  public void loginWithTwitter( android.app.Activity context, android.webkit.WebView webView,
-                                AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
-  {
-    loginWithTwitter( context, webView, null, responder, stayLoggedIn );
-  }
-
-  public void loginWithTwitter( android.app.Activity context, Map<String, String> twitterFieldsMappings,
-                                AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
-  {
-    loginWithTwitter( context, null, twitterFieldsMappings, responder, stayLoggedIn );
-  }
-
-  public void loginWithTwitter( android.app.Activity context, android.webkit.WebView webView,
-                                Map<String, String> twitterFieldsMappings, AsyncCallback<BackendlessUser> responder,
-                                boolean stayLoggedIn )
-  {
-    getUserServiceAndroidExtra().loginWithTwitter( context, webView, twitterFieldsMappings, getUserLoginAsyncHandler( responder, stayLoggedIn ) );
-  }
-
-  public void loginWithTwitterSdk( String authToken, String authTokenSecret, AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithTwitterSdk( authToken, authTokenSecret, null, responder, false );
-  }
-
-  public void loginWithTwitterSdk( String authToken, String authTokenSecret, AsyncCallback<BackendlessUser> responder,
-                                   boolean stayLoggedIn )
-  {
-    loginWithTwitterSdk( authToken, authTokenSecret, null, responder, stayLoggedIn );
-  }
-
-  public void loginWithTwitterSdk( String authToken, String authTokenSecret, Map<String, String> fieldsMappings,
-                                   AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithTwitterSdk( authToken, authTokenSecret, fieldsMappings, responder, false );
-  }
-
-  public void loginWithTwitterSdk( String authToken, String authTokenSecret, Map<String, String> fieldsMappings,
-                                   AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
-  {
-    AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler( responder, stayLoggedIn );
-    getUserServiceAndroidExtra().loginWithTwitterSdk( authToken, null, authTokenSecret, fieldsMappings, internalResponder );
-  }
-
-  public void loginWithTwitterSdk( String authToken, BackendlessUser guestUser, String authTokenSecret, Map<String, String> fieldsMappings,
-                                   AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
-  {
-    AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler( responder, stayLoggedIn );
-    getUserServiceAndroidExtra().loginWithTwitterSdk( authToken, guestUser, authTokenSecret, fieldsMappings, internalResponder );
-  }
-
-  @Deprecated
-  public void loginWithGooglePlus( android.app.Activity context, final AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithGooglePlus( context, null, null, null, responder );
-  }
-
-  @Deprecated
-  public void loginWithGooglePlus( android.app.Activity context, android.webkit.WebView webView,
-                                 final AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithGooglePlus( context, webView, null, null, responder );
-  }
-
-  @Deprecated
-  public void loginWithGooglePlus( android.app.Activity context, android.webkit.WebView webView,
-                                 final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
-  {
-    loginWithGooglePlus( context, webView, null, null, responder, stayLoggedIn );
-  }
-
-  @Deprecated
-  public void loginWithGooglePlus( android.app.Activity context, android.webkit.WebView webView,
-                                 Map<String, String> googlePlusFieldsMappings, List<String> permissions,
-                                 final AsyncCallback<BackendlessUser> responder )
-  {
-    loginWithGooglePlus( context, webView, googlePlusFieldsMappings, permissions, responder, false );
-  }
-
-  @Deprecated
-  public void loginWithGooglePlus( android.app.Activity context, android.webkit.WebView webView,
-                                 Map<String, String> googlePlusFieldsMappings, List<String> permissions,
-                                 final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn )
-  {
-    getUserServiceAndroidExtra().loginWithGooglePlus( context, webView, googlePlusFieldsMappings, permissions, getUserLoginAsyncHandler( responder, stayLoggedIn ) );
-  }
-
-  @Deprecated
-  public void loginWithGooglePlusSdk( String tokenId, String accessToken, final AsyncCallback<BackendlessUser> responder ) {
-    loginWithGooglePlusSdk(accessToken, (Map<String, String>) null, responder, false);
-  }
-
-  @Deprecated
-  public void loginWithGooglePlusSdk( String tokenId, String accessToken, final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn ) {
-    loginWithGooglePlusSdk(accessToken, (Map<String, String>) null, responder, stayLoggedIn);
-  }
-
-  @Deprecated
-  public void loginWithGooglePlusSdk( String tokenId, String accessToken, final Map<String, String> fieldsMappings,
-                                     List<String> permissions, final AsyncCallback<BackendlessUser> responder ) {
-    loginWithGooglePlusSdk(accessToken, fieldsMappings, responder, false);
-  }
-
-  @Deprecated
-  public void loginWithGooglePlusSdk( String tokenId, String accessToken, final Map<String, String> fieldsMappings,
-                                     List<String> permissions, final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn ) {
-    loginWithGooglePlusSdk(accessToken, fieldsMappings, responder, stayLoggedIn);
-  }
-
-  public void loginWithGooglePlusSdk( String accessToken, final Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn) {
-    AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler(responder, stayLoggedIn);
-    getUserServiceAndroidExtra().loginWithGooglePlusSdk(accessToken, null, fieldsMappings, internalResponder);
-  }
-
-  public void loginWithGooglePlusSdk( String accessToken, BackendlessUser guestUser, final Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn) {
-    AsyncCallback<BackendlessUser> internalResponder = getUserLoginAsyncHandler(responder, stayLoggedIn);
-    getUserServiceAndroidExtra().loginWithGooglePlusSdk(accessToken, guestUser, fieldsMappings, internalResponder);
-  }
-
-  public void loginWithGooglePlusSdk( String accessToken, final Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder) {
-    loginWithGooglePlusSdk(accessToken, fieldsMappings, responder, false);
-  }
-
-  public void loginWithGooglePlusSdk( String accessToken, final AsyncCallback<BackendlessUser> responder, boolean stayLoggedIn) {
-    loginWithGooglePlusSdk(accessToken, (Map<String, String>) null, responder, stayLoggedIn);
-  }
-
-  public void loginWithGooglePlusSdk( String accessToken, final AsyncCallback<BackendlessUser> responder) {
-    loginWithGooglePlusSdk(accessToken, (Map<String, String>) null, responder, false);
+    getUserServiceAndroidExtra().loginWithOAuth1( authProviderCode, authToken, guestUser, authTokenSecret, fieldsMappings, internalResponder );
   }
 
   public void logout() throws BackendlessException
@@ -688,7 +467,7 @@ public final class UserService
     if( id == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
 
-    return Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "findById", new Object[] { id, new ArrayList() } );
+    return Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "findById", new Object[] { id, new ArrayList<>() } );
   }
 
   public void findById( final String id, final AsyncCallback<BackendlessUser> responder )
@@ -698,7 +477,7 @@ public final class UserService
       if( id == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
 
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "findById", new Object[] { id, new ArrayList() }, new AsyncCallback<BackendlessUser>()
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "findById", new Object[] { id, new ArrayList<>() }, new AsyncCallback<BackendlessUser>()
       {
         @Override
         public void handleResponse( BackendlessUser response )
@@ -843,28 +622,6 @@ public final class UserService
     } );
   }
 
-  public void getFacebookServiceAuthorizationUrlLink( Map<String, String> facebookFieldsMappings,
-                                                      List<String> permissions,
-                                                      AsyncCallback<String> responder ) throws BackendlessException
-  {
-    if( facebookFieldsMappings == null )
-      facebookFieldsMappings = new HashMap<>();
-
-    if( permissions == null )
-      permissions = new ArrayList<>();
-
-    Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getFacebookServiceAuthorizationUrlLink", new Object[] { HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME ), facebookFieldsMappings, permissions }, responder );
-  }
-
-  public void getTwitterServiceAuthorizationUrlLink( Map<String, String> twitterFieldsMapping,
-                                                     AsyncCallback<String> responder )
-  {
-    if( twitterFieldsMapping == null )
-      twitterFieldsMapping = new HashMap<>();
-
-    Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getTwitterServiceAuthorizationUrlLink", new Object[] { HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME ), twitterFieldsMapping }, responder );
-  }
-
   public BackendlessUser loginAsGuest()
   {
     return loginAsGuest( false );
@@ -874,7 +631,7 @@ public final class UserService
   {
     synchronized( currentUserLock )
     {
-      handleUserLogin( Invoker.<BackendlessUser>invokeSync( USER_MANAGER_SERVER_ALIAS, "loginAsGuest", new Object[] {  }, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) ), stayLoggedIn );
+      handleUserLogin( Invoker.<BackendlessUser>invokeSync( USER_MANAGER_SERVER_ALIAS, "loginAsGuest", new Object[] {  }, new AdaptingResponder<>( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) ), stayLoggedIn );
 
       return currentUser;
     }
@@ -908,7 +665,7 @@ public final class UserService
       {
         synchronized( currentUserLock )
         {
-          Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "loginAsGuest", new Object[] { }, getUserLoginAsyncHandler( responder, stayLoggedIn ) , new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
+          Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "loginAsGuest", new Object[] { }, getUserLoginAsyncHandler( responder, stayLoggedIn ) , new AdaptingResponder<>( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
         }
       }
       catch( Throwable e )
@@ -918,17 +675,25 @@ public final class UserService
       }
   }
 
-  public void getGooglePlusServiceAuthorizationUrlLink( Map<String, String> googlePlusFieldsMappings,
-                                                      List<String> permissions,
-                                                      AsyncCallback<String> responder ) throws BackendlessException
+  public void getAuthorizationUrlLink( String authProviderCode, Map<String, String> fieldsMappings,
+                                                        List<String> scope,
+                                                        AsyncCallback<String> responder ) throws BackendlessException
   {
-    if( googlePlusFieldsMappings == null )
-      googlePlusFieldsMappings = new HashMap<>();
+    if( fieldsMappings == null )
+      fieldsMappings = new HashMap<>();
 
-    if( permissions == null )
-      permissions = new ArrayList<>();
+    if( scope == null )
+      scope = new ArrayList<>();
 
-    Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getGooglePlusServiceAuthorizationUrlLink", new Object[] { HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME ), googlePlusFieldsMappings, permissions }, responder );
+    String origin = null;
+    String deviceType = HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME );
+
+    Invoker.invokeAsync(
+            USER_MANAGER_SERVER_ALIAS,
+            "getAuthorizationUrlLink",
+            new Object[] { authProviderCode, origin, deviceType, fieldsMappings, scope },
+            responder
+    );
   }
 
   private static void checkUserToBeProper( BackendlessUser user ) throws BackendlessException

@@ -18,27 +18,16 @@
 
 package com.backendless;
 
-import android.os.Bundle;
 import com.backendless.async.callback.AsyncCallback;
-import com.backendless.commons.util.SocialType;
 import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.core.responder.policy.BackendlessUserAdaptingPolicy;
 import com.backendless.exceptions.BackendlessFault;
-import com.backendless.exceptions.ExceptionMessage;
-import com.backendless.social.AbstractSocialLoginStrategy;
-import com.backendless.utils.JSONObjectConverter;
-import com.facebook.*;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.*;
 
 class UserServiceAndroidExtra
 {
   private static final UserServiceAndroidExtra instance = new UserServiceAndroidExtra();
-  private static final String GOOGLE_ACCOUNT_TYPE = "com.google";
 
   static UserServiceAndroidExtra getInstance()
   {
@@ -49,81 +38,13 @@ class UserServiceAndroidExtra
   {
   }
 
-  void loginWithFacebookSdk( final android.app.Activity context, CallbackManager callbackManager, final AsyncCallback<BackendlessUser> responder )
+  void loginWithOAuth1(
+          String authProviderCode, String authToken, BackendlessUser guestUser, String authTokenSecret, Map<String, String> fieldsMappings,
+          final AsyncCallback<BackendlessUser> responder )
   {
-    List<String> permissions = new ArrayList<>();
-    permissions.add( "email" );
-    permissions.add( "public_profile" );
+    if( !authProviderCode.equals( "twitter" ) )
+      throw new IllegalArgumentException( "OAuth1 provider '" + authProviderCode + "' is not supported" );
 
-    Map<String, String> facebookFieldsMappings = new HashMap<>(  );
-    facebookFieldsMappings.put( "email", "email" );
-
-    loginWithFacebookSdk( context, facebookFieldsMappings, permissions, callbackManager, responder );
-  }
-
-  void loginWithFacebookSdk( final android.app.Activity context, final Map<String, String> facebookFieldsMappings,
-                             List<String> permissions, CallbackManager callbackManager, final AsyncCallback<BackendlessUser> responder )
-  {
-    LoginManager.getInstance().registerCallback( callbackManager, new FacebookCallback<LoginResult>()
-    {
-      @Override
-      public void onSuccess( LoginResult loginResult )
-      {
-        getBackendlessUser( loginResult.getAccessToken(), facebookFieldsMappings, responder );
-      }
-
-      @Override
-      public void onCancel()
-      {
-        responder.handleFault( new BackendlessFault( ExceptionMessage.FACEBOOK_LOGINNING_CANCELED ) );
-      }
-
-      @Override
-      public void onError( FacebookException exception )
-      {
-        responder.handleFault( new BackendlessFault( ExceptionMessage.NULL_GRAPH_USER ) );
-         }
-       } );
-
-    LoginManager.getInstance().logInWithReadPermissions( context, permissions );
-  }
-
-  private void getBackendlessUser( final AccessToken accessToken, final Map<String, String> facebookFieldsMappings, final AsyncCallback<BackendlessUser> responder )
-  {
-    GraphRequest request = GraphRequest.newMeRequest( accessToken, new GraphRequest.GraphJSONObjectCallback()
-      {
-        @Override
-        public void onCompleted( JSONObject object,
-                                 GraphResponse response )
-        {
-          FacebookBundle facebookBundle = new FacebookBundle( response, accessToken );
-          Object[] requestData = new Object[] { null, facebookBundle.accessToken, null, null, facebookFieldsMappings };
-          Invoker.invokeAsync( UserService.USER_MANAGER_SERVER_ALIAS, "loginWithFacebook", requestData, responder, new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() ) );
-        }
-      } );
-
-    Bundle parameters = new Bundle();
-    parameters.putString("fields", "id,name,link");
-    request.setParameters( parameters );
-    request.executeAsync();
-  }
-
-  void loginWithFacebook( android.app.Activity context, android.webkit.WebView webView,
-                          Map<String, String> facebookFieldsMappings, List<String> permissions,
-                          final AsyncCallback<BackendlessUser> responder )
-  {
-    new AbstractSocialLoginStrategy.Builder( context, webView, SocialType.FACEBOOK, facebookFieldsMappings, permissions, getSocialDialogResponder( responder ) ).build().run();
-  }
-
-  void loginWithTwitter( android.app.Activity context, android.webkit.WebView webView,
-                         Map<String, String> twitterFieldsMappings, AsyncCallback<BackendlessUser> responder )
-  {
-    new AbstractSocialLoginStrategy.Builder( context, webView, SocialType.TWITTER, twitterFieldsMappings, null, getSocialDialogResponder( responder ) ).build().run();
-  }
-
-  void loginWithTwitterSdk( String authToken, BackendlessUser guestUser, String authTokenSecret, Map<String, String> fieldsMappings,
-                            final AsyncCallback<BackendlessUser> responder )
-  {
     if( fieldsMappings == null )
       fieldsMappings = new HashMap<>();
 
@@ -150,43 +71,17 @@ class UserServiceAndroidExtra
     );
   }
 
-  void loginWithGooglePlusSdk(  String accessToken, BackendlessUser guestUser, Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder )
+  void loginWithOAuth2(
+          String authProviderCode, String accessToken, BackendlessUser guestUser, Map<String, String> fieldsMappings,
+          final AsyncCallback<BackendlessUser> responder )
   {
     if (fieldsMappings == null)
       fieldsMappings = new HashMap<>();
 
     Invoker.invokeAsync(
             UserService.USER_MANAGER_SERVER_ALIAS,
-            "loginWithGooglePlus",
-            new Object[] { accessToken, fieldsMappings, guestUser == null ? null : guestUser.getProperties() },
-            new AsyncCallback<BackendlessUser>()
-            {
-              @Override
-              public void handleResponse( BackendlessUser response )
-              {
-                if( responder != null )
-                  responder.handleResponse( response );
-              }
-
-              @Override
-              public void handleFault( BackendlessFault fault )
-              {
-                if( responder != null )
-                  responder.handleFault( fault );
-              }
-            }
-    );
-  }
-
-  void loginWithFacebookSdk(  String accessToken, BackendlessUser guestUser, Map<String, String> fieldsMappings, final AsyncCallback<BackendlessUser> responder )
-  {
-    if (fieldsMappings == null)
-      fieldsMappings = new HashMap<>();
-
-    Invoker.invokeAsync(
-            UserService.USER_MANAGER_SERVER_ALIAS,
-            "loginWithFacebook",
-            new Object[] { accessToken, fieldsMappings, guestUser == null ? null : guestUser.getProperties() },
+            "loginWithOAuth2",
+            new Object[] { authProviderCode, accessToken, fieldsMappings, guestUser == null ? null : guestUser.getProperties() },
             new AsyncCallback<BackendlessUser>()
             {
               @Override
@@ -203,79 +98,7 @@ class UserServiceAndroidExtra
                   responder.handleFault( fault );
               }
             },
-            new AdaptingResponder( BackendlessUser.class, new BackendlessUserAdaptingPolicy() )
+            new AdaptingResponder<>( BackendlessUser.class, new BackendlessUserAdaptingPolicy() )
     );
-  }
-
-  void loginWithGooglePlus( android.app.Activity context, android.webkit.WebView webView,
-                          Map<String, String> googlePlusFieldsMappings, List<String> permissions,
-                          final AsyncCallback<BackendlessUser> responder )
-  {
-    new AbstractSocialLoginStrategy.Builder( context, webView, SocialType.GOOGLE_PLUS, googlePlusFieldsMappings, permissions, getSocialDialogResponder( responder ) ).build().run();
-  }
-
-  private AsyncCallback<JSONObject> getSocialDialogResponder( final AsyncCallback<BackendlessUser> responder )
-  {
-    return new AsyncCallback<JSONObject>()
-    {
-      @Override
-      public void handleResponse( JSONObject response )
-      {
-        try
-        {
-          BackendlessUser result = new BackendlessUser();
-
-          Iterator keys = response.keys();
-          while( keys.hasNext() )
-          {
-            String key = String.valueOf( keys.next() );
-            result.setProperty( key, JSONObjectConverter.fromJson(response.get(key)) );
-          }
-
-          if( responder != null )
-            responder.handleResponse( result );
-        }
-        catch( Exception e )
-        {
-          if( responder != null )
-            responder.handleFault( new BackendlessFault( e ) );
-        }
-      }
-
-      @Override
-      public void handleFault( BackendlessFault fault )
-      {
-        if( responder != null )
-          responder.handleFault( fault );
-      }
-    };
-  }
-
-  private static class FacebookBundle
-  {
-    String accessToken;
-    Date expirationDate;
-    Set<String> permissions;
-    String socialUserId;
-
-    FacebookBundle( GraphResponse response, AccessToken accessToken )
-    {
-
-      JSONObject jsonObj = response.getJSONObject();
-      if ( jsonObj == null )
-        throw new IllegalArgumentException( ExceptionMessage.NULL_FACEBOOK_RESPONSE_OBJECT );
-
-      expirationDate = accessToken.getExpires();
-      this.accessToken  = accessToken.getToken();
-      permissions = accessToken.getPermissions();
-      try
-      {
-        socialUserId = jsonObj.getString( "id" );
-      }
-      catch( JSONException e )
-      {
-        throw new IllegalArgumentException( ExceptionMessage.NULL_FACEBOOK_USER_ID );
-      }
-    }
   }
 }
