@@ -1092,32 +1092,29 @@ public final class UserService
 
   private void changeUserStatus( final String userId, final UserStatusEnum newUserStatus, final AsyncCallback<Void> responder )
   {
-    synchronized( currentUserLock )
-    {
-      Invoker.invokeAsync(
-              USER_MANAGER_SERVER_ALIAS,
-              "changeUserStatus",
-              new Object[] { userId, newUserStatus },
-              new AsyncCallback<Void>()
+    Invoker.invokeAsync(
+            USER_MANAGER_SERVER_ALIAS,
+            "changeUserStatus",
+            new Object[] { userId, newUserStatus },
+            new AsyncCallback<Void>()
+            {
+              @Override
+              public void handleResponse( Void response )
               {
-                @Override
-                public void handleResponse( Void response )
-                {
-                  if( currentUser != null && !currentUser.isEmpty() && currentUser.getObjectId().equals( userId ) )
-                    currentUser.setProperty( USER_STATUS_COLUMN, newUserStatus.toString() );
+                if( currentUser != null && !currentUser.isEmpty() && currentUser.getObjectId().equals( userId ) )
+                  currentUser.setProperty( USER_STATUS_COLUMN, newUserStatus.toString() );
 
-                  if( responder != null )
-                    responder.handleResponse( response );
-                }
+                if( responder != null )
+                  responder.handleResponse( response );
+              }
 
-                @Override
-                public void handleFault( BackendlessFault fault )
-                {
-                  if( responder != null )
-                    responder.handleFault( fault );
-                }
-              } );
-    }
+              @Override
+              public void handleFault( BackendlessFault fault )
+              {
+                if( responder != null )
+                  responder.handleFault( fault );
+              }
+            } );
   }
 
   private boolean isLogoutFaultAllowed( String errorCode )
