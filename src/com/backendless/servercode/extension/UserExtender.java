@@ -71,6 +71,17 @@ public abstract class UserExtender
   {
   }
 
+  @Deprecated
+  public void beforeSocialLogin( RunnerContext context, Map<String, String> userValues, SocialType socialType ) throws Exception
+  {
+  }
+
+  @Deprecated
+  public void afterSocialLogin( RunnerContext context, Map<String, String> userValues, SocialType socialType,
+                                ExecutionResult<BackendlessUser> result ) throws Exception
+  {
+  }
+
   public void beforeRegister( RunnerContext context, HashMap userValues ) throws Exception
   {
   }
@@ -84,6 +95,17 @@ public abstract class UserExtender
   }
 
   public void afterOAuthRegister( RunnerContext context, Map<String, String> userValues, String oauthProviderCode,
+                                   ExecutionResult<BackendlessUser> result ) throws Exception
+  {
+  }
+
+  @Deprecated
+  public void beforeSocialRegister( RunnerContext context, Map<String, String> userValues, SocialType socialType ) throws Exception
+  {
+  }
+
+  @Deprecated
+  public void afterSocialRegister( RunnerContext context, Map<String, String> userValues, SocialType socialType,
                                    ExecutionResult<BackendlessUser> result ) throws Exception
   {
   }
