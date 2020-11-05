@@ -3,6 +3,8 @@ package com.backendless.rt.data;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.rt.RTListener;
 
+import java.util.List;
+
 public interface EventHandler<T> extends RTListener
 {
   void addCreateListener( AsyncCallback<T> callback );
@@ -40,6 +42,12 @@ public interface EventHandler<T> extends RTListener
   void removeDeleteListener( AsyncCallback<T> callback );
 
   void removeDeleteListeners( String whereClause );
+
+  void addBulkCreateListener( AsyncCallback<List> callback );
+
+  void removeBulkCreateListener( AsyncCallback<List<String>> callback );
+
+  void removeBulkCreateListeners();
 
   void addBulkUpdateListener( AsyncCallback<BulkEvent> callback );
 

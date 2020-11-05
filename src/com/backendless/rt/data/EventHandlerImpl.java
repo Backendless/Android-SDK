@@ -11,6 +11,7 @@ import weborb.exceptions.AdaptingException;
 import weborb.types.IAdaptingType;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<T>
 {
@@ -153,6 +154,28 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   public void removeDeleteListeners( final String whereClause )
   {
     removeListeners( RTDataEvents.deleted, whereClause );
+  }
+
+  //--------bulk-create-------
+
+  @Override
+  public void addBulkCreateListener( AsyncCallback<List> callback )
+  {
+    DataSubscription subscription =
+        new DataSubscription( RTDataEvents.bulk_created, tableName, createCallback( callback, List.class ) );
+    addEventListener( subscription );
+  }
+
+  @Override
+  public void removeBulkCreateListener( AsyncCallback<List<String>> callback )
+  {
+    removeListeners( RTDataEvents.bulk_created, callback );
+  }
+
+  @Override
+  public void removeBulkCreateListeners()
+  {
+    removeListeners( RTDataEvents.bulk_created );
   }
 
   //--------bulk-update-------
