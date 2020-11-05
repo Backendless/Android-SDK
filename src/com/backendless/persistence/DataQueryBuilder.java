@@ -1,5 +1,8 @@
 package com.backendless.persistence;
 
+import com.backendless.persistence.offline.DataRetrievalPolicy;
+import com.backendless.persistence.offline.LocalStoragePolicy;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +17,8 @@ public class DataQueryBuilder
   private String whereClause;
   private List<String> groupBy;
   private String havingClause;
+  private DataRetrievalPolicy retrievalPolicy;
+  private LocalStoragePolicy storagePolicy;
 
   private DataQueryBuilder()
   {
@@ -266,5 +271,23 @@ public class DataQueryBuilder
   public Integer getRelationPageSize()
   {
     return queryOptionsBuilder.getRelationsPageSize();
+  }
+
+  public DataQueryBuilder setRetrievalPolicy(DataRetrievalPolicy retrievalPolicy) {
+    this.retrievalPolicy = retrievalPolicy;
+    return this;
+  }
+
+  public DataRetrievalPolicy getRetrievalPolicy() {
+    return retrievalPolicy;
+  }
+
+  public LocalStoragePolicy getStoragePolicy() {
+    return storagePolicy;
+  }
+
+  public DataQueryBuilder setStoragePolicy(LocalStoragePolicy storagePolicy) {
+    this.storagePolicy = storagePolicy;
+    return this;
   }
 }

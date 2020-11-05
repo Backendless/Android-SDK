@@ -25,6 +25,11 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.persistence.DataQueryBuilder;
 import com.backendless.persistence.LoadRelationsQueryBuilder;
+import com.backendless.persistence.offline.LocalStorageManager;
+import com.backendless.persistence.offline.OfflineAwareCallback;
+import com.backendless.persistence.offline.SyncCompletionCallback;
+import com.backendless.persistence.offline.SyncManager;
+import com.backendless.persistence.offline.TransactionManager;
 import com.backendless.rt.data.EventHandler;
 import com.backendless.rt.data.EventHandlerFactory;
 
@@ -33,10 +38,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import static com.backendless.persistence.BackendlessSerializer.serializeToMap;
+
 class DataStoreFactory
 {
   private static final List<String> emptyRelations = new ArrayList<String>();
-  private final static EventHandlerFactory eventHandlerFactory = new EventHandlerFactory();
+  private static final EventHandlerFactory eventHandlerFactory = new EventHandlerFactory();
+  private static final TransactionManager transactionManager = TransactionManager.getInstance();
+  private static final SyncManager syncManager = SyncManager.getInstance();
 
   protected static <E> IDataStore<E> createDataStore( final Class<E> entityClass )
   {
@@ -44,6 +53,8 @@ class DataStoreFactory
     return new IDataStore<E>()
     {
       private EventHandler<E> eventHandler = eventHandlerFactory.of( entityClass );
+      private final LocalStorageManager storageManager = new LocalStorageManager(
+          BackendlessSerializer.getSimpleName( entityClass ));
 
       @Override
       public List<String> create( List<E> objects ) throws BackendlessException
@@ -215,25 +226,37 @@ class DataStoreFactory
       @Override
       public List<E> find() throws BackendlessException
       {
-        return Backendless.Persistence.find( entityClass, DataQueryBuilder.create() );
+        return find(DataQueryBuilder.create() );
       }
 
       @Override
       public List<E> find( DataQueryBuilder dataQueryBuilder ) throws BackendlessException
       {
-        return Backendless.Persistence.find( entityClass, dataQueryBuilder );
+        if (!storageManager.shouldRetrieveOnline(dataQueryBuilder))
+          return storageManager.find(entityClass, dataQueryBuilder);
+
+        List<E> result = Backendless.Persistence.find( entityClass, dataQueryBuilder );
+        storageManager.store(result, dataQueryBuilder);
+        return result;
       }
 
       @Override
       public void find( AsyncCallback<List<E>> responder )
       {
-        Backendless.Persistence.find( entityClass, DataQueryBuilder.create(), responder );
+        find(DataQueryBuilder.create(), responder );
       }
 
       @Override
       public void find( DataQueryBuilder dataQueryBuilder, AsyncCallback<List<E>> responder )
       {
-        Backendless.Persistence.find( entityClass, dataQueryBuilder, responder );
+        if (!storageManager.shouldRetrieveOnline(dataQueryBuilder)) {
+          storageManager.find(entityClass, dataQueryBuilder, responder);
+          return;
+        }
+
+        AsyncCallback<List<E>> storeCallback = storageManager.getStoreCallback(dataQueryBuilder, responder);
+
+        Backendless.Persistence.find( entityClass, dataQueryBuilder, storeCallback );
       }
 
       @Override
@@ -639,6 +662,88 @@ class DataStoreFactory
       {
         return eventHandler;
       }
+
+      /*
+        TODO: OFFLINE SECTION
+       */
+
+      @Override
+      public void initLocalDatabase(String whereClause, AsyncCallback<Integer> responder) {
+        storageManager.initDatabase(whereClause, responder);
+      }
+
+      @Override
+      public void clearLocalDatabase() {
+        storageManager.clearLocalDatabase();
+      }
+
+      @Override
+      public void saveEventually(E entity) {
+        saveEventually(entity, null);
+      }
+
+      @Override
+      public void saveEventually(E entity, OfflineAwareCallback<E> responder) {
+        int blLocalId = storageManager.save(entity, responder);
+        Map serializedEntity = serializeToMap( entity );
+        serializedEntity.put("blLocalId", blLocalId);
+
+        Object[] args = new Object[] {
+            BackendlessSerializer.getSimpleName( entity.getClass() ),
+            serializedEntity};
+
+        transactionManager.scheduleOperation("save", args, entityClass.getName(), responder);
+      }
+
+      @Override
+      public void removeEventually(E entity) {
+        removeEventually(entity, null);
+      }
+
+      @Override
+      public void removeEventually(E entity, OfflineAwareCallback<E> responder) {
+        final Map<String, Object> serializedEntity = serializeToMap( entity );
+
+        Object[] args = new Object[] {
+            BackendlessSerializer.getSimpleName( entity.getClass() ),
+            serializedEntity };
+
+        transactionManager.scheduleOperation("remove", args, entityClass.getName(), responder);
+      }
+
+      @Override
+      public void onSave(AsyncCallback<E> responder) {
+        transactionManager.onSave(BackendlessSerializer.getSimpleName( entityClass ), responder);
+
+      }
+
+      @Override
+      public void onRemove(AsyncCallback<E> responder) {
+        transactionManager.onRemove(BackendlessSerializer.getSimpleName( entityClass ), responder);
+
+      }
+
+      @Override
+      public void enableAutoSync() {
+        syncManager.enableAutoSync(BackendlessSerializer.getSimpleName( entityClass ));
+      }
+
+      @Override
+      public void disableAutoSync() {
+        syncManager.disableAutoSync(BackendlessSerializer.getSimpleName( entityClass ));
+      }
+
+      @Override
+      public boolean isAutoSyncEnabled() {
+        return syncManager.isAutoSyncEnabled(BackendlessSerializer.getSimpleName( entityClass ));
+      }
+
+      @Override
+      public void startOfflineSync(SyncCompletionCallback callback) {
+        syncManager.startSemiAutoSynchronization(BackendlessSerializer.getSimpleName( entityClass ), callback);
+      }
+
+
     };
   }
 }

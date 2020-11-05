@@ -19,6 +19,7 @@
 package com.backendless.persistence;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.backendless.Backendless;
 import com.backendless.IDataStore;
@@ -29,6 +30,11 @@ import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.persistence.offline.LocalStorageManager;
+import com.backendless.persistence.offline.OfflineAwareCallback;
+import com.backendless.persistence.offline.SyncCompletionCallback;
+import com.backendless.persistence.offline.SyncManager;
+import com.backendless.persistence.offline.TransactionManager;
 import com.backendless.rt.data.EventHandler;
 import com.backendless.rt.data.EventHandlerFactory;
 import com.backendless.utils.ResponderHelper;
@@ -47,18 +53,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class MapDrivenDataStore implements IDataStore<Map>
 {
   private static final List<String> emptyRelations = new ArrayList<String>();
-  private final static EventHandlerFactory eventHandlerFactory = new EventHandlerFactory();
+  private static final EventHandlerFactory eventHandlerFactory = new EventHandlerFactory();
   private String tableName;
 
   private final EventHandler<Map> eventHandler;
+
+  /*
+    TODO: OFFLINE SECTION
+   */
+
+  private static final TransactionManager transactionManager = TransactionManager.getInstance();
+  private static final SyncManager syncManager = SyncManager.getInstance();
+  private final LocalStorageManager storageManager;
 
   public MapDrivenDataStore( String tableName )
   {
     this.tableName = tableName;
     eventHandler = eventHandlerFactory.of( tableName );
+    storageManager = new LocalStorageManager(tableName);
   }
 
   @Override
@@ -346,10 +362,15 @@ public class MapDrivenDataStore implements IDataStore<Map>
   @Override
   public List<Map> find( DataQueryBuilder dataQuery ) throws BackendlessException
   {
-    Object[] args = new Object[] { tableName, dataQuery.build() };
+      if (!storageManager.shouldRetrieveOnline(dataQuery))
+        return storageManager.find(Map.class, dataQuery);
 
-    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args,
-                               ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
+      Object[] args = new Object[]{tableName, dataQuery.build()};
+
+      List<Map> result = Invoker.invokeSync(Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args,
+          ResponderHelper.getCollectionAdaptingResponder(HashMap.class));
+      storageManager.store(result, dataQuery);
+      return result;
   }
 
   @Override
@@ -363,9 +384,17 @@ public class MapDrivenDataStore implements IDataStore<Map>
   {
     try
     {
-      Object[] args = new Object[] { tableName, dataQuery.build() };
-      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, callback,
-                           ResponderHelper.getCollectionAdaptingResponder( HashMap.class ) );
+      if (!storageManager.shouldRetrieveOnline(dataQuery)) {
+        storageManager.find(Map.class, dataQuery, callback);
+        return;
+      }
+
+      AsyncCallback<List<Map>> storeCallback = storageManager.getStoreCallback(dataQuery, callback);
+
+      Object[] args = new Object[]{tableName, dataQuery.build()};
+      Invoker.invokeAsync(Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "find", args, storeCallback,
+          ResponderHelper.getCollectionAdaptingResponder(HashMap.class));
+
     }
     catch( Throwable e )
     {
@@ -849,7 +878,79 @@ public class MapDrivenDataStore implements IDataStore<Map>
     return eventHandler;
   }
 
-  private class MapDrivenResponder implements IRawResponder
+  /*
+    TODO: OFFLINE SECTION
+   */
+
+    @Override
+    public void initLocalDatabase(@Nullable String whereClause, AsyncCallback<Integer> responder) {
+        storageManager.initDatabase(whereClause, responder);
+    }
+
+    @Override
+    public void clearLocalDatabase() {
+        storageManager.clearLocalDatabase();
+    }
+
+
+  @Override
+  public void saveEventually(Map entity) {
+      saveEventually(entity, null);
+  }
+
+  @Override
+  public void saveEventually(Map entity, OfflineAwareCallback<Map> responder) {
+      int blLocalId = storageManager.save(entity, responder);
+      entity.put("blLocalId", blLocalId);
+
+      Object[] args = new Object[] { tableName, entity };
+
+      transactionManager.scheduleOperation("save", args, null, responder);
+  }
+
+  @Override
+  public void removeEventually(Map entity) {
+      removeEventually(entity, null);
+  }
+
+  @Override
+  public void removeEventually(Map entity, OfflineAwareCallback<Map> responder) {
+      Object[] args = new Object[] { tableName, entity };
+
+      transactionManager.scheduleOperation("remove", args, null, responder);
+  }
+
+  @Override
+  public void onSave(AsyncCallback<Map> responder) {
+    transactionManager.onSave(tableName, responder);
+  }
+
+  @Override
+  public void onRemove(AsyncCallback<Map> responder) {
+    transactionManager.onRemove(tableName, responder);
+  }
+
+  @Override
+  public void enableAutoSync() {
+      syncManager.enableAutoSync(tableName);
+  }
+
+  @Override
+  public void disableAutoSync() {
+    syncManager.disableAutoSync(tableName);
+  }
+
+  @Override
+  public boolean isAutoSyncEnabled() {
+      return syncManager.isAutoSyncEnabled(tableName);
+  }
+
+  @Override
+  public void startOfflineSync(SyncCompletionCallback callback) {
+      syncManager.startSemiAutoSynchronization(tableName, callback);
+  }
+
+    private class MapDrivenResponder implements IRawResponder
   {
     private IResponder nextResponder;
 
