@@ -3,10 +3,12 @@ package com.backendless.geo;
 import com.backendless.persistence.GeoJSONParser;
 import com.backendless.persistence.Geometry;
 import com.backendless.persistence.GeometryDTO;
+import com.backendless.persistence.WKTParser;
 import weborb.reader.AnonymousObject;
 import weborb.reader.NamedObject;
 import weborb.reader.NullType;
 import weborb.reader.ReferenceCache;
+import weborb.reader.StringType;
 import weborb.types.IAdaptingType;
 import weborb.util.IArgumentObjectFactory;
 
@@ -52,6 +54,11 @@ public class BackendlessGeometryFactory implements IArgumentObjectFactory
       Geometry geometry = new GeometryDTO( geomClass, srsId, geoJson ).toGeometry();
       refCache.addObject( adaptingType, GeometryDTO.class, geometry );
       return geometry;
+    }
+    else if( adaptingType instanceof StringType )
+    {
+      String wkt = ((StringType) adaptingType).getValue();
+      return new WKTParser().read( wkt );
     }
     else
     {
