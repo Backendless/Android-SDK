@@ -19,7 +19,6 @@
 package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
-import com.backendless.commons.user.UserStatusEnum;
 import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.core.responder.policy.BackendlessUserAdaptingPolicy;
 import com.backendless.exceptions.BackendlessException;
@@ -41,7 +40,6 @@ import java.util.Map;
 
 public final class UserService
 {
-  private static final String USER_STATUS_COLUMN = "userStatus";
   final static String USER_MANAGER_SERVER_ALIAS = "com.backendless.services.users.UserService";
 
   private static BackendlessUser currentUser = new BackendlessUser();
@@ -415,26 +413,6 @@ public final class UserService
         }
       } );
     }
-  }
-
-  public void enableUser( String userId )
-  {
-    changeUserStatus( userId, UserStatusEnum.ENABLED );
-  }
-
-  public void enableUser( String userId, AsyncCallback<Void> responder )
-  {
-    changeUserStatus( userId, UserStatusEnum.ENABLED, responder );
-  }
-
-  public void disableUser( String userId )
-  {
-    changeUserStatus( userId, UserStatusEnum.DISABLED );
-  }
-
-  public void disableUser( String userId, AsyncCallback<Void> responder )
-  {
-    changeUserStatus( userId, UserStatusEnum.DISABLED, responder );
   }
 
   public void restorePassword( String identity ) throws BackendlessException
@@ -842,44 +820,6 @@ public final class UserService
     {
       responder.handleResponse( CurrentUser() != null );
     }
-  }
-
-  private void changeUserStatus( String userId, UserStatusEnum newUserStatus ) throws BackendlessException
-  {
-    synchronized( currentUserLock )
-    {
-      Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "changeUserStatus", new Object[] { userId, newUserStatus } );
-
-      if( currentUser != null && !currentUser.isEmpty() && currentUser.getObjectId().equals( userId ) )
-        currentUser.setProperty( USER_STATUS_COLUMN, newUserStatus.toString() );
-    }
-  }
-
-  private void changeUserStatus( final String userId, final UserStatusEnum newUserStatus, final AsyncCallback<Void> responder )
-  {
-    Invoker.invokeAsync(
-            USER_MANAGER_SERVER_ALIAS,
-            "changeUserStatus",
-            new Object[] { userId, newUserStatus },
-            new AsyncCallback<Void>()
-            {
-              @Override
-              public void handleResponse( Void response )
-              {
-                if( currentUser != null && !currentUser.isEmpty() && currentUser.getObjectId().equals( userId ) )
-                  currentUser.setProperty( USER_STATUS_COLUMN, newUserStatus.toString() );
-
-                if( responder != null )
-                  responder.handleResponse( response );
-              }
-
-              @Override
-              public void handleFault( BackendlessFault fault )
-              {
-                if( responder != null )
-                  responder.handleFault( fault );
-              }
-            } );
   }
 
   private boolean isLogoutFaultAllowed( String errorCode )
