@@ -121,6 +121,36 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
+  public Map deepSave( Map entity ) throws BackendlessException
+  {
+    if( entity == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
+
+    Object[] args = new Object[] { tableName, entity };
+    Map newEntity = Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deepSave", args, new MapDrivenResponder() );
+
+    return newEntity;
+  }
+
+  @Override
+  public void deepSave( Map entity, final AsyncCallback<Map> responder )
+  {
+    try
+    {
+      if( entity == null )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
+
+      Object[] args = new Object[] { tableName, entity };
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "deepSave", args, responder, new MapDrivenResponder() );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
+  @Override
   public Long remove( Map entity ) throws BackendlessException
   {
     if( entity == null )
