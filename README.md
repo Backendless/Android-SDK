@@ -27,3 +27,5 @@ To configure Backendless library in Gradle, add the following line into the "dep
 >      compile 'com.backendless:backendless:VERSION FROM MAVEN'
 
 >    }
+
+just test
