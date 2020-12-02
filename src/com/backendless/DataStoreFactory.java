@@ -70,6 +70,18 @@ class DataStoreFactory
       }
 
       @Override
+      public E deepSave( final E entity ) throws BackendlessException
+      {
+        return Backendless.Persistence.deepSave( entity );
+      }
+
+      @Override
+      public void deepSave( final E entity, final AsyncCallback<E> responder )
+      {
+        Backendless.Persistence.deepSave( entity, responder );
+      }
+
+      @Override
       public Long remove( final E entity ) throws BackendlessException
       {
         return Backendless.Persistence.remove( entity );

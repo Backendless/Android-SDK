@@ -163,57 +163,10 @@ public final class Persistence
       final Map<String, Object> serializedEntity = serializeEntityBeforeCreate( entity );
 
       AsyncCallback<E> callbackOverrider;
-      if( serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) == null )
-      {
-        callbackOverrider = new AsyncCallback<E>()
-        {
-          @Override
-          public void handleResponse( E newEntity )
-          {
-            MessageWriter.setObjectSubstitutor( null );
-            FootprintsManager.getInstance().Inner.duplicateFootprintForObject( serializedEntity, newEntity, entity );
-            Footprint footprint = FootprintsManager.getInstance().getEntityFootprint( newEntity );
-            if( footprint != null )
-              footprint.initObjectId( entity );
-
-            if( responder != null )
-              responder.handleResponse( newEntity );
-          }
-
-          @Override
-          public void handleFault( BackendlessFault fault )
-          {
-            MessageWriter.setObjectSubstitutor( null );
-
-            if( responder != null )
-              responder.handleFault( fault );
-          }
-        };
-      }
+      if (serializedEntity.get(Persistence.DEFAULT_OBJECT_ID_FIELD) == null)
+          callbackOverrider = getCreateAsyncHandler(entity, serializedEntity, responder);
       else
-      {
-        callbackOverrider = new AsyncCallback<E>()
-        {
-          @Override
-          public void handleResponse( E newEntity )
-          {
-            FootprintsManager.getInstance().Inner.updateFootprintForObject( serializedEntity, newEntity, entity );
-            Footprint footprint = FootprintsManager.getInstance().getEntityFootprint( newEntity );
-            if( footprint != null )
-              footprint.initObjectId( entity );
-
-            if( responder != null )
-              responder.handleResponse( newEntity );
-          }
-
-          @Override
-          public void handleFault( BackendlessFault fault )
-          {
-            if( responder != null )
-              responder.handleFault( fault );
-          }
-        };
-      }
+          callbackOverrider = getUpdateAsyncHandler(entity, serializedEntity, responder);
 
       String method = "create";
 
@@ -222,6 +175,56 @@ public final class Persistence
         method = "save";
 
       Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, method, new Object[] { BackendlessSerializer.getSimpleName( entity.getClass() ), serializedEntity }, callbackOverrider, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
+  public <E> E deepSave( final E entity ) throws BackendlessException
+  {
+    final Map<String, Object> serializedEntity = serializeEntityBeforeDeepSave( entity );
+
+    try
+    {
+      E newEntity = Invoker.invokeSync(
+              PERSISTENCE_MANAGER_SERVER_ALIAS, "deepSave",
+              new Object[] { BackendlessSerializer.getSimpleName( entity.getClass() ), serializedEntity },
+              ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
+
+      if( serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) == null )
+        FootprintsManager.getInstance().Inner.duplicateFootprintForObject( serializedEntity, newEntity, entity );
+      else
+        FootprintsManager.getInstance().Inner.updateFootprintForObject( serializedEntity, newEntity, entity );
+
+      //put or update footprint's properties to user's properties, if exists
+      Footprint footprint = FootprintsManager.getInstance().getEntityFootprint( newEntity );
+      if( footprint != null )
+        footprint.initObjectId( entity );
+
+      return newEntity;
+    }
+    finally
+    {
+      MessageWriter.setObjectSubstitutor( null );
+    }
+  }
+
+  public <E> void deepSave( final E entity, final AsyncCallback<E> responder )
+  {
+    try
+    {
+      final Map<String, Object> serializedEntity = serializeEntityBeforeDeepSave( entity );
+
+      AsyncCallback<E> callbackOverrider;
+      if( serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) == null )
+        callbackOverrider = getCreateAsyncHandler( entity, serializedEntity, responder );
+      else
+        callbackOverrider = getUpdateAsyncHandler( entity, serializedEntity, responder );
+
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "deepSave", new Object[] { BackendlessSerializer.getSimpleName( entity.getClass() ), serializedEntity }, callbackOverrider, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
     }
     catch( Throwable e )
     {
@@ -987,5 +990,83 @@ public final class Persistence
     } );
 
     return serializedEntity;
+  }
+
+  private <E> Map<String, Object> serializeEntityBeforeDeepSave( final E entity )
+  {
+    if( entity == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
+
+    checkDeclaredType( entity.getClass() );
+    final Map<String, Object> serializedEntity = BackendlessSerializer.serializeToMap( entity );
+
+    MessageWriter.setObjectSubstitutor( new IObjectSubstitutor()
+    {
+      @Override
+      public Object substitute( Object o )
+      {
+        if( o == entity )
+          return serializedEntity;
+        else
+          return o;
+      }
+    } );
+
+    return serializedEntity;
+  }
+
+  private <E> AsyncCallback<E> getCreateAsyncHandler(
+          final E entity, final Map<String, Object> serializedEntity, final AsyncCallback<E> responder )
+  {
+      return new AsyncCallback<E>()
+      {
+          @Override
+          public void handleResponse( E newEntity )
+          {
+              MessageWriter.setObjectSubstitutor( null );
+              FootprintsManager.getInstance().Inner.duplicateFootprintForObject( serializedEntity, newEntity, entity );
+              Footprint footprint = FootprintsManager.getInstance().getEntityFootprint( newEntity );
+              if( footprint != null )
+                  footprint.initObjectId( entity );
+
+              if( responder != null )
+                  responder.handleResponse( newEntity );
+          }
+
+          @Override
+          public void handleFault( BackendlessFault fault )
+          {
+              MessageWriter.setObjectSubstitutor( null );
+
+              if( responder != null )
+                  responder.handleFault( fault );
+          }
+      };
+  }
+
+  private <E> AsyncCallback<E> getUpdateAsyncHandler(
+          final E entity, final Map<String, Object> serializedEntity, final AsyncCallback<E> responder )
+  {
+      return new AsyncCallback<E>()
+      {
+          @Override
+          public void handleResponse( E newEntity )
+          {
+              FootprintsManager.getInstance().Inner.updateFootprintForObject( serializedEntity, newEntity, entity );
+              Footprint footprint = FootprintsManager.getInstance().getEntityFootprint( newEntity );
+              if( footprint != null )
+                  footprint.initObjectId( entity );
+
+              if( responder != null )
+                  responder.handleResponse( newEntity );
+          }
+
+          @Override
+          public void handleFault( BackendlessFault fault )
+          {
+              if( responder != null )
+                  responder.handleFault( fault );
+          }
+      };
   }
 }

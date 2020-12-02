@@ -40,6 +40,10 @@ public interface IDataStore<E>
 
   void save( E entity, AsyncCallback<E> responder );
 
+  E deepSave( E entity ) throws BackendlessException;
+
+  void deepSave( E entity, AsyncCallback<E> responder );
+
   Long remove( E entity ) throws BackendlessException;
 
   void remove( E entity, AsyncCallback<Long> responder );
