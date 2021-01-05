@@ -1,6 +1,6 @@
 USE `main_backendless`;
 
-INSERT INTO `Version` (`main`, `application`) values (34, 84);
+INSERT INTO `Version` (`main`, `application`) values (35, 84);
 
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('1', 'ACTIVE');
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('2', 'SUSPENDED');
@@ -52,11 +52,6 @@ INSERT INTO `DeveloperOperation` VALUES ('73','CREATE_MODIFY_DELETE_PUSH_BUTTON'
 INSERT INTO `DeveloperOperation` VALUES ('75','CREATE_MODIFY_DELETE_CHANEL_OPTIONS');
 INSERT INTO `DeveloperOperation` VALUES ('77','SEND_PUSH_BY_TEMPLATE');
 INSERT INTO `DeveloperOperation` VALUES ('8','CHANGE_CORS_DOMAIN_CONTROL');
-INSERT INTO `DeveloperOperation` VALUES ('81','CREATE_MODIFY_DELETE_GEO_CATEGORY');
-INSERT INTO `DeveloperOperation` VALUES ('83','CHANGE_GEO_CATEGORY_PERMISSIONS');
-INSERT INTO `DeveloperOperation` VALUES ('84','MODIFY_GEO_POINT_METADATA');
-INSERT INTO `DeveloperOperation` VALUES ('85','CREATE_MODIFY_DELETE_GEOFENCE');
-INSERT INTO `DeveloperOperation` VALUES ('88','CREATE_MODIFY_DELETE_GEO_POINT');
 INSERT INTO `DeveloperOperation` VALUES ('9','CHANGE_CUSTOM_DOMAIN');
 INSERT INTO `DeveloperOperation` VALUES ('93','MODIFY_BL');
 INSERT INTO `DeveloperOperation` VALUES ('94','PUBLISH_TO_MARKETPLACE');
