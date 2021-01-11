@@ -12,7 +12,7 @@ To get started:
     ```
     chmod -R 777 /full-path-to-backendless-folder
     ```
-1.In the same command prompt/terminal window from the step above change the current directory to `/scripts` which is located in the root of the directory created from the downloaded zip. Run the following command, which will download and install all the required images:
+1. In the same command prompt/terminal window from the step above change the current directory to `/scripts` which is located in the root of the directory created from the downloaded zip. Run the following command, which will download and install all the required images:
     ```
     ./backendless_install.sh
     ```
