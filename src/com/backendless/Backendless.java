@@ -64,6 +64,7 @@ public final class Backendless
 {
   private static String url = "https://api.backendless.com";
   private static final boolean isAndroid = isAndroidEnvironment();
+  // do not remove or change 'isCoderunner', because it is used in CodeRunner initialization process
   private static boolean isCodeRunner = false;
   private static final BackendlessPrefs prefs;
 
