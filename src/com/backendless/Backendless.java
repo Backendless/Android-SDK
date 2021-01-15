@@ -223,8 +223,11 @@ public final class Backendless
     }
 
     if( isCodeRunner() )
+    {
+      ThreadPoolService.getPoolExecutor();
       return;
-
+    }
+    
     String userToken = UserTokenStorageFactory.instance().getStorage().get();
 
     if( userToken != null && !userToken.equals( "" ) )
