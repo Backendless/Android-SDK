@@ -26,7 +26,6 @@ import com.backendless.messaging.IMessageHandler;
 import com.backendless.messaging.Message;
 
 import java.util.List;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -98,7 +97,7 @@ public class Subscription
 
   protected synchronized void onSubscribe( final AsyncCallback<List<Message>> subscriptionResponder )
   {
-    executor = Executors.newSingleThreadScheduledExecutor( ThreadFactoryService.getThreadFactory() );
+    executor = ThreadPoolService.createNewScheduledThreadPoolExecutor();
     handler = Backendless.isAndroid() ? new AndroidHandler( subscriptionResponder, this ) : new GenericMessagingHandler( subscriptionResponder, this );
     executor.scheduleWithFixedDelay( handler.getSubscriptionThread(), 0, pollingInterval, TimeUnit.MILLISECONDS );
   }
@@ -120,7 +119,7 @@ public class Subscription
 
     if( (executor == null || executor.isShutdown()) && subscriptionThread != null )
     {
-      executor = Executors.newSingleThreadScheduledExecutor( ThreadFactoryService.getThreadFactory() );
+      executor = ThreadPoolService.createNewScheduledThreadPoolExecutor();
       executor.scheduleWithFixedDelay( subscriptionThread, 0, pollingInterval, TimeUnit.MILLISECONDS );
     }
   }

@@ -48,7 +48,7 @@ class UploadBitmapAsyncTask
   private void doInBackground( final Bitmap bitmap, final Bitmap.CompressFormat compressFormat, final int quality,
                                final String name, final String path )
   {
-    ThreadPoolService.getPoolExecutor().execute( new Runnable()
+    ThreadPoolService.getThreadPoolExecutor().execute(new Runnable()
     {
       @Override
       public void run()

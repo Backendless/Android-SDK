@@ -54,7 +54,7 @@ class UploadFileAsyncTask
   {
     final AsyncUploadMessage asyncUploadMessage = new AsyncUploadMessage( uploadCallback );
 
-    ThreadPoolService.getPoolExecutor().execute( new Runnable()
+    ThreadPoolService.getThreadPoolExecutor().execute(new Runnable()
     {
       @Override
       public void run()

@@ -11,7 +11,7 @@ class AsynRTClient implements RTClient
   @Override
   public void subscribe( final RTSubscription subscription )
   {
-    ThreadPoolService.getPoolExecutor().execute( new Runnable()
+    ThreadPoolService.getThreadPoolExecutor().execute(new Runnable()
     {
       @Override
       public void run()
@@ -24,7 +24,7 @@ class AsynRTClient implements RTClient
   @Override
   public void unsubscribe( final String subscriptionId )
   {
-    ThreadPoolService.getPoolExecutor().execute( new Runnable()
+    ThreadPoolService.getThreadPoolExecutor().execute(new Runnable()
     {
       @Override
       public void run()
@@ -37,7 +37,7 @@ class AsynRTClient implements RTClient
   @Override
   public void userLoggedIn( final String userToken )
   {
-    ThreadPoolService.getPoolExecutor().execute( new Runnable()
+    ThreadPoolService.getThreadPoolExecutor().execute(new Runnable()
     {
       @Override
       public void run()
@@ -50,7 +50,7 @@ class AsynRTClient implements RTClient
   @Override
   public void userLoggedOut()
   {
-    ThreadPoolService.getPoolExecutor().execute( new Runnable()
+    ThreadPoolService.getThreadPoolExecutor().execute(new Runnable()
     {
       @Override
       public void run()
@@ -63,7 +63,7 @@ class AsynRTClient implements RTClient
   @Override
   public void invoke( final RTMethodRequest methodRequest )
   {
-    ThreadPoolService.getPoolExecutor().execute( new Runnable()
+    ThreadPoolService.getThreadPoolExecutor().execute(new Runnable()
     {
       @Override
       public void run()
@@ -106,7 +106,7 @@ class AsynRTClient implements RTClient
   @Override
   public void connect()
   {
-    ThreadPoolService.getPoolExecutor().execute( new Runnable()
+    ThreadPoolService.getThreadPoolExecutor().execute(new Runnable()
     {
       @Override
       public void run()
