@@ -65,10 +65,6 @@ public class ThreadPoolService
     return SCHEDULED_THREAD_POOL_EXECUTOR;
   }
   
-  public static ScheduledThreadPoolExecutor createNewScheduledThreadPoolExecutor()
-  {
-    return new ScheduledThreadPoolExecutor(0, THREAD_FACTORY);
-  }
   
   private static class SimpleThreadFactory implements ThreadFactory
   {
