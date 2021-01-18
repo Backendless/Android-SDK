@@ -18,9 +18,8 @@
 
 package com.backendless;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -29,30 +28,48 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class ThreadPoolService
 {
-  private final static ExecutorService threadPoolExecutor;
+  private final static SimpleThreadFactory THREAD_FACTORY;
+  private final static ThreadPoolExecutor THREAD_POOL_EXECUTOR;
+  private final static ScheduledThreadPoolExecutor SCHEDULED_THREAD_POOL_EXECUTOR;
   private final static int MAX_THREAD_POOL_SIZE = 10;
 
   static
   {
     if (Backendless.isCodeRunner())
-      threadPoolExecutor = new ThreadPoolExecutor(0, MAX_THREAD_POOL_SIZE, 2, TimeUnit.SECONDS,
+    {
+      THREAD_FACTORY = new SimpleThreadFactory("BackendlessSDK_CR");
+      THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(0, MAX_THREAD_POOL_SIZE, 2, TimeUnit.SECONDS,
           new LinkedBlockingQueue<Runnable>(),
-          new SimpleThreadFactory("BackendlessSDK_CR"));
+          THREAD_FACTORY);
+  
+      SCHEDULED_THREAD_POOL_EXECUTOR = null;
+    }
     else
-      threadPoolExecutor = new ThreadPoolExecutor(2, MAX_THREAD_POOL_SIZE, 60, TimeUnit.SECONDS,
-        new LinkedBlockingQueue<Runnable>(),
-        new SimpleThreadFactory("BackendlessSDK"));
+    {
+      THREAD_FACTORY = new SimpleThreadFactory("BackendlessSDK");
+      THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(2, MAX_THREAD_POOL_SIZE, 60, TimeUnit.SECONDS,
+          new LinkedBlockingQueue<Runnable>(),
+          THREAD_FACTORY);
   
+      SCHEDULED_THREAD_POOL_EXECUTOR = new ScheduledThreadPoolExecutor(2, THREAD_FACTORY);
+    }
   }
   
-  public static ExecutorService getPoolExecutor()
+  public static ThreadPoolExecutor getThreadPoolExecutor()
   {
-    return threadPoolExecutor;
+    return THREAD_POOL_EXECUTOR;
   }
+  
+  public static ScheduledThreadPoolExecutor getScheduledThreadPoolExecutor()
+  {
+    return SCHEDULED_THREAD_POOL_EXECUTOR;
+  }
+  
   
   private static class SimpleThreadFactory implements ThreadFactory
   {
-    private final ThreadFactory threadFactory = Executors.defaultThreadFactory();
+    private final static ThreadGroup THREAD_GROUP = new ThreadGroup( "BackendlessSDK_ThreadGroup" );
+    
     private final String threadNamePrefix;
     private final boolean isDaemon = true;
     private final AtomicInteger threadNumber = new AtomicInteger();
@@ -63,10 +80,9 @@ public class ThreadPoolService
     }
     
     @Override
-    public Thread newThread( Runnable r )
+    public Thread newThread( Runnable runnable )
     {
-      Thread t = threadFactory.newThread( r );
-      t.setName( threadNamePrefix + threadNumber.getAndIncrement() );
+      Thread t = new Thread( THREAD_GROUP, runnable, threadNamePrefix + threadNumber.getAndIncrement() );
       t.setDaemon( isDaemon );
       return t;
     }

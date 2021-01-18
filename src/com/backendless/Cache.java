@@ -92,7 +92,7 @@ public class Cache
   {
     final Class<?> asyncCallbackType = ReflectionUtil.getCallbackGenericType( callback );
 
-    ThreadPoolService.getPoolExecutor().execute( new Runnable()
+    ThreadPoolService.getThreadPoolExecutor().execute(new Runnable()
     {
       @Override
       public void run()

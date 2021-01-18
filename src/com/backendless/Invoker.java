@@ -61,7 +61,7 @@ public class Invoker
   public static <T> void invokeAsync( final String className, final String methodName, final Object[] args,
                                       final AsyncCallback<T> callback, final IChainedResponder responder )
   {
-    ThreadPoolService.getPoolExecutor().execute( new Runnable()
+    ThreadPoolService.getThreadPoolExecutor().execute(new Runnable()
     {
       @Override
       public void run()

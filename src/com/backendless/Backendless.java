@@ -224,7 +224,7 @@ public final class Backendless
 
     if( isCodeRunner() )
     {
-      ThreadPoolService.getPoolExecutor();
+      ThreadPoolService.getThreadPoolExecutor();
       return;
     }
     
