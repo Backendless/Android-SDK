@@ -335,14 +335,14 @@ public class PushTemplateHelper
 
   static public NotificationChannel getNotificationChannel( final Context context, final String templateName )
   {
-    final String channelId = Backendless.getApplicationId() + ":" + templateName;
+    final String channelId = Backendless.getApplicationIdOrDomain() + ":" + templateName;
     NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
     return notificationManager.getNotificationChannel( channelId );
   }
 
   static public NotificationChannel getOrCreateNotificationChannel( Context context, final AndroidPushTemplate template )
   {
-    final String channelId = Backendless.getApplicationId() + ":" + template.getName();
+    final String channelId = Backendless.getApplicationIdOrDomain() + ":" + template.getName();
     NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
 
     NotificationChannel notificationChannel = notificationManager.getNotificationChannel( channelId );

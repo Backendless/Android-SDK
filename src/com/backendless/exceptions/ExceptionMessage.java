@@ -25,7 +25,8 @@ public class ExceptionMessage
   public final static String CLIENT_ERROR = "Internal client exception.";
 
   public final static String WRONG_MANIFEST = "Wrong dependencies at the manifest";
-  public final static String NOT_INITIALIZED = "Backendless application was not initialized";
+  public final static String NOT_INITIALIZED = "Backendless application was not initialized. " +
+          "Call Backendless.initApp method before use any backendless functionality";
 
   public final static String NULL_USER = "User cannot be null or empty.";
   public final static String NULL_PASSWORD = "User password cannot be null or empty.";
