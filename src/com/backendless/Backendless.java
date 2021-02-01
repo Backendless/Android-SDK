@@ -57,6 +57,8 @@ import weborb.writer.MessageWriter;
 import weborb.writer.amf.AmfV3Formatter;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -170,26 +172,69 @@ public final class Backendless
     initApp( null, applicationId, apiKey );
   }
 
+  /**
+   * Initializes the Backendless API and all Backendless dependencies. This is the first step in using the client API.
+   * <p>
+   * There is a low probability for internal API data to be cleared by the garbage collector.
+   * In this case, an exception or fault, thrown by any of Backendless API methods, will contain 904 error code.
+   *
+   * @param customDomain custom domain which you setup in Backendless console https://backendless.com/docs/android/mgmt_custom_domain.html
+   */
+  public static void initApp( String customDomain )
+  {
+    initApp( (Object) null, customDomain );
+  }
+
   public static boolean isInitialized()
   {
     return initialized;
   }
 
+  public static void initApp( Object context, final String customDomain )
+  {
+    if( customDomain == null || customDomain.equals( "" ) )
+      throw new IllegalArgumentException( "Custom domain cant be null or empty" );
+
+    if( customDomain.startsWith( "http" ) )
+      setUrl( customDomain );
+    else
+      setUrl( "http://" + customDomain );
+
+    URI uri;
+    try
+    {
+      uri = new URI( Backendless.getUrl() );
+    }
+    catch( URISyntaxException e )
+    {
+      throw new RuntimeException( e );
+    }
+
+    prefs.setCustomDomain( uri.getHost() );
+
+    initApp( context );
+  }
+
   public static void initApp( Object context, final String applicationId, final String apiKey )
   {
-    if( isAndroid && context == null )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_CONTEXT );
-
     if( applicationId == null || applicationId.equals( "" ) )
       throw new IllegalArgumentException( ExceptionMessage.NULL_APPLICATION_ID );
 
     if( apiKey == null || apiKey.equals( "" ) )
       throw new IllegalArgumentException( ExceptionMessage.NULL_API_KEY );
 
-    prefs.onCreate( context );
     prefs.initPreferences( applicationId, apiKey );
     prefs.setUrl( url );
 
+    initApp( context );
+  }
+
+  private static void initApp( Object context )
+  {
+    if( isAndroid && context == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_CONTEXT );
+
+    prefs.onCreate( context );
     MessageWriter.addTypeWriter( BackendlessUser.class, new BackendlessUserWriter() );
     MessageWriter.addTypeWriter( Double.class, new DoubleWriter() );
     MessageWriter.addTypeWriter( Geometry.class, new BackendlessGeometryWriter() );
@@ -227,7 +272,7 @@ public final class Backendless
       ThreadPoolService.getThreadPoolExecutor();
       return;
     }
-    
+
     String userToken = UserTokenStorageFactory.instance().getStorage().get();
 
     if( userToken != null && !userToken.equals( "" ) )
@@ -269,12 +314,18 @@ public final class Backendless
     }
   }
 
-  public static String getApplicationId()
+  public static String getApplicationIdOrDomain()
   {
     if( prefs == null )
       throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
 
-    return prefs.getApplicationId();
+    if( prefs.getApplicationId() != null )
+       return prefs.getApplicationId();
+
+    if( prefs.getCustomDomain() != null )
+      return prefs.getCustomDomain();
+
+    throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
   }
 
   public static String getApiKey()
@@ -302,11 +353,26 @@ public final class Backendless
   {
     Backendless.url = url;
 
-    if( prefs != null && prefs.isAuthKeysExist() )
+    if( prefs != null )
     {
       prefs.setUrl( url );
       Invoker.reinitialize();
     }
+  }
+
+  /**
+   * @return url to call to backendless
+   * If application initialized with appId and api key returns url with the following pattern
+   * "http(s)://<backendless-host>/<appId>/<apiKey>/..."
+   * Else if application initialized with domain returns url with the following pattern
+   * "http(s)://<backendless-host>/..."
+   */
+  public static String getApplicationUrl()
+  {
+    final String applicationId = prefs.getApplicationId();
+    return applicationId == null
+            ? getUrl() + "/api"
+            : getUrl() + '/' + applicationId + '/' + getApiKey();
   }
 
   public static boolean isCodeRunner()

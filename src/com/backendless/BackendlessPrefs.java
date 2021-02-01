@@ -12,6 +12,7 @@ class BackendlessPrefs
   protected AuthKeys authKeys;
   protected Map<String, String> headers;
   protected String url;
+  protected String customDomain;
 
   public BackendlessPrefs()
   {
@@ -44,7 +45,9 @@ class BackendlessPrefs
 
   public String getApplicationId()
   {
-    return getAuthKeys().getApplicationId();
+
+    final AuthKeys authKeys = getAuthKeys();
+    return authKeys == null ? null : authKeys.getApplicationId();
   }
 
   public String getApiKey()
@@ -59,9 +62,6 @@ class BackendlessPrefs
 
   private synchronized AuthKeys getAuthKeys()
   {
-    if( authKeys == null)
-      throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
-    
     return authKeys;
   }
 
@@ -81,5 +81,16 @@ class BackendlessPrefs
       throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
 
     return this.url;
+  }
+
+  public String getCustomDomain()
+  {
+    return customDomain;
+  }
+
+  public BackendlessPrefs setCustomDomain( String customDomain )
+  {
+    this.customDomain = customDomain;
+    return this;
   }
 }

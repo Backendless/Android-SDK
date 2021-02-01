@@ -31,10 +31,6 @@ class AndroidHeadersManager implements IHeadersManager
 
   AndroidHeadersManager()
   {
-    if( Backendless.getApplicationId() == null || Backendless.getApiKey() == null )
-    {
-      throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
-    }
     initialFill();
   }
 

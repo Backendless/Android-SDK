@@ -9,6 +9,7 @@ import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.logging.Logger;
@@ -59,13 +60,13 @@ abstract class SocketIOConnectionManager
       final IO.Options opts = new IO.Options();
       opts.reconnection = false;
 
-      opts.path = "/" + Backendless.getApplicationId();
+      opts.path = "/" + Backendless.getApplicationIdOrDomain();
 
       opts.query = "apiKey=" + Backendless.getApiKey()
               + "&clientId=" + Backendless.Messaging.getDeviceId()
               + "&binary=true";
 
-      final String host = rtLookupService.lookup( ) + opts.path;
+      final String host = rtLookupService.lookup() + opts.path;
       logger.info( "Looked up for server " + host );
 
       String userToken = HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY );
