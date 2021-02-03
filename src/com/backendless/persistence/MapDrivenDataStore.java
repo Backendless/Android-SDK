@@ -25,6 +25,7 @@ import com.backendless.IDataStore;
 import com.backendless.Invoker;
 import com.backendless.Persistence;
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.commons.persistence.GroupResult;
 import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
@@ -49,7 +50,7 @@ import java.util.Map;
 
 public class MapDrivenDataStore implements IDataStore<Map>
 {
-  private static final List<String> emptyRelations = new ArrayList<String>();
+  private static final List<String> emptyRelations = new ArrayList<>();
   private final static EventHandlerFactory eventHandlerFactory = new EventHandlerFactory();
   private String tableName;
 
@@ -405,6 +406,31 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
+  public GroupResult<?> group( GroupDataQueryBuilder dataQuery ) throws BackendlessException
+  {
+    Object[] args = new Object[] { tableName, dataQuery.build() };
+
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "group", args,
+                               ResponderHelper.getGroupResultAdaptingResponder( HashMap.class ) );
+  }
+
+  @Override
+  public void group( final GroupDataQueryBuilder dataQuery, final AsyncCallback<GroupResult<?>> callback )
+  {
+    try
+    {
+      Object[] args = new Object[] { tableName, dataQuery.build() };
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "group", args, callback,
+                           ResponderHelper.getGroupResultAdaptingResponder( HashMap.class ) );
+    }
+    catch( Throwable e )
+    {
+      if( callback != null )
+        callback.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
+  @Override
   public Map findById( String id ) throws BackendlessException
   {
     return findById( id, emptyRelations );
@@ -618,6 +644,17 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
+  public int getObjectCountInGroup( GroupDataQueryBuilder dataQueryBuilder )
+  {
+    if( dataQueryBuilder == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_FIELD( "dataQueryBuilder" ) );
+
+    BackendlessDataQuery dataQuery = dataQueryBuilder.build();
+    Object[] args = new Object[] { tableName, dataQuery };
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "countInGroup", args );
+  }
+
+  @Override
   public void getObjectCount( AsyncCallback<Integer> responder )
   {
     try
@@ -643,6 +680,25 @@ public class MapDrivenDataStore implements IDataStore<Map>
       BackendlessDataQuery dataQuery = dataQueryBuilder.build();
       Object[] args = new Object[] { tableName, dataQuery };
       Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args, responder );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
+  @Override
+  public void getObjectCountInGroup( GroupDataQueryBuilder dataQueryBuilder, AsyncCallback<Integer> responder )
+  {
+    try
+    {
+      if( dataQueryBuilder == null )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_FIELD( "dataQueryBuilder" ) );
+
+      BackendlessDataQuery dataQuery = dataQueryBuilder.build();
+      Object[] args = new Object[] { tableName, dataQuery };
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "countInGroup", args, responder );
     }
     catch( Throwable e )
     {

@@ -267,6 +267,10 @@ dependencies {
 //       excluding org.json which is provided by Android
       exclude group: 'org.json', module: 'json'
     }
+
+    // https://projectlombok.org
+    compileOnly 'org.projectlombok:lombok:1.18.10'
+    annotationProcessor 'org.projectlombok:lombok:1.18.10'
 }
 
 apply plugin: 'java'

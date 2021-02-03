@@ -19,14 +19,18 @@
 package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.commons.persistence.GroupResult;
+import com.backendless.commons.persistence.group.GroupedData;
 import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.persistence.BackendlessDataQuery;
+import com.backendless.persistence.BackendlessGroupDataQuery;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.persistence.DataQueryBuilder;
+import com.backendless.persistence.GroupDataQueryBuilder;
 import com.backendless.persistence.LoadRelationsQueryBuilder;
 import com.backendless.persistence.MapDrivenDataStore;
 import com.backendless.persistence.QueryOptions;
@@ -53,7 +57,6 @@ import java.util.Map;
 public final class Persistence
 {
   public final static String PERSISTENCE_MANAGER_SERVER_ALIAS = "com.backendless.services.persistence.PersistenceService";
-  public final static String DATA_MANAGEMENT_SERVER_ALIAS = "com.backendless.management.persistence.DataManagementApi";
   private final static String DEFAULT_OBJECT_ID_GETTER = "getObjectId";
   public final static String DEFAULT_OBJECT_ID_FIELD = "objectId";
   public final static String DEFAULT_CREATED_FIELD = "created";
@@ -61,9 +64,6 @@ public final class Persistence
   public final static String DEFAULT_META_FIELD = "__meta";
   public final static String REST_CLASS_FIELD = "___class";
   public final static String PARCELABLE_CREATOR_FIELD_NAME = "CREATOR";
-
-  public final static String LOAD_ALL_RELATIONS = "*";
-  public final static DataPermission Permissions = new DataPermission();
 
   private static final Persistence instance = new Persistence();
 
@@ -75,6 +75,7 @@ public final class Persistence
   private Persistence()
   {
     Types.addClientClassMapping( "com.backendless.services.persistence.BackendlessDataQuery", BackendlessDataQuery.class );
+    Types.addClientClassMapping( "com.backendless.services.persistence.common.BackendlessGroupDataQuery", BackendlessGroupDataQuery.class );
     Types.addClientClassMapping( "com.backendless.services.persistence.ObjectProperty", ObjectProperty.class );
     Types.addClientClassMapping( "com.backendless.services.persistence.QueryOptions", QueryOptions.class );
   }
@@ -680,6 +681,38 @@ public final class Persistence
     }
   }
 
+  public <E> GroupResult<?> group( Class<E> entity, GroupDataQueryBuilder queryBuilder ) throws BackendlessException
+  {
+    if( entity == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
+    if( queryBuilder == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
+
+    Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), queryBuilder.build() };
+
+    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "group", args, ResponderHelper.getGroupResultAdaptingResponder( entity ) );
+  }
+
+  public <E> void group( Class<E> entity, GroupDataQueryBuilder queryBuilder, AsyncCallback<GroupResult<?>> responder )
+  {
+    if( entity == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
+    if( queryBuilder == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
+
+    BackendlessGroupDataQuery dataQuery = queryBuilder.build();
+    try
+    {
+      Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), dataQuery };
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "group", args, responder, ResponderHelper.getGroupResultAdaptingResponder( entity ) );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
   protected <E> E first( final Class<E> entity ) throws BackendlessException
   {
     if( entity == null )
@@ -908,6 +941,34 @@ public final class Persistence
     {
       Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), dataQuery };
       Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "count", args, responder );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
+  <E> int getObjectCountInGroup( final Class<E> entity, GroupDataQueryBuilder queryBuilder )
+  {
+    if( queryBuilder == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
+
+    BackendlessDataQuery dataQuery = queryBuilder.build();
+    Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), dataQuery };
+    return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "countInGroup", args );
+  }
+
+  <E> void getObjectCountInGroup( final Class<E> entity, GroupDataQueryBuilder queryBuilder, AsyncCallback<Integer> responder )
+  {
+    if( queryBuilder == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_FIELD( "queryBuilder" ) );
+
+    BackendlessDataQuery dataQuery = queryBuilder.build();
+    try
+    {
+      Object[] args = new Object[] { BackendlessSerializer.getSimpleName( entity ), dataQuery };
+      Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, "countInGroup", args, responder );
     }
     catch( Throwable e )
     {
