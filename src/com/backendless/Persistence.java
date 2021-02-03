@@ -681,7 +681,7 @@ public final class Persistence
     }
   }
 
-  public <E> GroupResult<?> group( Class<E> entity, GroupDataQueryBuilder queryBuilder ) throws BackendlessException
+  public <E> GroupResult<?> group( Class<E> entity, GroupDataQueryBuilder queryBuilder )
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );

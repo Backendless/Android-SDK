@@ -18,72 +18,55 @@
 
 package com.backendless.core.responder.policy;
 
-import weborb.client.Fault;
 import weborb.client.IResponder;
-import weborb.exceptions.AdaptingException;
 import weborb.reader.AnonymousObject;
 import weborb.reader.ArrayType;
 import weborb.reader.NamedObject;
 import weborb.types.IAdaptingType;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class GroupResultAdaptingPolicy<E> implements IAdaptingPolicy<E>
 {
-//  private final CollectionAdaptingPolicy<E> collectionAdaptingPolicy = new CollectionAdaptingPolicy<>();
 
   @Override
   public Object adapt( Class<E> clazz, IAdaptingType entity, IResponder nextResponder )
   {
-    Object result = null;
+    Object result;
 
-//    try
-//    {
-      if( entity == null )
-        return null;
+    if( entity == null )
+      return null;
 
-      NamedObject namedObj = (NamedObject) entity;
+    NamedObject namedObj = (NamedObject) entity;
 
-      List<NamedObject> namedObjects = new ArrayList<>();
-      namedObjects.add( namedObj );
+    List<NamedObject> namedObjects = new ArrayList<>();
+    namedObjects.add( namedObj );
 
-      while( ((AnonymousObject) namedObjects.get( 0 ).getTypedObject()).getProperties().containsKey( "hasNextPage" ) )
+    while( ((AnonymousObject) namedObjects.get( 0 ).getTypedObject()).getProperties().containsKey( "hasNextPage" ) )
+    {
+      List<NamedObject> nextLevel = new ArrayList<>();
+      for( NamedObject namedObject : namedObjects )
       {
-        List<NamedObject> nextLevel = new ArrayList<>();
-        for( NamedObject namedObject : namedObjects )
-        {
-          ArrayType arrayType = (ArrayType) ((AnonymousObject) namedObject.getTypedObject())
-                  .getProperties().get( "items" );
+        ArrayType arrayType = (ArrayType) ((AnonymousObject) namedObject.getTypedObject()).getProperties().get( "items" );
 
-          Object[] dataArray = (Object[]) arrayType.getArray();
-          for( Object item : dataArray )
-            nextLevel.add( (NamedObject) item );
-          namedObjects = nextLevel;
-        }
+        Object[] dataArray = (Object[]) arrayType.getArray();
+        for( Object item : dataArray )
+          nextLevel.add( (NamedObject) item );
+        namedObjects = nextLevel;
       }
+    }
 
     if( clazz != null && weborb.types.Types.getMappedClientClass( clazz.getName() ) == null )
     {
-      for ( NamedObject namedObject : namedObjects )
+      for( NamedObject namedObject : namedObjects )
         namedObject.setDefaultType( clazz );
     }
 
+    result = entity.defaultAdapt();
 
-
-      result = entity.defaultAdapt();
-
-      if( nextResponder != null )
-        nextResponder.responseHandler( result );
-//    }
-//    catch( AdaptingException e )
-//    {
-//      Fault fault = new Fault( "Unable to adapt GroupResult records to '" + clazz.getName() + "'", e.getMessage() );
-//
-//      if( nextResponder != null )
-//        nextResponder.errorHandler( fault );
-//    }
+    if( nextResponder != null )
+      nextResponder.responseHandler( result );
 
     return result;
   }

@@ -406,7 +406,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public GroupResult<?> group( GroupDataQueryBuilder dataQuery ) throws BackendlessException
+  public GroupResult<?> group( GroupDataQueryBuilder dataQuery )
   {
     Object[] args = new Object[] { tableName, dataQuery.build() };
 
