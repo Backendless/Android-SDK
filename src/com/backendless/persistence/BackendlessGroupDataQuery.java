@@ -32,9 +32,11 @@ import java.util.List;
 @Setter
 public class BackendlessGroupDataQuery extends BackendlessDataQuery
 {
+  public static final int GROUP_DEPTH = 3;
+
   private int groupPageSize = DEFAULT_PAGE_SIZE;
   private int recordsPageSize = DEFAULT_PAGE_SIZE;
-  private int recordsPageSizeOffset = BackendlessDataQuery.DEFAULT_OFFSET;
+  private int groupDepth = GROUP_DEPTH;
   private List<GroupingColumnValue> groupPath;
   private QueryOptions queryOptions;
 }
