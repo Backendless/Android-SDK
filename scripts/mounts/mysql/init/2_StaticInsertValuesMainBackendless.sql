@@ -1,6 +1,6 @@
 USE `main_backendless`;
 
-INSERT INTO `Version` (`main`, `application`) values (35, 87);
+INSERT INTO `Version` (`main`, `application`) values (35, 88);
 
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('1', 'ACTIVE');
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('2', 'SUSPENDED');
@@ -121,7 +121,6 @@ CREATE TABLE IF NOT EXISTS `User` (
   `failedLoginCount` INT NOT NULL DEFAULT 0,
   `logsCount` INT NOT NULL DEFAULT 0,
   `default` TINYINT(1) NOT NULL DEFAULT 0,
-  `activationKey` VARCHAR(100) NULL,
   `userTypeId` INT NOT NULL DEFAULT 1,
   `userStatusId` INT NULL DEFAULT 1,
   `lastLogin` DATETIME NULL,
@@ -1368,11 +1367,6 @@ CREATE UNIQUE INDEX `context_UNIQUE` ON `InvocationChain` (`context` ASC, `event
 
 
 -- -----------------------------------------------------
--- Placeholder table for view `DefaultUser`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DefaultUser` (`id` INT, `loggedIn` INT, `failedLoginCount` INT, `logsCount` INT, `default` INT, `activationKey` INT, `userTypeId` INT, `userStatusId` INT, `lastLogin` INT, `lastTimeReturningCount` INT);
-
--- -----------------------------------------------------
 -- function dist
 -- -----------------------------------------------------
 DROP function IF EXISTS `dist`;
@@ -1448,16 +1442,6 @@ END$$
 
 DELIMITER ;
 
--- -----------------------------------------------------
--- View `DefaultUser`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `DefaultUser`;
-DROP VIEW IF EXISTS `DefaultUser` ;
-CREATE  OR REPLACE VIEW `DefaultUser` AS
-SELECT u.*
-  FROM User as u
-  WHERE u.default = 1
-;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
