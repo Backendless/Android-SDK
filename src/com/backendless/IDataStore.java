@@ -98,9 +98,9 @@ public interface IDataStore<E>
 
   void find( DataQueryBuilder dataQueryBuilder, AsyncCallback<List<E>> responder );
 
-  GroupResult<?> group( GroupDataQueryBuilder dataQueryBuilder );
+  GroupResult<?,E> group( GroupDataQueryBuilder dataQueryBuilder );
 
-  void group( GroupDataQueryBuilder dataQueryBuilder, AsyncCallback<GroupResult<?>> responder );
+  void group( GroupDataQueryBuilder dataQueryBuilder, AsyncCallback<GroupResult<?,E>> responder );
 
   E findById( String id ) throws BackendlessException;
 

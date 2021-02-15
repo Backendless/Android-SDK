@@ -406,7 +406,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public GroupResult<?> group( GroupDataQueryBuilder dataQuery )
+  public GroupResult<?, Map> group( GroupDataQueryBuilder dataQuery )
   {
     Object[] args = new Object[] { tableName, dataQuery.build() };
 
@@ -415,7 +415,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
   }
 
   @Override
-  public void group( final GroupDataQueryBuilder dataQuery, final AsyncCallback<GroupResult<?>> callback )
+  public void group( final GroupDataQueryBuilder dataQuery, final AsyncCallback<GroupResult<?, Map>> callback )
   {
     try
     {

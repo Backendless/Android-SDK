@@ -257,13 +257,13 @@ class DataStoreFactory
       }
 
       @Override
-      public GroupResult<?> group( GroupDataQueryBuilder dataQueryBuilder ) throws BackendlessException
+      public GroupResult<?,E> group( GroupDataQueryBuilder dataQueryBuilder ) throws BackendlessException
       {
         return Backendless.Persistence.group( entityClass, dataQueryBuilder );
       }
 
       @Override
-      public void group( GroupDataQueryBuilder dataQueryBuilder, AsyncCallback<GroupResult<?>> responder )
+      public void group( GroupDataQueryBuilder dataQueryBuilder, AsyncCallback<GroupResult<?,E>> responder )
       {
         Backendless.Persistence.group( entityClass, dataQueryBuilder, responder );
       }

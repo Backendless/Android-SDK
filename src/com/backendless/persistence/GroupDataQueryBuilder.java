@@ -16,6 +16,8 @@ public class GroupDataQueryBuilder
   @Setter
   private boolean distinct = false;
   private List<GroupingColumnValue> groupPath;
+  @Setter @Getter
+  private int groupDepth;
   private ArrayList<String> properties;
   private ArrayList<String> excludeProperties;
   @Setter @Getter
@@ -47,6 +49,7 @@ public class GroupDataQueryBuilder
     dataQuery.setWhereClause( whereClause );
     dataQuery.setGroupBy( groupBy );
     dataQuery.setGroupPath( groupPath );
+    dataQuery.setGroupDepth( groupDepth );
 
     return dataQuery;
   }

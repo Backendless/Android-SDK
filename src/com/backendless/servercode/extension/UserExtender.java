@@ -48,7 +48,8 @@ public abstract class UserExtender
 
   }
 
-  public void afterGroup( RunnerContext context, BackendlessGroupDataQuery query, ExecutionResult<GroupResult<Object>> result ) throws Exception
+  public void afterGroup( RunnerContext context, BackendlessGroupDataQuery query,
+                          ExecutionResult<GroupResult<Object, BackendlessUser>> result ) throws Exception
   {
   }
 

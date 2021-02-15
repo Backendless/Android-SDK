@@ -681,7 +681,7 @@ public final class Persistence
     }
   }
 
-  public <E> GroupResult<?> group( Class<E> entity, GroupDataQueryBuilder queryBuilder )
+  public <E> GroupResult<?,E> group( Class<E> entity, GroupDataQueryBuilder queryBuilder )
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
@@ -693,7 +693,7 @@ public final class Persistence
     return Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, "group", args, ResponderHelper.getGroupResultAdaptingResponder( entity ) );
   }
 
-  public <E> void group( Class<E> entity, GroupDataQueryBuilder queryBuilder, AsyncCallback<GroupResult<?>> responder )
+  public <E> void group( Class<E> entity, GroupDataQueryBuilder queryBuilder, AsyncCallback<GroupResult<?,E>> responder )
   {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );

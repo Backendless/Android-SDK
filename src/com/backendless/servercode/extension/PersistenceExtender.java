@@ -127,7 +127,8 @@ public abstract class PersistenceExtender<T>
 
   }
 
-  public void afterGroup( RunnerContext context, BackendlessGroupDataQuery query, ExecutionResult<GroupResult<Object>> result ) throws Exception
+  public void afterGroup( RunnerContext context, BackendlessGroupDataQuery query,
+                          ExecutionResult<GroupResult<Object, T>> result ) throws Exception
   {
   }
 
