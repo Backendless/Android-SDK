@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `User` (
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_User_AccountType1`
     FOREIGN KEY (`accountTypeId`)
-    REFERENCES `UserType` (`id`)
+    REFERENCES `AccountType` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_User_UserStatus1`
