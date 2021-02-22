@@ -1,6 +1,6 @@
 USE `main_backendless`;
 
-INSERT INTO `Version` (`main`, `application`) values (35, 88);
+INSERT INTO `Version` (`main`, `application`) values (35, 90);
 
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('1', 'ACTIVE');
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('2', 'SUSPENDED');
@@ -86,15 +86,16 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- Schema main_application
 -- -----------------------------------------------------
 
--- -----------------------------------------------------
--- Table `UserType`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `UserType` ;
 
-CREATE TABLE IF NOT EXISTS `UserType` (
+-- -----------------------------------------------------
+-- Table `AccountType`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `AccountType` ;
+
+CREATE TABLE IF NOT EXISTS `AccountType` (
   `id` INT NOT NULL,
   `name` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
 
@@ -125,6 +126,7 @@ CREATE TABLE IF NOT EXISTS `User` (
   `userStatusId` INT NULL DEFAULT 1,
   `lastLogin` DATETIME NULL,
   `lastTimeReturningCount` DATETIME NULL,
+  `oAuthIdentities` JSON NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_User_UserType1`
     FOREIGN KEY (`userTypeId`)
@@ -845,32 +847,6 @@ CREATE TABLE IF NOT EXISTS `EmailSettings` (
   `emailFrom` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `OAuthUser`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `OAuthUser` ;
-
-CREATE TABLE IF NOT EXISTS `OAuthUser` (
-  `oAuthId` VARCHAR(100) NOT NULL,
-  `displayName` VARCHAR(100) NOT NULL,
-  `userTypeId` INT NOT NULL DEFAULT 1,
-  `userId` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`userId`),
-  CONSTRAINT `fk_OAuthUser_UserType1`
-    FOREIGN KEY (`userTypeId`)
-    REFERENCES `UserType` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_OAuthUser_User1`
-    FOREIGN KEY (`userId`)
-    REFERENCES `User` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-CREATE INDEX `fk_OAuthUser_UserType1_idx` ON `OAuthUser` (`userTypeId` ASC);
 
 
 -- -----------------------------------------------------
