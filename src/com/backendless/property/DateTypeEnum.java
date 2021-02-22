@@ -13,5 +13,11 @@ public enum DateTypeEnum
   RELATION_LIST,
   STRING_ID,
   TEXT,
-  FILE_REF;
+  FILE_REF,
+  GEOMETRY,
+  POINT,
+  LINESTRING,
+  POLYGON,
+  JSON,
+  AUTO_INCREMENT,
 }
