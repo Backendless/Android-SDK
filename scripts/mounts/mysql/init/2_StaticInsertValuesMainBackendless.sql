@@ -100,6 +100,18 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `AccountType`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `AccountType` ;
+
+CREATE TABLE IF NOT EXISTS `AccountType` (
+  `id` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `UserStatus`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `UserStatus` ;
@@ -122,15 +134,15 @@ CREATE TABLE IF NOT EXISTS `User` (
   `failedLoginCount` INT NOT NULL DEFAULT 0,
   `logsCount` INT NOT NULL DEFAULT 0,
   `default` TINYINT(1) NOT NULL DEFAULT 0,
-  `userTypeId` INT NOT NULL DEFAULT 1,
+  `accountTypeId` INT NOT NULL DEFAULT 1,
   `userStatusId` INT NULL DEFAULT 1,
   `lastLogin` DATETIME NULL,
   `lastTimeReturningCount` DATETIME NULL,
   `oAuthIdentities` JSON NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_User_UserType1`
-    FOREIGN KEY (`userTypeId`)
-    REFERENCES `UserType` (`id`)
+  CONSTRAINT `fk_User_AccountType1`
+    FOREIGN KEY (`accountTypeId`)
+    REFERENCES `AccountType` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_User_UserStatus1`
@@ -140,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `User` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_User_UserType1_idx` ON `User` (`userTypeId` ASC);
+CREATE INDEX `fk_User_AccountType1_idx` ON `User` (`accountTypeId` ASC);
 
 CREATE INDEX `fk_User_UserStatus1_idx` ON `User` (`userStatusId` ASC);
 
