@@ -19,13 +19,12 @@
 package com.backendless;
 
 import android.content.Context;
-import android.content.Intent;
+
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.files.BackendlessFile;
 import com.backendless.files.BackendlessFileFactory;
-import com.backendless.geo.BackendlessGeometryFactory;
-import com.backendless.geo.BackendlessGeometryWriter;
-import com.backendless.geo.LocationTracker;
+import com.backendless.persistence.BackendlessGeometryFactory;
+import com.backendless.persistence.BackendlessGeometryWriter;
 import com.backendless.io.BackendlessUserFactory;
 import com.backendless.io.BackendlessUserWriter;
 import com.backendless.io.DoubleWriter;
@@ -75,7 +74,6 @@ public final class Backendless
   public static final Persistence Persistence = com.backendless.Persistence.getInstance();
   public static final Persistence Data = com.backendless.Persistence.getInstance();
   public static final Messaging Messaging = com.backendless.Messaging.getInstance();
-  public static final Geo Geo = com.backendless.Geo.getInstance();
 
   public static final Files Files = com.backendless.Files.getInstance();
   public static final Commerce Commerce = com.backendless.Commerce.getInstance();
@@ -277,12 +275,6 @@ public final class Backendless
 
     if( userToken != null && !userToken.equals( "" ) )
       HeadersManager.getInstance().addHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY, userToken );
-
-    if( isAndroid && LocationTracker.getInstance() == null )
-    {
-      Intent intent = new Intent( ( (Context) context ).getApplicationContext(), LocationTracker.class );
-      ( (Context) context ).getApplicationContext().startService( intent );
-    }
 
     // check if Realm is present in classpath
     try

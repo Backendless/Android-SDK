@@ -22,7 +22,6 @@
       <directory url="file://$PROJECT_DIR$/UserService/userservicedemo/gen" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/MessagingService/pushdemo/gen" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/EndlessMatchMaker/gen" includeSubdirectories="true" />
-      <directory url="file://$PROJECT_DIR$/GeoService/geodemo/gen" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/FileService/filedemo/gen" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/DataService/tododemo/gen" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/DataService/dbeditor/gen" includeSubdirectories="true" />
@@ -210,7 +209,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FileService/filedemo/filedemo.iml" filepath="$PROJECT_DIR$/FileService/filedemo/filedemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/GeoService/geodemo/geodemo.iml" filepath="$PROJECT_DIR$/GeoService/geodemo/geodemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/MessagingService/pubsubdemo/pubsubdemo.iml" filepath="$PROJECT_DIR$/MessagingService/pubsubdemo/pubsubdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/MessagingService/pushdemo/pushdemo.iml" filepath="$PROJECT_DIR$/MessagingService/pushdemo/pushdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/DataService/tododemo/tododemo.iml" filepath="$PROJECT_DIR$/DataService/tododemo/tododemo.iml" />

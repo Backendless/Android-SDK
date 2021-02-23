@@ -12,7 +12,6 @@ import android.widget.*;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
-import com.backendless.geo.GeoCategory;
 
 import java.util.ArrayList;
 import java.util.List;

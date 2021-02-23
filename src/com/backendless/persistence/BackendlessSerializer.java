@@ -24,7 +24,6 @@ import com.backendless.FootprintsManager;
 import com.backendless.Persistence;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.ExceptionMessage;
-import com.backendless.geo.GeoPoint;
 
 import java.lang.reflect.Array;
 import java.util.*;
@@ -127,8 +126,8 @@ public abstract class BackendlessSerializer
 
       Object entityEntryValue = entityEntry.getValue();
 
-      // ignore null entries and GeoPoints
-      if( entityEntryValue == null || entityEntryValue instanceof GeoPoint )
+      // ignore null entries
+      if( entityEntryValue == null )
         continue;
 
       // check for anonymous class entry
@@ -151,10 +150,6 @@ public abstract class BackendlessSerializer
           continue;
         }
 
-        //do nothing with lists of GeoPoints
-        if( listEntry.iterator().next() instanceof GeoPoint )
-          continue;
-
         // check for anonymous class entry
         if( listEntry.iterator().next().getClass().isAnonymousClass() )
           throw new BackendlessException( String.format( ExceptionMessage.ANONYMOUS_CLASSES_PROHIBITED, entityEntry.getKey() ) );
@@ -173,8 +168,8 @@ public abstract class BackendlessSerializer
       {
         Object[] arrayEntry = (Object[]) entityEntryValue;
 
-        //do nothing with empty arrays and arrays of GeoPoints
-        if( arrayEntry.length == 0 || arrayEntry[ 0 ] instanceof GeoPoint )
+        //do nothing with empty arrays
+        if( arrayEntry.length == 0 )
           continue;
 
         // check for anonymous class entry

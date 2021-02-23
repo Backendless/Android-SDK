@@ -25,7 +25,6 @@ import com.backendless.examples.endless.matchmaker.controllers.*;
 import com.backendless.examples.endless.matchmaker.models.local.PreferenceTheme;
 import com.backendless.examples.endless.matchmaker.utils.Defaults;
 import com.backendless.BackendlessUser;
-import com.backendless.geo.GeoPoint;
 
 public class Lifecycle
 {

@@ -32,9 +32,6 @@ import com.backendless.Backendless;
 import com.backendless.BackendlessCollection;
 import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
-import com.backendless.geo.BackendlessGeoQuery;
-import com.backendless.geo.GeoPoint;
-import com.backendless.geo.SearchMatchesResult;
 
 import java.util.HashMap;
 import java.util.Map;

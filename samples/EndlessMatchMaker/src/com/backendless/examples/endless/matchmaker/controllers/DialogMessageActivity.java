@@ -38,8 +38,6 @@ import com.backendless.examples.endless.matchmaker.controllers.shared.ResponseAs
 import com.backendless.examples.endless.matchmaker.utils.Defaults;
 import com.backendless.examples.endless.matchmaker.views.UIFactory;
 import com.backendless.exceptions.BackendlessFault;
-import com.backendless.geo.BackendlessGeoQuery;
-import com.backendless.geo.GeoPoint;
 
 import java.util.List;
 

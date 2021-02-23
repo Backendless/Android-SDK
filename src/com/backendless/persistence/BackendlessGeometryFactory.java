@@ -1,9 +1,8 @@
-package com.backendless.geo;
+package com.backendless.persistence;
 
-import com.backendless.persistence.GeoJSONParser;
-import com.backendless.persistence.Geometry;
-import com.backendless.persistence.GeometryDTO;
-import com.backendless.persistence.WKTParser;
+import java.lang.reflect.Type;
+import java.util.Map;
+
 import weborb.reader.AnonymousObject;
 import weborb.reader.NamedObject;
 import weborb.reader.NullType;
@@ -11,9 +10,6 @@ import weborb.reader.ReferenceCache;
 import weborb.reader.StringType;
 import weborb.types.IAdaptingType;
 import weborb.util.IArgumentObjectFactory;
-
-import java.lang.reflect.Type;
-import java.util.Map;
 
 
 public class BackendlessGeometryFactory implements IArgumentObjectFactory
