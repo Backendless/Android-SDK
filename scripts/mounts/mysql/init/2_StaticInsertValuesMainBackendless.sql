@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `User` (
   `userStatusId` INT NULL DEFAULT 1,
   `lastLogin` DATETIME NULL,
   `lastTimeReturningCount` DATETIME NULL,
-  `oAuthIdentities` JSON NOT NULL,
+  `oAuthIdentities` JSON NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_User_AccountType1`
     FOREIGN KEY (`accountTypeId`)
