@@ -1,6 +1,7 @@
 package com.backendless.geo;
 
 import com.backendless.persistence.Geometry;
+import com.backendless.persistence.GeometryDTO;
 import weborb.writer.IProtocolFormatter;
 import weborb.writer.ITypeWriter;
 import weborb.writer.MessageWriter;
@@ -14,7 +15,8 @@ public class BackendlessGeometryWriter implements ITypeWriter
   public void write( Object o, IProtocolFormatter iProtocolFormatter ) throws IOException
   {
     Geometry geometry = (Geometry) o;
-    MessageWriter.writeObject( geometry.asWKT(), iProtocolFormatter );
+    GeometryDTO geometryDTO = new GeometryDTO(geometry.getClass().getName(), geometry.getSRS().getSRSId(), geometry.asGeoJSON());
+    MessageWriter.writeObject(geometryDTO, iProtocolFormatter);
   }
 
   @Override
