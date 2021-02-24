@@ -20,7 +20,6 @@ package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.commons.persistence.GroupResult;
-import com.backendless.commons.persistence.group.GroupedData;
 import com.backendless.core.responder.AdaptingResponder;
 import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 import com.backendless.exceptions.BackendlessException;
@@ -64,6 +63,9 @@ public final class Persistence
   public final static String DEFAULT_META_FIELD = "__meta";
   public final static String REST_CLASS_FIELD = "___class";
   public final static String PARCELABLE_CREATOR_FIELD_NAME = "CREATOR";
+
+  public final static String LOAD_ALL_RELATIONS = "*";
+  public final static DataPermission Permissions = new DataPermission();
 
   private static final Persistence instance = new Persistence();
 
