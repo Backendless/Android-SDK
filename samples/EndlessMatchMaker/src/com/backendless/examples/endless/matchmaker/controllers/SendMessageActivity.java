@@ -31,7 +31,6 @@ import com.backendless.examples.endless.matchmaker.utils.Defaults;
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.backendless.Subscription;
-import com.backendless.geo.GeoPoint;
 import com.backendless.messaging.*;
 
 import java.util.List;

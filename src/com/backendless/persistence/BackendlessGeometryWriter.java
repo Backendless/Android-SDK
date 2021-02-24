@@ -1,4 +1,4 @@
-package com.backendless.geo;
+package com.backendless.persistence;
 
 import com.backendless.persistence.Geometry;
 import com.backendless.persistence.GeometryDTO;

@@ -61,12 +61,6 @@
         </antcall>
 
         <antcall target="packSample">
-            <param name="sampleName" value="geodemo"/>
-            <param name="sampleSrcPath" value="GeoService/geodemo"/>
-            <param name="examplesRootPath" value="geo-service"/>
-        </antcall>
-
-        <antcall target="packSample">
             <param name="sampleName" value="userservicedemo"/>
             <param name="sampleSrcPath" value="UserService/userservicedemo"/>
             <param name="examplesRootPath" value="user-service"/>

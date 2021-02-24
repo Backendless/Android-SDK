@@ -35,9 +35,6 @@ import com.backendless.examples.endless.matchmaker.utils.SimpleMath;
 import com.backendless.examples.endless.matchmaker.views.UIFactory;
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
-import com.backendless.geo.BackendlessGeoQuery;
-import com.backendless.geo.GeoPoint;
-import com.backendless.geo.SearchMatchesResult;
 import com.backendless.messaging.*;
 
 import java.text.ParseException;

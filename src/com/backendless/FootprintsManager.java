@@ -18,7 +18,6 @@
 
 package com.backendless;
 
-import com.backendless.geo.GeoPoint;
 import com.backendless.utils.ReflectionUtil;
 import weborb.reader.AnonymousObject;
 import weborb.reader.ArrayType;
@@ -170,11 +169,7 @@ public class FootprintsManager
           }
           else if( entry.getValue() instanceof Collection )
           {
-            // TODO: discuss and decide what to do with GeoPoints here
             Collection collection = (Collection) entry.getValue();
-
-            if( collection.size() > 0 && collection.iterator().next() instanceof GeoPoint )
-              continue;
 
             // retrieve persisted entity's field value (which is collection)
             Collection persistedEntityFieldValue = getFieldValueAsCollection(persistedEntity, entry.getKey());
@@ -246,9 +241,6 @@ public class FootprintsManager
           {
             Collection valueCollection = (Collection) entry.getValue();
             Iterator valueIterator = valueCollection.iterator();
-
-            if( valueIterator.hasNext() && valueIterator.next() instanceof GeoPoint )
-              continue;
 
             Collection newObjectCollection= getFieldValueAsCollection( newEntity, key );
             Collection oldObjectCollection = getFieldValueAsCollection( oldEntity, key );
