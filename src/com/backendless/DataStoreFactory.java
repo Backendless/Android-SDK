@@ -21,9 +21,11 @@ package com.backendless;
 import android.support.annotation.NonNull;
 
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.commons.persistence.GroupResult;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.persistence.DataQueryBuilder;
+import com.backendless.persistence.GroupDataQueryBuilder;
 import com.backendless.persistence.LoadRelationsQueryBuilder;
 import com.backendless.rt.data.EventHandler;
 import com.backendless.rt.data.EventHandlerFactory;
@@ -153,6 +155,12 @@ class DataStoreFactory
         return Backendless.Persistence.getObjectCount( entityClass, dataQueryBuilder );
       }
 
+      @Override
+      public int getObjectCountInGroup( GroupDataQueryBuilder dataQueryBuilder )
+      {
+        return Backendless.Persistence.getObjectCountInGroup( entityClass, dataQueryBuilder );
+      }
+
       public void findFirst( final AsyncCallback<E> responder )
       {
         Backendless.Persistence.first( entityClass, responder );
@@ -246,6 +254,18 @@ class DataStoreFactory
       public void find( DataQueryBuilder dataQueryBuilder, AsyncCallback<List<E>> responder )
       {
         Backendless.Persistence.find( entityClass, dataQueryBuilder, responder );
+      }
+
+      @Override
+      public GroupResult<?,E> group( GroupDataQueryBuilder dataQueryBuilder ) throws BackendlessException
+      {
+        return Backendless.Persistence.group( entityClass, dataQueryBuilder );
+      }
+
+      @Override
+      public void group( GroupDataQueryBuilder dataQueryBuilder, AsyncCallback<GroupResult<?,E>> responder )
+      {
+        Backendless.Persistence.group( entityClass, dataQueryBuilder, responder );
       }
 
       @Override
@@ -392,6 +412,12 @@ class DataStoreFactory
       public void getObjectCount( DataQueryBuilder dataQueryBuilder, AsyncCallback<Integer> responder )
       {
         Backendless.Persistence.getObjectCount( entityClass, dataQueryBuilder, responder );
+      }
+
+      @Override
+      public void getObjectCountInGroup( GroupDataQueryBuilder dataQueryBuilder, AsyncCallback<Integer> responder )
+      {
+        Backendless.Persistence.getObjectCountInGroup( entityClass, dataQueryBuilder, responder );
       }
 
       @Override

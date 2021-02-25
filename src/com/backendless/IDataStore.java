@@ -21,8 +21,10 @@ package com.backendless;
 import android.support.annotation.NonNull;
 
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.commons.persistence.GroupResult;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.persistence.DataQueryBuilder;
+import com.backendless.persistence.GroupDataQueryBuilder;
 import com.backendless.persistence.LoadRelationsQueryBuilder;
 import com.backendless.rt.data.EventHandler;
 
@@ -96,6 +98,10 @@ public interface IDataStore<E>
 
   void find( DataQueryBuilder dataQueryBuilder, AsyncCallback<List<E>> responder );
 
+  GroupResult<?,E> group( GroupDataQueryBuilder dataQueryBuilder );
+
+  void group( GroupDataQueryBuilder dataQueryBuilder, AsyncCallback<GroupResult<?,E>> responder );
+
   E findById( String id ) throws BackendlessException;
 
   E findById( String id, List<String> relations ) throws BackendlessException;
@@ -119,6 +125,8 @@ public interface IDataStore<E>
   int getObjectCount();
 
   int getObjectCount( DataQueryBuilder dataQueryBuilder );
+
+  int getObjectCountInGroup( GroupDataQueryBuilder dataQueryBuilder );
 
   void findById( String id, AsyncCallback<E> responder );
 
@@ -160,6 +168,8 @@ public interface IDataStore<E>
   void getObjectCount( AsyncCallback<Integer> responder );
 
   void getObjectCount( DataQueryBuilder dataQueryBuilder, AsyncCallback<Integer> responder );
+
+  void getObjectCountInGroup( GroupDataQueryBuilder dataQueryBuilder, AsyncCallback<Integer> responder );
 
   <R> int addRelation( E parent, String relationColumnName, Collection<R> children );
 

@@ -18,7 +18,10 @@
 
 package com.backendless.servercode.extension;
 
+import com.backendless.commons.persistence.GroupResult;
+import com.backendless.commons.persistence.group.GroupingColumnValue;
 import com.backendless.persistence.BackendlessDataQuery;
+import com.backendless.persistence.BackendlessGroupDataQuery;
 import com.backendless.property.ObjectProperty;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
@@ -28,13 +31,6 @@ import com.backendless.transaction.UnitOfWorkResult;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: ivanlappo
- * Date: 5/20/13
- * Time: 12:40 PM
- * To change this template use File | Settings | File Templates.
- */
 public abstract class PersistenceExtender<T>
 {
   public void beforeFindById( RunnerContext context, Object objectId, String[] relations ) throws Exception
@@ -126,6 +122,16 @@ public abstract class PersistenceExtender<T>
   {
   }
 
+  public void beforeGroup( RunnerContext context, BackendlessGroupDataQuery query ) throws Exception
+  {
+
+  }
+
+  public void afterGroup( RunnerContext context, BackendlessGroupDataQuery query,
+                          ExecutionResult<GroupResult<Object, T>> result ) throws Exception
+  {
+  }
+
   public void beforeFirst( RunnerContext context, String[] relations, Integer relationsDepth, String[] properties ) throws Exception
   {
   }
@@ -148,6 +154,14 @@ public abstract class PersistenceExtender<T>
 
   public void afterCount( RunnerContext context, BackendlessDataQuery query,
                          ExecutionResult<Integer> result ) throws Exception
+  {
+  }
+
+  public void beforeCountInGroup( RunnerContext context, BackendlessGroupDataQuery query ) throws Exception
+  {
+  }
+
+  public void afterCountInGroup( RunnerContext context, BackendlessGroupDataQuery query, ExecutionResult<Integer> result ) throws Exception
   {
   }
 

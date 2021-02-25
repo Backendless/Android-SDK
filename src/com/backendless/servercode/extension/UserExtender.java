@@ -19,8 +19,10 @@
 package com.backendless.servercode.extension;
 
 import com.backendless.BackendlessUser;
+import com.backendless.commons.persistence.GroupResult;
 import com.backendless.commons.util.SocialType;
 import com.backendless.persistence.BackendlessDataQuery;
+import com.backendless.persistence.BackendlessGroupDataQuery;
 import com.backendless.property.UserProperty;
 import com.backendless.servercode.ExecutionResult;
 import com.backendless.servercode.RunnerContext;
@@ -31,9 +33,6 @@ import java.util.Map;
 
 public abstract class UserExtender
 {
-  public UserExtender()
-  {
-  }
 
   public void beforeFind( RunnerContext context, BackendlessDataQuery query ) throws Exception
   {
@@ -41,6 +40,16 @@ public abstract class UserExtender
   }
 
   public void afterFind( RunnerContext context, BackendlessDataQuery query, ExecutionResult<List<BackendlessUser>> result ) throws Exception
+  {
+  }
+
+  public void beforeGroup( RunnerContext context, BackendlessGroupDataQuery query ) throws Exception
+  {
+
+  }
+
+  public void afterGroup( RunnerContext context, BackendlessGroupDataQuery query,
+                          ExecutionResult<GroupResult<Object, BackendlessUser>> result ) throws Exception
   {
   }
 
