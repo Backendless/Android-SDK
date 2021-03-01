@@ -1,6 +1,6 @@
 USE `main_backendless`;
 
-INSERT INTO `Version` (`main`, `application`) values (35, 90);
+INSERT INTO `Version` (`main`, `application`) values (35, 91);
 
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('1', 'ACTIVE');
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('2', 'SUSPENDED');
@@ -1018,6 +1018,37 @@ ENGINE = InnoDB;
 CREATE INDEX `fk_GlobalFileRolePermissions_Role1_idx` ON `GlobalFileRolePermissions` (`roleId` ASC);
 
 CREATE INDEX `fk_GlobalFileRolePermissions_PermissionType1_idx` ON `GlobalFileRolePermissions` (`permissionTypeId` ASC);
+
+
+-- -----------------------------------------------------
+-- Table `UserDataTableColumnToRolePermission`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `UserDataTableColumnToRolePermission` ;
+
+CREATE TABLE IF NOT EXISTS `UserDataTableColumnToRolePermission` (
+  `columnId` VARCHAR(100) NOT NULL,
+  `roleId` VARCHAR(100) NOT NULL,
+  `tableId` VARCHAR(100) NOT NULL,
+  `permissionTypeId` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`columnId`, `roleId`),
+  CONSTRAINT `fk_ColumnToRolePermission_Role1`
+    FOREIGN KEY (`roleId`)
+      REFERENCES `Role` (`id`)
+      ON DELETE CASCADE
+      ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ColumnToRolePermission_UserDataTableColumn1`
+    FOREIGN KEY (`columnId`)
+      REFERENCES `UserDataTableColumn` (`id`)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ColumnToRolePermission_UserDataTable1`
+      FOREIGN KEY (`tableId`)
+      REFERENCES `UserDataTable` (`id`)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION)
+  ENGINE = InnoDB;
+
+CREATE INDEX `fk_ColumnToRolePermission_UserDataTable1_idx` ON `UserDataTableColumnToRolePermission` (`tableId` ASC);
 
 
 -- -----------------------------------------------------
