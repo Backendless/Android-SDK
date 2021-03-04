@@ -1023,32 +1023,25 @@ CREATE INDEX `fk_GlobalFileRolePermissions_PermissionType1_idx` ON `GlobalFileRo
 -- -----------------------------------------------------
 -- Table `UserDataTableColumnToRolePermission`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `UserDataTableColumnToRolePermission` ;
+DROP TABLE IF EXISTS `DataColumnRolePermission` ;
 
-CREATE TABLE IF NOT EXISTS `UserDataTableColumnToRolePermission` (
+CREATE TABLE IF NOT EXISTS `DataColumnRolePermission` (
   `columnId` VARCHAR(100) NOT NULL,
   `roleId` VARCHAR(100) NOT NULL,
-  `tableId` VARCHAR(100) NOT NULL,
+  `operationId` VARCHAR(100) NOT NULL,
   `permissionTypeId` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`columnId`, `roleId`),
-  CONSTRAINT `fk_ColumnToRolePermission_Role1`
+  PRIMARY KEY (`columnId`, `roleId`, `operationId`),
+  CONSTRAINT `fk_DataColumnRolePermission_Role1`
     FOREIGN KEY (`roleId`)
       REFERENCES `Role` (`id`)
       ON DELETE CASCADE
       ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ColumnToRolePermission_UserDataTableColumn1`
+  CONSTRAINT `fk_DataColumnRolePermission_UserDataTableColumn1`
     FOREIGN KEY (`columnId`)
       REFERENCES `UserDataTableColumn` (`id`)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ColumnToRolePermission_UserDataTable1`
-      FOREIGN KEY (`tableId`)
-      REFERENCES `UserDataTable` (`id`)
-      ON DELETE NO ACTION
+      ON DELETE CASCADE
       ON UPDATE NO ACTION)
   ENGINE = InnoDB;
-
-CREATE INDEX `fk_ColumnToRolePermission_UserDataTable1_idx` ON `UserDataTableColumnToRolePermission` (`tableId` ASC);
 
 
 -- -----------------------------------------------------
