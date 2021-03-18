@@ -143,7 +143,11 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven {
-        url "http://maven.backendless.com/repository/backendless_public"
+        credentials {
+            username creds.username
+            password creds.password
+        }
+        url "https://maven.backendless.com/repository/backendless_public"
     }
     flatDir {
         dirs 'libs'
@@ -165,8 +169,7 @@ publishing {
                 username creds.username
                 password creds.password
             }
-
-            url "http://maven.backendless.com/repository/backendless_public"
+            url "https://maven.backendless.com/repository/backendless_public"
         }
     }
 }
