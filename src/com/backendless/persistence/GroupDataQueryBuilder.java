@@ -255,7 +255,11 @@ public class GroupDataQueryBuilder
     for( String grb : groupBy )
     {
       if( grb != null && !grb.equals( "" ) )
+      {
+        if( !grb.startsWith( "'" ) && !grb.endsWith( "'" ) )
+          grb = "'" + grb + "'";
         this.groupBy.add( grb );
+      }
     }
 
     return this;
