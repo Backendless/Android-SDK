@@ -44,6 +44,37 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `main_backendless`.`AppCustomDomain`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `main_backendless`.`AppCustomDomain` ;
+
+CREATE TABLE IF NOT EXISTS `main_backendless`.`AppCustomDomain` (
+  `id` VARCHAR(100) NOT NULL,
+  `domain` VARCHAR(255) NOT NULL,
+  `apiKeyId` VARCHAR(100) NOT NULL,
+  `applicationId` VARCHAR(100) NOT NULL,
+  `zoneId` INT NOT NULL DEFAULT 1,
+  `roleId` VARCHAR(100) NULL,
+  `generated` BOOLEAN NOT NULL DEFAULT 0,
+  `useSSL` BOOLEAN NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `fk_AppCustomDomain_ClusterZone` (`zoneId`),
+  CONSTRAINT `fk_AppCustomDomain_ClusterZone`
+	FOREIGN KEY (`zoneId`)
+    REFERENCES `main_backendless`.`ClusterZone` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  KEY `fk_AppCustomDomain_Application` (`applicationId`,`zoneId`),
+  CONSTRAINT `fk_AppCustomDomain_Application`
+	FOREIGN KEY (`applicationId`,`zoneId`)
+    REFERENCES `main_backendless`.`Application` (`id`,`zoneId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  UNIQUE INDEX `domain_UNIQUE` (`domain` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `main_backendless`.`ClusterZone`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `main_backendless`.`ClusterZone`;
