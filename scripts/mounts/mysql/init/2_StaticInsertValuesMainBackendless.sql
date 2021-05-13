@@ -878,7 +878,7 @@ CREATE TABLE IF NOT EXISTS `Timer` (
     `timername` VARCHAR(100) NOT NULL,
     `startdate` DATETIME NULL,
     `expire` DATETIME NULL,
-    `type` ENUM('once','daily','weekly','monthly','custom') NOT NULL,
+    `type` ENUM('once','daily','weekly','monthly','custom','cron') NOT NULL,
     `frequency` VARCHAR(1000) NULL,
     `startup` BIGINT NULL,
     `nextStartup` BIGINT NULL,
