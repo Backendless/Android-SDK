@@ -5,6 +5,7 @@ import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.transaction.payload.Relation;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -103,7 +104,7 @@ class RelationOperationImpl implements RelationOperation
 
   @Override
   public OpResult addOperation( OperationType operationType, String parentTable, String parentObjectId,
-                                    String columnName, List<Map<String, Object>> childrenMaps )
+                                String columnName, List<Map<String, Object>> childrenMaps )
   {
     List<Object> childrenIds = getChildrenFromListMap( childrenMaps );
 
@@ -115,10 +116,8 @@ class RelationOperationImpl implements RelationOperation
   public OpResult addOperation( OperationType operationType, String parentTable, String parentObjectId,
                                 String columnName, OpResult children )
   {
-    checkOpResultForChildren( children );
-
     return addOperation( operationType, parentTable, parentObjectId, columnName,
-                         null, children.makeReference() );
+                         null, makeChildren( children ) );
   }
 
   @Override
@@ -180,10 +179,8 @@ class RelationOperationImpl implements RelationOperation
     String parentObjectId = getParentObjectIdFromInstance( parentObject );
     String parentTable = BackendlessSerializer.getSimpleName( parentObject.getClass() );
 
-    checkOpResultForChildren( children );
-
     return addOperation( operationType, parentTable, parentObjectId, columnName,
-                         null, children.makeReference() );
+                         null, makeChildren( children ) );
   }
 
   @Override
@@ -248,11 +245,9 @@ class RelationOperationImpl implements RelationOperation
   {
     checkOpResultFoParent( parentObject );
 
-    checkOpResultForChildren( children );
-
     return addOperation( operationType, parentObject.getTableName(),
                          parentObject.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ).makeReference(),
-                         columnName, null, children.makeReference() );
+                         columnName, null, makeChildren( children ) );
   }
 
   @Override
@@ -318,10 +313,8 @@ class RelationOperationImpl implements RelationOperation
   {
     Map<String, Object> referenceToObjectId = getReferenceToParentFromOpResultValue( parentObject );
 
-    checkOpResultForChildren( children );
-
     return addOperation( operationType, parentObject.getOpResult().getTableName(), referenceToObjectId, columnName,
-                         null, children.makeReference() );
+                         null, makeChildren( children ) );
   }
 
   @Override
@@ -396,14 +389,24 @@ class RelationOperationImpl implements RelationOperation
     return TransactionHelper.convertCreateBulkOrFindResultIndexToObjectId( parentObject );
   }
 
-  private void checkOpResultForChildren( OpResult children )
+  private Object makeChildren( OpResult children )
   {
     if( children == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_OP_RESULT );
 
-    if( ! ( OperationType.supportCollectionEntityDescriptionType.contains( children.getOperationType() )
-            || OperationType.supportListIdsResultType.contains( children.getOperationType() ) ) )
+    if( OperationType.supportCollectionEntityDescriptionType.contains( children.getOperationType() )
+        || OperationType.supportListIdsResultType.contains( children.getOperationType() ) )
+    {
+      return children.makeReference();
+    }
+    else if( OperationType.supportEntityDescriptionResultType.contains( children.getOperationType() ) )
+    {
+      return Collections.singletonList( children.resolveTo( Persistence.DEFAULT_OBJECT_ID_FIELD ).makeReference() );
+    }
+    else
+    {
       throw new IllegalArgumentException( ExceptionMessage.REF_TYPE_NOT_SUPPORT );
+    }
   }
 
   private List<Object> getChildrenFromListMap( List<Map<String, Object>> childrenMaps )
