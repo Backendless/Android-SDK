@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    field.cattle.io/creatorId: user-9ngsb
+  labels:
+    cattle.io/creator: norman
+    workload.user.cattle.io/workloadselector: deployment-default-taskman
+  name: bl-taskman
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: deployment-default-taskman
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        workload.user.cattle.io/workloadselector: deployment-default-taskman
+    spec:
+      containers:
+      - args:
+        - taskman
+        env:
+        - name: JAVA_OPTS
+          value: "-XX:MetaspaceSize=512m -Xms4096m -Xmx8192m -XX:+UseG1GC -XX:+UseStringDeduplication -XX:StringDeduplicationAgeThreshold=3"
+        - name: BL_CONFIG_PROVIDER
+          valueFrom:
+            configMapKeyRef:
+              key: BL_CONFIG_PROVIDER
+              name: bl-env
+              optional: false
+        - name: BL_CONSUL_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: BL_CONSUL_HOST
+              name: bl-env
+              optional: false
+        - name: BL_CONSUL_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: BL_CONSUL_PORT
+              name: bl-env
+              optional: false
+        - name: BL_HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        image: backendless/bl-server-cloud:     <--- provide version
+        imagePullPolicy: IfNotPresent
+        name: bl-taskman
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: {}
+          privileged: false
+          procMount: Default
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        stdin: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        tty: true
+        volumeMounts:
+        - mountPath: /opt/backendless/repo
+          name: repo
+        - mountPath: /opt/backendless/logs
+          name: logs
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - hostPath:
+          path: /opt/backendless/shared/repo
+          type: ""
+        name: repo
+      - hostPath:
+          path: /opt/backendless/logs/bl-taskman
+          type: ""
+        name: logs

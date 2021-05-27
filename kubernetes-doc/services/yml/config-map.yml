@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  BL_CONFIG_PROVIDER: consul
+  BL_CONSUL_HOST: bl-consul
+  BL_CONSUL_PORT: "8500"
+  BL_JS_CODE_RUNNER_MODE: pro
+  BL_MANAGEMENT_HTTP_PORT: "2400"
+kind: ConfigMap
+metadata:
+  name: bl-env

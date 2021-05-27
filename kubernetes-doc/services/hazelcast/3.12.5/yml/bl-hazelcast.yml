@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bl-hazelcast-3125
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: bl-hazelcast-3125
+  template:
+    metadata:
+      labels:
+        app: bl-hazelcast-3125
+    spec:
+      containers:
+        - name: bl-hazelcast-3125
+          image: backendless/bl-hazelcast:6.0.0.dev
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5701
+            - containerPort: 8080
+          env:
+            - name: BL_CONFIG_PROVIDER
+              valueFrom:
+                configMapKeyRef:
+                  key: BL_CONFIG_PROVIDER
+                  name: bl-env
+                  optional: false
+            - name: BL_CONSUL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: BL_CONSUL_HOST
+                  name: bl-env
+                  optional: false
+            - name: BL_CONSUL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: BL_CONSUL_PORT
+                  name: bl-env
+                  optional: false
+            - name: BL_HOST_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: BL_MANAGEMENT_HTTP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: BL_MANAGEMENT_HTTP_PORT
+                  name: bl-env
+                  optional: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bl-hazelcast-3125
+spec:
+  type: LoadBalancer
+  selector:
+    app: bl-hazelcast-3125
+  ports:
+    - name: hazelcast
+      port: 5701
+    - name: app
+      port: 8080

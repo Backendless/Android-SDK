@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    cattle.io/creator: norman
+  name: bl-init-config
+spec:
+  backoffLimit: 6
+  completions: 1
+  parallelism: 1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        job-name: bl-init-config
+    spec:
+      containers:
+      - env:
+        - name: consulConfig
+          value: '{"host": "bl-consul", "port": 8500}'
+        image: backendless/bl-config-loader:     <--- provide version
+        imagePullPolicy: IfNotPresent
+        name: bl-init-config
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: {}
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        stdin: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        tty: true
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
