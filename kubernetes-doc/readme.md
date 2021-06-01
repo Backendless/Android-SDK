@@ -50,6 +50,7 @@ Follow the setup guide step-by-step in the order that is provided in the doc.
 - [Setup domain](#setup_domains)
 - [Setup SMTP](#setup_smtp_server)
 - [Smoke test](./smoke_test.md)
+- [Advanced configuration](./advanced.md)
 
 
 ### <a name="init_config_map">Initialize config map</a>
