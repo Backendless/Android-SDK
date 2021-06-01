@@ -461,6 +461,19 @@ public final class UserService
     }
   }
 
+  public boolean verifyPassword( String password )
+  {
+    if( password == null || password.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_PASSWORD );
+
+    String userToken = UserTokenStorageFactory.instance().getStorage().get();
+    if( userToken == null || userToken.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NO_EXISTING_USER_TOKEN );
+
+    HeadersManager.getInstance().addHeader( HeadersManager.HeadersEnum.USER_TOKEN_KEY, userToken );
+    return Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "verifyPassword", new Object[] { password } );
+  }
+
   public void resendEmailConfirmation( String email ) throws BackendlessException
   {
     if( email == null || email.isEmpty() )
