@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2008-2013, Hazelcast, Inc. All Rights Reserved.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<hazelcast-client xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://www.hazelcast.com/schema/client-config
+                               http://www.hazelcast.com/schema/client-config/hazelcast-client-config-3.9.xsd"
+                  xmlns="http://www.hazelcast.com/schema/client-config">
+
+    <properties>
+        <!--property name="hazelcast.logging.type">slf4j</property-->
+        <property name="hazelcast.client.statistics.enabled">false</property>
+        <property name="hazelcast.discovery.enabled">true</property>
+    </properties>
+
+    <group>
+        <name>backendless</name>
+    </group>
+
+    <instance-name>hz-client</instance-name>
+
+    <connection-strategy reconnect-mode="ASYNC"  />
+
+    <network>
+        <!--it will try to reconnect during one hour 1200*3*1000 -->
+        <connection-attempt-limit>1200</connection-attempt-limit>
+        <connection-attempt-period>3000</connection-attempt-period>
+        <!--cluster-members>
+            <address>bl-hazelcast:5800</address>
+        </cluster-members-->
+        <discovery-strategies>
+            <discovery-strategy enabled="true" class="com.hazelcast.kubernetes.HazelcastKubernetesDiscoveryStrategy">
+                <properties>
+
+                </properties>
+            </discovery-strategy>
+        </discovery-strategies>
+    </network>
+
+    <near-cache name="*">
+        <in-memory-format>OBJECT</in-memory-format>
+    </near-cache>
+</hazelcast-client>

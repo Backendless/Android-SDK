@@ -10,7 +10,7 @@ To get started:
 1. Download the `quickstart` [archive](https://github.com/Backendless/BackendlessPro/archive/master.zip) and expand it into a directory. The archive contains all the management scripts for the product. 
 1. Open a command prompt/terminal window and change the current directory to `/scripts` which is located in the root of the directory created from the downloaded zip. Run the following command:
     ```
-    chmod -R 777 $(pwd)
+    chmod +x *.sh
     ```
 1. In the same command prompt/terminal window from the step above run the following command, which will download and install all the required images:
     ```
