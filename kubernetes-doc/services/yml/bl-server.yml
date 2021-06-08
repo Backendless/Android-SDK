@@ -1,0 +1,127 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    field.cattle.io/creatorId: user-9ngsb
+  labels:
+    cattle.io/creator: norman
+    workload.user.cattle.io/workloadselector: deployment-default-bl-server
+  name: bl-server
+spec:
+  progressDeadlineSeconds: 120
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: deployment-default-bl-server
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        field.cattle.io/ports: '[[{"containerPort":9000,"dnsName":"bl-server-nodeport","hostPort":0,"kind":"NodePort","name":"9000tcp323001","protocol":"TCP","sourcePort":32300}]]'
+      creationTimestamp: null
+      labels:
+        workload.user.cattle.io/workloadselector: deployment-default-bl-server
+    spec:
+      containers:
+      - args:
+        - play
+        env:
+        - name: JAVA_OPTS
+          value: -XX:MetaspaceSize=512m -Xms4096m -Xmx8192m -XX:+UseG1GC -XX:+UseStringDeduplication -XX:StringDeduplicationAgeThreshold=3
+        - name: LANG
+          value: en_US.UTF-8
+        - name: LC_ALL
+          value: en_US.UTF-8
+        - name: BL_CONSUL_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: BL_CONSUL_PORT
+              name: bl-env
+              optional: false
+        - name: BL_HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: BL_CONSUL_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: BL_CONSUL_HOST
+              name: bl-env
+              optional: false
+        - name: BL_CONFIG_PROVIDER
+          valueFrom:
+            configMapKeyRef:
+              key: BL_CONFIG_PROVIDER
+              name: bl-env
+              optional: false
+        image: backendless/bl-server:     <--- provide version
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 50
+          httpGet:
+            path: /
+            port: 9000
+            scheme: HTTP
+          initialDelaySeconds: 60
+          periodSeconds: 2
+          successThreshold: 1
+          timeoutSeconds: 10
+        name: bl-server
+        ports:
+        - containerPort: 9000
+          name: 9000tcp323001
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 60
+          httpGet:
+            path: /
+            port: 9000
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 1
+          successThreshold: 2
+          timeoutSeconds: 1
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: {}
+          privileged: false
+          procMount: Default
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        stdin: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        tty: true
+        volumeMounts:
+        - mountPath: /opt/backendless/repo
+          name: repo
+        - mountPath: /opt/backendless/logs
+          name: logs
+#        - mountPath: /opt/backendless/server/conf/application.conf
+#          name: applicationconf
+#          readOnly: true
+      dnsConfig: {}
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - hostPath:
+          path: /opt/backendless/shared/repo
+          type: ""
+        name: repo
+      - hostPath:
+          path: /opt/backendless/logs/bl-server
+          type: ""
+        name: logs
+#      - hostPath:
+#          path: /opt/backendless/shared/confs/bl-server/application.conf
+#          type: ""
+#        name: applicationconf
