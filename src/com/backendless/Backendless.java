@@ -20,7 +20,6 @@ package com.backendless;
 
 import android.content.Context;
 
-import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.files.BackendlessFile;
 import com.backendless.files.BackendlessFileFactory;
@@ -45,8 +44,6 @@ import com.backendless.rt.RTService;
 import com.backendless.rt.RTServiceImpl;
 import com.backendless.util.JSONUtil;
 import com.backendless.utils.JSONConverterWeborbImpl;
-import org.json.JSONException;
-import org.json.JSONObject;
 import weborb.ORBConstants;
 import weborb.config.ORBConfig;
 import weborb.types.Types;
@@ -58,19 +55,14 @@ import weborb.writer.ITypeWriter;
 import weborb.writer.MessageWriter;
 import weborb.writer.amf.AmfV3Formatter;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 public final class Backendless
 {
-  private final static String DEFAULT_API_ENDPOINT = "https://api.backendless.com";
   private static String url;
   private static final boolean isAndroid = isAndroidEnvironment();
   // do not remove or change 'isCoderunner', because it is used in CodeRunner initialization process
@@ -232,40 +224,11 @@ public final class Backendless
     prefs.initPreferences( applicationId, apiKey );
 
     if( url == null )
-      url = discoverApiEndpoint( applicationId );
+      url = DiscoverApiEndpointService.discoverApiEndpoint( applicationId );
 
     prefs.setUrl( url );
 
     initApp( context );
-  }
-
-  private static String discoverApiEndpoint( String applicationId )
-  {
-    String discoverUrl = DEFAULT_API_ENDPOINT + "/discover-api-endpoint?appId=" + applicationId;
-
-    try
-    {
-      URL connectionUrl = new URL( discoverUrl );
-
-      HttpURLConnection connection = (HttpURLConnection) connectionUrl.openConnection();
-      connection.setRequestMethod( "GET" );
-
-      BufferedReader in = new BufferedReader( new InputStreamReader( connection.getInputStream() ) );
-      String inputLine;
-      StringBuilder response = new StringBuilder();
-
-      while( ( inputLine = in.readLine() ) != null )
-      {
-        response.append( inputLine );
-      }
-      in.close();
-
-      return new JSONObject( response.toString() ).getString( "url" );
-    }
-    catch( IOException | JSONException e )
-    {
-      throw new BackendlessException( ExceptionMessage.DISCOVERY_ENDPOINT_EXCEPTION, e.getMessage() );
-    }
   }
 
   private static void initApp( Object context )
