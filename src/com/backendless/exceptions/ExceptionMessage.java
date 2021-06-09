@@ -146,4 +146,6 @@ public class ExceptionMessage
           "Unable to execute the bulkDelete operation. Use the bulkDelete method which accepts both table name and a collection of objectId values.";
   public final static String USE_ANOTHER_METHOD_WITH_TABLE_NAME_AND_LIST_OBJECT_MAPS =
           "Unable to execute the bulkDelete operation. Use the bulkDelete method which accepts both table name and a collection of objects.";
+
+  public final static String DISCOVERY_ENDPOINT_EXCEPTION = "Could not discover API endpoint";
 }
