@@ -1,0 +1,108 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    field.cattle.io/creatorId: user-9ngsb
+  labels:
+    cattle.io/creator: norman
+    workload.user.cattle.io/workloadselector: deployment-default-bl-web-console
+  name: bl-web-console
+spec:
+  progressDeadlineSeconds: 300
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: deployment-default-bl-web-console
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        field.cattle.io/ports: '[[{"containerPort":80,"dnsName":"bl-web-console-hostport","nodePort":32400,"kind":"NodePort","name":"80tcp324000","protocol":"TCP","sourcePort":32400}]]'
+      creationTimestamp: null
+      labels:
+        workload.user.cattle.io/workloadselector: deployment-default-bl-web-console
+    spec:
+      containers:
+      - env:
+        - name: BL_CONSUL_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: BL_CONSUL_HOST
+              name: bl-env
+              optional: false
+        - name: BL_CONSUL_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: BL_CONSUL_PORT
+              name: bl-env
+              optional: false
+        - name: BL_HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: PORT
+          value: "80"
+        image: backendless/bl-web-console:     <--- provide version
+        imagePullPolicy: Always
+        livenessProbe:
+          failureThreshold: 2
+          httpGet:
+            path: /
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 2
+        name: bl-web-console
+        ports:
+        - containerPort: 80
+#          hostPort: 32400
+          name: 80tcp324000
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 40
+          httpGet:
+            path: /
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 1
+          successThreshold: 2
+          timeoutSeconds: 2
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: {}
+          privileged: false
+          procMount: Default
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        stdin: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        tty: true
+        volumeMounts:
+        - mountPath: /opt/backendless/repo
+          name: repo
+        - mountPath: /opt/backendless/console/logs
+          name: logs
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - hostPath:
+          path: /opt/backendless/shared/repo
+          type: ""
+        name: repo
+      - hostPath:
+          path: /opt/backendless/logs/bl-web-console
+          type: ""
+        name: logs

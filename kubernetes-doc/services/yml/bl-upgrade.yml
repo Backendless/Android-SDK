@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    field.cattle.io/creatorId: u-9qrz6
+  labels:
+    cattle.io/creator: norman
+    workload.user.cattle.io/workloadselector: deployment-default-bl-upgrade
+  name: bl-upgrade
+  selfLink: /apis/apps/v1/namespaces/default/deployments/bl-upgrade
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 0
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: deployment-default-bl-upgrade
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        workload.user.cattle.io/workloadselector: deployment-default-bl-upgrade
+    spec:
+      containers:
+      - env:
+        - name: SKIP_VERSION_CHECK
+          value: "false"
+        - name: applicationsToBeUpdatedFirst
+          value: main_application
+        - name: dbRepeatedUpgrade
+          value: "false"
+        - name: forceUpgrade
+          value: "false"
+        - name: updateDBThreadNumber
+          value: "2"
+        - name: BL_CONFIG_PROVIDER
+          valueFrom:
+            configMapKeyRef:
+              key: BL_CONFIG_PROVIDER
+              name: bl-env
+              optional: false
+        - name: BL_CONSUL_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: BL_CONSUL_HOST
+              name: bl-env
+              optional: false
+        - name: BL_CONSUL_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: BL_CONSUL_PORT
+              name: bl-env
+              optional: false
+        - name: BL_HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        image: backendless/bl-upgrade:     <--- provide version
+        imagePullPolicy: Always
+        name: bl-upgrade
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: {}
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        stdin: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        tty: true
+        volumeMounts:
+        - mountPath: /opt/backendless/logs
+          name: logs
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - hostPath:
+          path: /opt/backendless/shared/logs/bl-upgrade
+          type: ""
+        name: logs

@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "80"
+    field.cattle.io/creatorId: user-9ngsb
+    field.cattle.io/publicEndpoints: "null"
+  labels:
+    cattle.io/creator: norman
+    workload.user.cattle.io/workloadselector: deployment-default-bl-hazelcast
+  name: bl-hazelcast
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: deployment-default-bl-hazelcast
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        field.cattle.io/ports: '[[{"containerPort":5701,"dnsName":"bl-hazelcast","kind":"ClusterIP","name":"5800tcp02","protocol":"TCP","sourcePort":0}]]'
+      creationTimestamp: null
+      labels:
+        workload.user.cattle.io/workloadselector: deployment-default-bl-hazelcast
+    spec:
+      containers:
+      - env:
+        - name: BL_CONFIG_PROVIDER
+          valueFrom:
+            configMapKeyRef:
+              key: BL_CONFIG_PROVIDER
+              name: bl-env
+              optional: false
+        - name: BL_CONSUL_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: BL_CONSUL_HOST
+              name: bl-env
+              optional: false
+        - name: BL_CONSUL_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: BL_CONSUL_PORT
+              name: bl-env
+              optional: false
+        - name: BL_HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: BL_MANAGEMENT_HTTP_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: BL_MANAGEMENT_HTTP_PORT
+              name: bl-env
+              optional: false
+        image: backendless/bl-hazelcast:latest
+#       image: registry.backendless.com:5000/bl-hazelcast:5.2.65
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 2400
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 20
+          successThreshold: 1
+          timeoutSeconds: 300
+        name: bl-hazelcast
+        ports:
+        - containerPort: 5701
+          name: 5800tcp02
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 60
+          httpGet:
+            path: /health
+            port: 2400
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 1
+          successThreshold: 2
+          timeoutSeconds: 2
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        stdin: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        tty: true
+      dnsPolicy: ClusterFirst
+#      imagePullSecrets:
+#        - name: registry-backendless
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

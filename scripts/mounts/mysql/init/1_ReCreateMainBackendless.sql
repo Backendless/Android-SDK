@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS `main_backendless`.`AppCustomDomain` (
   `roleId` VARCHAR(100) NULL,
   `generated` BOOLEAN NOT NULL DEFAULT 0,
   `useSSL` BOOLEAN NOT NULL DEFAULT 0,
+  `useForFileUrls` BOOLEAN NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `fk_AppCustomDomain_ClusterZone` (`zoneId`),
   CONSTRAINT `fk_AppCustomDomain_ClusterZone`
@@ -84,6 +85,8 @@ CREATE TABLE IF NOT EXISTS `main_backendless`.`ClusterZone` (
   `code` VARCHAR(255) NOT NULL,
   `name` VARCHAR(255) NOT NULL,
   `domain` VARCHAR(255) NOT NULL,
+  `domain` VARCHAR(255) NOT NULL,
+  `apiUrl` varchar(255) NOT NULL DEFAULT 'http://localhost:9000',
   `description` TEXT NULL,
   `iconURL` VARCHAR(500),
   PRIMARY KEY (`id`))
