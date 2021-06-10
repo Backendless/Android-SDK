@@ -1,6 +1,6 @@
 USE `main_backendless`;
 
-INSERT INTO `Version` (`main`, `application`) values (41, 92);
+INSERT INTO `Version` (`main`, `application`) values (41, 95);
 
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('1', 'ACTIVE');
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('2', 'SUSPENDED');
@@ -509,6 +509,7 @@ CREATE TABLE IF NOT EXISTS `UserDataTableColumn` (
     `isPrimaryKey` TINYINT(1) NULL,
     `unique` TINYINT(1) NOT NULL DEFAULT 0,
     `indexed` TINYINT(1) NOT NULL DEFAULT 0,
+    `internal` BOOLEAN DEFAULT false,
     `metaInfo` json NULL,
     PRIMARY KEY (`id`),
     CONSTRAINT `fk_UserDataTable_UserDataColumnTypes1`
