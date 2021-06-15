@@ -59,7 +59,6 @@ public class ExceptionMessage
   public final static String NULL_COMPRESS_FORMAT = "CompressFormat cannot be null";
 
   public final static String NULL_IDENTITY = "Identity cannot be null";
-  public final static String NULL_EMAIL = "Email cannot be null or empty.";
 
   public final static String NULL_APPLICATION_ID = "Application id cannot be null";
   public final static String NULL_API_KEY = "Secret key cannot be null";

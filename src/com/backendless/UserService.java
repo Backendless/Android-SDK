@@ -474,22 +474,47 @@ public final class UserService
     return Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "verifyPassword", new Object[] { password } );
   }
 
-  public void resendEmailConfirmation( String email ) throws BackendlessException
+  public void createEmailConfirmation( String identity )
   {
-    if( email == null || email.isEmpty() )
-      throw new IllegalArgumentException( ExceptionMessage.NULL_EMAIL );
+    if( identity == null || identity.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
 
-    Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "resendEmailConfirmation", new Object[]{ email } );
+    Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "createEmailConfirmationURL", new Object[]{ identity } );
   }
 
-  public void resendEmailConfirmation( String email, AsyncCallback<Void> responder )
+  public void createEmailConfirmation( String identity, AsyncCallback<Void> responder )
   {
     try
     {
-      if( email == null || email.isEmpty() )
-        throw new IllegalArgumentException( ExceptionMessage.NULL_EMAIL );
+      if( identity == null || identity.isEmpty() )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
 
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "resendEmailConfirmation", new Object[]{ email }, responder );    }
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "createEmailConfirmationURL", new Object[]{ identity }, responder );
+    }
+    catch ( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
+  public void resendEmailConfirmation( String identity ) throws BackendlessException
+  {
+    if( identity == null || identity.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
+
+    Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "resendEmailConfirmation", new Object[]{ identity } );
+  }
+
+  public void resendEmailConfirmation( String identity, AsyncCallback<Void> responder )
+  {
+    try
+    {
+      if( identity == null || identity.isEmpty() )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
+
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "resendEmailConfirmation", new Object[]{ identity }, responder );
+    }
     catch ( Throwable e )
     {
       if( responder != null )
