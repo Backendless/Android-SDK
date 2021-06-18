@@ -4,13 +4,24 @@ import com.backendless.rt.RTCallback;
 import com.backendless.rt.RTSubscription;
 import com.backendless.rt.SubscriptionNames;
 
+import java.util.List;
+
 class DataSubscription extends RTSubscription
 {
-  DataSubscription( RTDataEvents rtDataEvent, String tableName, RTCallback callback )
+  DataSubscription( DataEvents rtDataEvent, String tableName, RTCallback callback )
   {
     super( SubscriptionNames.OBJECTS_CHANGES, callback );
-    putOption("event", rtDataEvent.eventName() );
+    putOption( "event", rtDataEvent.eventName() );
     putOption( "tableName", tableName );
+  }
+
+  DataSubscription( DataEvents rtDataEvent, String tableName, String relationColumnName,
+                    RTCallback callback )
+  {
+    super( SubscriptionNames.RELATIONS_CHANGES, callback );
+    putOption( "event", rtDataEvent.eventName() );
+    putOption( "tableName", tableName );
+    putOption( "relationColumnName", relationColumnName );
   }
 
   DataSubscription withWhere( String where )
@@ -19,10 +30,16 @@ class DataSubscription extends RTSubscription
     return this;
   }
 
-  RTDataEvents getEvent()
+  DataSubscription withParentObjects( List<String> parentObjects )
+  {
+    putOption( "parentObjects", parentObjects );
+    return this;
+  }
+
+  DataEvents getEvent()
   {
     final String eventStr = (String) getOption( "event" );
-    return eventStr == null ? null : RTDataEvents.forName( eventStr );
+    return eventStr == null ? null : DataEvents.forName( eventStr );
   }
 
   String getTableName()
@@ -34,5 +51,4 @@ class DataSubscription extends RTSubscription
   {
     return (String) getOption( "whereClause" );
   }
-
 }
