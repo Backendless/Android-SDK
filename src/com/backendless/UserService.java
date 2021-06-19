@@ -474,15 +474,15 @@ public final class UserService
     return Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "verifyPassword", new Object[] { password } );
   }
 
-  public void createEmailConfirmation( String identity )
+  public String createEmailConfirmationURL( String identity )
   {
     if( identity == null || identity.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
 
-    Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "createEmailConfirmationURL", new Object[]{ identity } );
+    return Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "createEmailConfirmationURL", new Object[]{ identity } );
   }
 
-  public void createEmailConfirmation( String identity, AsyncCallback<Void> responder )
+  public void createEmailConfirmationURL( String identity, AsyncCallback<String> responder )
   {
     try
     {
