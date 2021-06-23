@@ -204,6 +204,11 @@ public class DataQueryBuilder
     return queryOptionsBuilder.setRelated( related );
   }
 
+  public DataQueryBuilder setFileReferencePrefix( String fileReferencePrefix )
+  {
+    return queryOptionsBuilder.setFileReferencePrefix( fileReferencePrefix );
+  }
+
   public DataQueryBuilder addRelated( List<String> related )
   {
     return queryOptionsBuilder.addRelated( related );

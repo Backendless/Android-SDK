@@ -18,33 +18,30 @@
 
 package com.backendless.persistence;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
 public class QueryOptions
 {
-  private List<String> sortBy = new ArrayList<String>();
-  private List<String> related  = new ArrayList<String>();
+  @Setter
+  private List<String> sortBy = new ArrayList<>();
+  @Setter
+  private List<String> related  = new ArrayList<>();
+  @Getter @Setter
   private Integer relationsDepth;
+  @Getter @Setter
   private Integer relationsPageSize;
-
-  public QueryOptions()
-  {
-  }
+  @Getter @Setter
+  private String fileReferencePrefix;
 
   public QueryOptions( String sortBy )
   {
     addSortByOption( sortBy );
-  }
-
-  public void setSortBy( List<String> sortBy )
-  {
-    this.sortBy = sortBy;
-  }
-
-  public void setRelated( List<String> related )
-  {
-    this.related = related;
   }
 
   public void addSortByOption( String sortBy )
@@ -53,7 +50,7 @@ public class QueryOptions
       return;
 
     if( this.sortBy == null )
-      this.sortBy = new ArrayList<String>();
+      this.sortBy = new ArrayList<>();
 
     this.sortBy.add( sortBy );
   }
@@ -64,7 +61,7 @@ public class QueryOptions
       return;
 
     if( this.related == null )
-      this.related = new ArrayList<String>();
+      this.related = new ArrayList<>();
 
     this.related.add( related );
   }
@@ -72,27 +69,17 @@ public class QueryOptions
   public List<String> getSortBy()
   {
     if( sortBy == null )
-      return sortBy = new ArrayList<String>();
+      return sortBy = new ArrayList<>();
 
-    return new ArrayList<String>( sortBy );
+    return new ArrayList<>( sortBy );
   }
 
   public List<String> getRelated()
   {
     if( related == null )
-      return related = new ArrayList<String>();
+      return related = new ArrayList<>();
 
-    return new ArrayList<String>( related );
-  }
-
-  public Integer getRelationsPageSize()
-  {
-    return relationsPageSize;
-  }
-
-  public void setRelationsPageSize( Integer relationsPageSize )
-  {
-    this.relationsPageSize = relationsPageSize;
+    return new ArrayList<>( related );
   }
 
   public QueryOptions newInstance()
@@ -102,17 +89,8 @@ public class QueryOptions
     result.setRelated( related );
     result.setRelationsDepth( relationsDepth );
     result.setRelationsPageSize( relationsPageSize );
+    result.setFileReferencePrefix( fileReferencePrefix );
 
     return result;
-  }
-
-  public void setRelationsDepth ( Integer relationsDepth )
-  {
-    this.relationsDepth = relationsDepth;
-  }
-
-  public Integer getRelationsDepth()
-  {
-    return relationsDepth;
   }
 }
