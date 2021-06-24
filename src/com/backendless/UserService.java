@@ -26,11 +26,13 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.persistence.BackendlessSerializer;
+import com.backendless.persistence.DataQueryBuilder;
 import com.backendless.persistence.local.UserIdStorageFactory;
 import com.backendless.persistence.local.UserTokenStorageFactory;
 import com.backendless.property.AbstractProperty;
 import com.backendless.property.UserProperty;
 import com.backendless.rt.RTClientFactory;
+import com.backendless.utils.ResponderHelper;
 import weborb.types.Types;
 
 import java.util.ArrayList;
@@ -649,6 +651,31 @@ public final class UserService
       Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getUserRoles", new Object[] { }, callback );
     }
     catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
+  public List<BackendlessUser> findByRole( String roleName, boolean loadRoles, DataQueryBuilder queryBuilder )
+  {
+    if( roleName != null && roleName.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_ROLE_NAME );
+
+    return Arrays.asList( (BackendlessUser[]) Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "findByRole", new Object[] { roleName, loadRoles, queryBuilder.build() } ) );
+  }
+
+  public void findByRole( String roleName, boolean loadRoles, DataQueryBuilder queryBuilder, final AsyncCallback<List<BackendlessUser>> responder )
+  {
+    try
+    {
+      if( roleName != null && roleName.isEmpty() )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_ROLE_NAME );
+
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "findByRole", new Object[] { roleName, loadRoles, queryBuilder.build() },
+                           responder, ResponderHelper.getCollectionAdaptingResponder( BackendlessUser.class ) );
+    }
+    catch ( Throwable e )
     {
       if( responder != null )
         responder.handleFault( new BackendlessFault( e ) );
