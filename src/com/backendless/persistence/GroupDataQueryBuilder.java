@@ -218,6 +218,11 @@ public class GroupDataQueryBuilder
     return queryOptionsBuilder.setRelated( related );
   }
 
+  public GroupDataQueryBuilder setFileReferencePrefix( String fileReferencePrefix )
+  {
+    return queryOptionsBuilder.setFileReferencePrefix( fileReferencePrefix );
+  }
+
   public GroupDataQueryBuilder addRelated( List<String> related )
   {
     return queryOptionsBuilder.addRelated( related );

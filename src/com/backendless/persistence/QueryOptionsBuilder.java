@@ -1,15 +1,24 @@
 package com.backendless.persistence;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 class QueryOptionsBuilder<Builder>
 {
+  @Getter
   private List<String> sortBy;
+  @Getter
   private List<String> related;
+  @Getter
   private Integer relationsDepth;
+  @Getter
   private Integer relationsPageSize;
+  @Getter
+  private String fileReferencePrefix;
   private Builder builder;
 
   QueryOptionsBuilder( Builder builder )
@@ -26,15 +35,11 @@ class QueryOptionsBuilder<Builder>
     queryOptions.setRelationsDepth( relationsDepth );
     queryOptions.setSortBy( sortBy );
     queryOptions.setRelationsPageSize( relationsPageSize );
+    queryOptions.setFileReferencePrefix( fileReferencePrefix );
     return queryOptions;
   }
   
   /*--- Auto-generated code ---*/
-
-  public List<String> getSortBy()
-  {
-    return sortBy;
-  }
 
   public Builder setSortBy( List<String> sortBy )
   {
@@ -52,11 +57,6 @@ class QueryOptionsBuilder<Builder>
   {
     this.sortBy.add( sortBy );
     return builder;
-  }
-
-  public List<String> getRelated()
-  {
-    return related;
   }
 
   public Builder setRelated( List<String> related )
@@ -83,25 +83,21 @@ class QueryOptionsBuilder<Builder>
     return builder;
   }
 
-  public Integer getRelationsDepth()
-  {
-    return relationsDepth;
-  }
-
   public Builder setRelationsDepth( Integer relationsDepth )
   {
     this.relationsDepth = relationsDepth;
     return builder;
   }
 
-  public Integer getRelationsPageSize()
-  {
-    return relationsPageSize;
-  }
-
   public Builder setRelationsPageSize( Integer relationPageSize )
   {
     this.relationsPageSize = relationPageSize;
+    return builder;
+  }
+
+  public Builder setFileReferencePrefix( String fileReferencePrefix )
+  {
+    this.fileReferencePrefix = fileReferencePrefix;
     return builder;
   }
 }
