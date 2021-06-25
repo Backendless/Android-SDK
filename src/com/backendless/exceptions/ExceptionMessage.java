@@ -31,6 +31,7 @@ public class ExceptionMessage
   public final static String NULL_USER = "User cannot be null or empty.";
   public final static String NULL_PASSWORD = "User password cannot be null or empty.";
   public final static String NULL_LOGIN = "User login cannot be null or empty.";
+  public final static String NO_EXISTING_USER_TOKEN = "No existing user token. In order to check password you have to be logged in.";
 
   public final static String NULL_FACEBOOK_RESPONSE_OBJECT = "Facebook response cannot be null.";
   public static final String NULL_FACEBOOK_USER_ID = "Facebook user id cannot be null";
@@ -58,7 +59,6 @@ public class ExceptionMessage
   public final static String NULL_COMPRESS_FORMAT = "CompressFormat cannot be null";
 
   public final static String NULL_IDENTITY = "Identity cannot be null";
-  public final static String NULL_EMAIL = "Email cannot be null or empty.";
 
   public final static String NULL_APPLICATION_ID = "Application id cannot be null";
   public final static String NULL_API_KEY = "Secret key cannot be null";
