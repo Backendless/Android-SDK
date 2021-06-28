@@ -1,6 +1,7 @@
 package com.backendless.rt.data;
 
 import com.backendless.rt.RTCallback;
+import com.backendless.rt.RTEvent;
 import com.backendless.rt.RTSubscription;
 import com.backendless.rt.SubscriptionNames;
 
@@ -8,18 +9,18 @@ import java.util.List;
 
 class DataSubscription extends RTSubscription
 {
-  DataSubscription( DataEvents rtDataEvent, String tableName, RTCallback callback )
+  DataSubscription( ObjectEvents objectEvent, String tableName, RTCallback callback )
   {
     super( SubscriptionNames.OBJECTS_CHANGES, callback );
-    putOption( "event", rtDataEvent.eventName() );
+    putOption( "event", objectEvent.eventName() );
     putOption( "tableName", tableName );
   }
 
-  DataSubscription( DataEvents rtDataEvent, String tableName, String relationColumnName,
+  DataSubscription( RelationEvents relationEvent, String tableName, String relationColumnName,
                     RTCallback callback )
   {
     super( SubscriptionNames.RELATIONS_CHANGES, callback );
-    putOption( "event", rtDataEvent.eventName() );
+    putOption( "event", relationEvent.eventName() );
     putOption( "tableName", tableName );
     putOption( "relationColumnName", relationColumnName );
   }
@@ -36,10 +37,16 @@ class DataSubscription extends RTSubscription
     return this;
   }
 
-  DataEvents getEvent()
+  ObjectEvents getObjectEvent()
   {
     final String eventStr = (String) getOption( "event" );
-    return eventStr == null ? null : DataEvents.forName( eventStr );
+    return eventStr == null ? null : ObjectEvents.forName( eventStr );
+  }
+
+  RelationEvents getRelationEvent()
+  {
+    final String eventStr = (String) getOption( "event" );
+    return eventStr == null ? null : RelationEvents.forName( eventStr );
   }
 
   String getTableName()

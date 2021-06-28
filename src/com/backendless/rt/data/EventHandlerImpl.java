@@ -4,6 +4,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.rt.RTCallback;
+import com.backendless.rt.RTEvent;
 import com.backendless.rt.RTListenerImpl;
 import com.backendless.rt.RTSubscription;
 import com.backendless.rt.SubscriptionNames;
@@ -35,14 +36,14 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   @Override
   public void addCreateListener( AsyncCallback<T> callback )
   {
-    DataSubscription subscription = new DataSubscription( DataEvents.created, tableName, createCallback( callback ) );
+    DataSubscription subscription = new DataSubscription( ObjectEvents.created, tableName, createCallback( callback ) );
     addEventListener( subscription );
   }
 
   @Override
   public void addCreateListener( String whereClause, AsyncCallback<T> callback )
   {
-    DataSubscription subscription = new DataSubscription( DataEvents.created, tableName, createCallback( callback ) )
+    DataSubscription subscription = new DataSubscription( ObjectEvents.created, tableName, createCallback( callback ) )
             .withWhere( whereClause );
 
     addEventListener( subscription );
@@ -51,25 +52,25 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   @Override
   public void removeCreateListeners()
   {
-     removeListeners( DataEvents.created );
+     removeListeners( ObjectEvents.created );
   }
 
   @Override
   public void removeCreateListener( final String whereClause, final AsyncCallback<T> callback )
   {
-    removeListeners( DataEvents.created, whereClause, callback );
+    removeListeners( ObjectEvents.created, whereClause, callback );
   }
 
   @Override
   public void removeCreateListener( final AsyncCallback<T> callback )
   {
-    removeListeners( DataEvents.created, callback );
+    removeListeners( ObjectEvents.created, callback );
   }
 
   @Override
   public void removeCreateListeners( final String whereClause )
   {
-    removeListeners( DataEvents.created, whereClause );
+    removeListeners( ObjectEvents.created, whereClause );
   }
 
   //--------update-------
@@ -77,14 +78,14 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   @Override
   public void addUpdateListener( AsyncCallback<T> callback )
   {
-    DataSubscription subscription = new DataSubscription( DataEvents.updated, tableName, createCallback( callback ) );
+    DataSubscription subscription = new DataSubscription( ObjectEvents.updated, tableName, createCallback( callback ) );
     addEventListener( subscription );
   }
 
   @Override
   public void addUpdateListener( String whereClause, AsyncCallback<T> callback )
   {
-    DataSubscription subscription = new DataSubscription( DataEvents.updated, tableName, createCallback( callback ) )
+    DataSubscription subscription = new DataSubscription( ObjectEvents.updated, tableName, createCallback( callback ) )
             .withWhere( whereClause );
 
     addEventListener( subscription );
@@ -93,25 +94,25 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   @Override
   public void removeUpdateListeners()
   {
-    removeListeners( DataEvents.updated );
+    removeListeners( ObjectEvents.updated );
   }
 
   @Override
   public void removeUpdateListener( final String whereClause, final AsyncCallback<T> callback )
   {
-    removeListeners( DataEvents.updated, whereClause, callback );
+    removeListeners( ObjectEvents.updated, whereClause, callback );
   }
 
   @Override
   public void removeUpdateListener( final AsyncCallback<T> callback )
   {
-    removeListeners( DataEvents.updated, callback );
+    removeListeners( ObjectEvents.updated, callback );
   }
 
   @Override
   public void removeUpdateListeners( final String whereClause )
   {
-    removeListeners( DataEvents.updated, whereClause );
+    removeListeners( ObjectEvents.updated, whereClause );
   }
 
   //--------remove-------
@@ -119,14 +120,14 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   @Override
   public void addDeleteListener( AsyncCallback<T> callback )
   {
-    DataSubscription subscription = new DataSubscription( DataEvents.deleted, tableName, createCallback( callback ) );
+    DataSubscription subscription = new DataSubscription( ObjectEvents.deleted, tableName, createCallback( callback ) );
     addEventListener( subscription );
   }
 
   @Override
   public void addDeleteListener( String whereClause, AsyncCallback<T> callback )
   {
-    DataSubscription subscription = new DataSubscription( DataEvents.deleted, tableName, createCallback( callback ) )
+    DataSubscription subscription = new DataSubscription( ObjectEvents.deleted, tableName, createCallback( callback ) )
             .withWhere( whereClause );
 
     addEventListener( subscription );
@@ -135,25 +136,25 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   @Override
   public void removeDeleteListeners()
   {
-    removeListeners( DataEvents.deleted );
+    removeListeners( ObjectEvents.deleted );
   }
 
   @Override
   public void removeDeleteListener( final String whereClause, final AsyncCallback<T> callback )
   {
-    removeListeners( DataEvents.deleted, whereClause, callback );
+    removeListeners( ObjectEvents.deleted, whereClause, callback );
   }
 
   @Override
   public void removeDeleteListener( final AsyncCallback<T> callback )
   {
-    removeListeners( DataEvents.deleted, callback );
+    removeListeners( ObjectEvents.deleted, callback );
   }
 
   @Override
   public void removeDeleteListeners( final String whereClause )
   {
-    removeListeners( DataEvents.deleted, whereClause );
+    removeListeners( ObjectEvents.deleted, whereClause );
   }
 
   //--------bulk-create-------
@@ -162,20 +163,20 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   public void addBulkCreateListener( AsyncCallback<List> callback )
   {
     DataSubscription subscription =
-        new DataSubscription( DataEvents.bulk_created, tableName, createCallback( callback, List.class ) );
+        new DataSubscription( ObjectEvents.bulk_created, tableName, createCallback( callback, List.class ) );
     addEventListener( subscription );
   }
 
   @Override
   public void removeBulkCreateListener( AsyncCallback<List<String>> callback )
   {
-    removeListeners( DataEvents.bulk_created, callback );
+    removeListeners( ObjectEvents.bulk_created, callback );
   }
 
   @Override
   public void removeBulkCreateListeners()
   {
-    removeListeners( DataEvents.bulk_created );
+    removeListeners( ObjectEvents.bulk_created );
   }
 
   //--------bulk-update-------
@@ -183,14 +184,14 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   @Override
   public void addBulkUpdateListener( AsyncCallback<BulkEvent> callback )
   {
-    DataSubscription subscription = new DataSubscription( DataEvents.bulk_updated, tableName, createCallback( callback, BulkEvent.class ) );
+    DataSubscription subscription = new DataSubscription( ObjectEvents.bulk_updated, tableName, createCallback( callback, BulkEvent.class ) );
     addEventListener( subscription );
   }
 
   @Override
   public void addBulkUpdateListener( String whereClause, AsyncCallback<BulkEvent> callback )
   {
-    DataSubscription subscription = new DataSubscription( DataEvents.bulk_updated, tableName, createCallback( callback, BulkEvent.class ) )
+    DataSubscription subscription = new DataSubscription( ObjectEvents.bulk_updated, tableName, createCallback( callback, BulkEvent.class ) )
             .withWhere( whereClause );
 
     addEventListener( subscription );
@@ -199,25 +200,25 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   @Override
   public void removeBulkUpdateListeners()
   {
-    removeListeners( DataEvents.bulk_updated );
+    removeListeners( ObjectEvents.bulk_updated );
   }
 
   @Override
   public void removeBulkUpdateListener( final String whereClause, final AsyncCallback<BulkEvent> callback )
   {
-    removeListeners( DataEvents.bulk_updated, whereClause, callback );
+    removeListeners( ObjectEvents.bulk_updated, whereClause, callback );
   }
 
   @Override
   public void removeBulkUpdateListener( final AsyncCallback<BulkEvent> callback )
   {
-    removeListeners( DataEvents.bulk_updated, callback );
+    removeListeners( ObjectEvents.bulk_updated, callback );
   }
 
   @Override
   public void removeBulkUpdateListeners( final String whereClause )
   {
-    removeListeners( DataEvents.bulk_updated, whereClause );
+    removeListeners( ObjectEvents.bulk_updated, whereClause );
   }
 
   //--------bulk-remove-------
@@ -225,14 +226,14 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   @Override
   public void addBulkDeleteListener( AsyncCallback<BulkEvent> callback )
   {
-    DataSubscription subscription = new DataSubscription( DataEvents.bulk_deleted, tableName, createCallback( callback, BulkEvent.class ) );
+    DataSubscription subscription = new DataSubscription( ObjectEvents.bulk_deleted, tableName, createCallback( callback, BulkEvent.class ) );
     addEventListener( subscription );
   }
 
   @Override
   public void addBulkDeleteListener( String whereClause, AsyncCallback<BulkEvent> callback )
   {
-    DataSubscription subscription = new DataSubscription( DataEvents.bulk_deleted, tableName, createCallback( callback, BulkEvent.class ) )
+    DataSubscription subscription = new DataSubscription( ObjectEvents.bulk_deleted, tableName, createCallback( callback, BulkEvent.class ) )
             .withWhere( whereClause );
 
     addEventListener( subscription );
@@ -241,32 +242,32 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   @Override
   public void removeBulkDeleteListeners()
   {
-    removeListeners( DataEvents.bulk_deleted );
+    removeListeners( ObjectEvents.bulk_deleted );
   }
 
   @Override
   public void removeBulkDeleteListener( final String whereClause, final AsyncCallback<BulkEvent> callback )
   {
-    removeListeners( DataEvents.bulk_deleted, whereClause, callback );
+    removeListeners( ObjectEvents.bulk_deleted, whereClause, callback );
   }
 
   @Override
   public void removeBulkDeleteListener( final AsyncCallback<BulkEvent> callback )
   {
-    removeListeners( DataEvents.bulk_deleted, callback );
+    removeListeners( ObjectEvents.bulk_deleted, callback );
   }
 
   @Override
   public void removeBulkDeleteListeners( final String whereClause )
   {
-    removeListeners( DataEvents.bulk_deleted, whereClause );
+    removeListeners( ObjectEvents.bulk_deleted, whereClause );
   }
 
   @Override
   public void addSetRelationListener( String relationColumnName,
                                       AsyncCallback<RelationStatus> callback )
   {
-    DataSubscription subscription = new DataSubscription( DataEvents.relations_set, tableName, relationColumnName,
+    DataSubscription subscription = new DataSubscription( RelationEvents.relations_set, tableName, relationColumnName,
                                                           createCallback( callback, RelationStatus.class ) );
     addEventListener( subscription );
   }
@@ -275,7 +276,7 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   public void addSetRelationListener( String relationColumnName, List<String> parentObjects,
                                       AsyncCallback<RelationStatus> callback )
   {
-    DataSubscription subscription = new DataSubscription( DataEvents.relations_set, tableName, relationColumnName,
+    DataSubscription subscription = new DataSubscription( RelationEvents.relations_set, tableName, relationColumnName,
                                                           createCallback( callback, RelationStatus.class ) ).withParentObjects( parentObjects );
     addEventListener( subscription );
   }
@@ -283,14 +284,14 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   @Override
   public void removeSetRelationListeners()
   {
-    removeListeners( DataEvents.relations_set );
+    removeListeners( RelationEvents.relations_set );
   }
 
   @Override
   public void addAddRelationListener( String relationColumnName,
                                       AsyncCallback<RelationStatus> callback )
   {
-    DataSubscription subscription = new DataSubscription( DataEvents.relations_added, tableName, relationColumnName,
+    DataSubscription subscription = new DataSubscription( RelationEvents.relations_added, tableName, relationColumnName,
                                                           createCallback( callback, RelationStatus.class ) );
     addEventListener( subscription );
   }
@@ -299,7 +300,7 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   public void addAddRelationListener( String relationColumnName, List<String> parentObjects,
                                       AsyncCallback<RelationStatus> callback )
   {
-    DataSubscription subscription = new DataSubscription( DataEvents.relations_added, tableName, relationColumnName,
+    DataSubscription subscription = new DataSubscription( RelationEvents.relations_added, tableName, relationColumnName,
                                                           createCallback( callback, RelationStatus.class ) ).withParentObjects( parentObjects );
     addEventListener( subscription );
   }
@@ -307,14 +308,14 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   @Override
   public void removeAddRelationListeners()
   {
-    removeListeners( DataEvents.relations_added );
+    removeListeners( RelationEvents.relations_added );
   }
 
   @Override
   public void addDeleteRelationListener( String relationColumnName,
                                          AsyncCallback<RelationStatus> callback )
   {
-    DataSubscription subscription = new DataSubscription( DataEvents.relations_removed, tableName, relationColumnName,
+    DataSubscription subscription = new DataSubscription( RelationEvents.relations_removed, tableName, relationColumnName,
                                                           createCallback( callback, RelationStatus.class ) );
     addEventListener( subscription );
   }
@@ -323,7 +324,7 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   public void addDeleteRelationListener( String relationColumnName, List<String> parentObjects,
                                          AsyncCallback<RelationStatus> callback )
   {
-    DataSubscription subscription = new DataSubscription( DataEvents.relations_removed, tableName, relationColumnName,
+    DataSubscription subscription = new DataSubscription( RelationEvents.relations_removed, tableName, relationColumnName,
                                                           createCallback( callback, RelationStatus.class ) ).withParentObjects( parentObjects );
     addEventListener( subscription );
   }
@@ -331,12 +332,12 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   @Override
   public void removeDeleteRelationListeners()
   {
-    removeListeners( DataEvents.relations_removed );
+    removeListeners( RelationEvents.relations_removed );
   }
 
   //------end-------
 
-  private void removeListeners( final DataEvents event )
+  private void removeListeners( final RTEvent event )
   {
     removeEventListener( new Predicate()
     {
@@ -348,7 +349,7 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
     } );
   }
 
-  private void removeListeners(final DataEvents event, final AsyncCallback callback )
+  private void removeListeners(final RTEvent event, final AsyncCallback callback )
   {
     checkCallback( callback );
     removeEventListener( new Predicate()
@@ -362,7 +363,7 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
     } );
   }
 
-  private void removeListeners(final DataEvents event, final String whereClause, final AsyncCallback callback )
+  private void removeListeners(final RTEvent event, final String whereClause, final AsyncCallback callback )
   {
     checkCallback( callback );
     checkWhereClause( whereClause );
@@ -378,7 +379,7 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
     } );
   }
 
-  private void removeListeners(final DataEvents event, final String whereClause )
+  private void removeListeners(final RTEvent event, final String whereClause )
   {
     checkWhereClause( whereClause );
     removeEventListener( new Predicate()
@@ -392,15 +393,20 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
     } );
   }
 
-  private boolean isEventSubscription( RTSubscription subscription, DataEvents event )
+  private boolean isEventSubscription( RTSubscription subscription, RTEvent event )
   {
-    if( !(subscription instanceof DataSubscription))
+    if( !(subscription instanceof DataSubscription) )
       return false;
 
     DataSubscription dataSubscription = (DataSubscription) subscription;
 
-    return dataSubscription.getSubscriptionName() == SubscriptionNames.OBJECTS_CHANGES
-            && dataSubscription.getEvent() == event;
+    if( event instanceof ObjectEvents )
+      return dataSubscription.getSubscriptionName() == SubscriptionNames.OBJECTS_CHANGES
+              && dataSubscription.getObjectEvent() == event;
+    if( event instanceof RelationEvents )
+      return dataSubscription.getSubscriptionName() == SubscriptionNames.RELATIONS_CHANGES
+              && dataSubscription.getRelationEvent() == event;
+    return false;
   }
 
   private RTCallback createCallback( final AsyncCallback<T> callback )
