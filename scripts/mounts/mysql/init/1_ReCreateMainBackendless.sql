@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS `main_backendless`.`Application` (
   `dbReadonly` BOOLEAN NOT NULL DEFAULT false,
   `shardName` VARCHAR(100) NULL,
   `zoneId` INT NOT NULL DEFAULT 1,
+  `type` VARCHAR(30) NOT NULL DEFAULT 'general',
   PRIMARY KEY (`id`,`zoneId`),
   KEY `fk_Application_ClusterZone` (`zoneId`),
   CONSTRAINT `fk_Application_ClusterZone`
