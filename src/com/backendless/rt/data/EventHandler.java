@@ -72,4 +72,22 @@ public interface EventHandler<T> extends RTListener
   void removeBulkDeleteListener( AsyncCallback<BulkEvent> callback );
 
   void removeBulkDeleteListeners( String whereClause );
+
+  void addSetRelationListener( String relationColumnName, AsyncCallback<RelationStatus> callback );
+
+  void addSetRelationListener( String relationColumnName, List<String> parentObjects, AsyncCallback<RelationStatus> callback );
+
+  void removeSetRelationListeners();
+
+  void addAddRelationListener( String relationColumnName, AsyncCallback<RelationStatus> callback );
+
+  void addAddRelationListener( String relationColumnName, List<String> parentObjects, AsyncCallback<RelationStatus> callback );
+
+  void removeAddRelationListeners();
+
+  void addDeleteRelationListener( String relationColumnName, AsyncCallback<RelationStatus> callback );
+
+  void addDeleteRelationListener( String relationColumnName, List<String> parentObjects, AsyncCallback<RelationStatus> callback );
+
+  void removeDeleteRelationListeners();
 }

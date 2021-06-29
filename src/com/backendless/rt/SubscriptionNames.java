@@ -3,6 +3,7 @@ package com.backendless.rt;
 public enum SubscriptionNames
 {
   OBJECTS_CHANGES,
+  RELATIONS_CHANGES,
   PUB_SUB_CONNECT,
   PUB_SUB_MESSAGES,
   PUB_SUB_COMMANDS,
