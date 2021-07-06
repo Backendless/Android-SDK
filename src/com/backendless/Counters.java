@@ -22,6 +22,11 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.atomic.AtomicCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.exceptions.ExceptionMessage;
+import com.backendless.utils.ResponderHelper;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public final class Counters
 {
@@ -214,6 +219,25 @@ public final class Counters
     try
     {
       Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "compareAndSet", new Object[] { counterName, expected, updated }, responder );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
+  public Set<String> list( String pattern )
+  {
+    final Object[] objectArray = Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, "list", new Object[] { pattern } );
+    return new HashSet<>( Arrays.asList(  Arrays.copyOf( objectArray, objectArray.length, String[].class ) ) );
+  }
+
+  public void list( String pattern, AsyncCallback<Set<String>> responder )
+  {
+    try
+    {
+      Invoker.invokeAsync( ATOMIC_MANAGER_SERVER_ALIAS, "list", new Object[] { pattern }, responder, ResponderHelper.getSetAdaptingResponder( String.class ) );
     }
     catch( Throwable e )
     {
