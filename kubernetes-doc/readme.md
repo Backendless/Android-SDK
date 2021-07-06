@@ -2,7 +2,7 @@
 
 Before setup services, install and configure following applications:
 
-- rancher in HA mode 
+- rancher in HA mode https://rancher.com/docs/rancher/v2.5/en/installation/install-rancher-on-k8s/
 
 - mysql 5.7 it should contains the following config:
 ```
