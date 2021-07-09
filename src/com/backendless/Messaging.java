@@ -678,21 +678,42 @@ public final class Messaging
 
   public MessageStatus sendEmailFromTemplate( String templateName, EmailEnvelope envelope, Map<String, String> templateValues )
   {
+    return sendEmailFromTemplate( templateName, envelope, templateValues, new ArrayList<String>() );
+  }
+
+  public MessageStatus sendEmailFromTemplate( String templateName, EmailEnvelope envelope, List<String> attachments )
+  {
+    return sendEmailFromTemplate( templateName, envelope, (Map<String, String>) null, attachments );
+  }
+
+  public MessageStatus sendEmailFromTemplate( String templateName, EmailEnvelope envelope, Map<String, String> templateValues, List<String> attachments )
+  {
     if( templateName == null || templateName.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_TEMPLATE_NAME );
 
     if( envelope == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMAIL_ENVELOPE );
 
-    return Invoker.invokeSync( EMAIL_TEMPLATE_SENDER_SERVER_ALIAS, "sendEmails", new Object[] { templateName, envelope, templateValues } );
+    return Invoker.invokeSync( EMAIL_TEMPLATE_SENDER_SERVER_ALIAS, "sendEmails", new Object[] { templateName, envelope, templateValues, attachments } );
   }
 
   public void sendEmailFromTemplate( String templateName, EmailEnvelope envelope, AsyncCallback<MessageStatus> responder )
   {
-    sendEmailFromTemplate( templateName, envelope, null, responder );
+    sendEmailFromTemplate( templateName, envelope, (Map<String, String>) null, responder );
   }
 
   public void sendEmailFromTemplate( String templateName, EmailEnvelope envelope, Map<String, String> templateValues, AsyncCallback<MessageStatus> responder )
+  {
+    sendEmailFromTemplate( templateName, envelope, templateValues, new ArrayList<String>(), responder );
+  }
+
+  public void sendEmailFromTemplate( String templateName, EmailEnvelope envelope, List<String> attachments, AsyncCallback<MessageStatus> responder )
+  {
+    sendEmailFromTemplate( templateName, envelope, (Map<String, String>) null, attachments, responder );
+  }
+
+  public void sendEmailFromTemplate( String templateName, EmailEnvelope envelope, Map<String, String> templateValues,
+                                     List<String> attachments, AsyncCallback<MessageStatus> responder )
   {
     try
     {
@@ -702,7 +723,7 @@ public final class Messaging
       if( envelope == null )
         throw new IllegalArgumentException( ExceptionMessage.NULL_EMAIL_ENVELOPE );
 
-      Invoker.invokeAsync( EMAIL_TEMPLATE_SENDER_SERVER_ALIAS, "sendEmails", new Object[] { templateName, envelope, templateValues }, responder );
+      Invoker.invokeAsync( EMAIL_TEMPLATE_SENDER_SERVER_ALIAS, "sendEmails", new Object[] { templateName, envelope, templateValues, attachments }, responder );
     }
     catch( Throwable e )
     {
