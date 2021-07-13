@@ -57,22 +57,22 @@ public abstract class AtomicOperationExtender
 
   }
 
-  public void beforeAddAndGet( RunnerContext context, String counterName, Long value ) throws Exception
+  public void beforeAddAndGet( RunnerContext context, String counterName, long value ) throws Exception
   {
 
   }
 
-  public void afterAddAndGet( RunnerContext context, String counterName, Long value, ExecutionResult<Long> result ) throws Exception
+  public void afterAddAndGet( RunnerContext context, String counterName, long value, ExecutionResult<Long> result ) throws Exception
   {
 
   }
 
-  public void beforeGetAndAdd( RunnerContext context, String counterName, Long value ) throws Exception
+  public void beforeGetAndAdd( RunnerContext context, String counterName, long value ) throws Exception
   {
 
   }
 
-  public void afterGetAndAdd( RunnerContext context, String counterName, Long value,
+  public void afterGetAndAdd( RunnerContext context, String counterName, long value,
                               ExecutionResult<Long> result ) throws Exception
   {
 
@@ -88,12 +88,12 @@ public abstract class AtomicOperationExtender
 
   }
 
-  public void beforeCompareAndSet( RunnerContext context, String counterName, Long expected, Long updated ) throws Exception
+  public void beforeCompareAndSet( RunnerContext context, String counterName, long expected, long updated ) throws Exception
   {
 
   }
 
-  public void afterCompareAndSet( RunnerContext context, String counterName, Long expected, Long updated, ExecutionResult<Boolean> result ) throws Exception
+  public void afterCompareAndSet( RunnerContext context, String counterName, long expected, long updated, ExecutionResult<Boolean> result ) throws Exception
   {
 
   }
