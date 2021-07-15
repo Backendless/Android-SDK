@@ -79,7 +79,7 @@ services:
     volumes:
     #- nfsRepo:/opt/backendless/repo
     - ${MOUNTS}/repo:/opt/backendless/repo
-    - ${MOUNTS}/server/logs:/opt/backendless/server/play-logs
+    - ${MOUNTS}/server/logs:/opt/backendless/logs
     networks:
     - bkndls-net
 
@@ -113,7 +113,7 @@ services:
     volumes:
     #- nfsRepo:/opt/backendless/repo
     - ${MOUNTS}/repo:/opt/backendless/repo
-    - ${MOUNTS}/taskman/logs:/opt/backendless/server/play-logs
+    - ${MOUNTS}/taskman/logs:/opt/backendless/logs
     networks:
     - bkndls-net
 
