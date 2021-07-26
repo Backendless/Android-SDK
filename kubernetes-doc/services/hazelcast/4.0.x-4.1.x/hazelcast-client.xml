@@ -14,7 +14,15 @@
 
     <instance-name>hz-client</instance-name>
 
-    <connection-strategy reconnect-mode="ASYNC"  />
+    <connection-strategy reconnect-mode="ASYNC">
+        <connection-retry>
+            <initial-backoff-millis>3000</initial-backoff-millis>
+            <max-backoff-millis>60000</max-backoff-millis>
+            <multiplier>1.2</multiplier>
+            <!-- 60*60*1000 = 3600000 = one hour -->
+            <cluster-connect-timeout-millis>3600000</cluster-connect-timeout-millis>
+        </connection-retry>
+    </connection-strategy>
 
     <network>
         <icmp-ping enabled="false"/>
