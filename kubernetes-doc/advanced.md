@@ -29,3 +29,24 @@ To get content of `application.conf` we need `kubectl` or use Rancher UI kubectl
   * mount path: `/opt/backendless/server/conf/application.conf`
   In rancher it should look like the following:
     ![](services/img/rancher_application_conf_volume.png)
+
+
+# <a name="mount_log_folder_for_bl_server">Mount log folder for bl-server</a>
+* Create folder on each worker node with the following path: `/opt/backendless/logs/bl-server`
+* Add volume mount with the following paths:
+    * path on the node `/opt/backendless/logs/bl-server`
+    * mount path: `/opt/backendless/logs`
+      In rancher it should look like the following:
+      ![](services/img/rancher_bl_server_log_volume.png)
+
+# <a name="mount_log_folder_for_bl_js_coderunner">Mount log folder for bl-coderunner-js</a>
+* Create folder on each worker node with the following path: `/opt/backendless/logs/bl-coderunner-js`
+* Add volume mount with the following paths:
+    * path on the node `/opt/backendless/logs/bl-server`
+    * mount path: `/opt/backendless/logs`
+      In rancher it should look like the following:
+      ![](services/img/rancher_bl_js_coderanner_log_volume.png)
+* Make sure that your configuration in consul `http(s)://<consul-domain-or-ip>:<port>/ui/#/dc1/kv/config/coderunner/js/loggers/file/filename/edit` is :
+```
+./logs/js-coderunner-%DATE%.log
+```
