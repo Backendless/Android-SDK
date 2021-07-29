@@ -72,6 +72,40 @@ public final class Files
     return instance;
   }
 
+  public BackendlessFile upload( String urlToFile, String backendlessPath )
+  {
+    return upload( urlToFile, backendlessPath, false );
+  }
+
+  public BackendlessFile upload( String urlToFile, String backendlessPath, boolean overwrite )
+  {
+    if( urlToFile == null || urlToFile.isEmpty() )
+      throw new NullPointerException( ExceptionMessage.NULL_URL_TO_FILE );
+
+    if( backendlessPath == null )
+      throw new NullPointerException( ExceptionMessage.NULL_PATH );
+
+    final String resultURL = Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "upload", new Object[] { urlToFile, backendlessPath, overwrite } );
+    return new BackendlessFile( resultURL );
+  }
+
+  public void upload( String urlToFile, String backendlessPath, AsyncCallback<BackendlessFile> responder )
+  {
+    upload( urlToFile, backendlessPath, false, responder );
+  }
+
+  public void upload( String urlToFile, String backendlessPath, boolean overwrite, AsyncCallback<BackendlessFile> responder )
+  {
+    if( urlToFile == null || urlToFile.isEmpty() )
+      throw new NullPointerException( ExceptionMessage.NULL_URL_TO_FILE );
+
+    if( backendlessPath == null )
+      throw new NullPointerException( ExceptionMessage.NULL_PATH );
+
+    // TODO Return string instead BackendlessFile
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "upload", new Object[] { urlToFile, backendlessPath, overwrite }, responder );
+  }
+
   public BackendlessFile upload( File file, String path ) throws Exception
   {
     return upload( file, path, false );
