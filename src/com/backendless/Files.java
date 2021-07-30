@@ -94,16 +94,37 @@ public final class Files
     upload( urlToFile, backendlessPath, false, responder );
   }
 
-  public void upload( String urlToFile, String backendlessPath, boolean overwrite, AsyncCallback<BackendlessFile> responder )
+  public void upload( String urlToFile, String backendlessPath, boolean overwrite, final AsyncCallback<BackendlessFile> responder )
   {
-    if( urlToFile == null || urlToFile.isEmpty() )
-      throw new NullPointerException( ExceptionMessage.NULL_URL_TO_FILE );
+    try
+    {
+      if( urlToFile == null || urlToFile.isEmpty() )
+        throw new NullPointerException( ExceptionMessage.NULL_URL_TO_FILE );
 
-    if( backendlessPath == null )
-      throw new NullPointerException( ExceptionMessage.NULL_PATH );
+      if( backendlessPath == null )
+        throw new NullPointerException( ExceptionMessage.NULL_PATH );
 
-    // TODO Return string instead BackendlessFile
-    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "upload", new Object[] { urlToFile, backendlessPath, overwrite }, responder );
+      Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "upload", new Object[] { urlToFile, backendlessPath, overwrite }, new AsyncCallback<String>()
+      {
+        @Override
+        public void handleResponse( String response )
+        {
+          responder.handleResponse( new BackendlessFile( response ) );
+        }
+
+        @Override
+        public void handleFault( BackendlessFault fault )
+        {
+          if( responder != null )
+            responder.handleFault( fault );
+        }
+      } );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
   }
 
   public BackendlessFile upload( File file, String path ) throws Exception
