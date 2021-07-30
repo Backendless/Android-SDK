@@ -1,6 +1,6 @@
 USE `main_backendless`;
 
-INSERT INTO `Version` (`main`, `application`) values (45, 97);
+INSERT INTO `Version` (`main`, `application`) values (45, 98);
 
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('1', 'ACTIVE');
 INSERT INTO `DeveloperStatus` (`id`, `name`) VALUES ('2', 'SUSPENDED');
@@ -785,6 +785,7 @@ CREATE TABLE IF NOT EXISTS `OAuth2Provider`
     `authUrl`             varchar(500) NOT NULL,
     `clientId`            varchar(500) NOT NULL,
     `clientSecret`        varchar(500) NOT NULL,
+    `redirectAfterLoginUrl` varchar(500) NULL,
     `active`              boolean NOT NULL,
     `tokenInfo`           JSON NOT NULL,
     `userInfoUrls`        JSON NOT NULL,
@@ -804,6 +805,7 @@ CREATE TABLE IF NOT EXISTS `OAuth1Provider`
     `code`            VARCHAR(100) NOT NULL,
     `clientId`        VARCHAR(500) NOT NULL,
     `clientSecret`    VARCHAR(500) NOT NULL,
+    `redirectAfterLoginUrl` varchar(500) NULL,
     `active`          boolean NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `name_UNIQUE` (`name`),
