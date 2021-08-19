@@ -259,7 +259,7 @@ dependencies {
     provided fileTree(dir: 'libs', include: 'FacebookSDK.jar')
     provided fileTree(dir: 'libs', include: 'maps.jar')
     compileOnly fileTree(dir: 'libs', include: 'mediaLib.jar')
-    compileOnly( group: "com.backendless", name: "commons", version: "6.1.0", changing: true, ) {
+    compileOnly( group: "com.backendless", name: "commons", version: "6.3.0", changing: true, ) {
         exclude group: 'com.fasterxml.jackson.core'
     }
     compileOnly( group: "weborb", name: "weborbclient", version: "5.2.0.4", changing: true)
