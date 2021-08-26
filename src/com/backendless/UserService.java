@@ -73,6 +73,59 @@ public final class UserService
     return currentUser;
   }
 
+  public BackendlessUser CurrentUser( boolean reload )
+  {
+    if( reload )
+    {
+      if( currentUser != null && currentUser.getObjectId() != null && !currentUser.getObjectId().isEmpty() )
+      {
+        currentUser = Backendless.UserService.findById( currentUser.getObjectId() );
+        return currentUser;
+      }
+      else
+      {
+        return null;
+      }
+    }
+    else
+    {
+      return CurrentUser();
+    }
+  }
+
+  public void CurrentUser( boolean reload, final AsyncCallback<BackendlessUser> responder )
+  {
+    if( reload )
+    {
+      if( currentUser != null && currentUser.getObjectId() != null && !currentUser.getObjectId().isEmpty() )
+      {
+        Backendless.UserService.findById( currentUser.getObjectId(), new AsyncCallback<BackendlessUser>()
+        {
+          @Override
+          public void handleResponse( BackendlessUser response )
+          {
+            currentUser = response;
+            responder.handleResponse( response );
+          }
+          @Override
+          public void handleFault( BackendlessFault fault )
+          {
+            if( responder != null )
+              responder.handleFault( fault );
+          }
+        } );
+      }
+      else
+      {
+        responder.handleResponse( null );
+      }
+    }
+    else
+    {
+      responder.handleResponse( CurrentUser() );
+    }
+  }
+
   private UserServiceAndroidExtra getUserServiceAndroidExtra()
   {
     if( !Backendless.isAndroid() )
