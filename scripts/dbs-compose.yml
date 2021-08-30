@@ -24,11 +24,12 @@ services:
 
 
   bl-mysql:
-    image: mysql:5.7
+    image: mysql/mysql-server:8.0
     hostname: bl-mysql
 
     environment:
     - MYSQL_ROOT_PASSWORD=rootpassword
+    - MYSQL_ROOT_HOST=%
     command: --lower_case_table_names=0 --sql-mode=""
 
     ports:
@@ -42,7 +43,7 @@ services:
 
 
   bl-mongo:
-    image: mongo:3.4.3
+    image: mongo:4
     hostname: bl-mongo
 
     #environment:
