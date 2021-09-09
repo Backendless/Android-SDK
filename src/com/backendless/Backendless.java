@@ -124,6 +124,7 @@ public final class Backendless
         queryOptionsMap.put( ORBConstants.WEBORB_TYPE_NAME.toString(), QueryOptions.class.getSimpleName() );
         queryOptionsMap.put( "sortBy", queryOptions.getSortBy() );
         queryOptionsMap.put( "related", queryOptions.getRelated() );
+        queryOptionsMap.put( "fileReferencePrefix", queryOptions.getFileReferencePrefix() );
         if( queryOptions.getRelationsDepth() != null )
           queryOptionsMap.put( "relationsDepth", queryOptions.getRelationsDepth() );
         if( queryOptions.getRelationsPageSize() != null )
