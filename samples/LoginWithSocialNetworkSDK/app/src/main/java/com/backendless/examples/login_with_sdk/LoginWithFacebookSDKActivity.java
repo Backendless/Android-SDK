@@ -19,6 +19,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class LoginWithFacebookSDKActivity extends Activity {
@@ -44,24 +45,21 @@ public class LoginWithFacebookSDKActivity extends Activity {
 	}
 
 	private void initUI() {
-		loginFacebookButton = (LoginButton) findViewById(R.id.button_FacebookLogin);
-		fbLogoutBackendlessButton = (Button) findViewById(R.id.button_fbBackendlessLogout);
-		socialAccountInfo = (EditText) findViewById(R.id.editText_fbSocialAccountInfo);
-		backendlessUserInfo = (EditText) findViewById(R.id.editText_fbBackendlessUserInfo);
+		loginFacebookButton = findViewById(R.id.button_FacebookLogin);
+		fbLogoutBackendlessButton = findViewById(R.id.button_fbBackendlessLogout);
+		socialAccountInfo = findViewById(R.id.editText_fbSocialAccountInfo);
+		backendlessUserInfo = findViewById(R.id.editText_fbBackendlessUserInfo);
 	}
 
 	private void initUIBehaviour() {
 		callbackManager = configureFacebookSDKLogin();
 
-		fbLogoutBackendlessButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (isLoggedInBackendless)
-					logoutFromBackendless();
+		fbLogoutBackendlessButton.setOnClickListener(v -> {
+			if (isLoggedInBackendless)
+				logoutFromBackendless();
 
-				if (isLoggedInFacebook)
-					logoutFromFacebook();
-			}
+			if (isLoggedInFacebook)
+				logoutFromFacebook();
 		});
 
 		if (AccessToken.getCurrentAccessToken() != null)
@@ -83,32 +81,35 @@ public class LoginWithFacebookSDKActivity extends Activity {
 
 	private void loginToBackendless()
 	{
-		Backendless.UserService.loginWithFacebookSdk(fbAccessToken, new AsyncCallback<BackendlessUser>() {
-			@Override
-			public void handleResponse(BackendlessUser response) {
-				isLoggedInBackendless = true;
+		Backendless.UserService.loginWithOAuth2("facebook",
+				fbAccessToken,
+				new HashMap<>(),
+				new AsyncCallback<BackendlessUser>() {
+					@Override
+					public void handleResponse(BackendlessUser response) {
+						isLoggedInBackendless = true;
 
-				String msg = "ObjectId: " + response.getObjectId() + "\n"
-						+ "UserId: " + response.getUserId() + "\n"
-						+ "Email: " + response.getEmail() + "\n"
-						+ "Properties: " + "\n";
+						String msg = "ObjectId: " + response.getObjectId() + "\n"
+								+ "UserId: " + response.getUserId() + "\n"
+								+ "Email: " + response.getEmail() + "\n"
+								+ "Properties: " + "\n";
 
-				for (Map.Entry<String, Object> entry : response.getProperties().entrySet())
-					msg += entry.getKey() + " : " + entry.getValue() + "\n";
+						for (Map.Entry<String, Object> entry : response.getProperties().entrySet())
+							msg += entry.getKey() + " : " + entry.getValue() + "\n";
 
-				backendlessUserInfo.setTextColor(getColor(android.R.color.black));
-				backendlessUserInfo.setText(msg);
+						backendlessUserInfo.setTextColor(getColor(android.R.color.black));
+						backendlessUserInfo.setText(msg);
 
-				loginFacebookButton.setVisibility(View.INVISIBLE);
-				fbLogoutBackendlessButton.setVisibility(View.VISIBLE);
-			}
+						loginFacebookButton.setVisibility(View.INVISIBLE);
+						fbLogoutBackendlessButton.setVisibility(View.VISIBLE);
+					}
 
-			@Override
-			public void handleFault(BackendlessFault fault) {
-				backendlessUserInfo.setTextColor(getColor(android.R.color.holo_red_dark));
-				backendlessUserInfo.setText(fault.toString());
-			}
-		});
+					@Override
+					public void handleFault(BackendlessFault fault) {
+						backendlessUserInfo.setTextColor(getColor(android.R.color.holo_red_dark));
+						backendlessUserInfo.setText(fault.toString());
+					}
+				}, true);
 	}
 
 	private void logoutFromBackendless(){
