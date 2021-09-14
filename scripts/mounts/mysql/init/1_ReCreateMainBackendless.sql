@@ -396,12 +396,15 @@ CREATE TABLE `main_backendless`.`FlowElement` (
   `name` varchar(100) NOT NULL,
   `description` varchar(500) DEFAULT NULL,
   `flowId` varchar(100) NOT NULL,
+  `groupId` varchar(100) NULL,
   `metaInfo` JSON NULL,
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_FlowElement_Flow` (`flowId`),
-  CONSTRAINT `fk_FlowElement_Flow` FOREIGN KEY (`flowId`) REFERENCES `main_backendless`.`Flow` (`id`) ON DELETE CASCADE
+  KEY `fk_FlowElement_FlowGroup` (`groupId`),
+  CONSTRAINT `fk_FlowElement_Flow` FOREIGN KEY (`flowId`) REFERENCES `main_backendless`.`Flow` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_FlowElement_FlowGroup` FOREIGN KEY (`groupId`) REFERENCES `main_backendless`.`FlowGroup` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 
@@ -438,6 +441,72 @@ CREATE TABLE `main_backendless`.`FlowElementToFlowElement` (
   KEY `fk_FlowElement_has_FlowElement_child_idx` (`childId`),
   CONSTRAINT `fk_FlowElement_has_FlowElement_parent` FOREIGN KEY (`parentId`) REFERENCES `main_backendless`.`FlowElement` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_FlowElement_has_FlowElement_child` FOREIGN KEY (`childId`) REFERENCES `main_backendless`.`FlowElement` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `main_backendless`.`FlowGroup`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `main_backendless`.`FlowGroup` ;
+
+CREATE TABLE `main_backendless`.`FlowGroup` (
+  `id` varchar(100) NOT NULL,
+  `typeId` int NOT NULL,
+  `metaInfo` JSON NULL,
+  `flowId` varchar(100) NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_FlowGroup_Flow` (`flowId`),
+  CONSTRAINT `fk_FlowGroup_Flow` FOREIGN KEY (`flowId`) REFERENCES `main_backendless`.`Flow` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `main_backendless`.`FlowElementToFlowGroup`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `main_backendless`.`FlowElementToFlowGroup` ;
+
+CREATE TABLE `main_backendless`.`FlowElementToFlowGroup` (
+  `elementId` varchar(100) NOT NULL,
+  `groupId` varchar(100) NOT NULL,
+  PRIMARY KEY (`elementId`,`groupId`),
+  KEY `fk_FlowElement_has_FlowGroup_element_idx` (`elementId`),
+  KEY `fk_FlowElement_has_FlowGroup_group_idx` (`groupId`),
+  CONSTRAINT `fk_FlowElement_has_FlowGroup_element` FOREIGN KEY (`elementId`) REFERENCES `main_backendless`.`FlowElement` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_FlowElement_has_FlowGroup_group` FOREIGN KEY (`groupId`) REFERENCES `main_backendless`.`FlowGroup` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `main_backendless`.`FlowGroupToFlowGroup`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `main_backendless`.`FlowGroupToFlowGroup` ;
+
+CREATE TABLE `main_backendless`.`FlowGroupToFlowGroup` (
+  `parentId` varchar(100) NOT NULL,
+  `childId` varchar(100) NOT NULL,
+  PRIMARY KEY (`parentId`,`childId`),
+  KEY `fk_FlowGroup_has_FlowGroup_parent_idx` (`parentId`),
+  KEY `fk_FlowGroup_has_FlowGroup_child_idx` (`childId`),
+  CONSTRAINT `fk_FlowGroup_has_FlowGroup_parent` FOREIGN KEY (`parentId`) REFERENCES `main_backendless`.`FlowGroup` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_FlowGroup_has_FlowGroup_child` FOREIGN KEY (`childId`) REFERENCES `main_backendless`.`FlowGroup` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `main_backendless`.`FlowGroupToFlowElement`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `main_backendless`.`FlowGroupToFlowElement` ;
+
+CREATE TABLE `main_backendless`.`FlowGroupToFlowElement` (
+  `groupId` varchar(100) NOT NULL,
+  `elementId` varchar(100) NOT NULL,
+  PRIMARY KEY (`groupId`,`elementId`),
+  KEY `fk_FlowGroup_has_FlowElement_group_idx` (`groupId`),
+  KEY `fk_FlowGroup_has_FlowElement_element_idx` (`elementId`),
+  CONSTRAINT `fk_FlowGroup_has_FlowElement_parent` FOREIGN KEY (`groupId`) REFERENCES `main_backendless`.`FlowGroup` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_FlowGroup_has_FlowElement_child` FOREIGN KEY (`elementId`) REFERENCES `main_backendless`.`FlowElement` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 
