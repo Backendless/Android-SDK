@@ -9,7 +9,6 @@ import com.backendless.persistence.DataQueryBuilder;
 import java.util.Date;
 import java.util.List;
 
-
 public class Car implements BackendlessDataCollection.Identifiable<Car>
 {
   private String model;
@@ -20,7 +19,8 @@ public class Car implements BackendlessDataCollection.Identifiable<Car>
   private Date created;
 
   @Override
-  public void setObjectId(String s) {
+  public void setObjectId( String s )
+  {
     this.objectId = objectId;
   }
 
@@ -64,7 +64,6 @@ public class Car implements BackendlessDataCollection.Identifiable<Car>
     return created;
   }
 
-                                                    
   public Car save()
   {
     return Backendless.Data.of( Car.class ).save( this );
