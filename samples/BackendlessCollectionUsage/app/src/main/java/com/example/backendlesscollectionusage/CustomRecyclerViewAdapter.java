@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.backendless.persistence.BackendlessDataCollection;
@@ -91,10 +92,9 @@ public class CustomRecyclerViewAdapter extends RecyclerView.Adapter<CustomRecycl
     }
 
     @Override
-    public CarViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.car_item, parent, false);
-        CarViewHolder holder = new CarViewHolder(view);
-        return holder;
+        return new CarViewHolder(view);
     }
 
     public static class CarViewHolder extends RecyclerView.ViewHolder {
