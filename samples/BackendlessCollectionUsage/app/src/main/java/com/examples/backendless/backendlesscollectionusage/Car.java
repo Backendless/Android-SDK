@@ -1,5 +1,5 @@
 
-package com.example.backendlesscollectionusage;
+package com.examples.backendless.backendlesscollectionusage;
 
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;

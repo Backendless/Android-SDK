@@ -1,4 +1,4 @@
-package com.example.backendlesscollectionusage;
+package com.examples.backendless.backendlesscollectionusage;
 
 import android.app.Activity;
 import android.os.Handler;

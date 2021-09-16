@@ -4,7 +4,7 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
     defaultConfig {
-        applicationId "com.example.backendlesscollectionusage"
+        applicationId "com.examples.backendless.backendlesscollectionusage"
         minSdkVersion 30
         targetSdkVersion 30
         versionCode 1
@@ -39,5 +39,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 }
