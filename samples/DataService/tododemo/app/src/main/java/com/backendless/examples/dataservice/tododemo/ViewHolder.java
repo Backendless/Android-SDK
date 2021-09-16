@@ -1,10 +1,12 @@
-package com.backendless.example.dataservice.tododemo;
+package com.backendless.examples.dataservice.tododemo;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.View;
 import android.widget.*;
+
+import com.backendless.example.dataservice.tododemo.R;
 
 public class ViewHolder
 {

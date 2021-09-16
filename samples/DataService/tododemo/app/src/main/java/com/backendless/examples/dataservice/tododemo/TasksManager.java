@@ -1,4 +1,4 @@
-package com.backendless.example.dataservice.tododemo;
+package com.backendless.examples.dataservice.tododemo;
 
 import android.content.Context;
 

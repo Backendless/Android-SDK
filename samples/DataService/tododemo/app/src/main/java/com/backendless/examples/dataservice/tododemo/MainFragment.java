@@ -1,4 +1,4 @@
-package com.backendless.example.dataservice.tododemo;
+package com.backendless.examples.dataservice.tododemo;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -13,6 +13,7 @@ import androidx.fragment.app.ListFragment;
 
 import com.backendless.Messaging;
 import com.backendless.async.callback.AsyncCallback;
+import com.backendless.example.dataservice.tododemo.R;
 import com.backendless.exceptions.BackendlessFault;
 
 import java.util.ArrayList;

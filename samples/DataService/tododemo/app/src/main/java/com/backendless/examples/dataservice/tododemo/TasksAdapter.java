@@ -1,9 +1,11 @@
-package com.backendless.example.dataservice.tododemo;
+package com.backendless.examples.dataservice.tododemo;
 
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+
+import com.backendless.example.dataservice.tododemo.R;
 
 import java.util.List;
 

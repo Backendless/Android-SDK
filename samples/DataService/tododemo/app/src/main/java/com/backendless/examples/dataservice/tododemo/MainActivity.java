@@ -1,4 +1,4 @@
-package com.backendless.example.dataservice.tododemo;
+package com.backendless.examples.dataservice.tododemo;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.backendless.Backendless;
+import com.backendless.example.dataservice.tododemo.R;
 
 public class MainActivity extends AppCompatActivity
 {
