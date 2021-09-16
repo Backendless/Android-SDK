@@ -31,7 +31,6 @@ dependencies {
     // please, set the current version of backendless sdk for Android here.
     implementation 'com.backendless:backendless:6.3.1'
     implementation 'androidx.core:core:1.6.0'
-    implementation 'androidx.appcompat:appcompat:1.3.1'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.3.1'
