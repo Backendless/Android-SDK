@@ -24,20 +24,22 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowMetrics;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
 import com.backendless.Backendless;
-import com.backendless.BackendlessCollection;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
-import com.backendless.persistence.BackendlessDataQuery;
-import com.backendless.persistence.QueryOptions;
+import com.backendless.persistence.DataQueryBuilder;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -48,8 +50,8 @@ import java.util.List;
 public class BrowseActivity extends Activity
 {
   private static int itemWidth;
-  private static ImageAdapter imageAdapter;
   private static int padding;
+  private ImageAdapter imageAdapter;
 
   public void onCreate( Bundle savedInstanceState )
   {
@@ -58,33 +60,33 @@ public class BrowseActivity extends Activity
 
     padding = (int) getResources().getDimension( R.dimen.micro_padding );
 
-    DisplayMetrics displayMetrics = new DisplayMetrics();
-    getWindowManager().getDefaultDisplay().getMetrics( displayMetrics );
-    int screenWidth = displayMetrics.widthPixels;
+    WindowMetrics currentWindowMetrics = getWindowManager().getCurrentWindowMetrics();
+    int screenWidth = currentWindowMetrics.getBounds().width();
     itemWidth = (screenWidth - (2 * (int) getResources().getDimension( R.dimen.default_margin ))) / 3;
 
-    GridView gridView = (GridView) findViewById( R.id.gridView );
+    GridView gridView = findViewById( R.id.gridView );
     imageAdapter = new ImageAdapter( this );
     gridView.setAdapter( imageAdapter );
 
     Toast.makeText( BrowseActivity.this, "Downloading images...", Toast.LENGTH_SHORT ).show();
 
-    BackendlessDataQuery backendlessDataQuery = new BackendlessDataQuery();
-    backendlessDataQuery.setQueryOptions( new QueryOptions( 100, 0, "uploaded" ) );
-    Backendless.Persistence.of( ImageEntity.class ).find( backendlessDataQuery, new AsyncCallback<Collection<ImageEntity>>()
+    DataQueryBuilder queryBuilder = DataQueryBuilder.create()
+            .addSortBy( "uploaded" )
+            .setPageSize( 100 )
+            .setOffset( 0 );
+
+    Backendless.Persistence.of( ImageEntity.class ).find( queryBuilder, new AsyncCallback<List<ImageEntity>>()
     {
       @Override
-      public void handleResponse( final Collection<ImageEntity> response )
+      public void handleResponse( final List<ImageEntity> imageEntities )
       {
-        Toast.makeText( BrowseActivity.this, "Will add " + response.getCurrentPage().size() + " images", Toast.LENGTH_SHORT ).show();
+        Toast.makeText( BrowseActivity.this, "Will add " + imageEntities.size() + " images", Toast.LENGTH_SHORT ).show();
 
         new Thread()
         {
           @Override
           public void run()
           {
-            List<ImageEntity> imageEntities = response.getCurrentPage();
-
             for( ImageEntity imageEntity : imageEntities )
             {
               Message message = new Message();
@@ -116,10 +118,10 @@ public class BrowseActivity extends Activity
     } );
   }
 
-  private Handler imagesHandler = new Handler( new Handler.Callback()
+  private Handler imagesHandler = new Handler( Looper.getMainLooper(), new Handler.Callback()
   {
     @Override
-    public boolean handleMessage( Message message )
+    public boolean handleMessage( @NonNull Message message )
     {
       Object result = message.obj;
 
@@ -135,9 +137,9 @@ public class BrowseActivity extends Activity
   private static class ImageAdapter extends BaseAdapter
   {
     private Context context;
-    private List<Bitmap> images = new ArrayList<Bitmap>();
+    private List<Bitmap> images = new ArrayList<>();
 
-    public ImageAdapter( Context c )
+    ImageAdapter( Context c )
     {
       context = c;
     }
@@ -148,7 +150,7 @@ public class BrowseActivity extends Activity
       return images.size();
     }
 
-    public void add( Bitmap bitmap )
+    void add( Bitmap bitmap )
     {
       images.add( bitmap );
       notifyDataSetChanged();
