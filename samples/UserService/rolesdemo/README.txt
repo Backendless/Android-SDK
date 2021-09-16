@@ -1,10 +1,12 @@
 Application demonstrates how user roles work.
 
-  Before Android application start create wtow roles in your app:
-1. "ReadWriteRole" with permissions to read and write from Data Service.
-2. "ReadOnlyRole" with permissions only to read from Data Service.
+For this app CloudCode API key should be used since roles management allowed only from CloudCode
 
-  Also verify that "Dynamic scheme" is enabled in Data Service - on first start application will
+Before Android application start
+1. Create two roles in your app:
+   1). "ReadWriteRole" with permissions to read and write from Data Service.
+   2). "ReadOnlyRole" with permissions only to read from Data Service.
+2. Verify that "Dynamic scheme" is enabled in Data Service - on first start application will
 create required tables.
 
   When application start you will see two tabs with sign in form on each. This form will sign in or

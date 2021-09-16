@@ -23,10 +23,10 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 
@@ -46,32 +46,28 @@ public class RegisterActivity extends Activity
     super.onCreate( savedInstanceState );
     setContentView( R.layout.register );
 
-    final EditText nameField = (EditText) findViewById( R.id.nameField );
-    final EditText passwordField = (EditText) findViewById( R.id.passwordField );
-    final EditText verifyPasswordField = (EditText) findViewById( R.id.verifyPasswordField );
-    final EditText emailField = (EditText) findViewById( R.id.emailField );
-    final RadioGroup genderRadio = (RadioGroup) findViewById( R.id.genderRadio );
+    final EditText nameField = findViewById( R.id.nameField );
+    final EditText passwordField = findViewById( R.id.passwordField );
+    final EditText verifyPasswordField = findViewById( R.id.verifyPasswordField );
+    final EditText emailField = findViewById( R.id.emailField );
+    final RadioGroup genderRadio = findViewById( R.id.genderRadio );
     final Calendar dateOfBirth = Calendar.getInstance();
-    final EditText dateOfBirthField = (EditText) findViewById( R.id.dateOfBirthField );
+    final EditText dateOfBirthField = findViewById( R.id.dateOfBirthField );
     dateOfBirthField.setText( SIMPLE_DATE_FORMAT.format( dateOfBirth.getTime() ) );
-    findViewById( R.id.dateOfBirthField ).setOnClickListener( new View.OnClickListener()
-    {
-      @Override
-      public void onClick( View view )
-      {
-        new DatePickerDialog( RegisterActivity.this, new DatePickerDialog.OnDateSetListener()
-        {
-          @Override
-          public void onDateSet( DatePicker datePicker, int year, int monthOfYear, int dayOfMonth )
-          {
-            dateOfBirth.set( Calendar.YEAR, year );
-            dateOfBirth.set( Calendar.MONTH, monthOfYear );
-            dateOfBirth.set( Calendar.DAY_OF_MONTH, dayOfMonth );
-            dateOfBirthField.setText( SIMPLE_DATE_FORMAT.format( dateOfBirth.getTime() ) );
-          }
-        }, dateOfBirth.get( Calendar.YEAR ), dateOfBirth.get( Calendar.MONTH ), dateOfBirth.get( Calendar.DAY_OF_MONTH ) ).show();
-      }
-    } );
+    findViewById( R.id.dateOfBirthField )
+            .setOnClickListener( view -> new DatePickerDialog(
+                                         RegisterActivity.this,
+                                         ( datePicker, year, monthOfYear, dayOfMonth ) -> {
+                                           dateOfBirth.set( Calendar.YEAR, year );
+                                           dateOfBirth.set( Calendar.MONTH, monthOfYear );
+                                           dateOfBirth.set( Calendar.DAY_OF_MONTH, dayOfMonth );
+                                           dateOfBirthField.setText( SIMPLE_DATE_FORMAT.format( dateOfBirth.getTime() ) );
+                                         },
+                                         dateOfBirth.get( Calendar.YEAR ),
+                                         dateOfBirth.get( Calendar.MONTH ),
+                                         dateOfBirth.get( Calendar.DAY_OF_MONTH )
+                                 ).show()
+            );
 
     findViewById( R.id.registerButton ).setOnClickListener( new View.OnClickListener()
     {
@@ -148,7 +144,7 @@ public class RegisterActivity extends Activity
     Toast.makeText( this, msg, Toast.LENGTH_SHORT ).show();
   }
 
-  private static enum Gender
+  private enum Gender
   {
     MALE, FEMALE
   }

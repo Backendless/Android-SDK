@@ -21,13 +21,14 @@ package com.backendless.examples.userservice.demo;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.widget.Toast;
+
 import com.backendless.async.callback.BackendlessCallback;
 import com.backendless.exceptions.BackendlessFault;
 
 public class DefaultCallback<T> extends BackendlessCallback<T>
 {
-  Context context;
-  ProgressDialog progressDialog;
+  private Context context;
+  private ProgressDialog progressDialog;
 
   public DefaultCallback( Context context )
   {
