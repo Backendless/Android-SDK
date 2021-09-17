@@ -3,8 +3,6 @@ package com.backendless.examples.login_with_sdk;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 import com.backendless.Backendless;
 
@@ -25,26 +23,20 @@ public class ChooseSocialNetworkActivity extends Activity {
 	}
 
 	private void initUI() {
-		loginWithFacebookSDK = (Button) findViewById(R.id.button_loginWithFacebookSDK);
-		loginWithGooglePlusSDK = (Button) findViewById(R.id.button_loginWithGooglePlusSDK);
+		loginWithFacebookSDK = findViewById(R.id.button_loginWithFacebookSDK);
+		loginWithGooglePlusSDK =  findViewById(R.id.button_loginWithGooglePlusSDK);
 
 	}
 
 	private void initUIBehavior() {
-		loginWithFacebookSDK.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(ChooseSocialNetworkActivity.this, LoginWithFacebookSDKActivity.class);
-				startActivity(intent);
-			}
-		});
+		loginWithFacebookSDK.setOnClickListener( v -> {
+			Intent intent = new Intent(ChooseSocialNetworkActivity.this, LoginWithFacebookSDKActivity.class);
+			startActivity(intent);
+		} );
 
-		loginWithGooglePlusSDK.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(ChooseSocialNetworkActivity.this, LoginWithGooglePlusSDKActivity.class);
-				startActivity(intent);
-			}
-		});
+		loginWithGooglePlusSDK.setOnClickListener( v -> {
+			Intent intent = new Intent(ChooseSocialNetworkActivity.this, LoginWithGooglePlusSDKActivity.class);
+			startActivity(intent);
+		} );
 	}
 }

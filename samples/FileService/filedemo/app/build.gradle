@@ -1,32 +1,20 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.2.3'
-    }
-}
 apply plugin: 'com.android.application'
 
-repositories {
-    jcenter()
-}
-
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "com.backendless.examples.fileservice.filedemo"
-        minSdkVersion 9
-        targetSdkVersion 23
+        minSdkVersion 30
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_6
-        targetCompatibility JavaVersion.VERSION_1_6
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
         release {
@@ -37,6 +25,7 @@ android {
 }
 
 dependencies {
-    compile 'com.backendless:backendless:3.0.11'
+  implementation 'com.backendless:backendless:6.3.1'
 //    compile 'com.android.support:appcompat-v7:23.1.1'
+  implementation 'androidx.core:core:1.6.0'
 }

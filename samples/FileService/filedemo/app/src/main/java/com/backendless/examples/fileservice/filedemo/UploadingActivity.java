@@ -30,6 +30,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.async.callback.BackendlessCallback;
@@ -68,61 +69,65 @@ public class UploadingActivity extends Activity
 
   private void uploadFile( Uri data )
   {
-    Backendless.Files.upload( new File( getPath( data ) ), Defaults.DEFAULT_PATH_ROOT, true, new UploadCallback()
-        {
-          @Override
-          public void onProgressUpdate( Integer progress )
-          {
-            Log.e( UploadCallback.class.getName(), "Progress: " + progress );
-          }
-        },
-        new AsyncCallback<BackendlessFile>()
-        {
-          @Override
-          public void handleResponse( final BackendlessFile backendlessFile )
-          {
-            handleSuccess( backendlessFile );
-          }
+    Backendless.Files.upload(
+            new File( getPath( data ) ),
+            Defaults.DEFAULT_PATH_ROOT,
+            true,
+            progress -> Log.e( UploadCallback.class.getName(), "Progress: " + progress ),
+            new AsyncCallback<BackendlessFile>()
+            {
+              @Override
+              public void handleResponse( final BackendlessFile backendlessFile )
+              {
+                handleSuccess( backendlessFile );
+              }
 
-          @Override
-          public void handleFault( BackendlessFault backendlessFault )
-          {
-            Toast.makeText( UploadingActivity.this, backendlessFault.toString(), Toast.LENGTH_SHORT ).show();
-          }
-        } );
+              @Override
+              public void handleFault( BackendlessFault backendlessFault )
+              {
+                Toast.makeText( UploadingActivity.this, backendlessFault.toString(), Toast.LENGTH_SHORT ).show();
+              }
+            } );
   }
 
   private void uploadBitmap( Bitmap photo )
   {
-    LinearLayout imageContainer = (LinearLayout) findViewById( R.id.imageContainer );
+    LinearLayout imageContainer = findViewById( R.id.imageContainer );
 
-    Drawable drawable = new BitmapDrawable( photo );
+    Drawable drawable = new BitmapDrawable( getResources(), photo );
     drawable.setAlpha( 50 );
-    imageContainer.setBackgroundDrawable( drawable );
+    imageContainer.setBackground( drawable );
 
     String name = UUID.randomUUID().toString() + ".png";
 
-    Backendless.Files.Android.upload( photo, Bitmap.CompressFormat.PNG, 100, name, Defaults.DEFAULT_PATH_ROOT, new AsyncCallback<BackendlessFile>()
-    {
-      @Override
-      public void handleResponse( final BackendlessFile backendlessFile )
-      {
-        handleSuccess( backendlessFile );
-      }
+    Backendless.Files.Android.upload(
+            photo,
+            Bitmap.CompressFormat.PNG,
+            100,
+            name,
+            Defaults.DEFAULT_PATH_ROOT,
+            new AsyncCallback<BackendlessFile>()
+            {
+              @Override
+              public void handleResponse( final BackendlessFile backendlessFile )
+              {
+                handleSuccess( backendlessFile );
+              }
 
-      @Override
-      public void handleFault( BackendlessFault backendlessFault )
-      {
-        Toast.makeText( UploadingActivity.this, backendlessFault.toString(), Toast.LENGTH_SHORT ).show();
-      }
-    } );
+              @Override
+              public void handleFault( BackendlessFault backendlessFault )
+              {
+                Toast.makeText( UploadingActivity.this, backendlessFault.toString(), Toast.LENGTH_SHORT ).show();
+              }
+            } );
   }
 
   public String getPath( Uri uri )
   {
     String[] projection = { MediaStore.Images.Media.DATA };
     Cursor cursor = getContentResolver().query( uri, projection, null, null, null );
-    if( cursor == null ) return null;
+    if( cursor == null )
+      return null;
     int column_index = cursor.getColumnIndexOrThrow( MediaStore.Images.Media.DATA );
     cursor.moveToFirst();
     String s = cursor.getString( column_index );
