@@ -12,9 +12,10 @@ To get started:
     ```
     chmod +x *.sh
     ```
+1. Get the latest version of backendless by the following link https://develop.backendless.com/console/status    
 1. In the same command prompt/terminal window from the step above run the following command, which will download and install all the required images:
     ```
-    ./backendless_install.sh
+    ./backendless_install.sh <version from the previous step>
     ```
 1. When the installation script runs, it will prompt you to enter port numbers for the following Backendless components:
     * MySQL (default port - 3306)
