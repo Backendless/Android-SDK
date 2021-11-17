@@ -146,7 +146,7 @@ public class BackendlessFCMService extends FirebaseMessagingService
     // android.os.Build.VERSION_CODES.O == 26
     if( android.os.Build.VERSION.SDK_INT > 25 )
     {
-      final String channelId = PushTemplateHelper.getChannelNotificationPrefix() + ":" + channelName;
+      final String channelId = PushTemplateHelper.getChannelId( channelName );
       NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
       NotificationChannel notificationChannel = notificationManager.getNotificationChannel( channelId );
 

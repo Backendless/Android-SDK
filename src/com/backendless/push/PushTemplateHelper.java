@@ -341,21 +341,26 @@ public class PushTemplateHelper
     }
   }
 
-  static public String getChannelNotificationPrefix()
+  static String getChannelId( String channelName )
+  {
+    return getChannelNotificationPrefix() + ":" + channelName;
+  }
+
+  static private String getChannelNotificationPrefix()
   {
     return Backendless.getApplicationIdOrDomain();
   }
 
   static public NotificationChannel getNotificationChannel( final Context context, final String templateName )
   {
-    final String channelId = getChannelNotificationPrefix() + ":" + templateName;
+    final String channelId = getChannelId( templateName );
     NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
     return notificationManager.getNotificationChannel( channelId );
   }
 
   static public NotificationChannel getOrCreateNotificationChannel( Context context, final AndroidPushTemplate template )
   {
-    final String channelId = getChannelNotificationPrefix() + ":" + template.getName();
+    final String channelId = getChannelId( template.getName() );
     NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
 
     NotificationChannel notificationChannel = notificationManager.getNotificationChannel( channelId );
