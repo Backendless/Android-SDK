@@ -100,20 +100,20 @@ public class PushTemplateHelper
     // Notification channel ID is ignored for Android 7.1.1 (API level 25) and lower.
 
     String messageText = newBundle.getString( PublishOptions.MESSAGE_TAG );
-    
+
     String contentTitle = newBundle.getString( PublishOptions.ANDROID_CONTENT_TITLE_TAG );
     contentTitle = contentTitle != null ? contentTitle : template.getContentTitle();
-    
+
     String summarySubText = newBundle.getString( PublishOptions.ANDROID_SUMMARY_SUBTEXT_TAG );
     summarySubText = summarySubText != null ? summarySubText : template.getSummarySubText();
-    
+
     String largeIcon = newBundle.getString( PublishOptions.ANDROID_LARGE_ICON_TAG );
     largeIcon = largeIcon != null ? largeIcon : template.getLargeIcon();
-  
+
     String attachmentUrl = newBundle.getString( PublishOptions.ANDROID_ATTACHMENT_URL_TAG );
     attachmentUrl = attachmentUrl != null ? attachmentUrl : template.getAttachmentUrl();
-  
-  
+
+
     NotificationCompat.Builder notificationBuilder;
     // android.os.Build.VERSION_CODES.O == 26
     if( android.os.Build.VERSION.SDK_INT > 25 )
@@ -252,7 +252,7 @@ public class PushTemplateHelper
             .setContentTitle( contentTitle != null ? contentTitle : template.getContentTitle() )
             .setSubText( summarySubText != null ? summarySubText : template.getSummarySubText() )
             .setContentText( messageText );
-  
+
     Intent notificationIntent;
     if (template.getActionOnTap() == null || template.getActionOnTap().isEmpty())
       notificationIntent = appContext.getPackageManager().getLaunchIntentForPackage(appContext.getPackageName());
@@ -261,11 +261,11 @@ public class PushTemplateHelper
       notificationIntent = new Intent("ActionOnTap");
       notificationIntent.setClassName(appContext, template.getActionOnTap());
     }
-  
+
     notificationIntent.putExtras(newBundle);
     notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     PendingIntent contentIntent = PendingIntent.getActivity(appContext, notificationId * 3, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-  
+
     // user should use messageId and tag(templateName) to cancel notification.
     notificationBuilder.setContentIntent(contentIntent);
 
@@ -329,20 +329,38 @@ public class PushTemplateHelper
 
     NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
     List<NotificationChannel> notificationChannels = notificationManager.getNotificationChannels();
-    for (NotificationChannel notifChann : notificationChannels)
-      notificationManager.deleteNotificationChannel( notifChann.getId() );
+    final String channelNotificationPrefix = getChannelNotificationPrefix();
+    for( NotificationChannel notifChann : notificationChannels )
+    {
+      String notifChannId = notifChann.getId();
+      // Delete NotificationChannel only if Backendless created this channel
+      if( notifChannId.startsWith( channelNotificationPrefix ) )
+      {
+        notificationManager.deleteNotificationChannel( notifChannId );
+      }
+    }
+  }
+
+  static String getChannelId( String channelName )
+  {
+    return getChannelNotificationPrefix() + ":" + channelName;
+  }
+
+  static private String getChannelNotificationPrefix()
+  {
+    return Backendless.getApplicationIdOrDomain();
   }
 
   static public NotificationChannel getNotificationChannel( final Context context, final String templateName )
   {
-    final String channelId = Backendless.getApplicationIdOrDomain() + ":" + templateName;
+    final String channelId = getChannelId( templateName );
     NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
     return notificationManager.getNotificationChannel( channelId );
   }
 
   static public NotificationChannel getOrCreateNotificationChannel( Context context, final AndroidPushTemplate template )
   {
-    final String channelId = Backendless.getApplicationIdOrDomain() + ":" + template.getName();
+    final String channelId = getChannelId( template.getName() );
     NotificationManager notificationManager = (NotificationManager) context.getSystemService( Context.NOTIFICATION_SERVICE );
 
     NotificationChannel notificationChannel = notificationManager.getNotificationChannel( channelId );
