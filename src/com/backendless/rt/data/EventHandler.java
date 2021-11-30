@@ -31,6 +31,18 @@ public interface EventHandler<T> extends RTListener
 
   void removeUpdateListeners( String whereClause );
 
+  void addUpsertListener( AsyncCallback<T> callback );
+
+  void addUpsertListener( String whereClause, AsyncCallback<T> callback );
+
+  void removeUpsertListeners();
+
+  void removeUpsertListener( AsyncCallback<T> callback );
+
+  void removeUpsertListeners( String whereClause );
+
+  void removeUpsertListener( String whereClause, AsyncCallback<T> callback );
+
   void addDeleteListener( AsyncCallback<T> callback );
 
   void addDeleteListener( String whereClause, AsyncCallback<T> callback );
@@ -60,6 +72,18 @@ public interface EventHandler<T> extends RTListener
   void removeBulkUpdateListener( AsyncCallback<BulkEvent> callback );
 
   void removeBulkUpdateListeners( String whereClause );
+
+  void addBulkUpsertListener( AsyncCallback<List> callback );
+
+  void addBulkUpsertListener( String whereClause, AsyncCallback<List> callback );
+
+  void removeBulkUpsertListeners();
+
+  void removeBulkUpsertListener( AsyncCallback<List<String>> callback );
+
+  void removeBulkUpsertListeners( String whereClause );
+
+  void removeBulkUpsertListener( String whereClause, AsyncCallback<List<String>> callback );
 
   void addBulkDeleteListener( AsyncCallback<BulkEvent> callback );
 
