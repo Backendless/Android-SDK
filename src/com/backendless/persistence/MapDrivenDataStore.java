@@ -95,16 +95,36 @@ public class MapDrivenDataStore implements IDataStore<Map>
   @Override
   public Map save( Map entity ) throws BackendlessException
   {
+    return save( entity, false );
+  }
+
+  @Override
+  public Map save( Map entity, boolean isUpsert ) throws BackendlessException
+  {
     if( entity == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
     Object[] args = new Object[] { tableName, entity };
-    Map newEntity = Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "save", args, new MapDrivenResponder() );
-    return newEntity;
+    String methodName;
+    if( isUpsert )
+    {
+      methodName = "upsert";
+    }
+    else
+    {
+      methodName = "save";
+    }
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, methodName, args, new MapDrivenResponder() );
   }
 
   @Override
   public void save( Map entity, final AsyncCallback<Map> responder )
+  {
+    save( entity, false, responder );
+  }
+
+  @Override
+  public void save( Map entity, boolean isUpsert, AsyncCallback<Map> responder )
   {
     try
     {
@@ -112,7 +132,16 @@ public class MapDrivenDataStore implements IDataStore<Map>
         throw new IllegalArgumentException( ExceptionMessage.NULL_ENTITY );
 
       Object[] args = new Object[] { tableName, entity };
-      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "save", args, responder, new MapDrivenResponder() );
+      String methodName;
+      if( isUpsert )
+      {
+        methodName = "upsert";
+      }
+      else
+      {
+        methodName = "save";
+      }
+      Invoker.invokeAsync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, methodName, args, responder, new MapDrivenResponder() );
     }
     catch( Throwable e )
     {

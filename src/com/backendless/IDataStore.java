@@ -40,7 +40,11 @@ public interface IDataStore<E>
 
   E save( E entity ) throws BackendlessException;
 
+  E save( E entity, boolean isUpsert ) throws BackendlessException;
+
   void save( E entity, AsyncCallback<E> responder );
+
+  void save( E entity, boolean isUpsert, AsyncCallback<E> responder );
 
   E deepSave( E entity ) throws BackendlessException;
 
