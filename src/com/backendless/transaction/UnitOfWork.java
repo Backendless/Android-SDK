@@ -23,6 +23,8 @@ public class UnitOfWork implements IUnitOfWork
     ObjectFactories.addArgumentObjectFactory( OperationCreateBulk.class.getName(), new OperationCreateBulkFactory() );
     ObjectFactories.addArgumentObjectFactory( OperationUpdate.class.getName(), new OperationUpdateFactory() );
     ObjectFactories.addArgumentObjectFactory( OperationUpdateBulk.class.getName(), new OperationUpdateBulkFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationUpsert.class.getName(), new OperationUpsertFactory() );
+    ObjectFactories.addArgumentObjectFactory( OperationUpsertBulk.class.getName(), new OperationUpsertBulkFactory() );
     ObjectFactories.addArgumentObjectFactory( OperationDelete.class.getName(), new OperationDeleteFactory() );
     ObjectFactories.addArgumentObjectFactory( OperationDeleteBulk.class.getName(), new OperationDeleteBulkFactory() );
     ObjectFactories.addArgumentObjectFactory( OperationFind.class.getName(), new OperationFindFactory() );
@@ -33,6 +35,7 @@ public class UnitOfWork implements IUnitOfWork
 
   private final UnitOfWorkCreate unitOfWorkCreate;
   private final UnitOfWorkUpdate unitOFWorkUpdate;
+  private final UnitOfWorkUpsert unitOFWorkUpsert;
   private final UnitOfWorkDelete unitOfWorkDelete;
   private final UnitOfWorkFind unitOfWorkFind;
   private final UnitOfWorkAddRelation unitOfWorkAddRelation;
@@ -52,6 +55,7 @@ public class UnitOfWork implements IUnitOfWork
     OpResultIdGenerator opResultIdGenerator = new OpResultIdGenerator( opResultIdStrings );
     unitOfWorkCreate = new UnitOfWorkCreateImpl( operations, opResultIdGenerator, clazzes );
     unitOFWorkUpdate = new UnitOfWorkUpdateImpl( operations, opResultIdGenerator, clazzes );
+    unitOFWorkUpsert = new UnitOfWorkUpsertImpl( operations, opResultIdGenerator, clazzes );
     unitOfWorkDelete = new UnitOfWorkDeleteImpl( operations, opResultIdGenerator );
     unitOfWorkFind = new UnitOfWorkFindImpl( operations, opResultIdGenerator );
     RelationOperation relationOperation = new RelationOperationImpl( operations, opResultIdGenerator );
@@ -168,6 +172,30 @@ public class UnitOfWork implements IUnitOfWork
   public OpResult bulkUpdate( OpResult objectIdsForChanges, Map<String, Object> changes )
   {
     return unitOFWorkUpdate.bulkUpdate( objectIdsForChanges, changes );
+  }
+
+  @Override
+  public <E> OpResult upsert( E instance )
+  {
+    return unitOFWorkUpsert.upsert( instance );
+  }
+
+  @Override
+  public OpResult upsert( String tableName, Map<String, Object> objectMap )
+  {
+    return unitOFWorkUpsert.upsert( tableName, objectMap );
+  }
+
+  @Override
+  public <E> OpResult bulkUpsert( List<E> instances )
+  {
+    return unitOFWorkUpsert.bulkUpsert( instances );
+  }
+
+  @Override
+  public OpResult bulkUpsert( String tableName, List<Map<String, Object>> arrayOfObjectMaps )
+  {
+    return unitOFWorkUpsert.bulkUpsert( tableName, arrayOfObjectMaps );
   }
 
   @Override
