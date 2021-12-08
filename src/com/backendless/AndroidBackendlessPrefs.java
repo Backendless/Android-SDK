@@ -79,6 +79,30 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
     return this.url;
   }
 
+  public AndroidBackendlessPrefs setCustomDomain( String customDomain )
+  {
+    if( sharedPreferences == null )
+      throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
+
+    SharedPreferences.Editor editor = sharedPreferences.edit();
+    editor.putString( Type.CUSTOM_DOMAIN_KEY.name64(), customDomain );
+    editor.commit();
+
+    this.customDomain = customDomain;
+    return this;
+  }
+
+  public String getCustomDomain()
+  {
+    if( sharedPreferences == null )
+      throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
+
+    if( this.customDomain == null )
+      this.customDomain = sharedPreferences.getString( Type.CUSTOM_DOMAIN_KEY.name64(), Backendless.getUrl() );
+
+    return this.customDomain;
+  }
+
   public synchronized Map getHeaders()
   {
     if( headers == null )
@@ -115,6 +139,9 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
   {
     if( authKeys == null )
       restoreAuthKeysFromPreferences();
+
+    if( authKeys == null && getCustomDomain() == null )
+      throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
 
     return authKeys;
   }
@@ -201,6 +228,7 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
     APPLICATION_ID_KEY,
     API_KEY,
     URL_KEY,
+    CUSTOM_DOMAIN_KEY,
     HEADERS,
     PUSH_TEMPLATES,
     NOTIFICATION_ID_GENERATOR;
