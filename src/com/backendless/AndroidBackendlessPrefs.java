@@ -47,7 +47,8 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
 
   public String getApplicationId()
   {
-    return getAuthKeys().getApplicationId();
+    final AuthKeys authKeys = getAuthKeys();
+    return authKeys == null ? null : authKeys.getApplicationId();
   }
 
   public String getApiKey()
@@ -78,6 +79,30 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
     return this.url;
   }
 
+  public AndroidBackendlessPrefs setCustomDomain( String customDomain )
+  {
+    if( sharedPreferences == null )
+      throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
+
+    SharedPreferences.Editor editor = sharedPreferences.edit();
+    editor.putString( Type.CUSTOM_DOMAIN_KEY.name64(), customDomain );
+    editor.commit();
+
+    this.customDomain = customDomain;
+    return this;
+  }
+
+  public String getCustomDomain()
+  {
+    if( sharedPreferences == null )
+      throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
+
+    if( this.customDomain == null )
+      this.customDomain = sharedPreferences.getString( Type.CUSTOM_DOMAIN_KEY.name64(), Backendless.getUrl() );
+
+    return this.customDomain;
+  }
+
   public synchronized Map getHeaders()
   {
     if( headers == null )
@@ -90,7 +115,7 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
   {
     if( sharedPreferences == null )
       throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
-    
+
     String rawHeaders = sharedPreferences.getString( Type.HEADERS.name64(), null );
 
     if( rawHeaders != null )
@@ -115,7 +140,7 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
     if( authKeys == null )
       restoreAuthKeysFromPreferences();
 
-    if (authKeys == null)
+    if( authKeys == null && getCustomDomain() == null )
       throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
 
     return authKeys;
@@ -125,7 +150,7 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
   {
     if( sharedPreferences == null )
       throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
-    
+
     String applicationId = sharedPreferences.getString( Type.APPLICATION_ID_KEY.name64(), null );
     String apiKey = sharedPreferences.getString( Type.API_KEY.name64(), null );
 
@@ -165,7 +190,7 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
   {
     if( sharedPreferences == null )
       throw new IllegalStateException( ExceptionMessage.NOT_INITIALIZED );
-    
+
     if( sharedPreferences.contains( Type.HEADERS.name64() ) )
     {
       SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -203,6 +228,7 @@ class AndroidBackendlessPrefs extends BackendlessPrefs
     APPLICATION_ID_KEY,
     API_KEY,
     URL_KEY,
+    CUSTOM_DOMAIN_KEY,
     HEADERS,
     PUSH_TEMPLATES,
     NOTIFICATION_ID_GENERATOR;
