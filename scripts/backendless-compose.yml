@@ -32,31 +32,6 @@ services:
     depends_on:
     - bl-consul
 
-  bl-hazelcast:
-    image: "${REGISTRY}/bl-hazelcast:${VERSION}"
-    hostname: bl-hazelcast
-
-    env_file:
-      - ports.env
-
-    environment:
-      - BL_CONFIG_PROVIDER=consul
-      - BL_CONSUL_HOST=bl-consul
-      - BL_CONSUL_PORT=8500
-      - BL_MANAGEMENT_HTTP_PORT=2400
-    networks:
-    - bkndls-net
-
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:2400/health"]
-      interval: 20s
-      timeout: 300s
-      retries: 3
-      start_period: 180s
-
-    depends_on:
-    - bl-consul
-
   bl-server:
     image: "${REGISTRY}/bl-server:${VERSION}"
     #stop_signal: SIGINT
@@ -70,6 +45,7 @@ services:
       - BL_CONFIG_PROVIDER=consul
       - BL_CONSUL_HOST=bl-consul
       - BL_CONSUL_PORT=8500
+      - JAVA_OPTS="-Dinfinispan.stack.name=tcp -Dinfinispan.cluster.name=backendless-cluster"
 
     #environment:
     #-
@@ -80,6 +56,7 @@ services:
     #- nfsRepo:/opt/backendless/repo
     - ${MOUNTS}/repo:/opt/backendless/repo
     - ${MOUNTS}/server/logs:/opt/backendless/logs
+    - ${MOUNTS}/configs/application.conf:/opt/backendless/server/conf/application.conf
     networks:
     - bkndls-net
 
@@ -109,6 +86,7 @@ services:
       - BL_CONFIG_PROVIDER=consul
       - BL_CONSUL_HOST=bl-consul
       - BL_CONSUL_PORT=8500
+      - JAVA_OPTS="-Dinfinispan.stack.name=tcp -Dinfinispan.cluster.name=backendless-cluster"
 
     volumes:
     #- nfsRepo:/opt/backendless/repo
