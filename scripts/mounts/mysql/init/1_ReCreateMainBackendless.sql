@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `main_backendless`.`Application` (
   `shardName` VARCHAR(100) NULL,
   `zoneId` INT NOT NULL DEFAULT 1,
   `type` VARCHAR(30) NOT NULL DEFAULT 'general',
+  `metaInfo` JSON NULL,
   PRIMARY KEY (`id`,`zoneId`),
   KEY `fk_Application_ClusterZone` (`zoneId`),
   CONSTRAINT `fk_Application_ClusterZone`
