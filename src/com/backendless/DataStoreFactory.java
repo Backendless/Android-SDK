@@ -66,7 +66,19 @@ class DataStoreFactory
       }
 
       @Override
+      public E save( final E entity, boolean isUpsert ) throws BackendlessException
+      {
+        return Backendless.Persistence.save( entity );
+      }
+
+      @Override
       public void save( final E entity, final AsyncCallback<E> responder )
+      {
+        Backendless.Persistence.save( entity, responder );
+      }
+
+      @Override
+      public void save( final E entity, boolean isUpsert, final AsyncCallback<E> responder )
       {
         Backendless.Persistence.save( entity, responder );
       }

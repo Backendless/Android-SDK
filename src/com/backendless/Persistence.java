@@ -104,7 +104,7 @@ public final class Persistence
 
     if( objects.isEmpty() )
       return new ArrayList<>();
-    
+
     String tableName =  BackendlessSerializer.getSimpleName( objects.get( 0 ).getClass() );
 
     List<Map<String, Object>> serializedEntities = new ArrayList<>();
@@ -125,15 +125,29 @@ public final class Persistence
 
   public <E> E save( final E entity ) throws BackendlessException
   {
+    return save( entity, false );
+  }
+
+  public <E> E save( final E entity, boolean isUpsert ) throws BackendlessException
+  {
     final Map<String, Object> serializedEntity = serializeEntityBeforeCreate( entity );
 
     try
     {
-      String method = "create";
-
-      if( serializedEntity.containsKey( Persistence.DEFAULT_OBJECT_ID_FIELD ) &&
-              serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) != null )
+      String method;
+      if( isUpsert )
+      {
+        method = "upsert";
+      }
+      else if( serializedEntity.containsKey( Persistence.DEFAULT_OBJECT_ID_FIELD ) &&
+            serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) != null )
+      {
         method = "update";
+      }
+      else
+      {
+        method = "create";
+      }
 
       E newEntity = Invoker.invokeSync( PERSISTENCE_MANAGER_SERVER_ALIAS, method,
                                         new Object[] {
@@ -161,21 +175,32 @@ public final class Persistence
 
   public <E> void save( final E entity, final AsyncCallback<E> responder )
   {
+    save( entity, false, responder );
+  }
+
+  public <E> void save( final E entity, boolean isUpsert, final AsyncCallback<E> responder )
+  {
     try
     {
       final Map<String, Object> serializedEntity = serializeEntityBeforeCreate( entity );
 
+      String method;
       AsyncCallback<E> callbackOverrider;
-      if (serializedEntity.get(Persistence.DEFAULT_OBJECT_ID_FIELD) == null)
-          callbackOverrider = getCreateAsyncHandler(entity, serializedEntity, responder);
+      if( isUpsert )
+      {
+        callbackOverrider = getUpsertAsyncHandler(entity, serializedEntity, responder);
+        method = "upsert";
+      }
+      else if( serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) == null )
+      {
+        callbackOverrider = getCreateAsyncHandler( entity, serializedEntity, responder );
+        method = "create";
+      }
       else
-          callbackOverrider = getUpdateAsyncHandler(entity, serializedEntity, responder);
-
-      String method = "create";
-
-      if( serializedEntity.containsKey( Persistence.DEFAULT_OBJECT_ID_FIELD ) &&
-              serializedEntity.get( Persistence.DEFAULT_OBJECT_ID_FIELD ) != null )
+      {
+        callbackOverrider = getUpdateAsyncHandler( entity, serializedEntity, responder );
         method = "save";
+      }
 
       Invoker.invokeAsync( PERSISTENCE_MANAGER_SERVER_ALIAS, method, new Object[] { BackendlessSerializer.getSimpleName( entity.getClass() ), serializedEntity }, callbackOverrider, ResponderHelper.getPOJOAdaptingResponder( entity.getClass() ) );
     }
@@ -1076,6 +1101,42 @@ public final class Persistence
     } );
 
     return serializedEntity;
+  }
+
+  private <E> AsyncCallback<E> getUpsertAsyncHandler( final E entity, final Map<String, Object> serializedEntity,
+                                                      final AsyncCallback<E> responder )
+  {
+    return new AsyncCallback<E>()
+    {
+      @Override
+      public void handleResponse( E newEntity )
+      {
+        final Map<String, Object> serializedNewEntity = BackendlessSerializer.serializeToMap( newEntity );
+        if( serializedNewEntity.get( Persistence.DEFAULT_UPDATED_FIELD ) == null )
+        {
+          MessageWriter.setObjectSubstitutor( null );
+          FootprintsManager.getInstance().Inner.duplicateFootprintForObject( serializedEntity, newEntity, entity );
+        }
+        else
+        {
+          FootprintsManager.getInstance().Inner.updateFootprintForObject( serializedEntity, newEntity, entity );
+        }
+
+        Footprint footprint = FootprintsManager.getInstance().getEntityFootprint( newEntity );
+        if( footprint != null )
+          footprint.initObjectId( entity );
+
+        if( responder != null )
+          responder.handleResponse( newEntity );
+      }
+
+      @Override
+      public void handleFault( BackendlessFault fault )
+      {
+        if( responder != null )
+          responder.handleFault( fault );
+      }
+    };
   }
 
   private <E> AsyncCallback<E> getCreateAsyncHandler(
