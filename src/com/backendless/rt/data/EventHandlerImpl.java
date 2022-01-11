@@ -275,15 +275,6 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   }
 
   @Override
-  public void addBulkUpsertListener( String whereClause, AsyncCallback<List> callback )
-  {
-    DataSubscription subscription = new DataSubscription( ObjectEvents.bulk_upserted, tableName, createCallback( callback, List.class ) )
-        .withWhere( whereClause );
-
-    addEventListener( subscription );
-  }
-
-  @Override
   public void removeBulkUpsertListeners()
   {
     removeListeners( ObjectEvents.bulk_upserted );
@@ -293,18 +284,6 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
   public void removeBulkUpsertListener( AsyncCallback<List<String>> callback )
   {
     removeListeners( ObjectEvents.bulk_upserted, callback );
-  }
-
-  @Override
-  public void removeBulkUpsertListeners( String whereClause )
-  {
-    removeListeners( ObjectEvents.bulk_upserted, whereClause );
-  }
-
-  @Override
-  public void removeBulkUpsertListener( String whereClause, AsyncCallback<List<String>> callback )
-  {
-    removeListeners( ObjectEvents.bulk_upserted, whereClause, callback );
   }
 
   //--------bulk-delete-------

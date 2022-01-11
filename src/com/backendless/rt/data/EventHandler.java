@@ -75,15 +75,9 @@ public interface EventHandler<T> extends RTListener
 
   void addBulkUpsertListener( AsyncCallback<List> callback );
 
-  void addBulkUpsertListener( String whereClause, AsyncCallback<List> callback );
-
   void removeBulkUpsertListeners();
 
   void removeBulkUpsertListener( AsyncCallback<List<String>> callback );
-
-  void removeBulkUpsertListeners( String whereClause );
-
-  void removeBulkUpsertListener( String whereClause, AsyncCallback<List<String>> callback );
 
   void addBulkDeleteListener( AsyncCallback<BulkEvent> callback );
 
