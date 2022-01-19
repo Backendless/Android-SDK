@@ -136,6 +136,14 @@ public abstract class UserExtender
   {
   }
 
+  public void beforeUpsert( RunnerContext context, HashMap userValues ) throws Exception
+  {
+  }
+
+  public void afterUpsert( RunnerContext context, HashMap userValues, ExecutionResult<BackendlessUser> result ) throws Exception
+  {
+  }
+
   public void beforeRemove( RunnerContext context, String id ) throws Exception
   {
   }
