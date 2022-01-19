@@ -115,6 +115,49 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
     removeListeners( ObjectEvents.updated, whereClause );
   }
 
+  //--------upsert-------
+
+  @Override
+  public void addUpsertListener( AsyncCallback<T> callback )
+  {
+    DataSubscription subscription = new DataSubscription( ObjectEvents.upserted, tableName, createCallback( callback ) );
+    addEventListener( subscription );
+  }
+
+  @Override
+  public void addUpsertListener( String whereClause, AsyncCallback<T> callback )
+  {
+    DataSubscription subscription = new DataSubscription( ObjectEvents.upserted, tableName, createCallback( callback ) )
+        .withWhere( whereClause );
+
+    addEventListener( subscription );
+  }
+
+  @Override
+  public void removeUpsertListeners()
+  {
+    removeListeners( ObjectEvents.upserted );
+  }
+
+
+  @Override
+  public void removeUpsertListener( AsyncCallback<T> callback )
+  {
+    removeListeners( ObjectEvents.upserted, callback );
+  }
+
+  @Override
+  public void removeUpsertListeners( String whereClause )
+  {
+    removeListeners( ObjectEvents.upserted, whereClause );
+  }
+
+  @Override
+  public void removeUpsertListener( String whereClause, AsyncCallback<T> callback )
+  {
+    removeListeners( ObjectEvents.upserted, whereClause, callback );
+  }
+
   //--------remove-------
 
   @Override
@@ -221,7 +264,29 @@ public class EventHandlerImpl<T> extends RTListenerImpl implements EventHandler<
     removeListeners( ObjectEvents.bulk_updated, whereClause );
   }
 
-  //--------bulk-remove-------
+  //--------bulk-upsert-------
+
+  @Override
+  public void addBulkUpsertListener( AsyncCallback<List> callback )
+  {
+    DataSubscription subscription =
+        new DataSubscription( ObjectEvents.bulk_upserted, tableName, createCallback( callback, List.class ) );
+    addEventListener( subscription );
+  }
+
+  @Override
+  public void removeBulkUpsertListeners()
+  {
+    removeListeners( ObjectEvents.bulk_upserted );
+  }
+
+  @Override
+  public void removeBulkUpsertListener( AsyncCallback<List<String>> callback )
+  {
+    removeListeners( ObjectEvents.bulk_upserted, callback );
+  }
+
+  //--------bulk-delete-------
 
   @Override
   public void addBulkDeleteListener( AsyncCallback<BulkEvent> callback )

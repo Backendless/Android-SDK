@@ -8,6 +8,8 @@ public enum ObjectEvents implements RTEvent
   bulk_created( "bulk-created" ),
   updated( "updated" ),
   bulk_updated( "bulk-updated" ),
+  upserted( "upserted" ),
+  bulk_upserted( "bulk-upserted" ),
   deleted( "deleted" ),
   bulk_deleted( "bulk-deleted" );
 
