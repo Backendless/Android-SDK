@@ -76,6 +76,22 @@ public abstract class PersistenceExtender<T>
   {
   }
 
+  public void beforeUpsert( RunnerContext context, HashMap hashmap ) throws Exception
+  {
+  }
+
+  public void afterUpsert( RunnerContext context, HashMap hashmap,  ExecutionResult<HashMap> result ) throws Exception
+  {
+  }
+
+  public void beforeUpsertBulk( RunnerContext context, List<HashMap> entities)
+  {
+  }
+
+  public void afterUpsertBulk( RunnerContext context, List<HashMap> entities, ExecutionResult<List<String>> result )
+  {
+  }
+
   public void beforeLoadRelations( RunnerContext context, Object objectId, String entityName,
                                    String relationName, int pageSize, int offset ) throws Exception
   {
