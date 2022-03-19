@@ -44,6 +44,7 @@ import com.backendless.rt.RTService;
 import com.backendless.rt.RTServiceImpl;
 import com.backendless.util.JSONUtil;
 import com.backendless.utils.JSONConverterWeborbImpl;
+import lombok.Getter;
 import weborb.ORBConstants;
 import weborb.config.ORBConfig;
 import weborb.types.Types;
@@ -58,6 +59,7 @@ import weborb.writer.amf.AmfV3Formatter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,6 +70,9 @@ public final class Backendless
   // do not remove or change 'isCoderunner', because it is used in CodeRunner initialization process
   private static boolean isCodeRunner = false;
   private static final BackendlessPrefs prefs;
+
+  @Getter
+  private static Map<String, String> forwardableHeaders = Collections.unmodifiableMap( new HashMap<String, String>() );
 
   public static final FootprintsManager FootprintsManager = com.backendless.FootprintsManager.getInstance();
   public static final UserService UserService = com.backendless.UserService.getInstance();
@@ -301,7 +306,7 @@ public final class Backendless
     {
       Map<String, String> headers = prefs.getHeaders();
       if( headers == null )
-        headers = new HashMap<String, String>();
+        headers = new HashMap<>();
       headers.put( HeadersManager.HeadersEnum.UI_STATE.getHeader(), state );
       prefs.setHeaders( headers );
     }

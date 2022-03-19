@@ -5,7 +5,7 @@ apply plugin: 'signing'
 
 
 group 'com.backendless'
-version '6.3.1-snapshot'
+version '6.3.2'
 archivesBaseName='backendless'
 
 
@@ -270,8 +270,8 @@ dependencies {
     }
 
     // https://projectlombok.org
-    compileOnly 'org.projectlombok:lombok:1.18.10'
-    annotationProcessor 'org.projectlombok:lombok:1.18.10'
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
 }
 
 apply plugin: 'java'
