@@ -68,12 +68,12 @@ public class Invoker
       {
         try
         {
-          T result = (T) Invoker.invokeSync( className, methodName, args, responder );
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<T>( result, callback ) );
+          T result = Invoker.invokeSync( className, methodName, args, responder );
+          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<>( result, callback ) );
         }
         catch( BackendlessException e )
         {
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<T>( new BackendlessFault( e ), callback ) );
+          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<>( new BackendlessFault( e ), callback ) );
         }
       }
     } );
@@ -92,7 +92,7 @@ public class Invoker
     try
     {
       ThreadContext.cleanup();
-      getWebOrbClient().invoke( className, methodName, args, null, null, HeadersManager.getInstance().getHeaders(), chainedResponder );
+      getWebOrbClient().invoke( className, methodName, args, Backendless.getForwardableHeaders(), null, HeadersManager.getInstance().getHeaders(), chainedResponder );
     }
     catch( Exception e )
     {
@@ -104,7 +104,7 @@ public class Invoker
 
   public static <T> T invokeSync( String className, String methodName, Object[] args ) throws BackendlessException
   {
-    return (T) invokeSync( className, methodName, args, null );
+    return invokeSync( className, methodName, args, null );
   }
 
   static class SyncResponder implements IResponder
