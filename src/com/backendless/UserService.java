@@ -681,6 +681,14 @@ public final class UserService
     return Arrays.asList( (String[]) Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "getUserRoles", new Object[] { } ) );
   }
 
+  public List<String> getUserRoles( String userId )
+  {
+    if( userId == null || userId.isEmpty() )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
+
+    return Arrays.asList( (String[]) Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "getUserRoles", new Object[] { userId } ) );
+  }
+
   public void getUserRoles( final AsyncCallback<List<String>> responder )
   {
     try
@@ -702,6 +710,38 @@ public final class UserService
         }
       };
       Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getUserRoles", new Object[] { }, callback );
+    }
+    catch( Throwable e )
+    {
+      if( responder != null )
+        responder.handleFault( new BackendlessFault( e ) );
+    }
+  }
+
+  public void getUserRoles( String userId, final AsyncCallback<List<String>> responder )
+  {
+    try
+    {
+      if( userId == null || userId.isEmpty() )
+        throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
+
+      AsyncCallback<String[]> callback = new AsyncCallback<String[]>()
+      {
+        @Override
+        public void handleResponse( String[] response )
+        {
+          if( responder != null )
+            responder.handleResponse( Arrays.asList( response ) );
+        }
+
+        @Override
+        public void handleFault( BackendlessFault fault )
+        {
+          if( responder != null )
+            responder.handleFault( fault );
+        }
+      };
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getUserRoles", new Object[] { userId }, callback );
     }
     catch( Throwable e )
     {
