@@ -876,6 +876,29 @@ public final class UserService
     );
   }
 
+  public void getAuthorizationUrlLink( String authProviderCode,
+                                       String callbackUrlDomain,
+                                       Map<String, String> fieldsMappings,
+                                       List<String> scope,
+                                       AsyncCallback<String> responder ) throws BackendlessException
+  {
+    if( fieldsMappings == null )
+      fieldsMappings = new HashMap<>();
+
+    if( scope == null )
+      scope = new ArrayList<>();
+
+    String origin = null;
+    String deviceType = HeadersManager.getInstance().getHeader( HeadersManager.HeadersEnum.APP_TYPE_NAME );
+
+    Invoker.invokeAsync(
+            USER_MANAGER_SERVER_ALIAS,
+            "getAuthorizationUrlLink",
+            new Object[] { authProviderCode, origin, deviceType, fieldsMappings, scope, callbackUrlDomain },
+            responder
+    );
+  }
+
   private static void checkUserToBeProper( BackendlessUser user ) throws BackendlessException
   {
     checkUserToBeProperForUpdate( user );
