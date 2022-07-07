@@ -688,12 +688,8 @@ public final class UserService
       throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
 
     Object[] objects = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "getUserRoles", new Object[] { userId } );
-    if( objects.length == 0 )
-    {
-      return Collections.<String>emptyList();
-    }
 
-    return Arrays.asList( (String[]) objects );
+    return objects.length == 0 ? Collections.<String>emptyList() : Arrays.asList( (String[]) objects );
   }
 
   public void getUserRoles( final AsyncCallback<List<String>> responder )
@@ -738,14 +734,7 @@ public final class UserService
         public void handleResponse( Object[] response )
         {
           if( responder != null )
-            if( response.length == 0 )
-            {
-              responder.handleResponse( Collections.<String>emptyList() );
-            }
-            else
-            {
-              responder.handleResponse( Arrays.asList( (String[]) response ) );
-            }
+            responder.handleResponse( response.length == 0 ? Collections.<String>emptyList() : Arrays.asList( (String[]) response ) );
         }
 
         @Override
