@@ -35,6 +35,7 @@ import com.backendless.rt.RTClientFactory;
 import com.backendless.utils.ResponderHelper;
 import weborb.types.Types;
 
+import java.util.Collections;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -686,7 +687,9 @@ public final class UserService
     if( userId == null || userId.isEmpty() )
       throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
 
-    return Arrays.asList( (String[]) Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "getUserRoles", new Object[] { userId } ) );
+    Object[] objects = Invoker.invokeSync( USER_MANAGER_SERVER_ALIAS, "getUserRoles", new Object[] { userId } );
+
+    return objects.length == 0 ? Collections.<String>emptyList() : Arrays.asList( (String[]) objects );
   }
 
   public void getUserRoles( final AsyncCallback<List<String>> responder )
@@ -709,7 +712,7 @@ public final class UserService
             responder.handleFault( fault );
         }
       };
-      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getUserRoles", new Object[] { }, callback );
+      Invoker.invokeAsync( USER_MANAGER_SERVER_ALIAS, "getUserRoles", new Object[] {}, callback );
     }
     catch( Throwable e )
     {
@@ -725,13 +728,13 @@ public final class UserService
       if( userId == null || userId.isEmpty() )
         throw new IllegalArgumentException( ExceptionMessage.NULL_IDENTITY );
 
-      AsyncCallback<String[]> callback = new AsyncCallback<String[]>()
+      AsyncCallback<Object[]> callback = new AsyncCallback<Object[]>()
       {
         @Override
-        public void handleResponse( String[] response )
+        public void handleResponse( Object[] response )
         {
           if( responder != null )
-            responder.handleResponse( Arrays.asList( response ) );
+            responder.handleResponse( response.length == 0 ? Collections.<String>emptyList() : Arrays.asList( (String[]) response ) );
         }
 
         @Override
