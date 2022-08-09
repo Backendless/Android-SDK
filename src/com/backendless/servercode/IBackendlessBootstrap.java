@@ -23,10 +23,10 @@ public interface IBackendlessBootstrap
   /**
    * Receives notification that the classes initialization process is starting.
    */
-  public void onStart();
+  void onStart();
 
   /**
    * Receives notification that the CodeRunner is about to be shut down.
    */
-  public void onStop();
+  void onStop();
 }

@@ -6,7 +6,6 @@ import weborb.reader.ReferenceCache;
 import weborb.types.ICacheableAdaptingType;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 

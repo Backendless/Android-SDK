@@ -23,8 +23,8 @@ import java.util.Map;
  */
 public interface IObjectSerializer
 {
-  public boolean shouldTraverse();
-  public String getClassName( Class clazz );
-  public Class getSerializationFriendlyClass( Class clazz );
+  boolean shouldTraverse();
+  String getClassName( Class clazz );
+  Class getSerializationFriendlyClass( Class clazz );
   Object serializeToMap( Object entity, Map<Object, Map<String, Object>> serializedCache );
 }

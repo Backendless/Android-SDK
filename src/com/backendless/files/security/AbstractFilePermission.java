@@ -18,7 +18,6 @@
 
 package com.backendless.files.security;
 
-import com.backendless.Backendless;
 import com.backendless.Invoker;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.core.responder.AdaptingResponder;

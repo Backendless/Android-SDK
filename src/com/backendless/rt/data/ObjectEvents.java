@@ -15,7 +15,7 @@ public enum ObjectEvents implements RTEvent
 
   private final String eventName;
 
-  private ObjectEvents( String eventName )
+  ObjectEvents( String eventName )
   {
     this.eventName = eventName;
   }

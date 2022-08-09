@@ -1,6 +1,8 @@
 package com.backendless.persistence;
 
 
+import lombok.Getter;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -20,14 +22,11 @@ public final class JSONUpdateBuilder
 		ARRAY_APPEND("JSON_ARRAY_APPEND"),
 		ARRAY_INSERT("JSON_ARRAY_INSERT");
 
-		private String operationName;
+    @Getter
+		private final String operationName;
 
 		Operation(String operationName) {
 			this.operationName = operationName;
-		}
-
-		public String getOperationName() {
-			return operationName;
 		}
 	}
 	
@@ -73,7 +72,7 @@ public final class JSONUpdateBuilder
 	
 	public final class GeneralArgHolder extends ArgHolder
 	{
-		private LinkedHashMap<String, Object> jsonUpdateArgs = new LinkedHashMap<>();
+		private final LinkedHashMap<String, Object> jsonUpdateArgs = new LinkedHashMap<>();
 		
 		private GeneralArgHolder()
 		{
@@ -94,7 +93,7 @@ public final class JSONUpdateBuilder
 			JSONUpdateBuilder.this.jsonUpdate.put(ARGS_FIELD_NAME, jsonUpdateArgs);
 		}
 		
-		private LinkedHashSet<String> jsonUpdateArgs = new LinkedHashSet<>();
+		private final LinkedHashSet<String> jsonUpdateArgs = new LinkedHashSet<>();
 		
 		public RemoveArgHolder addArgument(String jsonPath)
 		{

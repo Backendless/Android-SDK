@@ -1,10 +1,7 @@
 package com.backendless.persistence;
 
-import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.backendless.UserService;
-
-import java.util.Map;
 
 /**
  * *******************************************************************************************************************

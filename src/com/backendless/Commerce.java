@@ -45,7 +45,7 @@ public final class Commerce
 
   public GooglePlayPurchaseStatus validatePlayPurchase( String packageName, String productId, String token )
   {
-    return (GooglePlayPurchaseStatus) Invoker.invokeSync( COMMERCE_MANAGER_SERVER_ALIAS, "validatePlayPurchase", new Object[] { packageName, productId, token } );
+    return Invoker.invokeSync( COMMERCE_MANAGER_SERVER_ALIAS, "validatePlayPurchase", new Object[] { packageName, productId, token } );
   }
 
   public void validatePlayPurchase( String packageName, String productId, String token,
@@ -56,7 +56,7 @@ public final class Commerce
 
   public GooglePlaySubscriptionStatus getPlaySubscriptionsStatus( String packageName, String subscriptionId, String token )
   {
-    return (GooglePlaySubscriptionStatus) Invoker.invokeSync( COMMERCE_MANAGER_SERVER_ALIAS, "getPlaySubscriptionsStatus", new Object[] { packageName, subscriptionId, token } );
+    return Invoker.invokeSync( COMMERCE_MANAGER_SERVER_ALIAS, "getPlaySubscriptionsStatus", new Object[] { packageName, subscriptionId, token } );
   }
 
   public void getPlaySubscriptionsStatus( String packageName, String subscriptionId, String token,

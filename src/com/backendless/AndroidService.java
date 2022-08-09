@@ -25,22 +25,11 @@ import android.os.IBinder;
 @Deprecated
 public class AndroidService extends Service
 {
-  @Override
-  public void onCreate()
-  {
-    super.onCreate();
-  }
 
   @Override
   public int onStartCommand( Intent intent, int flags, int startId )
   {
     return START_NOT_STICKY;
-  }
-
-  @Override
-  public void onDestroy()
-  {
-    super.onDestroy();
   }
 
   @Override

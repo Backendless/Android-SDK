@@ -35,9 +35,8 @@ public class ReflectionUtil
    * @param lowerKey name of the field starting with lower case letter
    * @param upperKey name of the field starting with the upper case letter
    * @return Object, which is the value of the given field in the given object; null, if for some reason setAccessible(true) didn't work
-   * @throws NoSuchFieldException if object doesn't have a field with such name
    */
-  public static Object getFieldValue( Object object, String lowerKey, String upperKey ) //throws NoSuchFieldException
+  public static Object getFieldValue( Object object, String lowerKey, String upperKey )
   {
     if( object == null )
       return null;
@@ -56,7 +55,7 @@ public class ReflectionUtil
     if( getMethod != null )
       try
       {
-        return getMethod.invoke( object, new Object[ 0 ] );
+        return getMethod.invoke( object );
       }
       catch( Throwable t )
       {

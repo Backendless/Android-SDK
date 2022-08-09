@@ -23,8 +23,8 @@ import weborb.types.IAdaptingType;
  **********************************************************************************************************************/
 public class UniversalAdaptingPolicy<E> implements IAdaptingPolicy<E>
 {
-  private IAdaptingPolicy<E> collectionAdaptingPolicy;
-  private IAdaptingPolicy<E> pojoAdaptingPolicy;
+  private final IAdaptingPolicy<E> collectionAdaptingPolicy;
+  private final IAdaptingPolicy<E> pojoAdaptingPolicy;
 
   public UniversalAdaptingPolicy()
   {
@@ -35,7 +35,7 @@ public class UniversalAdaptingPolicy<E> implements IAdaptingPolicy<E>
   @Override
   public Object adapt( Class<E> clazz, IAdaptingType entity, IResponder nextResponder ) throws AdaptingException
   {
-    if( entity != null && entity instanceof ArrayType)
+    if( entity instanceof ArrayType )
       return collectionAdaptingPolicy.adapt( clazz, entity, nextResponder );
     else
       return pojoAdaptingPolicy.adapt( clazz, entity, nextResponder );

@@ -19,12 +19,10 @@
 package com.backendless.persistence;
 
 import com.backendless.commons.persistence.group.GroupingColumnValue;
-import com.backendless.persistence.BackendlessDataQuery;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @ToString( callSuper = true )

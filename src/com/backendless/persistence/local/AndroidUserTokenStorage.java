@@ -23,7 +23,7 @@ import android.content.SharedPreferences;
 
 class AndroidUserTokenStorage implements IStorage<String>
 {
-  private Context context;
+  private final Context context;
 
   AndroidUserTokenStorage( Context context )
   {

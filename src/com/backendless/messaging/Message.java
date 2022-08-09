@@ -20,6 +20,7 @@ package com.backendless.messaging;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Message
 {
@@ -37,9 +38,9 @@ public class Message
   public Map<String, String> getHeaders()
   {
     if( headers == null )
-      return headers = new HashMap<String, String>();
+      return headers = new HashMap<>();
 
-    return new HashMap<String, String>( headers );
+    return new HashMap<>( headers );
   }
 
   public Object getData()
@@ -94,16 +95,14 @@ public class Message
 
     if( timestamp != message.timestamp )
       return false;
-    if( data != null ? !data.equals( message.data ) : message.data != null )
+    if( !Objects.equals( data, message.data ) )
       return false;
-    if( headers != null ? !headers.equals( message.headers ) : message.headers != null )
+    if( !Objects.equals( headers, message.headers ) )
       return false;
-    if( messageId != null ? !messageId.equals( message.messageId ) : message.messageId != null )
-      return false;
-    if( publisherId != null ? !publisherId.equals( message.publisherId ) : message.publisherId != null )
+    if( !Objects.equals( messageId, message.messageId ) )
       return false;
 
-    return true;
+    return Objects.equals( publisherId, message.publisherId );
   }
 
   @Override
@@ -120,7 +119,7 @@ public class Message
   @Override
   public String toString()
   {
-    final StringBuffer sb = new StringBuffer();
+    final StringBuilder sb = new StringBuilder();
     sb.append( "Message" );
     sb.append( "{messageId='" ).append( messageId ).append( '\'' );
     sb.append( ", data=" ).append( data );

@@ -27,7 +27,6 @@ import com.backendless.exceptions.ExceptionMessage;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.security.AccessControlException;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -43,7 +42,7 @@ public class LogBuffer
   private int numOfMessages;
   private int timeFrequency;
 
-  private Queue<LogMessage> logMessages;
+  private final Queue<LogMessage> logMessages;
   private ScheduledFuture<?> scheduledFuture;
 
   public static class SingletonHolder
@@ -139,7 +138,7 @@ public class LogBuffer
       return null;
 
     try ( StringWriter errors = new StringWriter();
-          PrintWriter s1 = new PrintWriter( errors ); )
+          PrintWriter s1 = new PrintWriter( errors ) )
     {
       t.printStackTrace( s1 );
       return errors.toString();

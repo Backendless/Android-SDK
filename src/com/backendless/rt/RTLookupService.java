@@ -29,7 +29,7 @@ class RTLookupService
     }
     catch( BackendlessException e )
     {
-      logger.severe( "Lookup failed " + e.toString() );
+      logger.severe( "Lookup failed " + e );
       final int retryTimeout  = timeOutManager.nextTimeout();
       logger.info( "Wait before lookup for " + retryTimeout );
       try

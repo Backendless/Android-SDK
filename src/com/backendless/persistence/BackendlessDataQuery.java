@@ -28,11 +28,11 @@ public class BackendlessDataQuery extends AbstractBackendlessQuery
   public static final int DEFAULT_OFFSET = 0;
 
   private boolean distinct = false;
-  private ArrayList<String> properties = new ArrayList<>();
-  private ArrayList<String> excludeProperties = new ArrayList<>();
+  private final ArrayList<String> properties = new ArrayList<>();
+  private final ArrayList<String> excludeProperties = new ArrayList<>();
   private String whereClause;
   private QueryOptions queryOptions;
-  private List<String> groupBy = new ArrayList<>();
+  private final List<String> groupBy = new ArrayList<>();
   private String havingClause = "";
 
   public BackendlessDataQuery()

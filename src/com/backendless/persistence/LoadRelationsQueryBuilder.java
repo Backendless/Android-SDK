@@ -39,8 +39,8 @@ import java.util.Map;
 public final class LoadRelationsQueryBuilder<R>
 {
   private String relationName;
-  private Class<R> relationType;
-  private PagedQueryBuilder<LoadRelationsQueryBuilder<R>> pagedQueryBuilder;
+  private final Class<R> relationType;
+  private final PagedQueryBuilder<LoadRelationsQueryBuilder<R>> pagedQueryBuilder;
   private List<String> properties;
   private List<String> sortBy;
 

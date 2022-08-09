@@ -20,6 +20,6 @@ package com.backendless.persistence.local;
 
 public interface IStorage<T>
 {
-  public T get();
-  public void set(T value);
+  T get();
+  void set(T value);
 }

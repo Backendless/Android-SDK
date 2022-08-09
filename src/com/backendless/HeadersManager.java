@@ -19,15 +19,16 @@
 package com.backendless;
 
 import com.backendless.exceptions.BackendlessException;
+import lombok.Getter;
 
 import java.util.Hashtable;
 import java.util.Map;
 
 public class HeadersManager
 {
-  private static IHeadersManager headersManager = (Backendless.isCodeRunner()) ? BLHeadersManager.getInstance() : AndroidHeadersManager.getInstance();
+  private static final IHeadersManager headersManager = (Backendless.isCodeRunner()) ? BLHeadersManager.getInstance() : AndroidHeadersManager.getInstance();
 
-  private static volatile HeadersManager instance = new HeadersManager();
+  private static final HeadersManager instance = new HeadersManager();
 
   private HeadersManager()
   {
@@ -78,16 +79,12 @@ public class HeadersManager
     USER_TOKEN_KEY( "user-token" ), LOGGED_IN_KEY( "logged-in" ), SESSION_TIME_OUT_KEY( "session-time-out" ),
     APP_TYPE_NAME( "application-type" ), API_VERSION( "api-version" ), UI_STATE( "uiState" );
 
-    private String header;
+    @Getter
+    private final String header;
 
     HeadersEnum( String header )
     {
       this.header = header;
-    }
-
-    String getHeader()
-    {
-      return header;
     }
   }
 }

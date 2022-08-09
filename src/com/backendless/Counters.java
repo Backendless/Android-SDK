@@ -211,7 +211,7 @@ public final class Counters
 
   public boolean compareAndSet( String counterName, Number expected, Number updated )
   {
-    return (Boolean) Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, "compareAndSet", new Object[] { counterName, expected, updated } );
+    return Invoker.invokeSync( ATOMIC_MANAGER_SERVER_ALIAS, "compareAndSet", new Object[] { counterName, expected, updated } );
   }
 
   public void compareAndSet( String counterName, Number expected, Number updated, AsyncCallback<Boolean> responder )

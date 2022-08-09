@@ -1,7 +1,6 @@
 package com.backendless.persistence;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +18,7 @@ class QueryOptionsBuilder<Builder>
   private Integer relationsPageSize;
   @Getter
   private String fileReferencePrefix;
-  private Builder builder;
+  private final Builder builder;
 
   QueryOptionsBuilder( Builder builder )
   {

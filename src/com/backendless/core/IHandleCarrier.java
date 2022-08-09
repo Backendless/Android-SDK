@@ -22,5 +22,5 @@ import com.backendless.async.message.IAsyncMessage;
 
 interface IHandleCarrier
 {
-  public <T> void deliverMessage( IAsyncMessage<T> asyncMessage );
+  <T> void deliverMessage( IAsyncMessage<T> asyncMessage );
 }

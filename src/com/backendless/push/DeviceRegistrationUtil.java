@@ -83,7 +83,7 @@ public class DeviceRegistrationUtil
 
   public boolean unregisterDeviceOnServer()
   {
-    return (Boolean) Invoker.invokeSync( Messaging.getDeviceRegistrationManagerServerAlias(), "unregisterDevice", new Object[] { Messaging.getDeviceId() } );
+    return Invoker.invokeSync( Messaging.getDeviceRegistrationManagerServerAlias(), "unregisterDevice", new Object[] { Messaging.getDeviceId() } );
   }
 
   public void unregisterDeviceOnServer( final AsyncCallback<Boolean> responder )
@@ -93,7 +93,7 @@ public class DeviceRegistrationUtil
 
   public int unregisterDeviceOnServer( List<String> channels )
   {
-    return (int) Invoker.invokeSync( Messaging.getDeviceRegistrationManagerServerAlias(), "unregisterDevice", new Object[] { Messaging.getDeviceId(), channels } );
+    return Invoker.invokeSync( Messaging.getDeviceRegistrationManagerServerAlias(), "unregisterDevice", new Object[] { Messaging.getDeviceId(), channels } );
   }
 
   public void unregisterDeviceOnServer( List<String> channels, final AsyncCallback<Integer> responder )

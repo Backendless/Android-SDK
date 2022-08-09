@@ -20,5 +20,5 @@ package com.backendless.async.callback;
 
 public interface UploadCallback
 {
-  public void onProgressUpdate( Integer progress );
+  void onProgressUpdate( Integer progress );
 }

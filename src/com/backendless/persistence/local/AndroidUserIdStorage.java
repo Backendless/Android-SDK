@@ -23,7 +23,7 @@ import android.content.SharedPreferences;
 
 class AndroidUserIdStorage implements IStorage<String>
 {
-  private Context context;
+  private final Context context;
 
   AndroidUserIdStorage( Context context )
   {

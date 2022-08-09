@@ -18,12 +18,16 @@
 
 package com.backendless.exceptions;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Map;
 
 public class BackendlessException extends RuntimeException
 {
   private static final long serialVersionUID = -7537447408166433783L;
   private BackendlessFault backendlessFault;
+  @Getter @Setter
   private int httpStatusCode = 400;
 
   public BackendlessException()
@@ -77,16 +81,6 @@ public class BackendlessException extends RuntimeException
     backendlessFault = fault;
   }
 
-  public int getHttpStatusCode()
-  {
-    return httpStatusCode;
-  }
-
-  public void setHttpStatusCode( int httpStatusCode )
-  {
-    this.httpStatusCode = httpStatusCode;
-  }
-
   public String getCode()
   {
     return backendlessFault.getCode();
@@ -113,13 +107,12 @@ public class BackendlessException extends RuntimeException
   @Override
   public String toString()
   {
-    final StringBuffer sb = new StringBuffer();
-    sb.append( getClass().getSimpleName() );
-    sb.append( "{ code: '" ).append( getCode() ).append( '\'' );
-    sb.append( ", message: '" ).append( getMessage() ).append( '\'' );
-    sb.append( ", extendedData: '").append( getExtendedData() ).append( '\'' );
-    sb.append( ", detail: '" ).append( getDetail() ).append( '\'' );
-    sb.append( " }" );
-    return sb.toString();
+    String sb = getClass().getSimpleName() +
+            "{ code: '" + getCode() + '\'' +
+            ", message: '" + getMessage() + '\'' +
+            ", extendedData: '" + getExtendedData() + '\'' +
+            ", detail: '" + getDetail() + '\'' +
+            " }";
+    return sb;
   }
 }

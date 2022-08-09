@@ -29,16 +29,16 @@ import java.util.Set;
  */
 public class BackendlessDataCollection<T extends BackendlessDataCollection.Identifiable<T>> implements Collection<T>
 {
-  public static interface Identifiable<T>
+  public interface Identifiable<T>
   {
     String getObjectId();
 
     void setObjectId( String id );
   }
 
-  private Class<T> entityType;
-  private IDataStore<T> iDataStore;
-  private String slice;
+  private final Class<T> entityType;
+  private final IDataStore<T> iDataStore;
+  private final String slice;
   private LinkedHashMap<String, T> preservedData; // if null, the mode is 'transient'
   private int size;
   private boolean isLoaded = false;
@@ -307,12 +307,7 @@ public class BackendlessDataCollection<T extends BackendlessDataCollection.Ident
     if( this.preservedData != null && this.isLoaded )
       return this.preservedData.values().toArray( (T[]) Array.newInstance( this.entityType, this.preservedData.size() ) );
 
-    ArrayList<T> list = new ArrayList<>();
-
-    Iterator<T> iter = this.iterator();
-
-    while( iter.hasNext() )
-      list.add( iter.next() );
+    ArrayList<T> list = new ArrayList<>( this );
 
     return (T[]) list.toArray();
   }
@@ -616,7 +611,7 @@ public class BackendlessDataCollection<T extends BackendlessDataCollection.Ident
 
       if( loadedData != null )
       {
-        int tmpLastIndex = (loadedData.length < lastLoadIndex) ? loadedData.length : lastLoadIndex;
+        int tmpLastIndex = Math.min( loadedData.length, lastLoadIndex );
 
         for( int i = startLoadIndex; i < tmpLastIndex; i++ )
           target.add( loadedData[ i ] );

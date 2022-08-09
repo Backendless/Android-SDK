@@ -56,9 +56,9 @@ public class ResponderHelper
   public static <E> AdaptingResponder getAdaptingResponder( Class<E> entity, IAdaptingPolicy<E> policy )
   {
     if( needsPhantomCache( entity ) )
-      policy = new DecoratorCachingAdaptingPolicy<E>( policy );
+      policy = new DecoratorCachingAdaptingPolicy<>( policy );
 
-    return new AdaptingResponder<E>( entity, policy );
+    return new AdaptingResponder<>( entity, policy );
   }
 
   public static <T> boolean needsPhantomCache( Class<T> entityClass ) throws BackendlessException

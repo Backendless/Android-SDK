@@ -27,16 +27,14 @@ public class BackendlessFilesQuery extends AbstractBackendlessQuery
   private String pattern;
   private boolean recursive;
 
-  {
-    setPageSize( DEFAULT_PAGE_SIZE );
-    setOffset( DEFAULT_OFFSET );
-  }
-
   public BackendlessFilesQuery( String path, String pattern, boolean recursive )
   {
     this.path = path;
     this.recursive = recursive;
     this.pattern = pattern;
+
+    setPageSize( DEFAULT_PAGE_SIZE );
+    setOffset( DEFAULT_OFFSET );
   }
 
   @Override

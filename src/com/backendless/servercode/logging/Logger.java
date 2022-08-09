@@ -22,10 +22,10 @@ import com.backendless.Backendless;
 
 public class Logger
 {
-  private boolean async;
-  private Class clazz;
+  private final boolean async;
+  private final Class clazz;
 
-  private com.backendless.logging.Logger logger;
+  private final com.backendless.logging.Logger logger;
 
   public static Logger getLogger( Class clazz )
   {

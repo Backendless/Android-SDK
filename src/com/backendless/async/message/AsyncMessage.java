@@ -23,16 +23,16 @@ import com.backendless.exceptions.BackendlessFault;
 
 final public class AsyncMessage<E> implements IAsyncMessage<E>
 {
-  private IHandler handler;
+  private final IHandler handler;
 
   public AsyncMessage( E response, AsyncCallback<E> callback )
   {
-    handler = new ResponseHandler<E>( response, callback );
+    handler = new ResponseHandler<>( response, callback );
   }
 
   public AsyncMessage( BackendlessFault fault, AsyncCallback<E> callback )
   {
-    handler = new FaultHandler<E>( fault, callback );
+    handler = new FaultHandler<>( fault, callback );
   }
 
   @Override
@@ -41,15 +41,15 @@ final public class AsyncMessage<E> implements IAsyncMessage<E>
     handler.handle();
   }
 
-  private static interface IHandler
+  private interface IHandler
   {
     void handle();
   }
 
   private static class ResponseHandler<E> implements IHandler
   {
-    private AsyncCallback<E> callback;
-    private E response;
+    private final AsyncCallback<E> callback;
+    private final E response;
 
     private ResponseHandler( E response, AsyncCallback<E> callback )
     {
@@ -67,8 +67,8 @@ final public class AsyncMessage<E> implements IAsyncMessage<E>
 
   private static class FaultHandler<E> implements IHandler
   {
-    private AsyncCallback<E> callback;
-    private BackendlessFault fault;
+    private final AsyncCallback<E> callback;
+    private final BackendlessFault fault;
 
     private FaultHandler( BackendlessFault fault, AsyncCallback<E> callback )
     {

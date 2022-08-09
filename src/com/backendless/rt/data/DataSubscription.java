@@ -1,7 +1,6 @@
 package com.backendless.rt.data;
 
 import com.backendless.rt.RTCallback;
-import com.backendless.rt.RTEvent;
 import com.backendless.rt.RTSubscription;
 import com.backendless.rt.SubscriptionNames;
 

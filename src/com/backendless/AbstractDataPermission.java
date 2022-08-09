@@ -149,8 +149,8 @@ public abstract class AbstractDataPermission
   private <T> void serverCall( AsyncCallback<T> responder, String method, Object[] args, Class type )
   {
     if( responder == null )
-      Invoker.invokeSync( PERMISSION_SERVICE, method, args, new AdaptingResponder<T>( type, new PoJoAdaptingPolicy<T>() ) );
+      Invoker.invokeSync( PERMISSION_SERVICE, method, args, new AdaptingResponder<>( type, new PoJoAdaptingPolicy<T>() ) );
     else
-      Invoker.invokeAsync( PERMISSION_SERVICE, method, args, responder, new AdaptingResponder<T>( type, new PoJoAdaptingPolicy<T>() ) );
+      Invoker.invokeAsync( PERMISSION_SERVICE, method, args, responder, new AdaptingResponder<>( type, new PoJoAdaptingPolicy<T>() ) );
   }
 }

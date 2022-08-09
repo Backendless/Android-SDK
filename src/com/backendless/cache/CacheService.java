@@ -25,9 +25,9 @@ import java.util.Date;
 
 public class CacheService<T> implements ICache<T>
 {
-  private Class<? extends T> clazz;
+  private final Class<? extends T> clazz;
 
-  private String key;
+  private final String key;
 
   public CacheService( Class<? extends T> clazz, String key )
   {
@@ -122,7 +122,7 @@ public class CacheService<T> implements ICache<T>
   @Override
   public T get()
   {
-    return (T) Backendless.Cache.get( key, clazz );
+    return Backendless.Cache.get( key, clazz );
   }
 
   @Override
