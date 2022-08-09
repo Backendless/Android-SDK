@@ -57,11 +57,11 @@ class UploadBitmapAsyncTask
         {
           BitmapOutputStreamRouter bitmapOutputStreamRouter = new BitmapOutputStreamRouter( bitmap, compressFormat, quality );
           BackendlessFile result = Backendless.Files.uploadFromStream( bitmapOutputStreamRouter, name, path, overwrite );
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<BackendlessFile>( result, responder ) );
+          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<>( result, responder ) );
         }
         catch( Exception e )
         {
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<BackendlessFile>( new BackendlessFault( e ), responder ) );
+          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<>( new BackendlessFault( e ), responder ) );
         }
       }
     } );

@@ -1,7 +1,6 @@
 package com.backendless.files;
 
 import android.os.AsyncTask;
-import android.os.PowerManager;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,8 +27,8 @@ import java.net.URL;
  **********************************************************************************************************************/
 public class DownloadTask extends AsyncTask<Void, Integer, String>
 {
-  private String url;
-  private String saveLocation;
+  private final String url;
+  private final String saveLocation;
 
   protected DownloadTask( String url, String saveLocation )
   {
@@ -62,7 +61,7 @@ public class DownloadTask extends AsyncTask<Void, Integer, String>
       input = connection.getInputStream();
       output = new FileOutputStream( saveLocation );
 
-      byte data[] = new byte[ 4096 ];
+      byte[] data = new byte[ 4096 ];
       long total = 0;
       int count;
       while( (count = input.read( data )) != -1 )

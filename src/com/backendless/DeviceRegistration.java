@@ -30,7 +30,7 @@ public class DeviceRegistration
   protected String os;
   protected String osVersion;
   protected Date expiration;
-  private List<String> channels = new ArrayList<String>();
+  private List<String> channels = new ArrayList<>();
 
   public String getId()
   {
@@ -100,7 +100,7 @@ public class DeviceRegistration
   public List<String> getChannels()
   {
     if( channels == null )
-      return channels = new ArrayList<String>();
+      return channels = new ArrayList<>();
 
     return channels;
   }
@@ -113,7 +113,7 @@ public class DeviceRegistration
   public synchronized void addChannel( String channel )
   {
     if( channels == null )
-      channels = new ArrayList<String>();
+      channels = new ArrayList<>();
 
     channels.add( channel );
   }

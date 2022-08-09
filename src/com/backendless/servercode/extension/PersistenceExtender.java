@@ -19,7 +19,6 @@
 package com.backendless.servercode.extension;
 
 import com.backendless.commons.persistence.GroupResult;
-import com.backendless.commons.persistence.group.GroupingColumnValue;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.BackendlessGroupDataQuery;
 import com.backendless.property.ObjectProperty;

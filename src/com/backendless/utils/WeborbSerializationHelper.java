@@ -21,7 +21,7 @@ public class WeborbSerializationHelper
     }
     catch( Exception e )
     {
-      logger.severe( "weborb serialization error " + e.toString() );
+      logger.severe( "weborb serialization error " + e );
       throw new RuntimeException( e );
     }
   }
@@ -40,7 +40,7 @@ public class WeborbSerializationHelper
     }
     catch( Exception e )
     {
-      logger.severe( "weborb deserialization error " + e.toString() );
+      logger.severe( "weborb deserialization error " + e );
       throw new RuntimeException( e );
     }
   }

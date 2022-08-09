@@ -33,9 +33,9 @@ import java.util.*;
 public class FootprintsManager
 {
   private static final FootprintsManager instance = new FootprintsManager();
-  private static Set<Object> marked = new HashSet<Object>(); //for cyclic entities
+  private static final Set<Object> marked = new HashSet<>(); //for cyclic entities
   public final Inner Inner = new Inner();
-  private final Map<Object, Footprint> persistenceCache = new WeakHashMap<Object, Footprint>();
+  private final Map<Object, Footprint> persistenceCache = new WeakHashMap<>();
 
   private FootprintsManager()
   {
@@ -68,11 +68,11 @@ public class FootprintsManager
   {
     Object obj = persistenceCache.get( entity );
 
-    if( obj != null && obj instanceof Footprint )
+    if( obj instanceof Footprint )
       return ((Footprint) obj).get__meta();
 
-    if( obj != null && obj instanceof BackendlessUser )
-      ((BackendlessUser) obj).getProperty( "__meta" );
+    if( obj instanceof BackendlessUser )
+      return (String) ((BackendlessUser) obj).getProperty( "__meta" );
 
     return null;
   }

@@ -11,18 +11,18 @@ import java.util.List;
 @Accessors( chain = true )
 public class GroupDataQueryBuilder
 {
-  private PagedGroupQueryBuilder<GroupDataQueryBuilder> pagedQueryBuilder;
-  private QueryOptionsBuilder<GroupDataQueryBuilder> queryOptionsBuilder;
+  private final PagedGroupQueryBuilder<GroupDataQueryBuilder> pagedQueryBuilder;
+  private final QueryOptionsBuilder<GroupDataQueryBuilder> queryOptionsBuilder;
   @Setter
   private boolean distinct = false;
   private List<GroupingColumnValue> groupPath;
   @Setter @Getter
   private int groupDepth;
-  private ArrayList<String> properties;
-  private ArrayList<String> excludeProperties;
+  private final ArrayList<String> properties;
+  private final ArrayList<String> excludeProperties;
   @Setter @Getter
   private String whereClause;
-  private List<String> groupBy;
+  private final List<String> groupBy;
 
   private GroupDataQueryBuilder()
   {

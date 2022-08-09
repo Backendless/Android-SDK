@@ -23,11 +23,11 @@ class RTClientSocketIO implements RTClient
 {
   private static final Logger logger = Logger.getLogger( "RTClient" );
 
-  private Map<String, RTSubscription> subscriptions = new ConcurrentHashMap<>();
+  private final Map<String, RTSubscription> subscriptions = new ConcurrentHashMap<>();
 
-  private Map<String, RTMethodRequest> sentRequests = new ConcurrentHashMap<>();
+  private final Map<String, RTMethodRequest> sentRequests = new ConcurrentHashMap<>();
 
-  private ConcurrentLinkedDeque<RTMethodRequest> methodsToSend = new ConcurrentLinkedDeque<>();
+  private final ConcurrentLinkedDeque<RTMethodRequest> methodsToSend = new ConcurrentLinkedDeque<>();
 
   private final SocketIOConnectionManager connectionManager;
 
@@ -112,7 +112,7 @@ class RTClientSocketIO implements RTClient
 
     if( error != null )
     {
-      logger.severe( "got error " + error.toString() );
+      logger.severe( "got error " + error );
       final BackendlessFault fault = new BackendlessFault( error.toString() );
       ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<>( fault, request.getCallback() ) );
       return request;

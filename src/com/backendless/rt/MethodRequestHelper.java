@@ -5,7 +5,6 @@ import com.backendless.exceptions.BackendlessFault;
 import weborb.exceptions.AdaptingException;
 import weborb.types.IAdaptingType;
 
-import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.logging.Level;
 import java.util.logging.Logger;

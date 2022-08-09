@@ -72,7 +72,7 @@ public final class Backendless
   private static final BackendlessPrefs prefs;
 
   @Getter
-  private static Map<String, String> forwardableHeaders = Collections.unmodifiableMap( new HashMap<String, String>() );
+  private static final Map<String, String> forwardableHeaders = Collections.unmodifiableMap( new HashMap<String, String>() );
 
   public static final FootprintsManager FootprintsManager = com.backendless.FootprintsManager.getInstance();
   public static final UserService UserService = com.backendless.UserService.getInstance();

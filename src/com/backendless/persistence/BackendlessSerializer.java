@@ -33,8 +33,8 @@ import java.util.*;
  */
 public abstract class BackendlessSerializer
 {
-  private static HashMap<Class, IObjectSerializer> serializers = new HashMap<Class, IObjectSerializer>();
-  private static IObjectSerializer DEFAULT_SERIALIZER = new DefaultSerializer();
+  private static final HashMap<Class, IObjectSerializer> serializers = new HashMap<>();
+  private static final IObjectSerializer DEFAULT_SERIALIZER = new DefaultSerializer();
 
   public abstract boolean shouldTraverse();
 
@@ -82,7 +82,7 @@ public abstract class BackendlessSerializer
     if( entity.getClass().isEnum() )
       return ((Enum) entity).name();
 
-    Map<String, Object> serializedEntity = new HashMap<String, Object>();
+    Map<String, Object> serializedEntity = new HashMap<>();
 
     if( entity.getClass() == BackendlessUser.class )
     {
@@ -154,7 +154,7 @@ public abstract class BackendlessSerializer
         if( listEntry.iterator().next().getClass().isAnonymousClass() )
           throw new BackendlessException( String.format( ExceptionMessage.ANONYMOUS_CLASSES_PROHIBITED, entityEntry.getKey() ) );
 
-        List<Object> newCollection = new ArrayList<Object>();
+        List<Object> newCollection = new ArrayList<>();
 
         for( Object listEntryItem : listEntry )
           if( !isBelongsJdk( listEntryItem.getClass() ) )
@@ -176,7 +176,7 @@ public abstract class BackendlessSerializer
         if( arrayEntry[ 0 ].getClass().isAnonymousClass() )
           throw new BackendlessException( String.format( ExceptionMessage.ANONYMOUS_CLASSES_PROHIBITED, entityEntry.getKey() ) );
 
-        List<Object> newCollection = new ArrayList<Object>();
+        List<Object> newCollection = new ArrayList<>();
         for( Object arrayEntryItem : arrayEntry )
           if( !isBelongsJdk( arrayEntryItem.getClass() ) )
             newCollection.add( getOrMakeSerializedObject( arrayEntryItem, serializedCache ) );

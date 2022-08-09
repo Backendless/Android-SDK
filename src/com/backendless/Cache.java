@@ -52,7 +52,7 @@ public class Cache
 
   public <T> ICache<T> with( String key, Class<? extends T> type )
   {
-    return new CacheService<T>( type, key );
+    return new CacheService<>( type, key );
   }
 
   public void put( String key, Object object, int timeToLive, AsyncCallback<Object> callback )
@@ -79,7 +79,7 @@ public class Cache
 
   public <T> T get( String key, Class<? extends T> type )
   {
-    byte[] bytes = Invoker.invokeSync( CACHE_SERVER_ALIAS, "getBytes", new Object[] { key }, new AdaptingResponder<byte[]>( byte[].class, new PoJoAdaptingPolicy<byte[]>() ) );
+    byte[] bytes = Invoker.invokeSync( CACHE_SERVER_ALIAS, "getBytes", new Object[] { key }, new AdaptingResponder<>( byte[].class, new PoJoAdaptingPolicy<byte[]>() ) );
 
     if( bytes == null )
       return null;
@@ -100,15 +100,15 @@ public class Cache
         try
         {
           T result = (T) get( key, asyncCallbackType );
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<T>( result, callback ) );
+          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<>( result, callback ) );
         }
         catch( BackendlessException e )
         {
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<T>( new BackendlessFault( e ), callback ) );
+          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<>( new BackendlessFault( e ), callback ) );
         }
         catch( Exception e )
         {
-          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<T>( new BackendlessFault( e ), callback ) );
+          ResponseCarrier.getInstance().deliverMessage( new AsyncMessage<>( new BackendlessFault( e ), callback ) );
         }
       }
     } );
@@ -171,7 +171,7 @@ public class Cache
 
   private static Object deserialize( byte[] bytes, Type type )
   {
-    Object object = null;
+    Object object;
     try
     {
       object = weborb.util.io.Serializer.fromBytes( bytes, ISerializer.AMF3, true );

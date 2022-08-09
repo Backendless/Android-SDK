@@ -23,8 +23,8 @@ import java.util.prefs.Preferences;
 
 class JavaUserIdStorage implements IStorage<String>
 {
-  private Preferences prefs = Preferences.userRoot().node( this.getClass().getName() );
-  private static JavaUserIdStorage instance = new JavaUserIdStorage();
+  private final Preferences prefs = Preferences.userRoot().node( this.getClass().getName() );
+  private static final JavaUserIdStorage instance = new JavaUserIdStorage();
 
   private JavaUserIdStorage()
   {

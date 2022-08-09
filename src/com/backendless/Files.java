@@ -41,6 +41,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -196,7 +197,7 @@ public final class Files
         connection.addRequestProperty( key, HeadersManager.getInstance().getHeaders().get( key ) );
 
       try ( OutputStream outputStream = connection.getOutputStream();
-            PrintWriter writer = new PrintWriter( new OutputStreamWriter( outputStream, "UTF-8" ), true ) )
+            PrintWriter writer = new PrintWriter( new OutputStreamWriter( outputStream, StandardCharsets.UTF_8 ), true ) )
       {
         writer.append( "--" ).append( boundary ).append( CRLF );
         writer.append( "Content-Disposition: form-data; name=\"file\"; filename=\"" ).append( name ).append( "\"" ).append( CRLF );
@@ -246,11 +247,7 @@ public final class Files
         return new BackendlessFile( fileUrl );
       }
     }
-    catch( MalformedURLException e )
-    {
-      throw new IllegalArgumentException( ExceptionMessage.FILE_UPLOAD_ERROR, e );
-    }
-    catch( UnsupportedEncodingException e )
+    catch( MalformedURLException | UnsupportedEncodingException e )
     {
       throw new IllegalArgumentException( ExceptionMessage.FILE_UPLOAD_ERROR, e );
     }
@@ -464,7 +461,7 @@ public final class Files
   public List<FileInfo> listing( String path, String pattern, boolean recursive, int pagesize,
                                                   int offset )
   {
-    List<FileInfo> fileInfoList = Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "listing", new Object[] { path, pattern, recursive, pagesize, offset }, new AdaptingResponder<FileInfo>( FileInfo.class, new CollectionAdaptingPolicy<FileInfo>() ) );
+    List<FileInfo> fileInfoList = Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "listing", new Object[] { path, pattern, recursive, pagesize, offset }, new AdaptingResponder<>( FileInfo.class, new CollectionAdaptingPolicy<FileInfo>() ) );
     return fileInfoList;
   }
 
@@ -497,7 +494,7 @@ public final class Files
         if( responder != null )
           responder.handleFault( fault );
       }
-    }, new AdaptingResponder<FileInfo>( FileInfo.class, new CollectionAdaptingPolicy<FileInfo>() ) );
+    }, new AdaptingResponder<>( FileInfo.class, new CollectionAdaptingPolicy<FileInfo>() ) );
   }
 
   public int getFileCount( String path, String pattern, boolean recursive, boolean countDirectories )
@@ -561,7 +558,7 @@ public final class Files
     Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "exists", new Object[] { path }, responder );
   }
 
-  private class EmptyUploadCallback implements UploadCallback
+  private static class EmptyUploadCallback implements UploadCallback
   {
     public void onProgressUpdate( Integer progress )
     {

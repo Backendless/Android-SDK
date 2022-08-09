@@ -161,7 +161,7 @@ public final class Messaging
 
   public void registerDevice( AsyncCallback<DeviceRegistrationResult> callback )
   {
-    registerDevice( (List<String>) null, callback );
+    registerDevice( null, callback );
   }
 
   public void registerDevice( List<String> channels )
@@ -171,12 +171,12 @@ public final class Messaging
 
   public void registerDevice( List<String> channels, Date expiration )
   {
-    registerDevice( channels, expiration, (AsyncCallback<DeviceRegistrationResult>) null );
+    registerDevice( channels, expiration, null );
   }
 
   public void registerDevice( List<String> channels, AsyncCallback<DeviceRegistrationResult> callback )
   {
-    registerDevice( channels, (Date) null, callback );
+    registerDevice( channels, null, callback );
   }
 
   public void registerDevice( List<String> channels, Date expiration, AsyncCallback<DeviceRegistrationResult> callback )
@@ -246,7 +246,7 @@ public final class Messaging
 
   public DeviceRegistration getRegistrations()
   {
-    return (DeviceRegistration) Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "getDeviceRegistrationByDeviceId", new Object[] { getDeviceId() } );
+    return Invoker.invokeSync( DEVICE_REGISTRATION_MANAGER_SERVER_ALIAS, "getDeviceRegistrationByDeviceId", new Object[] { getDeviceId() } );
   }
 
   public void getDeviceRegistration( AsyncCallback<DeviceRegistration> responder )
@@ -340,7 +340,7 @@ public final class Messaging
       deliveryOptions.setPushBroadcast( PushBroadcastMask.ALL );
     }
 
-    return (MessageStatus) Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "publish", new Object[] { channelName, message, publishOptions, deliveryOptions } );
+    return Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "publish", new Object[] { channelName, message, publishOptions, deliveryOptions } );
   }
 
   private String getCheckedChannelName( String channelName )
@@ -446,7 +446,7 @@ public final class Messaging
     if( templateName == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_EMPTY_TEMPLATE_NAME );
 
-    return (MessageStatus) Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "pushWithTemplate", new Object[] { templateName, templateValues } );
+    return Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "pushWithTemplate", new Object[] { templateName, templateValues } );
   }
 
   public void pushWithTemplate( String templateName, final AsyncCallback<MessageStatus> responder )
@@ -529,7 +529,7 @@ public final class Messaging
     if( subscriptionId == null )
       throw new IllegalArgumentException( ExceptionMessage.NULL_SUBSCRIPTION_ID );
 
-    Object[] result = (Object[]) Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "pollMessages", new Object[] { channelName, subscriptionId } );
+    Object[] result = Invoker.invokeSync( MESSAGING_MANAGER_SERVER_ALIAS, "pollMessages", new Object[] { channelName, subscriptionId } );
 
     return result.length == 0 ? new ArrayList<Message>() : Arrays.asList( (Message[]) result );
   }
@@ -683,7 +683,7 @@ public final class Messaging
 
   public MessageStatus sendEmailFromTemplate( String templateName, EmailEnvelope envelope, List<String> attachments )
   {
-    return sendEmailFromTemplate( templateName, envelope, (Map<String, String>) null, attachments );
+    return sendEmailFromTemplate( templateName, envelope, null, attachments );
   }
 
   public MessageStatus sendEmailFromTemplate( String templateName, EmailEnvelope envelope, Map<String, String> templateValues, List<String> attachments )
@@ -709,7 +709,7 @@ public final class Messaging
 
   public void sendEmailFromTemplate( String templateName, EmailEnvelope envelope, List<String> attachments, AsyncCallback<MessageStatus> responder )
   {
-    sendEmailFromTemplate( templateName, envelope, (Map<String, String>) null, attachments, responder );
+    sendEmailFromTemplate( templateName, envelope, null, attachments, responder );
   }
 
   public void sendEmailFromTemplate( String templateName, EmailEnvelope envelope, Map<String, String> templateValues,

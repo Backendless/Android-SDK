@@ -10,7 +10,7 @@ public enum RelationEvents implements RTEvent
 
   private final String eventName;
 
-  private RelationEvents( String eventName )
+  RelationEvents( String eventName )
   {
     this.eventName = eventName;
   }

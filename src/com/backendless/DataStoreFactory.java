@@ -37,7 +37,7 @@ import java.util.Map;
 
 class DataStoreFactory
 {
-  private static final List<String> emptyRelations = new ArrayList<String>();
+  private static final List<String> emptyRelations = new ArrayList<>();
   private final static EventHandlerFactory eventHandlerFactory = new EventHandlerFactory();
 
   protected static <E> IDataStore<E> createDataStore( final Class<E> entityClass )
@@ -45,7 +45,7 @@ class DataStoreFactory
 
     return new IDataStore<E>()
     {
-      private EventHandler<E> eventHandler = eventHandlerFactory.of( entityClass );
+      private final EventHandler<E> eventHandler = eventHandlerFactory.of( entityClass );
 
       @Override
       public List<String> create( List<E> objects ) throws BackendlessException
@@ -211,7 +211,7 @@ class DataStoreFactory
       @Override
       public E findLast( List<String> relations ) throws BackendlessException
       {
-        return findLast( relations, (Integer)null, null );
+        return findLast( relations, null, null );
       }
 
       @Override
@@ -361,7 +361,7 @@ class DataStoreFactory
       @Override
       public void findById( E entity, List<String> relations, AsyncCallback<E> responder )
       {
-        findById( entity, relations, (Integer)null, responder );
+        findById( entity, relations, null, responder );
       }
 
       @Override

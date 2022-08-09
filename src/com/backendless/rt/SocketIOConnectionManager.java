@@ -2,6 +2,7 @@ package com.backendless.rt;
 
 import com.backendless.Backendless;
 import com.backendless.HeadersManager;
+import com.backendless.Messaging;
 import com.backendless.async.callback.Result;
 import com.backendless.utils.timeout.TimeOutManager;
 import com.backendless.utils.timeout.TimeOutManagerImpl;
@@ -9,7 +10,6 @@ import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.logging.Logger;
@@ -34,7 +34,7 @@ abstract class SocketIOConnectionManager
   private final Object lock = new Object();
   private final RTLookupService rtLookupService;
 
-  private TimeOutManager timeOutManager = new TimeOutManagerImpl();
+  private final TimeOutManager timeOutManager = new TimeOutManagerImpl();
   private Socket socket;
 
   Socket get()
@@ -63,7 +63,7 @@ abstract class SocketIOConnectionManager
       opts.path = "/" + Backendless.getApplicationIdOrDomain();
 
       opts.query = "apiKey=" + Backendless.getApiKey()
-              + "&clientId=" + Backendless.Messaging.getDeviceId()
+              + "&clientId=" + Messaging.getDeviceId()
               + "&binary=true";
 
       final String host = rtLookupService.lookup() + opts.path;

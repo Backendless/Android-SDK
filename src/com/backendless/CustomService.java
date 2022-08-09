@@ -20,7 +20,6 @@ package com.backendless;
 
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.core.responder.AdaptingResponder;
-import com.backendless.core.responder.policy.PoJoAdaptingPolicy;
 import com.backendless.core.responder.policy.UniversalAdaptingPolicy;
 import com.backendless.servercode.ExecutionType;
 
@@ -44,25 +43,25 @@ public class CustomService
   public <T> T invoke( String serviceName, String method, Object[] arguments )
   {
     Object[] args =  new Object[] { serviceName, method, arguments };
-    return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args );
+    return Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args );
   }
 
   public <T> T invoke( String serviceName, String method, Object[] arguments, ExecutionType executionType )
   {
     Object[] args =  new Object[] { serviceName, method, arguments, executionType };
-    return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args );
+    return Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args );
   }
 
    public <T> T invoke( String serviceName, String method, Object[] arguments, Class<?> clazz )
   {
     Object[] args = new Object[] { serviceName, method, arguments };
-    return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, new AdaptingResponder( clazz, new UniversalAdaptingPolicy() ) );
+    return Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, new AdaptingResponder( clazz, new UniversalAdaptingPolicy() ) );
   }
 
   public <T> T invoke( String serviceName, String method, Object[] arguments, ExecutionType executionType, Class<?> clazz )
   {
     Object[] args = new Object[] { serviceName, method, arguments, executionType };
-    return (T) Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, new AdaptingResponder( clazz, new UniversalAdaptingPolicy() ) );
+    return Invoker.invokeSync( CUSTOM_SERVICE_ALIAS, METHOD_NAME_ALIAS, args, new AdaptingResponder( clazz, new UniversalAdaptingPolicy() ) );
   }
 
   public <E> void invoke( String serviceName, String method, Object[] arguments, AsyncCallback<E> callback )

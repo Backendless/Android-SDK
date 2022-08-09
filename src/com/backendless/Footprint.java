@@ -113,7 +113,7 @@ public class Footprint
 
   public void initObjectId( Object entity )
   {
-    Field objectIdField = null;
+    Field objectIdField;
     try
     {
       objectIdField = entity.getClass().getDeclaredField( Persistence.DEFAULT_OBJECT_ID_FIELD );

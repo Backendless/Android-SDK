@@ -19,20 +19,17 @@
 package com.backendless.async.message;
 
 import com.backendless.async.callback.UploadCallback;
+import lombok.Setter;
 
 public class AsyncUploadMessage implements IAsyncMessage<UploadCallback>
 {
-  private UploadCallback uploadCallback;
+  private final UploadCallback uploadCallback;
+  @Setter
   private int currentProgress;
 
   public AsyncUploadMessage( UploadCallback uploadCallback )
   {
     this.uploadCallback = uploadCallback;
-  }
-
-  public void setCurrentProgress( int currentProgress )
-  {
-    this.currentProgress = currentProgress;
   }
 
   @Override

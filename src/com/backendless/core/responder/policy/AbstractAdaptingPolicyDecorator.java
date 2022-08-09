@@ -6,7 +6,7 @@ import weborb.types.IAdaptingType;
 
 abstract class AbstractAdaptingPolicyDecorator<E> implements IAdaptingPolicy<E>
 {
-  private IAdaptingPolicy<E> adaptingPolicy;
+  private final IAdaptingPolicy<E> adaptingPolicy;
 
   AbstractAdaptingPolicyDecorator( IAdaptingPolicy<E> adaptingPolicy )
   {

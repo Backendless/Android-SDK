@@ -26,7 +26,7 @@ import java.util.Set;
 
 public class BackendlessUser implements Serializable
 {
-  private final Map<String, Object> properties = new HashMap<String, Object>();
+  private final Map<String, Object> properties = new HashMap<>();
 
   public static final String PASSWORD_KEY = "password";
   public static final String EMAIL_KEY = "email";
@@ -46,7 +46,7 @@ public class BackendlessUser implements Serializable
    */
   public Map<String, Object> getProperties()
   {
-    return new HashMap<String, Object>( properties );
+    return new HashMap<>( properties );
   }
 
   public void setProperties( Map<String, Object> properties )
@@ -151,10 +151,7 @@ public class BackendlessUser implements Serializable
 
     BackendlessUser that = (BackendlessUser) o;
 
-    if( !properties.equals( that.properties ) )
-      return false;
-
-    return true;
+    return properties.equals( that.properties );
   }
 
   private Object marker;// = new Object();
@@ -162,7 +159,7 @@ public class BackendlessUser implements Serializable
   @Override
   public int hashCode()
   {
-    Set<Object> refCache = new HashSet<Object>(  );
+    Set<Object> refCache = new HashSet<>();
     return hashCode( refCache );
   }
 

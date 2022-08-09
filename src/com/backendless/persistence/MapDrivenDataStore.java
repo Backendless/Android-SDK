@@ -257,28 +257,28 @@ public class MapDrivenDataStore implements IDataStore<Map>
   public Map findFirst() throws BackendlessException
   {
     Object[] args = new Object[] { tableName };
-    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args,
-                                     new MapDrivenResponder() );
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args,
+                               new MapDrivenResponder() );
   }
 
   @Override
   public Map findFirst( Integer relationsDepth ) throws BackendlessException
   {
-    return findFirst( emptyRelations, relationsDepth, (Integer) null );
+    return findFirst( emptyRelations, relationsDepth, null );
   }
 
   @Override
   public Map findFirst( List<String> relations ) throws BackendlessException
   {
-    return findFirst( relations, (Integer) null, (Integer) null );
+    return findFirst( relations, null, null );
   }
 
   @Override
   public Map findFirst( List<String> relations, Integer relationsDepth, Integer relationsPageSize ) throws BackendlessException
   {
     Object[] args = new Object[] { tableName, relations, relationsDepth, relationsPageSize };
-    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args,
-                                     new MapDrivenResponder() );
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "first", args,
+                               new MapDrivenResponder() );
   }
 
   @Override
@@ -329,28 +329,28 @@ public class MapDrivenDataStore implements IDataStore<Map>
   public Map findLast() throws BackendlessException
   {
     Object[] args = new Object[] { tableName };
-    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args,
-                                     new MapDrivenResponder() );
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args,
+                               new MapDrivenResponder() );
   }
 
   @Override
   public Map findLast( Integer relationsDepth ) throws BackendlessException
   {
-    return findLast( emptyRelations, relationsDepth, (Integer) null );
+    return findLast( emptyRelations, relationsDepth, null );
   }
 
   @Override
   public Map findLast( List<String> relations ) throws BackendlessException
   {
-    return findLast( relations, (Integer) null, (Integer) null );
+    return findLast( relations, null, null );
   }
 
   @Override
   public Map findLast( List<String> relations, Integer relationsDepth, Integer relationsPageSize ) throws BackendlessException
   {
     Object[] args = new Object[] { tableName, relations, relationsDepth, relationsPageSize };
-    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args,
-                                     new MapDrivenResponder() );
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "last", args,
+                               new MapDrivenResponder() );
   }
 
   @Override
@@ -472,8 +472,8 @@ public class MapDrivenDataStore implements IDataStore<Map>
       throw new IllegalArgumentException( ExceptionMessage.NULL_ID );
 
     Object[] args = new Object[] { tableName, id, relations };
-    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args,
-                                     new MapDrivenResponder() );
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args,
+                               new MapDrivenResponder() );
   }
 
   @Override
@@ -489,8 +489,8 @@ public class MapDrivenDataStore implements IDataStore<Map>
       throw new IllegalArgumentException( ExceptionMessage.NULL_ID );
 
     Object[] args = new Object[] { tableName, id, relations, relationsDepth };
-    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args,
-                                     new MapDrivenResponder() );
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args,
+                               new MapDrivenResponder() );
   }
 
   @Override
@@ -515,8 +515,8 @@ public class MapDrivenDataStore implements IDataStore<Map>
   public Map findById( Map entity, List<String> relations, Integer relationsDepth ) throws BackendlessException
   {
     Object[] args = new Object[] { tableName, entity, relations, relationsDepth };
-    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args,
-                                     new MapDrivenResponder() );
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args,
+                               new MapDrivenResponder() );
   }
 
   @Override
@@ -597,16 +597,16 @@ public class MapDrivenDataStore implements IDataStore<Map>
   public Map findById( String id, DataQueryBuilder queryBuilder ) throws BackendlessException
   {
     Object[] args = new Object[] { tableName, id, queryBuilder.build() };
-    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args,
-                                     new MapDrivenResponder() );
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args,
+                               new MapDrivenResponder() );
   }
 
   @Override
   public Map findById( Map entity, DataQueryBuilder queryBuilder ) throws BackendlessException
   {
     Object[] args = new Object[] { tableName, entity, queryBuilder.build() };
-    return (Map) Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args,
-                                     new MapDrivenResponder() );
+    return Invoker.invokeSync( Persistence.PERSISTENCE_MANAGER_SERVER_ALIAS, "findById", args,
+                               new MapDrivenResponder() );
   }
 
   @Override
@@ -964,7 +964,7 @@ public class MapDrivenDataStore implements IDataStore<Map>
     return eventHandler;
   }
 
-  private class MapDrivenResponder implements IRawResponder
+  private static class MapDrivenResponder implements IRawResponder
   {
     private IResponder nextResponder;
 

@@ -23,12 +23,12 @@ public class Events
 
   public Map dispatch( String eventName, Map eventArgs )
   {
-    return (Map) Invoker.invokeSync( EVENTS_MANAGER_SERVER_ALIAS, "dispatchEvent", new Object[] { eventName, eventArgs } );
+    return Invoker.invokeSync( EVENTS_MANAGER_SERVER_ALIAS, "dispatchEvent", new Object[] { eventName, eventArgs } );
   }
 
   public Map dispatch( String eventName, Map eventArgs, ExecutionType executionType )
   {
-    return (Map) Invoker.invokeSync( EVENTS_MANAGER_SERVER_ALIAS, "dispatchEvent", new Object[] { eventName, eventArgs, executionType } );
+    return Invoker.invokeSync( EVENTS_MANAGER_SERVER_ALIAS, "dispatchEvent", new Object[] { eventName, eventArgs, executionType } );
   }
 
   public void dispatch( String eventName, Map eventArgs, AsyncCallback<Map> callback )

@@ -22,39 +22,39 @@ import com.backendless.async.callback.AsyncCallback;
 
 public interface IAtomic<T>
 {
-  public void reset();
+  void reset();
 
-  public void reset( AsyncCallback responder );
+  void reset( AsyncCallback responder );
 
-  public T get();
+  T get();
 
-  public void get( AsyncCallback<T> responder );
+  void get( AsyncCallback<T> responder );
 
-  public T getAndIncrement();
+  T getAndIncrement();
 
-  public void getAndIncrement( AsyncCallback<T> responder );
+  void getAndIncrement( AsyncCallback<T> responder );
 
-  public T incrementAndGet();
+  T incrementAndGet();
 
-  public void incrementAndGet( AsyncCallback<T> responder );
+  void incrementAndGet( AsyncCallback<T> responder );
 
-  public T getAndDecrement();
+  T getAndDecrement();
 
-  public void getAndDecrement( AsyncCallback<T> responder );
+  void getAndDecrement( AsyncCallback<T> responder );
 
-  public T decrementAndGet();
+  T decrementAndGet();
 
-  public void decrementAndGet( AsyncCallback<T> responder );
+  void decrementAndGet( AsyncCallback<T> responder );
 
-  public T addAndGet( Number value );
+  T addAndGet( Number value );
 
-  public void addAndGet( Number value, AsyncCallback<T> responder );
+  void addAndGet( Number value, AsyncCallback<T> responder );
 
-  public T getAndAdd( Number value );
+  T getAndAdd( Number value );
 
-  public void getAndAdd( Number value, AsyncCallback<T> responder );
+  void getAndAdd( Number value, AsyncCallback<T> responder );
 
-  public boolean compareAndSet( Number expected, Number updated );
+  boolean compareAndSet( Number expected, Number updated );
 
-  public void compareAndSet( Number expected, Number updated, AsyncCallback<Boolean> responder );
+  void compareAndSet( Number expected, Number updated, AsyncCallback<Boolean> responder );
 }

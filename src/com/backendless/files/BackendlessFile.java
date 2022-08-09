@@ -21,24 +21,17 @@ package com.backendless.files;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessException;
+import lombok.Getter;
+import lombok.Setter;
 
 public class BackendlessFile
 {
+  @Setter @Getter
   private String fileURL;
 
   public BackendlessFile( String fileURL )
   {
     this.fileURL = fileURL;
-  }
-
-  public void setFileURL( String fileURL )
-  {
-    this.fileURL = fileURL;
-  }
-
-  public String getFileURL()
-  {
-    return fileURL;
   }
 
   public int remove() throws BackendlessException
@@ -50,13 +43,4 @@ public class BackendlessFile
   {
     Backendless.Files.remove( fileURL, responder );
   }
-  /*
-  public void download()
-  {
-    URL file = new URL( fileURL );
-    ReadableByteChannel rbc = Channels.newChannel(file.openStream());
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    baos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-  }
-  */
 }

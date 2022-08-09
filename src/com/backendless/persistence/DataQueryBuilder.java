@@ -6,13 +6,13 @@ import java.util.List;
 
 public class DataQueryBuilder
 {
-  private PagedQueryBuilder<DataQueryBuilder> pagedQueryBuilder;
-  private QueryOptionsBuilder<DataQueryBuilder> queryOptionsBuilder;
+  private final PagedQueryBuilder<DataQueryBuilder> pagedQueryBuilder;
+  private final QueryOptionsBuilder<DataQueryBuilder> queryOptionsBuilder;
   private boolean distinct = false;
-  private ArrayList<String> properties;
-  private ArrayList<String> excludeProperties;
+  private final ArrayList<String> properties;
+  private final ArrayList<String> excludeProperties;
   private String whereClause;
-  private List<String> groupBy;
+  private final List<String> groupBy;
   private String havingClause;
 
   private DataQueryBuilder()

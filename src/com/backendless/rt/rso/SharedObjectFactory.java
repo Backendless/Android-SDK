@@ -1,8 +1,6 @@
 package com.backendless.rt.rso;
 
 import com.backendless.rt.AbstractListenerFactory;
-import com.backendless.rt.messaging.Channel;
-import com.backendless.rt.messaging.ChannelImpl;
 
 public class SharedObjectFactory extends AbstractListenerFactory<SharedObject>
 {

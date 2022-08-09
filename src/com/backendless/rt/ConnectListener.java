@@ -2,7 +2,6 @@ package com.backendless.rt;
 
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
-import com.backendless.rt.messaging.MessagingSubscription;
 import weborb.types.IAdaptingType;
 
 import java.util.concurrent.CopyOnWriteArrayList;

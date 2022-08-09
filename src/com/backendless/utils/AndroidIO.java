@@ -86,7 +86,7 @@ public final class AndroidIO
     try
     {
       FileInputStream inputStream = context.openFileInput( fileName );
-      String result = new DataInputStream( inputStream ).readLine();
+      String result = new BufferedReader(new InputStreamReader( inputStream ) ).readLine();
       inputStream.close();
 
       return result;

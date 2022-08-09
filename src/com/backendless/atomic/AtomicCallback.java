@@ -35,7 +35,7 @@ public class AtomicCallback<T> implements AsyncCallback<Object>
   @Override
   public void handleResponse( Object response )
   {
-    Number numberResult = null;
+    Number numberResult;
 
     if( response instanceof Integer )
       numberResult = Long.valueOf( response.toString() );
