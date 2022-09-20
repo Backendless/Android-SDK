@@ -18,10 +18,16 @@
 
 package com.backendless;
 
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.persistence.AclPermissionDTO;
 import com.backendless.persistence.PersistenceOperations;
+
+import java.util.List;
 
 public class DataPermission
 {
+  private static final String PERMISSION_SERVICE = "com.backendless.services.persistence.permissions.ClientPermissionService";
+
   public static final Find FIND = new Find();
   public static final Update UPDATE = new Update();
   public static final Remove REMOVE = new Remove();
@@ -51,5 +57,21 @@ public class DataPermission
     {
       return PersistenceOperations.REMOVE;
     }
+  }
+
+  public Boolean[] updateUsersPermissions( String tableName, String objectId,
+                                           List<AclPermissionDTO> permissions )
+  {
+    String method = "updateUsersPermissions";
+    Object[] args = new Object[] { tableName, objectId, permissions };
+    return Invoker.invokeSync( PERMISSION_SERVICE, method, args );
+  }
+
+  public void updateUsersPermissions( String tableName, String objectId,
+                                      List<AclPermissionDTO> permissions, AsyncCallback<Boolean[]> callback )
+  {
+    String method = "updateUsersPermissions";
+    Object[] args = new Object[] { tableName, objectId, permissions };
+    Invoker.invokeAsync( PERMISSION_SERVICE, method, args, callback );
   }
 }
