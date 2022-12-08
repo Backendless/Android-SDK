@@ -20,5 +20,5 @@ package com.backendless.persistence;
 
 public enum PersistenceOperations
 {
-  FIND, UPDATE, REMOVE
+  FIND, UPDATE, REMOVE, LOAD_RELATIONS, ADD_RELATION, DELETE_RELATION, UPSERT
 }
