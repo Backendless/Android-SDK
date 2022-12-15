@@ -23,6 +23,9 @@ import android.content.Context;
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.files.BackendlessFile;
 import com.backendless.files.BackendlessFileFactory;
+import com.backendless.hive.HiveManagement;
+import com.backendless.hive.ScanResult;
+import com.backendless.hive.ScanResultFactory;
 import com.backendless.persistence.BackendlessGeometryFactory;
 import com.backendless.persistence.BackendlessGeometryWriter;
 import com.backendless.io.BackendlessUserFactory;
@@ -252,6 +255,7 @@ public final class Backendless
     ObjectFactories.addArgumentObjectFactory( Point.class.getName(), new BackendlessGeometryFactory() );
     ObjectFactories.addArgumentObjectFactory( LineString.class.getName(), new BackendlessGeometryFactory() );
     ObjectFactories.addArgumentObjectFactory( Polygon.class.getName(), new BackendlessGeometryFactory() );
+    ObjectFactories.addArgumentObjectFactory( ScanResult.class.getName(), new ScanResultFactory() );
     Types.addClientClassMapping( JsonDTO.class.getName(), JsonDTOAdaptingType.class );
     //ObjectFactories.addArgumentObjectFactory( JsonDTO.class.getName(), new BackendlessJsonFactory() );
     ContextHandler.setContext( context );
@@ -413,5 +417,15 @@ public final class Backendless
   public static void saveNotificationIdGeneratorState( int value )
   {
     ((AndroidBackendlessPrefs) prefs).saveNotificationIdGeneratorState( value );
+  }
+
+  public static HiveManagement Hive()
+  {
+    return new HiveManagement();
+  }
+
+  public static Hive Hive( String name )
+  {
+    return Hive.getOrCreate( name );
   }
 }

@@ -9,15 +9,16 @@ import weborb.util.io.Serializer;
 
 import java.util.logging.Logger;
 
+
 public class WeborbSerializationHelper
 {
   private static final Logger logger = Logger.getLogger( "WeborbSerializationHelper" );
 
-  public static Object[] serialize( Object args )
+  public static byte[] serialize( Object obj )
   {
     try
     {
-      return new Object[] { Serializer.toBytes( args, ISerializer.JSON ) };
+      return Serializer.toBytes( obj, ISerializer.JSON );
     }
     catch( Exception e )
     {
@@ -26,7 +27,20 @@ public class WeborbSerializationHelper
     }
   }
 
-  public static IAdaptingType deserialize( Object arg )
+  public static Object deserialize( byte[] bytes )
+  {
+    try
+    {
+      return Serializer.fromBytes( bytes, ISerializer.JSON, false );
+    }
+    catch( Exception e )
+    {
+      logger.severe( "weborb deserialization error " + e );
+      throw new RuntimeException( e );
+    }
+  }
+
+  public static IAdaptingType deserializeNotAdapt( Object arg )
   {
     try
     {

@@ -5,12 +5,12 @@ apply plugin: 'signing'
 
 
 group 'com.backendless'
-version '6.3.5-snapshot'
+version '6.4-beta-snapshot'
 archivesBaseName='backendless'
 
 
 
-sourceCompatibility = 1.7
+sourceCompatibility = 1.8
 
 def getMavenSettingsCredentials = {
     String userHome = System.getProperty( "user.home" );

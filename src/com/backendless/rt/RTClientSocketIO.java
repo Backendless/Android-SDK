@@ -94,7 +94,7 @@ class RTClientSocketIO implements RTClient
       return null;
     }
 
-    AnonymousObject result = (AnonymousObject) deserialize( args[ 0 ] );
+    AnonymousObject result = (AnonymousObject) deserializeNotAdapt( args[ 0 ] );
 
     String id = asString( result, "id" );
 
@@ -267,7 +267,7 @@ class RTClientSocketIO implements RTClient
 
   private Emitter subOn( RTSubscription subscription )
   {
-    final Emitter emitter = connectionManager.get().emit( "SUB_ON", serialize( subscription.toArgs() ) );
+    final Emitter emitter = connectionManager.get().emit( "SUB_ON", new Object[] { serialize( subscription.toArgs() ) } );
 
     logger.info( "subOn called" );
     return emitter;
@@ -277,14 +277,14 @@ class RTClientSocketIO implements RTClient
   {
     Map<String, String> request = new HashMap<>(  );
     request.put( "id", subscriptionId );
-    final Emitter emitter = connectionManager.get().emit( "SUB_OFF", serialize( request ) );
+    final Emitter emitter = connectionManager.get().emit( "SUB_OFF", new Object[] { serialize( request ) } );
     logger.info( "subOff called" );
     return emitter;
   }
 
   private Emitter metReq( RTMethodRequest methodRequest )
   {
-    final Emitter emitter = connectionManager.get().emit( "MET_REQ", serialize( methodRequest.toArgs() ) );
+    final Emitter emitter = connectionManager.get().emit( "MET_REQ", new Object[] { serialize( methodRequest.toArgs() ) } );
 
     logger.info( "subOn called" );
     return emitter;
