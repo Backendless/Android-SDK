@@ -353,6 +353,22 @@ public final class Files
     }
   }
 
+  public void createDirectory( String directoryPath )
+  {
+    if( directoryPath == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
+
+    Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "createDirectory", new Object[] { directoryPath } );
+  }
+
+  public void createDirectory( String directoryPath, AsyncCallback<Void> responder )
+  {
+    if( directoryPath == null )
+      throw new IllegalArgumentException( ExceptionMessage.NULL_PATH );
+
+    Invoker.invokeAsync( FILE_MANAGER_SERVER_ALIAS, "createDirectory", new Object[] { directoryPath }, responder );
+  }
+
   public String saveFile( String path, String fileName, byte[] fileContent )
   {
     return Invoker.invokeSync( FILE_MANAGER_SERVER_ALIAS, "saveFile", new Object[] { path, fileName, fileContent } );
