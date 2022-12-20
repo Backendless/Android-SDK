@@ -10,6 +10,15 @@ import java.util.concurrent.CompletableFuture;
 public final class HiveManagement
 {
   public final static String HIVE_SERVICE_ALIAS = "com.backendless.services.hive.HiveService";
+  private static final HiveManagement HIVE_MANAGEMENT = new HiveManagement();
+
+  public static HiveManagement getInstance()
+  {
+    return HIVE_MANAGEMENT;
+  }
+
+  HiveManagement()
+  {}
 
   public CompletableFuture<Set<String>> getHiveNames()
   {

@@ -19,18 +19,18 @@
 package com.backendless;
 
 import android.content.Context;
-
 import com.backendless.exceptions.ExceptionMessage;
 import com.backendless.files.BackendlessFile;
 import com.backendless.files.BackendlessFileFactory;
+import com.backendless.hive.Hive;
 import com.backendless.hive.HiveManagement;
 import com.backendless.hive.ScanResult;
 import com.backendless.hive.ScanResultFactory;
-import com.backendless.persistence.BackendlessGeometryFactory;
-import com.backendless.persistence.BackendlessGeometryWriter;
 import com.backendless.io.BackendlessUserFactory;
 import com.backendless.io.BackendlessUserWriter;
 import com.backendless.io.DoubleWriter;
+import com.backendless.persistence.BackendlessGeometryFactory;
+import com.backendless.persistence.BackendlessGeometryWriter;
 import com.backendless.persistence.BackendlessSerializer;
 import com.backendless.persistence.Geometry;
 import com.backendless.persistence.GeometryDTO;
@@ -421,7 +421,7 @@ public final class Backendless
 
   public static HiveManagement Hive()
   {
-    return new HiveManagement();
+    return HiveManagement.getInstance();
   }
 
   public static Hive Hive( String name )

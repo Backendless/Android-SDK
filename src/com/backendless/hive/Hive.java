@@ -1,12 +1,6 @@
-package com.backendless;
+package com.backendless.hive;
 
-import com.backendless.hive.HiveKeyValue;
-import com.backendless.hive.HiveList;
-import com.backendless.hive.HiveManagement;
-import com.backendless.hive.HiveMap;
-import com.backendless.hive.HiveSet;
-import com.backendless.hive.HiveSortedSet;
-
+import java.util.List;
 import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.concurrent.CompletableFuture;
@@ -24,11 +18,22 @@ public final class Hive
   private final HiveManagement hiveManagement;
   private final HiveKeyValue hiveKeyValue;
 
+  private final HiveGeneralWithoutStoreKey generalKeyValueOps;
+  private final HiveGeneralWithoutStoreKey generalListOps;
+  private final HiveGeneralWithoutStoreKeyForSet generalSetOps;
+  private final HiveGeneralWithoutStoreKeyForSortedSet generalSortedSetOps;
+  private final HiveGeneralWithoutStoreKey generalMapOps;
+
   private Hive( String name )
   {
     this.hiveName = name;
-    this.hiveManagement = new HiveManagement();
-    this.hiveKeyValue = new HiveKeyValue( hiveName, hiveManagement );
+    this.hiveManagement = HiveManagement.getInstance();
+    this.generalKeyValueOps = new HiveGeneralWithoutStoreKey( hiveName, StoreType.KeyValue, hiveManagement );
+    this.hiveKeyValue = new HiveKeyValue( hiveName, generalKeyValueOps );
+    generalListOps = new HiveGeneralWithoutStoreKey( hiveName, StoreType.List, hiveManagement );
+    generalSetOps = new HiveGeneralWithoutStoreKeyForSet( hiveName, StoreType.Set, hiveManagement );
+    generalSortedSetOps = new HiveGeneralWithoutStoreKeyForSortedSet( hiveName, StoreType.SortedSet, hiveManagement );
+    generalMapOps = new HiveGeneralWithoutStoreKey( hiveName, StoreType.Map, hiveManagement );
   }
 
   public static Hive getOrCreate( String name )
@@ -76,6 +81,11 @@ public final class Hive
     return hiveKeyValue;
   }
 
+  public HiveGeneralWithoutStoreKey ListStore()
+  {
+    return this.generalListOps;
+  }
+
   public HiveList ListStore( String storeKey )
   {
     return ListStore( storeKey, Object.class );
@@ -87,10 +97,15 @@ public final class Hive
     HiveList hiveList = listHives.get( hiveStoreKey );
     if( hiveList == null )
     {
-      hiveList = new HiveList( hiveName, storeKey, hiveManagement );
+      hiveList = new HiveList( hiveName, storeKey );
       listHives.put( hiveStoreKey, hiveList );
     }
     return hiveList;
+  }
+
+  public HiveGeneralWithoutStoreKeyForSet SetStore()
+  {
+    return this.generalSetOps;
   }
 
   public HiveSet SetStore( String storeKey )
@@ -104,10 +119,15 @@ public final class Hive
     HiveSet hiveSet = setHives.get( hiveStoreKey );
     if( hiveSet == null )
     {
-      hiveSet = new HiveSet( hiveName, storeKey, hiveManagement );
+      hiveSet = new HiveSet( hiveName, storeKey );
       setHives.put( hiveStoreKey, hiveSet );
     }
     return hiveSet;
+  }
+
+  public HiveGeneralWithoutStoreKeyForSortedSet SortedSetStore()
+  {
+    return this.generalSortedSetOps;
   }
 
   public HiveSortedSet SortedSetStore( String storeKey )
@@ -121,10 +141,15 @@ public final class Hive
     HiveSortedSet hiveSortedSet = sortedSetHives.get( hiveStoreKey );
     if( hiveSortedSet == null )
     {
-      hiveSortedSet = new HiveSortedSet( hiveName, storeKey, hiveManagement );
+      hiveSortedSet = new HiveSortedSet( hiveName, storeKey );
       sortedSetHives.put( hiveStoreKey, hiveSortedSet );
     }
     return hiveSortedSet;
+  }
+
+  public HiveGeneralWithoutStoreKey MapStore()
+  {
+    return this.generalMapOps;
   }
 
   public HiveMap MapStore( String storeKey )
@@ -138,7 +163,7 @@ public final class Hive
     HiveMap hiveMap = mapHives.get( hiveStoreKey );
     if( hiveMap == null )
     {
-      hiveMap = new HiveMap( hiveName, storeKey, hiveManagement );
+      hiveMap = new HiveMap( hiveName, storeKey );
       mapHives.put( hiveStoreKey, hiveMap );
     }
     return hiveMap;
