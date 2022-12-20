@@ -30,10 +30,10 @@ public final class Hive
     this.hiveManagement = HiveManagement.getInstance();
     this.generalKeyValueOps = new HiveGeneralWithoutStoreKey( hiveName, StoreType.KeyValue, hiveManagement );
     this.hiveKeyValue = new HiveKeyValue( hiveName, generalKeyValueOps );
-    generalListOps = new HiveGeneralWithoutStoreKey( hiveName, StoreType.List, hiveManagement );
-    generalSetOps = new HiveGeneralWithoutStoreKeyForSet( hiveName, StoreType.Set, hiveManagement );
-    generalSortedSetOps = new HiveGeneralWithoutStoreKeyForSortedSet( hiveName, StoreType.SortedSet, hiveManagement );
-    generalMapOps = new HiveGeneralWithoutStoreKey( hiveName, StoreType.Map, hiveManagement );
+    this.generalListOps = new HiveGeneralWithoutStoreKey( hiveName, StoreType.List, hiveManagement );
+    this.generalSetOps = new HiveGeneralWithoutStoreKeyForSet( hiveName, StoreType.Set, hiveManagement );
+    this.generalSortedSetOps = new HiveGeneralWithoutStoreKeyForSortedSet( hiveName, StoreType.SortedSet, hiveManagement );
+    this.generalMapOps = new HiveGeneralWithoutStoreKey( hiveName, StoreType.Map, hiveManagement );
   }
 
   public static Hive getOrCreate( String name )
