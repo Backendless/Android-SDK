@@ -6,7 +6,7 @@ import com.backendless.async.callback.BackendlessCallback;
 import java.util.concurrent.CompletableFuture;
 
 
-class HiveGeneral
+abstract class HiveGeneral
 {
   public final static String HIVE_GENERAL_KEY_ALIAS = "com.backendless.services.hive.HiveGeneralKeyService";
   protected final String hiveName;
