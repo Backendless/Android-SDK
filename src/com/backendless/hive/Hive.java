@@ -1,6 +1,5 @@
 package com.backendless.hive;
 
-import java.util.List;
 import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.concurrent.CompletableFuture;
@@ -9,10 +8,10 @@ import java.util.concurrent.CompletableFuture;
 public final class Hive
 {
   private final static WeakHashMap<String, Hive> hives = new WeakHashMap<>();
-  private final static WeakHashMap<String, HiveList> listHives = new WeakHashMap<>();
-  private final static WeakHashMap<String, HiveSet> setHives = new WeakHashMap<>();
-  private final static WeakHashMap<String, HiveSortedSet> sortedSetHives = new WeakHashMap<>();
-  private final static WeakHashMap<String, HiveMap> mapHives = new WeakHashMap<>();
+  private final static WeakHashMap<String, HiveList<?>> listHives = new WeakHashMap<>();
+  private final static WeakHashMap<String, HiveSet<?>> setHives = new WeakHashMap<>();
+  private final static WeakHashMap<String, HiveSortedSet<?>> sortedSetHives = new WeakHashMap<>();
+  private final static WeakHashMap<String, HiveMap<?>> mapHives = new WeakHashMap<>();
 
   private final String hiveName;
   private final HiveManagement hiveManagement;
@@ -86,7 +85,7 @@ public final class Hive
     return this.generalListOps;
   }
 
-  public HiveList ListStore( String storeKey )
+  public HiveList<Object> ListStore( String storeKey )
   {
     return ListStore( storeKey, Object.class );
   }
@@ -94,13 +93,13 @@ public final class Hive
   public <T> HiveList<T> ListStore( String storeKey, Class<T> tClass )
   {
     final String hiveStoreKey = getComplexKey( storeKey );
-    HiveList hiveList = listHives.get( hiveStoreKey );
+    HiveList<?> hiveList = listHives.get( hiveStoreKey );
     if( hiveList == null )
     {
-      hiveList = new HiveList( hiveName, storeKey );
+      hiveList = new HiveList<>( hiveName, storeKey );
       listHives.put( hiveStoreKey, hiveList );
     }
-    return hiveList;
+    return (HiveList<T>) hiveList;
   }
 
   public HiveGeneralWithoutStoreKeyForSet SetStore()
@@ -108,21 +107,21 @@ public final class Hive
     return this.generalSetOps;
   }
 
-  public HiveSet SetStore( String storeKey )
+  public HiveSet<Object> SetStore( String storeKey )
   {
     return SetStore( storeKey, Object.class );
   }
 
-  public <T> HiveSet SetStore( String storeKey, Class<T> tClass )
+  public <T> HiveSet<T> SetStore( String storeKey, Class<T> tClass )
   {
     final String hiveStoreKey = getComplexKey( storeKey );
-    HiveSet hiveSet = setHives.get( hiveStoreKey );
+    HiveSet<?> hiveSet = setHives.get( hiveStoreKey );
     if( hiveSet == null )
     {
-      hiveSet = new HiveSet( hiveName, storeKey );
+      hiveSet = new HiveSet<>( hiveName, storeKey );
       setHives.put( hiveStoreKey, hiveSet );
     }
-    return hiveSet;
+    return (HiveSet<T>) hiveSet;
   }
 
   public HiveGeneralWithoutStoreKeyForSortedSet SortedSetStore()
@@ -130,7 +129,7 @@ public final class Hive
     return this.generalSortedSetOps;
   }
 
-  public HiveSortedSet SortedSetStore( String storeKey )
+  public HiveSortedSet<Object> SortedSetStore( String storeKey )
   {
     return SortedSetStore( storeKey, Object.class );
   }
@@ -138,13 +137,13 @@ public final class Hive
   public <T> HiveSortedSet<T> SortedSetStore( String storeKey, Class<T> tClass )
   {
     final String hiveStoreKey = getComplexKey( storeKey );
-    HiveSortedSet hiveSortedSet = sortedSetHives.get( hiveStoreKey );
+    HiveSortedSet<?> hiveSortedSet = sortedSetHives.get( hiveStoreKey );
     if( hiveSortedSet == null )
     {
-      hiveSortedSet = new HiveSortedSet( hiveName, storeKey );
+      hiveSortedSet = new HiveSortedSet<>( hiveName, storeKey );
       sortedSetHives.put( hiveStoreKey, hiveSortedSet );
     }
-    return hiveSortedSet;
+    return (HiveSortedSet<T>) hiveSortedSet;
   }
 
   public HiveGeneralWithoutStoreKey MapStore()
@@ -152,7 +151,7 @@ public final class Hive
     return this.generalMapOps;
   }
 
-  public HiveMap MapStore( String storeKey )
+  public HiveMap<Object> MapStore( String storeKey )
   {
     return MapStore( storeKey, Object.class );
   }
@@ -160,13 +159,13 @@ public final class Hive
   public <T> HiveMap<T> MapStore( String storeKey, Class<T> tClass )
   {
     final String hiveStoreKey = getComplexKey( storeKey );
-    HiveMap hiveMap = mapHives.get( hiveStoreKey );
+    HiveMap<?> hiveMap = mapHives.get( hiveStoreKey );
     if( hiveMap == null )
     {
-      hiveMap = new HiveMap( hiveName, storeKey );
+      hiveMap = new HiveMap<>( hiveName, storeKey );
       mapHives.put( hiveStoreKey, hiveMap );
     }
-    return hiveMap;
+    return (HiveMap<T>) hiveMap;
   }
 
   private String getComplexKey( String storeKey )
