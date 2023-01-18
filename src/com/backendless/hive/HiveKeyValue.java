@@ -1,5 +1,6 @@
 package com.backendless.hive;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -8,15 +9,17 @@ import java.util.concurrent.CompletableFuture;
 public final class HiveKeyValue extends HiveGeneralForKeyValue
 {
   public final static String HIVE_KEY_VALUE_ALIAS = "com.backendless.services.hive.HiveKeyValueService";
+  private final HiveGeneralWithoutStoreKey generalOps;
 
-  public HiveKeyValue( String hiveName, HiveManagement hiveManagement )
+  HiveKeyValue( String hiveName, HiveGeneralWithoutStoreKey generalOps )
   {
-    super( hiveName, StoreType.KeyValue, null, hiveManagement );
+    super( hiveName, StoreType.KeyValue );
+    this.generalOps = generalOps;
   }
 
   public <T> CompletableFuture<T> get( String key )
   {
-    return this.<String>makeRemoteCall( "get", key ).thenApply( jsonValue -> (T) HiveSerializer.deserialize( jsonValue ) );
+    return this.<String>makeRemoteCall( "get", key ).thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<Map<String, ?>> multiGet( Set<String> keys )
@@ -51,8 +54,30 @@ public final class HiveKeyValue extends HiveGeneralForKeyValue
 
   // ----------------------------------------
 
+  public CompletableFuture<Long> del( List<String> keys )
+  {
+    return generalOps.del( keys );
+  }
+
+  public CompletableFuture<Long> exists( List<String> keys )
+  {
+    return generalOps.exists( keys );
+  }
+
+  public CompletableFuture<Long> touch( List<String> keys )
+  {
+    return generalOps.touch( keys );
+  }
+
+  public CompletableFuture<ScanResult> retrieveHiveKeys( String filterPattern, String cursor, int pageSize )
+  {
+    return generalOps.retrieveHiveKeys( filterPattern, cursor, pageSize );
+  }
+
+  // ----------------------------------------
+
   private <T> CompletableFuture<T> makeRemoteCall( String methodName, Object... args )
   {
-    return makeRemoteCall( HIVE_KEY_VALUE_ALIAS, methodName, args );
+    return makeRemoteCallWithoutStoreKey( HIVE_KEY_VALUE_ALIAS, methodName, args );
   }
 }

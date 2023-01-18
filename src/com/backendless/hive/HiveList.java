@@ -8,24 +8,25 @@ public final class HiveList<T> extends HiveGeneralForComplexStore
 {
   public final static String HIVE_LIST_ALIAS = "com.backendless.services.hive.HiveListService";
 
-  public HiveList( String hiveName, String storeKey, HiveManagement hiveManagement )
+  HiveList( String hiveName, String storeKey )
   {
-    super( hiveName, StoreType.List, storeKey, hiveManagement );
+    super( hiveName, StoreType.List, storeKey );
   }
+
 
   public CompletableFuture<List<T>> get()
   {
-    return this.<List<String>>makeRemoteCall( "get" ).thenApply( jsonValues -> (List<T>) HiveSerializer.deserialize( jsonValues ) );
+    return this.<List<String>>makeRemoteCall( "get" ).thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<List<T>> get( int start, int stop )
   {
-    return this.<List<String>>makeRemoteCall( "get", start, stop ).thenApply( jsonValues -> (List<T>) HiveSerializer.deserialize( jsonValues ) );
+    return this.<List<String>>makeRemoteCall( "get", start, stop ).thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<T> get( int index )
   {
-    return this.<String>makeRemoteCall( "get", index ).thenApply( jsonValue -> (T) HiveSerializer.deserialize( jsonValue ) );
+    return this.<String>makeRemoteCall( "get", index ).thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<Long> set( List<T> values )
@@ -55,22 +56,22 @@ public final class HiveList<T> extends HiveGeneralForComplexStore
 
   public CompletableFuture<T> removeAndReturnFirst()
   {
-    return this.<String>makeRemoteCall( "removeAndReturnFirst" ).thenApply( jsonValue -> (T) HiveSerializer.deserialize( jsonValue ) );
+    return this.<String>makeRemoteCall( "removeAndReturnFirst" ).thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<T> removeAndReturnLast()
   {
-    return this.<String>makeRemoteCall( "removeAndReturnLast" ).thenApply( jsonValue -> (T) HiveSerializer.deserialize( jsonValue ) );
+    return this.<String>makeRemoteCall( "removeAndReturnLast" ).thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<List<T>> removeAndReturnFirst( int count )
   {
-    return this.<List<String>>makeRemoteCall( "removeAndReturnFirst", count ).thenApply( jsonValues -> (List<T>) HiveSerializer.deserialize( jsonValues ) );
+    return this.<List<String>>makeRemoteCall( "removeAndReturnFirst", count ).thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<List<T>> removeAndReturnLast( int count )
   {
-    return this.<List<String>>makeRemoteCall( "removeAndReturnLast", count ).thenApply( jsonValues -> (List<T>) HiveSerializer.deserialize( jsonValues ) );
+    return this.<List<String>>makeRemoteCall( "removeAndReturnLast", count ).thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<Long> removeValue( T value, int count )
@@ -87,6 +88,6 @@ public final class HiveList<T> extends HiveGeneralForComplexStore
 
   private <T> CompletableFuture<T> makeRemoteCall( String methodName, Object... args )
   {
-    return makeRemoteCall( HIVE_LIST_ALIAS, methodName, args );
+    return makeRemoteCallWithStoreKey( HIVE_LIST_ALIAS, methodName, args );
   }
 }

@@ -3,11 +3,11 @@ package com.backendless.hive;
 import java.util.concurrent.CompletableFuture;
 
 
-public class HiveGeneralForKeyValue extends HiveGeneral
+abstract class HiveGeneralForKeyValue extends HiveGeneral
 {
-  public HiveGeneralForKeyValue( String hiveName, StoreType storeType, String storeKey, HiveManagement hiveManagement )
+  HiveGeneralForKeyValue( String hiveName, StoreType storeType )
   {
-    super( hiveName, storeType, storeKey, hiveManagement );
+    super( hiveName, storeType, null );
   }
 
   @Override

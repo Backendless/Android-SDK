@@ -3,11 +3,11 @@ package com.backendless.hive;
 import java.util.concurrent.CompletableFuture;
 
 
-public class HiveGeneralForComplexStore extends HiveGeneral
+abstract class HiveGeneralForComplexStore extends HiveGeneral
 {
-  public HiveGeneralForComplexStore( String hiveName, StoreType storeType, String storeKey, HiveManagement hiveManagement )
+  HiveGeneralForComplexStore( String hiveName, StoreType storeType, String storeKey )
   {
-    super( hiveName, storeType, storeKey, hiveManagement );
+    super( hiveName, storeType, storeKey );
   }
 
   @Override

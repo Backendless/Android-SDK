@@ -5,8 +5,10 @@ import com.backendless.utils.WeborbSerializationHelper;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 final class HiveSerializer
@@ -16,9 +18,9 @@ final class HiveSerializer
     return new String( WeborbSerializationHelper.serialize( obj ), StandardCharsets.UTF_8 );
   }
 
-  static Object deserialize( String jsonString )
+  static <T> T deserialize( String jsonString )
   {
-    return WeborbSerializationHelper.deserialize( jsonString.getBytes( StandardCharsets.UTF_8 ) );
+    return (T) WeborbSerializationHelper.deserialize( jsonString.getBytes( StandardCharsets.UTF_8 ) );
   }
 
   static Map<String, String> serializeAsMap( Map<String, ?> mapOfObjects )
@@ -36,9 +38,9 @@ final class HiveSerializer
     return result;
   }
 
-  static Map<String, Object> deserialize( Map<String, String> mapOfJsonStrings )
+  static <T> Map<String, T> deserialize( Map<String, String> mapOfJsonStrings )
   {
-    HashMap<String, Object> result = new HashMap<>();
+    HashMap<String, T> result = new HashMap<>();
 
     for( Map.Entry<String, String> entry : mapOfJsonStrings.entrySet() )
       result.put( entry.getKey(), deserialize( entry.getValue() ) );
@@ -63,12 +65,23 @@ final class HiveSerializer
     return result;
   }
 
-  static List<Object> deserialize( List<String> listOfJsonStrings )
+  static <T> List<T> deserialize( List<String> listOfJsonStrings )
   {
-    ArrayList<Object> result = new ArrayList<>();
+    ArrayList<T> result = new ArrayList<>();
 
     for( String listOfJsonString : listOfJsonStrings )
       result.add( deserialize( listOfJsonString ) );
 
-    return result;  }
+    return result;
+  }
+
+  static <T> Set<T> deserialize( Set<String> listOfJsonStrings )
+  {
+    Set<T> result = new HashSet<>();
+
+    for( String listOfJsonString : listOfJsonStrings )
+      result.add( deserialize( listOfJsonString ) );
+
+    return result;
+  }
 }
