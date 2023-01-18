@@ -12,9 +12,9 @@ public final class Hive
   private final static WeakHashMap<String, HiveSet<?>> setHives = new WeakHashMap<>();
   private final static WeakHashMap<String, HiveSortedSet<?>> sortedSetHives = new WeakHashMap<>();
   private final static WeakHashMap<String, HiveMap<?>> mapHives = new WeakHashMap<>();
+  private static final HiveManagement hiveManagement = HiveManagement.getInstance();
 
   private final String hiveName;
-  private final HiveManagement hiveManagement;
   private final HiveKeyValue hiveKeyValue;
 
   private final HiveGeneralWithoutStoreKey generalKeyValueOps;
@@ -26,7 +26,6 @@ public final class Hive
   private Hive( String name )
   {
     this.hiveName = name;
-    this.hiveManagement = HiveManagement.getInstance();
     this.generalKeyValueOps = new HiveGeneralWithoutStoreKey( hiveName, StoreType.KeyValue, hiveManagement );
     this.hiveKeyValue = new HiveKeyValue( hiveName, generalKeyValueOps );
     this.generalListOps = new HiveGeneralWithoutStoreKey( hiveName, StoreType.List, hiveManagement );
@@ -48,27 +47,27 @@ public final class Hive
 
   // ----------------------------------------
 
-  public CompletableFuture<Set<String>> getHiveNames()
+  public static CompletableFuture<Set<String>> getHiveNames()
   {
     return hiveManagement.getHiveNames();
   }
 
-  public CompletableFuture<Void> addHive( String name )
+  public static CompletableFuture<Void> addHive( String name )
   {
     return hiveManagement.addHive( name );
   }
 
-  public CompletableFuture<Void> renameHive( String name, String newName )
+  public static CompletableFuture<Void> renameHive( String name, String newName )
   {
     return hiveManagement.renameHive( name, newName );
   }
 
-  public CompletableFuture<Long> deleteHive( String name )
+  public static CompletableFuture<Long> deleteHive( String name )
   {
     return hiveManagement.deleteHive( name );
   }
 
-  public CompletableFuture<Long> deleteAllHives()
+  public static CompletableFuture<Long> deleteAllHives()
   {
     return hiveManagement.deleteAllHives();
   }
