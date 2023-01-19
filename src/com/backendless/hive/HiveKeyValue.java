@@ -1,5 +1,7 @@
 package com.backendless.hive;
 
+import com.backendless.core.responder.AdaptingResponder;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -44,12 +46,12 @@ public final class HiveKeyValue extends HiveGeneralForKeyValue
 
   public CompletableFuture<Long> incrementBy( String key, int amount )
   {
-    return makeRemoteCall( "incrementBy", key, amount );
+    return makeRemoteCall( "incrementBy", new AdaptingResponder<>( Long.class ), key, amount );
   }
 
   public CompletableFuture<Long> decrementBy( String key, int amount )
   {
-    return makeRemoteCall( "decrementBy", key, amount );
+    return makeRemoteCall( "decrementBy", new AdaptingResponder<>( Long.class ), key, amount );
   }
 
   // ----------------------------------------
@@ -79,5 +81,10 @@ public final class HiveKeyValue extends HiveGeneralForKeyValue
   private <T> CompletableFuture<T> makeRemoteCall( String methodName, Object... args )
   {
     return makeRemoteCallWithoutStoreKey( HIVE_KEY_VALUE_ALIAS, methodName, args );
+  }
+
+  private <T> CompletableFuture<T> makeRemoteCall( String methodName, AdaptingResponder<T> adaptingResponder, Object... args )
+  {
+    return makeRemoteCallWithoutStoreKey( HIVE_KEY_VALUE_ALIAS, methodName, adaptingResponder, args );
   }
 }

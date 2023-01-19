@@ -52,6 +52,7 @@ public class AdaptingResponder<E> implements IRawResponder
   public AdaptingResponder( Class<E> clazz )
   {
     this.clazz = clazz;
+    this.adaptingPolicy = new PoJoAdaptingPolicy<>();
   }
 
   public AdaptingResponder( Class<E> clazz, IAdaptingPolicy<E> adaptingPolicy )

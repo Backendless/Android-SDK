@@ -1,5 +1,7 @@
 package com.backendless.hive;
 
+import com.backendless.core.responder.AdaptingResponder;
+
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -31,7 +33,7 @@ public final class HiveList<T> extends HiveGeneralForComplexStore
 
   public CompletableFuture<Long> set( List<T> values )
   {
-    return makeRemoteCall( "set", HiveSerializer.serializeAsList( values ) );
+    return makeRemoteCall( "set", new AdaptingResponder<>( Long.class ), HiveSerializer.serializeAsList( values ) );
   }
 
   public CompletableFuture<Void> set( int index, Object value )
@@ -41,17 +43,17 @@ public final class HiveList<T> extends HiveGeneralForComplexStore
 
   public CompletableFuture<Long> insert( Object targetValue, Object value, boolean before )
   {
-    return makeRemoteCall( "insert", HiveSerializer.serialize( targetValue ), HiveSerializer.serialize( value ), before );
+    return makeRemoteCall( "insert", new AdaptingResponder<>( Long.class ), HiveSerializer.serialize( targetValue ), HiveSerializer.serialize( value ), before );
   }
 
   public CompletableFuture<Long> addFirst( List<T> values )
   {
-    return makeRemoteCall( "addFirst", HiveSerializer.serializeAsList( values ) );
+    return makeRemoteCall( "addFirst", new AdaptingResponder<>( Long.class ), HiveSerializer.serializeAsList( values ) );
   }
 
   public CompletableFuture<Long> addLast( List<T> values )
   {
-    return makeRemoteCall( "addLast", HiveSerializer.serializeAsList( values ) );
+    return makeRemoteCall( "addLast", new AdaptingResponder<>( Long.class ), HiveSerializer.serializeAsList( values ) );
   }
 
   public CompletableFuture<T> removeAndReturnFirst()
@@ -76,12 +78,12 @@ public final class HiveList<T> extends HiveGeneralForComplexStore
 
   public CompletableFuture<Long> removeValue( T value, int count )
   {
-    return makeRemoteCall( "removeValue", HiveSerializer.serialize( value ), count );
+    return makeRemoteCall( "removeValue", new AdaptingResponder<>( Long.class ), HiveSerializer.serialize( value ), count );
   }
 
   public CompletableFuture<Long> length()
   {
-    return makeRemoteCall( "length" );
+    return makeRemoteCall( "length", new AdaptingResponder<>( Long.class ) );
   }
 
   // ----------------------------------------
@@ -89,5 +91,10 @@ public final class HiveList<T> extends HiveGeneralForComplexStore
   private <T> CompletableFuture<T> makeRemoteCall( String methodName, Object... args )
   {
     return makeRemoteCallWithStoreKey( HIVE_LIST_ALIAS, methodName, args );
+  }
+
+  private <T> CompletableFuture<T> makeRemoteCall( String methodName, AdaptingResponder<T> adaptingResponder, Object... args )
+  {
+    return makeRemoteCallWithStoreKey( HIVE_LIST_ALIAS, methodName, adaptingResponder, args );
   }
 }

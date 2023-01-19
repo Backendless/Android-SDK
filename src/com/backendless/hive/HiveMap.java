@@ -1,5 +1,7 @@
 package com.backendless.hive;
 
+import com.backendless.core.responder.AdaptingResponder;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -42,7 +44,7 @@ public final class HiveMap<T> extends HiveGeneralForComplexStore
 
   public CompletableFuture<Long> set( Map<String, T> values )
   {
-    return makeRemoteCall( "set", HiveSerializer.serialize( values ) );
+    return makeRemoteCall( "set", new AdaptingResponder<>( Long.class ), HiveSerializer.serialize( values ) );
   }
 
   public CompletableFuture<Boolean> set( String objKey, String value )
@@ -57,7 +59,7 @@ public final class HiveMap<T> extends HiveGeneralForComplexStore
 
   public CompletableFuture<Long> incrementBy( String objKey, Integer value )
   {
-    return makeRemoteCall( "incrementBy", objKey, value );
+    return makeRemoteCall( "incrementBy", new AdaptingResponder<>( Long.class ), objKey, value );
   }
 
   public CompletableFuture<Boolean> exists( String objKey )
@@ -67,12 +69,12 @@ public final class HiveMap<T> extends HiveGeneralForComplexStore
 
   public CompletableFuture<Long> length()
   {
-    return makeRemoteCall( "length" );
+    return makeRemoteCall( "length", new AdaptingResponder<>( Long.class ) );
   }
 
   public CompletableFuture<Long> del( List<String> objKeys )
   {
-    return makeRemoteCall( "del", objKeys );
+    return makeRemoteCall( "del", new AdaptingResponder<>( Long.class ), objKeys );
   }
 
   // ----------------------------------------
@@ -80,5 +82,10 @@ public final class HiveMap<T> extends HiveGeneralForComplexStore
   private <T> CompletableFuture<T> makeRemoteCall( String methodName, Object... args )
   {
     return makeRemoteCallWithStoreKey( HIVE_MAP_ALIAS, methodName, args );
+  }
+
+  private <T> CompletableFuture<T> makeRemoteCall( String methodName, AdaptingResponder<T> adaptingResponder, Object... args )
+  {
+    return makeRemoteCallWithStoreKey( HIVE_MAP_ALIAS, methodName, adaptingResponder, args );
   }
 }
