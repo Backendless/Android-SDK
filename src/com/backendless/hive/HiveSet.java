@@ -1,5 +1,7 @@
 package com.backendless.hive;
 
+import com.backendless.core.responder.AdaptingResponder;
+
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -42,17 +44,17 @@ public final class HiveSet<T> extends HiveGeneralForComplexStore
 
   public CompletableFuture<Long> size()
   {
-    return this.makeRemoteCall( "size" );
+    return this.makeRemoteCall( "size", new AdaptingResponder<>( Long.class ) );
   }
 
   public CompletableFuture<Long> add( List<T> values )
   {
-    return makeRemoteCall( "add", HiveSerializer.serialize( values ) );
+    return makeRemoteCall( "add", new AdaptingResponder<>( Long.class ), HiveSerializer.serialize( values ) );
   }
 
   public CompletableFuture<Long> del( List<String> values )
   {
-    return this.makeRemoteCall( "del", values );
+    return this.makeRemoteCall( "del", new AdaptingResponder<>( Long.class ), values );
   }
 
   // ----------------------------------------
@@ -60,5 +62,10 @@ public final class HiveSet<T> extends HiveGeneralForComplexStore
   private <T> CompletableFuture<T> makeRemoteCall( String methodName, Object... args )
   {
     return makeRemoteCallWithStoreKey( HIVE_SET_ALIAS, methodName, args );
+  }
+
+  private <T> CompletableFuture<T> makeRemoteCall( String methodName, AdaptingResponder<T> adaptingResponder, Object... args )
+  {
+    return makeRemoteCallWithStoreKey( HIVE_SET_ALIAS, methodName, adaptingResponder, args );
   }
 }

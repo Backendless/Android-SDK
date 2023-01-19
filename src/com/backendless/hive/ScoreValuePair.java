@@ -25,6 +25,18 @@ public class ScoreValuePair<T>
     this.value = value;
   }
 
+  public static <T> List<ScoreValuePair<T>> from( Object[] arrayItems )
+  {
+    if( arrayItems.length % 2 != 0 )
+      throw new IllegalArgumentException( "Wrong length of incoming array for ScoreValuePair. It should contain even numbers of elements." );
+
+    List<ScoreValuePair<T>> items = new ArrayList<>();
+    for( int i = 0; i < arrayItems.length; i += 2 )
+      items.add( new ScoreValuePair<>( ((Number) arrayItems[ i ]).doubleValue(), (T) arrayItems[ i + 1 ] ) );
+
+    return items;
+  }
+
   static <T> Object[] toObjectArray( List<ScoreValuePair<T>> items )
   {
     Object[] arrayItems = new Object[ items.size() * 2 ];
@@ -44,7 +56,7 @@ public class ScoreValuePair<T>
 
     List<ScoreValuePair<T>> items = new ArrayList<>();
     for( int i = 0; i < arrayItems.length; i += 2 )
-      items.add( new ScoreValuePair( (double) arrayItems[ i ], HiveSerializer.deserialize( (String) arrayItems[ i + 1 ] ) ) );
+      items.add( new ScoreValuePair<>( ((Number) arrayItems[ i ]).doubleValue(), HiveSerializer.deserialize( (String) arrayItems[ i + 1 ] ) ) );
 
     return items;
   }

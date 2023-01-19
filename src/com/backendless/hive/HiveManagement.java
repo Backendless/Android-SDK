@@ -2,6 +2,7 @@ package com.backendless.hive;
 
 import com.backendless.Invoker;
 import com.backendless.async.callback.BackendlessCallback;
+import com.backendless.core.responder.AdaptingResponder;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -37,20 +38,26 @@ public final class HiveManagement
 
   public CompletableFuture<Long> deleteHive( String name )
   {
-    return makeRemoteCall( "deleteHive", name );
+    return makeRemoteCall( "deleteHive", new AdaptingResponder<>( Long.class ), name );
   }
 
   public CompletableFuture<Long> deleteAllHives()
   {
-    return makeRemoteCall( "deleteAllHives" );
+    return makeRemoteCall( "deleteAllHives", new AdaptingResponder<>( Long.class ) );
   }
 
-  public CompletableFuture<ScanResult> retrieveHiveKeys( String name, StoreType storeType, String filterPattern, String cursor, int pageSize )
+  public CompletableFuture<ScanResult> retrieveHiveKeys( String name, StoreType storeType, String filterPattern, String cursor,
+                                                         int pageSize )
   {
     return makeRemoteCall( "retrieveHiveKeys", name, storeType, filterPattern, cursor, pageSize );
   }
 
   private <T> CompletableFuture<T> makeRemoteCall( String methodName, Object... args )
+  {
+    return makeRemoteCall( methodName, null, args );
+  }
+
+  private <T> CompletableFuture<T> makeRemoteCall( String methodName, AdaptingResponder<T> adaptingResponder, Object... args )
   {
     CompletableFuture<T> futureResult = new CompletableFuture<>();
     Invoker.invokeAsync( HIVE_SERVICE_ALIAS, methodName, args, new BackendlessCallback<T>()
@@ -60,7 +67,7 @@ public final class HiveManagement
       {
         futureResult.complete( response );
       }
-    } );
+    }, adaptingResponder );
     return futureResult;
   }
 }

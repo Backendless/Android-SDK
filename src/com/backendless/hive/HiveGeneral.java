@@ -2,6 +2,7 @@ package com.backendless.hive;
 
 import com.backendless.Invoker;
 import com.backendless.async.callback.BackendlessCallback;
+import com.backendless.core.responder.AdaptingResponder;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -22,12 +23,12 @@ abstract class HiveGeneral
 
   protected CompletableFuture<Long> del()
   {
-    return makeRemoteCallForGeneral( "del" );
+    return makeRemoteCallForGeneral( "del", new AdaptingResponder<>( Long.class ) );
   }
 
   protected CompletableFuture<Long> del( String key )
   {
-    return makeRemoteCallForGeneral( "del", key );
+    return makeRemoteCallForGeneral( "del", new AdaptingResponder<>( Long.class ), key );
   }
 
   protected CompletableFuture<Void> rename( String newKey )
@@ -72,12 +73,12 @@ abstract class HiveGeneral
 
   protected CompletableFuture<Long> getExpirationTTL()
   {
-    return makeRemoteCallForGeneral( "getExpirationTTL" );
+    return makeRemoteCallForGeneral( "getExpirationTTL", new AdaptingResponder<>( Long.class ) );
   }
 
   protected CompletableFuture<Long> getExpirationTTL( String key )
   {
-    return makeRemoteCallForGeneral( "getExpirationTTL", key );
+    return makeRemoteCallForGeneral( "getExpirationTTL", new AdaptingResponder<>( Long.class ), key );
   }
 
   protected CompletableFuture<Void> clearExpiration()
@@ -92,17 +93,22 @@ abstract class HiveGeneral
 
   protected CompletableFuture<Long> secondsSinceLastOperation()
   {
-    return makeRemoteCallForGeneral( "secondsSinceLastOperation" );
+    return makeRemoteCallForGeneral( "secondsSinceLastOperation", new AdaptingResponder<>( Long.class ) );
   }
 
   protected CompletableFuture<Long> secondsSinceLastOperation( String key )
   {
-    return makeRemoteCallForGeneral( "secondsSinceLastOperation", key );
+    return makeRemoteCallForGeneral( "secondsSinceLastOperation", new AdaptingResponder<>( Long.class ), key );
   }
 
   // ----------------------------------------
 
-  protected  <T> CompletableFuture<T> makeRemoteCallForGeneral( String methodName, Object... args )
+  protected <T> CompletableFuture<T> makeRemoteCallForGeneral( String methodName, Object... args )
+  {
+    return makeRemoteCallForGeneral( methodName, null, args );
+  }
+
+  protected <T> CompletableFuture<T> makeRemoteCallForGeneral( String methodName, AdaptingResponder<T> adaptingResponder, Object... args )
   {
     final Object[] combinedArgs;
     final int dstPos;
@@ -123,29 +129,38 @@ abstract class HiveGeneral
     }
 
     System.arraycopy( args, 0, combinedArgs, dstPos, args.length );
-    return makeRemoteCall( HIVE_GENERAL_KEY_ALIAS, methodName, combinedArgs );
+    return makeRemoteCall( HIVE_GENERAL_KEY_ALIAS, methodName, adaptingResponder, combinedArgs );
   }
 
   protected <T> CompletableFuture<T> makeRemoteCallWithoutStoreKey( String remoteServiceName, String methodName, Object[] args )
   {
+    return makeRemoteCallWithoutStoreKey( remoteServiceName, methodName, null, args );
+  }
+
+  protected <T> CompletableFuture<T> makeRemoteCallWithoutStoreKey( String remoteServiceName, String methodName, AdaptingResponder<T> adaptingResponder, Object[] args )
+  {
     final Object[] combinedArgs = new Object[ 1 + args.length ];
     combinedArgs[ 0 ] = hiveName;
     System.arraycopy( args, 0, combinedArgs, 1, args.length );
-
-    return makeRemoteCall(remoteServiceName, methodName, combinedArgs);
+    return makeRemoteCall( remoteServiceName, methodName, adaptingResponder, combinedArgs );
   }
 
   protected <T> CompletableFuture<T> makeRemoteCallWithStoreKey( String remoteServiceName, String methodName, Object[] args )
+  {
+    return makeRemoteCallWithStoreKey( remoteServiceName, methodName, null, args );
+  }
+
+  protected <T> CompletableFuture<T> makeRemoteCallWithStoreKey( String remoteServiceName, String methodName, AdaptingResponder<T> adaptingResponder, Object[] args )
   {
     final Object[] combinedArgs = new Object[ 2 + args.length ];
     combinedArgs[ 0 ] = hiveName;
     combinedArgs[ 1 ] = storeKey;
     System.arraycopy( args, 0, combinedArgs, 2, args.length );
 
-    return makeRemoteCall(remoteServiceName, methodName, combinedArgs);
+    return makeRemoteCall( remoteServiceName, methodName, adaptingResponder, combinedArgs );
   }
 
-  private <T> CompletableFuture<T> makeRemoteCall( String remoteServiceName, String methodName, Object[] args )
+  private <T> CompletableFuture<T> makeRemoteCall( String remoteServiceName, String methodName, AdaptingResponder<T> adaptingResponder, Object[] args )
   {
     CompletableFuture<T> futureResult = new CompletableFuture<>();
     Invoker.invokeAsync( remoteServiceName, methodName, args, new BackendlessCallback<T>()
@@ -155,7 +170,7 @@ abstract class HiveGeneral
       {
         futureResult.complete( response );
       }
-    } );
+    }, adaptingResponder );
     return futureResult;
   }
 }
