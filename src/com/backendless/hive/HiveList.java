@@ -47,7 +47,7 @@ public final class HiveList<T> extends HiveGeneralForComplexStore
     return insert( targetValue, value, true );
   }
 
-  public CompletableFuture<Long> insertAfter( Object targetValue, Object value, boolean before )
+  public CompletableFuture<Long> insertAfter( Object targetValue, Object value )
   {
     return insert( targetValue, value, false );
   }

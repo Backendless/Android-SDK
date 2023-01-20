@@ -81,12 +81,12 @@ public final class HiveKeyValue extends HiveGeneralForKeyValue
 
   public CompletableFuture<Boolean> set( String key, Object value, int expirationSeconds, Expiration expirationType )
   {
-    return makeRemoteCall( "set", key, HiveSerializer.serialize( value ), expirationSeconds, expirationType, Condition.Always );
+    return set( key, value, expirationSeconds, expirationType, Condition.Always );
   }
 
   public CompletableFuture<Boolean> set( String key, Object value, Condition condition )
   {
-    return makeRemoteCall( "set", key, HiveSerializer.serialize( value ), 0, Expiration.None, condition );
+    return set( key, value, 0, Expiration.None, condition );
   }
 
   public CompletableFuture<Boolean> set( String key, Object value, int expirationSeconds, Expiration expirationType, Condition condition )
@@ -96,7 +96,7 @@ public final class HiveKeyValue extends HiveGeneralForKeyValue
 
   public CompletableFuture<Boolean> set( String key, Object value, Options options )
   {
-    return makeRemoteCall( "set", key, HiveSerializer.serialize( value ), options.expirationSeconds, options.expiration, options.condition );
+    return set( key, value, options.expirationSeconds, options.expiration, options.condition );
   }
 
   public CompletableFuture<Void> multiSet( Map<String, ?> keyValues )
