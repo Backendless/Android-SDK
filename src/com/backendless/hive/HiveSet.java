@@ -2,6 +2,7 @@ package com.backendless.hive;
 
 import com.backendless.core.responder.AdaptingResponder;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -32,19 +33,24 @@ public final class HiveSet<T> extends HiveGeneralForComplexStore
     return this.<Set<String>>makeRemoteCall( "getRandomAndDel", count ).thenApply( HiveSerializer::deserialize );
   }
 
-  public CompletableFuture<Boolean> contains( T value )
+  public CompletableFuture<Boolean> isValueMember( T value )
   {
     return makeRemoteCall( "contains", HiveSerializer.serialize( value ) );
   }
 
-  public CompletableFuture<List<Boolean>> contains( List<T> values )
+  public CompletableFuture<List<Boolean>> isValueMember( List<T> values )
   {
     return makeRemoteCall( "contains", HiveSerializer.serialize( values ) );
   }
 
-  public CompletableFuture<Long> size()
+  public CompletableFuture<Long> length()
   {
     return this.makeRemoteCall( "size", new AdaptingResponder<>( Long.class ) );
+  }
+
+  public CompletableFuture<Long> add( T value )
+  {
+    return add( Collections.singletonList( value ) );
   }
 
   public CompletableFuture<Long> add( List<T> values )
@@ -52,7 +58,7 @@ public final class HiveSet<T> extends HiveGeneralForComplexStore
     return makeRemoteCall( "add", new AdaptingResponder<>( Long.class ), HiveSerializer.serialize( values ) );
   }
 
-  public CompletableFuture<Long> del( List<String> values )
+  public CompletableFuture<Long> delete( List<String> values )
   {
     return this.makeRemoteCall( "del", new AdaptingResponder<>( Long.class ), values );
   }

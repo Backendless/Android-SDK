@@ -21,43 +21,43 @@ public final class HiveKeyValue extends HiveGeneralForKeyValue
     this.generalOps = generalOps;
   }
 
-  public static final class KeyOptions
+  public static final class Options
   {
     private int expirationSeconds = 0;
     private Expiration expiration = Expiration.None;
     private Condition condition = Condition.Always;
 
-    private KeyOptions()
+    private Options()
     {
     }
 
-    public static KeyOptions create()
+    public static Options create()
     {
-      return new KeyOptions();
+      return new Options();
     }
 
-    public KeyOptions expireAt( LocalDateTime localDateTime )
+    public Options expireAt( LocalDateTime localDateTime )
     {
       this.expiration = Expiration.UnixTimestamp;
       this.expirationSeconds = (int) localDateTime.toEpochSecond( ZoneOffset.UTC );
       return this;
     }
 
-    public KeyOptions expireAt( int timeStampInSeconds )
+    public Options expireAt( int timeStampInSeconds )
     {
       this.expiration = Expiration.UnixTimestamp;
       this.expirationSeconds = timeStampInSeconds;
       return this;
     }
 
-    public KeyOptions expireAfter( int seconds )
+    public Options expireAfter( int seconds )
     {
       this.expiration = Expiration.TTL;
       this.expirationSeconds = seconds;
       return this;
     }
 
-    public KeyOptions condition( Condition condition )
+    public Options condition( Condition condition )
     {
       this.condition = condition;
       return this;
@@ -94,9 +94,9 @@ public final class HiveKeyValue extends HiveGeneralForKeyValue
     return makeRemoteCall( "set", key, HiveSerializer.serialize( value ), expirationSeconds, expirationType, condition );
   }
 
-  public CompletableFuture<Boolean> set( String key, Object value, KeyOptions keyOptions )
+  public CompletableFuture<Boolean> set( String key, Object value, Options options )
   {
-    return makeRemoteCall( "set", key, HiveSerializer.serialize( value ), keyOptions.expirationSeconds, keyOptions.expiration, keyOptions.condition );
+    return makeRemoteCall( "set", key, HiveSerializer.serialize( value ), options.expirationSeconds, options.expiration, options.condition );
   }
 
   public CompletableFuture<Void> multiSet( Map<String, ?> keyValues )
