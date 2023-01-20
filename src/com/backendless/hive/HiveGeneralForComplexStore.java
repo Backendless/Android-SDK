@@ -11,27 +11,21 @@ abstract class HiveGeneralForComplexStore extends HiveGeneral
   }
 
   @Override
-  public CompletableFuture<Long> del()
+  public CompletableFuture<Long> delete()
   {
-    return super.del();
+    return super.delete();
   }
 
   @Override
-  public CompletableFuture<Void> rename( String newKey )
+  public CompletableFuture<Boolean> rename( String newKey, boolean overwrite )
   {
-    return super.rename( newKey );
+    return super.rename( newKey, overwrite );
   }
 
   @Override
-  public CompletableFuture<Boolean> renameIfNotExists( String newKey )
+  public CompletableFuture<Void> expireAfter( Integer ttlSeconds )
   {
-    return super.renameIfNotExists( newKey );
-  }
-
-  @Override
-  public CompletableFuture<Void> expire( Integer ttlSeconds )
-  {
-    return super.expire( ttlSeconds );
+    return super.expireAfter( ttlSeconds );
   }
 
   @Override
@@ -41,9 +35,9 @@ abstract class HiveGeneralForComplexStore extends HiveGeneral
   }
 
   @Override
-  public CompletableFuture<Long> getExpirationTTL()
+  public CompletableFuture<Long> getExpiration()
   {
-    return super.getExpirationTTL();
+    return super.getExpiration();
   }
 
   @Override

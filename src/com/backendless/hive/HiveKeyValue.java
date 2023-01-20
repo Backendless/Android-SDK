@@ -2,6 +2,8 @@ package com.backendless.hive;
 
 import com.backendless.core.responder.AdaptingResponder;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,6 +21,49 @@ public final class HiveKeyValue extends HiveGeneralForKeyValue
     this.generalOps = generalOps;
   }
 
+  public static final class KeyOptions
+  {
+    private int expirationSeconds = 0;
+    private Expiration expiration = Expiration.None;
+    private Condition condition = Condition.Always;
+
+    private KeyOptions()
+    {
+    }
+
+    public static KeyOptions create()
+    {
+      return new KeyOptions();
+    }
+
+    public KeyOptions expireAt( LocalDateTime localDateTime )
+    {
+      this.expiration = Expiration.UnixTimestamp;
+      this.expirationSeconds = (int) localDateTime.toEpochSecond( ZoneOffset.UTC );
+      return this;
+    }
+
+    public KeyOptions expireAt( int timeStampInSeconds )
+    {
+      this.expiration = Expiration.UnixTimestamp;
+      this.expirationSeconds = timeStampInSeconds;
+      return this;
+    }
+
+    public KeyOptions expireAfter( int seconds )
+    {
+      this.expiration = Expiration.TTL;
+      this.expirationSeconds = seconds;
+      return this;
+    }
+
+    public KeyOptions condition( Condition condition )
+    {
+      this.condition = condition;
+      return this;
+    }
+  }
+
   public <T> CompletableFuture<T> get( String key )
   {
     return this.<String>makeRemoteCall( "get", key ).thenApply( HiveSerializer::deserialize );
@@ -34,9 +79,24 @@ public final class HiveKeyValue extends HiveGeneralForKeyValue
     return makeRemoteCall( "set", key, HiveSerializer.serialize( value ) );
   }
 
-  public CompletableFuture<Boolean> set( String key, Object value, int expirationSeconds, Expiration expiration, Condition condition )
+  public CompletableFuture<Boolean> set( String key, Object value, int expirationSeconds, Expiration expirationType )
   {
-    return makeRemoteCall( "set", key, HiveSerializer.serialize( value ), expirationSeconds, expiration, condition );
+    return makeRemoteCall( "set", key, HiveSerializer.serialize( value ), expirationSeconds, expirationType, Condition.Always );
+  }
+
+  public CompletableFuture<Boolean> set( String key, Object value, Condition condition )
+  {
+    return makeRemoteCall( "set", key, HiveSerializer.serialize( value ), 0, Expiration.None, condition );
+  }
+
+  public CompletableFuture<Boolean> set( String key, Object value, int expirationSeconds, Expiration expirationType, Condition condition )
+  {
+    return makeRemoteCall( "set", key, HiveSerializer.serialize( value ), expirationSeconds, expirationType, condition );
+  }
+
+  public CompletableFuture<Boolean> set( String key, Object value, KeyOptions keyOptions )
+  {
+    return makeRemoteCall( "set", key, HiveSerializer.serialize( value ), keyOptions.expirationSeconds, keyOptions.expiration, keyOptions.condition );
   }
 
   public CompletableFuture<Void> multiSet( Map<String, ?> keyValues )
@@ -44,21 +104,21 @@ public final class HiveKeyValue extends HiveGeneralForKeyValue
     return makeRemoteCall( "multiSet", HiveSerializer.serializeAsMap( keyValues ) );
   }
 
-  public CompletableFuture<Long> incrementBy( String key, int amount )
+  public CompletableFuture<Long> increment( String key, int amount )
   {
     return makeRemoteCall( "incrementBy", new AdaptingResponder<>( Long.class ), key, amount );
   }
 
-  public CompletableFuture<Long> decrementBy( String key, int amount )
+  public CompletableFuture<Long> decrement( String key, int amount )
   {
     return makeRemoteCall( "decrementBy", new AdaptingResponder<>( Long.class ), key, amount );
   }
 
   // ----------------------------------------
 
-  public CompletableFuture<Long> del( List<String> keys )
+  public CompletableFuture<Long> delete( List<String> keys )
   {
-    return generalOps.del( keys );
+    return generalOps.delete( keys );
   }
 
   public CompletableFuture<Long> exists( List<String> keys )
@@ -71,9 +131,9 @@ public final class HiveKeyValue extends HiveGeneralForKeyValue
     return generalOps.touch( keys );
   }
 
-  public CompletableFuture<ScanResult> retrieveHiveKeys( String filterPattern, String cursor, int pageSize )
+  public CompletableFuture<ScanResult> keys( String filterPattern, String cursor, int pageSize )
   {
-    return generalOps.retrieveHiveKeys( filterPattern, cursor, pageSize );
+    return generalOps.keys( filterPattern, cursor, pageSize );
   }
 
   // ----------------------------------------

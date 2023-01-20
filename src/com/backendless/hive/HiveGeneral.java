@@ -21,42 +21,38 @@ abstract class HiveGeneral
     this.storeKey = storeKey;
   }
 
-  protected CompletableFuture<Long> del()
+  protected CompletableFuture<Long> delete()
   {
     return makeRemoteCallForGeneral( "del", new AdaptingResponder<>( Long.class ) );
   }
 
-  protected CompletableFuture<Long> del( String key )
+  protected CompletableFuture<Long> delete( String key )
   {
     return makeRemoteCallForGeneral( "del", new AdaptingResponder<>( Long.class ), key );
   }
 
-  protected CompletableFuture<Void> rename( String newKey )
+  protected CompletableFuture<Boolean> rename( String newKey, boolean overwrite )
   {
-    return makeRemoteCallForGeneral( "rename", newKey );
+    if (overwrite)
+      return makeRemoteCallForGeneral( "rename", newKey ).thenApply( voidNull -> true );
+    else
+      return makeRemoteCallForGeneral( "renameIfNotExists", newKey );
   }
 
-  protected CompletableFuture<Void> rename( String key, String newKey )
+  protected CompletableFuture<Boolean> rename( String key, String newKey, boolean overwrite )
   {
-    return makeRemoteCallForGeneral( "rename", key, newKey );
+    if (overwrite)
+      return makeRemoteCallForGeneral( "rename", key, newKey ).thenApply( voidNull -> true );
+    else
+      return makeRemoteCallForGeneral( "renameIfNotExists", key, newKey );
   }
 
-  protected CompletableFuture<Boolean> renameIfNotExists( String newKey )
-  {
-    return makeRemoteCallForGeneral( "renameIfNotExists", newKey );
-  }
-
-  protected CompletableFuture<Boolean> renameIfNotExists( String key, String newKey )
-  {
-    return makeRemoteCallForGeneral( "renameIfNotExists", key, newKey );
-  }
-
-  protected CompletableFuture<Void> expire( Integer ttlSeconds )
+  protected CompletableFuture<Void> expireAfter( Integer ttlSeconds )
   {
     return makeRemoteCallForGeneral( "expire", ttlSeconds );
   }
 
-  protected CompletableFuture<Void> expire( String key, Integer ttlSeconds )
+  protected CompletableFuture<Void> expireAfter( String key, Integer ttlSeconds )
   {
     return makeRemoteCallForGeneral( "expire", key, ttlSeconds );
   }
@@ -71,12 +67,12 @@ abstract class HiveGeneral
     return makeRemoteCallForGeneral( "expireAt", key, unixTimeSeconds );
   }
 
-  protected CompletableFuture<Long> getExpirationTTL()
+  protected CompletableFuture<Long> getExpiration()
   {
     return makeRemoteCallForGeneral( "getExpirationTTL", new AdaptingResponder<>( Long.class ) );
   }
 
-  protected CompletableFuture<Long> getExpirationTTL( String key )
+  protected CompletableFuture<Long> getExpiration( String key )
   {
     return makeRemoteCallForGeneral( "getExpirationTTL", new AdaptingResponder<>( Long.class ), key );
   }

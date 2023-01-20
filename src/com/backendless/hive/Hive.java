@@ -47,29 +47,29 @@ public final class Hive
 
   // ----------------------------------------
 
-  public static CompletableFuture<Set<String>> getHiveNames()
+  public static CompletableFuture<Set<String>> getNames()
   {
-    return hiveManagement.getHiveNames();
+    return hiveManagement.getNames();
   }
 
-  public static CompletableFuture<Void> addHive( String name )
+  public static CompletableFuture<Void> create( String name )
   {
-    return hiveManagement.addHive( name );
+    return hiveManagement.create( name );
   }
 
-  public static CompletableFuture<Void> renameHive( String name, String newName )
+  public static CompletableFuture<Void> rename( String name, String newName )
   {
-    return hiveManagement.renameHive( name, newName );
+    return hiveManagement.rename( name, newName );
   }
 
-  public static CompletableFuture<Long> deleteHive( String name )
+  public static CompletableFuture<Long> delete( String name )
   {
-    return hiveManagement.deleteHive( name );
+    return hiveManagement.delete( name );
   }
 
-  public static CompletableFuture<Long> deleteAllHives()
+  public static CompletableFuture<Long> deleteAll()
   {
-    return hiveManagement.deleteAllHives();
+    return hiveManagement.deleteAll();
   }
 
   // ----------------------------------------
