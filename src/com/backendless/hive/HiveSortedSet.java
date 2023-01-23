@@ -16,27 +16,64 @@ public final class HiveSortedSet<T> extends HiveGeneralForComplexStore
   }
 
 
+  public static final class ScoreRangeOptions
+  {
+    private double minScore;
+    private ValueBound minBound;
+    private double maxScore;
+    private ValueBound maxBound;
+
+    public ScoreRangeOptions setMinScore( double minScore )
+    {
+      this.minScore = minScore;
+      return this;
+    }
+
+    public ScoreRangeOptions setMinBound( ValueBound minBound )
+    {
+      this.minBound = minBound;
+      return this;
+    }
+
+    public ScoreRangeOptions setMaxScore( double maxScore )
+    {
+      this.maxScore = maxScore;
+      return this;
+    }
+
+    public ScoreRangeOptions setMaxBound( ValueBound maxBound )
+    {
+      this.maxBound = maxBound;
+      return this;
+    }
+  }
+
+  public CompletableFuture<Long> add( List<ScoreValuePair<T>> items )
+  {
+    return add( items, null, null, null );
+  }
+
   public CompletableFuture<Long> add( List<ScoreValuePair<T>> items, DuplicateBehaviour duplicateBehaviour, ScoreUpdateMode scoreUpdateMode, ResultType resultType )
   {
     return makeRemoteCall( "add", new AdaptingResponder<>( Long.class ), ScoreValuePair.toObjectArray( items ), duplicateBehaviour, scoreUpdateMode, resultType );
   }
 
-  public CompletableFuture<Long> set( List<ScoreValuePair<T>> items, DuplicateBehaviour duplicateBehaviour, ScoreUpdateMode scoreUpdateMode, ResultType resultType )
-  {
-    return makeRemoteCall( "set", new AdaptingResponder<>( Long.class ), ScoreValuePair.toObjectArray( items ), duplicateBehaviour, scoreUpdateMode, resultType );
-  }
-
-  public CompletableFuture<Double> increment( double scoreAmount, String member )
+  public CompletableFuture<Double> incrementScore( double scoreAmount, String member )
   {
     return makeRemoteCall( "increment", scoreAmount, member );
   }
 
-  public CompletableFuture<List<ScoreValuePair<T>>> getAndRemoveMax( int count )
+  public CompletableFuture<Double> decrementScore( double scoreAmount, String member )
+  {
+    return incrementScore( -scoreAmount, member );
+  }
+
+  public CompletableFuture<List<ScoreValuePair<T>>> getAndDeleteMaxScore( int count )
   {
     return makeRemoteCall( "getAndRemoveMax", count );
   }
 
-  public CompletableFuture<List<ScoreValuePair<T>>> getAndRemoveMin( int count )
+  public CompletableFuture<List<ScoreValuePair<T>>> getAndDeleteMinScore( int count )
   {
     return makeRemoteCall( "getAndRemoveMin", count );
   }
@@ -56,77 +93,131 @@ public final class HiveSortedSet<T> extends HiveGeneralForComplexStore
     return makeRemoteCall( "getScore", member );
   }
 
-  public CompletableFuture<Long> getRank( String member )
+  public CompletableFuture<Long> getRank( String member, boolean reverse )
+  {
+    if( reverse )
+      return getReverseRank( member );
+    else
+      return getRank( member );
+  }
+
+  private CompletableFuture<Long> getRank( String member )
   {
     return makeRemoteCall( "getRank", new AdaptingResponder<>( Long.class ), member );
   }
 
-  public CompletableFuture<Long> getReverseRank( String member )
+  private CompletableFuture<Long> getReverseRank( String member )
   {
     return makeRemoteCall( "getReverseRank", new AdaptingResponder<>( Long.class ), member );
   }
 
-  public CompletableFuture<List<String>> getRangeByRank( long startRank, long stopRank )
+  public CompletableFuture<List<String>> getRangeByRank( long startRank, long stopRank, boolean reverse )
+  {
+    if( reverse )
+      return getReverseRangeByRank( startRank, stopRank );
+    else
+      return getRangeByRank( startRank, stopRank );
+  }
+
+  private CompletableFuture<List<String>> getRangeByRank( long startRank, long stopRank )
   {
     return makeRemoteCall( "getRangeByRank", startRank, stopRank );
   }
 
-  public CompletableFuture<List<ScoreValuePair<T>>> getRangeWithScoresByRank( long startRank, long stopRank )
-  {
-    return makeRemoteCall( "getRangeWithScoresByRank", startRank, stopRank );
-  }
-
-  public CompletableFuture<List<String>> getReverseRangeByRank( long startRank, long stopRank )
+  private CompletableFuture<List<String>> getReverseRangeByRank( long startRank, long stopRank )
   {
     return makeRemoteCall( "getReverseRangeByRank", startRank, stopRank );
   }
 
-  public CompletableFuture<List<ScoreValuePair<T>>> getReverseRangeWithScoresByRank( long startRank, long stopRank )
+  public CompletableFuture<List<ScoreValuePair<T>>> getRangeWithScoresByRank( long startRank, long stopRank, boolean reverse )
+  {
+    if( reverse )
+      return getReverseRangeWithScoresByRank( startRank, stopRank );
+    else
+      return getRangeWithScoresByRank( startRank, stopRank );
+  }
+
+  private CompletableFuture<List<ScoreValuePair<T>>> getRangeWithScoresByRank( long startRank, long stopRank )
+  {
+    return makeRemoteCall( "getRangeWithScoresByRank", startRank, stopRank );
+  }
+
+  private CompletableFuture<List<ScoreValuePair<T>>> getReverseRangeWithScoresByRank( long startRank, long stopRank )
   {
     return makeRemoteCall( "getReverseRangeWithScoresByRank", startRank, stopRank );
   }
 
-  public CompletableFuture<List<String>> getRangeByScore( double minScore, ValueBound minBound, double maxScore, ValueBound maxBound, long offset, long pageSize )
+  public CompletableFuture<List<String>> getRangeByScore( ScoreRangeOptions options, long offset, long pageSize )
+  {
+    return getRangeByScore( options.minScore, options.minBound, options.maxScore, options.maxBound, offset, pageSize );
+  }
+
+  private CompletableFuture<List<String>> getRangeByScore( double minScore, ValueBound minBound, double maxScore, ValueBound maxBound, long offset, long pageSize )
   {
     return makeRemoteCall( "getRangeByScore", minScore, minBound, maxScore, maxBound, offset, pageSize );
   }
 
-  public CompletableFuture<List<ScoreValuePair<T>>> getRangeWithScoresByScore( double minScore, ValueBound minBound, double maxScore, ValueBound maxBound, long offset, long pageSize )
+  public CompletableFuture<List<ScoreValuePair<T>>> getRangeWithScoresByScore( ScoreRangeOptions options, long offset, long pageSize )
+  {
+    return getRangeWithScoresByScore( options.minScore, options.minBound, options.maxScore, options.maxBound, offset, pageSize );
+  }
+
+  private CompletableFuture<List<ScoreValuePair<T>>> getRangeWithScoresByScore( double minScore, ValueBound minBound, double maxScore, ValueBound maxBound, long offset, long pageSize )
   {
     return makeRemoteCall( "getRangeWithScoresByScore", minScore, minBound, maxScore, maxBound, offset, pageSize );
   }
 
-  public CompletableFuture<List<String>> getReverseRangeByScore( double minScore, ValueBound minBound, double maxScore, ValueBound maxBound, long offset, long pageSize )
+  public CompletableFuture<List<String>> getReverseRangeByScore( ScoreRangeOptions options, long offset, long pageSize )
+  {
+    return getReverseRangeByScore( options.minScore, options.minBound, options.maxScore, options.maxBound, offset, pageSize );
+  }
+
+  private CompletableFuture<List<String>> getReverseRangeByScore( double minScore, ValueBound minBound, double maxScore, ValueBound maxBound, long offset, long pageSize )
   {
     return makeRemoteCall( "getReverseRangeByScore", minScore, minBound, maxScore, maxBound, offset, pageSize );
   }
 
-  public CompletableFuture<List<ScoreValuePair<T>>> getReverseRangeWithScoresByScore( double minScore, ValueBound minBound, double maxScore, ValueBound maxBound, long offset, long pageSize )
+  public CompletableFuture<List<ScoreValuePair<T>>> getReverseRangeWithScoresByScore( ScoreRangeOptions options, long offset, long pageSize )
+  {
+    return getReverseRangeWithScoresByScore( options.minScore, options.minBound, options.maxScore, options.maxBound, offset, pageSize );
+  }
+
+  private CompletableFuture<List<ScoreValuePair<T>>> getReverseRangeWithScoresByScore( double minScore, ValueBound minBound, double maxScore, ValueBound maxBound, long offset, long pageSize )
   {
     return makeRemoteCall( "getReverseRangeWithScoresByScore", minScore, minBound, maxScore, maxBound, offset, pageSize );
   }
 
-  public CompletableFuture<Long> remove( List<String> values )
+  public CompletableFuture<Long> delete( List<String> values )
   {
     return makeRemoteCall( "remove", new AdaptingResponder<>( Long.class ), values );
   }
 
-  public CompletableFuture<Long> removeByRank( long startRank, long stopRank )
+  public CompletableFuture<Long> deleteByRank( long startRank, long stopRank )
   {
     return makeRemoteCall( "removeByRank", new AdaptingResponder<>( Long.class ), startRank, stopRank );
   }
 
-  public CompletableFuture<Long> removeByScore( double minScore, ValueBound minBound, double maxScore, ValueBound maxBound )
+  public CompletableFuture<Long> deleteByScore( ScoreRangeOptions options )
+  {
+    return deleteByScore( options.minScore, options.minBound, options.maxScore, options.maxBound );
+  }
+
+  public CompletableFuture<Long> deleteByScore( double minScore, ValueBound minBound, double maxScore, ValueBound maxBound )
   {
     return makeRemoteCall( "removeByScore", new AdaptingResponder<>( Long.class ), minScore, minBound, maxScore, maxBound );
   }
 
-  public CompletableFuture<Long> size( )
+  public CompletableFuture<Long> length( )
   {
     return makeRemoteCall( "size", new AdaptingResponder<>( Long.class ) );
   }
 
-  public CompletableFuture<Long> count( double minScore, ValueBound minBound, double maxScore, ValueBound maxBound )
+  public CompletableFuture<Long> countBetweenScores( ScoreRangeOptions options )
+  {
+    return countBetweenScores( options.minScore, options.minBound, options.maxScore, options.maxBound );
+  }
+
+  private CompletableFuture<Long> countBetweenScores( double minScore, ValueBound minBound, double maxScore, ValueBound maxBound )
   {
     return makeRemoteCall( "count", new AdaptingResponder<>( Long.class ), minScore, minBound, maxScore, maxBound );
   }

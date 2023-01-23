@@ -2,6 +2,7 @@ package com.backendless.hive;
 
 import com.backendless.core.responder.AdaptingResponder;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -27,17 +28,17 @@ public final class HiveMap<T> extends HiveGeneralForComplexStore
     return this.<String>makeRemoteCall( "get", objKey ).thenApply( HiveSerializer::deserialize );
   }
 
-  public CompletableFuture<Map<String, T>> multiGet( List<String> objKeys )
+  public CompletableFuture<Map<String, T>> get( List<String> objKeys )
   {
     return this.<Map<String, String>>makeRemoteCall( "multiGet", objKeys ).thenApply( HiveSerializer::deserialize );
   }
 
-  public CompletableFuture<List<String>> getKeys()
+  public CompletableFuture<List<String>> keys()
   {
     return makeRemoteCall( "getKeys" );
   }
 
-  public CompletableFuture<List<T>> getValues()
+  public CompletableFuture<List<T>> values()
   {
     return this.<List<String>>makeRemoteCall( "getValues" ).thenApply( HiveSerializer::deserialize );
   }
@@ -47,22 +48,35 @@ public final class HiveMap<T> extends HiveGeneralForComplexStore
     return makeRemoteCall( "set", new AdaptingResponder<>( Long.class ), HiveSerializer.serialize( values ) );
   }
 
-  public CompletableFuture<Boolean> set( String objKey, String value )
+  private CompletableFuture<Boolean> set( String objKey, String value )
   {
     return makeRemoteCall( "set", objKey, HiveSerializer.serialize( value ) );
   }
 
-  public CompletableFuture<Boolean> setIfNotExist( String objKey, String value )
+  private CompletableFuture<Boolean> setIfNotExist( String objKey, String value )
   {
     return makeRemoteCall( "setIfNotExist", objKey, HiveSerializer.serialize( value ) );
   }
 
-  public CompletableFuture<Long> incrementBy( String objKey, Integer value )
+  public CompletableFuture<Boolean> set( String objKey, String value, boolean overwrite )
+  {
+    if( overwrite )
+      return set( objKey, value );
+    else
+      return setIfNotExist( objKey, value );
+  }
+
+  public CompletableFuture<Long> increment( String objKey, Integer value )
   {
     return makeRemoteCall( "incrementBy", new AdaptingResponder<>( Long.class ), objKey, value );
   }
 
-  public CompletableFuture<Boolean> exists( String objKey )
+  public CompletableFuture<Long> decrement( String objKey, Integer value )
+  {
+    return increment( objKey, -value );
+  }
+
+  public CompletableFuture<Boolean> keyExists( String objKey )
   {
     return makeRemoteCall( "exists", objKey );
   }
@@ -72,7 +86,12 @@ public final class HiveMap<T> extends HiveGeneralForComplexStore
     return makeRemoteCall( "length", new AdaptingResponder<>( Long.class ) );
   }
 
-  public CompletableFuture<Long> del( List<String> objKeys )
+  public CompletableFuture<Long> delete( String objKey )
+  {
+    return delete( Collections.singletonList( objKey ) );
+  }
+
+  public CompletableFuture<Long> delete( List<String> objKeys )
   {
     return makeRemoteCall( "del", new AdaptingResponder<>( Long.class ), objKeys );
   }

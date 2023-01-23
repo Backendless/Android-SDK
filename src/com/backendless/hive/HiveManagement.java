@@ -21,33 +21,32 @@ public final class HiveManagement
   HiveManagement()
   {}
 
-  public CompletableFuture<Set<String>> getHiveNames()
+  public CompletableFuture<Set<String>> getNames()
   {
     return makeRemoteCall( "getHiveNames" );
   }
 
-  public CompletableFuture<Void> addHive( String name )
+  public CompletableFuture<Void> create( String name )
   {
     return makeRemoteCall( "addHive", name );
   }
 
-  public CompletableFuture<Void> renameHive( String name, String newName )
+  public CompletableFuture<Void> rename( String name, String newName )
   {
     return makeRemoteCall( "renameHive", name, newName );
   }
 
-  public CompletableFuture<Long> deleteHive( String name )
+  public CompletableFuture<Long> delete( String name )
   {
     return makeRemoteCall( "deleteHive", new AdaptingResponder<>( Long.class ), name );
   }
 
-  public CompletableFuture<Long> deleteAllHives()
+  public CompletableFuture<Long> deleteAll()
   {
     return makeRemoteCall( "deleteAllHives", new AdaptingResponder<>( Long.class ) );
   }
 
-  public CompletableFuture<ScanResult> retrieveHiveKeys( String name, StoreType storeType, String filterPattern, String cursor,
-                                                         int pageSize )
+  public CompletableFuture<ScanResult> keys( String name, StoreType storeType, String filterPattern, String cursor, int pageSize )
   {
     return makeRemoteCall( "retrieveHiveKeys", name, storeType, filterPattern, cursor, pageSize );
   }

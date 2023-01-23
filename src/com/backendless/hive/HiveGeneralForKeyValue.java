@@ -11,27 +11,21 @@ abstract class HiveGeneralForKeyValue extends HiveGeneral
   }
 
   @Override
-  public CompletableFuture<Long> del( String key )
+  public CompletableFuture<Long> delete( String key )
   {
-    return super.del( key );
+    return super.delete( key );
   }
 
   @Override
-  public CompletableFuture<Void> rename( String key, String newKey )
+  public CompletableFuture<Boolean> rename( String key, String newKey, boolean overwrite )
   {
-    return super.rename( key, newKey );
+    return super.rename( key, newKey, overwrite );
   }
 
   @Override
-  public CompletableFuture<Boolean> renameIfNotExists( String key, String newKey )
+  public CompletableFuture<Void> expireAfter( String key, Integer ttlSeconds )
   {
-    return super.renameIfNotExists( key, newKey );
-  }
-
-  @Override
-  public CompletableFuture<Void> expire( String key, Integer ttlSeconds )
-  {
-    return super.expire( key, ttlSeconds );
+    return super.expireAfter( key, ttlSeconds );
   }
 
   @Override
@@ -41,9 +35,9 @@ abstract class HiveGeneralForKeyValue extends HiveGeneral
   }
 
   @Override
-  public CompletableFuture<Long> getExpirationTTL( String key )
+  public CompletableFuture<Long> getExpiration( String key )
   {
-    return super.getExpirationTTL( key );
+    return super.getExpiration( key );
   }
 
   @Override

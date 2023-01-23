@@ -2,6 +2,7 @@ package com.backendless.hive;
 
 import com.backendless.core.responder.AdaptingResponder;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -41,9 +42,24 @@ public final class HiveList<T> extends HiveGeneralForComplexStore
     return makeRemoteCall( "set", index, HiveSerializer.serialize( value ) );
   }
 
-  public CompletableFuture<Long> insert( Object targetValue, Object value, boolean before )
+  public CompletableFuture<Long> insertBefore( Object targetValue, Object value )
+  {
+    return insert( targetValue, value, true );
+  }
+
+  public CompletableFuture<Long> insertAfter( Object targetValue, Object value )
+  {
+    return insert( targetValue, value, false );
+  }
+
+  private CompletableFuture<Long> insert( Object targetValue, Object value, boolean before )
   {
     return makeRemoteCall( "insert", new AdaptingResponder<>( Long.class ), HiveSerializer.serialize( targetValue ), HiveSerializer.serialize( value ), before );
+  }
+
+  public CompletableFuture<Long> addFirst( T value )
+  {
+    return addFirst( Collections.singletonList( value ) );
   }
 
   public CompletableFuture<Long> addFirst( List<T> values )
@@ -51,32 +67,37 @@ public final class HiveList<T> extends HiveGeneralForComplexStore
     return makeRemoteCall( "addFirst", new AdaptingResponder<>( Long.class ), HiveSerializer.serializeAsList( values ) );
   }
 
+  public CompletableFuture<Long> addLast( T value )
+  {
+    return addLast( Collections.singletonList( value ) );
+  }
+
   public CompletableFuture<Long> addLast( List<T> values )
   {
     return makeRemoteCall( "addLast", new AdaptingResponder<>( Long.class ), HiveSerializer.serializeAsList( values ) );
   }
 
-  public CompletableFuture<T> removeAndReturnFirst()
+  public CompletableFuture<T> deleteAndReturnFirst()
   {
     return this.<String>makeRemoteCall( "removeAndReturnFirst" ).thenApply( HiveSerializer::deserialize );
   }
 
-  public CompletableFuture<T> removeAndReturnLast()
+  public CompletableFuture<T> deleteAndReturnLast()
   {
     return this.<String>makeRemoteCall( "removeAndReturnLast" ).thenApply( HiveSerializer::deserialize );
   }
 
-  public CompletableFuture<List<T>> removeAndReturnFirst( int count )
+  public CompletableFuture<List<T>> deleteAndReturnFirst( int count )
   {
     return this.<List<String>>makeRemoteCall( "removeAndReturnFirst", count ).thenApply( HiveSerializer::deserialize );
   }
 
-  public CompletableFuture<List<T>> removeAndReturnLast( int count )
+  public CompletableFuture<List<T>> deleteAndReturnLast( int count )
   {
     return this.<List<String>>makeRemoteCall( "removeAndReturnLast", count ).thenApply( HiveSerializer::deserialize );
   }
 
-  public CompletableFuture<Long> removeValue( T value, int count )
+  public CompletableFuture<Long> deleteValue( T value, int count )
   {
     return makeRemoteCall( "removeValue", new AdaptingResponder<>( Long.class ), HiveSerializer.serialize( value ), count );
   }
