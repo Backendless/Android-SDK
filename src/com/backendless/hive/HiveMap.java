@@ -48,17 +48,22 @@ public final class HiveMap<T> extends HiveGeneralForComplexStore
     return makeRemoteCall( "set", new AdaptingResponder<>( Long.class ), HiveSerializer.serialize( values ) );
   }
 
-  public CompletableFuture<Boolean> set( String objKey, String value )
+  private CompletableFuture<Boolean> set( String objKey, String value )
   {
     return makeRemoteCall( "set", objKey, HiveSerializer.serialize( value ) );
   }
 
-  public CompletableFuture<Boolean> setWithOverwrite( String objKey, String value, boolean overwrite )
+  private CompletableFuture<Boolean> setIfNotExist( String objKey, String value )
+  {
+    return makeRemoteCall( "setIfNotExist", objKey, HiveSerializer.serialize( value ) );
+  }
+
+  public CompletableFuture<Boolean> set( String objKey, String value, boolean overwrite )
   {
     if( overwrite )
       return set( objKey, value );
     else
-      return makeRemoteCall( "setIfNotExist", objKey, HiveSerializer.serialize( value ) );
+      return setIfNotExist( objKey, value );
   }
 
   public CompletableFuture<Long> increment( String objKey, Integer value )

@@ -52,7 +52,7 @@ public final class HiveList<T> extends HiveGeneralForComplexStore
     return insert( targetValue, value, false );
   }
 
-  public CompletableFuture<Long> insert( Object targetValue, Object value, boolean before )
+  private CompletableFuture<Long> insert( Object targetValue, Object value, boolean before )
   {
     return makeRemoteCall( "insert", new AdaptingResponder<>( Long.class ), HiveSerializer.serialize( targetValue ), HiveSerializer.serialize( value ), before );
   }
