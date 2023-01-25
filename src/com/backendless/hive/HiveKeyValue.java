@@ -66,12 +66,14 @@ public final class HiveKeyValue extends HiveGeneralForKeyValue
 
   public <T> CompletableFuture<T> get( String key )
   {
-    return this.<String>makeRemoteCall( "get", key ).thenApply( HiveSerializer::deserialize );
+    return this.<String>makeRemoteCall( "get", key )
+            .thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<Map<String, ?>> multiGet( Set<String> keys )
   {
-    return this.<Map<String, String>>makeRemoteCall( "multiGet", keys ).thenApply( HiveSerializer::deserialize );
+    return this.<Map<String, String>>makeRemoteCall( "multiGet", keys )
+            .thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<Void> set( String key, Object value )

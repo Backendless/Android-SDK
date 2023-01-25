@@ -19,17 +19,17 @@ public class HiveGeneralWithoutStoreKey extends HiveGeneral
 
   public CompletableFuture<Long> delete( List<String> keys )
   {
-    return makeRemoteCallForGeneral( HiveGeneral.HIVE_GENERAL_KEY_ALIAS, "del", new AdaptingResponder<>( Long.class ), new Object[] { keys } );
+    return makeRemoteCallForGeneral( "del", new AdaptingResponder<>( Long.class ), new Object[] { keys } );
   }
 
   public CompletableFuture<Long> exists( List<String> keys )
   {
-    return makeRemoteCallForGeneral( HiveGeneral.HIVE_GENERAL_KEY_ALIAS, "exists", new AdaptingResponder<>( Long.class ), new Object[] { keys } );
+    return makeRemoteCallForGeneral( "exists", new AdaptingResponder<>( Long.class ), new Object[] { keys } );
   }
 
   public CompletableFuture<Long> touch( List<String> keys )
   {
-    return makeRemoteCallForGeneral( HiveGeneral.HIVE_GENERAL_KEY_ALIAS, "touch", new AdaptingResponder<>( Long.class ), new Object[] { keys } );
+    return makeRemoteCallForGeneral( "touch", new AdaptingResponder<>( Long.class ), new Object[] { keys } );
   }
 
   public CompletableFuture<ScanResult> keys( String filterPattern, String cursor, int pageSize )
