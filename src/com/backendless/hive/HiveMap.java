@@ -20,45 +20,50 @@ public final class HiveMap<T> extends HiveGeneralForComplexStore
 
   public CompletableFuture<Map<String, T>> get()
   {
-    return this.<Map<String, String>>makeRemoteCall( "get" ).thenApply( HiveSerializer::deserialize );
+    return this.<Map<String, String>>makeRemoteCall( "get" )
+            .thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<T> get( String objKey )
   {
-    return this.<String>makeRemoteCall( "get", objKey ).thenApply( HiveSerializer::deserialize );
+    return this.<String>makeRemoteCall( "get", objKey )
+            .thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<Map<String, T>> get( List<String> objKeys )
   {
-    return this.<Map<String, String>>makeRemoteCall( "multiGet", objKeys ).thenApply( HiveSerializer::deserialize );
+    return this.<Map<String, String>>makeRemoteCall( "multiGet", objKeys )
+            .thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<List<String>> keys()
   {
-    return makeRemoteCall( "getKeys" );
+    return makeRemoteCall( "getKeys", new AdaptingResponder<>( List.class ) )
+            .thenApply( result -> (List<String>) result );
   }
 
   public CompletableFuture<List<T>> values()
   {
-    return this.<List<String>>makeRemoteCall( "getValues" ).thenApply( HiveSerializer::deserialize );
+    return this.<String[]>makeRemoteCall( "getValues" )
+            .thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<Long> set( Map<String, T> values )
   {
-    return makeRemoteCall( "set", new AdaptingResponder<>( Long.class ), HiveSerializer.serialize( values ) );
+    return makeRemoteCall( "set", new AdaptingResponder<>( Long.class ), HiveSerializer.serializeAsMap( values ) );
   }
 
-  private CompletableFuture<Boolean> set( String objKey, String value )
+  private CompletableFuture<Boolean> set( String objKey, T value )
   {
     return makeRemoteCall( "set", objKey, HiveSerializer.serialize( value ) );
   }
 
-  private CompletableFuture<Boolean> setIfNotExist( String objKey, String value )
+  private CompletableFuture<Boolean> setIfNotExist( String objKey, T value )
   {
     return makeRemoteCall( "setIfNotExist", objKey, HiveSerializer.serialize( value ) );
   }
 
-  public CompletableFuture<Boolean> set( String objKey, String value, boolean overwrite )
+  public CompletableFuture<Boolean> set( String objKey, T value, boolean overwrite )
   {
     if( overwrite )
       return set( objKey, value );

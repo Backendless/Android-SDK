@@ -16,20 +16,22 @@ public final class HiveList<T> extends HiveGeneralForComplexStore
     super( hiveName, StoreType.List, storeKey );
   }
 
-
   public CompletableFuture<List<T>> get()
   {
-    return this.<List<String>>makeRemoteCall( "get" ).thenApply( HiveSerializer::deserialize );
+    return this.<String[]>makeRemoteCall( "get" )
+            .thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<List<T>> get( int start, int stop )
   {
-    return this.<List<String>>makeRemoteCall( "get", start, stop ).thenApply( HiveSerializer::deserialize );
+    return this.<String[]>makeRemoteCall( "get", start, stop )
+            .thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<T> get( int index )
   {
-    return this.<String>makeRemoteCall( "get", index ).thenApply( HiveSerializer::deserialize );
+    return this.<String>makeRemoteCall( "get", index )
+            .thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<Long> set( List<T> values )
@@ -79,22 +81,26 @@ public final class HiveList<T> extends HiveGeneralForComplexStore
 
   public CompletableFuture<T> deleteAndReturnFirst()
   {
-    return this.<String>makeRemoteCall( "removeAndReturnFirst" ).thenApply( HiveSerializer::deserialize );
+    return this.<String>makeRemoteCall( "removeAndReturnFirst" )
+            .thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<T> deleteAndReturnLast()
   {
-    return this.<String>makeRemoteCall( "removeAndReturnLast" ).thenApply( HiveSerializer::deserialize );
+    return this.<String>makeRemoteCall( "removeAndReturnLast" )
+            .thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<List<T>> deleteAndReturnFirst( int count )
   {
-    return this.<List<String>>makeRemoteCall( "removeAndReturnFirst", count ).thenApply( HiveSerializer::deserialize );
+    return this.<String[]>makeRemoteCall( "removeAndReturnFirst", count )
+            .thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<List<T>> deleteAndReturnLast( int count )
   {
-    return this.<List<String>>makeRemoteCall( "removeAndReturnLast", count ).thenApply( HiveSerializer::deserialize );
+    return this.<String[]>makeRemoteCall( "removeAndReturnLast", count )
+            .thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<Long> deleteValue( T value, int count )

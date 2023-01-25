@@ -1,16 +1,15 @@
 package com.backendless.hive;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @Getter
 @ToString
-@EqualsAndHashCode
 public class ScoreValuePair<T>
 {
   final private double score;
@@ -59,5 +58,22 @@ public class ScoreValuePair<T>
       items.add( new ScoreValuePair<>( ((Number) arrayItems[ i ]).doubleValue(), HiveSerializer.deserialize( (String) arrayItems[ i + 1 ] ) ) );
 
     return items;
+  }
+
+  @Override
+  public boolean equals( Object o )
+  {
+    if( this == o )
+      return true;
+    if( !(o instanceof ScoreValuePair) )
+      return false;
+    ScoreValuePair<?> that = (ScoreValuePair<?>) o;
+    return Double.compare( that.score, score ) == 0 && value.equals( that.value );
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash( value );
   }
 }

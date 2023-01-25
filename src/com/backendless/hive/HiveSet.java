@@ -20,17 +20,20 @@ public final class HiveSet<T> extends HiveGeneralForComplexStore
 
   public CompletableFuture<Set<T>> get()
   {
-    return this.<Set<String>>makeRemoteCall( "get" ).thenApply( HiveSerializer::deserialize );
+    return makeRemoteCall( "get", new AdaptingResponder<>( Set.class ) )
+            .thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<List<T>> getRandom( int count )
   {
-    return this.<List<String>>makeRemoteCall( "getRandom", count ).thenApply( HiveSerializer::deserialize );
+    return this.<String[]>makeRemoteCall( "getRandom", count )
+            .thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<Set<T>> getRandomAndDel( int count )
   {
-    return this.<Set<String>>makeRemoteCall( "getRandomAndDel", count ).thenApply( HiveSerializer::deserialize );
+    return makeRemoteCall( "getRandomAndDel", new AdaptingResponder<>( Set.class ), count )
+            .thenApply( HiveSerializer::deserialize );
   }
 
   public CompletableFuture<Boolean> isValueMember( T value )
@@ -38,9 +41,10 @@ public final class HiveSet<T> extends HiveGeneralForComplexStore
     return makeRemoteCall( "contains", HiveSerializer.serialize( value ) );
   }
 
-  public CompletableFuture<List<Boolean>> isValueMember( List<T> values )
+  public CompletableFuture<List<Boolean>> isValueMember( Set<T> values )
   {
-    return makeRemoteCall( "contains", HiveSerializer.serialize( values ) );
+    return makeRemoteCall( "contains", new AdaptingResponder<>( List.class ), HiveSerializer.serialize( values ) )
+            .thenApply( result -> (List<Boolean>) result );
   }
 
   public CompletableFuture<Long> length()

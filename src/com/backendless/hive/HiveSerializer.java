@@ -65,6 +65,16 @@ final class HiveSerializer
     return result;
   }
 
+  static <T> List<T> deserialize( String[] arrayOfJsonStrings )
+  {
+    ArrayList<T> result = new ArrayList<>();
+
+    for( String listOfJsonString : arrayOfJsonStrings )
+      result.add( deserialize( listOfJsonString ) );
+
+    return result;
+  }
+
   static <T> List<T> deserialize( List<String> listOfJsonStrings )
   {
     ArrayList<T> result = new ArrayList<>();

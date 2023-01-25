@@ -23,7 +23,8 @@ public final class HiveManagement
 
   public CompletableFuture<Set<String>> getNames()
   {
-    return makeRemoteCall( "getHiveNames" );
+    return makeRemoteCall( "getHiveNames", new AdaptingResponder<>( Set.class ) )
+            .thenApply( set -> (Set<String>)set );
   }
 
   public CompletableFuture<Void> create( String name )
