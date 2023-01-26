@@ -3,7 +3,9 @@ package com.backendless.hive;
 import com.backendless.core.responder.AdaptingResponder;
 
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 
@@ -51,15 +53,15 @@ public final class HiveSortedSet<T> extends HiveGeneralForComplexStore
 
   public CompletableFuture<Long> add( ScoreValuePair<T> item )
   {
-    return add( Collections.singletonList( item ), null, null, null );
+    return add( Collections.singleton( item ), null, null, null );
   }
 
-  public CompletableFuture<Long> add( List<ScoreValuePair<T>> items )
+  public CompletableFuture<Long> add( Set<ScoreValuePair<T>> items )
   {
     return add( items, null, null, null );
   }
 
-  public CompletableFuture<Long> add( List<ScoreValuePair<T>> items, DuplicateBehaviour duplicateBehaviour, ScoreUpdateMode scoreUpdateMode, ResultType resultType )
+  public CompletableFuture<Long> add( Set<ScoreValuePair<T>> items, DuplicateBehaviour duplicateBehaviour, ScoreUpdateMode scoreUpdateMode, ResultType resultType )
   {
     return makeRemoteCall( "add", new AdaptingResponder<>( Long.class ), ScoreValuePair.toObjectArray( items ), duplicateBehaviour, scoreUpdateMode, resultType );
   }
@@ -74,13 +76,13 @@ public final class HiveSortedSet<T> extends HiveGeneralForComplexStore
     return incrementScore( -scoreAmount, member );
   }
 
-  public CompletableFuture<List<ScoreValuePair<T>>> getAndDeleteMaxScore( int count )
+  public CompletableFuture<LinkedHashSet<ScoreValuePair<T>>> getAndDeleteMaxScore( int count )
   {
     return this.<Object[]>makeRemoteCall( "getAndRemoveMax", count )
             .thenApply( ScoreValuePair::fromObjectArray );
   }
 
-  public CompletableFuture<List<ScoreValuePair<T>>> getAndDeleteMinScore( int count )
+  public CompletableFuture<LinkedHashSet<ScoreValuePair<T>>> getAndDeleteMinScore( int count )
   {
     return this.<Object[]>makeRemoteCall( "getAndRemoveMin", count )
             .thenApply( ScoreValuePair::fromObjectArray );
@@ -89,13 +91,13 @@ public final class HiveSortedSet<T> extends HiveGeneralForComplexStore
   public CompletableFuture<List<T>> getRandom( int count )
   {
     return this.<String[]>makeRemoteCall( "getRandom", count )
-            .thenApply( HiveSerializer::deserialize );
+            .thenApply( HiveSerializer::deserializeAsList );
   }
 
   public CompletableFuture<List<ScoreValuePair<T>>> getRandomWithScores( int count )
   {
     return this.<Object[]>makeRemoteCall( "getRandomWithScores", count )
-            .thenApply( ScoreValuePair::fromObjectArray );
+            .thenApply( ScoreValuePair::fromObjectArrayToList );
   }
 
   public CompletableFuture<Double> getScore( String member )
@@ -121,7 +123,7 @@ public final class HiveSortedSet<T> extends HiveGeneralForComplexStore
     return makeRemoteCall( "getReverseRank", new AdaptingResponder<>( Long.class ), member );
   }
 
-  public CompletableFuture<List<T>> getRangeByRank( long startRank, long stopRank, boolean reverse )
+  public CompletableFuture<LinkedHashSet<T>> getRangeByRank( long startRank, long stopRank, boolean reverse )
   {
     if( reverse )
       return getReverseRangeByRank( startRank, stopRank );
@@ -129,19 +131,19 @@ public final class HiveSortedSet<T> extends HiveGeneralForComplexStore
       return getRangeByRank( startRank, stopRank );
   }
 
-  private CompletableFuture<List<T>> getRangeByRank( long startRank, long stopRank )
+  private CompletableFuture<LinkedHashSet<T>> getRangeByRank( long startRank, long stopRank )
   {
     return this.<String[]>makeRemoteCall( "getRangeByRank", startRank, stopRank )
-            .thenApply( HiveSerializer::deserialize );
+            .thenApply( HiveSerializer::deserializeAsLinkedSet );
   }
 
-  private CompletableFuture<List<T>> getReverseRangeByRank( long startRank, long stopRank )
+  private CompletableFuture<LinkedHashSet<T>> getReverseRangeByRank( long startRank, long stopRank )
   {
     return this.<String[]>makeRemoteCall( "getReverseRangeByRank", startRank, stopRank )
-            .thenApply( HiveSerializer::deserialize );
+            .thenApply( HiveSerializer::deserializeAsLinkedSet );
   }
 
-  public CompletableFuture<List<ScoreValuePair<T>>> getRangeWithScoresByRank( long startRank, long stopRank, boolean reverse )
+  public CompletableFuture<LinkedHashSet<ScoreValuePair<T>>> getRangeWithScoresByRank( long startRank, long stopRank, boolean reverse )
   {
     if( reverse )
       return getReverseRangeWithScoresByRank( startRank, stopRank );
@@ -149,19 +151,19 @@ public final class HiveSortedSet<T> extends HiveGeneralForComplexStore
       return getRangeWithScoresByRank( startRank, stopRank );
   }
 
-  private CompletableFuture<List<ScoreValuePair<T>>> getRangeWithScoresByRank( long startRank, long stopRank )
+  private CompletableFuture<LinkedHashSet<ScoreValuePair<T>>> getRangeWithScoresByRank( long startRank, long stopRank )
   {
     return this.<Object[]>makeRemoteCall( "getRangeWithScoresByRank", startRank, stopRank )
             .thenApply( ScoreValuePair::fromObjectArray );
   }
 
-  private CompletableFuture<List<ScoreValuePair<T>>> getReverseRangeWithScoresByRank( long startRank, long stopRank )
+  private CompletableFuture<LinkedHashSet<ScoreValuePair<T>>> getReverseRangeWithScoresByRank( long startRank, long stopRank )
   {
     return this.<Object[]>makeRemoteCall( "getReverseRangeWithScoresByRank", startRank, stopRank )
             .thenApply( ScoreValuePair::fromObjectArray );
   }
 
-  public CompletableFuture<List<T>> getRangeByScore( ScoreRangeOptions options, long offset, long pageSize, boolean reverse )
+  public CompletableFuture<LinkedHashSet<T>> getRangeByScore( ScoreRangeOptions options, long offset, long pageSize, boolean reverse )
   {
     if( reverse )
       return getReverseRangeByScore( options.minScore, options.minBound, options.maxScore, options.maxBound, offset, pageSize );
@@ -169,19 +171,19 @@ public final class HiveSortedSet<T> extends HiveGeneralForComplexStore
       return getRangeByScore( options.minScore, options.minBound, options.maxScore, options.maxBound, offset, pageSize );
   }
 
-  private CompletableFuture<List<T>> getRangeByScore( double minScore, ValueBound minBound, double maxScore, ValueBound maxBound, long offset, long pageSize )
+  private CompletableFuture<LinkedHashSet<T>> getRangeByScore( double minScore, ValueBound minBound, double maxScore, ValueBound maxBound, long offset, long pageSize )
   {
     return this.<String[]>makeRemoteCall( "getRangeByScore", minScore, minBound, maxScore, maxBound, offset, pageSize )
-            .thenApply( HiveSerializer::deserialize );
+            .thenApply( HiveSerializer::deserializeAsLinkedSet );
   }
 
-  private CompletableFuture<List<T>> getReverseRangeByScore( double minScore, ValueBound minBound, double maxScore, ValueBound maxBound, long offset, long pageSize )
+  private CompletableFuture<LinkedHashSet<T>> getReverseRangeByScore( double minScore, ValueBound minBound, double maxScore, ValueBound maxBound, long offset, long pageSize )
   {
     return this.<String[]>makeRemoteCall( "getReverseRangeByScore", minScore, minBound, maxScore, maxBound, offset, pageSize )
-            .thenApply( HiveSerializer::deserialize );
+            .thenApply( HiveSerializer::deserializeAsLinkedSet );
   }
 
-  public CompletableFuture<List<ScoreValuePair<T>>> getRangeWithScoresByScore( ScoreRangeOptions options, long offset, long pageSize, boolean reverse )
+  public CompletableFuture<LinkedHashSet<ScoreValuePair<T>>> getRangeWithScoresByScore( ScoreRangeOptions options, long offset, long pageSize, boolean reverse )
   {
     if( reverse )
       return getReverseRangeWithScoresByScore( options.minScore, options.minBound, options.maxScore, options.maxBound, offset, pageSize );
@@ -189,19 +191,19 @@ public final class HiveSortedSet<T> extends HiveGeneralForComplexStore
       return getRangeWithScoresByScore( options.minScore, options.minBound, options.maxScore, options.maxBound, offset, pageSize );
   }
 
-  private CompletableFuture<List<ScoreValuePair<T>>> getRangeWithScoresByScore( double minScore, ValueBound minBound, double maxScore, ValueBound maxBound, long offset, long pageSize )
+  private CompletableFuture<LinkedHashSet<ScoreValuePair<T>>> getRangeWithScoresByScore( double minScore, ValueBound minBound, double maxScore, ValueBound maxBound, long offset, long pageSize )
   {
     return this.<Object[]>makeRemoteCall( "getRangeWithScoresByScore", minScore, minBound, maxScore, maxBound, offset, pageSize )
             .thenApply( ScoreValuePair::fromObjectArray );
   }
 
-  private CompletableFuture<List<ScoreValuePair<T>>> getReverseRangeWithScoresByScore( double minScore, ValueBound minBound, double maxScore, ValueBound maxBound, long offset, long pageSize )
+  private CompletableFuture<LinkedHashSet<ScoreValuePair<T>>> getReverseRangeWithScoresByScore( double minScore, ValueBound minBound, double maxScore, ValueBound maxBound, long offset, long pageSize )
   {
     return this.<Object[]>makeRemoteCall( "getReverseRangeWithScoresByScore", minScore, minBound, maxScore, maxBound, offset, pageSize )
             .thenApply( ScoreValuePair::fromObjectArray );
   }
 
-  public CompletableFuture<Long> delete( List<String> values )
+  public CompletableFuture<Long> delete( Set<String> values )
   {
     return makeRemoteCall( "remove", new AdaptingResponder<>( Long.class ), values );
   }

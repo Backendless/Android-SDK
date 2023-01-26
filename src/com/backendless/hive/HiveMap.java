@@ -45,7 +45,7 @@ public final class HiveMap<T> extends HiveGeneralForComplexStore
   public CompletableFuture<List<T>> values()
   {
     return this.<String[]>makeRemoteCall( "getValues" )
-            .thenApply( HiveSerializer::deserialize );
+            .thenApply( HiveSerializer::deserializeAsList );
   }
 
   public CompletableFuture<Long> set( Map<String, T> values )

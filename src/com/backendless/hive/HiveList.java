@@ -19,13 +19,13 @@ public final class HiveList<T> extends HiveGeneralForComplexStore
   public CompletableFuture<List<T>> get()
   {
     return this.<String[]>makeRemoteCall( "get" )
-            .thenApply( HiveSerializer::deserialize );
+            .thenApply( HiveSerializer::deserializeAsList );
   }
 
   public CompletableFuture<List<T>> get( int start, int stop )
   {
     return this.<String[]>makeRemoteCall( "get", start, stop )
-            .thenApply( HiveSerializer::deserialize );
+            .thenApply( HiveSerializer::deserializeAsList );
   }
 
   public CompletableFuture<T> get( int index )
@@ -94,13 +94,13 @@ public final class HiveList<T> extends HiveGeneralForComplexStore
   public CompletableFuture<List<T>> deleteAndReturnFirst( int count )
   {
     return this.<String[]>makeRemoteCall( "removeAndReturnFirst", count )
-            .thenApply( HiveSerializer::deserialize );
+            .thenApply( HiveSerializer::deserializeAsList );
   }
 
   public CompletableFuture<List<T>> deleteAndReturnLast( int count )
   {
     return this.<String[]>makeRemoteCall( "removeAndReturnLast", count )
-            .thenApply( HiveSerializer::deserialize );
+            .thenApply( HiveSerializer::deserializeAsList );
   }
 
   public CompletableFuture<Long> deleteValue( T value, int count )

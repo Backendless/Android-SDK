@@ -20,20 +20,20 @@ public final class HiveSet<T> extends HiveGeneralForComplexStore
 
   public CompletableFuture<Set<T>> get()
   {
-    return makeRemoteCall( "get", new AdaptingResponder<>( Set.class ) )
-            .thenApply( HiveSerializer::deserialize );
+    return this.<String[]>makeRemoteCall( "get" )
+            .thenApply( HiveSerializer::deserializeAsSet );
   }
 
   public CompletableFuture<List<T>> getRandom( int count )
   {
     return this.<String[]>makeRemoteCall( "getRandom", count )
-            .thenApply( HiveSerializer::deserialize );
+            .thenApply( HiveSerializer::deserializeAsList );
   }
 
   public CompletableFuture<Set<T>> getRandomAndDel( int count )
   {
-    return makeRemoteCall( "getRandomAndDel", new AdaptingResponder<>( Set.class ), count )
-            .thenApply( HiveSerializer::deserialize );
+    return this.<String[]>makeRemoteCall( "getRandomAndDel", count )
+            .thenApply( HiveSerializer::deserializeAsSet );
   }
 
   public CompletableFuture<Boolean> isValueMember( T value )
