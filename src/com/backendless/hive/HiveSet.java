@@ -43,7 +43,7 @@ public final class HiveSet<T> extends HiveGeneralForComplexStore
 
   public CompletableFuture<List<Boolean>> isValueMember( Set<T> values )
   {
-    return makeRemoteCall( "contains", new AdaptingResponder<>( List.class ), HiveSerializer.serialize( values ) )
+    return makeRemoteCall( "contains", new AdaptingResponder<>( List.class ), HiveSerializer.serializeAsList( values ) )
             .thenApply( result -> (List<Boolean>) result );
   }
 
@@ -54,17 +54,17 @@ public final class HiveSet<T> extends HiveGeneralForComplexStore
 
   public CompletableFuture<Long> add( T value )
   {
-    return add( Collections.singletonList( value ) );
+    return add( Collections.singleton( value ) );
   }
 
-  public CompletableFuture<Long> add( List<T> values )
+  public CompletableFuture<Long> add( Set<T> values )
   {
-    return makeRemoteCall( "add", new AdaptingResponder<>( Long.class ), HiveSerializer.serialize( values ) );
+    return makeRemoteCall( "add", new AdaptingResponder<>( Long.class ), HiveSerializer.serializeAsList( values ) );
   }
 
-  public CompletableFuture<Long> delete( List<String> values )
+  public CompletableFuture<Long> delete( Set<T> values )
   {
-    return this.makeRemoteCall( "del", new AdaptingResponder<>( Long.class ), values );
+    return this.makeRemoteCall( "del", new AdaptingResponder<>( Long.class ), HiveSerializer.serializeAsList( values ) );
   }
 
   // ----------------------------------------
