@@ -4,6 +4,7 @@ import com.backendless.utils.WeborbSerializationHelper;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -48,16 +49,14 @@ final class HiveSerializer
     return result;
   }
 
-  static ArrayList<String> serializeAsList( List<?> listOfObjects )
+  static ArrayList<String> serializeAsList( Collection<?> listOfObjects )
   {
     ArrayList<String> result = new ArrayList<>();
 
-    for( int i = 0; i < listOfObjects.size(); i++ )
+    for( Object obj : listOfObjects )
     {
-      Object obj = listOfObjects.get( i );
-
       if( obj == null )
-        throw new IllegalArgumentException( "null value on index '" + i + "'" );
+        throw new IllegalArgumentException( "null value found in collection" );
 
       result.add( serialize( obj ) );
     }
