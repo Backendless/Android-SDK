@@ -54,15 +54,15 @@ public final class HiveSet<T> extends HiveGeneralForComplexStore
 
   public CompletableFuture<Long> add( T value )
   {
-    return add( Collections.singletonList( value ) );
+    return add( Collections.singleton( value ) );
   }
 
-  public CompletableFuture<Long> add( List<T> values )
+  public CompletableFuture<Long> add( Set<T> values )
   {
     return makeRemoteCall( "add", new AdaptingResponder<>( Long.class ), HiveSerializer.serialize( values ) );
   }
 
-  public CompletableFuture<Long> delete( List<String> values )
+  public CompletableFuture<Long> delete( Set<String> values )
   {
     return this.makeRemoteCall( "del", new AdaptingResponder<>( Long.class ), values );
   }
