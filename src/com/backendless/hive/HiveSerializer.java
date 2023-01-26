@@ -6,9 +6,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 
 final class HiveSerializer
@@ -23,7 +23,7 @@ final class HiveSerializer
     return (T) WeborbSerializationHelper.deserialize( jsonString.getBytes( StandardCharsets.UTF_8 ) );
   }
 
-  static Map<String, String> serializeAsMap( Map<String, ?> mapOfObjects )
+  static HashMap<String, String> serializeAsMap( Map<String, ?> mapOfObjects )
   {
     HashMap<String, String> result = new HashMap<>();
 
@@ -38,7 +38,7 @@ final class HiveSerializer
     return result;
   }
 
-  static <T> Map<String, T> deserialize( Map<String, String> mapOfJsonStrings )
+  static <T> HashMap<String, T> deserialize( Map<String, String> mapOfJsonStrings )
   {
     HashMap<String, T> result = new HashMap<>();
 
@@ -48,7 +48,7 @@ final class HiveSerializer
     return result;
   }
 
-  static List<String> serializeAsList( List<?> listOfObjects )
+  static ArrayList<String> serializeAsList( List<?> listOfObjects )
   {
     ArrayList<String> result = new ArrayList<>();
 
@@ -65,7 +65,7 @@ final class HiveSerializer
     return result;
   }
 
-  static <T> List<T> deserialize( String[] arrayOfJsonStrings )
+  static <T> ArrayList<T> deserializeAsList( String[] arrayOfJsonStrings )
   {
     ArrayList<T> result = new ArrayList<>();
 
@@ -75,9 +75,9 @@ final class HiveSerializer
     return result;
   }
 
-  static <T> List<T> deserialize( List<String> listOfJsonStrings )
+  static <T> HashSet<T> deserializeAsSet( String[] listOfJsonStrings )
   {
-    ArrayList<T> result = new ArrayList<>();
+    HashSet<T> result = new HashSet<>();
 
     for( String listOfJsonString : listOfJsonStrings )
       result.add( deserialize( listOfJsonString ) );
@@ -85,9 +85,9 @@ final class HiveSerializer
     return result;
   }
 
-  static <T> Set<T> deserialize( Set<String> listOfJsonStrings )
+  static <T> LinkedHashSet<T> deserializeAsLinkedSet( String[] listOfJsonStrings )
   {
-    Set<T> result = new HashSet<>();
+    LinkedHashSet<T> result = new LinkedHashSet<>();
 
     for( String listOfJsonString : listOfJsonStrings )
       result.add( deserialize( listOfJsonString ) );
