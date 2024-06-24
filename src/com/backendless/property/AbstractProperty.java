@@ -21,6 +21,7 @@ package com.backendless.property;
 public abstract class AbstractProperty
 {
   private String name;
+  private String expression;
   private boolean required;
   private DateTypeEnum type;
 
@@ -32,6 +33,16 @@ public abstract class AbstractProperty
   public void setName( String name )
   {
     this.name = name;
+  }
+
+  public String getExpression()
+  {
+    return expression;
+  }
+
+  public void setExpression( String expression )
+  {
+    this.expression = expression;
   }
 
   public boolean isRequired()
